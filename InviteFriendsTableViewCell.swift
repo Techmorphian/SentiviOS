@@ -15,6 +15,11 @@ class InviteFriendsTableViewCell: UITableViewCell
     
     
     
+    
+    //////////////////
+    
+    
+    
     @IBOutlet var contactImage: UIImageView!
     
     
