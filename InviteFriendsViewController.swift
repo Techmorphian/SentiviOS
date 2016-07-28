@@ -21,7 +21,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
     @IBAction func backButtonAction(sender: AnyObject)
     {
         
-        print("sonali")
+        print("Archana")
         
         
     }
