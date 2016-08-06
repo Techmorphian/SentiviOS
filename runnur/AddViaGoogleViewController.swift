@@ -560,7 +560,7 @@ class AddViaGoogleViewController: UIViewController,UITableViewDataSource,UITable
             
             
             
-        }
+        } /// //else close
         
         
         
@@ -937,7 +937,8 @@ class AddViaGoogleViewController: UIViewController,UITableViewDataSource,UITable
           self.searchTextField.delegate = self;
           searchTextField.autocorrectionType = .No
         
-        
+        doneButton.layer.cornerRadius = 2
+        doneButton.clipsToBounds = true;
         
         
         for var i=0;i<FirstName.count;i++

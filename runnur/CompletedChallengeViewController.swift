@@ -750,32 +750,11 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
         let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
         let filter = "3"
         
+        //let userId  = "158CDEFB-37D4-4216-BD17-E06B6C6812A6"
         
         
         
-        var curentDate = NSDate()
-        
-        var  currentDateString = String(curentDate)
-        
-        
-        let dateFormatter = NSDateFormatter()
-        
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZZ"
-        
-        let Date = dateFormatter.dateFromString(currentDateString)
-        
-        print(Date)
-        
-        
-        let aString = String(Date!)
-        
-        
-        let date = aString.componentsSeparatedByString(" ").first!
-        
-        print(date)
-        
-        
-        let postString = "userId=\(userId)&filter=\(filter)&currentDate=\(date)";
+        let postString = "userId=\(userId)&filter=\(filter)&currentDate=\(CurrentDateFunc.currentDate())";
         
         print(postString)
         
@@ -800,8 +779,11 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
     let loadingView: UIView = UIView()
     func showActivityIndicatory()
     {
-        loadingView.frame = CGRectMake(0, 0, 60, 50)
-        loadingView.center = view.center
+        
+        loadingView.frame = CGRectMake(self.view.frame.width/2 - 30 ,self.view.frame.height/2 - 100, 60, 50)
+        
+        
+       // loadingView.center = view.center
         
         loadingView.backgroundColor = UIColor.grayColor()
         loadingView.alpha = 0.6
@@ -1422,7 +1404,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                                     
                                     self.NoResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
                                     
-                                    self.NoResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+                                    self.NoResult.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
                                     
                                     
                                     self.NoResult.noResultTextLabel.text = msg

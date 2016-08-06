@@ -46,10 +46,22 @@ class Url
     
      static let  viewCauseChallengeDetail = baseUrl + "viewCauseChallengeDetail.php"
     
+   
+    
     static let inviteFriends = baseUrl + "inviteFriends.php"
     
     
     static let getChallengeFriendlist = baseUrl + "getChallengeFriendlist.php"
+    
+    
+    static let inviteFriendsEmail = baseUrl + "inviteFriendsEmail.php"
+    
+
+    static let declineChallenge = baseUrl + "declineChallenge.php"
+    static let acceptChallenge = baseUrl + "acceptChallenge.php"
+    
+    
+
     
     
 }
