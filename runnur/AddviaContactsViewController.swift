@@ -1896,7 +1896,9 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             
             
     
-        
+       doneButton.layer.cornerRadius = 2
+        doneButton.clipsToBounds = true;
+
    
          self.searchTextField.delegate = self;
         ContactTableView.separatorColor = UIColor.grayColor()
