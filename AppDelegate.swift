@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 import FBSDKCoreKit
-
+import GoogleMaps
 
 
 @UIApplicationMain
@@ -17,14 +17,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 {
 
     var window: UIWindow?
-
+    var client : MSClient?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     {
         // Override point for customization after application launch.
         
-        
-        return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        GMSServices.provideAPIKey("AIzaSyBWIi7VAXpFbu1dqX3cXuhu9bB30gUb6u0")
+        self.client = MSClient(
+            applicationURLString:"http://runningappjs.azure-mobile.net"
+        )
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+
         
         
         return true
@@ -34,7 +38,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool
     {
-        return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
+        var handled: Bool?
+        if  url.scheme.hasPrefix("fb")
+        {
+            handled = FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
+        }
+        else{
+            handled = GIDSignIn.sharedInstance().handleURL(url,
+                                                           sourceApplication: sourceApplication,
+                                                           annotation: annotation)
+        }
+        // Add any custom logic here.
+        return handled!
+
     }
     
     

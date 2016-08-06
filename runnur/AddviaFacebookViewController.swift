@@ -81,6 +81,7 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
     }
     
     
+    
     //MARK:-propertyDetailNetwork
     func doneButtonNetwork()
     {

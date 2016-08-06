@@ -6,6 +6,7 @@ target 'runnur' do
   use_frameworks!
 
 pod 'Kingfisher', '~> 2.4'
+pod 'Google/SignIn'
   # Pods for runnur
 
 end

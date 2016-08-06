@@ -7,271 +7,284 @@
 //
 
 import UIKit
+import GoogleMaps
+import MapKit
 
-class HomeViewController: UIViewController,NSURLSessionDelegate,NSURLSessionDataDelegate
+import CoreBluetooth
+
+class HomeViewController: UIViewController,CLLocationManagerDelegate,CBCentralManagerDelegate
 {
-
-    
-    
+    var myManager:CLLocationManager!
+    @IBOutlet weak var mapView: GMSMapView!
+    var winning = [String]()
+     var actionButton: ActionButton!
     @IBAction func menuButtonAction(sender: AnyObject)
     {
-        
-        
         if self.revealViewController() != nil
         {
-             self.revealViewController().revealToggle(self);
+            self.revealViewController().revealToggle(self);
+        }
+        
+    }
+    @IBAction func turnOnBluetooth(sender: AnyObject) {
+        
+           btManager = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionShowPowerAlertKey: true])
+    }
+    @IBOutlet weak var gps: UIImageView!
+    @IBOutlet weak var planRoute: UIButton!
+    @IBOutlet weak var startActivity: UIButton!
+    @IBOutlet weak var getMyLocation: UIButton!
+    @IBAction func getMyLocation(sender: AnyObject) {
+        mapView.myLocationEnabled = true
+        if let _ = mapView.myLocation?.coordinate{
+       self.mapView.camera = GMSCameraPosition.cameraWithTarget((mapView.myLocation?.coordinate)!, zoom: 16.0)
         }
         
     }
     
-    
-    
-    
-    
-    
-    func call()
-        
-    {
-        
-       // LoaderFile.showLoader(self.view);
-        
-        let myurl = NSURL(string: "http://sentivphp.azurewebsites.net/navigationDrawer.php")
-        
-        let request = NSMutableURLRequest(URL: myurl!)
-        
-        request.HTTPMethod = "POST"
-        
-        request.timeoutInterval = 20.0;
-        
-        let modelName = UIDevice.currentDevice().modelName
-        
-        let systemVersion = UIDevice.currentDevice().systemVersion;
-        
-        let make="iphone"
-        
-        let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
-
-        
-        let postString = "os=\(systemVersion)&make=\(make)&model=\(modelName)&userId=\(userId)";
-        
-        print(postString)
-        
-        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
-        
-        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
-        
-        let session = NSURLSession(configuration: config, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
-        
-        let downloadTask = session.dataTaskWithRequest(request);
-        
-        downloadTask.resume()
-        
-        
-        
-    }
-    
-    
-    var winning = [String]()
-    
-    
-    //MARK:- NSURLSession delegate methods
-    
-    func URLSessionDidFinishEventsForBackgroundURLSession(session: NSURLSession)
-    {
-        
-        
-        
-    }
-    
-    func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, willCacheResponse proposedResponse: NSCachedURLResponse, completionHandler: (NSCachedURLResponse?) -> Void)
-    {
-        
-        let dataString = String(data: self.mutableData, encoding: NSUTF8StringEncoding)
-        
-        
-        
-        print(dataString!)
-        
-        if dataTask.currentRequest?.URL! == NSURL(string:"http://sentivphp.azurewebsites.net/navigationDrawer.php")
-            
-        {
-            
+    func call(){
+        print("os=\(UIDevice.currentDevice().systemVersion)&make=iphone&model=\(UIDevice.currentDevice().modelName)&userId=\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)")
+        NetworkRequest.sharedInstance.connectToServer(self.view, urlString: Url.navigationDrawer, postData: "os=\(UIDevice.currentDevice().systemVersion)&make=iphone&model=\(UIDevice.currentDevice().modelName)&userId=\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)", responseData: {(success,error) in
             do
-                
             {
-                
-                let json = try NSJSONSerialization.JSONObjectWithData(self.mutableData, options: .MutableContainers) as? NSDictionary
-                
+                let json = try NSJSONSerialization.JSONObjectWithData(success!, options: .MutableContainers) as? NSDictionary
                 if  let parseJSON = json{
-                    
                     let status = parseJSON["status"] as? String
                     let msg=parseJSON["message"] as? String
+                    dispatch_async(dispatch_get_main_queue(), {
+                        CommonFunctions.hideActivityIndicator()
+                    })
+                    
+                    
                     if(status=="Success")
                     {
-                        
-                        
-                        
                         if  let elements: AnyObject = json!["response"]
                         {
-                            
-                            print(elements.count)
-                            
                             for i in 0 ..< elements.count
                             {
-                                
-                                
-                                
                                 let winningCount = elements[i]["winning"] as! String
-                                
-                                
                                 self.winning.append(winningCount)
-                                
                                 NSUserDefaults.standardUserDefaults().setObject(winningCount, forKey: "winningCount")
-
-                                print(NSUserDefaults.standardUserDefaults().stringForKey("winningCount"))
-                              
-                                
-                                
                             }//
-                            
                         }
-                       
-                        
-                        
                     }
                         
                     else if status == "Error"
-                        
                     {
-                        
                         NSOperationQueue.mainQueue().addOperationWithBlock
-                            
                             {
-                                
-                              //  LoaderFile.hideLoader(self.view)
-                                
-                                let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
-                                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
-                                
-                                alert.addAction(okAction)
-                                
-                                self.presentViewController(alert, animated: true, completion: nil)
+                                CommonFunctions.showPopup(self, msg: msg!, getClick: { })
                                 return
-                                
-                                
                         }
                         
                     }
                         
                     else if status == "NoResult"
-                        
                     {
-                        
                         NSOperationQueue.mainQueue().addOperationWithBlock
-                            
                             {
-                                
-                                let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
-                                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
-                                
-                                alert.addAction(okAction)
-                                
-                                self.presentViewController(alert, animated: true, completion: nil)
+                                NSUserDefaults.standardUserDefaults().setObject("", forKey: "winningCount")
+                                CommonFunctions.showPopup(self, msg: msg!, getClick: { })
                                 return
-                                
-                                
                         }
-                        
                     }
-                        
-                    
-                    
                 }
-                
             }
-                
             catch
                 
             {
-                
-                
-                
-                
                 print(error)
-                
+                CommonFunctions.showPopup(self, msg: "Error", getClick: { })
             }
-            
-        }
-        
-        
-        
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    var mutableData = NSMutableData()
-    func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData)
-    {
-        
-        self.mutableData.appendData(data);
-        
-        
-        
-    }
-    
-    func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveResponse response: NSURLResponse, completionHandler: (NSURLSessionResponseDisposition) -> Void) {
-        
-        self.mutableData.setData(NSData())
-        
-        completionHandler(NSURLSessionResponseDisposition.Allow)
-        
-    }
-    
-    func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?)
-    {
-        
-       // LoaderFile.hideLoader(self.view)
-        
-        let alert = UIAlertController(title: "", message:"something went wrong try again later." , preferredStyle: UIAlertControllerStyle.Alert)
-        
-        let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
-        
-        alert.addAction(alertAction)
-        
-        let alertAction2 = UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler: {
-            
-            Void in
             
         })
         
-        alert.addAction(alertAction2)
-        
-        
-        
-        self.presentViewController(alert, animated: true, completion: nil)
-        
-        
-        
+    }
+    var customPopUp = CustomPopUp();
+    
+    @IBAction func menu(sender: AnyObject) {
+          customPopUp = NSBundle.mainBundle().loadNibNamed("CustomPopUp",owner:view,options:nil).last as! CustomPopUp
+        customPopUp.backgroundColor = UIColor(white: 0, alpha: 0.5)
+
+          self.view.addSubview(customPopUp)
+            customPopUp.frame = self.view.bounds
+
     }
     
-    
-    
-    
+    var lat = String();
+    var long = String();
+    var btManager = CBCentralManager()
     override func viewDidLoad()
     {
         super.viewDidLoad();
-        
         call();
+        gps.layer.shadowOpacity=0.4;
+        startActivity.layer.cornerRadius=3.0;
+        //startActivity.clipsToBounds=true;
+        planRoute.layer.cornerRadius=3.0;
+        // planRoute.clipsToBounds=true;
+        startActivity.layer.shadowOpacity=0.4;
+        planRoute.layer.shadowOpacity=0.4;
+        getMyLocation.layer.cornerRadius = self.getMyLocation.frame.height/2;
+        //getMyLocation.clipsToBounds=true;
+        getMyLocation.layer.shadowOpacity=0.4;
+    
+        
+        let mapImage = UIImage(named: "ic_fab_map")!
+        let satelliteImage = UIImage(named: "ic_fab_sattelite")!
+        let terrainImage = UIImage(named: "ic_fab_terrain")!
+        
+        
+        let map = ActionButtonItem(title: "Map", image: mapImage)
+        
+        map.action = { item in
+            self.actionButton.toggleMenu();
+            self.mapView.mapType = kGMSTypeNormal;
+            //coding
+        }
+        
+        let Satellite = ActionButtonItem(title: "Satellite", image: satelliteImage)
+        Satellite.action = { item in
+            self.actionButton.toggleMenu();
+            self.mapView.mapType = kGMSTypeSatellite;
+            //coding
+        }
+        
+        let Terrain = ActionButtonItem(title: "Terrain", image: terrainImage)
+        Terrain.action = { item in
+            self.actionButton.toggleMenu();
+            self.mapView.mapType = kGMSTypeTerrain;
+            //coding
+        }
+       // let vs:Int = Int(self.view.frame.height - self.getMyLocation.frame.maxY);
+        actionButton = ActionButton(attachedToView: self.view, items: [map, Satellite,Terrain], v: 140, h: 15)
+        // actionButton = ActionButton(attachedToView: self.view, items: [map, Satellite,Terrain])
+        
+        actionButton.action = { button in button.toggleMenu() }
+        actionButton.setImage(UIImage(named: "ic_fab_map_format"), forState: .Normal);
+        
+        //  let orgColor = UIColor(red: 255/255, green: 102/255, blue: 102/255, alpha: 1)
+        actionButton.backgroundColor = colorCode.BlueColor;
 
+        //startActivity.layer.shadowOffset = CGSizeMake(2, 2)
+        //        startActivity.layer.shadowColor=UIColor.whiteColor().CGColor;
+        //        planRoute.layer.shadowColor=UIColor.whiteColor().CGColor;
+        //        gps.layer.shadowColor=UIColor.whiteColor().CGColor;
         // Do any additional setup after loading the view.
+        
+    }
+    func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
+        print("printing bt")
+    }
+    func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager) {
+        
+        if peripheral.state == CBPeripheralManagerState.PoweredOff {
+            CommonFunctions.showPopup(self, msg: "Turn On Your Device Bluetooh", getClick: { })
+
+           // simpleAlert("Beacon", message: )
+        }
+    }
+    func centralManagerDidUpdateState(central: CBCentralManager) {
+        print("printing bt")
+        switch (central.state) {
+        case CBCentralManagerState.PoweredOff:
+            NSLog("CoreBluetooth BLE hardware is powered off");
+            break;
+        case CBCentralManagerState.PoweredOn:
+            NSLog("CoreBluetooth BLE hardware is powered on and ready");
+            
+            break;
+        case CBCentralManagerState.Resetting:
+            NSLog("CoreBluetooth BLE hardware is resetting");
+            break;
+        case CBCentralManagerState.Unauthorized:
+            NSLog("CoreBluetooth BLE state is unauthorized");
+            break;
+        case CBCentralManagerState.Unknown:
+            NSLog("CoreBluetooth BLE state is unknown");
+            break;
+        case CBCentralManagerState.Unsupported:
+            NSLog("CoreBluetooth BLE hardware is unsupported on this platform");
+            break;
+        
+        }
+    }
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+        //  print("locations = \(locValue.latitude) \(locValue.longitude)")
+        //        self.lat = locValue.latitude;
+        //        self.long = locValue.longitude
+        //let camera = GMSCameraPosition.cameraWithLatitude(CLLocationDegrees(lat)!, longitude: CLLocationDegrees(lat)!, zoom: 6.0)
+        let camera = GMSCameraPosition.cameraWithLatitude(locValue.latitude, longitude: locValue.longitude, zoom: 16.0)
+        mapView.myLocationEnabled = true
+        self.mapView.camera = camera
+        
+        // Creates a marker in the center of the map.
+        //        let marker = GMSMarker()
+        //        marker.position = CLLocationCoordinate2D(latitude: locValue.latitude, longitude: locValue.longitude)
+        ////        marker.title = "Sydney"
+        ////        marker.snippet = "Australia"
+        //        marker.map = self.mapView
+        //mapView.myLocationEnabled = true
+        if !CLLocationManager.locationServicesEnabled()
+        {
+            gps.image = UIImage(named: "ic_gps_none");
+        }else{
+            if (locations[0].horizontalAccuracy < 0)
+            {
+                gps.image = UIImage(named: "ic_gps_none");
+                // No Signal
+            }
+            else if (locations[0].horizontalAccuracy > 163)
+            {
+                gps.image = UIImage(named: "ic_gps_low_range");
+                // Poor Signal
+            }
+            else if (locations[0].horizontalAccuracy > 48)
+            {
+                
+                gps.image = UIImage(named: "ic_gps_med_range");
+                // Average Signal
+            }
+            else
+            {
+                gps.image = UIImage(named: "ic_gps_full_range");
+                // Full Signal
+            }
+        }
+   
+//     myManager.startUpdatingLocation()
+//        
+       self.myManager.stopUpdatingLocation()
+        
+    }
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+         gps.image = UIImage(named: "ic_gps_none");
+    }
+    override func viewDidAppear(animated: Bool) {
+        self.myManager = CLLocationManager();
+        self.myManager.delegate = self;
+        self.myManager.desiredAccuracy = kCLLocationAccuracyBest;
+        
+        self.myManager.requestWhenInUseAuthorization()
+        self.myManager.startUpdatingLocation()
+             myManager.startMonitoringSignificantLocationChanges()
+        if CLLocationManager.locationServicesEnabled()
+        {
+            print("location on")
+        }else{
+            gps.image = UIImage(named: "ic_gps_none");
+        }
     }
     
-    
+    @IBAction func startActivity(sender: AnyObject) {
+        
+        CommonFunctions.showPopup(self,title:"WEAK GPS SIGNAL" , msg: "GPS signal is weak at your current location. Please find a place with direct line of sight to the sky. If you continue, your tracking may not be accurate.", positiveMsg: "Continue", negMsg: "Cancel", show2Buttons: true) {
+            let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("StartActivityViewController") as! StartActivityViewController
+            self.presentViewController(nextViewController, animated: true, completion: nil)
+        }
+    }
+   
     //MARK:- preferredStatusBarStyle
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle
@@ -279,15 +292,16 @@ class HomeViewController: UIViewController,NSURLSessionDelegate,NSURLSessionData
         return UIStatusBarStyle.LightContent;
     }
     
-
-
+    
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
+    
 }
 
 public extension UIDevice

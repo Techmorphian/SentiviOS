@@ -908,6 +908,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                                             if challengeName != ""
                                             {
                                                 self.ChModel.challengeName = challengeName
+                                              //  self.ChModel.challengeName.append(challengeName)
                                             }
                                             
                                             let photoUrl = participating![i]["photoUrl"] as! String
@@ -963,6 +964,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                                             
                                             if betAmount != ""
                                             {
+                                               // betAmount.append(betAmount);
                                                 self.ChModel.betAmount = betAmount
                                             }
                                             
