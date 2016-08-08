@@ -13,6 +13,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
 
     @IBOutlet var naviTopView: UIView!
     
+    @IBOutlet weak var bgTopImageView: UIImageView!
     
     @IBOutlet var navigationProfilePic: UIImageView!
     
@@ -210,7 +211,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             case "Activity":
 
                
-//                self.performSegueWithIdentifier("home", sender: nil)
+                self.performSegueWithIdentifier("homeView", sender: nil)
                 break;
                 
             case "Challenges":
@@ -275,7 +276,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 break;
                 
             case "Winnings":
-                
+            
                 
                 break;
                 
@@ -301,6 +302,41 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 //                self.performSegueWithIdentifier("home", sender: nil)
                 break;
                 
+            case "Logout":
+                if  NSUserDefaults.standardUserDefaults().integerForKey("loginThroughValue") == 1
+                {
+                    let loginManager:FBSDKLoginManager = FBSDKLoginManager()
+                    loginManager.logOut();
+                    
+                }else{
+                    
+                    
+                }
+                    let appDomain = NSBundle.mainBundle().bundleIdentifier!
+                    NSUserDefaults.standardUserDefaults().removePersistentDomainForName(appDomain)
+                    NSUserDefaults.standardUserDefaults().removePersistentDomainForName(NSBundle.mainBundle().bundleIdentifier!)
+                    NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "userId")
+                    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                    appDelegate.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let mainVC = storyboard.instantiateViewControllerWithIdentifier("FirstViewController")
+                    appDelegate.window!.rootViewController = mainVC
+                    appDelegate.window!.makeKeyAndVisible()
+                    for view in self.view.window!.subviews {
+                        view.removeFromSuperview()
+                    }
+                    UIView.transitionWithView(appDelegate.window!, duration: 0.5, options:UIViewAnimationOptions.TransitionFlipFromLeft , animations: { () -> Void in
+                        appDelegate.window!.rootViewController = mainVC
+                        
+                        
+                        },completion: { (Bool) -> Void in
+                            
+                    })
+               
+
+                
+                break;
+   
             case "Feedback":
                 
                 
@@ -345,8 +381,8 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
     var sectionTwo = ["History","Statistics","Heart Rate","Winnings"]
     var sectionTwoImages = ["ic_history_nav","ic_statistics_nav","ic_heart_rate_nav","ic_winning_balance_nav"]
     
-    var sectionThree = ["Settings","Feedback","FAQ"]
-    var sectionThreeImages = ["ic_settings_nav","ic_feedback_nav","ic_faq_nav"]
+    var sectionThree = ["Settings","Logout","Feedback","FAQ"]
+    var sectionThreeImages = ["ic_settings_nav","ic_settings_nav","ic_feedback_nav","ic_faq_nav"]
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -355,18 +391,38 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
         self.naviTableView.dataSource = self;
         self.naviTableView.reloadData()
         
+        
+        
+        if NSUserDefaults.standardUserDefaults().stringForKey("firstName") != nil{
+            self.Name.text = NSUserDefaults.standardUserDefaults().stringForKey("firstName")! + " " + NSUserDefaults.standardUserDefaults().stringForKey("lastName")!
+        }
+        
+        if NSUserDefaults.standardUserDefaults().stringForKey("email") != nil{
+            self.emailId.text = NSUserDefaults.standardUserDefaults().stringForKey("email")!;
+        }
+        
+        
+        if NSUserDefaults.standardUserDefaults().stringForKey("photoUrl") != nil{
+            navigationProfilePic.kf_setImageWithURL(NSURL(string: NSUserDefaults.standardUserDefaults().stringForKey("photoUrl")!)!, placeholderImage: UIImage(named:"im_default_profile"))
+        }else{
+            navigationProfilePic.image=UIImage(named: "im_default_profile");
+        }
         self.naviTableView.separatorColor = UIColor.clearColor();
         
         navigationProfilePic.layer.cornerRadius = navigationProfilePic.frame.size.width / 2;
-      navigationProfilePic.clipsToBounds = true;
+        navigationProfilePic.clipsToBounds = true;
         navigationProfilePic.layer.borderWidth = 1
-       navigationProfilePic.layer.borderColor = UIColor.grayColor().CGColor
-
+        navigationProfilePic.layer.borderColor = UIColor.grayColor().CGColor
+         bgTopImageView.userInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(NavigationViewController.handleTap(_:)));
         
+        bgTopImageView.addGestureRecognizer(tap)
         // self.naviTableView.backgroundColor = colorCode.MediumDarkBlueColor
         // Do any additional setup after loading the view.
     }
-
+    func handleTap(sender: UITapGestureRecognizer)  {
+        self.performSegueWithIdentifier("ProfileScreen", sender: nil);
+    }
     
     //MARK:- preferredStatusBarStyle
     

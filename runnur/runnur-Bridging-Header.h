@@ -8,8 +8,10 @@
 
 
 #import "SWRevealViewController.h"
-
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
-
+#import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
+//#import <MicrosoftAzureMobile/MicrosoftAzureMobile.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKCoreKit/FBSDKAccessToken.h>
+#import <Google/SignIn.h>
+
 #endif
