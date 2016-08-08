@@ -23,6 +23,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate,CBCentralMa
         {
             self.revealViewController().revealToggle(self);
         }
+ 
         
     }
     @IBAction func turnOnBluetooth(sender: AnyObject) {
