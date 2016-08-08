@@ -9,7 +9,6 @@
 import UIKit
 import GoogleMaps
 import MapKit
-
 import CoreBluetooth
 
 class HomeViewController: UIViewController,CLLocationManagerDelegate,CBCentralManagerDelegate
