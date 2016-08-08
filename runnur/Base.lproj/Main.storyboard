@@ -6479,6 +6479,7 @@
         <image name="ic_history_nav" width="22" height="19"/>
         <image name="ic_location" width="24" height="24"/>
         <image name="ic_members" width="13" height="13"/>
+        <image name="ic_overflow_menu" width="5" height="20"/>
         <image name="ic_personal_cause_inactive" width="17" height="27"/>
         <image name="ic_pot" width="11" height="16"/>
         <image name="ic_pot_amount" width="49" height="49"/>
