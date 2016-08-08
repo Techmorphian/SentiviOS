@@ -94,7 +94,11 @@
 		47C634891D361D7A005EB1E3 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C634881D361D7A005EB1E3 /* FBSDKShareKit.framework */; };
 		47C78CF81D265520006DEACF /* colorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C78CF71D265520006DEACF /* colorCode.swift */; };
 		47C78CFC1D26A480006DEACF /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C78CFB1D26A480006DEACF /* SplashScreenViewController.swift */; };
+		47CF1FBD1D4CC3130083B1A7 /* challengeFilterXIB.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47CF1FBC1D4CC3130083B1A7 /* challengeFilterXIB.xib */; };
+		47CF1FC11D4CC5620083B1A7 /* challengeFilterXIB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CF1FC01D4CC5620083B1A7 /* challengeFilterXIB.swift */; };
 		47EF173C1D41EE0C00468698 /* dateFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EF173B1D41EE0C00468698 /* dateFunction.swift */; };
+		47F40DF81D4B28770087E658 /* CurrentDateFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F40DF71D4B28770087E658 /* CurrentDateFunc.swift */; };
+		47F40DFA1D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F40DF91D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift */; };
 		47F97BE31D33CF5C0034B767 /* errorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F97BE21D33CF5C0034B767 /* errorViewController.swift */; };
 		47FEAE0A1D2FD93800881EE8 /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FEAE091D2FD93800881EE8 /* Url.swift */; };
 		47FED24C1D2E6FE5006CAE8A /*  Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FED24B1D2E6FE5006CAE8A /*  Reachability.swift */; };
@@ -192,7 +196,11 @@
 		47C634881D361D7A005EB1E3 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		47C78CF71D265520006DEACF /* colorCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = colorCode.swift; sourceTree = "<group>"; };
 		47C78CFB1D26A480006DEACF /* SplashScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
+		47CF1FBC1D4CC3130083B1A7 /* challengeFilterXIB.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = challengeFilterXIB.xib; sourceTree = "<group>"; };
+		47CF1FC01D4CC5620083B1A7 /* challengeFilterXIB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = challengeFilterXIB.swift; sourceTree = "<group>"; };
 		47EF173B1D41EE0C00468698 /* dateFunction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dateFunction.swift; sourceTree = "<group>"; };
+		47F40DF71D4B28770087E658 /* CurrentDateFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentDateFunc.swift; sourceTree = "<group>"; };
+		47F40DF91D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsViaEmailViewController.swift; sourceTree = "<group>"; };
 		47F97BE21D33CF5C0034B767 /* errorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = errorViewController.swift; sourceTree = "<group>"; };
 		47FEAE091D2FD93800881EE8 /* Url.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
 		47FED24B1D2E6FE5006CAE8A /*  Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = " Reachability.swift"; sourceTree = "<group>"; };
@@ -361,6 +369,8 @@
 				47FED24B1D2E6FE5006CAE8A /*  Reachability.swift */,
 				47474C171D3CEF6E008FE197 /* ActionButton.swift */,
 				47474C191D3CEF7A008FE197 /* ActionButtonItem.swift */,
+				47CF1FBC1D4CC3130083B1A7 /* challengeFilterXIB.xib */,
+				47CF1FC01D4CC5620083B1A7 /* challengeFilterXIB.swift */,
 				47FEAE091D2FD93800881EE8 /* Url.swift */,
 				445449271D535FE600995B45 /* CheckBox.swift */,
 			);
@@ -488,6 +498,7 @@
 			children = (
 				473D0D7A1D49E7BF004DDC07 /* InviteFriendsTableViewCell.swift */,
 				473D0D781D49E7A7004DDC07 /* InviteFriendsViewController.swift */,
+				47F40DF91D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift */,
 			);
 			name = InviteFriends;
 			sourceTree = "<group>";
@@ -726,9 +737,11 @@
 				470CF8971D24FB010001B3BC /* AddFriendsViewController.swift in Sources */,
 				470B1B621D27A5A100E3B5B0 /* SWRevealViewController.m in Sources */,
 				470CF8951D24E8500001B3BC /* FriendsListCellTableViewCell.swift in Sources */,
+				47F40DFA1D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift in Sources */,
 				470261761D40F83D005261ED /* ChallengeModel.swift in Sources */,
 				473D0D941D49E955004DDC07 /* FAQViewController.swift in Sources */,
 				47FED24C1D2E6FE5006CAE8A /*  Reachability.swift in Sources */,
+				47F40DF81D4B28770087E658 /* CurrentDateFunc.swift in Sources */,
 				47474C161D3CBFB1008FE197 /* CreateGroupAndCauseFitViewController.swift in Sources */,
 				448584141D4A0A240027F141 /* CommonFunctions.swift in Sources */,
 				4485841D1D4A109C0027F141 /* NetworkRequest.swift in Sources */,
@@ -745,6 +758,7 @@
 				470B1B641D27A61C00E3B5B0 /* NavigationViewController.swift in Sources */,
 				470B1B661D27A63A00E3B5B0 /* NavigationCellTableViewCell.swift in Sources */,
 				470CF89D1D2507770001B3BC /* AddviaFacebookViewController.swift in Sources */,
+				47CF1FC11D4CC5620083B1A7 /* challengeFilterXIB.swift in Sources */,
 				47FED2501D2E84D9006CAE8A /* ChallengesViewController.swift in Sources */,
 				470CF89F1D25079C0001B3BC /* AddViaGoogleViewController.swift in Sources */,
 				4731FC8E1D2A2E4300E860B0 /* GroupFitCellTableViewCell.swift in Sources */,

@@ -176,7 +176,7 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
             {
                 
                 self.searchFacebookModel = phoneBookModel();
-                
+                self.searchFacebookModel.firstName = FBFriendsFilterArray[i].firstName;
                 self.searchFacebookModel.firstName = FBFriendsFilterArray[i].firstName;
                 self.searchFacebookModel.lastName = FBFriendsFilterArray[i].lastName;
                 
@@ -1197,6 +1197,9 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         self.searchTextField.delegate = self;
         searchTextField.autocorrectionType = .No
 
+        
+        doneButton.layer.cornerRadius = 2
+        doneButton.clipsToBounds = true;
         
 //        
 //        for var i=0;i<FirstName.count;i++

@@ -666,39 +666,6 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
         SelectedchallengeValues();
 
-        
-//        if indexPath.section == 0
-//        {
-//            if NSUserDefaults.standardUserDefaults().boolForKey("filterActive") == true
-//            {
-//                
-//                selectedChallenegId = indexPath.row
-//            }
-//            else
-//            {
-//                selectedChallenegId = indexPath.row
-//            }
-//            
-//        }
-//        
-//        if indexPath.section == 1
-//        {
-//            if NSUserDefaults.standardUserDefaults().boolForKey("filterActive") == true
-//            {
-//                
-//                selectedChallenegId = indexPath.row
-//
-//            }
-//            
-//            else
-//            {
-//                
-//                selectedChallenegId = indexPath.row
-//
-//            }
-//            
-//            
-//        }
     
        
         
@@ -736,35 +703,16 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
         let make="iphone"
         
-        let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
+       let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
+        
+        //ANUJ user id
+        
+       // let userId  = "158CDEFB-37D4-4216-BD17-E06B6C6812A6"
+        
         let filter = "3"
         
         
-        
-        
-        var curentDate = NSDate()
-        
-        var  currentDateString = String(curentDate)
-        
-        
-        let dateFormatter = NSDateFormatter()
-        
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZZ"
-        
-        let Date = dateFormatter.dateFromString(currentDateString)
-        
-        print(Date)
-        
-        
-        let aString = String(Date!)
-        
-        
-        let date = aString.componentsSeparatedByString(" ").first!
-        
-        print(date)
-        
-        
-        let postString = "userId=\(userId)&filter=\(filter)&currentDate=\(date)";
+        let postString = "userId=\(userId)&filter=\(filter)&currentDate=\(CurrentDateFunc.currentDate())";
         
         print(postString)
         
@@ -790,9 +738,9 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     let loadingView: UIView = UIView()
     func showActivityIndicatory()
     {
-        loadingView.frame = CGRectMake(0, 0, 60, 50)
+        loadingView.frame = CGRectMake(self.view.frame.width/2 - 30 ,self.view.frame.height/2 - 100, 60, 50)
         
-        loadingView.center = view.center
+       // loadingView.center = self.view.center;
         
         loadingView.backgroundColor = UIColor.grayColor()
         loadingView.alpha = 0.6
@@ -876,7 +824,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                                 {
                                     if !(participating is NSNull )
                                     {
-                                        //self.amenitiesName.removeAll();
+                                       
                                         
                                         for var i = 0; i<participating!.count; i++
                                         {
@@ -1412,8 +1360,11 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                                     
                                     self.NoResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
                                     
-                                    self.NoResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+                                    self.NoResult.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
                                     
+                                    self.NoResult.noResultTextLabel.text = msg
+                                    
+                            
                                     self.view.addSubview((self.NoResult.view)!);
                                     
                                     
@@ -1597,6 +1548,35 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     
     
     
+    override func viewDidAppear(animated: Bool)
+    {
+        
+        
+        
+        if NSUserDefaults.standardUserDefaults().stringForKey("successMsgOfDecline") != ""
+        {
+            
+             //NSUserDefaults.standardUserDefaults().setObject(msg, forKey: "successMsgOfDecline")
+            
+          
+            
+              let alert = UIAlertController(title: "", message:  NSUserDefaults.standardUserDefaults().stringForKey("successMsgOfDecline") , preferredStyle: UIAlertControllerStyle.Alert)
+            let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+            
+            alert.addAction(okAction)
+             self.presentViewController(alert, animated: true, completion: nil)
+            return
+            
+            
+
+            
+            
+            
+            
+        }
+    }
+    
+    
     
     
     
@@ -1604,6 +1584,9 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     {
         super.viewDidLoad()
         
+                
+        
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "successMsgOfDecline")
         
         NSUserDefaults.standardUserDefaults().setObject("", forKey: "challengeName")
         
@@ -1630,7 +1613,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
         if(Reachability.isConnectedToNetwork()==true )
         {
-            showActivityIndicatory();
+           // showActivityIndicatory();
          viewActiveChallenges();
             
         }

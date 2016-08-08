@@ -918,7 +918,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                                     // self.noInternet.imageView.userInteractionEnabled = true
                                     
                                     
-                                    let tapRecognizer = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
+                                    let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(FriendsListViewController.handleTap(_:)))
                                     
                                     
                                    self.view.userInteractionEnabled = true
@@ -1199,7 +1199,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
             // self.noInternet.imageView.userInteractionEnabled = true
             
            
-            let tapRecognizer = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(FriendsListViewController.handleTap(_:)))
             
            // self.noInternet.noInternetLabel.userInteractionEnabled = true
             
@@ -1407,7 +1407,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                 
                // self.noInternet.imageView.userInteractionEnabled = true
                 
-                let tapRecognizer = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
+                let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(FriendsListViewController.handleTap(_:)))
                 self.noInternet.noInternetLabel.userInteractionEnabled = true
 
                 

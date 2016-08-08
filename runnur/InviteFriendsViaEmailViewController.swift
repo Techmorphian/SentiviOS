@@ -1,38 +1,31 @@
 //
-//  AddManuallyViewController.swift
+//  InviteFriendsViaEmailViewController.swift
 //  runnur
 //
-//  Created by Sonali on 30/06/16.
+//  Created by Sonali on 29/07/16.
 //  Copyright © 2016 Sonali. All rights reserved.
 //
 
 import UIKit
 
-class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessionDelegate,NSURLSessionDataDelegate
+class InviteFriendsViaEmailViewController: UIViewController,UITextFieldDelegate,NSURLSessionDelegate,NSURLSessionDataDelegate
+    
 {
     
     
     
+    var delegate = InviteFriendsViewController()
+    
     @IBAction func backButtonAction(sender: AnyObject)
     {
         
-       self.dismissViewControllerAnimated(false, completion: nil)
-    }
-   
-    var EmailIds = [String]()
-    
-    @IBOutlet var emailIDTextField: UITextField!
-    
-    @IBOutlet var cancelButton: UIButton!
-    
-    @IBOutlet var addButton: UIButton!
-
-    
-    
-    @IBAction func cancelButtonAction(sender: AnyObject)
-    {
         
-        self.dismissViewControllerAnimated(false, completion: nil)
+        delegate.EmailIds = EmailIds
+        self.dismissViewControllerAnimated(false, completion: nil);
+        
+        
+        
+        
     }
     
     
@@ -47,20 +40,31 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
         let result = emailTest.evaluateWithObject(testStr)
         return result
     }
-
-    @IBAction func addButtonAction(sender: AnyObject)
+    
+    
+    
+    @IBAction func cancelButtonAction(sender: AnyObject)
     {
-       
-        doneButtonNetwork();
+        
+        self.dismissViewControllerAnimated(false, completion: nil)
+        
         
         
     }
     
     
+    @IBOutlet var inviteButton: UIButton!
     
+    
+    @IBAction func InviteButtonAction(sender: AnyObject)
+    {
+        
+        inviteButtonNetwork()
+        
+    }
     
     //MARK:-propertyDetailNetwork
-    func doneButtonNetwork()
+    func inviteButtonNetwork()
     {
         
         view.endEditing(true);
@@ -70,7 +74,7 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
             
             
             
-            if(emailIDTextField.text == "")
+            if(emailIdTextField.text == "")
             {
                 
                 
@@ -84,61 +88,163 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
                 return
             }
             
-          if ( emailIDTextField.text != "" )
+            if ( emailIdTextField.text != "" )
             {
-                if(!isValidEmail(emailIDTextField.text!) )
+                if(!isValidEmail(emailIdTextField.text!) )
                 {
                     let alert = UIAlertController(title: "", message: alertMsg.addManuallyValidField, preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                     
                     self.presentViewController(alert, animated: true, completion: nil)
-                   
-                     return
+                    
+                    return
                 }
                 
-               
+                
             }
-           
+            
+                     
+            EmailIds.append(emailIdTextField.text!)
+            
+            inviteFriendsEmail();
+            
+            self.emailIdTextField.text = ""
+            
+            emailIdTextField.resignFirstResponder();
             
             
-                EmailIds.append(emailIDTextField.text!)
-                addFriends();
-            
-            
-            self.emailIDTextField.text = ""
-            
-            emailIDTextField.resignFirstResponder();
-          
-
             
         }
         else
         {
-          
             
-         
+            
+            let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg, preferredStyle: UIAlertControllerStyle.Alert)
+            let okAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil)
+            let tryAgainAction = UIAlertAction(title: "Try again", style: UIAlertActionStyle.Default, handler: {action  in  self.inviteButtonNetwork() })
+            alert.addAction(okAction)
+            alert.addAction(tryAgainAction)
+            self.presentViewController(alert, animated: true, completion: nil)
+            return
+            
+            
             
         }
         
     }
     
     
-  ///////////////////////// web service//////////////////////////////////
+    
+    @IBOutlet var emailIdTextField: UITextField!
+    
+    
+    
+    //MARK:- KEYBOARD
+    
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool
+    {
+        
+        if textField == emailIdTextField
+        {
+            textField.inputAccessoryView = inputToolbar3
+            
+            
+        }
+        
+        return true
+    }
+    
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool
+    {
+        if textField == emailIdTextField
+        {
+            textField.resignFirstResponder();
+            
+        }
+        return true;
+    }
+    
+    lazy var inputToolbar3: UIToolbar =
+        {
+            var toolbar = UIToolbar()
+            toolbar.barStyle = .Default
+            toolbar.translucent = true
+            toolbar.sizeToFit()
+            
+            var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "inputToolbarDonePressed")
+            
+            var flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+            
+            var fixedSpaceButton = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
+            
+            
+            toolbar.setItems([fixedSpaceButton, fixedSpaceButton, flexibleSpaceButton, doneButton], animated: false)
+            toolbar.userInteractionEnabled = true
+            
+            return toolbar
+    }()
+    func animateViewMoving (up:Bool, moveValue :CGFloat)
+    {
+        let movementDuration:NSTimeInterval = 0.3
+        let movement:CGFloat = ( up ? -moveValue : moveValue)
+        UIView.beginAnimations( "animateView", context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(movementDuration )
+        self.view.frame = CGRectOffset(self.view.frame, 0,  movement)
+        UIView.commitAnimations()
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField)
+    {
+        if textField == emailIdTextField
+        {
+            
+            
+            animateViewMoving(true, moveValue: 60)
+            
+        }
+        
+        
+    }
+    func textFieldDidEndEditing(textField: UITextField)
+    {
+        
+        
+        if textField == emailIdTextField
+        {
+            
+            
+            animateViewMoving(false, moveValue: 60)
+            
+        }
+        
+        
+        
+    }
+    
+    
+    func inputToolbarDonePressed()
+    {
+        self.view.endEditing(true);
+        
+    }
     
     
     
     
     
+    var EmailIds = [String]()
     
-    // MARK:- ADD FRIENDS
+    // MARK:- inviteFriendsEmail
     
-    func addFriends()
+    func inviteFriendsEmail()
         
     {
         
         // LoaderFile.showLoader(self.view);
         
-        let myurl = NSURL(string:"http://sentivphp.azurewebsites.net/addFriends.php")
+        let myurl = NSURL(string: Url.inviteFriendsEmail)
         
         
         let request = NSMutableURLRequest(URL: myurl!)
@@ -147,14 +253,10 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
         
         request.timeoutInterval = 20.0;
         
-        let modelName = UIDevice.currentDevice().modelName
-        
-        let systemVersion = UIDevice.currentDevice().systemVersion;
-        
-        let make="iphone"
         
         let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
         
+        let ChallengeId = NSUserDefaults.standardUserDefaults().stringForKey("challengeId")
         
         
         var cliendIds = [String]()
@@ -169,10 +271,10 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
         let  friendEmailIds  = cliendIds.joinWithSeparator("&")
         print(friendEmailIds);
         
-
         
         
-        let postString = "os=\(systemVersion)&make=\(make)&model=\(modelName)&userId=\(userId)&\(friendEmailIds)";
+        
+        let postString = "userId=\(userId)&challengeId=\(ChallengeId!)&\(friendEmailIds)";
         
         print(postString)
         
@@ -191,7 +293,8 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
     }
     
     
-
+    
+    
     
     
     
@@ -214,7 +317,7 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
         print(dataString!)
         
         
-        if dataTask.currentRequest?.URL! == NSURL(string:"http://sentivphp.azurewebsites.net/addFriends.php")
+        if dataTask.currentRequest?.URL! == NSURL(string: Url.inviteFriendsEmail)
             
         {
             
@@ -238,37 +341,15 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
                                 
                                 
                                 
-                                self.emailIDTextField.resignFirstResponder();
+                                self.emailIdTextField.resignFirstResponder();
+                                
+                                 self.delegate.EmailIds = self.EmailIds
                                 
 
-//                            if msg == ""
-//                            {
                                 
-                            NSUserDefaults.standardUserDefaults().setObject(msg, forKey: "successMsgOfAddManually")
-                           // }
+                                NSUserDefaults.standardUserDefaults().setObject(msg, forKey: "successMsgOfAddViaEmail")
+                                self.dismissViewControllerAnimated(true, completion: nil)
                                 
-                                
-//                            if msg != ""
-//                            {
-                                
-                          
-                           // }
-    
-                                
-                                
-                         self.presentingViewController.self!.presentingViewController!.dismissViewControllerAnimated(true, completion: nil);
-
-                                
-                                
-                                
-//                                
-//                                let alert = UIAlertController(title: "", message:msg , preferredStyle: UIAlertControllerStyle.Alert)
-//                                
-//                                let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
-//                                
-//                                alert.addAction(alertAction)
-//                                
-//                                self.presentViewController(alert, animated: true, completion: nil)
                                 
                                 
                                 
@@ -333,7 +414,7 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
                 self.presentViewController(alert, animated: true, completion: nil)
                 
                 
-
+                
                 
                 print(error)
                 
@@ -394,128 +475,38 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
     }
     
     
-
     
     
-    //MARK:- KEYBOARD 
     
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool
-    {
-        
-        if textField == emailIDTextField
-        {
-            textField.inputAccessoryView = inputToolbar3
-            
-            
-        }
-        
-        return true
-    }
-
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool
-    {
-        if textField == emailIDTextField
-        {
-            textField.resignFirstResponder();
-            
-        }
-        return true;
-    }
-
-    lazy var inputToolbar3: UIToolbar =
-        {
-            var toolbar = UIToolbar()
-            toolbar.barStyle = .Default
-            toolbar.translucent = true
-            toolbar.sizeToFit()
-            
-            var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "inputToolbarDonePressed")
-            
-            var flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-            
-            var fixedSpaceButton = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
-            
-            
-            toolbar.setItems([fixedSpaceButton, fixedSpaceButton, flexibleSpaceButton, doneButton], animated: false)
-            toolbar.userInteractionEnabled = true
-            
-            return toolbar
-    }()
-    func animateViewMoving (up:Bool, moveValue :CGFloat)
-    {
-        let movementDuration:NSTimeInterval = 0.3
-        let movement:CGFloat = ( up ? -moveValue : moveValue)
-        UIView.beginAnimations( "animateView", context: nil)
-        UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(movementDuration )
-        self.view.frame = CGRectOffset(self.view.frame, 0,  movement)
-        UIView.commitAnimations()
-    }
     
-    func textFieldDidBeginEditing(textField: UITextField)
-    {
-        if textField == emailIDTextField
-        {
-            
-            
-            animateViewMoving(true, moveValue: 60)
-            
-        }
-        
-        
-    }
-    func textFieldDidEndEditing(textField: UITextField)
-    {
-        
-        
-        if textField == emailIDTextField
-        {
-            
-            
-            animateViewMoving(false, moveValue: 60)
-            
-        }
-        
-        
-        
-    }
-
     
-    func inputToolbarDonePressed()
-    {
-        self.view.endEditing(true);
-        
-    }
-    
-
-  
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        self.emailIDTextField.delegate = self;
-           emailIDTextField.autocorrectionType = .No
-
+        self.emailIdTextField.delegate = self;
+        emailIdTextField.autocorrectionType = .No
+        
+        
         // Do any additional setup after loading the view.
     }
-
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle
-    {
-        return UIStatusBarStyle.LightContent;
-    }
-    
-    
-
-    override func didReceiveMemoryWarning()
-    {
+    override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
- 
-
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

@@ -198,10 +198,15 @@ class ChallengesViewController: UIViewController
         self.activeView.view.hidden = false
         
         UIView.animateWithDuration(0.7, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            
+              self.activeView.view.hidden = false
             self.completedView.view.frame.origin.x = +self.view.frame.size.width;
             self.activeView.view.frame.origin.x = 0
             
-            }, completion: nil)
+            }, completion: {
+          action in self.activeView.view.hidden = false
+        
+        })
     }
     func respondToSwipeGestureLeft()
     {
@@ -314,6 +319,10 @@ class ChallengesViewController: UIViewController
         self.view.addSubview(self.completedView.view)
         self.completedView.didMoveToParentViewController(self);
         
+        
+     
+        
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "successMsgOfDecline")
         
         
         let causeFit = UIImage(named: "ic_fab_cause_fit")!

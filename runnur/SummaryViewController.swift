@@ -14,11 +14,38 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
     let customPresentAnimationController = CustomPresentAnimationController()
     
     let customDismissAnimationController = CustomPresentBackAnimation()
+ 
+    
+    
+    @IBOutlet var FrontView: UIView!
+    
+    @IBOutlet var bottomButtonsView: UIView!
+    
+    @IBOutlet var bottomButtomViewHeight: NSLayoutConstraint!
+    
+    
+    @IBOutlet var bottomSmallView: UIView!
+    
+    
+    @IBOutlet var bottomSmallViewWidth: NSLayoutConstraint!
+    
+    
+    @IBOutlet var bottomSmallViewCenterX: NSLayoutConstraint!
+    
+    
+   // @IBOutlet var buttonTwoWidth: NSLayoutConstraint!
+    
+    
+    @IBOutlet var buttonTwoTrailing: NSLayoutConstraint!
+    
+    
+    
+    
     
     @IBOutlet var buttonOne: UIButton!
     @IBOutlet var buttonTwo: UIButton!
     
-    @IBOutlet var buttonThree: UIButton!
+    
     
     @IBOutlet var challengeMSGView: UIView!
     
@@ -141,28 +168,12 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
     
     
     
-    @IBAction func ButtonThreeAction(sender: UIButton)
-       
-    {
-        
-        if sender.titleLabel?.text  == "Invite"
-        {
-            
-            
-            self.performSegueWithIdentifier("inviteFriends", sender: nil)
-            
-        }
-        
-        
-    }
-    
-    
     
     @IBAction func ButtonOneAction(sender: UIButton)
     {
         
         
-        if sender.titleLabel?.text == "Invite"
+        if sender.titleLabel?.text == "Invite Friends"
         {
             
             
@@ -170,10 +181,60 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
             
         }
         
+        if sender.titleLabel?.text == "Decline"
+        {
+            
+            
+            
+            let alert = UIAlertController(title: "Decline Challenge", message: "Are you sure you want to decline this challenge?" , preferredStyle: UIAlertControllerStyle.Alert)
+            
+             let NoAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default, handler: nil)
+            
+            let YesAction = UIAlertAction(title: "YES", style: UIAlertActionStyle.Default, handler: { action in
+            
+             self.DeclineChallenge();
+            
+            
+            })
+            
+         
+            
+            alert.addAction(NoAction)
+            alert.addAction(YesAction)
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+            return
+            
+            
+                       
+        }
+        
+        
+        
     }
     
     
     
+    @IBAction func buttonTwoAction(sender: UIButton)
+    {
+        
+        if sender.titleLabel?.text == "Invite Friends"
+        {
+            
+            
+            self.performSegueWithIdentifier("inviteFriends", sender: nil)
+            
+        }
+  
+        if sender.titleLabel?.text == "Accept"
+        {
+            
+            self.AcceptGroupChallenge();
+          
+            
+        }
+        
+    }
     
     ////////////////////////////////////////
     
@@ -186,86 +247,70 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
     {
     
         
-        let currentDate = NSDate()
-        
+        let nscurrentDate = NSDate()
         
         
         
         
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-mm-dd"
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        let currentDate = dateFormatter.stringFromDate(nscurrentDate)
+        
+        print(currentDate)
+
         
         let nsStartDate = dateFormatter.dateFromString(startDate)
+        
         print(nsStartDate)
+        
          let nsEndDate = dateFormatter.dateFromString(endDate)
         
+         print(nsEndDate)
         
-            if isLessThanDate(currentDate,dateToCompare2: nsStartDate!)
-            {
-                
-                ///// 1 mns no
-                return challengeNotStarted
-                
-            }
         
-        if (isLessThanDate(nsStartDate!,dateToCompare2: currentDate) ||  equalToDate(nsStartDate!,dateToCompare2: currentDate)) && (isGreaterThanDate(currentDate, dateToCompare2: nsEndDate!) || equalToDate(currentDate, dateToCompare2: nsEndDate!))
-          {
+        if nscurrentDate.compare(nsEndDate!) == .OrderedDescending
+        {
             
-             return challengeOnGoing
+             print("over")
             
         }
+        else
+        {
+            
+            
+            
+            if nsStartDate?.compare(nscurrentDate) == .OrderedAscending || nsEndDate?.compare(nscurrentDate) == .OrderedDescending
+            {
+                 print("could be going")
+                return challengeOnGoing
+               
+            }
+            else if nsStartDate?.compare(nscurrentDate) == .OrderedSame || nsEndDate?.compare(nscurrentDate) == .OrderedSame
+
+            {
+                 print("could be going")
+                return challengeOnGoing
+                
+            }
+            else
+            {
+                print("not started")
+                
+                return challengeNotStarted
+               
+            }
+            
+            
+            
+        }
+        
         
         
         return challengeOver
         
     }
     
-    
-    func isGreaterThanDate(dateToCompare1: NSDate,dateToCompare2: NSDate) -> Bool
-    {
-        //Declare Variables
-        var isGreater = false
-        
-        //Compare Values
-        if dateToCompare2.compare(dateToCompare1) == NSComparisonResult.OrderedDescending
-        {
-            isGreater = true
-        }
-        
-        //Return Result
-        return isGreater
-    }
-    
-    func isLessThanDate(dateToCompare1: NSDate,dateToCompare2: NSDate) -> Bool
-    {
-        //Declare Variables
-        var isLess = false
-        
-        //Compare Values
-        if dateToCompare2.compare(dateToCompare1) == NSComparisonResult.OrderedAscending
-        {
-            isLess = true
-        }
-        
-        //Return Result
-        return isLess
-    }
-    
-    func equalToDate(dateToCompare1: NSDate,dateToCompare2: NSDate) -> Bool
-    {
-        //Declare Variables
-        var isEqualTo = false
-        
-        //Compare Values
-        if dateToCompare2.compare(dateToCompare1) == NSComparisonResult.OrderedSame
-        {
-            isEqualTo = true
-        }
-        
-        //Return Result
-        return isEqualTo
-    }
-
     
     
     
@@ -305,6 +350,128 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
     }
 
+    ///////////////////////////////////////////////////// web service part
+    
+    // MARK:- DECLINE WEB SERVICE
+    
+    func AcceptGroupChallenge()
+        
+    {
+        
+        self.showActivityIndicatory()
+        // LoaderFile.showLoader(self.view);
+        
+        let myurl = NSURL(string: Url.acceptChallenge)
+        
+        let request = NSMutableURLRequest(URL: myurl!)
+        
+        request.HTTPMethod = "POST"
+        
+        request.timeoutInterval = 20.0;
+        
+     
+        
+      //  let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
+        
+         let userId =  "158CDEFB-37D4-4216-BD17-E06B6C6812A6"
+        
+        let ChallengeId = NSUserDefaults.standardUserDefaults().stringForKey("challengeId")
+        
+        //NSUserDefaults.standardUserDefaults().setObject(challengeId, forKey: "challengeId")
+        
+        
+        let postString = "userId=\(userId)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
+        
+        print(postString)
+        
+        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+        
+        let session = NSURLSession(configuration: config, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
+        
+        let downloadTask = session.dataTaskWithRequest(request);
+        
+        downloadTask.resume()
+        
+        
+        
+    }
+    
+    
+
+    
+    ///////////////////////////////////////////////////// web service part
+    
+    // MARK:- DECLINE WEB SERVICE
+    
+    func DeclineChallenge()
+        
+    {
+        
+        self.showActivityIndicatory()
+        // LoaderFile.showLoader(self.view);
+        
+        let myurl = NSURL(string: Url.declineChallenge)
+        
+        let request = NSMutableURLRequest(URL: myurl!)
+        
+        request.HTTPMethod = "POST"
+        
+        request.timeoutInterval = 20.0;
+        
+        
+        //let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
+        
+          let userId =  "158CDEFB-37D4-4216-BD17-E06B6C6812A6"
+        
+        
+        let ChallengeId = NSUserDefaults.standardUserDefaults().stringForKey("challengeId")
+        
+        //NSUserDefaults.standardUserDefaults().setObject(challengeId, forKey: "challengeId")
+        
+        
+        
+        let postString = "userId=\(userId)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
+        
+        print(postString)
+        
+        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+        
+        let session = NSURLSession(configuration: config, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
+        
+        let downloadTask = session.dataTaskWithRequest(request);
+        
+        downloadTask.resume()
+        
+        
+        
+    }
+    
+
+    
+    
+    //MARK:- NO INTERNET TAP GESTURE
+    
+    func handleTap(sender: UITapGestureRecognizer)
+    {
+        
+        if(Reachability.isConnectedToNetwork()==true )
+        {
+            
+            viewGroupChallengeDetail();
+            
+        }
+        
+        
+        
+    }
+    
+    
+    
+    
     
     ///////////////////////////////////////////////////// web service part
     
@@ -325,43 +492,21 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
         request.timeoutInterval = 20.0;
         
-//        let modelName = UIDevice.currentDevice().modelName
-//        
-//        let systemVersion = UIDevice.currentDevice().systemVersion;
-//        
-//        let make="iphone"
+
         
         let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
         
+        //ANUJ user id
         
-        let curentDate = NSDate()
-        
-        let  currentDateString = String(curentDate)
-        
-        
-        let dateFormatter = NSDateFormatter()
-        
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZZ"
-        
-        let Date = dateFormatter.dateFromString(currentDateString)
-        
-        print(Date)
-        
-        
-        let aString = String(Date!)
-        
-        
-        let date = aString.componentsSeparatedByString(" ").first!
-        
+       // let userId  = "158CDEFB-37D4-4216-BD17-E06B6C6812A6"
         
         let ChallengeId = NSUserDefaults.standardUserDefaults().stringForKey("challengeId")
             
             //NSUserDefaults.standardUserDefaults().setObject(challengeId, forKey: "challengeId")
+      
         
-        print(date)
         
-        
-        let postString = "userId=\(userId)&challengeId=\(ChallengeId!)&currentDate=\(date)";
+        let postString = "userId=\(userId)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
         
         print(postString)
         
@@ -505,7 +650,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                 
                                 self.loadingView.removeFromSuperview();
                                 
-                                
+                                FrontView.hidden = true;
                                 
                                 
                                  let challengeId = elements[i]["challengeId"] as! String
@@ -639,6 +784,8 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
                                 }
                                 
+                               
+                                /// MARK: USER STATUS
                                 
                                 let userStatus = elements[i]["userStatus"] as! String
                                 
@@ -649,22 +796,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                     
                                     ViewGroupFitViewController.instance?.overFlowButton.hidden=true;
                                   
-                                  //  ParentView.overFlowButton.hidden = true
-
-//                                    
-//                                    buttonOne.hidden = false
-//                                    
-//                                    buttonThree.hidden = true
-//                                    
-//                                    buttonOne.setTitle("Invite", forState: .Normal)
-//                                    
-                                    buttonThree.hidden = false;
-                                    
-                                    buttonThree.setTitle("Invite", forState: .Normal)
-                                    
-                                    
-                                    
-                                    
+                                
                                     buttonOne.hidden = true
                                     buttonTwo.hidden = true
                                     
@@ -674,23 +806,33 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                     if dateCheck == challengeNotStarted
                                     {
                                         
-                                          buttonTwo.hidden = true
+                                        buttonOne.hidden = false
+                                        
+                                        buttonOne.setTitle("Invite Friends", forState: .Normal)
+                                        
+                                        buttonTwo.hidden = true
+                                        
+                                        bottomSmallViewCenterX.constant = self.view.frame.width/2 - 10
                                         
                                         
                                     }
                                     if dateCheck == challengeOnGoing
                                     {
                                        
-                                        buttonThree.hidden = true;
                                         
-                                        buttonTwo.hidden = false
-                                        
-                                        buttonTwo.setTitle("Start Activity", forState: .Normal)
                                         
                                         buttonOne.hidden = false
                                         
-                                        buttonOne.setTitle("Invite", forState: .Normal)
+                                        buttonOne.setTitle("Invite Friends", forState: .Normal)
 
+                                        
+                                        buttonTwo.hidden = false
+                                        
+                                         bottomSmallViewCenterX.constant = 0
+                                        
+                                        buttonTwo.setTitle("Start Activity", forState: .Normal)
+                                        
+                                       
                                         
                                         
                                         
@@ -700,7 +842,13 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                     if dateCheck == challengeOver
                                     {
                                         
-                                       buttonTwo.hidden = true
+                                        buttonOne.hidden = false
+                                        
+                                        buttonOne.setTitle("Invite Friends", forState: .Normal)
+                                        
+                                        buttonTwo.hidden = true
+                                        
+                                        bottomSmallViewCenterX.constant = self.view.frame.width/2 - 10
                                         
                                     }
                                     
@@ -719,20 +867,66 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                ViewGroupFitViewController.instance?.overFlowButton.hidden=true;
                                 
                                 
-                              /////////////////////
+                                /// button one decline 
                                 
-                                buttonOne.hidden = false
-                                buttonTwo.hidden = false
-
-                                buttonThree.hidden = true
+                                
+                                buttonOne.hidden = true
+                                
+                                ///  button two accept
+                                buttonTwo.hidden = true
+                                
+                                
+                                let dateCheck =  dateComparison(startDate, endDate: endDate)
+                                
+                                if dateCheck == challengeNotStarted
+                                {
                                     
+                                    buttonOne.hidden = true
                                     
-                                buttonOne.setTitle("Decline", forState: .Normal)
-                                buttonTwo.setTitle("Accept", forState: .Normal)
-                                buttonThree.hidden = true
+                                  
+                                    
+                                    buttonTwo.hidden = true
+                                    
+                                   
                                     
                                     
                                 }
+                                if dateCheck == challengeOnGoing
+                                {
+                                    
+                                 
+                                    
+                                    buttonOne.hidden = false
+                                    
+                                    buttonOne.setTitle("Decline", forState: .Normal)
+                                    
+                                    
+                                    buttonTwo.hidden = false
+                                    
+                                    bottomSmallViewCenterX.constant = 0
+                                    
+                                    buttonTwo.setTitle("Accept", forState: .Normal)
+                                    
+
+                                    
+                                    
+                                    
+                                    
+                                }
+                                
+                                if dateCheck == challengeOver
+                                {
+                                    
+                                    buttonOne.hidden = true
+                                  
+                                    
+                                    buttonTwo.hidden = true
+                                    
+                                    
+                                    
+                                }
+                                
+                            }
                                 
 
                                ////////// status = Accepetd
@@ -740,16 +934,12 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                 if userStatus == "2"
                                 {
                                     
-                                    ////  overflow button
                                     
-                                    ViewGroupFitViewController.instance?.overFlowButton.hidden=false;
-                                    ///////////////////////////////
-                                    
-                                     buttonOne.hidden = true
+                                    buttonOne.hidden = true
                                     
                                     buttonTwo.hidden = true
                                     
-                                    buttonThree.hidden = true
+                                    bottomButtomViewHeight.constant = 0
                                     
                                     let dateCheck =  dateComparison(startDate, endDate: endDate)
                                     
@@ -759,17 +949,27 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                         buttonOne.hidden = true
                                         buttonTwo.hidden = true
                                         
+                                        ViewGroupFitViewController.instance?.overFlowButton.hidden=true;
                                         
                                     }
                                     if dateCheck == challengeOnGoing
                                     {
                                         
-                                        buttonOne.hidden = true
+                                        buttonOne.hidden = false
                                         buttonTwo.hidden = true
                                         
-                                        buttonThree.hidden = false
                                         
-                                        buttonThree.setTitle("Start Activity", forState: .Normal)
+                                        
+                                        buttonOne.setTitle("Start Activity", forState: .Normal)
+                                        
+                                        
+                                        bottomSmallViewCenterX.constant = self.view.frame.width/2 - 10
+                                        
+                                        
+                                        ViewGroupFitViewController.instance?.overFlowButton.hidden=false;
+                                        
+                                        bottomButtomViewHeight.constant = 50
+
 
                                         
                                     }
@@ -780,6 +980,8 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                         buttonOne.hidden = true
                                         buttonTwo.hidden = true
                                         
+                                        ViewGroupFitViewController.instance?.overFlowButton.hidden=true ;
+                                        
                                     }
 
                                     
@@ -788,7 +990,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                     
                                 }
                                 
-                     ///////// status = Rejected
+                               ///////// status = Rejected
                                 if userStatus == "3"
                                 {
                                     
@@ -798,9 +1000,8 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                     
                                     buttonOne.hidden = true
                                     buttonTwo.hidden = true
-                                    buttonThree.hidden = true
-                                    
-                                    
+                                 
+                                    bottomButtomViewHeight.constant = 0
                                     
                                 }
 
@@ -818,24 +1019,35 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                     buttonOne.hidden = true
                                     buttonTwo.hidden = true
                                     
+                                    bottomButtomViewHeight.constant = 0
                                     
                                     let dateCheck =  dateComparison(startDate, endDate: endDate)
                                     
                                     if dateCheck == challengeNotStarted
                                     {
                                         
-                                        buttonThree.hidden = true
+                                      
                                         buttonOne.hidden = true
                                         buttonTwo.hidden = true
+                                        ViewGroupFitViewController.instance?.overFlowButton.hidden=true;
                                         
                                     }
                                     if dateCheck == challengeOnGoing
                                     {
                                         
-                                        buttonThree.hidden = false
+                                        
+                                        buttonOne.hidden = false
+                                      
+                                        buttonOne.setTitle("Start Activity", forState: .Normal)
                                         
                                         
-                                          buttonThree.setTitle("Start Activity", forState: .Normal)
+                                        bottomSmallViewCenterX.constant = self.view.frame.width/2 - 10
+                                        
+                                        
+                                        ViewGroupFitViewController.instance?.overFlowButton.hidden=false;
+                                        
+                                        bottomButtomViewHeight.constant = 50
+
                                         
                                         
                                     }
@@ -843,7 +1055,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                     if dateCheck == challengeOver
                                     {
                                         
-                                        buttonThree.hidden = true
+                                       ViewGroupFitViewController.instance?.overFlowButton.hidden=true;
                                         buttonOne.hidden = true
                                         buttonTwo.hidden = true
                                     }
@@ -864,9 +1076,9 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                     
                                     buttonOne.hidden = true
                                     buttonTwo.hidden = true
-                                    buttonThree.hidden = true
+                                  
                                     
-                                    
+                                    bottomButtomViewHeight.constant = 0
                                     
                                 }
 
@@ -881,8 +1093,8 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                     
                                     buttonOne.hidden = true
                                     buttonTwo.hidden = true
-                                    buttonThree.hidden = true
-                                    
+                                  
+                                    bottomButtomViewHeight.constant = 0
                                     
                                     
                                 }
@@ -1149,8 +1361,248 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
             }
             
             
-        } // if dataTask close
+        } // if dataTask close 
         
+        
+        // MARK:- IF DATA TASK ACCPET GROUP CHALLENGE(acceptChallenge)
+        
+        if dataTask.currentRequest?.URL! == NSURL(string: Url.acceptChallenge)
+            
+        {
+            
+            do
+                
+            {
+                
+                let json = try NSJSONSerialization.JSONObjectWithData(self.mutableData, options: .MutableContainers) as? NSDictionary
+                
+                if  let parseJSON = json
+                {
+                    
+                    let status = parseJSON["status"] as? String
+                    let msg=parseJSON["message"] as? String
+                    if(status=="Success")
+                    {
+                        
+                        
+                        NSOperationQueue.mainQueue().addOperationWithBlock
+                            {
+                                
+                                
+                                
+                                self.activityIndicator.stopAnimating();
+                                
+                                self.loadingView.removeFromSuperview();
+
+                                
+                                let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
+                                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in self.viewGroupChallengeDetail() })
+                                
+                                alert.addAction(okAction)
+                                
+                                self.presentViewController(alert, animated: true, completion: nil)
+                                return
+
+                                
+                                
+                                
+                        } // ns close
+                        
+                        
+                        
+                        
+                    }
+                        
+                    else if status == "Error"
+                        
+                    {
+                        
+                        NSOperationQueue.mainQueue().addOperationWithBlock
+                            
+                            {
+                                
+                                self.activityIndicator.stopAnimating();
+                                
+                                self.loadingView.removeFromSuperview();
+
+                                //  LoaderFile.hideLoader(self.view)
+                                
+                                let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
+                                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+                                
+                                alert.addAction(okAction)
+                                
+                                self.presentViewController(alert, animated: true, completion: nil)
+                                return
+                                
+                                
+                        }
+                        
+                    }
+                    
+                    
+                    
+                }
+                
+            }
+                
+            catch
+                
+            {
+                
+                
+                
+                self.activityIndicator.stopAnimating();
+                
+                self.loadingView.removeFromSuperview();
+
+                
+                let alert = UIAlertController(title: "", message:"something went wrong try again later." , preferredStyle: UIAlertControllerStyle.Alert)
+                
+                let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
+                
+                alert.addAction(alertAction)
+                
+                let alertAction2 = UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler: {
+                    
+                    Void in
+                    
+                })
+                
+                alert.addAction(alertAction2)
+                
+                
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+                
+                
+                
+                
+                print(error)
+                
+            }
+            
+        } // if  acceptChallenge dataTask close
+        
+        
+        // MARK:- IF DATA TASK ACCPET decline
+        
+        if dataTask.currentRequest?.URL! == NSURL(string: Url.declineChallenge)
+            
+        {
+            
+            do
+                
+            {
+                
+                let json = try NSJSONSerialization.JSONObjectWithData(self.mutableData, options: .MutableContainers) as? NSDictionary
+                
+                if  let parseJSON = json
+                {
+                    
+                    let status = parseJSON["status"] as? String
+                    let msg=parseJSON["message"] as? String
+                    if(status=="Success")
+                    {
+                        
+                        
+                        NSOperationQueue.mainQueue().addOperationWithBlock
+                            {
+                                
+                                
+                                
+                                self.activityIndicator.stopAnimating();
+                                
+                                self.loadingView.removeFromSuperview();
+
+                                NSUserDefaults.standardUserDefaults().setObject(msg, forKey: "successMsgOfDecline")
+                                
+                                self.dismissViewControllerAnimated(false, completion: nil)
+                                
+                                 
+                                
+                                
+                        } // ns close
+                        
+                        
+                        
+                        
+                    }
+                        
+                    else if status == "Error"
+                        
+                    {
+                        
+                        NSOperationQueue.mainQueue().addOperationWithBlock
+                            
+                            {
+                                
+                                
+                                
+                                
+                                self.activityIndicator.stopAnimating();
+                                
+                                self.loadingView.removeFromSuperview();
+
+                                //  LoaderFile.hideLoader(self.view)
+                                
+                                let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
+                                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+                                
+                                alert.addAction(okAction)
+                                
+                                self.presentViewController(alert, animated: true, completion: nil)
+                                return
+                                
+                                
+                        }
+                        
+                    }
+                    
+                    
+                    
+                }
+                
+            }
+                
+            catch
+                
+            {
+                
+                
+                self.activityIndicator.stopAnimating();
+                
+                self.loadingView.removeFromSuperview();
+  
+                
+                let alert = UIAlertController(title: "", message:"something went wrong try again later." , preferredStyle: UIAlertControllerStyle.Alert)
+                
+                let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
+                
+                alert.addAction(alertAction)
+                
+                let alertAction2 = UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler: {
+                    
+                    Void in
+                    
+                })
+                
+                alert.addAction(alertAction2)
+                
+                
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+                
+                
+                
+                
+                print(error)
+                
+            }
+            
+        } // if  acceptChallenge dataTask close
+
+
         
     } //// main func
     
@@ -1261,7 +1713,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
             // self.noInternet.imageView.userInteractionEnabled = true
             
             
-            let tapRecognizer = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(SummaryViewController.handleTap(_:)))
             
             // self.noInternet.noInternetLabel.userInteractionEnabled = true
             
@@ -1290,10 +1742,27 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         challengeOverLabel.hidden = true
         challenegeOverImagView.hidden = true
         
+        buttonOne.layer.cornerRadius = 2
+        buttonOne.clipsToBounds = true
+        
+        buttonTwo.layer.cornerRadius = 2
+        buttonTwo.clipsToBounds = true
+
+            
         self.viewGroupChallengeDetail();
 
        
     }
+    
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle
+    {
+        return UIStatusBarStyle.LightContent;
+    }
+    
+    
+    
+    
 
     override func didReceiveMemoryWarning()
     {

@@ -60,43 +60,21 @@ class ViewGroupFitViewController: UIViewController
     {
         
         
-        button = UIButton(frame: CGRect(x: self.view.frame.width - 150, y: 26, width: 150, height: 40))
-        
-        
-        button.backgroundColor = colorCode.LightGrayColor
-        
-        button.setTitle("Exit Challenge", forState: .Normal)
-        button.addTarget(self, action: #selector(buttonAction), forControlEvents: .TouchUpInside)
-        
-        self.view.addSubview(button)
-        
-        
-    }
-    
-    
-    func buttonAction(sender: UIButton!)
-    {
-        
-        
-        
         let alert = UIAlertController(title: "Exit Challenge", message: "Are you sure you want to exit challenge?\nIf yes,it willl be sent to moderator for approval.It is up to moderator to decide whether to refund your amount or not." , preferredStyle: UIAlertControllerStyle.Alert)
         
-        let noAction = UIAlertAction(title: "NO", style: UIAlertActionStyle.Default, handler: { action in
-        
-        
-            self.button.hidden = true
-        })
+        let noAction = UIAlertAction(title: "NO", style: UIAlertActionStyle.Default, handler: nil)
         
         let yesAction = UIAlertAction(title: "YES", style: UIAlertActionStyle.Default, handler: nil)
         
         alert.addAction(noAction)
-         alert.addAction(yesAction)
+        alert.addAction(yesAction)
         
         self.presentViewController(alert, animated: true, completion: nil)
         return
+        
 
         
-       
+        
     }
     
     
