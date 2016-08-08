@@ -730,8 +730,8 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
         
     {
         
-        self.showActivityIndicatory()
-        // LoaderFile.showLoader(self.view);
+        self.showActivityIndicatory();
+        
         
         let myurl = NSURL(string: Url.viewCompletedChallenges)
         
@@ -741,11 +741,6 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
         
         request.timeoutInterval = 20.0;
         
-        let modelName = UIDevice.currentDevice().modelName
-        
-        let systemVersion = UIDevice.currentDevice().systemVersion;
-        
-        let make="iphone"
         
         let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
         let filter = "3"

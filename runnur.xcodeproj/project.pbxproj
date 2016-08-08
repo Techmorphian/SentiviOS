@@ -65,6 +65,7 @@
 		47CF1FBD1D4CC3130083B1A7 /* challengeFilterXIB.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47CF1FBC1D4CC3130083B1A7 /* challengeFilterXIB.xib */; };
 		47CF1FC11D4CC5620083B1A7 /* challengeFilterXIB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CF1FC01D4CC5620083B1A7 /* challengeFilterXIB.swift */; };
 		47EF173C1D41EE0C00468698 /* dateFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EF173B1D41EE0C00468698 /* dateFunction.swift */; };
+		47EFFBA71D5849B600F2A2D7 /* viewCauseFitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EFFBA61D5849B600F2A2D7 /* viewCauseFitViewController.swift */; };
 		47F40DF81D4B28770087E658 /* CurrentDateFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F40DF71D4B28770087E658 /* CurrentDateFunc.swift */; };
 		47F40DFA1D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F40DF91D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift */; };
 		47F97BE31D33CF5C0034B767 /* errorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F97BE21D33CF5C0034B767 /* errorViewController.swift */; };
@@ -137,6 +138,7 @@
 		47CF1FBC1D4CC3130083B1A7 /* challengeFilterXIB.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = challengeFilterXIB.xib; sourceTree = "<group>"; };
 		47CF1FC01D4CC5620083B1A7 /* challengeFilterXIB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = challengeFilterXIB.swift; sourceTree = "<group>"; };
 		47EF173B1D41EE0C00468698 /* dateFunction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dateFunction.swift; sourceTree = "<group>"; };
+		47EFFBA61D5849B600F2A2D7 /* viewCauseFitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = viewCauseFitViewController.swift; sourceTree = "<group>"; };
 		47F40DF71D4B28770087E658 /* CurrentDateFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentDateFunc.swift; sourceTree = "<group>"; };
 		47F40DF91D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsViaEmailViewController.swift; sourceTree = "<group>"; };
 		47F97BE21D33CF5C0034B767 /* errorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = errorViewController.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 		470CF87C1D24DC370001B3BC /* runnur */ = {
 			isa = PBXGroup;
 			children = (
+				47EFFBA81D5849D000F2A2D7 /* ViewCauseFitChallenge */,
 				47FD4EC31D48E3EC0059DB55 /* HeartHistory */,
 				47FD4EC21D48E3780059DB55 /* InviteFriends */,
 				477811691D487A4F003B01A4 /* AppDelegate */,
@@ -378,6 +381,14 @@
 				473D0D7B1D49E7FE004DDC07 /* AppDelegate.swift */,
 			);
 			name = AppDelegate;
+			sourceTree = "<group>";
+		};
+		47EFFBA81D5849D000F2A2D7 /* ViewCauseFitChallenge */ = {
+			isa = PBXGroup;
+			children = (
+				47EFFBA61D5849B600F2A2D7 /* viewCauseFitViewController.swift */,
+			);
+			name = ViewCauseFitChallenge;
 			sourceTree = "<group>";
 		};
 		47FD4EC21D48E3780059DB55 /* InviteFriends */ = {
@@ -591,6 +602,7 @@
 				471A686A1D30D4E200DD2138 /* NoInternetViewController.swift in Sources */,
 				470CF8A51D25082C0001B3BC /* AddviaGoogleCellTableViewCell.swift in Sources */,
 				470CF8A71D252F540001B3BC /* AddManuallyViewController.swift in Sources */,
+				47EFFBA71D5849B600F2A2D7 /* viewCauseFitViewController.swift in Sources */,
 				473D0D801D49E84C004DDC07 /* alertMsg.swift in Sources */,
 				473D0D8A1D49E8D9004DDC07 /* activeChallengeTableViewCell.swift in Sources */,
 				470CF8861D24DC370001B3BC /* runnur.xcdatamodeld in Sources */,
@@ -663,7 +675,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "66488a15-f3bd-4f52-9e38-a332448023cd";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -704,7 +716,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "66488a15-f3bd-4f52-9e38-a332448023cd";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -717,8 +729,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: sonali@techmorphosis.com (QX99664RAM)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: sonali@techmorphosis.com (QX99664RAM)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/runnur",
@@ -728,7 +740,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.sentiv;
 				PRODUCT_NAME = sentiv;
-				PROVISIONING_PROFILE = "66488a15-f3bd-4f52-9e38-a332448023cd";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "runnur/runnur-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -741,8 +753,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: sonali@techmorphosis.com (QX99664RAM)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: sonali@techmorphosis.com (QX99664RAM)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/runnur",
@@ -752,7 +764,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.sentiv;
 				PRODUCT_NAME = sentiv;
-				PROVISIONING_PROFILE = "66488a15-f3bd-4f52-9e38-a332448023cd";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "runnur/runnur-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
