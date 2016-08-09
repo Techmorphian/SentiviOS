@@ -10,6 +10,7 @@
 		20813234FDE7A7F5889F9825 /* Pods_runnur.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C26545E285D446A5AFC1B8F4 /* Pods_runnur.framework */; };
 		440D64E41D522580004AE539 /* CustomPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 440D64E31D522580004AE539 /* CustomPopUp.xib */; };
 		440D64E61D5225B1004AE539 /* CustomPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440D64E51D5225B1004AE539 /* CustomPopUp.swift */; };
+		4441A8E31D58687B00CBB6A7 /* CurrentDateFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4441A8E11D58676C00CBB6A7 /* CurrentDateFunc.swift */; };
 		444C5E1B1D50B36300A4DB3D /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 444C5E1A1D50B36300A4DB3D /* GoogleMaps.framework */; };
 		444C5E1D1D50B38E00A4DB3D /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 444C5E1C1D50B38E00A4DB3D /* GoogleMapsCore.framework */; };
 		444C5E1F1D50B39900A4DB3D /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 444C5E1E1D50B39900A4DB3D /* GoogleMapsBase.framework */; };
@@ -30,6 +31,9 @@
 		44524A1D1D54B8C800CC21C8 /* StartActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44524A1C1D54B8C800CC21C8 /* StartActivityViewController.swift */; };
 		445449261D534EC200995B45 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445449251D534EC200995B45 /* ProfileViewController.swift */; };
 		445449281D535FE600995B45 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445449271D535FE600995B45 /* CheckBox.swift */; };
+		4457FFE21D59C19A0097C598 /* ActivityDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4457FFE11D59C19A0097C598 /* ActivityDetailsViewController.swift */; };
+		4457FFE41D59C2030097C598 /* SummaryActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4457FFE31D59C2030097C598 /* SummaryActivityViewController.swift */; };
+		4457FFE61D5A0E730097C598 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4457FFE51D5A0E730097C598 /* WeatherData.swift */; };
 		447473C51D51F8CB0021C561 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447473C41D51F8CB0021C561 /* MapKit.framework */; };
 		447B235B1D4B863700D79823 /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447B235A1D4B863700D79823 /* WindowsAzureMobileServices.framework */; };
 		448584141D4A0A240027F141 /* CommonFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448584131D4A0A240027F141 /* CommonFunctions.swift */; };
@@ -94,11 +98,9 @@
 		47C634891D361D7A005EB1E3 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C634881D361D7A005EB1E3 /* FBSDKShareKit.framework */; };
 		47C78CF81D265520006DEACF /* colorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C78CF71D265520006DEACF /* colorCode.swift */; };
 		47C78CFC1D26A480006DEACF /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C78CFB1D26A480006DEACF /* SplashScreenViewController.swift */; };
-		47CF1FBD1D4CC3130083B1A7 /* challengeFilterXIB.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47CF1FBC1D4CC3130083B1A7 /* challengeFilterXIB.xib */; };
 		47CF1FC11D4CC5620083B1A7 /* challengeFilterXIB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CF1FC01D4CC5620083B1A7 /* challengeFilterXIB.swift */; };
 		47EF173C1D41EE0C00468698 /* dateFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EF173B1D41EE0C00468698 /* dateFunction.swift */; };
 		47EFFBA71D5849B600F2A2D7 /* viewCauseFitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EFFBA61D5849B600F2A2D7 /* viewCauseFitViewController.swift */; };
-		47F40DF81D4B28770087E658 /* CurrentDateFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F40DF71D4B28770087E658 /* CurrentDateFunc.swift */; };
 		47F40DFA1D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F40DF91D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift */; };
 		47F97BE31D33CF5C0034B767 /* errorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F97BE21D33CF5C0034B767 /* errorViewController.swift */; };
 		47FEAE0A1D2FD93800881EE8 /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FEAE091D2FD93800881EE8 /* Url.swift */; };
@@ -111,6 +113,7 @@
 		177C37439DFA6F41EEC1B8E6 /* Pods-runnur.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-runnur.release.xcconfig"; path = "Pods/Target Support Files/Pods-runnur/Pods-runnur.release.xcconfig"; sourceTree = "<group>"; };
 		440D64E31D522580004AE539 /* CustomPopUp.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomPopUp.xib; sourceTree = "<group>"; };
 		440D64E51D5225B1004AE539 /* CustomPopUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPopUp.swift; sourceTree = "<group>"; };
+		4441A8E11D58676C00CBB6A7 /* CurrentDateFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentDateFunc.swift; sourceTree = "<group>"; };
 		444C5E1A1D50B36300A4DB3D /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		444C5E1C1D50B38E00A4DB3D /* GoogleMapsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMapsCore.framework; sourceTree = "<group>"; };
 		444C5E1E1D50B39900A4DB3D /* GoogleMapsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMapsBase.framework; sourceTree = "<group>"; };
@@ -131,6 +134,9 @@
 		44524A1C1D54B8C800CC21C8 /* StartActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartActivityViewController.swift; sourceTree = "<group>"; };
 		445449251D534EC200995B45 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		445449271D535FE600995B45 /* CheckBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
+		4457FFE11D59C19A0097C598 /* ActivityDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityDetailsViewController.swift; sourceTree = "<group>"; };
+		4457FFE31D59C2030097C598 /* SummaryActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryActivityViewController.swift; sourceTree = "<group>"; };
+		4457FFE51D5A0E730097C598 /* WeatherData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		447473C41D51F8CB0021C561 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		447B235A1D4B863700D79823 /* WindowsAzureMobileServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WindowsAzureMobileServices.framework; sourceTree = "<group>"; };
 		448584131D4A0A240027F141 /* CommonFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonFunctions.swift; sourceTree = "<group>"; };
@@ -201,7 +207,6 @@
 		47CF1FC01D4CC5620083B1A7 /* challengeFilterXIB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = challengeFilterXIB.swift; sourceTree = "<group>"; };
 		47EF173B1D41EE0C00468698 /* dateFunction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dateFunction.swift; sourceTree = "<group>"; };
 		47EFFBA61D5849B600F2A2D7 /* viewCauseFitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = viewCauseFitViewController.swift; sourceTree = "<group>"; };
-		47F40DF71D4B28770087E658 /* CurrentDateFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentDateFunc.swift; sourceTree = "<group>"; };
 		47F40DF91D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsViaEmailViewController.swift; sourceTree = "<group>"; };
 		47F97BE21D33CF5C0034B767 /* errorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = errorViewController.swift; sourceTree = "<group>"; };
 		47FEAE091D2FD93800881EE8 /* Url.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
@@ -250,6 +255,8 @@
 		44524A1B1D54B83400CC21C8 /* Activities */ = {
 			isa = PBXGroup;
 			children = (
+				4457FFE11D59C19A0097C598 /* ActivityDetailsViewController.swift */,
+				4457FFE31D59C2030097C598 /* SummaryActivityViewController.swift */,
 				44524A1C1D54B8C800CC21C8 /* StartActivityViewController.swift */,
 			);
 			name = Activities;
@@ -354,6 +361,7 @@
 				473D0D7D1D49E820004DDC07 /* inviteFriendsModel.swift */,
 				470261751D40F83D005261ED /* ChallengeModel.swift */,
 				470728B91D2BD9BE002B86E1 /* phoneBookModel.swift */,
+				4457FFE51D5A0E730097C598 /* WeatherData.swift */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -361,6 +369,7 @@
 		4778115C1D487723003B01A4 /* swift Files */ = {
 			isa = PBXGroup;
 			children = (
+				4441A8E11D58676C00CBB6A7 /* CurrentDateFunc.swift */,
 				4485841C1D4A109C0027F141 /* NetworkRequest.swift */,
 				473D0D7F1D49E84C004DDC07 /* alertMsg.swift */,
 				473D0D811D49E86A004DDC07 /* CircleLabel.swift */,
@@ -593,6 +602,11 @@
 					470CF8791D24DC370001B3BC = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 44C2WNQ95S;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -730,12 +744,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4441A8E31D58687B00CBB6A7 /* CurrentDateFunc.swift in Sources */,
 				47BB027B1D49EC4800273694 /* InviteFriendsTableViewCell.swift in Sources */,
 				440D64E61D5225B1004AE539 /* CustomPopUp.swift in Sources */,
 				473D0D921D49E93E004DDC07 /* StatisticsViewController.swift in Sources */,
 				473D0D7C1D49E7FE004DDC07 /* AppDelegate.swift in Sources */,
 				473D0D791D49E7A7004DDC07 /* InviteFriendsViewController.swift in Sources */,
 				473D0D981D49E984004DDC07 /* HistoryViewController.swift in Sources */,
+				4457FFE41D59C2030097C598 /* SummaryActivityViewController.swift in Sources */,
 				473D0D821D49E86A004DDC07 /* CircleLabel.swift in Sources */,
 				448584211D4A3BE40027F141 /* TourContentViewController.swift in Sources */,
 				473D0D771D49E770004DDC07 /* HeartHistroryViewController.swift in Sources */,
@@ -745,6 +761,7 @@
 				47B8A8F81D45E2E100BACB83 /* ViewGroupFitViewController.swift in Sources */,
 				445449261D534EC200995B45 /* ProfileViewController.swift in Sources */,
 				44524A1D1D54B8C800CC21C8 /* StartActivityViewController.swift in Sources */,
+				4457FFE21D59C19A0097C598 /* ActivityDetailsViewController.swift in Sources */,
 				470CF8971D24FB010001B3BC /* AddFriendsViewController.swift in Sources */,
 				470B1B621D27A5A100E3B5B0 /* SWRevealViewController.m in Sources */,
 				470CF8951D24E8500001B3BC /* FriendsListCellTableViewCell.swift in Sources */,
@@ -752,12 +769,12 @@
 				470261761D40F83D005261ED /* ChallengeModel.swift in Sources */,
 				473D0D941D49E955004DDC07 /* FAQViewController.swift in Sources */,
 				47FED24C1D2E6FE5006CAE8A /*  Reachability.swift in Sources */,
-				47F40DF81D4B28770087E658 /* CurrentDateFunc.swift in Sources */,
 				47474C161D3CBFB1008FE197 /* CreateGroupAndCauseFitViewController.swift in Sources */,
 				448584141D4A0A240027F141 /* CommonFunctions.swift in Sources */,
 				4485841D1D4A109C0027F141 /* NetworkRequest.swift in Sources */,
 				473D0D961D49E970004DDC07 /* FAQCellTableViewCell.swift in Sources */,
 				47F97BE31D33CF5C0034B767 /* errorViewController.swift in Sources */,
+				4457FFE61D5A0E730097C598 /* WeatherData.swift in Sources */,
 				470CF8A31D2508140001B3BC /* AddviaFacebookCellTableViewCell.swift in Sources */,
 				470728BA1D2BD9BE002B86E1 /* phoneBookModel.swift in Sources */,
 				47C78CFC1D26A480006DEACF /* SplashScreenViewController.swift in Sources */,
@@ -838,8 +855,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Archana Vetkar (MWEK85FF43)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Archana Vetkar (MWEK85FF43)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -886,8 +903,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Archana Vetkar (MWEK85FF43)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Archana Vetkar (MWEK85FF43)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;

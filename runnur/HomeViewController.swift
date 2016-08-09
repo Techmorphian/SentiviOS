@@ -11,7 +11,7 @@ import GoogleMaps
 import MapKit
 import CoreBluetooth
 
-class HomeViewController: UIViewController,CLLocationManagerDelegate,CBCentralManagerDelegate
+class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentralManagerDelegate*/
 {
     var myManager:CLLocationManager!
     @IBOutlet weak var mapView: GMSMapView!
@@ -28,7 +28,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate,CBCentralMa
     }
     @IBAction func turnOnBluetooth(sender: AnyObject) {
         
-           btManager = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionShowPowerAlertKey: true])
+       //  btManager = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionShowPowerAlertKey: true])
     }
     @IBOutlet weak var gps: UIImageView!
     @IBOutlet weak var planRoute: UIButton!
@@ -47,6 +47,8 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate,CBCentralMa
         NetworkRequest.sharedInstance.connectToServer(self.view, urlString: Url.navigationDrawer, postData: "os=\(UIDevice.currentDevice().systemVersion)&make=iphone&model=\(UIDevice.currentDevice().modelName)&userId=\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)", responseData: {(success,error) in
             do
             {
+                
+                
                 let json = try NSJSONSerialization.JSONObjectWithData(success!, options: .MutableContainers) as? NSDictionary
                 if  let parseJSON = json{
                     let status = parseJSON["status"] as? String
@@ -278,10 +280,14 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate,CBCentralMa
     }
     
     @IBAction func startActivity(sender: AnyObject) {
-        
+        if gps.image == UIImage(named: "ic_gps_none"){
         CommonFunctions.showPopup(self,title:"WEAK GPS SIGNAL" , msg: "GPS signal is weak at your current location. Please find a place with direct line of sight to the sky. If you continue, your tracking may not be accurate.", positiveMsg: "Continue", negMsg: "Cancel", show2Buttons: true) {
             let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("StartActivityViewController") as! StartActivityViewController
-            self.presentViewController(nextViewController, animated: true, completion: nil)
+            self.presentViewController(nextViewController, animated: false, completion: nil)
+        }
+        }else{
+            let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("StartActivityViewController") as! StartActivityViewController
+            self.presentViewController(nextViewController, animated: false, completion: nil)
         }
     }
    
