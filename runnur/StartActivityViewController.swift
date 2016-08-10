@@ -69,10 +69,36 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             self.pause.setTitle("DISCARD RUN", forState: .Normal);
           }else{
             UIApplication.sharedApplication().cancelAllLocalNotifications()
-              let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as! ActivityDetailsViewController;
-            self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
+            saveData()
+//                         let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as! ActivityDetailsViewController;
+//            self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
         }
        // self.duration.text = "00:00:00"
+    }
+    private func saveData()
+    {
+        let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
+        let client = delegate!.client!;
+        
+        let table = client.tableWithName("RunObject")
+        
+                let date = lastLocation.timestamp
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd";
+                let dateString = dateFormatter.stringFromDate(date)
+        
+        
+        let newItem = ["id": "custom-id", "date": "\(dateString)", "distance": "\(distance.text!)","altGainS": "\(altGain)", "altLossS": "\(altLoss)", "GPSAcc": "\(Double(accuracy))","elapsedTime": "0.9","caloriesBurnedS": "\(caloriesburned)", "trackPolylinesS": "", "graphAltitudeS": "\(altitude)", "startLocationS": "", "mileMarkerS": "","splitSpeedS": "0", "splitDistanceS": "0", "time": "", "averageSpeed": "", "averagePace": "my new item", "graphHRS": "","splitTimeLog": "custom-id", "UriBlob": "my new item", "UUIDBlob": "ui", "activityLog": "my new item", "weatherData": "weatherData"]
+        
+        
+        table.insert(newItem as [NSObject : AnyObject]) { (result, error) in
+            if let err = error {
+                print("ERROR ", err)
+            } else if let item = result {
+                print("RunObject: ", item["date"])
+            }
+        }
+
     }
     @IBAction func pause(sender: AnyObject) {
         if self.pause.titleLabel?.text == "PAUSE"{
@@ -98,12 +124,15 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         counter += 1
         duration.text = "\(counter)"
     }
-    
+    var elapsedTime = NSTimeInterval();
+    var avgspeed = Double();
+    var currentTime = NSTimeInterval();
     func updateTime() {
-        
-        let currentTime = NSDate.timeIntervalSinceReferenceDate()
+      
+         currentTime = NSDate.timeIntervalSinceReferenceDate()
+       
         //Find the difference between current time and start time.
-        var elapsedTime: NSTimeInterval = currentTime - startTime
+         elapsedTime = currentTime - startTime
         //calculate the minutes in elapsed time.
         let minutes = UInt8(elapsedTime / 60.0)
         elapsedTime -= (NSTimeInterval(minutes) * 60)
@@ -136,26 +165,75 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     var loc = [CLLocation]()
     var lat = CLLocationDegrees();
     var long = CLLocationDegrees();
-    
+    var altitude = CLLocationDistance();
+    var Altitudes = [Int]();
+    var accuracy = CLLocationAccuracy();
     
     func calculateDistanceSpeed(lastLocation:CLLocation)  {
         
           //myManager.maximumRegionMonitoringDistance;
-        distanceInMeters =  firstLocation.distanceFromLocation(lastLocation);
+ 
 //        let date = lastLocation.timestamp
 //        let dateFormatter = NSDateFormatter()
 //        dateFormatter.dateFormat = "hh:mm:ss";
 //        let dateString = dateFormatter.stringFromDate(date)
+        
+        print("elapsedTime:-\(elapsedTime)\(Double(elapsedTime))")
+        
+//       	if (elapsedTime <= 0) {
+//            return;
+//           } else {
+        
+         //   self.avgspeed = (distanceInMeters / (((Double(elapsedTime) / 1000) / 60) / 60));
+//        }
+//        if (measuringUnits == 1) {
+////            distanceTextView.setText(String.format("%.2f", Math.round(dis * 100.0) / 100.0));
+////            speedTextView.setText(String.format("%.2f", Math.round(speed * 100.0) / 100.0));
+////            AvgSpeedTextView.setText(String.format("%.2f", Math.round(avgspeed * 100.0) / 100.0));
+////            calculatedCalories.setText(String.format("%d", (int) caloriesburned));
+//            
+//            if (avgpace < 100) {
+////                PaceTextView.setText(String.format("%.2f", Math.round(avgpace * 100.0) / 100.0));
+//            } else {
+////                PaceTextView.setText(String.format("%s", "0.00"));
+//            }
+//        }
+     //else {
+       // distance.text = String(format:"%.2f", round(dis * 1.60934 * 100.0) / 100.0);
+      //  speed.text = String(format:"%.2f", round(speeds * 1.60934 * 100.0) / 100.0);
+        //print(String(format:"%.1f", caloriesburned))
+
+        
+        distanceInMeters =  firstLocation.distanceFromLocation(lastLocation);
         distance.text = String(format: "%.2f", distanceInMeters);
         speed.text = String(lastLocation.speed);
+        self.avgspeed = lastLocation.speed
+        self.avgpace = (((Double(round(elapsedTime)) / 1000) / 60) / Double(distanceInMeters));
+        calculateCaloriesBurned()
+
         
-          }
+        if String(format:"%.1f", caloriesburned) == "nan"
+        {
+            caloriesburned = 0.0;
+        }
+        avgSpeed.text = String(format:"%.2f", round(avgspeed * 1.60934 * 100.0) / 100.0);
+        calories.text = String(format:"%d", Int(caloriesburned));
+        
+            if (avgpace < 100) {
+                avgPace.text = String(format: "%.2f", round(avgpace * 0.621371 * 100.0 / 100.0))
+
+            } else {
+                 avgPace.text = String(format: "%s", "0.00")
+            }
+        
+    }
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         gpsImg.image = UIImage(named: "ic_gps_none");
     }
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+       
         if first == false{
 //            lat=locValue.latitude;
 //            long=locValue.longitude;
@@ -172,7 +250,18 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         }
         
         self.mapView.animateToLocation(CLLocationCoordinate2D(latitude:locValue.latitude, longitude: locValue.longitude))
-        
+        accuracy = locations[0].horizontalAccuracy
+        altitude = (locations[0].altitude);
+        if (altitude < (-25)) {
+            Altitudes.append(Int((-25 - Double(-EGM96_US)) * 3.28084));
+           // Altitude.add((int) ((-25 - (-EGM96_US)) * 3.28084));
+            calculateElevation(-25);
+        } else {
+             Altitudes.append(Int((altitude - Double(-EGM96_US)) * 3.28084));
+          //  Altitude.add((int) ((altitude - (-EGM96_US)) * 3.28084));  // altitude in feet
+            calculateElevation(Int(altitude));
+        }
+
         
         loc = locations;
         print(loc)
@@ -295,7 +384,6 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         self.view.layoutIfNeeded()
         
     }
-    
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let touch = touches.first;
         let endPosition = touch?.locationInView(self.view);
@@ -317,12 +405,124 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         self.view.layoutIfNeeded()
         
     }
+//    Mark:- Calculate Calories 
+    var avgpace = Double();
+    var weight = Double();
+    //var elapsedTime = CLong();
+    var altGain = Int();
+    var dis = Double();
+    var performedActivity = String();
+    var caloriesburned = Double();
+    var elevationCount = Int();
+    var initialElevation = Int();
+    var altLoss = Int();
+    var EGM96_US = 25;
+   
     
+    func calculateCaloriesBurned() {
+        let caloriesLookUp = CaloriesCounterLookUp()
+        
+        if (performedActivity == ("Biking")) {  // calculate calories burned if biking
+            
+            caloriesburned = caloriesLookUp.Biking(avgpace, weight: weight, elapsedTime: CLong(round(elapsedTime)), altGain: altGain, distance: Double(distanceInMeters));
+            
+        } else if (performedActivity == ("Walking")) {
+            avgpace = 2.34
+            caloriesburned = caloriesLookUp.Walking(avgpace, weight: weight, elapsedTime: CLong(round(elapsedTime)), altGain: altGain, distance: Double(distanceInMeters));
+           
+            
+        } else if (performedActivity == ("Running")) { //calculate calories burned for running
+            
+            caloriesburned = caloriesLookUp.Running(avgpace, weight: weight, elapsedTime: CLong(round(elapsedTime)));
+        }
+    }
+    //--------------------------------------Calculate Elevation-----------------------------------------
+    //This method calculates max elevation gain and max elevation loss
+    func calculateElevation(Elevation:Int) {
+               let roundDis = Int(dis + 0.5);
+    var absolute = (abs(Double(round(dis * 10.0) / 10.0) - Double(roundDis))) * 10;
+    absolute = round(absolute);
+    let isDivisibleby2 = absolute % 2 == 0;
+    
+    if (isDivisibleby2 && (elevationCount == 0) && (round(dis * 10.0) / 10.0) > 0.0) {
+    let toElevation = Int((Elevation - (-EGM96_US)) * Int(3.28084));
+    
+        if (initialElevation == 0){
+				initialElevation = toElevation;
+        }
+    
+    if ((toElevation - initialElevation) >= 10) {
+				altGain = altGain + (toElevation - initialElevation);
+    } else if (initialElevation - toElevation >= 10) {
+				altLoss = altLoss + (initialElevation - toElevation);
+    }
+    
+    initialElevation = toElevation;
+    elevationCount += 1;
+    
+    } else if (elevationCount >= 1 && elevationCount <= 4) {
+    elevationCount += 1;
+    } else {
+    elevationCount = 0;
+    }
+    }
+    
+    
+    func audioType(type:Int){
+        switch type {
+        case 1:
+            let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+            let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Activity Started");
+            mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+            mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+            break;
+        case 2:
+            let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+            let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Activity Stopped");
+            mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+            mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+            break;
+
+        case 3:
+            let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+            let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Activity Automatically Paused");
+            mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+            mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+            break;
+
+        case 4:
+            let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+            let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Activity Manually Paused");
+            mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+            mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+            break;
+
+        case 5:
+            let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+            let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Activity Resumed");
+            mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+            mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+            break;
+        case 6:
+            let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+            let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Distance");
+            mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+            mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+            break;
+        case 57:
+            let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+            let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Activity is paused, would you like to resume or stop it?");
+            mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+            mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+            break;
+
+        default:
+            break;
+        }
+       
+    }
+// MARK:- Life cycle
     override func viewDidAppear(animated: Bool) {
-        let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
-        let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Activity Started");
-        mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-        mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
         
         UIApplication.sharedApplication().cancelAllLocalNotifications()
         
@@ -348,6 +548,8 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.weight = NSUserDefaults.standardUserDefaults().doubleForKey("weight");
+        performedActivity = "Walking";
         self.topConstraint.constant = -87;
         gpsImg.layer.shadowOpacity=0.4;
         stop.layer.cornerRadius=3.0;

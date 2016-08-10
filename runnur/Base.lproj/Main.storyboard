@@ -1349,6 +1349,9 @@
                                             <constraint firstAttribute="height" constant="44" id="ksF-9q-Y4g"/>
                                             <constraint firstAttribute="width" constant="46" id="qIF-XO-Yzj"/>
                                         </constraints>
+                                        <connections>
+                                            <action selector="back:" destination="1Gy-Ki-qvd" eventType="touchUpInside" id="ZNv-PG-rL3"/>
+                                        </connections>
                                     </button>
                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="ic_edit" translatesAutoresizingMaskIntoConstraints="NO" id="Yd6-mU-gXJ">
                                         <rect key="frame" x="522" y="28" width="21" height="21"/>
@@ -1433,8 +1436,11 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FQM-JJ-kIk">
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FQM-JJ-kIk">
                                 <rect key="frame" x="0.0" y="114" width="600" height="486"/>
+                                <connections>
+                                    <segue destination="XaG-fo-Umk" kind="embed" id="Ud9-4f-5ef"/>
+                                </connections>
                             </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1444,18 +1450,26 @@
                             <constraint firstAttribute="trailing" secondItem="ceX-Vt-Ola" secondAttribute="trailing" id="Dt9-lW-zKz"/>
                             <constraint firstItem="r71-rp-dFL" firstAttribute="width" secondItem="ceX-Vt-Ola" secondAttribute="width" id="EYD-uL-vta"/>
                             <constraint firstItem="r71-rp-dFL" firstAttribute="height" secondItem="ceX-Vt-Ola" secondAttribute="height" id="Hwr-Xm-JF9"/>
+                            <constraint firstAttribute="trailing" secondItem="FQM-JJ-kIk" secondAttribute="trailing" id="LOd-Cb-rpv"/>
                             <constraint firstItem="HuJ-dC-SQr" firstAttribute="top" secondItem="Ndi-ku-KeF" secondAttribute="bottom" id="N6T-iY-6YU"/>
                             <constraint firstItem="r71-rp-dFL" firstAttribute="leading" secondItem="HuJ-dC-SQr" secondAttribute="trailing" id="TJd-sR-sT7"/>
                             <constraint firstItem="ceX-Vt-Ola" firstAttribute="top" secondItem="Ndi-ku-KeF" secondAttribute="bottom" id="UWw-mw-gA8"/>
+                            <constraint firstItem="DvU-GC-Jm2" firstAttribute="top" secondItem="FQM-JJ-kIk" secondAttribute="bottom" id="abK-fj-wis"/>
+                            <constraint firstItem="FQM-JJ-kIk" firstAttribute="top" secondItem="Ndi-ku-KeF" secondAttribute="bottom" constant="49" id="bba-mg-LSu"/>
                             <constraint firstItem="HuJ-dC-SQr" firstAttribute="height" secondItem="r71-rp-dFL" secondAttribute="height" id="cUr-s6-OIb"/>
+                            <constraint firstItem="FQM-JJ-kIk" firstAttribute="centerX" secondItem="MWW-Ft-LO9" secondAttribute="centerX" id="fp0-SK-JpO"/>
                             <constraint firstAttribute="trailing" secondItem="Ndi-ku-KeF" secondAttribute="trailing" id="iKf-CR-1xM"/>
                             <constraint firstItem="HuJ-dC-SQr" firstAttribute="width" secondItem="r71-rp-dFL" secondAttribute="width" id="iTq-lv-vum"/>
                             <constraint firstItem="Ndi-ku-KeF" firstAttribute="leading" secondItem="MWW-Ft-LO9" secondAttribute="leading" id="jmt-i3-HSc"/>
+                            <constraint firstItem="FQM-JJ-kIk" firstAttribute="leading" secondItem="MWW-Ft-LO9" secondAttribute="leading" id="nzW-w7-v3z"/>
                             <constraint firstItem="r71-rp-dFL" firstAttribute="centerX" secondItem="MWW-Ft-LO9" secondAttribute="centerX" id="oga-Dt-R5c"/>
                             <constraint firstItem="HuJ-dC-SQr" firstAttribute="leading" secondItem="MWW-Ft-LO9" secondAttribute="leading" id="qBG-Ai-KeG"/>
                             <constraint firstItem="ceX-Vt-Ola" firstAttribute="leading" secondItem="r71-rp-dFL" secondAttribute="trailing" id="srX-O8-ife"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="container" destination="FQM-JJ-kIk" id="sDo-gt-Vcu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QtC-sz-57V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1809,7 +1823,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6r5-c3-Ynu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2530" y="556"/>
+            <point key="canvasLocation" x="2487" y="751"/>
         </scene>
         <!--Statistics View Controller-->
         <scene sceneID="XXJ-QX-cYk">

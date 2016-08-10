@@ -10,12 +10,17 @@ import UIKit
 
 class ActivityDetailsViewController: UIViewController {
 
+    @IBAction func back(sender: AnyObject) {
+        self.presentingViewController?.dismissViewControllerAnimated(false, completion: nil);
+    }
+    @IBOutlet weak var container: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        let sumViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SummaryActivityViewController") as! SummaryActivityViewController;
-        sumViewController.view.frame = CGRectMake(0, 115, self.view.frame.width, self.view.frame.height);
-        self.addChildViewController(sumViewController);
-        sumViewController.didMoveToParentViewController(self);
+//        let sumViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SummaryActivityViewController") as! SummaryActivityViewController;
+//        sumViewController.view.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height);
+//        container.addSubview(sumViewController.view);
+//        self.addChildViewController(sumViewController);
+//        sumViewController.didMoveToParentViewController(self);
         // Do any additional setup after loading the view.
     }
 
