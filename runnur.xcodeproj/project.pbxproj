@@ -35,7 +35,7 @@
 		4457FFE41D59C2030097C598 /* SummaryActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4457FFE31D59C2030097C598 /* SummaryActivityViewController.swift */; };
 		4457FFE61D5A0E730097C598 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4457FFE51D5A0E730097C598 /* WeatherData.swift */; };
 		446681B91D5AF64D00BFF4B6 /* CaloriesCounterLookUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446681B81D5AF64C00BFF4B6 /* CaloriesCounterLookUp.swift */; };
-		446681BB1D5B47B800BFF4B6 /* RunObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446681BA1D5B47B800BFF4B6 /* RunObject.swift */; };
+		446681BB1D5B47B800BFF4B6 /* MapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446681BA1D5B47B800BFF4B6 /* MapData.swift */; };
 		447473C51D51F8CB0021C561 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447473C41D51F8CB0021C561 /* MapKit.framework */; };
 		447B235B1D4B863700D79823 /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447B235A1D4B863700D79823 /* WindowsAzureMobileServices.framework */; };
 		448584141D4A0A240027F141 /* CommonFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448584131D4A0A240027F141 /* CommonFunctions.swift */; };
@@ -140,7 +140,7 @@
 		4457FFE31D59C2030097C598 /* SummaryActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryActivityViewController.swift; sourceTree = "<group>"; };
 		4457FFE51D5A0E730097C598 /* WeatherData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		446681B81D5AF64C00BFF4B6 /* CaloriesCounterLookUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaloriesCounterLookUp.swift; sourceTree = "<group>"; };
-		446681BA1D5B47B800BFF4B6 /* RunObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunObject.swift; sourceTree = "<group>"; };
+		446681BA1D5B47B800BFF4B6 /* MapData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapData.swift; sourceTree = "<group>"; };
 		447473C41D51F8CB0021C561 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		447B235A1D4B863700D79823 /* WindowsAzureMobileServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WindowsAzureMobileServices.framework; sourceTree = "<group>"; };
 		448584131D4A0A240027F141 /* CommonFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonFunctions.swift; sourceTree = "<group>"; };
@@ -263,7 +263,7 @@
 				4457FFE31D59C2030097C598 /* SummaryActivityViewController.swift */,
 				44524A1C1D54B8C800CC21C8 /* StartActivityViewController.swift */,
 				446681B81D5AF64C00BFF4B6 /* CaloriesCounterLookUp.swift */,
-				446681BA1D5B47B800BFF4B6 /* RunObject.swift */,
+				446681BA1D5B47B800BFF4B6 /* MapData.swift */,
 			);
 			name = Activities;
 			sourceTree = "<group>";
@@ -778,7 +778,7 @@
 				47FED24C1D2E6FE5006CAE8A /*  Reachability.swift in Sources */,
 				47474C161D3CBFB1008FE197 /* CreateGroupAndCauseFitViewController.swift in Sources */,
 				448584141D4A0A240027F141 /* CommonFunctions.swift in Sources */,
-				446681BB1D5B47B800BFF4B6 /* RunObject.swift in Sources */,
+				446681BB1D5B47B800BFF4B6 /* MapData.swift in Sources */,
 				4485841D1D4A109C0027F141 /* NetworkRequest.swift in Sources */,
 				473D0D961D49E970004DDC07 /* FAQCellTableViewCell.swift in Sources */,
 				47F97BE31D33CF5C0034B767 /* errorViewController.swift in Sources */,

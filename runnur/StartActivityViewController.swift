@@ -21,6 +21,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     var actionButton: ActionButton!
     var weatherData = WeatherData();
     var weatherDataArray = [WeatherData]();
+    var mapData = MapData();
     
     var startPosition: CGPoint?
     var originalHeight: CGFloat = 0
@@ -57,6 +58,10 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     }
     @IBAction func stop(sender: AnyObject) {
           if self.stop.titleLabel?.text == "STOP"{
+            if NSUserDefaults.standardUserDefaults().boolForKey("voiceFeedback") == true{
+                self.audioType(2);
+            }
+
             timer.invalidate()
 
             self.myManager.stopUpdatingLocation();
@@ -68,50 +73,115 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             self.stop.setTitle("SAVE", forState: .Normal);
             self.pause.setTitle("DISCARD RUN", forState: .Normal);
           }else{
+
+
             UIApplication.sharedApplication().cancelAllLocalNotifications()
             saveData()
-//                         let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as! ActivityDetailsViewController;
+//  let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as! ActivityDetailsViewController;
 //            self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
         }
        // self.duration.text = "00:00:00"
     }
     private func saveData()
     {
+        
+        CommonFunctions.showActivityIndicator(self.view);
+        
         let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
         let client = delegate!.client!;
+      
+        let user: MSUser = MSUser(userId: NSUserDefaults.standardUserDefaults().stringForKey("azureUserId"));
+        user.mobileServiceAuthenticationToken = NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken");
+        client.currentUser = user
         
-        let table = client.tableWithName("RunObject")
         
+        
+       let table = client.tableWithName("RunObject")
+        if client.currentUser != nil{
                 let date = lastLocation.timestamp
                 let dateFormatter = NSDateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd";
                 let dateString = dateFormatter.stringFromDate(date)
-        
-        
-        let newItem = ["id": "custom-id", "date": "\(dateString)", "distance": "\(distance.text!)","altGainS": "\(altGain)", "altLossS": "\(altLoss)", "GPSAcc": "\(Double(accuracy))","elapsedTime": "0.9","caloriesBurnedS": "\(caloriesburned)", "trackPolylinesS": "", "graphAltitudeS": "\(altitude)", "startLocationS": "", "mileMarkerS": "","splitSpeedS": "0", "splitDistanceS": "0", "time": "", "averageSpeed": "", "averagePace": "my new item", "graphHRS": "","splitTimeLog": "custom-id", "UriBlob": "my new item", "UUIDBlob": "ui", "activityLog": "my new item", "weatherData": "weatherData"]
-        
-        
+                let uuid = NSUUID().UUIDString;
+            
+            
+            
+            let newItem : NSDictionary = ["id": uuid,
+                           "date": dateString,
+                           "distance": Double(distance.text!)!,
+                           "elapsedTime": Double(self.elapsedTime),
+                           "averageSpeed": Double(self.avgSpeed.text!)!,
+                           "averagePace": Double(self.avgPace.text!)!,
+                           "time": Double("1.4")!,
+                           "performedActivity": String(UTF8String: performedActivity)!,
+                           "caloriesBurnedS": caloriesburned,
+                           "startLocationS": String(firstLocation),
+                           "altGainS": String(altGain),
+                           "altLossS": String(altLoss),
+                           "weatherData": "weatherData"] ;
+            
+            mapData = MapData();
+            mapData.distance = distance.text!;
+            mapData.date = dateString;
+            mapData.elevationLoss = String(altLoss);
+            mapData.elevationGain = String(altGain);
+            mapData.avgSpeed = self.avgSpeed.text!;
+            mapData.avgPace = self.avgPace.text!;
+            mapData.duration = self.duration.text!;
+            mapData.weatherData = weatherData;
+            mapData.activityType = "Run";
+            mapData.maxElevation = "";
+            mapData.maxSpeed = "";
+            mapData.startTime = stringStartTime;
+            mapData.streak = "1"
+            mapData.caloriesBurned = String(caloriesburned);
+            
+  
+     
+            
+//     TODO:- add more data
+            
+            
+     //, "GPSAcc": Double(accuracy), "EmailS": [""],"graphDistanceS": [Double("1.4")],"graphPaceS": [Double("1.4")],"graphSpeedS": [Double("1.4")],"graphAltitudeS": ["\(altitude)"], "mileMarkerS": [""],"splitSpeedS": ["0"], "splitDistanceS": ["0"], "graphHRS": [""],"splitTimeLog": ["custom-id"], "UriBlob": "my new item", "UUIDBlob": "ui", "activityLog": "my new item"
+            
+            
         table.insert(newItem as [NSObject : AnyObject]) { (result, error) in
             if let err = error {
+                CommonFunctions.hideActivityIndicator();
                 print("ERROR ", err)
             } else if let item = result {
-                print("RunObject: ", item["date"])
+                 CommonFunctions.hideActivityIndicator();
+                print("RunObject: ", item["altGainS"])
+                let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
+                ActivityDetailsViewController;
+                activityDetailsViewController.mapData=self.mapData;
+                 self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
             }
+        }
         }
 
     }
     @IBAction func pause(sender: AnyObject) {
         if self.pause.titleLabel?.text == "PAUSE"{
+            if NSUserDefaults.standardUserDefaults().boolForKey("voiceFeedback") == true{
+                self.audioType(4);
+            }
+
           timer.invalidate()
         self.pause.setTitle("RESUME", forState: .Normal);
         }else if self.pause.titleLabel?.text == "DISCARD RUN"{
+          
              UIApplication.sharedApplication().cancelAllLocalNotifications()
             CommonFunctions.showPopup(self,title:"Discard Activity" , msg: "Are you sure you want to discard this activity?", positiveMsg: "Yes", negMsg: "No", show2Buttons: true) {
                  self.dismissViewControllerAnimated(false, completion: nil);
             }
-
+           
            
         }else{
+            if NSUserDefaults.standardUserDefaults().boolForKey("voiceFeedback") == true{
+                self.audioType(5);
+            }
+
              self.stop.setTitle("STOP", forState: .Normal);
              self.pause.setTitle("PAUSE", forState: .Normal);
             timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: #selector(StartActivityViewController.updateTime), userInfo: nil, repeats: true)
@@ -119,8 +189,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             timer.fire()
         }
     }
-    
-    func timerAction() {
+     func timerAction() {
         counter += 1
         duration.text = "\(counter)"
     }
@@ -235,8 +304,6 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
        
         if first == false{
-//            lat=locValue.latitude;
-//            long=locValue.longitude;
             let camera = GMSCameraPosition.cameraWithLatitude(locValue.latitude, longitude: locValue.longitude, zoom: 16.0)
             self.mapView.camera = camera
             firstLocation = manager.location!;
@@ -254,17 +321,14 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         altitude = (locations[0].altitude);
         if (altitude < (-25)) {
             Altitudes.append(Int((-25 - Double(-EGM96_US)) * 3.28084));
-           // Altitude.add((int) ((-25 - (-EGM96_US)) * 3.28084));
             calculateElevation(-25);
         } else {
              Altitudes.append(Int((altitude - Double(-EGM96_US)) * 3.28084));
-          //  Altitude.add((int) ((altitude - (-EGM96_US)) * 3.28084));  // altitude in feet
             calculateElevation(Int(altitude));
         }
 
         
         loc = locations;
-        print(loc)
         calculateDistanceSpeed(locations[0]);
         if !CLLocationManager.locationServicesEnabled()
         {
@@ -524,6 +588,10 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
 // MARK:- Life cycle
     override func viewDidAppear(animated: Bool) {
         
+        if NSUserDefaults.standardUserDefaults().boolForKey("voiceFeedback") == true{
+            self.audioType(1);
+        }
+        
         UIApplication.sharedApplication().cancelAllLocalNotifications()
         
         notification.alertBody = "Your workout is in progress"
@@ -544,10 +612,21 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         }
         
     }
-    
+    override func viewDidDisappear(animated: Bool) {
+        myManager.stopUpdatingLocation();
+        myManager.stopMonitoringSignificantLocationChanges()
+
+    }
+    var stringStartTime = String();
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let date = NSDate()
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "h:mm a"
+        let dateAsString  = dateFormatter.stringFromDate(date)
+        stringStartTime = dateAsString;
+        
         self.weight = NSUserDefaults.standardUserDefaults().doubleForKey("weight");
         performedActivity = "Walking";
         self.topConstraint.constant = -87;
@@ -614,7 +693,10 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         // Dispose of any resources that can be recreated.
     }
     deinit{
-        
+        myManager.stopUpdatingLocation();
+        myManager.stopUpdatingLocation();
+        myManager.stopMonitoringSignificantLocationChanges()
     }
-
+    
+ 
 }

@@ -1194,9 +1194,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
+                        NSOperationQueue.mainQueue().addOperationWithBlock{
                                 
                                 
                                 
@@ -1279,7 +1277,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                 {
                     
                     let status = parseJSON["status"] as? String
-                    let msg=parseJSON["message"] as? String
+                    _=parseJSON["message"] as? String
                     if(status=="Success")
                     {
                         
@@ -1299,7 +1297,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                                             {
                                                 //self.amenitiesName.removeAll();
                                                 
-                                                for var i = 0; i<friendList!.count; i++
+                                                for var i = 0; i<friendList!.count; i += 1
                                                 {
                                                    
                                                     
@@ -1511,15 +1509,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
-                                
-                                
-                                
-                                NSOperationQueue.mainQueue().addOperationWithBlock
-                                    
-                                    {
+                                NSOperationQueue.mainQueue().addOperationWithBlock{
                                         
                                         self.activityIndicator.stopAnimating();
                                         
@@ -1600,7 +1590,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                                             // self.noInternet.imageView.userInteractionEnabled = true
                                             
                                             
-                                            let tapRecognizer = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
+                                            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(InviteFriendsViewController.handleTap(_:)))
                                             
                                             
                                             self.view.userInteractionEnabled = true
@@ -1617,7 +1607,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                                         
                                 }
                                 
-                        }
+                      
                         
                     } /// error close
                     
@@ -1625,9 +1615,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
+                        NSOperationQueue.mainQueue().addOperationWithBlock{
                                 
                                 
                                 

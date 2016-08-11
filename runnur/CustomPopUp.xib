@@ -29,10 +29,16 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uLa-p6-OIF" customClass="CheckBox" customModule="sentiv" customModuleProvider="target">
                             <rect key="frame" x="524" y="15" width="21" height="22"/>
                             <state key="normal" image="ic_checked"/>
+                            <connections>
+                                <action selector="autoPause:" destination="iN0-l3-epB" eventType="touchUpInside" id="7Wr-60-blq"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgw-Bd-heE" customClass="CheckBox" customModule="sentiv" customModuleProvider="target">
                             <rect key="frame" x="524" y="57" width="21" height="22"/>
                             <state key="normal" image="ic_checked"/>
+                            <connections>
+                                <action selector="voiceFeedback:" destination="iN0-l3-epB" eventType="touchUpInside" id="ruS-8Q-5UH"/>
+                            </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VIq-Kw-6Ua">
                             <rect key="frame" x="5" y="46" width="550" height="1"/>
@@ -120,11 +126,11 @@
                 <constraint firstItem="gLe-ug-dYy" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="nTu-Cf-FUW"/>
             </constraints>
             <connections>
-                <outlet property="autoPause" destination="uLa-p6-OIF" id="zbE-qx-MkM"/>
+                <outlet property="autoPause" destination="uLa-p6-OIF" id="R67-ol-xOU"/>
                 <outlet property="cancel" destination="nx0-Oc-Bum" id="oFn-8h-3IK"/>
                 <outlet property="done" destination="iOA-bw-zcB" id="dEL-Te-IKF"/>
                 <outlet property="mView" destination="gLe-ug-dYy" id="HHo-RY-owt"/>
-                <outlet property="voiceFeedback" destination="fgw-Bd-heE" id="Ja4-FZ-fx3"/>
+                <outlet property="voiceFeedback" destination="fgw-Bd-heE" id="56l-fs-SXx"/>
             </connections>
         </view>
     </objects>

@@ -8,14 +8,26 @@
 
 import UIKit
 class CustomPopUp: UIView {
-    @IBOutlet weak var autoPause: UIButton!
-    @IBOutlet weak var voiceFeedback: UIButton!
+   
+   
     @IBOutlet weak var mView: UIView!
+    @IBOutlet weak var autoPause: CheckBox!
+    @IBOutlet weak var voiceFeedback: CheckBox!
     
     @IBOutlet weak var cancel: UIButton!
     
     @IBOutlet weak var done: UIButton!
     
+    @IBAction func autoPause(sender: AnyObject) {
+    }
+    @IBAction func voiceFeedback(sender: AnyObject) {
+       if voiceFeedback.isChecked {
+           NSUserDefaults.standardUserDefaults().setBool(true, forKey: "voiceFeedback")
+       }else{
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "voiceFeedback")
+        }
+        
+    }
     @IBAction func cancel(sender: AnyObject) {
         self.removeFromSuperview();
     }
