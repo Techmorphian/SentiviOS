@@ -176,6 +176,81 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
     }
     
     
+    
+    
+    var selectedChallenegId = Int()
+    
+    var selectedChallenegId2 = Int()
+    
+    var selectedChallenegName = Int()
+    
+    var selectedTypeId = Int()
+    
+    var selectedTypeId2 = Int()
+    
+    
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        if indexPath.section == 0
+        {
+            
+            
+            let viewChallenge = storyboard?.instantiateViewControllerWithIdentifier("ViewGroupFitViewController") as! ViewGroupFitViewController
+            
+            let challengeId =  participatingArray[indexPath.row].challengeId
+            NSUserDefaults.standardUserDefaults().setObject(challengeId, forKey: "challengeId")
+            
+            
+            let challengeName = participatingArray[indexPath.row].challengeName
+            NSUserDefaults.standardUserDefaults().setObject(challengeName, forKey: "challengeName")
+            
+            
+            let TypeIdParticipating = participatingArray[indexPath.row].typeId
+            
+            NSUserDefaults.standardUserDefaults().setObject(TypeIdParticipating, forKey: "TypeIdParticipating")
+            
+            
+            
+            
+            self.presentViewController(viewChallenge, animated: false, completion: nil)
+            
+            
+        }
+        
+        
+        if indexPath.section == 1
+        {
+            
+            
+            let viewChallenge = storyboard?.instantiateViewControllerWithIdentifier("ViewGroupFitViewController") as! ViewGroupFitViewController
+            
+            let challengeId =  contributingArray[indexPath.row].challengeId
+            NSUserDefaults.standardUserDefaults().setObject(challengeId, forKey: "challengeId")
+            
+            
+            
+            let challengeName = contributingArray[indexPath.row].challengeName
+            NSUserDefaults.standardUserDefaults().setObject(challengeName, forKey: "challengeName")
+            
+            
+            let TypeIdParticipating = contributingArray[indexPath.row].typeId
+            
+            NSUserDefaults.standardUserDefaults().setObject(TypeIdParticipating, forKey: "TypeIdParticipating")
+            
+            
+            self.presentViewController(viewChallenge, animated: false, completion: nil)
+            
+        }
+        
+        
+    }
+    
+    
+    
+
+    
+    
     //MARK:- FILTER BUTTON ACTIVE
     
     func FilterButtonActive(notification: NSNotification)

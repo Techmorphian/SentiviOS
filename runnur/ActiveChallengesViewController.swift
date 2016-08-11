@@ -347,12 +347,12 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                     if participatingFilterArray[indexPath.row].startDate != "" &&   participatingFilterArray[indexPath.row].endDate != ""
                     {
                         
-                        let StartDate = dateFunction.dateFormatFunc("MMMM dd", formFormat: "yyyy/MM/dd", dateToConvert: participatingFilterArray[indexPath.row].startDate)
+                        let StartDate = dateFunction.dateFormatFunc("MMM dd", formFormat: "yyyy/MM/dd", dateToConvert: participatingFilterArray[indexPath.row].startDate)
                         
                         
                         print(StartDate)
                         
-                        let EndDate = dateFunction.dateFormatFunc("MMMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: participatingFilterArray[indexPath.row].endDate)
+                        let EndDate = dateFunction.dateFormatFunc("MMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: participatingFilterArray[indexPath.row].endDate)
                         print(EndDate)
                         
                         
@@ -430,12 +430,12 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                 if participatingArray[indexPath.row].startDate != "" &&   participatingArray[indexPath.row].endDate != ""
                 {
                     
-                    let StartDate = dateFunction.dateFormatFunc("MMMM dd", formFormat: "yyyy/MM/dd", dateToConvert: participatingArray[indexPath.row].startDate)
+                    let StartDate = dateFunction.dateFormatFunc("MMM dd", formFormat: "yyyy/MM/dd", dateToConvert: participatingArray[indexPath.row].startDate)
                     
                     
                     print(StartDate)
                     
-                    let EndDate = dateFunction.dateFormatFunc("MMMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: participatingArray[indexPath.row].endDate)
+                    let EndDate = dateFunction.dateFormatFunc("MMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: participatingArray[indexPath.row].endDate)
                     print(EndDate)
                     
                     
@@ -628,49 +628,70 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     
      var selectedChallenegId = Int()
     
+    var selectedChallenegId2 = Int()
+    
     var selectedChallenegName = Int()
     
+    var selectedTypeId = Int()
+    
+    var selectedTypeId2 = Int()
 
-    
-    
-    func SelectedchallengeValues()
-    {
-        let viewChallenge = storyboard?.instantiateViewControllerWithIdentifier("ViewGroupFitViewController") as! ViewGroupFitViewController
-        
-         var challengeId =  participatingArray[selectedChallenegId].challengeId
-        
-        var challengeName = participatingArray[selectedChallenegName].challengeName
-        
-        
-       
-        //// saving challengeId for summary screen
-        NSUserDefaults.standardUserDefaults().setObject(challengeId, forKey: "challengeId")
-        
-           NSUserDefaults.standardUserDefaults().setObject(challengeName, forKey: "challengeName")
-        
-          self.presentViewController(viewChallenge, animated: false, completion: nil)
-    }
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
-        
-        
-    
-        
-        selectedChallenegId = indexPath.row
-        
-        
-        selectedChallenegName = indexPath.row
+        if indexPath.section == 0
+        {
+            
+            
+            let viewChallenge = storyboard?.instantiateViewControllerWithIdentifier("ViewGroupFitViewController") as! ViewGroupFitViewController
 
+            let challengeId =  participatingArray[indexPath.row].challengeId
+              NSUserDefaults.standardUserDefaults().setObject(challengeId, forKey: "challengeId")
+            
+            
+             let challengeName = participatingArray[indexPath.row].challengeName
+             NSUserDefaults.standardUserDefaults().setObject(challengeName, forKey: "challengeName")
+            
+            
+             let TypeIdParticipating = participatingArray[indexPath.row].typeId
+            
+            NSUserDefaults.standardUserDefaults().setObject(TypeIdParticipating, forKey: "TypeIdParticipating")
+            
+            
+            
+            
+           self.presentViewController(viewChallenge, animated: false, completion: nil)
+            
         
-        SelectedchallengeValues();
+        }
+        
+        
+        if indexPath.section == 1
+        {
+            
+            
+            let viewChallenge = storyboard?.instantiateViewControllerWithIdentifier("ViewGroupFitViewController") as! ViewGroupFitViewController
 
-    
-       
+            let challengeId =  contributingArray[indexPath.row].challengeId
+            NSUserDefaults.standardUserDefaults().setObject(challengeId, forKey: "challengeId")
+            
+            
+            
+            let challengeName = contributingArray[indexPath.row].challengeName
+            NSUserDefaults.standardUserDefaults().setObject(challengeName, forKey: "challengeName")
+            
+            
+            let TypeIdParticipating = contributingArray[indexPath.row].typeId
+            
+            NSUserDefaults.standardUserDefaults().setObject(TypeIdParticipating, forKey: "TypeIdParticipating")
+            
+
+            self.presentViewController(viewChallenge, animated: false, completion: nil)
+            
+        }
         
-  
-       
+        
     }
     
     
@@ -1561,16 +1582,19 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
           
             
               let alert = UIAlertController(title: "", message:  NSUserDefaults.standardUserDefaults().stringForKey("successMsgOfDecline") , preferredStyle: UIAlertControllerStyle.Alert)
-            let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+            let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {action in
+            
+                
+                self.participatingArray.removeAll();
+                self.contributingArray.removeAll();
+             self.viewActiveChallenges();
+            
+            
+            })
             
             alert.addAction(okAction)
              self.presentViewController(alert, animated: true, completion: nil)
             return
-            
-            
-
-            
-            
             
             
         }
@@ -1584,7 +1608,10 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     {
         super.viewDidLoad()
         
-                
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "TypeIdParticipating")
+        
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "TypeIdContributing")
+        
         
         NSUserDefaults.standardUserDefaults().setObject("", forKey: "successMsgOfDecline")
         

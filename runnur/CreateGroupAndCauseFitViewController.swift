@@ -767,9 +767,13 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     func cancelStartDate()
     {
         
-        startDateLabel.text = "june 16, 2016"
 
-        startDateTextField.text = ""
+       if  startDateTextField.text == ""
+       {
+        
+         startDateLabel.text = "june 16, 2016"
+        
+        }
         
         startDateTextField.resignFirstResponder()
 
@@ -855,9 +859,14 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     func cancelEndDate()
     {
         
-        endDateLabel.text = "june 16, 2016"
+//        endDateLabel.text = "june 16, 2016"
         
-        endDateTextField.text = ""
+         if   endDateTextField.text == ""
+        
+         {
+            endDateLabel.text = "june 16, 2016"
+            
+        }
 
         endDateTextField.resignFirstResponder()
 

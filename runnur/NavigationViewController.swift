@@ -303,15 +303,16 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 break;
                 
             case "Logout":
-                if  NSUserDefaults.standardUserDefaults().integerForKey("loginThroughValue") == 1
-                {
-                    let loginManager:FBSDKLoginManager = FBSDKLoginManager()
+//                if  NSUserDefaults.standardUserDefaults().integerForKey("loginThroughValue") == 1
+//                {
+                
+                let loginManager:FBSDKLoginManager = FBSDKLoginManager()
                     loginManager.logOut();
                     
-                }else{
-                    
-                    
-                }
+//                }else{
+//                    
+//                    
+//                }
                     let appDomain = NSBundle.mainBundle().bundleIdentifier!
                     NSUserDefaults.standardUserDefaults().removePersistentDomainForName(appDomain)
                     NSUserDefaults.standardUserDefaults().removePersistentDomainForName(NSBundle.mainBundle().bundleIdentifier!)
@@ -322,9 +323,9 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                     let mainVC = storyboard.instantiateViewControllerWithIdentifier("FirstViewController")
                     appDelegate.window!.rootViewController = mainVC
                     appDelegate.window!.makeKeyAndVisible()
-                    for view in self.view.window!.subviews {
-                        view.removeFromSuperview()
-                    }
+//                    for view in self.view.window!.subviews {
+//                        view.removeFromSuperview()
+//                    }
                     UIView.transitionWithView(appDelegate.window!, duration: 0.5, options:UIViewAnimationOptions.TransitionFlipFromLeft , animations: { () -> Void in
                         appDelegate.window!.rootViewController = mainVC
                         

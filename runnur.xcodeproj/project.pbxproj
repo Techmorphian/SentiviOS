@@ -86,19 +86,25 @@
 		47474C161D3CBFB1008FE197 /* CreateGroupAndCauseFitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47474C151D3CBFB0008FE197 /* CreateGroupAndCauseFitViewController.swift */; };
 		47474C181D3CEF6E008FE197 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47474C171D3CEF6E008FE197 /* ActionButton.swift */; };
 		47474C1A1D3CEF7A008FE197 /* ActionButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47474C191D3CEF7A008FE197 /* ActionButtonItem.swift */; };
+		4748CB8D1D59EE9B0096DB55 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4748CB8C1D59EE9B0096DB55 /* ActivityViewController.swift */; };
 		47B8A8F81D45E2E100BACB83 /* ViewGroupFitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B8A8F71D45E2E100BACB83 /* ViewGroupFitViewController.swift */; };
 		47B8A8FA1D45E31600BACB83 /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B8A8F91D45E31600BACB83 /* SummaryViewController.swift */; };
 		47BB027B1D49EC4800273694 /* InviteFriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473D0D7A1D49E7BF004DDC07 /* InviteFriendsTableViewCell.swift */; };
 		47C634851D361D4B005EB1E3 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C634841D361D4A005EB1E3 /* FBSDKCoreKit.framework */; };
 		47C634871D361D5E005EB1E3 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C634861D361D5E005EB1E3 /* FBSDKLoginKit.framework */; };
 		47C634891D361D7A005EB1E3 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C634881D361D7A005EB1E3 /* FBSDKShareKit.framework */; };
+		47C6AFFA1D5AF12700410DAE /* LeaderBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C6AFF91D5AF12700410DAE /* LeaderBoardViewController.swift */; };
+		47C6AFFC1D5AF58800410DAE /* userActivityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C6AFFB1D5AF58800410DAE /* userActivityTableViewCell.swift */; };
+		47C6AFFE1D5AF59B00410DAE /* activityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C6AFFD1D5AF59B00410DAE /* activityTableViewCell.swift */; };
+		47C6B0001D5AF5B300410DAE /* userChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C6AFFF1D5AF5B300410DAE /* userChatTableViewCell.swift */; };
+		47C6B0021D5AF5C300410DAE /* chatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C6B0011D5AF5C300410DAE /* chatTableViewCell.swift */; };
+		47C6B00A1D5B2ABA00410DAE /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C6B0091D5B2ABA00410DAE /* ProgressViewController.swift */; };
 		47C78CF81D265520006DEACF /* colorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C78CF71D265520006DEACF /* colorCode.swift */; };
 		47C78CFC1D26A480006DEACF /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C78CFB1D26A480006DEACF /* SplashScreenViewController.swift */; };
-		47CF1FBD1D4CC3130083B1A7 /* challengeFilterXIB.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47CF1FBC1D4CC3130083B1A7 /* challengeFilterXIB.xib */; };
 		47CF1FC11D4CC5620083B1A7 /* challengeFilterXIB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CF1FC01D4CC5620083B1A7 /* challengeFilterXIB.swift */; };
 		47EF173C1D41EE0C00468698 /* dateFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EF173B1D41EE0C00468698 /* dateFunction.swift */; };
-		47EFFBA71D5849B600F2A2D7 /* viewCauseFitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EFFBA61D5849B600F2A2D7 /* viewCauseFitViewController.swift */; };
-		47F40DF81D4B28770087E658 /* CurrentDateFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F40DF71D4B28770087E658 /* CurrentDateFunc.swift */; };
+		47EFFBAA1D58689A00F2A2D7 /* CurrentDateFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EFFBA91D58689A00F2A2D7 /* CurrentDateFunc.swift */; };
+		47EFFBAC1D58822A00F2A2D7 /* CauseFirSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EFFBAB1D58822A00F2A2D7 /* CauseFirSummaryViewController.swift */; };
 		47F40DFA1D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F40DF91D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift */; };
 		47F97BE31D33CF5C0034B767 /* errorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F97BE21D33CF5C0034B767 /* errorViewController.swift */; };
 		47FEAE0A1D2FD93800881EE8 /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FEAE091D2FD93800881EE8 /* Url.swift */; };
@@ -190,18 +196,25 @@
 		47474C151D3CBFB0008FE197 /* CreateGroupAndCauseFitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGroupAndCauseFitViewController.swift; sourceTree = "<group>"; };
 		47474C171D3CEF6E008FE197 /* ActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		47474C191D3CEF7A008FE197 /* ActionButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButtonItem.swift; sourceTree = "<group>"; };
+		4748CB8C1D59EE9B0096DB55 /* ActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityViewController.swift; path = ../ActivityViewController.swift; sourceTree = "<group>"; };
 		47B8A8F71D45E2E100BACB83 /* ViewGroupFitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewGroupFitViewController.swift; sourceTree = "<group>"; };
 		47B8A8F91D45E31600BACB83 /* SummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
 		47C634841D361D4A005EB1E3 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		47C634861D361D5E005EB1E3 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		47C634881D361D7A005EB1E3 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		47C6AFF91D5AF12700410DAE /* LeaderBoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderBoardViewController.swift; sourceTree = "<group>"; };
+		47C6AFFB1D5AF58800410DAE /* userActivityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = userActivityTableViewCell.swift; sourceTree = "<group>"; };
+		47C6AFFD1D5AF59B00410DAE /* activityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = activityTableViewCell.swift; sourceTree = "<group>"; };
+		47C6AFFF1D5AF5B300410DAE /* userChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = userChatTableViewCell.swift; sourceTree = "<group>"; };
+		47C6B0011D5AF5C300410DAE /* chatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = chatTableViewCell.swift; sourceTree = "<group>"; };
+		47C6B0091D5B2ABA00410DAE /* ProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
 		47C78CF71D265520006DEACF /* colorCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = colorCode.swift; sourceTree = "<group>"; };
 		47C78CFB1D26A480006DEACF /* SplashScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
 		47CF1FBC1D4CC3130083B1A7 /* challengeFilterXIB.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = challengeFilterXIB.xib; sourceTree = "<group>"; };
 		47CF1FC01D4CC5620083B1A7 /* challengeFilterXIB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = challengeFilterXIB.swift; sourceTree = "<group>"; };
 		47EF173B1D41EE0C00468698 /* dateFunction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dateFunction.swift; sourceTree = "<group>"; };
-		47EFFBA61D5849B600F2A2D7 /* viewCauseFitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = viewCauseFitViewController.swift; sourceTree = "<group>"; };
-		47F40DF71D4B28770087E658 /* CurrentDateFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentDateFunc.swift; sourceTree = "<group>"; };
+		47EFFBA91D58689A00F2A2D7 /* CurrentDateFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentDateFunc.swift; sourceTree = "<group>"; };
+		47EFFBAB1D58822A00F2A2D7 /* CauseFirSummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CauseFirSummaryViewController.swift; sourceTree = "<group>"; };
 		47F40DF91D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsViaEmailViewController.swift; sourceTree = "<group>"; };
 		47F97BE21D33CF5C0034B767 /* errorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = errorViewController.swift; sourceTree = "<group>"; };
 		47FEAE091D2FD93800881EE8 /* Url.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
@@ -292,6 +305,7 @@
 		470CF87C1D24DC370001B3BC /* runnur */ = {
 			isa = PBXGroup;
 			children = (
+				47C6B0041D5AF5E300410DAE /* ViewActivity */,
 				47EFFBA81D5849D000F2A2D7 /* ViewCauseFitChallenge */,
 				47FD4EC31D48E3EC0059DB55 /* HeartHistory */,
 				47FD4EC21D48E3780059DB55 /* InviteFriends */,
@@ -299,6 +313,7 @@
 				4778115B1D487706003B01A4 /* models */,
 				4778115C1D487723003B01A4 /* swift Files */,
 				470CF8811D24DC370001B3BC /* Main.storyboard */,
+				47C6AFF91D5AF12700410DAE /* LeaderBoardViewController.swift */,
 				477811681D4879EE003B01A4 /* noInternet/error */,
 				47323D091D479D6D002B27CF /* challenge */,
 				4778115A1D4876AF003B01A4 /* ViewGroupFitChalleneg */,
@@ -366,6 +381,7 @@
 				473D0D811D49E86A004DDC07 /* CircleLabel.swift */,
 				448584131D4A0A240027F141 /* CommonFunctions.swift */,
 				47EF173B1D41EE0C00468698 /* dateFunction.swift */,
+				47EFFBA91D58689A00F2A2D7 /* CurrentDateFunc.swift */,
 				47C78CF71D265520006DEACF /* colorCode.swift */,
 				47FED2551D2E8D14006CAE8A /* animation2.swift */,
 				473D0D831D49E87E004DDC07 /* animation1.swift */,
@@ -496,10 +512,23 @@
 			name = AppDelegate;
 			sourceTree = "<group>";
 		};
+		47C6B0041D5AF5E300410DAE /* ViewActivity */ = {
+			isa = PBXGroup;
+			children = (
+				4748CB8C1D59EE9B0096DB55 /* ActivityViewController.swift */,
+				47C6AFFB1D5AF58800410DAE /* userActivityTableViewCell.swift */,
+				47C6AFFF1D5AF5B300410DAE /* userChatTableViewCell.swift */,
+				47C6B0091D5B2ABA00410DAE /* ProgressViewController.swift */,
+				47C6B0011D5AF5C300410DAE /* chatTableViewCell.swift */,
+				47C6AFFD1D5AF59B00410DAE /* activityTableViewCell.swift */,
+			);
+			name = ViewActivity;
+			sourceTree = "<group>";
+		};
 		47EFFBA81D5849D000F2A2D7 /* ViewCauseFitChallenge */ = {
 			isa = PBXGroup;
 			children = (
-				47EFFBA61D5849B600F2A2D7 /* viewCauseFitViewController.swift */,
+				47EFFBAB1D58822A00F2A2D7 /* CauseFirSummaryViewController.swift */,
 			);
 			name = ViewCauseFitChallenge;
 			sourceTree = "<group>";
@@ -561,7 +590,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 470CF88F1D24DC370001B3BC /* Build configuration list for PBXNativeTarget "runnur" */;
 			buildPhases = (
-				00CF063020DE12AB0D3EA38F /* 📦 Check Pods Manifest.lock */,
+				00CF063020DE12AB0D3EA38F /* [CP] Check Pods Manifest.lock */,
 				795E453EDB159647E78F3403 /* [CP] Check Pods Manifest.lock */,
 				470CF8761D24DC370001B3BC /* Sources */,
 				470CF8771D24DC370001B3BC /* Frameworks */,
@@ -592,7 +621,7 @@
 				TargetAttributes = {
 					470CF8791D24DC370001B3BC = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 44C2WNQ95S;
+						DevelopmentTeam = KN8AAJ89C8;
 					};
 				};
 			};
@@ -648,14 +677,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-runnur/Pods-runnur-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		00CF063020DE12AB0D3EA38F /* 📦 Check Pods Manifest.lock */ = {
+		00CF063020DE12AB0D3EA38F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -730,10 +759,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47EFFBAA1D58689A00F2A2D7 /* CurrentDateFunc.swift in Sources */,
 				47BB027B1D49EC4800273694 /* InviteFriendsTableViewCell.swift in Sources */,
 				440D64E61D5225B1004AE539 /* CustomPopUp.swift in Sources */,
 				473D0D921D49E93E004DDC07 /* StatisticsViewController.swift in Sources */,
 				473D0D7C1D49E7FE004DDC07 /* AppDelegate.swift in Sources */,
+				47C6B0021D5AF5C300410DAE /* chatTableViewCell.swift in Sources */,
 				473D0D791D49E7A7004DDC07 /* InviteFriendsViewController.swift in Sources */,
 				473D0D981D49E984004DDC07 /* HistoryViewController.swift in Sources */,
 				473D0D821D49E86A004DDC07 /* CircleLabel.swift in Sources */,
@@ -750,9 +781,9 @@
 				470CF8951D24E8500001B3BC /* FriendsListCellTableViewCell.swift in Sources */,
 				47F40DFA1D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift in Sources */,
 				470261761D40F83D005261ED /* ChallengeModel.swift in Sources */,
+				47EFFBAC1D58822A00F2A2D7 /* CauseFirSummaryViewController.swift in Sources */,
 				473D0D941D49E955004DDC07 /* FAQViewController.swift in Sources */,
 				47FED24C1D2E6FE5006CAE8A /*  Reachability.swift in Sources */,
-				47F40DF81D4B28770087E658 /* CurrentDateFunc.swift in Sources */,
 				47474C161D3CBFB1008FE197 /* CreateGroupAndCauseFitViewController.swift in Sources */,
 				448584141D4A0A240027F141 /* CommonFunctions.swift in Sources */,
 				4485841D1D4A109C0027F141 /* NetworkRequest.swift in Sources */,
@@ -760,6 +791,7 @@
 				47F97BE31D33CF5C0034B767 /* errorViewController.swift in Sources */,
 				470CF8A31D2508140001B3BC /* AddviaFacebookCellTableViewCell.swift in Sources */,
 				470728BA1D2BD9BE002B86E1 /* phoneBookModel.swift in Sources */,
+				4748CB8D1D59EE9B0096DB55 /* ActivityViewController.swift in Sources */,
 				47C78CFC1D26A480006DEACF /* SplashScreenViewController.swift in Sources */,
 				470B1B5E1D278B6200E3B5B0 /* HomeViewController.swift in Sources */,
 				473D0D861D49E89D004DDC07 /* NoResultViewController.swift in Sources */,
@@ -773,9 +805,12 @@
 				47FED2501D2E84D9006CAE8A /* ChallengesViewController.swift in Sources */,
 				470CF89F1D25079C0001B3BC /* AddViaGoogleViewController.swift in Sources */,
 				4731FC8E1D2A2E4300E860B0 /* GroupFitCellTableViewCell.swift in Sources */,
+				47C6AFFC1D5AF58800410DAE /* userActivityTableViewCell.swift in Sources */,
 				47B8A8FA1D45E31600BACB83 /* SummaryViewController.swift in Sources */,
 				473D0D7E1D49E820004DDC07 /* inviteFriendsModel.swift in Sources */,
 				470CF89B1D2505C60001B3BC /* AddviaContactsViewController.swift in Sources */,
+				47C6AFFE1D5AF59B00410DAE /* activityTableViewCell.swift in Sources */,
+				47C6B00A1D5B2ABA00410DAE /* ProgressViewController.swift in Sources */,
 				470CF8991D24FB1C0001B3BC /* AddFriendsCellTableViewCell.swift in Sources */,
 				47474C181D3CEF6E008FE197 /* ActionButton.swift in Sources */,
 				445449281D535FE600995B45 /* CheckBox.swift in Sources */,
@@ -788,7 +823,8 @@
 				471A686A1D30D4E200DD2138 /* NoInternetViewController.swift in Sources */,
 				470CF8A51D25082C0001B3BC /* AddviaGoogleCellTableViewCell.swift in Sources */,
 				470CF8A71D252F540001B3BC /* AddManuallyViewController.swift in Sources */,
-				47EFFBA71D5849B600F2A2D7 /* viewCauseFitViewController.swift in Sources */,
+				47C6B0001D5AF5B300410DAE /* userChatTableViewCell.swift in Sources */,
+				47C6AFFA1D5AF12700410DAE /* LeaderBoardViewController.swift in Sources */,
 				473D0D801D49E84C004DDC07 /* alertMsg.swift in Sources */,
 				473D0D8A1D49E8D9004DDC07 /* activeChallengeTableViewCell.swift in Sources */,
 				470CF8861D24DC370001B3BC /* runnur.xcdatamodeld in Sources */,
