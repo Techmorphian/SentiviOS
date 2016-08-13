@@ -16,6 +16,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
      ///// views height constraint
     
     
+    @IBOutlet var ic_betImageView: UIImageView!
     
     @IBOutlet var ScrollView: UIScrollView!
     
@@ -382,10 +383,114 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     }
     
     
+    @IBOutlet var NameNdDescriptionView: UIView!
+    
+    /// 130 constant
+    
+    @IBOutlet var nameNdDescriptionViewHeightConstraint: NSLayoutConstraint!
+    
+    
+    @IBOutlet var DescriptionTextViewHeight: NSLayoutConstraint!
+    
+    
+    @IBOutlet var descriptionTextView: UITextView!
     
     
     
+    func textViewDidChange(textView: UITextView)
+    {
+        let rawLineNumber = (textView.contentSize.height - textView.textContainerInset.top - textView.textContainerInset.bottom) / textView.font!.lineHeight;
         
+            let  finalLineNumber = round(rawLineNumber)
+        
+        
+        
+            if finalLineNumber == 2
+            {
+        
+            DescriptionTextViewHeight.constant = 50
+        
+            nameNdDescriptionViewHeightConstraint.constant = 150
+        
+            }
+        
+        
+        
+            if finalLineNumber == 3
+            {
+        
+        
+              DescriptionTextViewHeight.constant = 60
+                
+            nameNdDescriptionViewHeightConstraint.constant = 160
+            
+            }
+            
+            
+            
+            if finalLineNumber == 1
+            {
+            
+            
+            
+            DescriptionTextViewHeight.constant = 30
+                
+            nameNdDescriptionViewHeightConstraint.constant = 130
+    
+                
+            
+            }
+            
+
+    }
+    
+//    ​func textViewDidChange(textView: UITextView)
+//    {
+//    
+//    
+//    let rawLineNumber = (textView.contentSize.height - textView.textContainerInset.top - textView.textContainerInset.bottom) / textView.font!.lineHeight;
+//    
+//    let  finalLineNumber = round(rawLineNumber)
+//    
+//    
+//    
+//    if finalLineNumber == 2
+//    {
+//    
+//    
+//    
+//    challengeDescriptionHeight.constant = 70
+//    
+//    }
+//    
+//    
+//    
+//    if finalLineNumber == 3{
+//    
+//    
+//    
+//    challengeDescriptionHeight.constant = 80
+//    
+//    }
+//    
+//    
+//    
+//    if finalLineNumber == 1{
+//    
+//    
+//    
+//    challengeDescriptionHeight.constant = 60
+//    
+//    }
+//    
+    
+    
+    
+    
+   // }
+
+    
+    
     
    // MARK:- ACTIVITY TYPE
     
@@ -517,9 +622,9 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         
        calorieBasedILabel.textColor = UIColor.blackColor()
         
-        calorieImageView.image  = UIImage(named: "ic_calorie_inactive")
+         calorieImageView.image  = UIImage(named: "ic_calorie_inactive")
         
-           ParameterTypeId = "2"
+        ParameterTypeId = "2"
         
     }
     
@@ -651,8 +756,13 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     
       var pickerDate2 = NSDate()
     
+ 
+    
+    
     func datePickerValueChanged(sender:UIDatePicker)
     {
+        
+    
         
         pickerDate = sender.date
         
@@ -690,6 +800,8 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         
         datePickerView1.backgroundColor = UIColor.whiteColor();
         
+        datePickerView1.datePickerMode = UIDatePickerMode.Date
+        
         sender.inputView = datePickerView1
         
         
@@ -701,7 +813,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         }
 
         
-        datePickerView1.addTarget(self, action: Selector("datePickerValueChanged:"), forControlEvents: UIControlEvents.ValueChanged)
+        datePickerView1.addTarget(self, action: #selector(CreateGroupAndCauseFitViewController.datePickerValueChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
         let toolBar = UIToolbar()
         
         toolBar.barStyle = UIBarStyle.Default
@@ -710,9 +822,9 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         
         toolBar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneStartDate")
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.doneStartDate))
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        let CancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: "cancelStartDate")
+        let CancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.cancelStartDate))
         
         toolBar.setItems([doneButton,flexSpace, CancelButton], animated: false)
         toolBar.userInteractionEnabled = true
@@ -723,7 +835,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         
     }
     
-    
+  ///// MARK:  DONE STRAT DATE FUNC
     
     func doneStartDate()
     {
@@ -763,7 +875,9 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         startDateTextField.resignFirstResponder()
         
     }
+   
     
+///// MARK:  CANCEL STRAT DATE FUNC
     func cancelStartDate()
     {
         
@@ -780,21 +894,25 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         
     }
 
-    
+    ///// MARK:  END DATE TEXT FIELD   FUNC
     @IBAction func endDateTxtFldAction(sender: UITextField)
     {
         
-        
+        ////  bck color
         datePickerView2.backgroundColor = UIColor.whiteColor();
+       
+        
+        datePickerView2.datePickerMode = UIDatePickerMode.Date
         
         sender.inputView = datePickerView2
+        
         
         datePickerView2.minimumDate = pickerDate;
 
         
        endDateLabel.text = ""
         
-        datePickerView2.addTarget(self, action: Selector("datePickerValueChanged2:"), forControlEvents: UIControlEvents.ValueChanged)
+        datePickerView2.addTarget(self, action: #selector(CreateGroupAndCauseFitViewController.datePickerValueChanged2(_:)), forControlEvents: UIControlEvents.ValueChanged)
         let toolBar = UIToolbar()
         
         toolBar.barStyle = UIBarStyle.Default
@@ -803,15 +921,19 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         
         toolBar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "doneEndDate")
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.doneEndDate))
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        let CancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: "cancelEndDate")
+        let CancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.cancelEndDate))
         
         toolBar.setItems([doneButton,flexSpace, CancelButton], animated: false)
         toolBar.userInteractionEnabled = true
         sender.inputAccessoryView = toolBar
         
     }
+    
+    
+    
+    ///// MARK:  DONE END DATE FUNC
     
     func doneEndDate()
     {
@@ -855,7 +977,9 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
 
           
     }
+   
     
+     ///// MARK:  CANCEL END DATE FUNC
     func cancelEndDate()
     {
         
@@ -886,10 +1010,11 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     @IBOutlet var betAmountTxtBelowView: UIView!
     
     
-    @IBOutlet var ic_betImageView: UIImageView!
+  
     
     
     let setBetAmountPickerView:UIPickerView=UIPickerView()
+    
     
     
     @IBAction func setBetAmountTextFieldAction(sender: UITextField)
@@ -909,23 +1034,14 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     
     func DoneButtonPickerAction()
     {
-       // setBetAmountTextField.resignFirstResponder()
-
+      
     }
     
     
     func CancelButtonPickerAction()
     {
       
-        
-        
-//       let placeholder6 = NSAttributedString(string: "0", attributes: [NSForegroundColorAttributeName:UIColor(red: 139/255, green: 139/255, blue: 139/255, alpha: 1)])
-//        setBetAmountTextField.attributedPlaceholder = placeholder6
-//        
-//        
-//        setBetAmountTextField.text = ""
-//        
-//         setBetAmountTextField.resignFirstResponder()
+   
     }
     
     
@@ -960,14 +1076,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
    // MARK:- SET BET AMOUNT $/PER MILE (CAUSE FIT)
     
     
-    
-    
     @IBOutlet var setBetAmountperMileTxtFld: UITextField!
-    
-    
-    
-    @IBOutlet var ic_betCauseFitImageView: UIImageView!
-    
     
     
     let setBetAmountperMilePickerView:UIPickerView=UIPickerView()
@@ -990,21 +1099,21 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         toolBar.backgroundColor = UIColor(red: 209/255, green: 209/255, blue: 209/255, alpha: 1)
         toolBar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "DoneButtonPicker2Action")
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.DoneButtonPicker2Action))
         
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         
         
-        var setBetAmount = UIBarButtonItem(title: "Set Bet Amount $/per mile", style: .Plain, target: self, action: nil)
+        let setBetAmount = UIBarButtonItem(title: "Set Bet Amount $/per mile", style: .Plain, target: self, action: nil)
         
       
         
         
-        let CancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: "CancelButtonPicker2Action")
+        let CancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.CancelButtonPicker2Action))
         
                 
         
-        toolBar.setItems([CancelButton,flexSpace,setBetAmount,flexSpace,doneButton], animated: false)
+        toolBar.setItems([doneButton,flexSpace,setBetAmount,flexSpace,CancelButton], animated: false)
         
         setBetAmount.enabled = false
         toolBar.userInteractionEnabled = true
@@ -1024,6 +1133,14 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     
     func DoneButtonPicker2Action()
     {
+        
+       
+   
+       
+       self.setBetAmountperMileTxtFld.text = setBetAmountValue[0]
+        
+
+      
         setBetAmountperMileTxtFld.resignFirstResponder()
         
     }
@@ -1112,6 +1229,15 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         }
         
         
+        if setBetAmountTextField.isFirstResponder()
+        {
+            
+            self.FirstWinnerTextField.becomeFirstResponder()
+            
+            return
+
+            
+        }
         
         if FirstWinnerTextField.isFirstResponder()
         {
@@ -1138,6 +1264,15 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
             self.nameOfChallenge.becomeFirstResponder()
             
         }
+        
+        
+        if FirstWinnerTextField.isFirstResponder()
+        {
+            
+            self.setBetAmountTextField.becomeFirstResponder()
+        }
+
+        
         
         if secondWinnerTextField.isFirstResponder()
         {
@@ -1175,8 +1310,6 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
             textField.inputAccessoryView = inputToolbar5
             
         }
-
-        
         if textField == self.setGoalTextField
         {
             
@@ -1211,10 +1344,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     {
         challengeDescription.inputAccessoryView = inputToolbar2
         
-//        if textView == propertyTextView
-//        {
-//            animateViewMoving(true, moveValue: 180)
-//        }
+
         return true
         
     }
@@ -1370,17 +1500,15 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
             toolbar.sizeToFit()
             
             
-            var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "inputToolbarDonePressed")
+            var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.inputToolbarDonePressed))
             
             var flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
             
             var fixedSpaceButton = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
             
+            var nextButton  = UIBarButtonItem(image: UIImage(named: "bt_fwd"), style: .Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.keyboardNextButton))
             
-            
-         
-            var nextButton  = UIBarButtonItem(image: UIImage(named: "bt_fwd"), style: .Plain, target: self, action: "keyboardNextButton")
-            
+    
             
             
             
@@ -1402,22 +1530,20 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
             toolbar.translucent = true
             toolbar.sizeToFit()
             
-            var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "inputToolbarDonePressed")
+            var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.inputToolbarDonePressed))
             
             var flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
             
             var fixedSpaceButton = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
             
+//            
+//            var nextButton  = UIBarButtonItem(image: UIImage(named: "bt_fwd"), style: .Plain, target: self, action: "keyboardNextButton")
             
-            var nextButton  = UIBarButtonItem(image: UIImage(named: "bt_fwd"), style: .Plain, target: self, action: "keyboardNextButton")
-            
-            nextButton.width = 60.0
-            
-            var previousButton  = UIBarButtonItem(image: UIImage(named: "bt_back"), style: .Plain, target: self, action: "keyboardPreviousButton")
+            var previousButton  = UIBarButtonItem(image: UIImage(named: "bt_back"), style: .Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.keyboardPreviousButton))
             
             
             
-            toolbar.setItems([fixedSpaceButton,previousButton,nextButton, fixedSpaceButton, flexibleSpaceButton, doneButton], animated: false)
+            toolbar.setItems([fixedSpaceButton,previousButton, fixedSpaceButton, flexibleSpaceButton, doneButton], animated: false)
             toolbar.userInteractionEnabled = true
             
             return toolbar
@@ -1436,7 +1562,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
             toolbar.translucent = true
             toolbar.sizeToFit()
             
-            var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "inputToolbarDonePressed")
+            var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.inputToolbarDonePressed))
             
             var flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
             
@@ -1452,6 +1578,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     
     
     
+    
     lazy var inputToolbar5: UIToolbar =
         {
             var toolbar = UIToolbar()
@@ -1459,15 +1586,18 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
             toolbar.translucent = true
             toolbar.sizeToFit()
             
-            var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "inputToolbarDonePressed")
+            var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.inputToolbarDonePressed))
+            
             
             var flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
             
             var fixedSpaceButton = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
             
+            var nextButton  = UIBarButtonItem(image: UIImage(named: "bt_fwd"), style: .Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.keyboardNextButton))
             
-            toolbar.setItems([fixedSpaceButton, fixedSpaceButton, flexibleSpaceButton, doneButton], animated: false)
+            toolbar.setItems([ fixedSpaceButton,nextButton,fixedSpaceButton, flexibleSpaceButton, doneButton], animated: false)
             toolbar.userInteractionEnabled = true
+
             
             return toolbar
     }()
@@ -1482,16 +1612,24 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
             toolbar.translucent = true
             toolbar.sizeToFit()
             
-            
-            var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "inputToolbarDonePressed")
+            var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.inputToolbarDonePressed))
             
             var flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
             
             var fixedSpaceButton = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
-            var nextButton  = UIBarButtonItem(image: UIImage(named: "bt_fwd"), style: .Plain, target: self, action: "keyboardNextButton")
             
-            toolbar.setItems([ fixedSpaceButton,nextButton,fixedSpaceButton, flexibleSpaceButton, doneButton], animated: false)
+            
+            var nextButton  = UIBarButtonItem(image: UIImage(named: "bt_fwd"), style: .Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.keyboardNextButton))
+            
+            nextButton.width = 60.0
+            
+            var previousButton  = UIBarButtonItem(image: UIImage(named: "bt_back"), style: .Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.keyboardPreviousButton))
+            
+            
+            
+            toolbar.setItems([fixedSpaceButton,previousButton,nextButton, fixedSpaceButton, flexibleSpaceButton, doneButton], animated: false)
             toolbar.userInteractionEnabled = true
+
             
             return toolbar
     }()
@@ -1506,18 +1644,18 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
             toolbar.translucent = true
             toolbar.sizeToFit()
             
-            var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "inputToolbarDonePressed")
+            var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.inputToolbarDonePressed))
             
             var flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
             
             var fixedSpaceButton = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
             
             
-            var nextButton  = UIBarButtonItem(image: UIImage(named: "bt_fwd"), style: .Plain, target: self, action: "keyboardNextButton")
+            var nextButton  = UIBarButtonItem(image: UIImage(named: "bt_fwd"), style: .Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.keyboardNextButton))
             
             nextButton.width = 60.0
             
-            var previousButton  = UIBarButtonItem(image: UIImage(named: "bt_back"), style: .Plain, target: self, action: "keyboardPreviousButton")
+            var previousButton  = UIBarButtonItem(image: UIImage(named: "bt_back"), style: .Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.keyboardPreviousButton))
             
             
             
@@ -1534,13 +1672,13 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
             toolbar.translucent = true
             toolbar.sizeToFit()
             
-            var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "inputToolbarDonePressed")
+            var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.inputToolbarDonePressed))
             
             var flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
             
             var fixedSpaceButton = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
             
-            var previousButton  = UIBarButtonItem(image: UIImage(named: "bt_back"), style: .Plain, target: self, action: "keyboardPreviousButton")
+            var previousButton  = UIBarButtonItem(image: UIImage(named: "bt_back"), style: .Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.keyboardPreviousButton))
             
             
             
@@ -1720,7 +1858,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
 
     
     
-    
+    var descriptionText = String()
     
     
     // MARK:- GROUP FIT
@@ -1740,13 +1878,9 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         
         request.timeoutInterval = 20.0;
         
-        let modelName = UIDevice.currentDevice().modelName
+     
         
-        let systemVersion = UIDevice.currentDevice().systemVersion;
-        
-        let make="iphone"
-        
-        let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
+        let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
         
         
         let betAmount = Int(setBetAmountTextField.text!)
@@ -1756,6 +1890,19 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         
         let endDate = NSUserDefaults.standardUserDefaults().stringForKey("endDate")
         
+        let Description = challengeDescription.text!
+        
+        if Description ==  "Challenge description"
+        {
+            descriptionText = ""
+        }
+        else
+        {
+            descriptionText = challengeDescription.text!
+            
+        }
+        
+        
         
         
         if self.addImage.image != UIImage(named: "im_add_image")
@@ -1763,9 +1910,9 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
             
             let param = [
              
-                "userId"  : userId,
+                "userId"  : userId!,
                 "challengeName" : nameOfChallenge.text!,
-                "description" : challengeDescription.text!,
+                "description" : descriptionText,
                 "betAmount" : String(betAmount!),
                 "winner1"  : String(FirstWinner),
                 "winner2"  : String(secondWinner),
@@ -1799,7 +1946,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         else
         {
         
-        let postString = "userId=\(userId)&challengeName=\(nameOfChallenge.text!)&description=\(challengeDescription.text!)&betAmount=\(betAmount!)&winner1=\(FirstWinner)&winner2=\(secondWinner)&winner3=\(thirdWinner)&activityType=\(activityTypeId)&parametersType=\(ParameterTypeId)&startDate=\(startDate!)&endDate=\(endDate!)";
+        let postString = "userId=\(userId!)&challengeName=\(nameOfChallenge.text!)&description=\(descriptionText)&betAmount=\(betAmount!)&winner1=\(FirstWinner)&winner2=\(secondWinner)&winner3=\(thirdWinner)&activityType=\(activityTypeId)&parametersType=\(ParameterTypeId)&startDate=\(startDate!)&endDate=\(endDate!)";
         
         print(postString)
         
@@ -1839,14 +1986,9 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         request.HTTPMethod = "POST"
         
         request.timeoutInterval = 20.0;
+     
         
-        let modelName = UIDevice.currentDevice().modelName
-        
-        let systemVersion = UIDevice.currentDevice().systemVersion;
-        
-        let make="iphone"
-        
-        let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
+        let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
         
         
         let amountPerMile = AmountPerMile
@@ -1858,14 +2000,27 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         let endDate = NSUserDefaults.standardUserDefaults().stringForKey("endDate")
         
         
+        let Description = challengeDescription.text!
+        
+        if Description ==  "Challenge description"
+        {
+            descriptionText = ""
+        }
+        else
+        {
+            descriptionText = challengeDescription.text!
+            
+        }
+
+        
         if self.addImage.image != UIImage(named: "im_add_image")
         {
             
             let param = [
                 
-                "userId"  : userId,
+                "userId"  : userId!,
                 "challengeName" : nameOfChallenge.text!,
-                "description" : challengeDescription.text!,
+                "description" : descriptionText,
                 "betAmount" : String(betAmount!),
                 "amountPerMile"  : amountPerMile,
                 "myContributions"  : myContributionsId,
@@ -1896,7 +2051,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         else
         {
         
-        let postString = "userId=\(userId)&challengeName=\(nameOfChallenge.text!)&description=\(challengeDescription.text!)&amountPerMile=\(amountPerMile)&betAmount=\(betAmount!)&activityType=\(activityTypeId)&causes=\(CauseTypeId)&startDate=\(startDate!)&endDate=\(endDate!)&myContributions=\(myContributionsId)";
+        let postString = "userId=\(userId!)&challengeName=\(nameOfChallenge.text!)&description=\(descriptionText)&amountPerMile=\(amountPerMile)&betAmount=\(betAmount!)&activityType=\(activityTypeId)&causes=\(CauseTypeId)&startDate=\(startDate!)&endDate=\(endDate!)&myContributions=\(myContributionsId)";
         
         print(postString)
         
@@ -1952,6 +2107,12 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                     
                     let status = parseJSON["status"] as? String
                     let msg=parseJSON["message"] as? String
+                    
+                    let response=parseJSON["response"] as? String
+                    
+//                    let challengeID=parseJSON["challengeId"] as? String
+                    
+                    
                     if(status=="Success")
                     {
                         
@@ -1959,28 +2120,47 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                         NSOperationQueue.mainQueue().addOperationWithBlock
                             {
                                 
-                                
-                                
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
+                                if  let elements: AnyObject = json!["response"]
+                                {
+                                    
+                                    
+                                    
+                                    for i in 0 ..< elements.count
+                                    {
+                                        
+                                       
+                                        let challengeId = elements[i]["challengeId"] as! String
 
-//                                
-//                                NSUserDefaults.standardUserDefaults().setObject(msg, forKey: "successMsgOfAddManually")
-//                                
-//                                self.presentingViewController.self!.presentingViewController!.dismissViewControllerAnimated(true, completion: nil);
-//                                
-//                                
-//                                
+                                    
+                                    self.activityIndicator.stopAnimating();
+                                    
+                                    self.loadingView.removeFromSuperview();
+
+                                    
+                                let viewChallenge = self.storyboard?.instantiateViewControllerWithIdentifier("ViewGroupFitViewController") as! ViewGroupFitViewController
+                                    
+                                        
+                                print(challengeId)
+                                    
+
+                                    
+                                NSUserDefaults.standardUserDefaults().setObject(challengeId, forKey: "challengeId")
+                                    
+                                    
+                                NSUserDefaults.standardUserDefaults().setObject(1, forKey: "TypeIdParticipating")
+                                    
+                                 NSUserDefaults.standardUserDefaults().setObject(self.nameOfChallenge.text, forKey: "challengeName")
+                                    
+                                print(NSUserDefaults.standardUserDefaults().stringForKey("challengeId"))
+   
+                                    
+                                self.presentViewController(viewChallenge, animated: false, completion: nil)
+                                        
+                                    
+                            }
+                                                  
+                        }
                                 
-                                
-                                    let alert = UIAlertController(title: "", message:msg , preferredStyle: UIAlertControllerStyle.Alert)
-                                
-                                                                let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
-                                
-                                                                alert.addAction(alertAction)
-                                
-                                                                self.presentViewController(alert, animated: true, completion: nil)
                                 
                                 
                                 
@@ -2084,28 +2264,46 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                                 
                                 
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
-                                
-                                //
-                                //                                NSUserDefaults.standardUserDefaults().setObject(msg, forKey: "successMsgOfAddManually")
-                                //
-                                //                                self.presentingViewController.self!.presentingViewController!.dismissViewControllerAnimated(true, completion: nil);
-                                //
-                                //
-                                //
-                                
-                                
-                                let alert = UIAlertController(title: "", message:msg , preferredStyle: UIAlertControllerStyle.Alert)
-                                
-                                let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
-                                
-                                alert.addAction(alertAction)
-                                
-                                self.presentViewController(alert, animated: true, completion: nil)
-                                
-                                
+                                if  let elements: AnyObject = json!["response"]
+                                {
+                                    
+                                    
+                                    
+                                    for i in 0 ..< elements.count
+                                    {
+                                        
+                                        
+                                        let challengeId = elements[i]["challengeId"] as! String
+                                        
+                                        
+                                        self.activityIndicator.stopAnimating();
+                                        
+                                        self.loadingView.removeFromSuperview();
+                                        
+                                        
+                                        let viewChallenge = self.storyboard?.instantiateViewControllerWithIdentifier("ViewGroupFitViewController") as! ViewGroupFitViewController
+                                        
+                                        
+                                        print(challengeId)
+                                        
+                                        
+                                        
+                                        NSUserDefaults.standardUserDefaults().setObject(challengeId, forKey: "challengeId")
+                                        
+                                        
+                                        NSUserDefaults.standardUserDefaults().setObject(2, forKey: "TypeIdParticipating")
+                                        
+                                        NSUserDefaults.standardUserDefaults().setObject(self.nameOfChallenge.text, forKey: "challengeName")
+                                        
+                                        print(NSUserDefaults.standardUserDefaults().stringForKey("challengeId"))
+                                        
+                                        
+                                        self.presentViewController(viewChallenge, animated: false, completion: nil)
+                                        
+                                        
+                                    }
+                                    
+                                }
                                 
                         } // ns close
                         
@@ -2252,6 +2450,12 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     {
         super.viewDidLoad()
         
+        
+        
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "FromCreateCauseAndGroupFitScreen")
+        
+        
+        
       /// delegate 
         
         nameOfChallenge.delegate = self
@@ -2300,7 +2504,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
             screenNameLAbel.text = "Create GroupFit"
             
             
-            let string = "Note: If at the end of a GroupFit only 2 participants remain, then the winners amount will be distributed equally between 1st and 2nd winners." as NSString
+            let string = "Note: If at the end of a GroupFit only 2 participants remain, then the third winners amount will be distributed equally between 1st and 2nd winners." as NSString
             
             let style = NSMutableParagraphStyle()
             style.alignment = .Center
@@ -2371,7 +2575,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
             
             
             
-            let string2 = "Note: The amount that gets donated will be based on the actual distance covered" as NSString
+            let string2 = "Note: The amount that gets donated will be based on the actual distance covered." as NSString
             
             let style = NSMutableParagraphStyle()
             style.alignment = .Center

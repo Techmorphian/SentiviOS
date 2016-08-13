@@ -17,6 +17,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
  
     
     
+    @IBOutlet var winnerMainViewHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet var bottomFrontView: UIView!
     
@@ -238,6 +239,22 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
             
         }
         
+        
+        if sender.titleLabel?.text == "Start Activity"
+        {
+           
+            
+            
+            self.performSegueWithIdentifier("summaryToHomeScreen", sender: nil)
+            
+//            let stratActivity = self.storyboard?.instantiateViewControllerWithIdentifier("HomeViewController") as!  HomeViewController;
+//            
+//                   self.presentViewController(stratActivity,animated :false , completion:nil);
+
+            
+        }
+
+        
     }
     
     ////////////////////////////////////////
@@ -376,7 +393,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
      
         
-       let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
+       let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
         
         // let userId =  "158CDEFB-37D4-4216-BD17-E06B6C6812A6"
         
@@ -387,7 +404,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
     
         
-        let postString = "userId=\(userId)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
+        let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
         
         print(postString)
         
@@ -428,8 +445,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         request.timeoutInterval = 20.0;
         
         
-        let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
-        
+        let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
          // let userId =  "158CDEFB-37D4-4216-BD17-E06B6C6812A6"
         
         
@@ -439,7 +455,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
         
         
-        let postString = "userId=\(userId)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
+        let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
         
         print(postString)
         
@@ -501,7 +517,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
 
         
-        let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
+        let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
         
         //ANUJ user id
         
@@ -513,7 +529,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
       
         
         
-        let postString = "userId=\(userId)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
+        let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
         
         print(postString)
         
@@ -871,13 +887,6 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                     if dateCheck == challengeOver
                                     {
                                         
-//                                        buttonOne.hidden = false
-//                                        
-//                                        buttonOne.setTitle("Invite Friends", forState: .Normal)
-//                                        
-//                                        buttonTwo.hidden = true
-//                                        
-//                                        bottomSmallViewCenterX.constant = self.view.frame.width/2 - 10
                                         
                                         
                                         buttonOne.hidden = true
@@ -916,12 +925,8 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                 {
                                     
                                     buttonOne.hidden = true
-                                    
-                                  
-                                    
                                     buttonTwo.hidden = true
                                     
-                                   
                                     
                                     
                                 }
@@ -1154,33 +1159,42 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                         
                                        if i.valueForKey("winner") as? String != ""
                                        {
-                                          FirstWinnerLabel.text = i.valueForKey("winner") as? String
+                                          FirstWinnerLabel.text = (i.valueForKey("winner") as? String)! + "%"
                                         
                                         
                                         
                                         
                                         frstWinnerImagevIew.hidden = true
+                                        
                                         secondWinnerImageView.hidden = true
+                                        
                                         thirdWinnerImageView.hidden = true
+                                        
                                         nameOf1stWinner.hidden = true
                                         nameOf2ndWinner.hidden = true
                                         nameOf3rdWinner.hidden = true
 
                                          winnerDividerYConstarint.constant = -20
                                         winnerDivider2YConstraint.constant = -20
+                                        
                                         winnerDividerView1Height.constant = 100
                                         winnerDividerView2Height.constant = 100
                                         
-                                        winnerViewHeight.constant = 270 - 75
+                                        winnerViewHeight.constant = 240 - 75
                                     
+                                        
+                                      //  winnerMainViewHeightConstraint.constant = 270 - 75
+                                                                         
                                         
                                     }
                                        
                                     else
                                        {
                                         
-                                        winnerViewHeight.constant = 270
+                                        winnerViewHeight.constant = 240
                                         
+                                       // winnerMainViewHeightConstraint.constant = 270
+                                                                                
                                         frstWinnerImagevIew.hidden = false
                                         secondWinnerImageView.hidden = false
                                         thirdWinnerImageView.hidden = false
@@ -1191,6 +1205,8 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                         
                                         winnerDividerYConstarint.constant = 0
                                         winnerDivider2YConstraint.constant = 0
+                                        
+                                        
                                         winnerDividerView1Height.constant = 150
                                         winnerDividerView2Height.constant = 150
 
@@ -1231,7 +1247,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                         if i.valueForKey("winner") as? String != ""
                                         {
 
-                                        SecondWinnerLabel.text = i.valueForKey("winner") as? String
+                                        SecondWinnerLabel.text = (i.valueForKey("winner") as? String)! + "%"
                                             
                                             
                                             winnerDividerYConstarint.constant = -20
@@ -1239,15 +1255,18 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                             winnerDividerView1Height.constant = 100
                                             winnerDividerView2Height.constant = 100
                                             
-                                            winnerViewHeight.constant = 270 - 75
-
+                                          winnerViewHeight.constant = 240 - 75
+                                       
                                         }
                                         
                                         else
                                         {
                                         
+                                            //winnerMainViewHeightConstraint.constant = 270
+
+                                           winnerViewHeight.constant = 240
                                             
-                                            winnerViewHeight.constant = 270
+                                         
                                             
                                             frstWinnerImagevIew.hidden = false
                                             secondWinnerImageView.hidden = false
@@ -1295,16 +1314,20 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                             winnerDividerView1Height.constant = 100
                                             winnerDividerView2Height.constant = 100
                                             
-                                            winnerViewHeight.constant = 270 - 75
+                                           winnerViewHeight.constant = 240 - 75
+                                          
+
                                         
-                                        thirdWinnerLabel.text = i.valueForKey("winner") as? String
+                                        thirdWinnerLabel.text = (i.valueForKey("winner") as? String)! + "%"
                                             
                                         }
                                         else
                                         {
                                         
                                             
-                                            winnerViewHeight.constant = 270
+                                           winnerViewHeight.constant = 240
+                                           // winnerMainViewHeightConstraint.constant = 270
+
                                             
                                             frstWinnerImagevIew.hidden = false
                                             secondWinnerImageView.hidden = false

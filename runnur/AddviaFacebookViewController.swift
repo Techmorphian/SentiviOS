@@ -107,7 +107,15 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
                 
             {
                 
-                self.addFbFriends();
+                if(Reachability.isConnectedToNetwork()==true )
+                {
+                    showActivityIndicatory();
+                     self.addFbFriends();
+                    
+                }
+                
+
+              
                 
             }
             
@@ -843,7 +851,8 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         
         let make="iphone"
         
-        let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
+        let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
+
         
         
         
@@ -868,7 +877,7 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         
         
         
-        let postString = "os=\(systemVersion)&make=\(make)&model=\(modelName)&userId=\(userId)&\(friendFbIds)";
+        let postString = "os=\(systemVersion)&make=\(make)&model=\(modelName)&userId=\(userId!)&\(friendFbIds)";
         
         print(postString)
         
@@ -955,7 +964,7 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
                                 
                                 
                                 
-                                NSUserDefaults.standardUserDefaults().setObject(msg, forKey: "successMsgOfAddManually")
+                                NSUserDefaults.standardUserDefaults().setObject(msg, forKey: "AddFBFrndsSucessMSG")
                                 
                                  self.presentingViewController.self!.presentingViewController!.dismissViewControllerAnimated(true, completion: nil);
                                 

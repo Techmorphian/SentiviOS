@@ -792,14 +792,14 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
-        return 150.0;//Choose your custom row height
+        return 130.0;//Choose your custom row height
     }
     
     
 
     ///////////////////////////////////////////////////// web service part
     
-    // MARK:- VIEW ACTIVE CHALLENGES WEB SERVICE
+    // MARK:- VIEW COMPLETED CHALLENGES WEB SERVICE
     
     func viewCompletedChallenges()
         
@@ -817,14 +817,13 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
         request.timeoutInterval = 20.0;
         
         
-        let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
+        let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
+        
         let filter = "3"
         
-        //let userId  = "158CDEFB-37D4-4216-BD17-E06B6C6812A6"
         
         
-        
-        let postString = "userId=\(userId)&filter=\(filter)&currentDate=\(CurrentDateFunc.currentDate())";
+        let postString = "userId=\(userId!)&filter=\(filter)&currentDate=\(CurrentDateFunc.currentDate())";
         
         print(postString)
         
@@ -1667,6 +1666,8 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+          NSUserDefaults.standardUserDefaults().setBool(false, forKey: "FromCreateCauseAndGroupFitScreen")
         
         completedTableView.tableFooterView = UIView()
       

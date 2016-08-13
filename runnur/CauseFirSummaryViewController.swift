@@ -204,6 +204,8 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
     @IBAction func buttonTwoAction(sender: UIButton)
     {
         
+       // causeFitSummaryToHomeScreen
+        
         if sender.titleLabel?.text == "Invite Friends"
         {
             
@@ -211,6 +213,16 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
             //self.performSegueWithIdentifier("inviteFriends", sender: nil)
             
         }
+        
+        
+        if sender.titleLabel?.text == "Start Activity"
+        {
+            
+            
+            self.performSegueWithIdentifier("causeFitSummaryToHomeScreen", sender: nil)
+            
+        }
+        
         
         if sender.titleLabel?.text == "Accept"
         {
@@ -388,14 +400,14 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         
         
         
-        let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
+        let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
         
        
         
         let ChallengeId = NSUserDefaults.standardUserDefaults().stringForKey("challengeId")
         
         
-        let postString = "userId=\(userId)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
+        let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
         
         print(postString)
         
@@ -440,7 +452,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         
         
         
-        let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
+        let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
         
        
         
@@ -451,7 +463,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         
         
         
-        let postString = "userId=\(userId)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())&amount=\(amount)&anonymous=\(anonymous)";
+        let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())&amount=\(amount)&anonymous=\(anonymous)";
         
         print(postString)
         
@@ -506,14 +518,14 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         request.timeoutInterval = 20.0;
         
         
-        let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
+        let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
         
         
         let ChallengeId = NSUserDefaults.standardUserDefaults().stringForKey("challengeId")
         
         
         
-        let postString = "userId=\(userId)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
+        let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
         
         print(postString)
         

@@ -241,8 +241,10 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         {
             cell.friendsNameLabel.text = searchfriendListArray[indexPath.row].firstName + " " + searchfriendListArray[indexPath.row].lastName;
             
-          
-           cell.contactImage.image = UIImage(named: searchfriendListArray[indexPath.row].conatctImage)
+                    
+            
+        cell.contactImage.kf_setImageWithURL(NSURL(string: searchfriendListArray[indexPath.row].conatctImage)!, placeholderImage: UIImage(named:"im_default_profile"))
+            
             
             cell.cancleButton.tag = indexPath.row
 
@@ -311,111 +313,115 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         
          self.index = index
      
-    
+        let alert = UIAlertController(title: "", message:"Are you sure you want to remove" + " " + friendListArray[index].firstName + " " + friendListArray[index].lastName + " " + "?" , preferredStyle: UIAlertControllerStyle.Alert)
+       
+        let okAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: {action in
         
         
-        
-        self.showActivityIndicatory()
-        if(Reachability.isConnectedToNetwork()==true )
-        {
-           
-            
-            let myurl = NSURL(string: Url.deleteFromFriendList)
-            
-            let request = NSMutableURLRequest(URL: myurl!)
-            request.HTTPMethod = "POST"
-            let modelName = UIDevice.currentDevice().modelName
-            let systemVersion = UIDevice.currentDevice().systemVersion;
-            let make="iphone"
             
             
-            let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
-            
-            
-            let postString = "os=\(systemVersion)&make=\(make)&model=\(modelName)&userId=\(userId)&friendUserId=\(friendListArray[index].friendId)";
-            
-            print(postString)
-
-            
-            
-            print(postString);
-            request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
-            request.timeoutInterval = 20.0;
-            let task = NSURLSession.sharedSession().dataTaskWithRequest(request)
+            self.showActivityIndicatory()
+            if(Reachability.isConnectedToNetwork()==true )
             {
-                data, response, error in
-                if error != nil
+                
+                
+                let myurl = NSURL(string: Url.deleteFromFriendList)
+                
+                let request = NSMutableURLRequest(URL: myurl!)
+                request.HTTPMethod = "POST"
+                let modelName = UIDevice.currentDevice().modelName
+                let systemVersion = UIDevice.currentDevice().systemVersion;
+                let make="iphone"
+                
+                
+                let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
+
+                
+                
+                let postString = "os=\(systemVersion)&make=\(make)&model=\(modelName)&userId=\(userId!)&friendUserId=\(self.friendListArray[index].friendId)";
+                
+                print(postString)
+                
+                
+                
+                print(postString);
+                request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+                request.timeoutInterval = 20.0;
+                let task = NSURLSession.sharedSession().dataTaskWithRequest(request)
                 {
-                    dispatch_sync(dispatch_get_main_queue())
+                    data, response, error in
+                    if error != nil
                     {
-                        self.activityIndicator.stopAnimating();
-                        self.loadingView.removeFromSuperview()
-                        
-                        let alert = UIAlertController(title: "", message:" You are currently offline" , preferredStyle: UIAlertControllerStyle.Alert)
-                        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
-                        let tryAgainAction = UIAlertAction(title: "Try Again", style: UIAlertActionStyle.Default, handler: {action  in  self.getdeleteRowProtocol(cell, text: "", index: index) })
-                        alert.addAction(okAction)
-                        alert.addAction(tryAgainAction)
-                       
-                        self.presentViewController(alert, animated: true, completion: nil)
-                        return
-                        
-                        
-                        
-                        
-                    }
-                }
-                else
-                {
-                    print("response=\(response)")
-                    
-                    
-                    if response != nil
-                    {
-                        let responseString = NSString(data: data!, encoding: NSUTF8StringEncoding)
-                        print("response data=\(responseString)")
-                        do
+                        dispatch_sync(dispatch_get_main_queue())
                         {
-                            let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as? NSDictionary
-                            if  let parseJSON = json
+                            self.activityIndicator.stopAnimating();
+                            self.loadingView.removeFromSuperview()
+                            
+                            let alert = UIAlertController(title: "", message:" You are currently offline" , preferredStyle: UIAlertControllerStyle.Alert)
+                            let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+                            let tryAgainAction = UIAlertAction(title: "Try Again", style: UIAlertActionStyle.Default, handler: {action  in  self.getdeleteRowProtocol(cell, text: "", index: index) })
+                            alert.addAction(okAction)
+                            alert.addAction(tryAgainAction)
+                            
+                            self.presentViewController(alert, animated: true, completion: nil)
+                            return
+                            
+                            
+                            
+                            
+                        }
+                    }
+                    else
+                    {
+                        print("response=\(response)")
+                        
+                        
+                        if response != nil
+                        {
+                            let responseString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+                            print("response data=\(responseString)")
+                            do
                             {
-                                let status = parseJSON["status"] as? String
-                                let msg=parseJSON["message"] as? String
-                                if(status=="Success")
+                                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as? NSDictionary
+                                if  let parseJSON = json
                                 {
-                                    
-                                    NSOperationQueue.mainQueue().addOperationWithBlock
-                                        {
-                                            
-                                            
-                                            
-                                            
-                                            self.activityIndicator.stopAnimating();
-                                            
-                                            self.loadingView.removeFromSuperview();
-                                            
-                                            
-                                            
-                                            if self.searchButtonActive == true
-                                            
-                                                   {
+                                    let status = parseJSON["status"] as? String
+                                    let msg=parseJSON["message"] as? String
+                                    if(status=="Success")
+                                    {
+                                        
+                                        NSOperationQueue.mainQueue().addOperationWithBlock
+                                            {
                                                 
+                                                
+                                                
+                                                
+                                                self.activityIndicator.stopAnimating();
+                                                
+                                                self.loadingView.removeFromSuperview();
+                                                
+                                                
+                                                
+                                                if self.searchButtonActive == true
+                                                    
+                                                {
+                                                    
                                                     self.friendListArray.removeAtIndex(self.searchfriendListArray[index].indexPathRow)
                                                     
                                                     self.searchfriendListArray.removeAtIndex(index)
-                                              
+                                                    
                                                     
                                                     self.friendsTableView.reloadData();
-                                            
-                                            
+                                                    
+                                                    
                                                 }
                                                 else
-                                                  {
-                                            
+                                                {
+                                                    
                                                     print(index)
-                                            
-                                            
-                                            
+                                                    
+                                                    
+                                                    
                                                     for i in self.friendListArray
                                                     {
                                                         
@@ -423,153 +429,186 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                                                         if i.indexPathRow == index
                                                         {
                                                             self.friendListArray.removeAtIndex(index)
-
+                                                            
                                                         }
                                                         
-
-                                                    }
-                                            
-                                            
-                                                           
-                                                    self.friendsTableView.reloadData();
-                                            
+                                                        
                                                     }
                                                     
-                                            
-                                            
-                                            
-                                            let alert = UIAlertController(title: "", message:msg , preferredStyle: UIAlertControllerStyle.Alert)
-                                            
-                                            let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
-                                            
-                                            alert.addAction(alertAction)
-                                          
-                                            self.presentViewController(alert, animated: true, completion: nil)
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                    self.friendsTableView.delegate = self;
-                                            
-                                    self.friendsTableView.dataSource = self;
-                                    self.friendsTableView.reloadData();
-                                            
-                                            
-                                    }///ns
-                                    
-                                }// if
-                                    
-                                else if (status == "Error")
-                                {
-                                    NSOperationQueue.mainQueue().addOperationWithBlock
-                                        {
-                                            
-                                            self.activityIndicator.stopAnimating();
-                                            self.loadingView.removeFromSuperview()
-                                            
-                                            
-                                            
-                                            let alert = UIAlertController(title: "", message:msg , preferredStyle: UIAlertControllerStyle.Alert)
-                                            
-                                            let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
-                                            
-                                            alert.addAction(alertAction)
-                                         
-                                            self.presentViewController(alert, animated: true, completion: nil)
-                                            
-                                            
+                                                    
+                                                    
+                                                    self.friendsTableView.reloadData();
+                                                    
+                                                }
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                              if   self.friendListArray.count == 0
+                                              {
+                                                
+                                                
+                                                if self.view.subviews.contains(self.noFriendResult.view)
+                                                    
+                                                {
+                                                    
+                                                    
+                                                }
+                                                    
+                                                else
+                                                    
+                                                {
+                                                    
+                                                    self.noFriendResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoFriendViewController") as! NoFriendViewController
+                                                    
+                                                    self.noFriendResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+                                                    
+                                                    self.view.addSubview((self.noFriendResult.view)!);
+                                                    
+                                                    
+                                                    
+                                                    self.noFriendResult.didMoveToParentViewController(self)
+                                                    
+                                                }
+                                                
+
+                                            }
+                                                self.friendsTableView.delegate = self;
+                                                
+                                                self.friendsTableView.dataSource = self;
+                                                self.friendsTableView.reloadData();
+                                                
+                                                
+                                        }///ns
+                                        
+                                    }// if
+                                        
+                                    else if (status == "Error")
+                                    {
+                                        NSOperationQueue.mainQueue().addOperationWithBlock
+                                            {
+                                                
+                                                self.activityIndicator.stopAnimating();
+                                                self.loadingView.removeFromSuperview()
+                                                
+                                                
+                                                
+                                                let alert = UIAlertController(title: "", message:msg , preferredStyle: UIAlertControllerStyle.Alert)
+                                                
+                                                let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
+                                                
+                                                alert.addAction(alertAction)
+                                                
+                                                self.presentViewController(alert, animated: true, completion: nil)
+                                                
+                                                
+                                        }
                                     }
-                                }
-                                else if (status == "NoResult")
-                                {
-                                    NSOperationQueue.mainQueue().addOperationWithBlock
-                                        {
-                                            
-                                            self.activityIndicator.stopAnimating();
-                                            self.loadingView.removeFromSuperview()
-                                            
-                                            let alert = UIAlertController(title: "", message:msg , preferredStyle: UIAlertControllerStyle.Alert)
-                                            
-                                            let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
-                                            
-                                            alert.addAction(alertAction)
-                                          
-                                            self.presentViewController(alert, animated: true, completion: nil)
+                                    else if (status == "NoResult")
+                                    {
+                                        NSOperationQueue.mainQueue().addOperationWithBlock
+                                            {
+                                                
+                                                self.activityIndicator.stopAnimating();
+                                                self.loadingView.removeFromSuperview()
+                                                
+                                                let alert = UIAlertController(title: "", message:msg , preferredStyle: UIAlertControllerStyle.Alert)
+                                                
+                                                let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
+                                                
+                                                alert.addAction(alertAction)
+                                                
+                                                self.presentViewController(alert, animated: true, completion: nil)
+                                        }
                                     }
                                 }
                             }
+                            catch
+                            {
+                                
+                                self.activityIndicator.stopAnimating();
+                                self.loadingView.removeFromSuperview()
+                                let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg , preferredStyle: UIAlertControllerStyle.Alert)
+                                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+                                let tryAgainAction = UIAlertAction(title: "Try Again", style: UIAlertActionStyle.Default, handler: {action  in  self.getdeleteRowProtocol(cell, text: "", index: index) })
+                                alert.addAction(okAction)
+                                alert.addAction(tryAgainAction)
+                                self.presentViewController(alert, animated: true, completion: nil)
+                                return
+                                    
+                                    
+                                    
+                                    
+                                    print("json error: \(error)")
+                            }
                         }
-                        catch
+                        else
                         {
-                            
                             self.activityIndicator.stopAnimating();
                             self.loadingView.removeFromSuperview()
+                            
                             let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg , preferredStyle: UIAlertControllerStyle.Alert)
                             let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
                             let tryAgainAction = UIAlertAction(title: "Try Again", style: UIAlertActionStyle.Default, handler: {action  in  self.getdeleteRowProtocol(cell, text: "", index: index) })
                             alert.addAction(okAction)
                             alert.addAction(tryAgainAction)
+                            
                             self.presentViewController(alert, animated: true, completion: nil)
                             return
-                                
-                                
-                                
-                                
-                                print("json error: \(error)")
+                            
+                            
+                            
+                            
+                            
                         }
                     }
-                    else
-                    {
-                        self.activityIndicator.stopAnimating();
-                        self.loadingView.removeFromSuperview()
-                        
-                        let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg , preferredStyle: UIAlertControllerStyle.Alert)
-                        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
-                        let tryAgainAction = UIAlertAction(title: "Try Again", style: UIAlertActionStyle.Default, handler: {action  in  self.getdeleteRowProtocol(cell, text: "", index: index) })
-                        alert.addAction(okAction)
-                        alert.addAction(tryAgainAction)
-                      
-                        self.presentViewController(alert, animated: true, completion: nil)
-                        return
-                        
-                        
-                        
-                        
-                        
-                    }
                 }
+                
+                task.resume();
+            } // close rech
+            else
+            {
+                
+                self.activityIndicator.stopAnimating();
+                self.loadingView.removeFromSuperview()
+                
+                
+                let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg , preferredStyle: UIAlertControllerStyle.Alert)
+                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+                let tryAgainAction = UIAlertAction(title: "Try Again", style: UIAlertActionStyle.Default, handler: {action  in  self.getdeleteRowProtocol(cell, text: "", index: index) })
+                alert.addAction(okAction)
+                alert.addAction(tryAgainAction)
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+                return
+                
+                
+                
+                
             }
             
-            task.resume();
-        } // close rech
-        else
-        {
             
-            self.activityIndicator.stopAnimating();
-            self.loadingView.removeFromSuperview()
-            
-            
-            let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg , preferredStyle: UIAlertControllerStyle.Alert)
-            let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
-            let tryAgainAction = UIAlertAction(title: "Try Again", style: UIAlertActionStyle.Default, handler: {action  in  self.getdeleteRowProtocol(cell, text: "", index: index) })
-            alert.addAction(okAction)
-            alert.addAction(tryAgainAction)
-           
-            self.presentViewController(alert, animated: true, completion: nil)
-            return
-     
-            
-            
-            
-        }
+        } )
         
         
+        let NoAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default, handler: nil)
+       
+        alert.addAction(okAction)
+        alert.addAction(NoAction)
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        return
+            
 
         
+        
+   
+        
 
-    }
+    }   ///main fun
     
     
     
@@ -592,17 +631,17 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         
         request.timeoutInterval = 20.0;
         
-        let modelName = UIDevice.currentDevice().modelName
         
-        let systemVersion = UIDevice.currentDevice().systemVersion;
+        let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
         
-        let make="iphone"
+        print(userId)
+        print(NSUserDefaults.standardUserDefaults().stringForKey("userId"))
         
-        let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
-        
-        let postString = "os=\(systemVersion)&make=\(make)&model=\(modelName)&userId=\(userId)";
+        let postString = "userId=\(userId!)";
         
         print(postString)
+        
+        
         
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -1003,15 +1042,11 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                                 }
                                 
                                 
-
-                                
-
                                 
                                 if self.view.subviews.contains(self.noFriendResult.view)
                                     
                                 {
                                     
-                                    //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
                                     
                                 }
                                     
@@ -1025,17 +1060,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                                     
                                     self.view.addSubview((self.noFriendResult.view)!);
                                     
-                                    //  self.DIVC.imageView.image = UIImage(named: "im_no_internet");
-                                    
-                                    // self.noInternet.imageView.userInteractionEnabled = true
-                                    
-                                    
-//                                    let tapRecognizer = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
-//                                    
-//                                    // self.noInternet.noInternetLabel.userInteractionEnabled = true
-                                    
-                                    
-                                    //self.noFriendResult.view.addGestureRecognizer(tapRecognizer)
+                                
                                     
                                     self.noFriendResult.didMoveToParentViewController(self)
                                     
@@ -1043,20 +1068,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
 
                                 
                                 
-                                
-//                                let label:UILabel = UILabel(frame: CGRectMake(0, self.view.frame.size.height/2-40, self.view.frame.width, 50))
-//                                
-//                             
-//                                label.textAlignment = NSTextAlignment.Center
-//                                label.text = "Click on the + button to add friends"
-//                                label.textColor = UIColor(red: 98/255, green: 99/255, blue: 102/255, alpha: 1)
-//                                label.lineBreakMode = NSLineBreakMode.ByWordWrapping
-//                                label.numberOfLines = 2;
-//                                
-//                                label.font = UIFont(name: "System",
-//                                    size: 13.0)
-//                                self.view.addSubview(label)
-
+                       
                                 
                                 
                         }
@@ -1302,10 +1314,16 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
     override func viewDidAppear(animated: Bool)
     {
         
-        if NSUserDefaults.standardUserDefaults().stringForKey("successMsgOfAddManually") != nil
-        {
         
-                if NSUserDefaults.standardUserDefaults().stringForKey("successMsgOfAddManually") == ""
+        
+        print(NSUserDefaults.standardUserDefaults().stringForKey("successMsgOfAddManually"))
+        
+        print(NSUserDefaults.standardUserDefaults().stringForKey("AddFBFrndsSucessMSG"))
+        
+        
+        if NSUserDefaults.standardUserDefaults().stringForKey("successMsgOfAddManually") != nil
+              {
+                if NSUserDefaults.standardUserDefaults().stringForKey("successMsgOfAddManually") != ""
                 {
         
                      let alert = UIAlertController(title: "", message: NSUserDefaults.standardUserDefaults().stringForKey("successMsgOfAddManually") , preferredStyle: UIAlertControllerStyle.Alert)
@@ -1329,11 +1347,16 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         
         
                 }
+                
+        }
         
-                if  NSUserDefaults.standardUserDefaults().stringForKey("successMsgOfAddManually") != ""
+        
+        if NSUserDefaults.standardUserDefaults().stringForKey("AddFBFrndsSucessMSG") != nil
+        {
+                if  NSUserDefaults.standardUserDefaults().stringForKey("AddFBFrndsSucessMSG") != ""
                 {
         
-                    let alert = UIAlertController(title: "", message: NSUserDefaults.standardUserDefaults().stringForKey("successMsgOfAddManually") , preferredStyle: UIAlertControllerStyle.Alert)
+                    let alert = UIAlertController(title: "", message: NSUserDefaults.standardUserDefaults().stringForKey("AddFBFrndsSucessMSG") , preferredStyle: UIAlertControllerStyle.Alert)
         
                     let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { void in
                    
@@ -1351,8 +1374,8 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                     
                 }
                 
-        }
         
+        }
         
     }
     
@@ -1369,10 +1392,12 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         friendsTableView.tableFooterView = UIView()
 
       
-        
-        
-        NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "successMsgOfAddManually")
 
+        
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "successMsgOfAddManually")
+        
+        
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "AddFBFrndsSucessMSG")
         
         
         if(Reachability.isConnectedToNetwork()==true )

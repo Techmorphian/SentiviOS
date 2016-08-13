@@ -164,7 +164,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             {
                
                 cell.countLabel.hidden = false;
-                cell.countLabel.text = "$" + " " + NSUserDefaults.standardUserDefaults().stringForKey("winningCount")!
+              //  cell.countLabel.text = "$" + " " + NSUserDefaults.standardUserDefaults().stringForKey("winningCount")!
                 
               
                cell.countLabel.layer.cornerRadius = cell.countLabel.frame.size.width / 2;
@@ -369,9 +369,11 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
     
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath)
     {
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as!  NavigationCellTableViewCell
+        //let cell = tableView.cellForRowAtIndexPath(indexPath) as!  NavigationCellTableViewCell
         
-        cell.contentView.backgroundColor = UIColor.clearColor()
+        let cell = tableView.dequeueReusableCellWithIdentifier("NavigationCellTableViewCell")
+        
+        cell!.contentView.backgroundColor = colorCode.DarkBlueColor 
     }
     
     

@@ -54,7 +54,26 @@ class ViewGroupFitViewController: UIViewController
     {
         
         
-        self.dismissViewControllerAnimated(false, completion: nil);
+        
+     //   NSUserDefaults.standardUserDefaults().setBool(true, forKey: "FromCreateCauseAndGroupFitScreen")
+        
+        if NSUserDefaults.standardUserDefaults().boolForKey("FromCreateCauseAndGroupFitScreen") == true
+        {
+           
+            self.presentingViewController.self!.presentingViewController!.dismissViewControllerAnimated(true, completion: nil);
+
+            
+        }
+        else
+        {
+            
+             NSUserDefaults.standardUserDefaults().setBool(false, forKey: "FromCreateCauseAndGroupFitScreen")
+            self.dismissViewControllerAnimated(true, completion: nil)
+            
+            
+        }
+
+        
         
         
         
@@ -164,8 +183,9 @@ class ViewGroupFitViewController: UIViewController
         
        // ActivityView.view.hidden=false;
         
-        activityBottomView.backgroundColor = UIColor.whiteColor()
+        sender.tintColor = UIColor.whiteColor();
         
+        activityBottomView.backgroundColor = UIColor.whiteColor()
         
         LeaderboardButton.titleLabel?.textColor  = colorCode.DarkBlueColor
         LeaderboardBottomView.backgroundColor = colorCode.DarkBlueColor
@@ -651,6 +671,8 @@ class ViewGroupFitViewController: UIViewController
        
         
         ActivityButton.titleLabel?.textColor  = colorCode.DarkBlueColor
+        
+        
         activityBottomView.backgroundColor = colorCode.DarkBlueColor
         
         LeaderboardButton.titleLabel?.textColor  = colorCode.DarkBlueColor

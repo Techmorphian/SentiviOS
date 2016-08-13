@@ -55,6 +55,13 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     var searchPBArray = [phoneBookModel]()
 
     
+    //// to get filter PhonebookContacts
+    
+    var PBFilterModel = phoneBookModel()
+    
+    var PBFilterArray = [phoneBookModel]()
+
+    
     
     
     @IBAction func backButtonAction(sender: AnyObject)
@@ -190,7 +197,8 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                 self.searchPBModel.lastName = PBArray[i].lastName;
 
                 self.searchPBModel.Email = PBArray[i].Email;
-                self.searchPBModel.MobNo = PBArray[i].MobNo;
+                
+               // self.searchPBModel.MobNo = PBArray[i].MobNo;
                 
                 self.searchPBModel.contImages = PBArray[i].contImages;
                 
@@ -300,34 +308,37 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     {
        
         
-        print(PBArray.count)
-        for i in 0 ..< PBArray.count
-        {
+//        print(PBArray.count)
+//        for i in 0 ..< PBArray.count
+//        {
+//            
+//            print(PBArray[i].Email)
+//            print(PBArray.count)
+//            for j in PBArray[i].Email
+//            {
+//                
+//                
+//                for k in friendListArray
+//                {
+//                    
+//                    if k.Email[0] == j
+//                        
+//                    {
+//                        PBArray[i].toShow = false
+//                  
+//                       
+//                        
+//                        break;
+//                    }
+//                    
+//                }
+//                
+//            }
+//        }
+        
             
-            print(PBArray[i].Email)
-            print(PBArray.count)
-            for j in PBArray[i].Email
-            {
-                
-                
-                for k in friendListArray
-                {
-                    
-                    if k.Email[0] == j
-                        
-                    {
-                        PBArray[i].toShow = false
-                  
-                       
-                        
-                        break;
-                    }
-                    
-                }
-                
-            }
-        }
-               
+        
+        
     }
     
 
@@ -493,7 +504,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             
            // selectedEmail.append(searchPBArray[indexPath.row].Email[0])
             
-            selectedMobNo.append(searchPBArray[indexPath.row].MobNo[0])
+           // selectedMobNo.append(searchPBArray[indexPath.row].MobNo[0])
             
             selectedIndex.append(String(searchPBArray[indexPath.row].indexPathRow))
             
@@ -586,7 +597,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             
            
             
-            selectedMobNo.append(PBArray[indexPath.row].MobNo[0])
+          // selectedMobNo.append(PBArray[indexPath.row].MobNo[0])
             
             selectedIndex.append(String(indexPath.row))
             
@@ -639,11 +650,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                                 
                             }
                             actionSheetController.addAction(myAction)
-                        
-                        
-                        
-                        
-                    //
+                    
                 }
 
                 
@@ -665,18 +672,9 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             }
             
             
-            
-            
-            
-            
         } /// else close
         
         
-        
-        
-        
-        
-    
     }
     
     
@@ -1142,19 +1140,6 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     
     
     
-    var friendsList = ["Kareena","Deepika","hrithik roshan","ranbir kapoor","farhan akhtar","alia bhatt","kriti sanon","varun dhawan"]
-    
-    var contactImages = ["download (3)","download (2)","images (4)","download (5)","download (7)","download (9)","download (10)","download (12)"]
-    
-    
-    func phoneBook()
-    {
-        
-        
-        
-        
-        
-    }
     
     
     

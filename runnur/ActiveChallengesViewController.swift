@@ -306,11 +306,12 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
         if indexPath.section == 0
         {
-            cell.noOfPlayers.hidden = false;
+           
+           
+            
             
             
             //MARK:-  FILTER ACTIVE
-            
             
             if NSUserDefaults.standardUserDefaults().boolForKey("filterActive") == true
             {
@@ -339,8 +340,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                     
                     cell.BetAmount.text = participatingFilterArray[indexPath.row].betAmount
                     
-                    cell.noOfPlayers.text = participatingFilterArray[indexPath.row].usersCount
-                    
+                                     
                     
                     cell.potAmount.text = participatingFilterArray[indexPath.row].betAmount
                     
@@ -370,7 +370,17 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                         {
                             
                             cell.grpCauseFitIcon.image = UIImage(named:"ic_group_fit")
-                                cell.ic_memberImageView.image = UIImage(named:"ic_members")
+                        cell.ic_memberImageView.image = UIImage(named:"ic_members")
+                            
+                            
+                            cell.betAmountLabel.text = "BET AMOUNT"
+                            cell.potAmountLabel.text = "POT AMOUNT"
+                          
+                             cell.noOfPlayers.hidden = false;
+                            cell.noOfPlayers.text = participatingFilterArray[indexPath.row].usersCount
+                           
+
+
                             
                         }
                         
@@ -380,16 +390,17 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                             cell.grpCauseFitIcon.image = UIImage(named:"ic_cause_fit")
                             
                             cell.ic_memberImageView.image = UIImage(named:"ic_charity_gray")
+                            
+                            cell.betAmountLabel.text = "PER MILE"
+                            cell.potAmountLabel.text = "TOTAL AMOUNT"
 
+                            cell.playersLabel.text = "ORGHUNTER"
                             
                         }
                         
                     }
                     
-                    
-                    
                 }
-                
                 
                 
             } /// if close
@@ -420,7 +431,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                 
                 cell.BetAmount.text = participatingArray[indexPath.row].betAmount
                 
-                cell.noOfPlayers.text = participatingArray[indexPath.row].usersCount
+              
                 
                 
                 cell.potAmount.text = participatingArray[indexPath.row].betAmount
@@ -446,6 +457,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                     
                 }
                 
+                
                 if participatingArray[indexPath.row].typeId != ""
                 {
                     
@@ -456,7 +468,11 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                         
                         cell.ic_memberImageView.image = UIImage(named:"ic_members")
                         
+                        cell.betAmountLabel.text = "BET AMOUNT"
+                        cell.potAmountLabel.text = "POT AMOUNT"
                         
+                         cell.noOfPlayers.hidden = false
+                        cell.noOfPlayers.text = participatingArray[indexPath.row].usersCount
                         
                         
                         
@@ -468,12 +484,20 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                         cell.grpCauseFitIcon.image = UIImage(named:"ic_cause_fit")
                         
                         cell.ic_memberImageView.image = UIImage(named:"ic_charity_gray")
+                        cell.betAmountLabel.text = "PER MILE"
+                        cell.potAmountLabel.text = "TOTAL AMOUNT"
                         
+                       
+                        
+                        cell.playersLabel.text = "ORAHUNTER"
                         
                         
                     }
                     
                 }
+                
+
+                
                 
             } // else close
             
@@ -622,7 +646,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
-        return 150.0;//Choose your custom row height
+        return 130.0;//Choose your custom row height
     }
     
     
@@ -647,6 +671,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
             let viewChallenge = storyboard?.instantiateViewControllerWithIdentifier("ViewGroupFitViewController") as! ViewGroupFitViewController
 
             let challengeId =  participatingArray[indexPath.row].challengeId
+            
               NSUserDefaults.standardUserDefaults().setObject(challengeId, forKey: "challengeId")
             
             
@@ -659,7 +684,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
             NSUserDefaults.standardUserDefaults().setObject(TypeIdParticipating, forKey: "TypeIdParticipating")
             
             
-            
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "FromCreateCauseAndGroupFitScreen")
             
            self.presentViewController(viewChallenge, animated: false, completion: nil)
             
@@ -687,6 +712,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
             NSUserDefaults.standardUserDefaults().setObject(TypeIdParticipating, forKey: "TypeIdParticipating")
             
 
+                NSUserDefaults.standardUserDefaults().setBool(false, forKey: "FromCreateCauseAndGroupFitScreen")
             self.presentViewController(viewChallenge, animated: false, completion: nil)
             
         }
@@ -718,22 +744,16 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
         request.timeoutInterval = 20.0;
         
-        let modelName = UIDevice.currentDevice().modelName
+     
         
-        let systemVersion = UIDevice.currentDevice().systemVersion;
+       let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
         
-        let make="iphone"
-        
-       let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
-        
-        //ANUJ user id
-        
-       // let userId  = "158CDEFB-37D4-4216-BD17-E06B6C6812A6"
+     
         
         let filter = "3"
         
         
-        let postString = "userId=\(userId)&filter=\(filter)&currentDate=\(CurrentDateFunc.currentDate())";
+        let postString = "userId=\(userId!)&filter=\(filter)&currentDate=\(CurrentDateFunc.currentDate())";
         
         print(postString)
         
@@ -1574,74 +1594,13 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
         
         
-        if NSUserDefaults.standardUserDefaults().stringForKey("successMsgOfDecline") != ""
-        {
-            
-             //NSUserDefaults.standardUserDefaults().setObject(msg, forKey: "successMsgOfDecline")
-            
-          
-            
-              let alert = UIAlertController(title: "", message:  NSUserDefaults.standardUserDefaults().stringForKey("successMsgOfDecline") , preferredStyle: UIAlertControllerStyle.Alert)
-            let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {action in
-            
-                
-                self.participatingArray.removeAll();
-                self.contributingArray.removeAll();
-             self.viewActiveChallenges();
-            
-            
-            })
-            
-            alert.addAction(okAction)
-             self.presentViewController(alert, animated: true, completion: nil)
-            return
-            
-            
-        }
-    }
-    
-    
-    
-    
-    
-    override func viewDidLoad()
-    {
-        super.viewDidLoad()
-        
-        NSUserDefaults.standardUserDefaults().setObject("", forKey: "TypeIdParticipating")
-        
-        NSUserDefaults.standardUserDefaults().setObject("", forKey: "TypeIdContributing")
-        
-        
-        NSUserDefaults.standardUserDefaults().setObject("", forKey: "successMsgOfDecline")
-        
-        NSUserDefaults.standardUserDefaults().setObject("", forKey: "challengeName")
-        
-        print(NSUserDefaults.standardUserDefaults().boolForKey("filterActive"))
-        
-        //// addObserver
-        NSNotificationCenter.defaultCenter().addObserver(self,selector: #selector(ActiveChallengesViewController.FilterButtonActive(_:)),name: "filterClicked",object: nil)
-        
-        
-        activeTableView.tableFooterView = UIView()
-        
-        print(participatingArray)
-        
-        
-        for i in participatingArray
-        {
-            
-            print(i.challengeId)
-            
-            
-        }
-        
-        
-        
         if(Reachability.isConnectedToNetwork()==true )
         {
-           // showActivityIndicatory();
-         viewActiveChallenges();
+            // showActivityIndicatory();
+            
+            self.participatingArray.removeAll();
+            self.contributingArray.removeAll();
+            viewActiveChallenges();
             
         }
             
@@ -1681,7 +1640,117 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
             }
             
         }
+
+        if NSUserDefaults.standardUserDefaults().stringForKey("successMsgOfDecline") != ""
+        {
+            
+             //NSUserDefaults.standardUserDefaults().setObject(msg, forKey: "successMsgOfDecline")
+            
           
+            
+              let alert = UIAlertController(title: "", message:  NSUserDefaults.standardUserDefaults().stringForKey("successMsgOfDecline") , preferredStyle: UIAlertControllerStyle.Alert)
+            let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {action in
+            
+                
+                self.participatingArray.removeAll();
+                self.contributingArray.removeAll();
+             self.viewActiveChallenges();
+            
+            
+            })
+            
+            alert.addAction(okAction)
+             self.presentViewController(alert, animated: true, completion: nil)
+            return
+            
+            
+        }
+    }
+    
+    
+    
+    
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        
+          NSUserDefaults.standardUserDefaults().setBool(false, forKey: "FromCreateCauseAndGroupFitScreen")
+        
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "TypeIdParticipating")
+        
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "TypeIdContributing")
+        
+        
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "successMsgOfDecline")
+        
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "challengeName")
+        
+        print(NSUserDefaults.standardUserDefaults().boolForKey("filterActive"))
+        
+        //// addObserver
+        NSNotificationCenter.defaultCenter().addObserver(self,selector: #selector(ActiveChallengesViewController.FilterButtonActive(_:)),name: "filterClicked",object: nil)
+        
+        
+        activeTableView.tableFooterView = UIView()
+        
+        print(participatingArray)
+        
+        
+        for i in participatingArray
+        {
+            
+            print(i.challengeId)
+            
+            
+        }
+        
+        
+//        
+//        if(Reachability.isConnectedToNetwork()==true )
+//        {
+//           // showActivityIndicatory();
+//         viewActiveChallenges();
+//            
+//        }
+//            
+//        else
+//        {
+//            
+//            if self.view.subviews.contains(self.noInternet.view)
+//                
+//            {
+//                
+//                //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
+//                
+//            }
+//                
+//            else
+//                
+//            {
+//                
+//                self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
+//                
+//                self.noInternet.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);
+//                
+//                self.view.addSubview((self.noInternet.view)!);
+//                
+//                //  self.DIVC.imageView.image = UIImage(named: "im_no_internet");
+//                
+//                // self.noInternet.imageView.userInteractionEnabled = true
+//                
+//                let tapRecognizer = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
+//                self.noInternet.noInternetLabel.userInteractionEnabled = true
+//                
+//                
+//                self.noInternet.view.addGestureRecognizer(tapRecognizer)
+//                
+//                self.noInternet.didMoveToParentViewController(self)
+//                
+//            }
+//            
+//        }
+        
         
     }
     
@@ -1692,14 +1761,5 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }

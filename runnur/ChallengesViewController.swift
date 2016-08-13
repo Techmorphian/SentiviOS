@@ -197,20 +197,44 @@ class ChallengesViewController: UIViewController
         
         self.activeView.view.hidden = false
         
-        UIView.animateWithDuration(0.7, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+        UIView.animateWithDuration(0.7, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+            {
             
+                
+                self.activeButton.titleLabel?.textColor  = UIColor.whiteColor();
+                
+                self.completedButton.titleLabel?.textColor  = colorCode.DarkBlueColor
+                
+                self.activeBottomView.backgroundColor = UIColor.whiteColor()
+                self.completedBottomView.backgroundColor = colorCode.DarkBlueColor
+
+                
               self.activeView.view.hidden = false
             self.completedView.view.frame.origin.x = +self.view.frame.size.width;
             self.activeView.view.frame.origin.x = 0
             
-            }, completion: {
+            }, completion:
+            {
           action in self.activeView.view.hidden = false
         
         })
     }
     func respondToSwipeGestureLeft()
     {
-        UIView.animateWithDuration(0.7, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+        UIView.animateWithDuration(0.7, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+            {
+                
+                
+                self.completedBottomView.backgroundColor = UIColor.whiteColor()
+                self.activeBottomView.backgroundColor =  colorCode.DarkBlueColor
+                
+                self.activeButton.titleLabel?.textColor  = colorCode.DarkBlueColor
+                
+                self.completedButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+                
+                self.completedButton.titleLabel?.textColor  = UIColor.whiteColor();
+
+                
             self.activeView.view.frame.origin.x = -self.view.frame.size.width;
             
             self.completedView.view.frame.origin.x = 0;
@@ -222,59 +246,6 @@ class ChallengesViewController: UIViewController
                 self.activeView.view.hidden = true})
         
     }
-    
-    //    func hideView()
-    //    {
-    //        if self.activeView.view.frame.origin.x == -self.view.frame.size.width{
-    //            activeView.view.hidden=true;
-    //        }
-    //
-    //
-    //        if self.activeView2.view.frame.origin.x == -self.view.frame.size.width{
-    //            activeView2.view.hidden=true;
-    //        }
-    //    }
-    //
-    
-    
-    
-    // MARK:- VIEW ACTIVE CHALLENGES VARIABLES
-    
-    
-    
-    //
-    //    var challengeId = [String]()
-    //    var typeId = [String]()
-    //
-    //    var challengeName = [String]()
-    //
-    //   var  photoUrl = [String]()
-    //   var  startDate = [String]()
-    //   var  endDate = [String]()
-    //   var  activityType  = [String]()
-    //   var  parameters = [String]()
-    //   var  causes = [String]()
-    //   var  betAmount = [String]()
-    //   var   usersCount = [String]()
-    //   var  potAmount = [String]()
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -391,7 +362,7 @@ class ChallengesViewController: UIViewController
         
         
         NSUserDefaults.standardUserDefaults().setBool(false, forKey: "filterActive")
-         completedBottomView.backgroundColor = colorCode.DarkBlueColor
+        completedBottomView.backgroundColor = colorCode.DarkBlueColor
         
         
     }

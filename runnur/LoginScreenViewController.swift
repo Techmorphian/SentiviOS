@@ -16,7 +16,8 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
     @IBOutlet var loginWithGoogleButton: UIButton!
     
     
-    @IBAction func loginWithFacebookButtonAction(sender: UIButton) {
+    @IBAction func loginWithFacebookButtonAction(sender: UIButton)
+    {
         
         self.authenticate(self);
         
@@ -248,10 +249,31 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
         var postData = String();
         let dateFormatter = NSDateFormatter()
         let dateObj = dateFormatter.stringFromDate(NSDate())
-        if isFacebook {
+        if isFacebook
+        {
             
+            print(id)
+            
+            
+            let aString: String =  id
+            
+            let newString = aString.stringByReplacingOccurrencesOfString("Facebook:", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            print(newString)
+            
+            let FacebookId =  newString
+             NSUserDefaults.standardUserDefaults().setObject(FacebookId, forKey: "facebookId")
+            print(FacebookId)
+            
+           
+            
+            print(NSUserDefaults.standardUserDefaults().stringForKey("facebookId"))
+
             postData = "email=\(email)&firstName=\(firstName)&lastName=\(lastName)&facebookId=\(id)&facebookToken=\(token)&currentDate=\(dateObj)&photoUrl=\(imageUrl)"
-        }else{
+            
+            
+            
+        }else
+        {
             postData = "email=\(email)&firstName=\(firstName)&lastName=\(lastName)&googleId=\(id)&googleToken=\(token)&currentDate=\(dateObj)&photoUrl=\(imageUrl)"
         }
         
@@ -276,6 +298,7 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
                                 let userId = elements[i]["userId"] as! String
                                 
                                 NSUserDefaults.standardUserDefaults().setObject(userId, forKey: "userId")
+                                
                                 let email = elements[i]["email"] as! String
                                 
                                 NSUserDefaults.standardUserDefaults().setObject(email, forKey: "email")
