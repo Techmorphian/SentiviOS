@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import GoogleMaps
 
 class SummaryActivityViewController: UIViewController {
 
+    @IBOutlet weak var expandMapView: UIView!
     var mapData : MapData!
         {
         didSet{
@@ -30,7 +32,8 @@ class SummaryActivityViewController: UIViewController {
             {
                 mapData.caloriesBurned = "0 KCal"
             }else{
-                mapData.caloriesBurned = mapData.caloriesBurned! + " KCal";
+                
+                mapData.caloriesBurned = String(format: "%.2f", mapData.caloriesBurned!) + " KCal";
             }
 
             if mapData.avgSpeed == ""
@@ -71,6 +74,7 @@ class SummaryActivityViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var mapView: GMSMapView!
     @IBOutlet weak var distance: UILabel!
     @IBOutlet weak var duration: UILabel!
     @IBOutlet weak var avgPace: UILabel!
@@ -133,9 +137,34 @@ class SummaryActivityViewController: UIViewController {
         self.startTime.text = mapData.startTime;
         self.caloriesBurned.text = mapData.caloriesBurned;
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        
+        self.expandMapView.addGestureRecognizer(tap)
+        
+        let camera = GMSCameraPosition.cameraWithLatitude(mapData.startLat, longitude: mapData.startLong, zoom: 16.0)
+        self.mapView.camera = camera
+        let london = GMSMarker(position: CLLocationCoordinate2D(latitude:mapData.startLat, longitude: mapData.startLong))
+        london.icon = UIImage(named: "im_start_marker")
+        london.map = mapView
+        
+        let london2 = GMSMarker(position: CLLocationCoordinate2D(latitude:mapData.endLat, longitude: mapData.endLong))
+        london2.icon = UIImage(named: "im_stop_marker")
+        london2.map = mapView
+        
         // Do any additional setup after loading the view.
     }
-
+    @IBOutlet weak var mapViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var scrollViewTop: NSLayoutConstraint!
+    func handleTap() {
+        
+        UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+            self.scrollViewTop.constant = self.view.frame.height;
+            self.mapViewHeight.constant = self.view.frame.height
+            }, completion: nil)
+        
+ 
+        // view1.alpha = 0.1
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

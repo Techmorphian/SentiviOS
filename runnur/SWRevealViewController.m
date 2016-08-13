@@ -1840,7 +1840,7 @@ NSString * const SWSegueFrontIdentifier = @"sw_front";
 NSString * const SWSegueRightIdentifier = @"sw_right";
 
 
-#pragma mark - SWRevealViewControllerSegueSetController class
+#pragma mark -   class
 
 @implementation SWRevealViewControllerSegueSetController
 
@@ -1932,5 +1932,5 @@ NSString * const SWSegueRightIdentifier = @"sw_right";
 //}
 //
 //@end
-
+//
 

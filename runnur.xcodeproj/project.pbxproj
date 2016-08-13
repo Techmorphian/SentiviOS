@@ -45,6 +45,9 @@
 		4485841F1D4A14A20027F141 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4485841E1D4A14A20027F141 /* GoogleService-Info.plist */; };
 		448584211D4A3BE40027F141 /* TourContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448584201D4A3BE40027F141 /* TourContentViewController.swift */; };
 		448584231D4A3D690027F141 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448584221D4A3D690027F141 /* FirstViewController.swift */; };
+		44BBF3771D5D96E2006618EF /* NSObject+MTNativeFacebookLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BBF3761D5D96E2006618EF /* NSObject+MTNativeFacebookLogin.m */; };
+		44C7967D1D5EF706000118C5 /* SWRevealViewController.h in Resources */ = {isa = PBXBuildFile; fileRef = 470B1B5F1D27A59600E3B5B0 /* SWRevealViewController.h */; };
+		44C7967E1D5EF70D000118C5 /* SWRevealViewController.m in Resources */ = {isa = PBXBuildFile; fileRef = 470B1B611D27A5A100E3B5B0 /* SWRevealViewController.m */; };
 		470261761D40F83D005261ED /* ChallengeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470261751D40F83D005261ED /* ChallengeModel.swift */; };
 		470728BA1D2BD9BE002B86E1 /* phoneBookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470728B91D2BD9BE002B86E1 /* phoneBookModel.swift */; };
 		470B1B5E1D278B6200E3B5B0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470B1B5D1D278B6200E3B5B0 /* HomeViewController.swift */; };
@@ -87,8 +90,6 @@
 		473D0D941D49E955004DDC07 /* FAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473D0D931D49E955004DDC07 /* FAQViewController.swift */; };
 		473D0D961D49E970004DDC07 /* FAQCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473D0D951D49E970004DDC07 /* FAQCellTableViewCell.swift */; };
 		473D0D981D49E984004DDC07 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473D0D971D49E984004DDC07 /* HistoryViewController.swift */; };
-		473D0D9A1D49E9BC004DDC07 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		473D0D9C1D49E9DA004DDC07 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		47474C161D3CBFB1008FE197 /* CreateGroupAndCauseFitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47474C151D3CBFB0008FE197 /* CreateGroupAndCauseFitViewController.swift */; };
 		47474C181D3CEF6E008FE197 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47474C171D3CEF6E008FE197 /* ActionButton.swift */; };
 		47474C1A1D3CEF7A008FE197 /* ActionButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47474C191D3CEF7A008FE197 /* ActionButtonItem.swift */; };
@@ -150,6 +151,9 @@
 		4485841E1D4A14A20027F141 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		448584201D4A3BE40027F141 /* TourContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourContentViewController.swift; sourceTree = "<group>"; };
 		448584221D4A3D690027F141 /* FirstViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
+		44BBF3751D5D96D4006618EF /* NSObject+MTNativeFacebookLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MTNativeFacebookLogin.h"; sourceTree = "<group>"; };
+		44BBF3761D5D96E2006618EF /* NSObject+MTNativeFacebookLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MTNativeFacebookLogin.m"; sourceTree = "<group>"; };
+		44C7967C1D5EF65D000118C5 /* Project-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Project-Prefix.pch"; sourceTree = "<group>"; };
 		470261751D40F83D005261ED /* ChallengeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengeModel.swift; sourceTree = "<group>"; };
 		470728B91D2BD9BE002B86E1 /* phoneBookModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = phoneBookModel.swift; sourceTree = "<group>"; };
 		470B1B5D1D278B6200E3B5B0 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -326,7 +330,10 @@
 				477811601D48785F003B01A4 /* AddViaGoogle */,
 				4778115F1D487846003B01A4 /* Friend List */,
 				4778115E1D48782B003B01A4 /* Add Friends */,
+				44BBF3751D5D96D4006618EF /* NSObject+MTNativeFacebookLogin.h */,
+				44BBF3761D5D96E2006618EF /* NSObject+MTNativeFacebookLogin.m */,
 				470B1B5F1D27A59600E3B5B0 /* SWRevealViewController.h */,
+				44C7967C1D5EF65D000118C5 /* Project-Prefix.pch */,
 				470B1B611D27A5A100E3B5B0 /* SWRevealViewController.m */,
 				448584151D4A0A980027F141 /* Frameworks */,
 				470CF8871D24DC370001B3BC /* Assets.xcassets */,
@@ -609,6 +616,9 @@
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 44C2WNQ95S;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 0;
 							};
@@ -639,11 +649,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44C7967E1D5EF70D000118C5 /* SWRevealViewController.m in Resources */,
+				44C7967D1D5EF706000118C5 /* SWRevealViewController.h in Resources */,
 				470CF88B1D24DC370001B3BC /* LaunchScreen.storyboard in Resources */,
 				470CF8881D24DC370001B3BC /* Assets.xcassets in Resources */,
 				470CF8831D24DC370001B3BC /* Main.storyboard in Resources */,
-				473D0D9C1D49E9DA004DDC07 /* (null) in Resources */,
-				473D0D9A1D49E9BC004DDC07 /* (null) in Resources */,
 				440D64E41D522580004AE539 /* CustomPopUp.xib in Resources */,
 				4485841F1D4A14A20027F141 /* GoogleService-Info.plist in Resources */,
 				444C5E3B1D50C76A00A4DB3D /* GoogleMaps.bundle in Resources */,
@@ -759,6 +769,7 @@
 				473D0D791D49E7A7004DDC07 /* InviteFriendsViewController.swift in Sources */,
 				473D0D981D49E984004DDC07 /* HistoryViewController.swift in Sources */,
 				4457FFE41D59C2030097C598 /* SummaryActivityViewController.swift in Sources */,
+				44BBF3771D5D96E2006618EF /* NSObject+MTNativeFacebookLogin.m in Sources */,
 				473D0D821D49E86A004DDC07 /* CircleLabel.swift in Sources */,
 				448584211D4A3BE40027F141 /* TourContentViewController.swift in Sources */,
 				473D0D771D49E770004DDC07 /* HeartHistroryViewController.swift in Sources */,
@@ -863,8 +874,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Archana Vetkar (MWEK85FF43)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Archana Vetkar (MWEK85FF43)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -886,7 +897,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "c5306fdf-9b20-472e-b2e0-670085f3b0ec";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -911,8 +922,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Archana Vetkar (MWEK85FF43)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Archana Vetkar (MWEK85FF43)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -927,7 +938,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "c5306fdf-9b20-472e-b2e0-670085f3b0ec";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -951,7 +962,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.sentiv;
 				PRODUCT_NAME = sentiv;
-				PROVISIONING_PROFILE = "c5306fdf-9b20-472e-b2e0-670085f3b0ec";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "runnur/runnur-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -975,7 +986,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.sentiv;
 				PRODUCT_NAME = sentiv;
-				PROVISIONING_PROFILE = "c5306fdf-9b20-472e-b2e0-670085f3b0ec";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "runnur/runnur-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

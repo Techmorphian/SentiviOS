@@ -175,7 +175,7 @@ class CommonFunctions : NSObject {
             
             if(showDone){
                 
-                  let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: nil, action: nil)
+                let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: nil, action: nil)
                 doneButton.target = textFields[index]
                 doneButton.action = #selector(UITextField.resignFirstResponder)
               //  let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: view, action: #selector(UIView.endEditing))

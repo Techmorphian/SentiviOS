@@ -164,7 +164,9 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             {
                
                 cell.countLabel.hidden = false;
+                if NSUserDefaults.standardUserDefaults().objectForKey("winningCount") != nil{
                 cell.countLabel.text = "$" + " " + NSUserDefaults.standardUserDefaults().stringForKey("winningCount")!
+                }
                 
               
                cell.countLabel.layer.cornerRadius = cell.countLabel.frame.size.width / 2;

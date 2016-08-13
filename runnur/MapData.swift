@@ -18,7 +18,12 @@ class MapData
     var date : String? = "00-00-00";
     var activityType = String();
     var caloriesBurned : String? = "0.0";
-    
+    var location : String? = "UNKNOWN";
+    var performedActivity : String? = "Running";
+    var startLat = Double();
+    var startLong = Double();
+    var endLat = Double();
+    var endLong = Double();
 
     
 }

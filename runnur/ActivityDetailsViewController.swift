@@ -51,6 +51,8 @@ class ActivityDetailsViewController: UIViewController {
     @IBOutlet weak var container: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.location.text = mapData.location;
+        self.dateAndType.text = mapData.date! + " - " + mapData.performedActivity!;
         
 //       let sumViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SummaryActivityViewController") as! SummaryActivityViewController;
 //        sumViewController.mapData = mapData;

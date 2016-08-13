@@ -23,7 +23,6 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         {
             self.revealViewController().revealToggle(self);
         }
- 
         
     }
     @IBAction func turnOnBluetooth(sender: AnyObject) {
@@ -107,11 +106,17 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     @IBAction func menu(sender: AnyObject) {
           customPopUp = NSBundle.mainBundle().loadNibNamed("CustomPopUp",owner:view,options:nil).last as! CustomPopUp
         customPopUp.backgroundColor = UIColor(white: 0, alpha: 0.5)
-
+        customPopUp.done.addTarget(self, action: #selector(HomeViewController.DonePopUp), forControlEvents: UIControlEvents.TouchUpInside);
           self.view.addSubview(customPopUp)
             customPopUp.frame = self.view.bounds
 
     }
+    func DonePopUp()
+    {
+        customPopUp.removeFromSuperview();
+    }
+    
+    
     
     var lat = String();
     var long = String();
@@ -119,8 +124,8 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     override func viewDidLoad()
     {
         super.viewDidLoad();
-        call();
-        gps.layer.shadowOpacity=0.4;
+       // call();
+             gps.layer.shadowOpacity=0.4;
         startActivity.layer.cornerRadius=3.0;
         //startActivity.clipsToBounds=true;
         planRoute.layer.cornerRadius=3.0;
@@ -269,6 +274,11 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         self.myManager.desiredAccuracy = kCLLocationAccuracyBest;
         
         self.myManager.requestWhenInUseAuthorization()
+        if #available(iOS 9.0, *) {
+            self.myManager.allowsBackgroundLocationUpdates=true
+        } else {
+            // Fallback on earlier versions
+        };
         self.myManager.startUpdatingLocation()
              myManager.startMonitoringSignificantLocationChanges()
         if CLLocationManager.locationServicesEnabled()

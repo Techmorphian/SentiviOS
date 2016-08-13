@@ -22,9 +22,10 @@ class CustomPopUp: UIView {
     }
     @IBAction func voiceFeedback(sender: AnyObject) {
        if voiceFeedback.isChecked {
-           NSUserDefaults.standardUserDefaults().setBool(true, forKey: "voiceFeedback")
+         NSUserDefaults.standardUserDefaults().setBool(false, forKey: "voiceFeedback")
+        
        }else{
-        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "voiceFeedback")
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "voiceFeedback")
         }
         
     }

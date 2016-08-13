@@ -70,6 +70,8 @@ public class CaloriesCounterLookUp {
     let timeInSecs = (elapsedTime / 1000);
     let timeInMin = timeInSecs/60;
     let timeInHours = timeInMin/60;
+//    let ti = NSInteger(elapsedTime)
+//    let timeInHours = Double(ti%3600);
     caloriesburned = (MET * 100) * (weight / 2.2) * Double(timeInHours);
     
     return caloriesburned;
