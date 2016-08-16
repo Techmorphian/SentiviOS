@@ -11,6 +11,74 @@ import UIKit
 class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionDataDelegate,UITextFieldDelegate
 {
 
+    
+    
+    
+    var noInternet = NoInternetViewController()
+   
+    var noResult = NoResultViewController()
+    /////// func no internet
+    func RemoveNoInternet()
+    {
+        
+        if self.view.subviews.contains(self.noInternet.view)
+            
+        {
+            
+            for i in self.view.subviews
+                
+            {
+                
+                if i == self.noInternet.view
+                    
+                {
+                    
+                    i.removeFromSuperview();
+                    
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+        
+    }
+    
+    
+    
+    func RemoveNoResult()
+    {
+        if self.view.subviews.contains(self.noResult.view)
+            
+        {
+            
+            for i in self.view.subviews
+                
+            {
+                
+                if i == self.noResult.view
+                    
+                {
+                    
+                    i.removeFromSuperview();
+                    
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+        
+        
+        
+    }
+
+
+    
     // MARK: VAR
     
     
@@ -1094,7 +1162,8 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                     
                                     
                                     
-                                    
+                                    self.RemoveNoInternet();
+                                    self.RemoveNoResult();
                                     
                                     
                                     
@@ -1115,16 +1184,39 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                             
                             {
                                 
+                                self.RemoveNoInternet();
                                 
-                                let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
-                                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
-                                
-                                alert.addAction(okAction)
-                                
-                                self.presentViewController(alert, animated: true, completion: nil)
-                                return
-                                
-                                
+                                if self.view.subviews.contains(self.noResult.view)
+                                    
+                                {
+                                    
+                                    
+                                }
+                                    
+                                else
+                                    
+                                {
+                                    
+                                    self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+                                    
+                                    self.noResult.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
+                                    
+                                    
+                                    self.noResult.noResultTextLabel.text = msg
+                                    
+                                    self.noResult.noResultImageView.image = UIImage(named: "im_error")
+                                    
+                                    
+                                    
+                                    self.view.addSubview((self.noResult.view)!);
+                                    
+                                    
+                                    self.view.userInteractionEnabled = true
+                                    
+                                    self.noResult.didMoveToParentViewController(self)
+                                    
+                                }
+  
                                 
                                 
                         }
@@ -1138,10 +1230,42 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                 
             {
                 
-                
-                
-                
                 print(error)
+                
+                
+                self.RemoveNoInternet();
+                
+                if self.view.subviews.contains(self.noResult.view)
+                    
+                {
+                    
+                    
+                }
+                    
+                else
+                    
+                {
+                    
+                    self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+                    
+                    self.noResult.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
+                    
+                    
+                    self.noResult.noResultTextLabel.text = "something went wrong."
+                    
+                    self.noResult.noResultImageView.image = UIImage(named: "im_error")
+                    
+                    
+                    
+                    self.view.addSubview((self.noResult.view)!);
+                    
+                    
+                    self.view.userInteractionEnabled = true
+                    
+                    self.noResult.didMoveToParentViewController(self)
+                    
+                }
+
                 
             }
             
@@ -1245,20 +1369,11 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                 self.loadingView.removeFromSuperview();
                 
                 
-                let alert = UIAlertController(title: "", message:"something went wrong try again later." , preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "", message:"something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
                 
-                let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
+                let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
                 
                 alert.addAction(alertAction)
-                
-                let alertAction2 = UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler: {
-                    
-                    Void in
-                    
-                })
-                
-                alert.addAction(alertAction2)
-                
                 
                 
                 self.presentViewController(alert, animated: true, completion: nil)
@@ -1363,19 +1478,11 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                 self.loadingView.removeFromSuperview();
                 
                 
-                let alert = UIAlertController(title: "", message:"something went wrong try again later." , preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "", message:"something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
                 
-                let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
+                let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
                 
                 alert.addAction(alertAction)
-                
-                let alertAction2 = UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler: {
-                    
-                    Void in
-                    
-                })
-                
-                alert.addAction(alertAction2)
                 
                 
                 
@@ -1430,61 +1537,13 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         
         
         
+        self.RemoveNoInternet();
         
-        if self.view.subviews.contains(self.noInternet.view)
+        
+        if self.view.subviews.contains(self.noResult.view)
             
         {
             
-            for i in self.view.subviews
-                
-            {
-                
-                if i == self.noInternet.view
-                    
-                {
-                    
-                    i.removeFromSuperview();
-                    
-                    
-                }
-                
-            }
-            
-        }
-        
-        
-        
-        
-        if self.view.subviews.contains(self.NoResult.view)
-            
-        {
-            
-            for i in self.view.subviews
-                
-            {
-                
-                if i == self.NoResult.view
-                    
-                {
-                    
-                    i.removeFromSuperview();
-                    
-                    
-                }
-                
-            }
-            
-            
-            
-        }
-        
-        
-        
-        if self.view.subviews.contains(self.error.view)
-            
-        {
-            
-            //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
             
         }
             
@@ -1492,36 +1551,26 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
             
         {
             
-            self.error = self.storyboard?.instantiateViewControllerWithIdentifier("errorViewController") as! errorViewController
+            self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
             
-            self.error.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+            self.noResult.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
             
-            self.view.addSubview((self.error.view)!);
+            self.noResult.noResultTextLabel.text = "something went wrong."
             
-            //  self.DIVC.imageView.image = UIImage(named: "im_no_internet");
+            self.noResult.noResultImageView.image = UIImage(named: "im_error")
             
-            // self.noInternet.imageView.userInteractionEnabled = true
-            
-            
-            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(SummaryViewController.handleTap(_:)))
-            
-            // self.noInternet.noInternetLabel.userInteractionEnabled = true
+            self.view.addSubview((self.noResult.view)!);
             
             
-            self.error.view.addGestureRecognizer(tapRecognizer)
-            
-            self.error.didMoveToParentViewController(self)
+            self.noResult.didMoveToParentViewController(self)
             
         }
         
         
         
+        
     }
     
-    var noInternet = NoInternetViewController()
-    var error =  errorViewController()
-    var NoResult = NoResultViewController()
- 
     
 
     
@@ -1549,7 +1598,52 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         maxAmountContributionTxtField.attributedPlaceholder = placeholder1
 
         
-        self.viewCauseChallengeDetail()
+        
+        
+        
+        if(Reachability.isConnectedToNetwork()==true )
+        {
+            showActivityIndicatory()
+            
+            self.viewCauseChallengeDetail();
+        
+        }
+            
+        else
+        {
+            
+            if self.view.subviews.contains(self.noInternet.view)
+                
+            {
+                
+                
+            }
+                
+            else
+                
+            {
+                
+                self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
+                
+                self.noInternet.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
+                
+                self.view.addSubview((self.noInternet.view)!);
+                
+                
+                let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(SummaryViewController.handleTap(_:)))
+                self.noInternet.noInternetLabel.userInteractionEnabled = true
+                
+                
+                self.noInternet.view.addGestureRecognizer(tapRecognizer)
+                
+                self.noInternet.didMoveToParentViewController(self)
+                
+            }
+            
+        }
+        
+
+     
         
       
        

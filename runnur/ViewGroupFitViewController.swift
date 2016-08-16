@@ -181,9 +181,13 @@ class ViewGroupFitViewController: UIViewController
     @IBAction func activityButtonAction(sender: UIButton)
     {
         
-       // ActivityView.view.hidden=false;
+     
         
-        sender.tintColor = UIColor.whiteColor();
+       
+        ActivityButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+
+        ActivityButton.titleLabel?.textColor  = UIColor.whiteColor();
+
         
         activityBottomView.backgroundColor = UIColor.whiteColor()
         
@@ -197,9 +201,11 @@ class ViewGroupFitViewController: UIViewController
         
         if sender.titleLabel?.text == "Activity"
         {
-            
-            sender.tintColor = UIColor.whiteColor();
-            
+          
+          
+             sender.tintColor = UIColor.whiteColor();
+            ActivityButton.titleLabel?.textColor  = UIColor.whiteColor();
+
             
             UIView.animateWithDuration(0.7, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 
@@ -215,13 +221,11 @@ class ViewGroupFitViewController: UIViewController
                 
                 
                 
-                }, completion: {
+                }, completion:
+                {
                     
                     finish in
                     
-                    //  self.summaryView.view.hidden = true
-                    
-                    //   self.LederBoardView.view.hidden = true
                     
                     
             })
@@ -279,6 +283,10 @@ class ViewGroupFitViewController: UIViewController
         
         
         sender.tintColor = UIColor.whiteColor();
+        
+        
+        LeaderboardButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+
         
         LeaderboardBottomView.backgroundColor = UIColor.whiteColor()
         
@@ -670,13 +678,17 @@ class ViewGroupFitViewController: UIViewController
         summaryBottomView.backgroundColor = UIColor.whiteColor();
        
         
-        ActivityButton.titleLabel?.textColor  = colorCode.DarkBlueColor
-        
+        ActivityButton.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+
         
         activityBottomView.backgroundColor = colorCode.DarkBlueColor
         
-        LeaderboardButton.titleLabel?.textColor  = colorCode.DarkBlueColor
+        
+        LeaderboardButton.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+        
         LeaderboardBottomView.backgroundColor = colorCode.DarkBlueColor
+        
+    
         
         
         print(NSUserDefaults.standardUserDefaults().stringForKey("challengeName"))
@@ -800,13 +812,9 @@ class ViewGroupFitViewController: UIViewController
             self.ProgressView.didMoveToParentViewController(self);
 
             
-            
         }
         
-        
-        
-        
-
+    
     }
 
     

@@ -254,7 +254,8 @@ class InviteFriendsViaEmailViewController: UIViewController,UITextFieldDelegate,
         request.timeoutInterval = 20.0;
         
         
-        let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
+        let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
+
         
         let ChallengeId = NSUserDefaults.standardUserDefaults().stringForKey("challengeId")
         
@@ -265,7 +266,7 @@ class InviteFriendsViaEmailViewController: UIViewController,UITextFieldDelegate,
         {
             
             cliendIds.append("friendEmailIds[\(count)]=\(i)");
-            count++;
+            count += 1;
         }
         
         let  friendEmailIds  = cliendIds.joinWithSeparator("&")
@@ -274,7 +275,7 @@ class InviteFriendsViaEmailViewController: UIViewController,UITextFieldDelegate,
         
         
         
-        let postString = "userId=\(userId)&challengeId=\(ChallengeId!)&\(friendEmailIds)";
+        let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&\(friendEmailIds)";
         
         print(postString)
         
@@ -504,15 +505,4 @@ class InviteFriendsViaEmailViewController: UIViewController,UITextFieldDelegate,
         // Dispose of any resources that can be recreated.
     }
     
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
-}
+ }

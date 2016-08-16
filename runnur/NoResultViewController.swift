@@ -15,6 +15,7 @@ class NoResultViewController: UIViewController
     @IBOutlet var noResultTextLabel: UILabel!
     
     
+    @IBOutlet var noResultImageView: UIImageView!
     
     //MARK:- Life Cycle Methods
     

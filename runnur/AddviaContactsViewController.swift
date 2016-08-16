@@ -24,6 +24,8 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     
      var noResult = NoResultViewController()
     
+    var noInternet = NoInternetViewController()
+    
     /////////////////// to filter values from both screens
     var friendListModel = phoneBookModel()
     
@@ -172,6 +174,9 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
      var SelectedSearchContactImages = [String]()
     //////////////////////////
     
+    
+    var friendsName = String()
+
     func updateSearchResultsForSearchController(searchController: String)
     {
         SearchContactNames.removeAll(keepCapacity: false)
@@ -187,18 +192,23 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         {
             //////// on i position we get name as well as image position that y we are  appending i position ofcontactImages in to a SearchContactImages
             
-            if let _ =  PBArray[i].firstName.lowercaseString.rangeOfString(searchController.lowercaseString, options: .RegularExpressionSearch)
+             friendsName = PBArray[i].firstName + PBArray[i].lastName
+            
+            if let _ =  friendsName.lowercaseString.rangeOfString(searchController.lowercaseString, options: .RegularExpressionSearch)
             
             {
                 
                 self.searchPBModel = phoneBookModel();
                 
                 self.searchPBModel.firstName = PBArray[i].firstName;
+                
+                
                 self.searchPBModel.lastName = PBArray[i].lastName;
+                
 
                 self.searchPBModel.Email = PBArray[i].Email;
                 
-               // self.searchPBModel.MobNo = PBArray[i].MobNo;
+            
                 
                 self.searchPBModel.contImages = PBArray[i].contImages;
                 
@@ -206,7 +216,15 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                 
                 searchPBModel.indexPathRow = i;
                 
+                 searchPBModel.toShow = PBArray[i].toShow;
+                
+                print(PBArray[i].firstName)
+                
+                
                 searchPBArray.append(searchPBModel)
+                
+                
+                
                 
 //                SearchContactNames.append(friendsList[i])
 //                
@@ -308,35 +326,35 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     {
        
         
-//        print(PBArray.count)
-//        for i in 0 ..< PBArray.count
-//        {
-//            
-//            print(PBArray[i].Email)
-//            print(PBArray.count)
-//            for j in PBArray[i].Email
-//            {
-//                
-//                
-//                for k in friendListArray
-//                {
-//                    
-//                    if k.Email[0] == j
-//                        
-//                    {
-//                        PBArray[i].toShow = false
-//                  
-//                       
-//                        
-//                        break;
-//                    }
-//                    
-//                }
-//                
-//            }
-//        }
-        
+        print(PBArray.count)
+        for i in 0 ..< PBArray.count
+        {
             
+            print(PBArray[i].Email)
+            print(PBArray.count)
+            for j in PBArray[i].Email
+            {
+                
+                
+                for k in friendListArray
+                {
+                    
+                    if k.Email[0] == j
+                        
+                    {
+                        PBArray[i].toShow = false
+                  
+                       
+                        
+                        break;
+                    }
+                    
+                }
+                
+            }
+        }
+        
+        
         
         
     }
@@ -916,28 +934,28 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     }
     
     
-    
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    let loadingView: UIView = UIView()
-    func showActivityIndicatory()
-    {
-        loadingView.frame = CGRectMake(0, 0, 60, 50)
-        loadingView.center = view.center
-        
-        loadingView.backgroundColor = UIColor.grayColor()
-        loadingView.alpha = 0.6
-        loadingView.clipsToBounds = true
-        loadingView.layer.cornerRadius = 10
-        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
-        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
-                                               loadingView.frame.size.height / 2);
-        loadingView.addSubview(activityIndicator)
-        self.view.addSubview(loadingView)
-        activityIndicator.startAnimating()
-    }
-    
-
+//    
+//    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+//    let loadingView: UIView = UIView()
+//    func showActivityIndicatory()
+//    {
+//        loadingView.frame = CGRectMake(0, 0, 60, 50)
+//        loadingView.center = view.center
+//        
+//        loadingView.backgroundColor = UIColor.grayColor()
+//        loadingView.alpha = 0.6
+//        loadingView.clipsToBounds = true
+//        loadingView.layer.cornerRadius = 10
+//        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+//        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+//                                               loadingView.frame.size.height / 2);
+//        loadingView.addSubview(activityIndicator)
+//        self.view.addSubview(loadingView)
+//        activityIndicator.startAnimating()
+//    }
+//    
+//
     
     
     //MARK:- NSURLSession delegate methods
@@ -1018,12 +1036,10 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                             
                             {
                                 
+                                CommonFunctions.hideActivityIndicator();
                                 
-                                
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
-                                //  LoaderFile.hideLoader(self.view)
+                             
+                              
                                 
                                 let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
                                 let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
@@ -1050,9 +1066,8 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                 
                 
                 
-                self.activityIndicator.stopAnimating();
-                
-                self.loadingView.removeFromSuperview();
+                CommonFunctions.hideActivityIndicator();
+
                 
                 let alert = UIAlertController(title: "", message:"something went wrong try again later." , preferredStyle: UIAlertControllerStyle.Alert)
                 
@@ -1109,10 +1124,8 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?)
     {
         
-        
-        self.activityIndicator.stopAnimating();
-        
-        self.loadingView.removeFromSuperview();
+        CommonFunctions.hideActivityIndicator();
+
         
         // LoaderFile.hideLoader(self.view)
         
@@ -1176,9 +1189,188 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         
     }
     
+  ///////////////////////
+    
+    func dontAllow()
+    {
+        
+     self.dismissViewControllerAnimated(false, completion: nil)
+    }
+    func allow()
+    {
+  
+        self.processContactNames();
+        
+    }
    
+    func GoToSetting()
+    {
+        if let url = NSURL(string: UIApplicationOpenSettingsURLString)
+        {
+            UIApplication.sharedApplication().openURL(url)
+        }
+    }
+
     
+    func getAddressBookNames()
+    {
+        
+        
+        var emptyDictionary: CFDictionaryRef?
+        
+        let authorizationStatus = ABAddressBookGetAuthorizationStatus()
+        if (authorizationStatus == ABAuthorizationStatus.NotDetermined)
+        {
+            
+            print(false)
+            NSLog("requesting access...")
+            // var emptyDictionary: CFDictionaryRef?
+            self.addressBook = (ABAddressBookCreateWithOptions(emptyDictionary, nil) == nil)
+            ABAddressBookRequestAccessWithCompletion(addressBook,{success, error in
+                if success
+                {
+                   
+                    self.processContactNames();
+                }
+                else
+                {
+                   
+                      self.dismissViewControllerAnimated(false, completion: nil)
+                    
+                    NSLog("unable to request access")
+                }
+            })
+
+            
+        }
+        
+        else if (authorizationStatus == ABAuthorizationStatus.Denied || authorizationStatus == ABAuthorizationStatus.Restricted)
+        {
+            print(false)
+             NSLog("access denied")
+            
+            let alert = UIAlertController(title: "", message: "This feature requires access to your phone contacts. Allow access?" , preferredStyle: UIAlertControllerStyle.Alert)
+           
+            let GotoSettingsAction = UIAlertAction(title: "Go to Settings", style: UIAlertActionStyle.Default, handler: {
+            
+                action in self.GoToSetting();
+            })
+            
+            let Dismiss = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: {action in self.dontAllow()})
+            
+            
+            alert.addAction(GotoSettingsAction)
+            
+            alert.addAction(Dismiss)
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+            return
+
+            
+            
+
+        }
+        
+        
+        else if (authorizationStatus == ABAuthorizationStatus.Authorized)
+        {
+            NSLog("access granted")
+            
+            
+            if(Reachability.isConnectedToNetwork()==true )
+            {
+               CommonFunctions.showActivityIndicator(view)
+                self.processContactNames();
+
+                
+            }
+                
+            else
+            {
+                
+                if self.view.subviews.contains(self.noInternet.view)
+                    
+                {
+                    
+                   
+                    
+                }
+                    
+                else
+                    
+                {
+                    
+                    self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
+                    
+                    self.noInternet.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+                    
+                    self.view.addSubview((self.noInternet.view)!);
+                    
+                    //  self.DIVC.imageView.image = UIImage(named: "im_no_internet");
+                    
+                    // self.noInternet.imageView.userInteractionEnabled = true
+                    
+                    let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddviaContactsViewController.handleTap(_:)))
+                    self.noInternet.noInternetLabel.userInteractionEnabled = true
+                    
+                    
+                    self.noInternet.view.addGestureRecognizer(tapRecognizer)
+                    
+                    self.noInternet.didMoveToParentViewController(self)
+                    
+                }
+                
+            }
+            
+        }
+        
+    }
     
+    //MARK:- NO INTERNET TAP GESTURE
+    
+    func handleTap(sender: UITapGestureRecognizer)
+    {
+        
+        if(Reachability.isConnectedToNetwork()==true )
+        {
+            
+           self.processContactNames();
+            
+        }
+        
+        
+        
+    }
+
+    /////// func no internet
+    func RemoveNoInternet()
+    {
+        
+        if self.view.subviews.contains(self.noInternet.view)
+            
+        {
+            
+            for i in self.view.subviews
+                
+            {
+                
+                if i == self.noInternet.view
+                    
+                {
+                    
+                    i.removeFromSuperview();
+                    
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+        
+    }
+
     
     var conatctImage = NSData()
     
@@ -1187,6 +1379,9 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     func processContactNames()
         
     {
+        
+        
+        
         
         NSUserDefaults.standardUserDefaults().setBool(true, forKey: "contactSwitch")
         
@@ -1207,6 +1402,11 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             (granted: Bool, error: CFError!) in
             dispatch_async(dispatch_get_main_queue())
             {
+               
+                CommonFunctions.hideActivityIndicator();
+
+                
+                
                 if !granted
                 {
                     print("Just denied")
@@ -1216,7 +1416,9 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                 {
                     print("Just authorized")
                     
-                    
+                    self.RemoveNoInternet();
+
+                     CommonFunctions.hideActivityIndicator();
                     
                                 self.addressBook = self.extractABAddressBookRef(ABAddressBookCreateWithOptions(nil, &errorRef))
                     
@@ -1522,284 +1724,12 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                     
                 }
             }
-        }
-    
             
-        
-//            self.addressBook = self.extractABAddressBookRef(ABAddressBookCreateWithOptions(nil, &errorRef))
-//            
-//            let contactList: NSArray = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(self.addressBook, nil, ABPersonSortOrdering(kABPersonSortByFirstName)).takeRetainedValue() as [ABRecordRef]
-//            
-//            print("records in the array \(contactList.count)")
-//            
-//            print("contactList \(contactList)")
-//            
-//            for record in contactList
-//                
-//            {
-//                
-//                
-//                
-//                if self.view.subviews.contains(self.noResult.view)
-//                    
-//                {
-//                    
-//                    for i in self.view.subviews
-//                        
-//                    {
-//                        
-//                        if i == self.noResult.view
-//                            
-//                        {
-//                            
-//                            i.removeFromSuperview();
-//                            
-//                            
-//                        }
-//                        
-//                    }
-//                    
-//                    
-//                    
-//                }
-//
-//                
-//                self.PBModel=phoneBookModel()
-//                
-//       
-//                
-//                if let v = ABRecordCopyValue(record,kABPersonEmailProperty)
-//                    
-//                {
-//                    
-//                    if let emails:ABMultiValueRef = v.takeRetainedValue()
-//                        
-//                        
-//                        
-//                    {
-//                        
-//                        if ABMultiValueGetCount(emails) > 0
-//                        {
-//                            
-//                            self.allEmails = ABMultiValueCopyArrayOfAllValues(emails).takeRetainedValue() as NSArray
-//                            
-//                            print(self.allEmails)
-//                            
-//                           
-////                            if self.allEmails.count < self.
-////                                
-////                            {
-////                                
-////                                
-////                                
-////                            }
-//                            
-//                            
-//                            // self.emailArray.append(self.allEmails)
-//                            
-//                            if self.allEmails.count > 0
-//                            {
-//                                
-//                                for emails in self.allEmails
-//                                {
-//                                    
-//                                    self.PBModel.Email.append(emails as! String);
-//                                    
-//                                    
-//                                    
-////                                    for k in friendListArray
-////                                    {
-////                                        
-////                                        if k.Email[0] == emails as! String
-////                                            
-////                                        {
-////                                            
-////                                            
-////                                           PBModel = phoneBookModel()
-////                                            
-////                                            
-////                                            break;
-////                                        }
-////                                        
-////                                    }
-//
-//                                    
-//                                    print(self.PBModel.Email)
-//                                    
-//                                }
-//                                
-//                                 self.PBModel.toShow = true
-//                                
-//                                /////// appending  first and last names
-//                                if (self.stringPropertyValue(record, id:kABPersonFirstNameProperty)) == nil
-//                                    
-//                                {
-//                                    
-//                                    self.PBModel.firstName = ""
-//                                    
-//                                   
-//                                }
-//                                    
-//                                else
-//                                    
-//                                {
-//                                    
-//                                    
-//                                    
-//                                    self.PBModel.firstName = (self.stringPropertyValue(record, id:kABPersonFirstNameProperty))!;
-//                                    
-//                                }
-//                                
-//                                
-//                                if (self.stringPropertyValue(record, id:kABPersonLastNameProperty)) == nil
-//                                    
-//                                {
-//                                    
-//                                    self.PBModel.lastName = ""
-//                                    
-//                                }
-//                                    
-//                                else
-//                                    
-//                                {
-//                                    
-//                                    self.PBModel.lastName = (self.stringPropertyValue(record, id:kABPersonLastNameProperty))!;
-//                                    
-//                                }
-//                                
-//
-//                                /// storing phone numbers
-//                                if let phones = ABRecordCopyValue(record,kABPersonPhoneProperty)?.takeUnretainedValue() as ABMultiValueRef?
-//                                    
-//                                {
-//                                    
-//                                    for(var numberIndex : CFIndex = 0; numberIndex < ABMultiValueGetCount(phones); numberIndex += 1)
-//                                        
-//                                    {
-//                                        
-//                                        
-//                                        
-//                                        let phoneUnmaganed = ABMultiValueCopyValueAtIndex(phones, numberIndex)
-//                                        
-//                                        self.phoneNumber = phoneUnmaganed.takeUnretainedValue() as! NSString
-//                                        
-//                                        self.locLabel = (ABMultiValueCopyValueAtIndex(phones,numberIndex)?.takeRetainedValue() as? String)
-//                                        
-//                                        if self.locLabel != " "
-//                                            
-//                                        {
-//                                            
-//                                            
-//                                            
-//                                            if  let cfStr:CFTypeRef = self.locLabel
-//                                                
-//                                            {
-//                                                
-//                                                self.nsTypeString = (cfStr as? NSString)!
-//                                                
-//                                                self.swiftString = (self.nsTypeString) as String
-//                                                
-//                                                if self.swiftString == "Identified As Spam"
-//                                                {
-//                                                    
-//                                                    
-//                                                    
-//                                                }
-//                                                    
-//                                                else
-//                                                    
-//                                                {
-//                                                    
-//                                                    
-//                                                    
-//                                                    self.PBModel.MobNo.append(self.phoneNumber as String);
-//                                                    
-//                                                }
-//                                                
-//                                            }
-//                                            
-//                                        }
-//                                        
-//                                    }
-//                                    
-//                                } //// phones close
-//                                
-//                                
-//                                
-//                                
-////                                let image: ABMultiValueRef = (ABPersonCopyImageDataWithFormat(record, kABPersonImageFormatThumbnail)?.takeRetainedValue())!
-////                               
-////                                    print(image)
-////                               
-//                                var image: UIImage?
-//                                
-//                                
-//                                print(ABPersonHasImageData(record))
-//                                if ABPersonHasImageData(record)
-//                                {
-//                                    
-//                                    var data = ABPersonCopyImageDataWithFormat(record, kABPersonImageFormatThumbnail).takeRetainedValue()
-//                                    
-//                                   // conatctImage = data
-//                                    
-//                                    self.PBModel.contImages = data
-//                                    
-//                                    
-//                                }
-//                                
-//                              
-//                                
-//                            }
-//                                
-//                            else
-//                                
-//                            {
-//                                
-//                                print("this record has no email ids")
-//                                
-//                            }
-//                            
-//                        }
-//                        
-//                    }
-//                        
-//                    else
-//                        
-//                    {
-//                        
-//                        print("this record has no email ids")
-//                        
-//                    }
-//                    
-//                }
-//                
-//                if self.PBModel.Email.count == 0 && self.PBModel.MobNo.count == 0
-//                    
-//                {
-//                    
-//                    
-//                    
-//                }
-//                    
-//                else
-//                    
-//                {
-//                    
-//                    self.PBArray.append(self.PBModel);
-//                    
-//                }
-//                
-//                
-//                
-//            }  /// for loop close
-//        
+        }
         
         
-        
-//        })
-        
-       //
-       
+            
+
         
     }
     
@@ -1869,15 +1799,67 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     }
 
     
+    override func viewDidAppear(animated: Bool)
+    {
+        
+        
+        if(Reachability.isConnectedToNetwork()==true )
+        {
+
+            
+            CommonFunctions.showActivityIndicator(view)
+            self.getAddressBookNames();
+            
+            
+        }
+            
+        else
+        {
+            
+            if self.view.subviews.contains(self.noInternet.view)
+                
+            {
+                
+                
+            }
+                
+            else
+                
+            {
+                
+                self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
+                
+                self.noInternet.view.frame = CGRectMake(0,100, self.view.frame.size.width, self.view.frame.size.height-100);
+                
+                self.view.addSubview((self.noInternet.view)!);
+                
+                
+                let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddviaContactsViewController.handleTap(_:)))
+                self.noInternet.noInternetLabel.userInteractionEnabled = true
+                
+                
+                self.noInternet.view.addGestureRecognizer(tapRecognizer)
+                
+                self.noInternet.didMoveToParentViewController(self)
+                
+            }
+            
+        }
+        
+        
+
+        
+       
+    }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
         
-        
        
-            processContactNames();
+       
+          //  processContactNames();
             
             
     

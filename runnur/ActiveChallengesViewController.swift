@@ -733,7 +733,9 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
     {
         
-        self.showActivityIndicatory()
+       
+        CommonFunctions.showActivityIndicator2(self.view)
+        
         // LoaderFile.showLoader(self.view);
         
         let myurl = NSURL(string: Url.viewActiveChallenges)
@@ -773,31 +775,31 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     
     
     
-    
-    
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    let loadingView: UIView = UIView()
-    func showActivityIndicatory()
-    {
-        loadingView.frame = CGRectMake(self.view.frame.width/2 - 30 ,self.view.frame.height/2 - 100, 60, 50)
-        
-       // loadingView.center = self.view.center;
-        
-        loadingView.backgroundColor = UIColor.grayColor()
-        loadingView.alpha = 0.6
-        loadingView.clipsToBounds = true
-        loadingView.layer.cornerRadius = 10
-      
-        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
-        
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
-        
-        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
-                                               loadingView.frame.size.height / 2);
-        loadingView.addSubview(activityIndicator)
-        self.view.addSubview(loadingView)
-        activityIndicator.startAnimating()
-    }
+//    
+//    
+//    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+//    let loadingView: UIView = UIView()
+//    func showActivityIndicatory()
+//    {
+//        loadingView.frame = CGRectMake(self.view.frame.width/2 - 30 ,self.view.frame.height/2 - 100, 60, 50)
+//        
+//       // loadingView.center = self.view.center;
+//        
+//        loadingView.backgroundColor = UIColor.grayColor()
+//        loadingView.alpha = 0.6
+//        loadingView.clipsToBounds = true
+//        loadingView.layer.cornerRadius = 10
+//      
+//        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+//        
+//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+//        
+//        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+//                                               loadingView.frame.size.height / 2);
+//        loadingView.addSubview(activityIndicator)
+//        self.view.addSubview(loadingView)
+//        activityIndicator.startAnimating()
+//    }
     
     
     
@@ -853,12 +855,12 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                                 
                                 
                                 
-                                self.activityIndicator.stopAnimating();
+//                                self.activityIndicator.stopAnimating();
+//                                
+//                                self.loadingView.removeFromSuperview();
                                 
-                                self.loadingView.removeFromSuperview();
                                 
-                                
-                                
+                                CommonFunctions.hideActivityIndicator2()
                                 
                                 
                                 if  let participating = elements[i]["participating"]
@@ -1219,9 +1221,9 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                                 
                                 
                                 print()
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
+//                                self.activityIndicator.stopAnimating();
+//                                
+//                                self.loadingView.removeFromSuperview();
                                 
                                 
                                 if self.view.subviews.contains(self.noInternet.view)
@@ -1297,16 +1299,14 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                                     
                                     // self.noInternet.imageView.userInteractionEnabled = true
                                     
-                                    
-                                    let tapRecognizer = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
+                               
                                     
                                     
                                     self.view.userInteractionEnabled = true
                                     
                                     // self.noInternet.noInternetLabel.userInteractionEnabled = true
                                     
-                                    
-                                    self.error.view.addGestureRecognizer(tapRecognizer)
+                                  
                                     
                                     self.error.didMoveToParentViewController(self)
                                     
@@ -1328,9 +1328,9 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                             
                             {
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
+//                                self.activityIndicator.stopAnimating();
+//                                
+//                                self.loadingView.removeFromSuperview();
                                 
                                 
                                 
@@ -1493,9 +1493,9 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
         print(error)
         
-        self.activityIndicator.stopAnimating();
-        
-        self.loadingView.removeFromSuperview();
+//        self.activityIndicator.stopAnimating();
+//        
+//        self.loadingView.removeFromSuperview();
         
         
         
@@ -1563,21 +1563,10 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
             
             self.error = self.storyboard?.instantiateViewControllerWithIdentifier("errorViewController") as! errorViewController
             
-            self.error.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
+            self.error.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
             
             self.view.addSubview((self.error.view)!);
             
-            //  self.DIVC.imageView.image = UIImage(named: "im_no_internet");
-            
-            // self.noInternet.imageView.userInteractionEnabled = true
-            
-            
-            let tapRecognizer = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
-            
-            // self.noInternet.noInternetLabel.userInteractionEnabled = true
-            
-            
-            self.error.view.addGestureRecognizer(tapRecognizer)
             
             self.error.didMoveToParentViewController(self)
             
