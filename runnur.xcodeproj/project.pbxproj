@@ -45,6 +45,9 @@
 		4485841F1D4A14A20027F141 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4485841E1D4A14A20027F141 /* GoogleService-Info.plist */; };
 		448584211D4A3BE40027F141 /* TourContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448584201D4A3BE40027F141 /* TourContentViewController.swift */; };
 		448584231D4A3D690027F141 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448584221D4A3D690027F141 /* FirstViewController.swift */; };
+		449A10A51D62E8A100E91536 /* GraphsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449A10A41D62E8A100E91536 /* GraphsViewController.swift */; };
+		449A10A71D62E8C800E91536 /* SplitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449A10A61D62E8C800E91536 /* SplitsViewController.swift */; };
+		449A10A91D62E92900E91536 /* TabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449A10A81D62E92900E91536 /* TabsViewController.swift */; };
 		44BBF3771D5D96E2006618EF /* NSObject+MTNativeFacebookLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BBF3761D5D96E2006618EF /* NSObject+MTNativeFacebookLogin.m */; };
 		44C7967D1D5EF706000118C5 /* SWRevealViewController.h in Resources */ = {isa = PBXBuildFile; fileRef = 470B1B5F1D27A59600E3B5B0 /* SWRevealViewController.h */; };
 		44C7967E1D5EF70D000118C5 /* SWRevealViewController.m in Resources */ = {isa = PBXBuildFile; fileRef = 470B1B611D27A5A100E3B5B0 /* SWRevealViewController.m */; };
@@ -151,6 +154,9 @@
 		4485841E1D4A14A20027F141 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		448584201D4A3BE40027F141 /* TourContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourContentViewController.swift; sourceTree = "<group>"; };
 		448584221D4A3D690027F141 /* FirstViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
+		449A10A41D62E8A100E91536 /* GraphsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphsViewController.swift; sourceTree = "<group>"; };
+		449A10A61D62E8C800E91536 /* SplitsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplitsViewController.swift; sourceTree = "<group>"; };
+		449A10A81D62E92900E91536 /* TabsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsViewController.swift; sourceTree = "<group>"; };
 		44BBF3751D5D96D4006618EF /* NSObject+MTNativeFacebookLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MTNativeFacebookLogin.h"; sourceTree = "<group>"; };
 		44BBF3761D5D96E2006618EF /* NSObject+MTNativeFacebookLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MTNativeFacebookLogin.m"; sourceTree = "<group>"; };
 		44C7967C1D5EF65D000118C5 /* Project-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Project-Prefix.pch"; sourceTree = "<group>"; };
@@ -263,11 +269,14 @@
 		44524A1B1D54B83400CC21C8 /* Activities */ = {
 			isa = PBXGroup;
 			children = (
+				449A10A81D62E92900E91536 /* TabsViewController.swift */,
 				4457FFE11D59C19A0097C598 /* ActivityDetailsViewController.swift */,
 				4457FFE31D59C2030097C598 /* SummaryActivityViewController.swift */,
 				44524A1C1D54B8C800CC21C8 /* StartActivityViewController.swift */,
 				446681B81D5AF64C00BFF4B6 /* CaloriesCounterLookUp.swift */,
 				446681BA1D5B47B800BFF4B6 /* MapData.swift */,
+				449A10A41D62E8A100E91536 /* GraphsViewController.swift */,
+				449A10A61D62E8C800E91536 /* SplitsViewController.swift */,
 			);
 			name = Activities;
 			sourceTree = "<group>";
@@ -760,6 +769,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				449A10A91D62E92900E91536 /* TabsViewController.swift in Sources */,
 				4441A8E31D58687B00CBB6A7 /* CurrentDateFunc.swift in Sources */,
 				47BB027B1D49EC4800273694 /* InviteFriendsTableViewCell.swift in Sources */,
 				440D64E61D5225B1004AE539 /* CustomPopUp.swift in Sources */,
@@ -785,11 +795,13 @@
 				470CF8951D24E8500001B3BC /* FriendsListCellTableViewCell.swift in Sources */,
 				47F40DFA1D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift in Sources */,
 				470261761D40F83D005261ED /* ChallengeModel.swift in Sources */,
+				449A10A51D62E8A100E91536 /* GraphsViewController.swift in Sources */,
 				473D0D941D49E955004DDC07 /* FAQViewController.swift in Sources */,
 				47FED24C1D2E6FE5006CAE8A /*  Reachability.swift in Sources */,
 				47474C161D3CBFB1008FE197 /* CreateGroupAndCauseFitViewController.swift in Sources */,
 				448584141D4A0A240027F141 /* CommonFunctions.swift in Sources */,
 				446681BB1D5B47B800BFF4B6 /* MapData.swift in Sources */,
+				449A10A71D62E8C800E91536 /* SplitsViewController.swift in Sources */,
 				4485841D1D4A109C0027F141 /* NetworkRequest.swift in Sources */,
 				473D0D961D49E970004DDC07 /* FAQCellTableViewCell.swift in Sources */,
 				47F97BE31D33CF5C0034B767 /* errorViewController.swift in Sources */,

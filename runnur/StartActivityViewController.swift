@@ -83,6 +83,37 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     }
     private func saveData()
     {
+        let date = self.lastLocation.timestamp
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd";
+        let dateString = dateFormatter.stringFromDate(date)
+        
+        self.mapData = MapData();
+        self.mapData.distance = self.distance.text!;
+        self.mapData.date = dateString;
+        self.mapData.elevationLoss = String(self.altLoss);
+        self.mapData.elevationGain = String(self.altGain);
+        self.mapData.avgSpeed = self.avgSpeed.text!;
+        self.mapData.avgPace = self.avgPace.text!;
+        self.mapData.duration = self.duration.text!;
+        self.mapData.weatherData = self.weatherData;
+        self.mapData.activityType = "Run";
+        self.mapData.maxElevation = "";
+        self.mapData.maxSpeed = "";
+        self.mapData.startTime = self.stringStartTime;
+        self.mapData.streak = "1"
+        self.mapData.caloriesBurned = String(self.caloriesburned);
+        self.mapData.location = self.locationName;
+        self.mapData.startLat = self.firstLocation.coordinate.latitude;
+        self.mapData.startLong = self.firstLocation.coordinate.longitude;
+        self.mapData.endLat = self.lastLocation.coordinate.latitude;
+        self.mapData.endLong = self.lastLocation.coordinate.longitude;
+
+        let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
+        ActivityDetailsViewController;
+        activityDetailsViewController.mapData=self.mapData;
+        self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
+        /*
         CommonFunctions.showPopup(self, title: "ALREADY FINISHED?", msg: "You did not cover enough distance. Are you sure you want to save the activity?", positiveMsg: "Yes, Save", negMsg: "No, Discard", show2Buttons: true, getClick: {
             // if Reachability.isConnectedToNetwork() == true{
             CommonFunctions.showActivityIndicator(self.view);
@@ -112,7 +143,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                     "elapsedTime": Double(self.elapsedTime),
                     "averageSpeed": Double(self.avgSpeed.text!)!,
                     "averagePace": Double(self.avgPace.text!)!,
-                    "time": self.duration.text!,
+                   // "time": "nil",
                     "performedActivity": String(UTF8String: self.performedActivity)!,
                     "caloriesBurnedS": self.caloriesburned,
                     "startLocationS": String(self.firstLocation),
@@ -174,7 +205,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             //        }else{
             //
             //        }
-        })
+        }) */
         
     }
     @IBAction func pause(sender: AnyObject) {

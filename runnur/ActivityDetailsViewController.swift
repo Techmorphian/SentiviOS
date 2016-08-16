@@ -8,12 +8,19 @@
 
 import UIKit
 
-class ActivityDetailsViewController: UIViewController {
+class ActivityDetailsViewController: UIViewController,TutorialPageViewControllerDelegate {
 
     @IBOutlet weak var dateAndType: UILabel!
     @IBOutlet weak var location: UILabel!
     var mapData = MapData();
+    var childView = TabsViewController();
     
+    @IBOutlet weak var summaryBtn: UIButton!
+    @IBOutlet weak var summaryBottomView: UILabel!
+    @IBOutlet weak var graphsBtn: UIButton!
+    @IBOutlet weak var graphsBottomView: UILabel!
+    @IBOutlet weak var splitsBtn: UIButton!
+    @IBOutlet weak var splitsBottomView: UILabel!
     
     @IBAction func back(sender: AnyObject) {
         self.presentingViewController?.presentingViewController!.dismissViewControllerAnimated(false, completion: nil);
@@ -34,6 +41,41 @@ class ActivityDetailsViewController: UIViewController {
         }
     }
     
+    @IBAction func summary(sender: UIButton) {
+        summaryBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        summaryBottomView.backgroundColor = UIColor.whiteColor();
+        
+        graphsBtn.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+        graphsBottomView.backgroundColor = colorCode.BlueColor;
+        
+        splitsBtn.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+        splitsBottomView.backgroundColor = colorCode.BlueColor;
+          childView.setViewControllers([childView.sumViewController], direction: UIPageViewControllerNavigationDirection.Forward, animated: false, completion: nil)    }
+    @IBAction func split(sender: UIButton) {
+        splitsBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        splitsBottomView.backgroundColor = UIColor.whiteColor();
+        
+        summaryBtn.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+        summaryBottomView.backgroundColor = colorCode.BlueColor;
+        
+        graphsBtn.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+        graphsBottomView.backgroundColor = colorCode.BlueColor;
+        childView.setViewControllers([childView.splitsViewController], direction: UIPageViewControllerNavigationDirection.Forward, animated: false, completion: nil)
+
+    }
+    @IBAction func graph(sender: UIButton) {
+        graphsBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        graphsBottomView.backgroundColor = UIColor.whiteColor();
+        
+        summaryBtn.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+        summaryBottomView.backgroundColor = colorCode.BlueColor;
+        
+        splitsBtn.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+        splitsBottomView.backgroundColor = colorCode.BlueColor;
+         childView.setViewControllers([childView.graphViewController], direction: UIPageViewControllerNavigationDirection.Forward, animated: false, completion: nil)
+
+    }
+
 
     @IBAction func edit(sender: AnyObject) {
         let alert = UIAlertController(title: "", message: "ENTER YOUR TITLE", preferredStyle: UIAlertControllerStyle.Alert)
@@ -62,7 +104,47 @@ class ActivityDetailsViewController: UIViewController {
 //        sumViewController.didMoveToParentViewController(self);
         // Do any additional setup after loading the view.
     }
+    func tutorialPageViewController(tutorialPageViewController: TabsViewController,
+                                    didUpdatePageCount count: Int) {
+       }
+    
+    func tutorialPageViewController(tutorialPageViewController: TabsViewController,
+                                    didUpdatePageIndex index: Int) {
+        if index == 0
+        {
+            summaryBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            summaryBottomView.backgroundColor = UIColor.whiteColor();
+            
+            graphsBtn.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+            graphsBottomView.backgroundColor = colorCode.BlueColor;
+            
+            splitsBtn.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+            splitsBottomView.backgroundColor = colorCode.BlueColor;
+            
+        }else if index == 1{
+            graphsBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            graphsBottomView.backgroundColor = UIColor.whiteColor();
+            
+            summaryBtn.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+            summaryBottomView.backgroundColor = colorCode.BlueColor;
+            
+            splitsBtn.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+            splitsBottomView.backgroundColor = colorCode.BlueColor;
+            
+        }else{
+            splitsBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            splitsBottomView.backgroundColor = UIColor.whiteColor();
+            
+            summaryBtn.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+            summaryBottomView.backgroundColor = colorCode.BlueColor;
+            
+            graphsBtn.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+            graphsBottomView.backgroundColor = colorCode.BlueColor;
 
+
+        }
+
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -76,6 +158,15 @@ class ActivityDetailsViewController: UIViewController {
             // Now you have a pointer to the child view controller.
             // You can save the reference to it, or pass data to it.
         }
+        if (segue.identifier == "TabsViewController") {
+            let childViewController = segue.destinationViewController as! TabsViewController
+            childViewController.mapData = mapData;
+            self.childView = childViewController;
+            childViewController.ActivityDetailsDelegate = self;
+            // Now you have a pointer to the child view controller.
+            // You can save the reference to it, or pass data to it.
+        }
+
     }
     /*
     // MARK: - Navigation
