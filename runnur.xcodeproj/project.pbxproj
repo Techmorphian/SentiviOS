@@ -313,7 +313,6 @@
 				4778115B1D487706003B01A4 /* models */,
 				4778115C1D487723003B01A4 /* swift Files */,
 				470CF8811D24DC370001B3BC /* Main.storyboard */,
-				47C6AFF91D5AF12700410DAE /* LeaderBoardViewController.swift */,
 				477811681D4879EE003B01A4 /* noInternet/error */,
 				47323D091D479D6D002B27CF /* challenge */,
 				4778115A1D4876AF003B01A4 /* ViewGroupFitChalleneg */,
@@ -528,6 +527,7 @@
 		47EFFBA81D5849D000F2A2D7 /* ViewCauseFitChallenge */ = {
 			isa = PBXGroup;
 			children = (
+				47C6AFF91D5AF12700410DAE /* LeaderBoardViewController.swift */,
 				47EFFBAB1D58822A00F2A2D7 /* CauseFirSummaryViewController.swift */,
 			);
 			name = ViewCauseFitChallenge;
