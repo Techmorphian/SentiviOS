@@ -10,6 +10,7 @@ import UIKit
 import AVFoundation
 import GoogleMaps
 import MapKit
+import FBSDKShareKit
 
 class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     
@@ -73,7 +74,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             self.pause.setTitle("DISCARD RUN", forState: .Normal);
         }else{
             
-            
+
             UIApplication.sharedApplication().cancelAllLocalNotifications()
             saveData()
             //  let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as! ActivityDetailsViewController;
@@ -108,6 +109,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         self.mapData.startLong = self.firstLocation.coordinate.longitude;
         self.mapData.endLat = self.lastLocation.coordinate.latitude;
         self.mapData.endLong = self.lastLocation.coordinate.longitude;
+        
 
         let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
         ActivityDetailsViewController;
@@ -461,8 +463,8 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                 if let weather = json!["weather"] as? NSArray {
                     
                     self.weatherData.descriptin  = weather[0].objectForKey("description") as! String;
-                    self.weatherData.descriptin = weather[0].objectForKey("main") as! String//weather[0]["main"] as! String;
-                    self.weatherData.descriptin = weather[0].objectForKey("icon") as! String//weather[0]["icon"] as! String;
+                    self.weatherData.main = weather[0].objectForKey("main") as! String//weather[0]["main"] as! String;
+                    self.weatherData.icon = weather[0].objectForKey("icon") as! String//weather[0]["icon"] as! String;
                 }
                 
                 if let main = json!["main"] as? NSDictionary {
@@ -520,7 +522,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                 placeMark = placemarks?[0]
                 
                 // Address dictionary
-                print(placeMark.addressDictionary)
+//                print(placeMark.addressDictionary)
                 
                 // Location name
                 if let locationName = placeMark.addressDictionary!["Name"] as? NSString {
@@ -574,10 +576,16 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         
         if originalHeight + difference <= 0
         {
+//            UIView.animateWithDuration(2.0, animations: {
+//                self.arrowImg.transform = CGAffineTransformMakeRotation((180.0 * CGFloat(M_PI)) / 180.0)
+//            })
             arrowImg.image = UIImage(named: "ic_up_down");
             
         }else{
-            arrowImg.image = UIImage(named: "ic_up_arrow");
+            UIView.animateWithDuration(2.0, animations: {
+                self.arrowImg.transform = CGAffineTransformMakeRotation((180.0 * CGFloat(M_PI)) / 180.0)
+            })
+           arrowImg.image = UIImage(named: "ic_up_arrow");
         }
         self.view.layoutIfNeeded()
         

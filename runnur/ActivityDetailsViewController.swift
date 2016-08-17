@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FBSDKShareKit
 
 class ActivityDetailsViewController: UIViewController,TutorialPageViewControllerDelegate {
 
@@ -22,13 +23,35 @@ class ActivityDetailsViewController: UIViewController,TutorialPageViewController
     @IBOutlet weak var splitsBtn: UIButton!
     @IBOutlet weak var splitsBottomView: UILabel!
     
+    var contentURL = String();
+    var contentTitle = String();
+    var contentDescription = String();
+    var contentURLImage = String();
+    
     @IBAction func back(sender: AnyObject) {
         self.presentingViewController?.presentingViewController!.dismissViewControllerAnimated(false, completion: nil);
     }
+    
     @IBAction func share(sender: AnyObject) {
-        let string = "What to Share?"
-        let share = UIActivityViewController(activityItems: [string], applicationActivities: nil)
-        self.presentViewController(share, animated: true, completion: nil)
+        if Reachability.isConnectedToNetwork() == true{
+        let share : FBSDKShareLinkContent = FBSDKShareLinkContent()
+        
+        share.imageURL = NSURL(string: "image url")
+        share.contentTitle = "content description "
+        share.contentURL = NSURL(string: "https://www.google.com")
+        
+        let dialog : FBSDKShareDialog = FBSDKShareDialog()
+        dialog.fromViewController = childView.sumViewController
+        dialog.shareContent = share
+        let facebookURL = NSURL(string: "fbauth2://app")
+        if(UIApplication.sharedApplication().canOpenURL(facebookURL!)){
+            dialog.mode = FBSDKShareDialogMode.Native
+        }else{
+            dialog.mode = FBSDKShareDialogMode.FeedWeb
+        }
+        dialog.show()
+        }
+    
     }
     var textField = UITextField();
     func configurationTextField(textField: UITextField!)

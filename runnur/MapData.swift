@@ -3,7 +3,7 @@ import UIKit
 
 class MapData
 {
- var distance : String? = "0.00mi";
+    var distance : String? = "0.00mi";
     var duration : String? = "00:00:00";
     var avgPace : String? = "0.00";
     var avgSpeed : String? = "0.00";
@@ -24,6 +24,12 @@ class MapData
     var startLong = Double();
     var endLat = Double();
     var endLong = Double();
+
+    var heartRate = String();
+    var splitGraphValues : [Double] = [];
+    var avgSpeedGraphValues : [Double] = [];
+    var maxElevationGraphValues : [Double] = [];
+    var heartRateGraphValues : [Double] = [];
 
     
 }

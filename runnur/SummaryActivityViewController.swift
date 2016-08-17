@@ -93,14 +93,14 @@ class SummaryActivityViewController: UIViewController {
     @IBOutlet weak var streak: UIView!
     
     
+    @IBOutlet weak var thermeter: UILabel!
+    @IBOutlet weak var dropValue: UILabel!
+    @IBOutlet weak var windValue: UILabel!
+    @IBOutlet weak var weatherValue: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        time.layer.shadowOffset = CGSizeZero
-//        elevation.layer.shadowOffset = CGSizeZero
-//        speed.layer.shadowOffset = CGSizeZero
-//        summary.layer.shadowOffset = CGSizeZero
-//        streak.layer.shadowOffset = CGSizeZero
         
           time.layer.shadowRadius = 5.0;
           elevation.layer.shadowRadius = 5.0;
@@ -136,6 +136,26 @@ class SummaryActivityViewController: UIViewController {
         self.maxElevation.text = mapData.maxElevation;
         self.startTime.text = mapData.startTime;
         self.caloriesBurned.text = mapData.caloriesBurned;
+        
+        if self.mapData.weatherData.temp != ""
+        {
+        self.thermeter.text=self.mapData.weatherData.temp+" F";
+        }
+        if self.mapData.weatherData.humidity != ""
+        {
+         self.dropValue.text = self.mapData.weatherData.humidity+"%";
+        }
+        if self.mapData.weatherData.descriptin != ""
+        {
+        self.weatherValue.text = self.mapData.weatherData.descriptin;
+        }
+        if self.mapData.weatherData.deg != ""
+        {
+        self.windValue.text = self.mapData.weatherData.deg;
+        }
+        
+        
+        
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         

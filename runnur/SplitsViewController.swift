@@ -15,11 +15,14 @@ class SplitsViewController: UIViewController {
     
     var dataPoints = [String]()
     
+    var splitChartValues : [Double] = [];
     
     
     func setChart(values: [Double]) {
         //   barChartView.noDataText = "You need to provide data for the chart."
         
+        if values.count != 0
+        {
         
         var dataEntries: [BarChartDataEntry] = []
         
@@ -28,9 +31,7 @@ class SplitsViewController: UIViewController {
             dataEntries.append(dataEntry)
             dataPoints.append("");
         }
-        
-        
-        
+
         let chartDataSet = BarChartDataSet(yVals: dataEntries, label: "SPLIT PACE (min/mi)")
         let chartData = BarChartData(xVals: dataPoints, dataSet: chartDataSet)
         
@@ -47,17 +48,15 @@ class SplitsViewController: UIViewController {
         
         splitChart.rightAxis.labelTextColor = UIColor.clearColor();
         splitChart.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
+        }
         splitChart.noDataText = "No Avg Speed Data Available";
          }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let unitsSold = [4.2,13.8,6.1];
         
-        
-        
-        setChart(unitsSold)
+        setChart(splitChartValues)
 
         // Do any additional setup after loading the view.
     }

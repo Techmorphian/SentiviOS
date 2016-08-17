@@ -87,14 +87,20 @@ class TabsViewController: UIPageViewController, UIPageViewControllerDataSource,U
             instantiateViewControllerWithIdentifier("\(color)");
         if color == "SummaryActivityViewController"
         {
-             sumViewController =  viewController as! SummaryActivityViewController
+            sumViewController =  viewController as! SummaryActivityViewController
             sumViewController.mapData = mapData;
            
         }else if color == "GraphsViewController"
         {
             self.graphViewController = viewController as! GraphsViewController
+            self.graphViewController.avgSpeedValue = self.mapData.avgSpeed!
+            self.graphViewController.totalDistanceValue = self.mapData.distance!;
+            self.graphViewController.maxElevationValue = self.mapData.maxElevation!;
+            self.graphViewController.heartRateValue = self.mapData.heartRate;
+            
         }else{
             self.splitsViewController = viewController as!  SplitsViewController;
+          //  self.splitsViewController.splitChartValues = self.mapData.splitGraphValues;
         }
         return viewController;
     }

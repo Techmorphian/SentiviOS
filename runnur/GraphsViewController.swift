@@ -15,15 +15,29 @@ class GraphsViewController: UIViewController {
     @IBOutlet weak var maxElevatinoChart: LineChartView!
     @IBOutlet weak var heartRateChart: LineChartView!
     
+    @IBOutlet weak var totalDistance: UILabel!
+    @IBOutlet weak var avgSpeed: UILabel!
+    @IBOutlet weak var maxElevation: UILabel!
+    @IBOutlet weak var heartRate: UILabel!
     
     var dataPoints = [String]()
+    var dataPoints1 = [String]()
+    var dataPoints2 = [String]()
     
-
-
+    var totalDistanceValue : String = "---";
+    var avgSpeedValue : String = "---";
+    var maxElevationValue : String = "---";
+    var heartRateValue : String = "---";
+    
+    var avgSpeedGraphValues : [Double] = [];
+    var maxElevationGraphValues : [Double] = [];
+    var heartRateGraphValues : [Double] = [];
+    
     func setChart(valuesForSpeed: [Double],valuesForMaxElevation:[Double],valuesForHeartRate:[Double]) {
      //   barChartView.noDataText = "You need to provide data for the chart."
         
-      
+        if valuesForSpeed.count != 0
+        {
         var dataEntries: [ChartDataEntry] = []
         
         for i in 0..<valuesForSpeed.count {
@@ -38,7 +52,7 @@ class GraphsViewController: UIViewController {
         lineChartDataSet.circleRadius = 0.0;
         lineChartDataSet.lineWidth = 2;
         lineChartDataSet.drawCubicEnabled = true;
-        lineChartDataSet.drawFilledEnabled = true;
+        //lineChartDataSet.drawFilledEnabled = true;
         lineChartDataSet.colors = [colorCode.BlueColor]
 
         lineChartDataSet.drawCirclesEnabled = false
@@ -54,16 +68,19 @@ class GraphsViewController: UIViewController {
         
         let ll = ChartLimitLine(limit: 10.5, label: "Avg Speed")
         speedCharts.rightAxis.addLimitLine(ll)
+        }
         speedCharts.noDataText = "No Avg Speed Data Available"
-        
-        
+       
+        if valuesForMaxElevation.count != 0
+        {
+          var dataEntries1: [ChartDataEntry] = []
         for i in 0..<valuesForMaxElevation.count {
             let dataEntry = ChartDataEntry(value: valuesForMaxElevation[i], xIndex: i)
-            dataEntries.append(dataEntry)
-            dataPoints.append("");
+            dataEntries1.append(dataEntry)
+            dataPoints1.append("");
         }
-        let lineChartDataSet2 = LineChartDataSet(yVals: dataEntries, label: "ELEVATION")
-        let lineChartData2 = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet2)
+        let lineChartDataSet2 = LineChartDataSet(yVals: dataEntries1, label: "ELEVATION")
+        let lineChartData2 = LineChartData(xVals: dataPoints1, dataSet: lineChartDataSet2)
         lineChartDataSet2.circleColors = [colorCode.RedColor];
         lineChartDataSet2.circleRadius = 0.0;
         lineChartDataSet2.lineWidth = 2;
@@ -81,20 +98,19 @@ class GraphsViewController: UIViewController {
         maxElevatinoChart.leftAxis.labelTextColor = colorCode.RedColor;
         maxElevatinoChart.xAxis.labelTextColor = colorCode.RedColor;
         maxElevatinoChart.rightAxis.labelTextColor = UIColor.clearColor();
-
-
-        
-        
+        }
         maxElevatinoChart.noDataText = "No Max Elevation Data Available"
-        
-        
+        if valuesForHeartRate.count != 0
+        {
+        var dataEntries2: [ChartDataEntry] = []
+
         for i in 0..<valuesForHeartRate.count {
             let dataEntry = ChartDataEntry(value: valuesForHeartRate[i], xIndex: i)
-            dataEntries.append(dataEntry)
-            dataPoints.append("");
+            dataEntries2.append(dataEntry)
+            dataPoints2.append("");
         }
-        let lineChartDataSet3 = LineChartDataSet(yVals: dataEntries, label: "ELEVATION")
-        let lineChartData3 = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet3)
+        let lineChartDataSet3 = LineChartDataSet(yVals: dataEntries2, label: "ELEVATION")
+        let lineChartData3 = LineChartData(xVals: dataPoints2, dataSet: lineChartDataSet3)
         lineChartDataSet3.circleColors = [colorCode.RedColor];
         lineChartDataSet3.circleRadius = 0.0;
         lineChartDataSet3.lineWidth = 2;
@@ -112,7 +128,7 @@ class GraphsViewController: UIViewController {
         maxElevatinoChart.leftAxis.labelTextColor = colorCode.RedColor;
         maxElevatinoChart.xAxis.labelTextColor = colorCode.RedColor;
         maxElevatinoChart.rightAxis.labelTextColor = UIColor.clearColor();
-        
+        }
 
         heartRateChart.noDataText = "No Heart Rate Data Available"
     }
@@ -120,11 +136,22 @@ class GraphsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-         let unitsSold = [10.0,10.2,10,8,11.0,12.1,12.6,12.8,13.9,20.5,20.9,25,4,28,9,30.0,30.1,30.50,10.5,10.5,10.5,10.5,10.0];
+        avgSpeedGraphValues = [10.0,10.2,10,8,11.0,12.1,12.6,12.8,13.9,20.5,20.9,25,4,28,9,30.0,30.1,30.50,10.5,10.5,10.5,10.5,10.0];
+        
+        totalDistance.text = totalDistanceValue.stringByReplacingOccurrencesOfString("mi", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil);
+        avgSpeed.text = avgSpeedValue.stringByReplacingOccurrencesOfString(" mph", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil);
+        
+        maxElevation.text = maxElevationValue.stringByReplacingOccurrencesOfString(" ft", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil);
+        if heartRateValue != " " || heartRateValue != ""
+        {
+         heartRate.text = "---";
+        }else{
+         heartRate.text = heartRateValue;
+        }
         
         
        
-        setChart(unitsSold, valuesForMaxElevation: unitsSold, valuesForHeartRate: [0.0])
+        setChart(avgSpeedGraphValues, valuesForMaxElevation: maxElevationGraphValues, valuesForHeartRate: heartRateGraphValues)
         
              // Do any additional setup after loading the view.
     }
