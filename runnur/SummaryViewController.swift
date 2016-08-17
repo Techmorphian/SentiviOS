@@ -559,7 +559,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
     
     ///////////////////////////////////////////////////// web service part
     
-    // MARK:- VIEW ACTIVE CHALLENGES WEB SERVICE
+    // MARK:- VIEW GROUP FIT CHALLENGES WEB SERVICE
     
     func viewGroupChallengeDetail()
         
@@ -695,7 +695,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                         challengeOverLabel.hidden = true
                         challenegeOverImagView.hidden = true
                         
-                        challenegeOverImagView.image = UIImage(named: "")
+                        challenegeOverImagView.hidden = true
                         
                         challengeViewHeightConstarint.constant = 0
 

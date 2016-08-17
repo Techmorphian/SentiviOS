@@ -657,7 +657,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     @IBOutlet var setBetAmountTextField: UITextField!
   
     
-  var setBetAmountValue = ["10 cents","20 cents","30 cents","40 cents","50 cents","60 cents","70 cents","80 cents","90 cents","$ 1","$ 1.5","$ 2"]
+  var setBetAmountValue = ["","10 cents","20 cents","30 cents","40 cents","50 cents","60 cents","70 cents","80 cents","90 cents","$ 1","$ 1.5","$ 2"]
     
     
 //MARK:- PICKER VIEW SET BET AMOUNT
@@ -1122,6 +1122,8 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         setBetAmount.tintColor = UIColor.blackColor();
         
         setBetAmountperMileTxtFld.inputAccessoryView = toolBar
+        
+       // self.setBetAmountperMileTxtFld.text = setBetAmountValue[0]
         setBetAmountperMilePickerView.delegate=self;
         setBetAmountperMilePickerView.dataSource=self;
 
@@ -1137,7 +1139,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
        
    
        
-       self.setBetAmountperMileTxtFld.text = setBetAmountValue[0]
+      // self.setBetAmountperMileTxtFld.text = setBetAmountValue[0]
         
 
       
@@ -1223,11 +1225,22 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
 
     func keyboardNextButton()
     {
+       
+        
         if self.nameOfChallenge.isFirstResponder()
         {
-            self.challengeDescription.becomeFirstResponder()
+        self.challengeDescription.becomeFirstResponder()
+             return
         }
         
+        
+        if self.challengeDescription.isFirstResponder()
+        {
+            
+            self.setBetAmountTextField.becomeFirstResponder()
+              return
+        }
+
         
         if setBetAmountTextField.isFirstResponder()
         {
@@ -1262,14 +1275,24 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         if self.challengeDescription.isFirstResponder()
         {
             self.nameOfChallenge.becomeFirstResponder()
+            return
             
         }
+        
+        if setBetAmountTextField.isFirstResponder()
+        {
+            
+            self.challengeDescription.becomeFirstResponder()
+            return
+        }
+
         
         
         if FirstWinnerTextField.isFirstResponder()
         {
             
             self.setBetAmountTextField.becomeFirstResponder()
+            return
         }
 
         
@@ -1278,12 +1301,14 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         {
             
             self.FirstWinnerTextField.becomeFirstResponder()
+            return
         }
 
         if thirdWinnerTextField.isFirstResponder()
         {
             
             self.secondWinnerTextField.becomeFirstResponder()
+            return
         }
         
         
@@ -1536,17 +1561,21 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
             
             var fixedSpaceButton = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
             
-//            
-//            var nextButton  = UIBarButtonItem(image: UIImage(named: "bt_fwd"), style: .Plain, target: self, action: "keyboardNextButton")
+            
+            var nextButton  = UIBarButtonItem(image: UIImage(named: "bt_fwd"), style: .Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.keyboardNextButton))
+            
+            nextButton.width = 60.0
             
             var previousButton  = UIBarButtonItem(image: UIImage(named: "bt_back"), style: .Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.keyboardPreviousButton))
             
             
             
-            toolbar.setItems([fixedSpaceButton,previousButton, fixedSpaceButton, flexibleSpaceButton, doneButton], animated: false)
+            toolbar.setItems([fixedSpaceButton,previousButton,nextButton, fixedSpaceButton, flexibleSpaceButton, doneButton], animated: false)
             toolbar.userInteractionEnabled = true
             
+            
             return toolbar
+
     }()
     
     
@@ -1588,16 +1617,21 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
             
             var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.inputToolbarDonePressed))
             
-            
             var flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
             
             var fixedSpaceButton = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
             
+            
             var nextButton  = UIBarButtonItem(image: UIImage(named: "bt_fwd"), style: .Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.keyboardNextButton))
             
-            toolbar.setItems([ fixedSpaceButton,nextButton,fixedSpaceButton, flexibleSpaceButton, doneButton], animated: false)
+            nextButton.width = 60.0
+            
+            var previousButton  = UIBarButtonItem(image: UIImage(named: "bt_back"), style: .Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.keyboardPreviousButton))
+            
+            
+            
+            toolbar.setItems([fixedSpaceButton,previousButton,nextButton, fixedSpaceButton, flexibleSpaceButton, doneButton], animated: false)
             toolbar.userInteractionEnabled = true
-
             
             return toolbar
     }()

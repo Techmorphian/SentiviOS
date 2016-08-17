@@ -525,20 +525,17 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                     
                     cell.BetAmount.text = participatingFilterArray[indexPath.row].betAmount
                     
-                    cell.noOfPlayers.text = participatingFilterArray[indexPath.row].usersCount
-                    
-                    
-                    cell.potAmount.text = participatingFilterArray[indexPath.row].betAmount
+                    cell.potAmount.text = participatingFilterArray[indexPath.row].potAmount
                     
                     if participatingFilterArray[indexPath.row].startDate != "" &&   participatingFilterArray[indexPath.row].endDate != ""
                     {
                         
-                        let StartDate = dateFunction.dateFormatFunc("MMMM dd", formFormat: "yyyy/MM/dd", dateToConvert: participatingFilterArray[indexPath.row].startDate)
+                        let StartDate = dateFunction.dateFormatFunc("MMM dd", formFormat: "yyyy/MM/dd", dateToConvert: participatingFilterArray[indexPath.row].startDate)
                         
                         
                         print(StartDate)
                         
-                        let EndDate = dateFunction.dateFormatFunc("MMMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: participatingFilterArray[indexPath.row].endDate)
+                        let EndDate = dateFunction.dateFormatFunc("MMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: participatingFilterArray[indexPath.row].endDate)
                         print(EndDate)
                         
                         
@@ -557,18 +554,31 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                             
                             cell.grpCauseFitIcon.image = UIImage(named:"ic_group_fit")
                             
-                        cell.ic_memberImageView.image = UIImage(named:"ic_members")
+                            cell.ic_memberImageView.image = UIImage(named:"ic_members")
+                            
+                            
+                            cell.betAmountLabel.text = "BET AMOUNT"
+                            cell.potAmountLabel.text = "POT AMOUNT"
+                            
+                            cell.noOfPlayers.hidden = false;
+                            cell.noOfPlayers.text = participatingFilterArray[indexPath.row].usersCount
+                            cell.playersLabel.text = "PLAYERS"
+                            
                             
                         }
                         
                         if participatingFilterArray[indexPath.row].typeId == "2"
                         {
                             
-                            cell.ic_memberImageView.image = UIImage(named:"ic_charity_gray")
-
-                            
                             cell.grpCauseFitIcon.image = UIImage(named:"ic_cause_fit")
                             
+                            cell.ic_memberImageView.image = UIImage(named:"ic_charity_gray")
+                            
+                            cell.betAmountLabel.text = "PER MILE"
+                            cell.potAmountLabel.text = "TOTAL AMOUNT"
+                            
+                            cell.playersLabel.text = "ORGHUNTER"
+                            cell.noOfPlayers.hidden = true;
                             
                         }
                         
@@ -585,6 +595,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
             
             else
             {
+                
             cell.challengeName.text = participatingArray[indexPath.row].challengeName
             
             
@@ -605,8 +616,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
             }
             
             cell.BetAmount.text = participatingArray[indexPath.row].betAmount
-            
-            cell.noOfPlayers.text = participatingArray[indexPath.row].usersCount
+         
             
             
             cell.potAmount.text = participatingArray[indexPath.row].betAmount
@@ -616,12 +626,12 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
             if participatingArray[indexPath.row].startDate != "" &&   participatingArray[indexPath.row].endDate != ""
             {
                 
-                let StartDate = dateFunction.dateFormatFunc("MMMM dd", formFormat: "yyyy/MM/dd", dateToConvert: participatingArray[indexPath.row].startDate)
+                let StartDate = dateFunction.dateFormatFunc("MMM dd", formFormat: "yyyy/MM/dd", dateToConvert: participatingArray[indexPath.row].startDate)
                 
                 
                 print(StartDate)
                 
-                let EndDate = dateFunction.dateFormatFunc("MMMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: participatingArray[indexPath.row].endDate)
+                let EndDate = dateFunction.dateFormatFunc("MMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: participatingArray[indexPath.row].endDate)
                 print(EndDate)
                 
                 
@@ -642,6 +652,13 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
 
                     cell.grpCauseFitIcon.image = UIImage(named:"ic_group_fit")
                     
+                    cell.betAmountLabel.text = "BET AMOUNT"
+                    cell.potAmountLabel.text = "POT AMOUNT"
+                    
+                    cell.noOfPlayers.hidden = false
+                    cell.noOfPlayers.text = participatingArray[indexPath.row].usersCount
+                    cell.playersLabel.text = "PLAYERS"
+                    
                 }
                 
                 if participatingArray[indexPath.row].typeId == "2"
@@ -649,6 +666,15 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                     cell.ic_memberImageView.image = UIImage(named:"ic_charity_gray")
 
                     cell.grpCauseFitIcon.image = UIImage(named:"ic_cause_fit")
+                    
+                    cell.betAmountLabel.text = "PER MILE"
+                    cell.potAmountLabel.text = "TOTAL AMOUNT"
+                    
+                    cell.playersLabel.text = "ORGHUNTER"
+
+                    cell.noOfPlayers.hidden = true;
+                    
+                    
                     
                 }
                 
@@ -671,6 +697,8 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
            cell.grpCauseFitIcon.image = UIImage(named:"ic_cause_fit")
             
             cell.noOfPlayers.hidden = true;
+            
+             cell.playersLabel.text = "ORGHUNTER"
             
 //            cell.ic_memCenterXConstraint.constant = 0
 //            
@@ -714,12 +742,12 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                 if contributingFilterArray[indexPath.row].startDate != "" &&   contributingFilterArray[indexPath.row].endDate != ""
                 {
                     
-                    let StartDate = dateFunction.dateFormatFunc("MMMM dd", formFormat: "yyyy/MM/dd", dateToConvert: contributingFilterArray[indexPath.row].startDate)
+                    let StartDate = dateFunction.dateFormatFunc("MMM dd", formFormat: "yyyy/MM/dd", dateToConvert: contributingFilterArray[indexPath.row].startDate)
                     
                     
                     print(StartDate)
                     
-                    let EndDate = dateFunction.dateFormatFunc("MMMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: contributingFilterArray[indexPath.row].endDate)
+                    let EndDate = dateFunction.dateFormatFunc("MMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: contributingFilterArray[indexPath.row].endDate)
                     print(EndDate)
                     
                     
@@ -754,7 +782,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
             
             cell.BetAmount.text = contributingArray[indexPath.row].betAmount
             
-            cell.noOfPlayers.text = contributingArray[indexPath.row].usersCount
+    
             
             
             cell.potAmount.text = contributingArray[indexPath.row].betAmount
@@ -764,12 +792,12 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
             if contributingArray[indexPath.row].startDate != "" &&   contributingArray[indexPath.row].endDate != ""
             {
                 
-                let StartDate = dateFunction.dateFormatFunc("MMMM dd", formFormat: "yyyy/MM/dd", dateToConvert: contributingArray[indexPath.row].startDate)
+                let StartDate = dateFunction.dateFormatFunc("MMM dd", formFormat: "yyyy/MM/dd", dateToConvert: contributingArray[indexPath.row].startDate)
                 
                 
                 print(StartDate)
                 
-                let EndDate = dateFunction.dateFormatFunc("MMMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: contributingArray[indexPath.row].endDate)
+                let EndDate = dateFunction.dateFormatFunc("MMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: contributingArray[indexPath.row].endDate)
                 print(EndDate)
                 
                 

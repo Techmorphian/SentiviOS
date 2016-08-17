@@ -164,10 +164,10 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             {
                
                 cell.countLabel.hidden = false;
-              //  cell.countLabel.text = "$" + " " + NSUserDefaults.standardUserDefaults().stringForKey("winningCount")!
+            cell.countLabel.text = "$" + " " + NSUserDefaults.standardUserDefaults().stringForKey("winningCount")!
                 
               
-               cell.countLabel.layer.cornerRadius = cell.countLabel.frame.size.width / 2;
+               cell.countLabel.layer.cornerRadius = cell.countLabel.frame.size.height/2;
                cell.countLabel.backgroundColor = colorCode.RedColor
             // cell.countLabel.layer.masksToBounds = true
               cell.countLabel.clipsToBounds = true
@@ -369,11 +369,9 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
     
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath)
     {
-        //let cell = tableView.cellForRowAtIndexPath(indexPath) as!  NavigationCellTableViewCell
-        
-        let cell = tableView.dequeueReusableCellWithIdentifier("NavigationCellTableViewCell")
-        
-        cell!.contentView.backgroundColor = colorCode.DarkBlueColor 
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as!  NavigationCellTableViewCell
+               
+        cell.contentView.backgroundColor = UIColor.clearColor();
     }
     
     
@@ -385,7 +383,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
     var sectionTwoImages = ["ic_history_nav","ic_statistics_nav","ic_heart_rate_nav","ic_winning_balance_nav"]
     
     var sectionThree = ["Settings","Logout","Feedback","FAQ"]
-    var sectionThreeImages = ["ic_settings_nav","ic_settings_nav","ic_feedback_nav","ic_faq_nav"]
+    var sectionThreeImages = ["ic_settings_nav","ic_logout","ic_feedback_nav","ic_faq_nav"]
     override func viewDidLoad()
     {
         super.viewDidLoad()

@@ -934,28 +934,28 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     }
     
     
-//    
-//    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-//    let loadingView: UIView = UIView()
-//    func showActivityIndicatory()
-//    {
-//        loadingView.frame = CGRectMake(0, 0, 60, 50)
-//        loadingView.center = view.center
-//        
-//        loadingView.backgroundColor = UIColor.grayColor()
-//        loadingView.alpha = 0.6
-//        loadingView.clipsToBounds = true
-//        loadingView.layer.cornerRadius = 10
-//        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
-//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
-//        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
-//                                               loadingView.frame.size.height / 2);
-//        loadingView.addSubview(activityIndicator)
-//        self.view.addSubview(loadingView)
-//        activityIndicator.startAnimating()
-//    }
-//    
-//
+    
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    let loadingView: UIView = UIView()
+    func showActivityIndicatory()
+    {
+        loadingView.frame = CGRectMake(0, 0, 60, 50)
+        loadingView.center = view.center
+        
+        loadingView.backgroundColor = UIColor.grayColor()
+        loadingView.alpha = 0.6
+        loadingView.clipsToBounds = true
+        loadingView.layer.cornerRadius = 10
+        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+                                               loadingView.frame.size.height / 2);
+        loadingView.addSubview(activityIndicator)
+        self.view.addSubview(loadingView)
+        activityIndicator.startAnimating()
+    }
+    
+
     
     
     //MARK:- NSURLSession delegate methods
@@ -1036,7 +1036,11 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                             
                             {
                                 
-                                CommonFunctions.hideActivityIndicator();
+                                   
+                                self.activityIndicator.stopAnimating();
+                                
+                                self.loadingView.removeFromSuperview();
+   
                                 
                              
                               
@@ -1066,8 +1070,12 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                 
                 
                 
-                CommonFunctions.hideActivityIndicator();
-
+                   
+                                self.activityIndicator.stopAnimating();
+                                
+                                self.loadingView.removeFromSuperview();
+   
+                           
                 
                 let alert = UIAlertController(title: "", message:"something went wrong try again later." , preferredStyle: UIAlertControllerStyle.Alert)
                 
@@ -1124,8 +1132,9 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?)
     {
         
-        CommonFunctions.hideActivityIndicator();
-
+        self.activityIndicator.stopAnimating();
+        
+        self.loadingView.removeFromSuperview();
         
         // LoaderFile.hideLoader(self.view)
         
@@ -1279,7 +1288,8 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             
             if(Reachability.isConnectedToNetwork()==true )
             {
-               CommonFunctions.showActivityIndicator(view)
+                 showActivityIndicatory()
+                
                 self.processContactNames();
 
                 
@@ -1403,8 +1413,11 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             dispatch_async(dispatch_get_main_queue())
             {
                
-                CommonFunctions.hideActivityIndicator();
-
+                   
+                                self.activityIndicator.stopAnimating();
+                                
+                                self.loadingView.removeFromSuperview();
+   
                 
                 
                 if !granted
@@ -1418,8 +1431,11 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                     
                     self.RemoveNoInternet();
 
-                     CommonFunctions.hideActivityIndicator();
-                    
+                        
+                                self.activityIndicator.stopAnimating();
+                                
+                                self.loadingView.removeFromSuperview();
+   
                                 self.addressBook = self.extractABAddressBookRef(ABAddressBookCreateWithOptions(nil, &errorRef))
                     
                                 let contactList: NSArray = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(self.addressBook, nil, ABPersonSortOrdering(kABPersonSortByFirstName)).takeRetainedValue() as [ABRecordRef]
@@ -1807,7 +1823,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         {
 
             
-            CommonFunctions.showActivityIndicator(view)
+            showActivityIndicatory()
             self.getAddressBookNames();
             
             

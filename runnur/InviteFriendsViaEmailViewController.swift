@@ -106,13 +106,11 @@ class InviteFriendsViaEmailViewController: UIViewController,UITextFieldDelegate,
                      
             EmailIds.append(emailIdTextField.text!)
             
-            inviteFriendsEmail();
-            
-            self.emailIdTextField.text = ""
+            //self.emailIdTextField.text = ""
             
             emailIdTextField.resignFirstResponder();
             
-            
+             inviteFriendsEmail();
             
         }
         else
@@ -233,6 +231,26 @@ class InviteFriendsViaEmailViewController: UIViewController,UITextFieldDelegate,
     
     
     
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    let loadingView: UIView = UIView()
+    func showActivityIndicatory()
+    {
+        loadingView.frame = CGRectMake(0, 0, 60, 50)
+        loadingView.center = view.center
+        
+        loadingView.backgroundColor = UIColor.grayColor()
+        loadingView.alpha = 0.6
+        loadingView.clipsToBounds = true
+        loadingView.layer.cornerRadius = 10
+        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+                                               loadingView.frame.size.height / 2);
+        loadingView.addSubview(activityIndicator)
+        self.view.addSubview(loadingView)
+        activityIndicator.startAnimating()
+    }
+
     
     var EmailIds = [String]()
     
@@ -241,6 +259,9 @@ class InviteFriendsViaEmailViewController: UIViewController,UITextFieldDelegate,
     func inviteFriendsEmail()
         
     {
+        
+        showActivityIndicatory();
+
         
         // LoaderFile.showLoader(self.view);
         
@@ -340,7 +361,10 @@ class InviteFriendsViaEmailViewController: UIViewController,UITextFieldDelegate,
                         NSOperationQueue.mainQueue().addOperationWithBlock
                             {
                                 
+                                self.activityIndicator.stopAnimating();
                                 
+                                self.loadingView.removeFromSuperview();
+
                                 
                                 self.emailIdTextField.resignFirstResponder();
                                 
@@ -369,7 +393,9 @@ class InviteFriendsViaEmailViewController: UIViewController,UITextFieldDelegate,
                             
                             {
                                 
-                                //  LoaderFile.hideLoader(self.view)
+                                self.activityIndicator.stopAnimating();
+                                
+                                self.loadingView.removeFromSuperview();
                                 
                                 let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
                                 let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
@@ -394,9 +420,12 @@ class InviteFriendsViaEmailViewController: UIViewController,UITextFieldDelegate,
                 
             {
                 
+                self.activityIndicator.stopAnimating();
                 
+                self.loadingView.removeFromSuperview();
+
                 
-                let alert = UIAlertController(title: "", message:"something went wrong try again later." , preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "", message:"something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
                 
                 let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
                 

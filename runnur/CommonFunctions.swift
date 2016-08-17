@@ -249,13 +249,11 @@ class CommonFunctions : NSObject
         loadingView.clipsToBounds=true
         activityIndicator.color = UIColor.grayColor()
         
-        UIApplication.sharedApplication().beginIgnoringInteractionEvents();
-    
         
         activityIndicator.center=CGPointMake(loadingView.frame.width/2, loadingView.frame.height/2)
         activityIndicator.hidesWhenStopped=true
         loadingLable=UILabel(frame: CGRectMake(0, 60, loadingView.bounds.width, loadingView.bounds.height))
-        loadingLable.text="Please wait a moment. This may take a while"
+        loadingLable.text="Please wait ..."
         loadingLable.textColor=UIColor.grayColor()
         loadingLable.font = loadingLable.font.fontWithSize(10)
         loadingLable.lineBreakMode =  .ByWordWrapping
@@ -270,63 +268,16 @@ class CommonFunctions : NSObject
         
     }
     
-    static func showActivityIndicator2(view:UIView)
-    {
-        
-        loadingView.frame = CGRectMake(0,self.view.frame.width/2, 60, 50)
-        
-        loadingView.center=view.center
-        //loadingView.backgroundColor = colorCode.themeTintColor()
-        loadingView.layer.cornerRadius = 10
-        loadingView.alpha = 0.7
-        loadingView.hidden=false
-        loadingView.clipsToBounds=true
-        activityIndicator.color = UIColor.grayColor()
-        
-        UIApplication.sharedApplication().beginIgnoringInteractionEvents();
-        
-        
-        activityIndicator.center=CGPointMake(loadingView.frame.width/2, loadingView.frame.height/2)
-        
-        activityIndicator.hidesWhenStopped=true
-        
-        loadingLable=UILabel(frame: CGRectMake(0, 0, loadingView.bounds.width, loadingView.bounds.height))
-        loadingLable.text="Please wait a moment. This may take a while"
-        loadingLable.textColor=UIColor.grayColor()
-        loadingLable.font = loadingLable.font.fontWithSize(10)
-        loadingLable.lineBreakMode =  .ByWordWrapping
-        loadingLable.numberOfLines=0
-        loadingLable.textAlignment = .Center
-        activityIndicator.startAnimating()
-        loadingView.addSubview(activityIndicator)
-        loadingView.addSubview(loadingLable)
-        view.addSubview(loadingView)
-        
-        //Please wait a moment. This may take a while
-        
-    }
-
     
     static func hideActivityIndicator()
     {
-        
-        UIApplication.sharedApplication().endIgnoringInteractionEvents()
-        
+                       
         loadingView.removeFromSuperview()
         
     }
     
-    static func hideActivityIndicator2()
-    {
-        
-        UIApplication.sharedApplication().endIgnoringInteractionEvents()
-        
-        loadingView.removeFromSuperview()
-        
-    }
+   
     
-
-
     
     static func showPopup(view : UIViewController,title:String = "", msg:String,positiveMsg : String = "OK",negMsg : String = "Cancel",show2Buttons : Bool = false,getClick : GetClick){
         

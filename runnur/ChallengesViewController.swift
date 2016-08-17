@@ -94,8 +94,8 @@ class ChallengesViewController: UIViewController
             NSUserDefaults.standardUserDefaults().setBool(false, forKey: "filterActive")
             
             print(NSUserDefaults.standardUserDefaults().boolForKey("filterActive"))
-            
-              NSNotificationCenter.defaultCenter().postNotificationName("filterClicked", object: nil)
+           
+               NSNotificationCenter.defaultCenter().postNotificationName("filterClicked", object: nil)
             })
         
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)

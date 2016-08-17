@@ -149,12 +149,13 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
                     print(result)
                     
                     
+                    self.activityIndicator.stopAnimating();
                     
+                    self.loadingView.removeFromSuperview();
                     
                     self.UpdateFacebookToken();
                     
-                    CommonFunctions.hideActivityIndicator();
-                    
+                 
                     
                     
                    
@@ -265,7 +266,9 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
                     
                     
                     
-                 CommonFunctions.hideActivityIndicator();
+                    self.activityIndicator.stopAnimating();
+                    
+                    self.loadingView.removeFromSuperview();
                     
                     
                     self.performSegueWithIdentifier("AddviaFacebook", sender: nil)
@@ -279,7 +282,9 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
                     
                     print("\(error)")
                     
-               CommonFunctions.hideActivityIndicator();
+                    self.activityIndicator.stopAnimating();
+                    
+                    self.loadingView.removeFromSuperview();
                     
                 }
                 
@@ -380,7 +385,9 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
                 
                 
                 
-               CommonFunctions.hideActivityIndicator();
+                self.activityIndicator.stopAnimating();
+                
+                self.loadingView.removeFromSuperview();
                 
             }
             else
@@ -391,7 +398,9 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
                 print("\(error)")
                 
                 
-               CommonFunctions.hideActivityIndicator();
+                self.activityIndicator.stopAnimating();
+                
+                self.loadingView.removeFromSuperview();
                 
             }
             
@@ -472,10 +481,11 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
                         {
                           
                         
-                         CommonFunctions.showActivityIndicator(self.view)
                             
                         if(Reachability.isConnectedToNetwork()==true )
                         {
+                            
+                            self.showActivityIndicatory()
                             
                         self.getFBUserData()
                             
@@ -747,8 +757,9 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
                         NSOperationQueue.mainQueue().addOperationWithBlock
                             {
                                 
+                                self.activityIndicator.stopAnimating();
                                 
-                               CommonFunctions.hideActivityIndicator();
+                                self.loadingView.removeFromSuperview();
                                 
                                // NSUserDefaults.standardUserDefaults().setObject(msg, forKey: "successMsgOfAddManually")
                                 
@@ -785,7 +796,9 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
                                 
                                 
                                 
-                                CommonFunctions.hideActivityIndicator();
+                                self.activityIndicator.stopAnimating();
+                                
+                                self.loadingView.removeFromSuperview();
                                 //  LoaderFile.hideLoader(self.view)
                                 
                                 let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
@@ -810,7 +823,10 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
                                 
                                 
                                 
-                              CommonFunctions.hideActivityIndicator();
+                                self.activityIndicator.stopAnimating();
+                                
+                                self.loadingView.removeFromSuperview();
+                                
                                 //  LoaderFile.hideLoader(self.view)
                                 
                                 let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
@@ -840,7 +856,9 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
                 
                 
                 
-                CommonFunctions.hideActivityIndicator();
+                self.activityIndicator.stopAnimating();
+                
+                self.loadingView.removeFromSuperview();
                 
                 let alert = UIAlertController(title: "", message:"something went wrong try again later." , preferredStyle: UIAlertControllerStyle.Alert)
                 
@@ -899,7 +917,7 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
     {
         
         
-      CommonFunctions.hideActivityIndicator();
+        showActivityIndicatory();
         
         // LoaderFile.hideLoader(self.view)
         
@@ -931,6 +949,27 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
     
     
     
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    let loadingView: UIView = UIView()
+    func showActivityIndicatory()
+    {
+        loadingView.frame = CGRectMake(0, 0, 60, 50)
+        loadingView.center = view.center
+        
+        loadingView.backgroundColor = UIColor.grayColor()
+        loadingView.alpha = 0.6
+        loadingView.clipsToBounds = true
+        loadingView.layer.cornerRadius = 10
+        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+                                               loadingView.frame.size.height / 2);
+        loadingView.addSubview(activityIndicator)
+        self.view.addSubview(loadingView)
+        activityIndicator.startAnimating()
+    }
+    
+
     
     
     

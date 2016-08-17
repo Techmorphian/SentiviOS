@@ -268,7 +268,7 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
             
             print(NSUserDefaults.standardUserDefaults().stringForKey("facebookId"))
 
-            postData = "email=\(email)&firstName=\(firstName)&lastName=\(lastName)&facebookId=\(id)&facebookToken=\(token)&currentDate=\(dateObj)&photoUrl=\(imageUrl)"
+            postData = "email=\(email)&firstName=\(firstName)&lastName=\(lastName)&facebookId=\(FacebookId)&facebookToken=\(token)&currentDate=\(dateObj)&photoUrl=\(imageUrl)"
             
             
             

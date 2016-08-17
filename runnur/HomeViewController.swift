@@ -117,7 +117,10 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate,CBCentralMa
     override func viewDidLoad()
     {
         super.viewDidLoad();
-      //  call();
+        
+         call();
+        
+        
         gps.layer.shadowOpacity=0.4;
         startActivity.layer.cornerRadius=3.0;
         //startActivity.clipsToBounds=true;

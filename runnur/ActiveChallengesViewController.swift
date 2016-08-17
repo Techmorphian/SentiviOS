@@ -179,8 +179,19 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     
     func FilterButtonActive(notification: NSNotification)
     {
+          print(NSUserDefaults.standardUserDefaults().boolForKey("filterActive"))
+        
+        print(NSUserDefaults.standardUserDefaults().stringForKey("filterActive"))
+        
+        
         
         NSUserDefaults.standardUserDefaults().setBool(true, forKey: "filterActive")
+        
+        print(NSUserDefaults.standardUserDefaults().boolForKey("filterActive"))
+        
+        print(NSUserDefaults.standardUserDefaults().stringForKey("filterActive"))
+ 
+       
         
         if let extractInfo = notification.userInfo
         {
@@ -274,16 +285,20 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                     
                 }  // for close
                 
-                
-                
-                print(participatingFilterArray.count)
-                
-                self.activeTableView.reloadData();
-                
+                 self.activeTableView.reloadData();
                                
             }
+            
+          
         }
-        
+        else
+        {
+            
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "filterActive")
+            
+            self.activeTableView.reloadData();
+           
+        }
         
         
     }
@@ -292,6 +307,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     {
         let cell:activeChallengeTableViewCell = tableView.dequeueReusableCellWithIdentifier("activeChallengeTableViewCell")as!
         activeChallengeTableViewCell
+        
         
         
         
@@ -342,7 +358,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                     
                                      
                     
-                    cell.potAmount.text = participatingFilterArray[indexPath.row].betAmount
+                    cell.potAmount.text = participatingFilterArray[indexPath.row].potAmount
                     
                     if participatingFilterArray[indexPath.row].startDate != "" &&   participatingFilterArray[indexPath.row].endDate != ""
                     {
@@ -377,6 +393,8 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                             cell.potAmountLabel.text = "POT AMOUNT"
                           
                              cell.noOfPlayers.hidden = false;
+                            
+                              cell.playersLabel.text = "PLAYERS"
                             cell.noOfPlayers.text = participatingFilterArray[indexPath.row].usersCount
                            
 
@@ -391,6 +409,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                             
                             cell.ic_memberImageView.image = UIImage(named:"ic_charity_gray")
                             
+                              cell.noOfPlayers.hidden = true;
                             cell.betAmountLabel.text = "PER MILE"
                             cell.potAmountLabel.text = "TOTAL AMOUNT"
 
@@ -473,7 +492,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                         
                          cell.noOfPlayers.hidden = false
                         cell.noOfPlayers.text = participatingArray[indexPath.row].usersCount
-                        
+                          cell.playersLabel.text = "PLAYERS"
                         
                         
                     }
@@ -488,8 +507,8 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                         cell.potAmountLabel.text = "TOTAL AMOUNT"
                         
                        
-                        
-                        cell.playersLabel.text = "ORAHUNTER"
+                  
+                        cell.playersLabel.text = "ORGHUNTER"
                         
                         
                     }
@@ -512,12 +531,10 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
             cell.betAmountLabel.text = "PER MILE"
             cell.potAmountLabel.text = "TOTAL AMOUNT"
             
+             cell.playersLabel.text = "ORGHUNTER"
             
             
             cell.grpCauseFitIcon.image = UIImage(named:"ic_cause_fit")
-            
-            
-            
             
             cell.noOfPlayers.hidden = true;
             
@@ -528,8 +545,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
             cell.ic_memberImageView.image = UIImage(named: "ic_charity_gray")
             
             
-            
-            
+        
             
             
             if NSUserDefaults.standardUserDefaults().boolForKey("filterActive") == true
@@ -566,12 +582,12 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                 if contributingFilterArray[indexPath.row].startDate != "" &&   contributingFilterArray[indexPath.row].endDate != ""
                 {
                     
-                    let StartDate = dateFunction.dateFormatFunc("MMMM dd", formFormat: "yyyy/MM/dd", dateToConvert: contributingFilterArray[indexPath.row].startDate)
+                    let StartDate = dateFunction.dateFormatFunc("MMM dd", formFormat: "yyyy/MM/dd", dateToConvert: contributingFilterArray[indexPath.row].startDate)
                     
                     
                     print(StartDate)
                     
-                    let EndDate = dateFunction.dateFormatFunc("MMMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: contributingFilterArray[indexPath.row].endDate)
+                    let EndDate = dateFunction.dateFormatFunc("MMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: contributingFilterArray[indexPath.row].endDate)
                     print(EndDate)
                     
                     
@@ -616,12 +632,12 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                 if contributingArray[indexPath.row].startDate != "" &&   contributingArray[indexPath.row].endDate != ""
                 {
                     
-                    let StartDate = dateFunction.dateFormatFunc("MMMM dd", formFormat: "yyyy/MM/dd", dateToConvert: contributingArray[indexPath.row].startDate)
+                    let StartDate = dateFunction.dateFormatFunc("MMM dd", formFormat: "yyyy/MM/dd", dateToConvert: contributingArray[indexPath.row].startDate)
                     
                     
                     print(StartDate)
                     
-                    let EndDate = dateFunction.dateFormatFunc("MMMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: contributingArray[indexPath.row].endDate)
+                    let EndDate = dateFunction.dateFormatFunc("MMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: contributingArray[indexPath.row].endDate)
                     print(EndDate)
                     
                     
@@ -733,8 +749,8 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
     {
         
-       
-        CommonFunctions.showActivityIndicator2(self.view)
+        showActivityIndicatory()
+        //CommonFunctions.showActivityIndicator2(self.view)
         
         // LoaderFile.showLoader(self.view);
         
@@ -775,31 +791,29 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     
     
     
-//    
-//    
-//    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-//    let loadingView: UIView = UIView()
-//    func showActivityIndicatory()
-//    {
-//        loadingView.frame = CGRectMake(self.view.frame.width/2 - 30 ,self.view.frame.height/2 - 100, 60, 50)
-//        
-//       // loadingView.center = self.view.center;
-//        
-//        loadingView.backgroundColor = UIColor.grayColor()
-//        loadingView.alpha = 0.6
-//        loadingView.clipsToBounds = true
-//        loadingView.layer.cornerRadius = 10
-//      
-//        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
-//        
-//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
-//        
-//        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
-//                                               loadingView.frame.size.height / 2);
-//        loadingView.addSubview(activityIndicator)
-//        self.view.addSubview(loadingView)
-//        activityIndicator.startAnimating()
-//    }
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    let loadingView: UIView = UIView()
+    func showActivityIndicatory()
+    {
+        loadingView.frame = CGRectMake(self.view.frame.width/2 - 30 ,self.view.frame.height/2 - 100, 60, 50)
+        
+        loadingView.layer.cornerRadius = 10
+        loadingView.alpha = 0.6
+        loadingView.backgroundColor = UIColor.grayColor()
+      
+        loadingView.clipsToBounds = true
+        
+      
+        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+        
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+        
+        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+                                               loadingView.frame.size.height / 2);
+        loadingView.addSubview(activityIndicator)
+        self.view.addSubview(loadingView)
+        activityIndicator.startAnimating()
+    }
     
     
     
@@ -855,12 +869,12 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                                 
                                 
                                 
-//                                self.activityIndicator.stopAnimating();
-//                                
-//                                self.loadingView.removeFromSuperview();
+                                self.activityIndicator.stopAnimating();
+                                
+                                self.loadingView.removeFromSuperview();
                                 
                                 
-                                CommonFunctions.hideActivityIndicator2()
+                             
                                 
                                 
                                 if  let participating = elements[i]["participating"]
@@ -1221,9 +1235,9 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                                 
                                 
                                 print()
-//                                self.activityIndicator.stopAnimating();
-//                                
-//                                self.loadingView.removeFromSuperview();
+                                self.activityIndicator.stopAnimating();
+                                
+                                self.loadingView.removeFromSuperview();
                                 
                                 
                                 if self.view.subviews.contains(self.noInternet.view)
@@ -1328,9 +1342,9 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                             
                             {
                                 
-//                                self.activityIndicator.stopAnimating();
-//                                
-//                                self.loadingView.removeFromSuperview();
+                                self.activityIndicator.stopAnimating();
+                                
+                                self.loadingView.removeFromSuperview();
                                 
                                 
                                 
@@ -1493,9 +1507,9 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
         print(error)
         
-//        self.activityIndicator.stopAnimating();
-//        
-//        self.loadingView.removeFromSuperview();
+        self.activityIndicator.stopAnimating();
+        
+        self.loadingView.removeFromSuperview();
         
         
         
@@ -1585,8 +1599,8 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
         if(Reachability.isConnectedToNetwork()==true )
         {
-            // showActivityIndicatory();
-            
+        
+           
             self.participatingArray.removeAll();
             self.contributingArray.removeAll();
             viewActiveChallenges();

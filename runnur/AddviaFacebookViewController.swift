@@ -109,7 +109,9 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
                 
                 if(Reachability.isConnectedToNetwork()==true )
                 {
-                    CommonFunctions.showActivityIndicator(view);
+                  
+                    
+                    showActivityIndicatory();
                      self.addFbFriends();
                     
                 }
@@ -123,8 +125,8 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         }
         else
         {
-            //            self.activityIndicator.stopAnimating();
-            //            self.loadingView.removeFromSuperview();
+                        self.activityIndicator.stopAnimating();
+                        self.loadingView.removeFromSuperview();
             
             let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg, preferredStyle: UIAlertControllerStyle.Alert)
             let okAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil)
@@ -140,6 +142,28 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
     
 
     
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    let loadingView: UIView = UIView()
+    func showActivityIndicatory()
+    {
+        loadingView.frame = CGRectMake(0, 0, 60, 50)
+        loadingView.center = view.center
+        
+        loadingView.backgroundColor = UIColor.grayColor()
+        loadingView.alpha = 0.6
+        loadingView.clipsToBounds = true
+        loadingView.layer.cornerRadius = 10
+        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+                                               loadingView.frame.size.height / 2);
+        loadingView.addSubview(activityIndicator)
+        self.view.addSubview(loadingView)
+        activityIndicator.startAnimating()
+    }
+    
+    
+
     
     
     @IBAction func searchCancelButtonAction(sender: AnyObject)
@@ -845,16 +869,11 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         
         request.timeoutInterval = 20.0;
         
-        let modelName = UIDevice.currentDevice().modelName
-        
-        let systemVersion = UIDevice.currentDevice().systemVersion;
-        
-        let make="iphone"
+    
         
         let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
 
-        
-        
+    
         
         var cliendIds = [String]()
         var count = 0;
@@ -877,7 +896,7 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         
         
         
-        let postString = "os=\(systemVersion)&make=\(make)&model=\(modelName)&userId=\(userId!)&\(friendFbIds)";
+        let postString = "userId=\(userId!)&\(friendFbIds)";
         
         print(postString)
         
@@ -933,7 +952,8 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
                     let msg=parseJSON["message"] as? String
                     if(status=="Success")
                     {
-                        
+                        self.activityIndicator.stopAnimating();
+                        self.loadingView.removeFromSuperview();
                         
                         NSOperationQueue.mainQueue().addOperationWithBlock
                             {
@@ -964,7 +984,8 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
                                 
                                 
                                 
-                             CommonFunctions.hideActivityIndicator();
+                                self.activityIndicator.stopAnimating();
+                                self.loadingView.removeFromSuperview();
                                 //  LoaderFile.hideLoader(self.view)
                                 
                                 let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
@@ -991,8 +1012,8 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
             {
                 
                 
-                
-             CommonFunctions.hideActivityIndicator();
+                self.activityIndicator.stopAnimating();
+                self.loadingView.removeFromSuperview();
                 
                 
                 let alert = UIAlertController(title: "", message:"something went wrong try again later." , preferredStyle: UIAlertControllerStyle.Alert)
@@ -1051,7 +1072,8 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
     {
         
         
-       CommonFunctions.hideActivityIndicator();
+        self.activityIndicator.stopAnimating();
+        self.loadingView.removeFromSuperview();
         
         // LoaderFile.hideLoader(self.view)
         

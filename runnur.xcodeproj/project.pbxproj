@@ -621,7 +621,7 @@
 				TargetAttributes = {
 					470CF8791D24DC370001B3BC = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = KN8AAJ89C8;
+						DevelopmentTeam = 44C2WNQ95S;
 					};
 				};
 			};
@@ -874,8 +874,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Archana Vetkar (MWEK85FF43)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Archana Vetkar (MWEK85FF43)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: sonali@techmorphosis.com (QX99664RAM)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: sonali@techmorphosis.com (QX99664RAM)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -922,8 +922,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Archana Vetkar (MWEK85FF43)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Archana Vetkar (MWEK85FF43)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: sonali@techmorphosis.com (QX99664RAM)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: sonali@techmorphosis.com (QX99664RAM)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
