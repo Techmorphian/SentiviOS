@@ -19,6 +19,7 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
     
     @IBAction func loginWithFacebookButtonAction(sender: UIButton)
     {
+        
         CommonFunctions.showActivityIndicator(self.view);
         self.authenticate(self);
         
