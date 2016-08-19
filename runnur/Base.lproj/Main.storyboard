@@ -20,7 +20,7 @@
         <!--First View Controller-->
         <scene sceneID="6To-yb-yCL">
             <objects>
-                <viewController storyboardIdentifier="FirstViewController" id="COl-bt-XK0" customClass="FirstViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FirstViewController" id="COl-bt-XK0" customClass="FirstViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cOT-MK-068"/>
                         <viewControllerLayoutGuide type="bottom" id="E69-XZ-4R8"/>
@@ -52,7 +52,7 @@
         <!--Tour Content View Controller-->
         <scene sceneID="bgF-8q-FVc">
             <objects>
-                <viewController storyboardIdentifier="ContentViewController" id="sz6-XG-rhV" customClass="TourContentViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ContentViewController" id="sz6-XG-rhV" customClass="TourContentViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1U4-uT-Jod"/>
                         <viewControllerLayoutGuide type="bottom" id="VQU-ei-qxn"/>
@@ -81,10 +81,28 @@
             </objects>
             <point key="canvasLocation" x="-2440" y="-2880"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="wAQ-sl-jRL">
+            <objects>
+                <viewController id="xJL-af-VnL" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="SVz-DN-Eor"/>
+                        <viewControllerLayoutGuide type="bottom" id="sri-Uv-jvo"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nJx-tD-hqc">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="byM-19-bF0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1770" y="-2865"/>
+        </scene>
         <!--Splash Screen View Controller-->
         <scene sceneID="Dwz-Zy-mO2">
             <objects>
-                <viewController storyboardIdentifier="SplashScreenViewController" id="h2H-zu-TZl" customClass="SplashScreenViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SplashScreenViewController" id="h2H-zu-TZl" customClass="SplashScreenViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wZX-xo-YaK"/>
                         <viewControllerLayoutGuide type="bottom" id="xJw-e0-xfZ"/>
@@ -114,7 +132,7 @@
         <!--Login Screen View Controller-->
         <scene sceneID="PqO-vR-4bF">
             <objects>
-                <viewController storyboardIdentifier="LoginScreenViewController" id="HCr-He-mLk" customClass="LoginScreenViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginScreenViewController" id="HCr-He-mLk" customClass="LoginScreenViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1fz-va-eYd"/>
                         <viewControllerLayoutGuide type="bottom" id="EVh-fY-BcU"/>
@@ -205,7 +223,7 @@
         <!--Navigation View Controller-->
         <scene sceneID="1zJ-zj-plm">
             <objects>
-                <viewController storyboardIdentifier="NavigationViewController" id="9AV-ce-MGO" customClass="NavigationViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NavigationViewController" id="9AV-ce-MGO" customClass="NavigationViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Yf0-Hl-Sve"/>
                         <viewControllerLayoutGuide type="bottom" id="4Av-2k-jJM"/>
@@ -218,7 +236,7 @@
                                 <rect key="frame" x="0.0" y="150" width="600" height="1050"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NavigationCellTableViewCell" rowHeight="44" id="MfD-RP-7h7" customClass="NavigationCellTableViewCell" customModule="sentiv" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NavigationCellTableViewCell" rowHeight="44" id="MfD-RP-7h7" customClass="NavigationCellTableViewCell" customModule="Sentiv" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MfD-RP-7h7" id="0lf-7U-afN">
@@ -235,7 +253,7 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="888" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wu8-ny-gNv" customClass="CircleLabel" customModule="sentiv" customModuleProvider="target">
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="888" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wu8-ny-gNv" customClass="CircleLabel" customModule="Sentiv" customModuleProvider="target">
                                                     <rect key="frame" x="122" y="12" width="60" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="80" id="AZd-9s-cH6"/>
@@ -370,7 +388,7 @@
         <!--Home View Controller-->
         <scene sceneID="vv2-GV-aoZ">
             <objects>
-                <viewController storyboardIdentifier="HomeViewController" id="MSq-bx-dYD" customClass="HomeViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeViewController" id="MSq-bx-dYD" customClass="HomeViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JPP-EI-vGz"/>
                         <viewControllerLayoutGuide type="bottom" id="zq5-s0-rSu"/>
@@ -592,7 +610,7 @@
         <!--Profile View Controller-->
         <scene sceneID="Wam-ug-vVL">
             <objects>
-                <viewController id="OOa-kl-kkf" customClass="ProfileViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="OOa-kl-kkf" customClass="ProfileViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qnZ-i2-iXT"/>
                         <viewControllerLayoutGuide type="bottom" id="62E-Lt-sDV"/>
@@ -980,7 +998,7 @@
         <!--Start Activity View Controller-->
         <scene sceneID="et4-OT-Af3">
             <objects>
-                <viewController storyboardIdentifier="StartActivityViewController" id="ukK-tx-khE" customClass="StartActivityViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="StartActivityViewController" id="ukK-tx-khE" customClass="StartActivityViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7Yc-Mf-7tz"/>
                         <viewControllerLayoutGuide type="bottom" id="xoE-kJ-4fh"/>
@@ -1336,7 +1354,7 @@
         <!--Statistics View Controller-->
         <scene sceneID="XXJ-QX-cYk">
             <objects>
-                <viewController storyboardIdentifier="StatisticsViewController" id="Far-NA-Pss" customClass="StatisticsViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="StatisticsViewController" id="Far-NA-Pss" customClass="StatisticsViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ab0-5n-nnl"/>
                         <viewControllerLayoutGuide type="bottom" id="hPH-Iq-9N4"/>
@@ -1406,7 +1424,7 @@
         <!--Heart Histrory View Controller-->
         <scene sceneID="YV5-0s-9rs">
             <objects>
-                <viewController storyboardIdentifier="HeartHistroryViewController" id="cPN-qj-xCc" customClass="HeartHistroryViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HeartHistroryViewController" id="cPN-qj-xCc" customClass="HeartHistroryViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Aoe-Du-77y"/>
                         <viewControllerLayoutGuide type="bottom" id="f98-Bh-rUa"/>
@@ -1477,7 +1495,7 @@
         <!--Challenges View Controller-->
         <scene sceneID="2mf-b4-6Ay">
             <objects>
-                <viewController storyboardIdentifier="ChallengesViewController" id="clZ-ab-6nm" customClass="ChallengesViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChallengesViewController" id="clZ-ab-6nm" customClass="ChallengesViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="65T-IQ-y80"/>
                         <viewControllerLayoutGuide type="bottom" id="4sp-45-YIW"/>
@@ -1642,7 +1660,7 @@
         <!--Active Challenges View Controller-->
         <scene sceneID="t6Y-4u-BPY">
             <objects>
-                <viewController storyboardIdentifier="ActiveChallengesViewController" id="Yqn-3I-wIy" customClass="ActiveChallengesViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ActiveChallengesViewController" id="Yqn-3I-wIy" customClass="ActiveChallengesViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EGI-gj-VPa"/>
                         <viewControllerLayoutGuide type="bottom" id="lfo-OK-v3A"/>
@@ -1655,7 +1673,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="activeChallengeTableViewCell" rowHeight="130" id="wjb-NA-bEW" customClass="activeChallengeTableViewCell" customModule="sentiv" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="activeChallengeTableViewCell" rowHeight="130" id="wjb-NA-bEW" customClass="activeChallengeTableViewCell" customModule="Sentiv" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="130"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wjb-NA-bEW" id="nHn-Vd-oas">
@@ -1988,7 +2006,7 @@
         <!--Completed Challenge View Controller-->
         <scene sceneID="dhK-x5-qdj">
             <objects>
-                <viewController storyboardIdentifier="CompletedChallengeViewController" id="wDZ-sm-GGd" customClass="CompletedChallengeViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CompletedChallengeViewController" id="wDZ-sm-GGd" customClass="CompletedChallengeViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Zpa-kd-OdO"/>
                         <viewControllerLayoutGuide type="bottom" id="VoC-2S-GOD"/>
@@ -2001,7 +2019,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="completedChallengeTableViewCell" rowHeight="130" id="dAk-tz-fiw" customClass="completedChallengeTableViewCell" customModule="sentiv" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="completedChallengeTableViewCell" rowHeight="130" id="dAk-tz-fiw" customClass="completedChallengeTableViewCell" customModule="Sentiv" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="130"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dAk-tz-fiw" id="j4x-Kr-me9">
@@ -2344,7 +2362,7 @@
         <!--History View Controller-->
         <scene sceneID="VK8-nz-XMk">
             <objects>
-                <viewController storyboardIdentifier="HistoryViewController" id="Hri-67-CaN" customClass="HistoryViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HistoryViewController" id="Hri-67-CaN" customClass="HistoryViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="koq-DZ-wgQ"/>
                         <viewControllerLayoutGuide type="bottom" id="4N8-Th-bEs"/>
@@ -2416,7 +2434,7 @@
         <!--View Controller-->
         <scene sceneID="KKq-qF-AJh">
             <objects>
-                <viewController storyboardIdentifier="FAQViewController" id="xHV-rC-gQp" customClass="FAQViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FAQViewController" id="xHV-rC-gQp" customClass="FAQViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ned-pd-ezg"/>
                         <viewControllerLayoutGuide type="bottom" id="LiB-Af-KZa"/>
@@ -2477,7 +2495,7 @@
                                 <rect key="frame" x="0.0" y="65" width="600" height="1135"/>
                                 <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FAQCellTableViewCell" rowHeight="70" id="lza-vM-3j6" customClass="FAQCellTableViewCell" customModule="sentiv" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FAQCellTableViewCell" rowHeight="70" id="lza-vM-3j6" customClass="FAQCellTableViewCell" customModule="Sentiv" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lza-vM-3j6" id="MhO-Yi-JRm">
@@ -2567,7 +2585,7 @@
         <!--Group Cause Fit View Controller-->
         <scene sceneID="czS-UT-flI">
             <objects>
-                <viewController storyboardIdentifier="GroupCauseFitViewController" id="mIv-J7-bYu" customClass="GroupCauseFitViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GroupCauseFitViewController" id="mIv-J7-bYu" customClass="GroupCauseFitViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6Kb-t4-6fd"/>
                         <viewControllerLayoutGuide type="bottom" id="429-Yv-cf6"/>
@@ -2638,7 +2656,7 @@
                                 <rect key="frame" x="0.0" y="65" width="600" height="535"/>
                                 <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="GroupFitCellTableViewCell" rowHeight="70" id="j6m-mA-GO7" customClass="GroupFitCellTableViewCell" customModule="sentiv" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="GroupFitCellTableViewCell" rowHeight="70" id="j6m-mA-GO7" customClass="GroupFitCellTableViewCell" customModule="Sentiv" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="j6m-mA-GO7" id="Ama-tJ-cjd">
@@ -2719,7 +2737,7 @@
         <!--No Internet View Controller-->
         <scene sceneID="5B7-fZ-rsv">
             <objects>
-                <viewController storyboardIdentifier="NoInternetViewController" id="cxW-tl-J1Y" customClass="NoInternetViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NoInternetViewController" id="cxW-tl-J1Y" customClass="NoInternetViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ANs-fb-a0A"/>
                         <viewControllerLayoutGuide type="bottom" id="hgz-aZ-GpW"/>
@@ -2763,7 +2781,7 @@
         <!--No Result View Controller-->
         <scene sceneID="DJ8-Hq-Br9">
             <objects>
-                <viewController storyboardIdentifier="NoResultViewController" id="fqt-mg-laA" customClass="NoResultViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NoResultViewController" id="fqt-mg-laA" customClass="NoResultViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5oh-07-kP3"/>
                         <viewControllerLayoutGuide type="bottom" id="WAv-Z1-xjY"/>
@@ -2802,7 +2820,7 @@
         <!--Create Group And Cause Fit View Controller-->
         <scene sceneID="uLx-ed-4NF">
             <objects>
-                <viewController storyboardIdentifier="CreateGroupAndCauseFitViewController" id="AF5-ix-efx" customClass="CreateGroupAndCauseFitViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreateGroupAndCauseFitViewController" id="AF5-ix-efx" customClass="CreateGroupAndCauseFitViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0Pi-l2-lHY"/>
                         <viewControllerLayoutGuide type="bottom" id="Si6-Mc-llp"/>
@@ -4046,7 +4064,7 @@
         <!--View Group Fit View Controller-->
         <scene sceneID="bJr-Qy-BMZ">
             <objects>
-                <viewController storyboardIdentifier="ViewGroupFitViewController" id="6yg-Ui-9Ci" customClass="ViewGroupFitViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewGroupFitViewController" id="6yg-Ui-9Ci" customClass="ViewGroupFitViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Zsy-qX-3su"/>
                         <viewControllerLayoutGuide type="bottom" id="6kZ-EX-ohB"/>
@@ -4255,7 +4273,7 @@
         <!--Summary View Controller-->
         <scene sceneID="dXI-R7-HW3">
             <objects>
-                <viewController storyboardIdentifier="SummaryViewController" id="3eE-EK-Cff" customClass="SummaryViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SummaryViewController" id="3eE-EK-Cff" customClass="SummaryViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8vr-gc-BVp"/>
                         <viewControllerLayoutGuide type="bottom" id="MWK-kX-o2h"/>
@@ -4946,7 +4964,7 @@
         <!--Cause Fir Summary View Controller-->
         <scene sceneID="JyN-zn-egc">
             <objects>
-                <viewController storyboardIdentifier="CauseFirSummaryViewController" id="ZSV-de-Yjc" customClass="CauseFirSummaryViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CauseFirSummaryViewController" id="ZSV-de-Yjc" customClass="CauseFirSummaryViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="crF-Dx-QET"/>
                         <viewControllerLayoutGuide type="bottom" id="l5S-RK-yJX"/>
@@ -5519,7 +5537,7 @@
         <!--Activity View Controller-->
         <scene sceneID="iOj-dH-Mmc">
             <objects>
-                <viewController storyboardIdentifier="ActivityViewController" id="fxM-QY-jhq" customClass="ActivityViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ActivityViewController" id="fxM-QY-jhq" customClass="ActivityViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3O0-Wy-kY6"/>
                         <viewControllerLayoutGuide type="bottom" id="y4h-MB-78t"/>
@@ -5532,7 +5550,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="750"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="userActivityTableViewCell" rowHeight="225" id="rrl-sR-yyR" customClass="userActivityTableViewCell" customModule="sentiv" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="userActivityTableViewCell" rowHeight="225" id="rrl-sR-yyR" customClass="userActivityTableViewCell" customModule="Sentiv" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="225"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rrl-sR-yyR" id="8sc-FB-C3j">
@@ -5800,7 +5818,7 @@
                                             </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="userChatTableViewCell" rowHeight="100" id="Wyo-Xn-CDu" customClass="userChatTableViewCell" customModule="sentiv" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="userChatTableViewCell" rowHeight="100" id="Wyo-Xn-CDu" customClass="userChatTableViewCell" customModule="Sentiv" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="253" width="600" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Wyo-Xn-CDu" id="Ahe-lp-iAn">
@@ -5847,7 +5865,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="activityTableViewCell" rowHeight="225" id="lhd-AN-DEf" customClass="activityTableViewCell" customModule="sentiv" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="activityTableViewCell" rowHeight="225" id="lhd-AN-DEf" customClass="activityTableViewCell" customModule="Sentiv" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="353" width="600" height="225"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lhd-AN-DEf" id="6tN-3Y-4ON">
@@ -6127,7 +6145,7 @@
                                             </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="chatTableViewCell" rowHeight="100" id="sMK-I6-oyy" customClass="chatTableViewCell" customModule="sentiv" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="chatTableViewCell" rowHeight="100" id="sMK-I6-oyy" customClass="chatTableViewCell" customModule="Sentiv" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="578" width="600" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sMK-I6-oyy" id="2cp-Z0-z2U">
@@ -6218,7 +6236,7 @@
         <!--Leader Board View Controller-->
         <scene sceneID="o0u-Pj-WtM">
             <objects>
-                <viewController storyboardIdentifier="LeaderBoardViewController" id="4Hs-KB-sJg" customClass="LeaderBoardViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LeaderBoardViewController" id="4Hs-KB-sJg" customClass="LeaderBoardViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vwW-IU-pz5"/>
                         <viewControllerLayoutGuide type="bottom" id="sR5-hY-WvX"/>
@@ -6245,7 +6263,7 @@
         <!--Progress View Controller-->
         <scene sceneID="RLg-PV-28z">
             <objects>
-                <viewController storyboardIdentifier="ProgressViewController" id="xdm-70-nx3" customClass="ProgressViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProgressViewController" id="xdm-70-nx3" customClass="ProgressViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8gi-2S-5tr"/>
                         <viewControllerLayoutGuide type="bottom" id="Wb2-sn-41s"/>
@@ -6316,7 +6334,7 @@
         <!--Invite Friends View Controller-->
         <scene sceneID="NHO-KR-BEi">
             <objects>
-                <viewController id="8I1-U7-A8M" customClass="InviteFriendsViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="8I1-U7-A8M" customClass="InviteFriendsViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cqm-SN-LhV"/>
                         <viewControllerLayoutGuide type="bottom" id="84V-zd-bag"/>
@@ -6461,7 +6479,7 @@
                                 <rect key="frame" x="0.0" y="100" width="600" height="1048"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="InviteFriendsTableViewCell" rowHeight="70" id="Ukb-Ll-9re" customClass="InviteFriendsTableViewCell" customModule="sentiv" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="InviteFriendsTableViewCell" rowHeight="70" id="Ukb-Ll-9re" customClass="InviteFriendsTableViewCell" customModule="Sentiv" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ukb-Ll-9re" id="fyp-7i-vs8">
@@ -6564,7 +6582,7 @@
         <!--Invite Friends Via Email View Controller-->
         <scene sceneID="5X2-en-UGi">
             <objects>
-                <viewController storyboardIdentifier="InviteFriendsViaEmailViewController" id="zV2-jU-9Wf" customClass="InviteFriendsViaEmailViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InviteFriendsViaEmailViewController" id="zV2-jU-9Wf" customClass="InviteFriendsViaEmailViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uJG-Or-ZZM"/>
                         <viewControllerLayoutGuide type="bottom" id="6bO-zg-bo8"/>
@@ -6742,7 +6760,7 @@
         <!--No Friend View Controller-->
         <scene sceneID="TiA-JE-p4C">
             <objects>
-                <viewController storyboardIdentifier="NoFriendViewController" id="4WS-cG-L2y" customClass="NoFriendViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NoFriendViewController" id="4WS-cG-L2y" customClass="NoFriendViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="s6r-sK-y3V"/>
                         <viewControllerLayoutGuide type="bottom" id="QCm-bi-dDg"/>
@@ -6777,7 +6795,7 @@
         <!--Error View Controller-->
         <scene sceneID="cgT-ZY-yzq">
             <objects>
-                <viewController storyboardIdentifier="errorViewController" id="CkB-hK-AKR" customClass="errorViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="errorViewController" id="CkB-hK-AKR" customClass="errorViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DMe-GA-u0z"/>
                         <viewControllerLayoutGuide type="bottom" id="3QT-a3-PUO"/>
@@ -6804,7 +6822,7 @@
         <!--Friends List View Controller-->
         <scene sceneID="sHI-fU-RTn">
             <objects>
-                <viewController storyboardIdentifier="FriendsListViewController" id="PhC-vx-jp7" customClass="FriendsListViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FriendsListViewController" id="PhC-vx-jp7" customClass="FriendsListViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="NIi-rO-5Gk"/>
                         <viewControllerLayoutGuide type="bottom" id="0Kc-Ie-8Ws"/>
@@ -6924,7 +6942,7 @@
                                 <rect key="frame" x="0.0" y="100" width="600" height="1100"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FriendsListCellTableViewCell" rowHeight="70" id="LUK-0L-g2E" customClass="FriendsListCellTableViewCell" customModule="sentiv" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FriendsListCellTableViewCell" rowHeight="70" id="LUK-0L-g2E" customClass="FriendsListCellTableViewCell" customModule="Sentiv" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LUK-0L-g2E" id="jC7-he-0BP">
@@ -7004,7 +7022,7 @@
         <!--Addvia Contacts View Controller-->
         <scene sceneID="rBP-rV-A2b">
             <objects>
-                <viewController storyboardIdentifier="AddviaContactsViewController" id="146-sH-RTr" customClass="AddviaContactsViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddviaContactsViewController" id="146-sH-RTr" customClass="AddviaContactsViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ftv-jf-e7H"/>
                         <viewControllerLayoutGuide type="bottom" id="zDs-iV-rLV"/>
@@ -7017,7 +7035,7 @@
                                 <rect key="frame" x="0.0" y="100" width="600" height="450"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AddviaContactCellTableViewCell" rowHeight="70" id="t4K-Yq-YJL" customClass="AddviaContactCellTableViewCell" customModule="sentiv" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AddviaContactCellTableViewCell" rowHeight="70" id="t4K-Yq-YJL" customClass="AddviaContactCellTableViewCell" customModule="Sentiv" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="t4K-Yq-YJL" id="MMJ-mh-tx6">
@@ -7210,7 +7228,7 @@
         <!--Addvia Facebook View Controller-->
         <scene sceneID="3O1-hV-hN2">
             <objects>
-                <viewController storyboardIdentifier="AddviaFacebookViewController" id="wDL-LZ-Fs4" customClass="AddviaFacebookViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddviaFacebookViewController" id="wDL-LZ-Fs4" customClass="AddviaFacebookViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="PAU-ug-L7c"/>
                         <viewControllerLayoutGuide type="bottom" id="gww-5f-5yq"/>
@@ -7300,7 +7318,7 @@
                                 <rect key="frame" x="0.0" y="100" width="600" height="450"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AddviaFacebookCellTableViewCell" rowHeight="70" id="2Ff-3L-mFB" customClass="AddviaFacebookCellTableViewCell" customModule="sentiv" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AddviaFacebookCellTableViewCell" rowHeight="70" id="2Ff-3L-mFB" customClass="AddviaFacebookCellTableViewCell" customModule="Sentiv" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2Ff-3L-mFB" id="nhd-uN-rT5">
@@ -7399,7 +7417,7 @@
         <!--Add Manually View Controller-->
         <scene sceneID="d0m-ww-2Bo">
             <objects>
-                <viewController storyboardIdentifier="AddManuallyViewController" id="RaU-Bk-a65" customClass="AddManuallyViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddManuallyViewController" id="RaU-Bk-a65" customClass="AddManuallyViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="HiI-bp-xpC"/>
                         <viewControllerLayoutGuide type="bottom" id="cz8-BH-rss"/>
@@ -7572,7 +7590,7 @@
         <!--Add Via Google View Controller-->
         <scene sceneID="KGF-go-ESu">
             <objects>
-                <viewController storyboardIdentifier="AddViaGoogleViewController" id="Lwc-IG-mRT" customClass="AddViaGoogleViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddViaGoogleViewController" id="Lwc-IG-mRT" customClass="AddViaGoogleViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="e53-lX-OYb"/>
                         <viewControllerLayoutGuide type="bottom" id="rpR-oX-hC0"/>
@@ -7662,7 +7680,7 @@
                                 <rect key="frame" x="0.0" y="100" width="600" height="450"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AddviaGoogleCellTableViewCell" rowHeight="70" id="2c1-vy-EDu" customClass="AddviaGoogleCellTableViewCell" customModule="sentiv" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AddviaGoogleCellTableViewCell" rowHeight="70" id="2c1-vy-EDu" customClass="AddviaGoogleCellTableViewCell" customModule="Sentiv" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2c1-vy-EDu" id="eyC-Lk-dJo">
@@ -7761,7 +7779,7 @@
         <!--Add Friends View Controller-->
         <scene sceneID="1dP-JH-WFy">
             <objects>
-                <viewController storyboardIdentifier="AddFriendsViewController" id="iWV-4p-B8D" customClass="AddFriendsViewController" customModule="sentiv" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddFriendsViewController" id="iWV-4p-B8D" customClass="AddFriendsViewController" customModule="Sentiv" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="322-Fn-eiY"/>
                         <viewControllerLayoutGuide type="bottom" id="yEo-XV-NkS"/>
@@ -7827,7 +7845,7 @@
                                 <rect key="frame" x="0.0" y="223" width="600" height="377"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AddFriendsCellTableViewCell" id="BeU-1K-a9l" customClass="AddFriendsCellTableViewCell" customModule="sentiv" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AddFriendsCellTableViewCell" id="BeU-1K-a9l" customClass="AddFriendsCellTableViewCell" customModule="Sentiv" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BeU-1K-a9l" id="6uZ-BX-Rez">

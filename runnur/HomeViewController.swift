@@ -26,6 +26,11 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate,CBCentralMa
  
         
     }
+    
+    
+    
+    
+    
     @IBAction func turnOnBluetooth(sender: AnyObject) {
         
            btManager = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionShowPowerAlertKey: true])

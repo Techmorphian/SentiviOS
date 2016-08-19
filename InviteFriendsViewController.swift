@@ -74,6 +74,15 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
     func RemoveNoFrinedResult()
     {
         

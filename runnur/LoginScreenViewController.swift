@@ -16,6 +16,9 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
     @IBOutlet var loginWithGoogleButton: UIButton!
     
     
+    
+    
+    
     @IBAction func loginWithFacebookButtonAction(sender: UIButton)
     {
         

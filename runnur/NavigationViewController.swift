@@ -24,7 +24,6 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
     
     @IBOutlet var emailId: UILabel!
     
-    
   
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
