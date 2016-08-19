@@ -384,7 +384,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
     var sectionTwoImages = ["ic_history_nav","ic_statistics_nav","ic_heart_rate_nav","ic_winning_balance_nav"]
     
     var sectionThree = ["Settings","Logout","Feedback","FAQ"]
-    var sectionThreeImages = ["ic_settings_nav","ic_settings_nav","ic_feedback_nav","ic_faq_nav"]
+    var sectionThreeImages = ["ic_settings_nav","ic_logout","ic_feedback_nav","ic_faq_nav"]
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -392,7 +392,6 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
         self.naviTableView.delegate = self
         self.naviTableView.dataSource = self;
         self.naviTableView.reloadData()
-        
         
         
         if NSUserDefaults.standardUserDefaults().stringForKey("firstName") != nil{
