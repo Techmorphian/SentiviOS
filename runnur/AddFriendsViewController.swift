@@ -134,6 +134,8 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
             NSUserDefaults.standardUserDefaults().setObject(FBSDKAccessToken.currentAccessToken().userID, forKey: "facebookID")
             
              print(NSUserDefaults.standardUserDefaults().stringForKey("facebookID"))
+            
+            
             print(NSUserDefaults.standardUserDefaults().stringForKey("facebookToken"))
             
           //  ["fields": "id, first_name, last_name, middle_name, name, email, picture"]
@@ -147,14 +149,13 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
                     print(result)
                     
                     
-                    
-                    
-                    self.UpdateFacebookToken();
-                    
                     self.activityIndicator.stopAnimating();
                     
                     self.loadingView.removeFromSuperview();
                     
+                    self.UpdateFacebookToken();
+                    
+                 
                     
                     
                    
@@ -166,7 +167,10 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
     
     @IBAction func btnFBLoginPressed(sender: AnyObject)
     {
-           }
+        
+        
+    
+    }
 
     
     
@@ -177,6 +181,126 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
     {
         
         
+        if NSUserDefaults.standardUserDefaults().stringForKey("facebookId") != ""
+        {
+            facebookArray.removeAll();
+            
+            let params = ["fields": "id, first_name, last_name, middle_name, name, email, picture"]
+            
+            let graphRequest: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me/friends", parameters: params)
+            
+            graphRequest.startWithCompletionHandler({ (connection, result, error: NSError!) -> Void in
+                
+                if error == nil
+                {
+                    
+                    // self.FBFriendsModel=phoneBookModel()
+                    
+                    print(result)
+                    
+                    let friendObjects = result["data"] as! [NSDictionary]
+                    
+                    
+                    
+                    
+                    for friendObject in friendObjects
+                    {
+                        
+                        print(friendObject["id"] as! String)
+                        
+                        print(friendObject["first_name"] as! String)
+                        
+                        print(friendObject["last_name"] as! String)
+                        
+                        
+                        
+                        let picture  = friendObject["picture"] as! [String:AnyObject]
+                        
+                        let data = picture["data"] as![String:AnyObject]
+                        
+                        
+                        let url = data["url"]
+                        
+                        print(url)
+                        
+                        
+                        self.facebookModel=phoneBookModel()
+                        
+                        
+                        
+                        self.facebookModel.facebookFriendDp = url as! String
+                        
+                        self.facebookModel.facebookFriendId = friendObject["id"] as! String
+                        
+                        self.facebookModel.firstName = friendObject["first_name"] as! String
+                        self.facebookModel.lastName = friendObject["last_name"] as! String
+                        self.facebookModel.toShow = true
+                        
+                        // self.friendListModel.toShow = true
+                        
+                        
+                        
+                        print(self.facebookModel.toShow)
+                        
+                        
+                        
+                        
+                        self.facebookArray.append(self.facebookModel);
+                        
+                        // self.friendListArray.append(self.friendListModel);
+                        
+                        
+                        print(self.facebookArray)
+                        
+                        for i in self.facebookArray
+                        {
+                            print(i.toShow)
+                        }
+                        
+                    }
+                    
+                    
+                    
+                    
+                    print("\(friendObjects.count)")
+                    
+                    
+                    
+                    self.activityIndicator.stopAnimating();
+                    
+                    self.loadingView.removeFromSuperview();
+                    
+                    
+                    self.performSegueWithIdentifier("AddviaFacebook", sender: nil)
+                    
+                    
+                }
+                else
+                {
+                    
+                    print("Error requesting friends list form facebook")
+                    
+                    print("\(error)")
+                    
+                    self.activityIndicator.stopAnimating();
+                    
+                    self.loadingView.removeFromSuperview();
+                    
+                }
+                
+                
+                
+            })
+            
+            
+            
+            
+        }
+        
+        
+        else
+        
+        {
         
         facebookArray.removeAll();
         
@@ -284,20 +408,10 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
             
         })
         
+    
         
-//        if NSUserDefaults.standardUserDefaults().stringForKey("facebookToken") != ""
-//        {
-//
-//            
-//            
-//            print(facebookArray.count)
-//            
-//            print(facebookArray)
-//            
-//            self.performSegueWithIdentifier("AddviaFacebook", sender: nil)
-//
-//            
-//        }
+        
+        } ///  else close
         
     }
 
@@ -312,32 +426,31 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
 
         }
         
-        if AddVia[indexPath.row] == "Add via Facebook"
+        if AddVia[indexPath.row] == "Add via facebook"
         {
             
             
+            //// facebook value (directly go on facebok friends screen)
             
+            if NSUserDefaults.standardUserDefaults().stringForKey("facebookId") != ""
+            {
+                
+                if Reachability.isConnectedToNetwork() == true
+                    
+                {
+                    
+                    
+                    self.getAllFriends();
+                    
+                }
+                
+                
+            }
             
-            //print(NSUserDefaults.standardUserDefaults().stringForKey("facebookID"))
-          //  print(NSUserDefaults.standardUserDefaults().stringForKey("facebookToken"))
-            
-            
-//            if NSUserDefaults.standardUserDefaults().stringForKey("facebookToken") != ""
-//            {
-//                
-//                
-//                self.getAllFriends();
-//                
-//                
-//               
-// 
-//                
-//                
-//                
-//            }
-//            
-//            else{
-            
+                ////// facebook value is not thr (not login by fb) nd askng 4 permission
+            else
+                
+            {
             
             if Reachability.isConnectedToNetwork() == true
                 
@@ -368,10 +481,11 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
                         {
                           
                         
-                        self.showActivityIndicatory()
                             
                         if(Reachability.isConnectedToNetwork()==true )
                         {
+                            
+                            self.showActivityIndicatory()
                             
                         self.getFBUserData()
                             
@@ -441,10 +555,8 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
                 
             }
             
-            
-            //self.performSegueWithIdentifier("AddviaFacebook", sender: nil)
-        //}
-            
+                
+      } // else close
             
         }
         if AddVia[indexPath.row] == "Add via Google"
@@ -454,7 +566,7 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
             
             
         }
-        if AddVia[indexPath.row] == "Add via Manually"
+        if AddVia[indexPath.row] == "Add Manually"
         {
             
             
@@ -465,15 +577,6 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
 
         
     }
-    
-//    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
-//    {
-//        return 70.0;//Choose your custom row height
-//    }
-    
-    
-    
-    
     
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
@@ -489,14 +592,6 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
             
             toViewController.friendListArray = friendListArray
 
-            
-            
-            
-//            toViewController.fromAdmin=true;
-//            
-//            toViewController.weddingId=self.weddingId;
-            
-            
             
             toViewController.transitioningDelegate = self
             
@@ -577,8 +672,7 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
         
     {
         
-        // LoaderFile.showLoader(self.view);
-        
+              
         let myurl = NSURL(string: Url.UpdateFacebookToken)
         
         
@@ -594,7 +688,7 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
         
         let make="iphone"
         
-        let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
+        let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
         
         let facebookToken = NSUserDefaults.standardUserDefaults().stringForKey("facebookToken")
         
@@ -619,31 +713,6 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
         
     }
     
-    
-
-    
-    
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    let loadingView: UIView = UIView()
-    func showActivityIndicatory()
-    {
-        loadingView.frame = CGRectMake(0, 0, 60, 50)
-        loadingView.center = view.center
-        
-        loadingView.backgroundColor = UIColor.grayColor()
-        loadingView.alpha = 0.6
-        loadingView.clipsToBounds = true
-        loadingView.layer.cornerRadius = 10
-        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
-        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
-                                               loadingView.frame.size.height / 2);
-        loadingView.addSubview(activityIndicator)
-        self.view.addSubview(loadingView)
-        activityIndicator.startAnimating()
-    }
-    
-
     
     
     
@@ -687,7 +756,6 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
                         
                         NSOperationQueue.mainQueue().addOperationWithBlock
                             {
-                                
                                 
                                 self.activityIndicator.stopAnimating();
                                 
@@ -758,6 +826,7 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
                                 self.activityIndicator.stopAnimating();
                                 
                                 self.loadingView.removeFromSuperview();
+                                
                                 //  LoaderFile.hideLoader(self.view)
                                 
                                 let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
@@ -848,9 +917,7 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
     {
         
         
-        self.activityIndicator.stopAnimating();
-        
-        self.loadingView.removeFromSuperview();
+        showActivityIndicatory();
         
         // LoaderFile.hideLoader(self.view)
         
@@ -882,13 +949,34 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
     
     
     
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    let loadingView: UIView = UIView()
+    func showActivityIndicatory()
+    {
+        loadingView.frame = CGRectMake(0, 0, 60, 50)
+        loadingView.center = view.center
+        
+        loadingView.backgroundColor = UIColor.grayColor()
+        loadingView.alpha = 0.6
+        loadingView.clipsToBounds = true
+        loadingView.layer.cornerRadius = 10
+        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+                                               loadingView.frame.size.height / 2);
+        loadingView.addSubview(activityIndicator)
+        self.view.addSubview(loadingView)
+        activityIndicator.startAnimating()
+    }
+    
+
     
     
     
     
     
     
-    var AddVia = ["Add via Phonebook","Add via Facebook","Add via Google","Add via Manually"]
+    var AddVia = ["Add via Phonebook","Add via facebook","Add via Google","Add Manually"]
     
     var AddviaImages = ["ic_add_via_phonebook","ic_add_via_fb","ic_add_via_google","ic_add_manually"]
     
@@ -918,6 +1006,14 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
     
         addFriendsTableView.reloadData();
        addFriendsTableView.tableFooterView = UIView()
+        
+        
+        
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "successMsgOfAddManually")
+        
+        
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "AddFBFrndsSucessMSG")
+
 
         
         print(friendListArray.count)

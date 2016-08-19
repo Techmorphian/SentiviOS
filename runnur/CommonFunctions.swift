@@ -9,7 +9,8 @@
 import Foundation
 import UIKit
 
-class CommonFunctions : NSObject {
+class CommonFunctions : NSObject
+{
     
     
     static var notification = NSNotification();
@@ -238,19 +239,22 @@ class CommonFunctions : NSObject {
     
     static func showActivityIndicator(view:UIView){
         
-        loadingView.frame = CGRectMake(0, 0, 100, 100)
+        loadingView.frame = CGRectMake(0, 0, view.frame.width/2, view.frame.height/2)
+        
         loadingView.center=view.center
         //loadingView.backgroundColor = colorCode.themeTintColor()
         loadingView.layer.cornerRadius = 10
         loadingView.alpha = 0.7
         loadingView.hidden=false
         loadingView.clipsToBounds=true
-        activityIndicator.color = UIColor.whiteColor()
+        activityIndicator.color = UIColor.grayColor()
+        
+        
         activityIndicator.center=CGPointMake(loadingView.frame.width/2, loadingView.frame.height/2)
         activityIndicator.hidesWhenStopped=true
-        loadingLable=UILabel(frame: CGRectMake(0, 60, loadingView.bounds.width, 20))
+        loadingLable=UILabel(frame: CGRectMake(0, 60, loadingView.bounds.width, loadingView.bounds.height))
         loadingLable.text="Please wait ..."
-        loadingLable.textColor=UIColor.whiteColor()
+        loadingLable.textColor=UIColor.grayColor()
         loadingLable.font = loadingLable.font.fontWithSize(10)
         loadingLable.lineBreakMode =  .ByWordWrapping
         loadingLable.numberOfLines=0
@@ -260,61 +264,20 @@ class CommonFunctions : NSObject {
         loadingView.addSubview(loadingLable)
         view.addSubview(loadingView)
         
+        //Please wait a moment. This may take a while
+        
     }
     
-    static func hideActivityIndicator(){
-        
+    
+    static func hideActivityIndicator()
+    {
+                       
         loadingView.removeFromSuperview()
         
     }
     
-//    static func showAlert(view: UIView,message : String , showRetry : Bool, getClick  : GetClick){
-//        
-//        alertView.removeFromSuperview()
-//        
-//        alertView = NSBundle.mainBundle().loadNibNamed("AlertView", owner: view, options: nil).last as! AlertView
-//        alertView.backgroundColor = colorCode.grey()
-//        alertView.frame = CGRectMake(0, 65, view.frame.width, 0)
-//        alertView.lblMsg.hidden=true
-//        alertView.btRetry.hidden = true
-//        alertView.onButtonTapped = {
-//            getClick()
-//            //alertView.removeFromSuperview()
-//        }
-//        
-//        view.addSubview(alertView)
-//        
-//        UIView.animateWithDuration(0.5, delay: 0, options: .CurveEaseInOut, animations: {
-//            
-//            alertView.frame = CGRectMake(0, 65, view.frame.width, 30)
-//            
-//            }, completion: {
-//                
-//                finished in
-//                
-//                if showRetry{
-//                    alertView.btRetry.hidden = false
-//                    alertView.lblTraillingCons.constant = 60
-//                    
-//                }else{
-//                    alertView.btRetry.hidden = true
-//                    alertView.lblTraillingCons.constant = 20
-//                }
-//                alertView.lblMsg.text = message
-//                alertView.lblMsg.hidden=false
-//                
-//                
-//                
-//        })
-//        
-//        
-//    }
-//    
-//    static func removeAlert(){
-//        
-//        alertView.removeFromSuperview()
-//        
-//    }
+   
+    
     
     static func showPopup(view : UIViewController,title:String = "", msg:String,positiveMsg : String = "OK",negMsg : String = "Cancel",show2Buttons : Bool = false,getClick : GetClick){
         

@@ -37,12 +37,112 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
     
     var noInternet = NoInternetViewController()
     
-    var error =  errorViewController()
+    var noResult =  NoResultViewController();
     
-    var noFriendResult = NoFriendViewController()
+    var noFriendResult = NoFriendViewController();
+    var erroMSG = String()
     
     
     var EmailIds = [String]()
+    
+    /////// func no internet
+    func RemoveNoInternet()
+    {
+        
+        if self.view.subviews.contains(self.noInternet.view)
+            
+        {
+            
+            for i in self.view.subviews
+                
+            {
+                
+                if i == self.noInternet.view
+                    
+                {
+                    
+                    i.removeFromSuperview();
+                    
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    func RemoveNoFrinedResult()
+    {
+        
+        
+        if self.view.subviews.contains(self.noFriendResult.view)
+            
+        {
+            
+            for i in self.view.subviews
+                
+            {
+                
+                if i == self.noFriendResult.view
+                    
+                {
+                    
+                    i.removeFromSuperview();
+                    
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+
+    }
+    
+    
+    func RemoveNoResult()
+    {
+        if self.view.subviews.contains(self.noResult.view)
+            
+        {
+            
+            for i in self.view.subviews
+                
+            {
+                
+                if i == self.noResult.view
+                    
+                {
+                    
+                    i.removeFromSuperview();
+                    
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+
+        
+        
+    }
+    
+    
 
     
     @IBAction func backButtonAction(sender: AnyObject)
@@ -196,6 +296,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
     
     
     var friendsName = String()
+    
     func updateSearchResultsForSearchController(searchController: String)
     {
         self.searchButtonActive = true;
@@ -235,12 +336,6 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                  searchInviteFrndsModel.indexPathRow = i;
                 
                 searchInviteFrndsArray.append(searchInviteFrndsModel)
-                
-                //                SearchContactNames.append(friendsList[i])
-                //
-                //                 //////// on i position we get name as well as image position that y we are  appending i position ofcontactImages in to a SearchContactImages
-                //                SearchContactImages.append(contactImages[i])
-                
                 
                 
             }
@@ -382,33 +477,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
     {
-//        if section == 0
-//        {
-//            
-//            if inviteEmailArray.count == 0
-//            {
-//            return 0
-//            }
-//            else
-//            {
-//                return 30
-//            }
-//
-//        }
-//        
-//        else
-//        {
-//            
-//            if inviteFrndsArray.count == 0
-//            {
-//                return 0
-//            }
-//            else
-//            {
-//            return 30
-//
-//            }
-//        }
+
     
         
         
@@ -1002,12 +1071,13 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         request.timeoutInterval = 20.0;
         
         
-        let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
+      let userId  =  NSUserDefaults.standardUserDefaults().stringForKey("userId");
+        
         
         let ChallengeId = NSUserDefaults.standardUserDefaults().stringForKey("challengeId")
 
                 
-        let postString = "userId=\(userId)&challengeId=\(ChallengeId!)";
+        let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)";
        
         
         print(postString)
@@ -1049,10 +1119,13 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         request.timeoutInterval = 20.0;
        
         
-        let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
+        let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
+        
+      
         
         let ChallengeId = NSUserDefaults.standardUserDefaults().stringForKey("challengeId")
-
+        
+        
         
         var cliendIds = [String]()
         var count = 0;
@@ -1063,7 +1136,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             
             cliendIds.append("friendIds[\(count)]=\(i)");
             
-            count++;
+            count += 1;
         }
         
         
@@ -1075,7 +1148,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         
         
         
-        let postString = "userId=\(userId)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())&\(friendIds)";
+        let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())&\(friendIds)";
         
         print(postString)
         
@@ -1231,24 +1304,14 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                 
                 self.loadingView.removeFromSuperview();
                 
-                let alert = UIAlertController(title: "", message:"something went wrong try again later." , preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "", message:"something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
                 
                 let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
                 
                 alert.addAction(alertAction)
                 
-                let alertAction2 = UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler: {
-                    
-                    Void in self.inviteFriends();
-                    
-                })
-                
-                alert.addAction(alertAction2)
-                
-                
                 
                 self.presentViewController(alert, animated: true, completion: nil)
-                
                 
                 
                 
@@ -1356,88 +1419,21 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                                                 NSOperationQueue.mainQueue().addOperationWithBlock
                                                     {
                                                         
-                                                        
-                                                        
-                                                        
-                                                        if self.view.subviews.contains(self.noInternet.view)
-                                                            
-                                                        {
-                                                            
-                                                            for i in self.view.subviews
-                                                                
-                                                            {
-                                                                
-                                                                if i == self.noInternet.view
-                                                                    
-                                                                {
-                                                                    
-                                                                    i.removeFromSuperview();
-                                                                    
-                                                                    
-                                                                }
-                                                                
-                                                            }
-                                                            
-                                                            
-                                                            
-                                                        }
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        if self.view.subviews.contains(self.noFriendResult.view)
-                                                            
-                                                        {
-                                                            
-                                                            for i in self.view.subviews
-                                                                
-                                                            {
-                                                                
-                                                                if i == self.noFriendResult.view
-                                                                    
-                                                                {
-                                                                    
-                                                                    i.removeFromSuperview();
-                                                                    
-                                                                    
-                                                                }
-                                                                
-                                                            }
-                                                            
-                                                            
-                                                            
-                                                        }
-                                                        
-                                                        
-                                                        
-                                                        if self.view.subviews.contains(self.error.view)
-                                                            
-                                                        {
-                                                            
-                                                            for i in self.view.subviews
-                                                                
-                                                            {
-                                                                
-                                                                if i == self.error.view
-                                                                    
-                                                                {
-                                                                    
-                                                                    i.removeFromSuperview();
-                                                                    
-                                                                    
-                                                                }
-                                                                
-                                                            }
-                                                            
-                                                            
-                                                            
-                                                        }
-                                                        
-                                                        
-                                                        
                                                         self.activityIndicator.stopAnimating();
                                                         
                                                         self.loadingView.removeFromSuperview();
+
+                                                        
+                                                        
+                                                        self.RemoveNoInternet();
+                                                        
+                                                        self.RemoveNoFrinedResult();
+                                                        
+                                                        self.RemoveNoResult();
+                                                        
+                                                        
+                                                        
+                                                        
                                                         
                                                         
                                                         self.InviteFriendsTableView.delegate = self;
@@ -1454,44 +1450,6 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                                             
                                         } // friendList close
 
-                                        
-                                        
-//                                        if let emailList = elements[i]["emailList"]
-//                                        {
-//                                            
-//                                            
-//                                            if   emailList  != nil
-//                                            {
-//                                                //self.amenitiesName.removeAll();
-//                                        
-//                                                
-//                                                for var i = 0; i<emailList!.count; i++
-//                                                {
-//                                                    
-//                                                    
-//                                                    
-//                                                    
-//                                                    
-//                                                }
-//                                                
-//                                                
-//                                                
-//                                            }
-//                                            
-//                                        } // emailList close
-//                                        
-                                        
-
-                                        
-                                        
-                                   ////// }
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
                                     
                                     
                                     
@@ -1509,69 +1467,23 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                         
                     {
                         
-                                NSOperationQueue.mainQueue().addOperationWithBlock{
+                                NSOperationQueue.mainQueue().addOperationWithBlock
+                                    
+                                    {
                                         
                                         self.activityIndicator.stopAnimating();
                                         
                                         self.loadingView.removeFromSuperview();
                                         
                                         
-                                        if self.view.subviews.contains(self.noInternet.view)
+                                        self.RemoveNoInternet();
+                                        self.RemoveNoFrinedResult();
+                                        
+                                        
+                                        if self.view.subviews.contains(self.noResult.view)
                                             
                                         {
                                             
-                                            for i in self.view.subviews
-                                                
-                                            {
-                                                
-                                                if i == self.noInternet.view
-                                                    
-                                                {
-                                                    
-                                                    i.removeFromSuperview();
-                                                    
-                                                    
-                                                }
-                                                
-                                            }
-                                            
-                                            
-                                            
-                                        }
-                                        
-                                        
-                                        
-                                        if self.view.subviews.contains(self.noFriendResult.view)
-                                            
-                                        {
-                                            
-                                            for i in self.view.subviews
-                                                
-                                            {
-                                                
-                                                if i == self.noFriendResult.view
-                                                    
-                                                {
-                                                    
-                                                    i.removeFromSuperview();
-                                                    
-                                                    
-                                                }
-                                                
-                                            }
-                                            
-                                            
-                                            
-                                        }
-                                        
-                                        
-                                        
-                                        
-                                        if self.view.subviews.contains(self.error.view)
-                                            
-                                        {
-                                            
-                                            //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
                                             
                                         }
                                             
@@ -1579,33 +1491,27 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                                             
                                         {
                                             
-                                            self.error = self.storyboard?.instantiateViewControllerWithIdentifier("errorViewController") as! errorViewController
+                                            self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
                                             
-                                            self.error.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
-                                            
-                                            self.view.addSubview((self.error.view)!);
-                                            
-                                            //  self.DIVC.imageView.image = UIImage(named: "im_no_internet");
-                                            
-                                            // self.noInternet.imageView.userInteractionEnabled = true
+                                            self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
                                             
                                             
-                                            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(InviteFriendsViewController.handleTap(_:)))
+                                            self.noResult.noResultTextLabel.text = msg
                                             
+                                            self.noResult.noResultImageView.image = UIImage(named: "im_error")
+
+                                            
+                                            self.view.addSubview((self.noResult.view)!);
                                             
                                             self.view.userInteractionEnabled = true
                                             
-                                            // self.noInternet.noInternetLabel.userInteractionEnabled = true
                                             
-                                            
-                                            self.error.view.addGestureRecognizer(tapRecognizer)
-                                            
-                                            self.error.didMoveToParentViewController(self)
+                                            self.noResult.didMoveToParentViewController(self)
                                             
                                         }
                                         
                                         
-                                }
+                                } // ns close
                                 
                       
                         
@@ -1627,53 +1533,9 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                                 
                                 ///// removeing image views
                                 
-                                if self.view.subviews.contains(self.noInternet.view)
-                                    
-                                {
-                                    
-                                    for i in self.view.subviews
-                                        
-                                    {
-                                        
-                                        if i == self.noInternet.view
-                                            
-                                        {
-                                            
-                                            i.removeFromSuperview();
-                                            
-                                            
-                                        }
-                                        
-                                    }
-                                    
-                                    
-                                    
-                                }
                                 
-                                if self.view.subviews.contains(self.error.view)
-                                    
-                                {
-                                    
-                                    for i in self.view.subviews
-                                        
-                                    {
-                                        
-                                        if i == self.error.view
-                                            
-                                        {
-                                            
-                                            i.removeFromSuperview();
-                                            
-                                            
-                                        }
-                                        
-                                    }
-                                    
-                                    
-                                    
-                                }
-                                
-                                
+                                self.RemoveNoInternet();
+                                self.RemoveNoResult();
                                 
                                 
                                 if self.view.subviews.contains(self.noFriendResult.view)
@@ -1720,30 +1582,52 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                 
                 self.loadingView.removeFromSuperview();
                 
-                let alert = UIAlertController(title: "", message:"something went wrong try again later." , preferredStyle: UIAlertControllerStyle.Alert)
+               
                 
-                let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
-                
-                alert.addAction(alertAction)
-                
-                let alertAction2 = UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler: {
-                    
-                    Void in self.inviteFriends();
-                    
-                })
-                
-                alert.addAction(alertAction2)
+                self.RemoveNoInternet();
                 
                 
+                self.RemoveNoFrinedResult();
+                        
                 
-                self.presentViewController(alert, animated: true, completion: nil)
+                        
+                        if self.view.subviews.contains(self.noResult.view)
+                            
+                        {
+                            
+                            
+                        }
+                            
+                        else
+                            
+                        {
+                            
+                            self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+                            
+                            self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+                            
+                            
+                            self.noResult.noResultTextLabel.text = "something went wrong."
+                            
+                            self.noResult.noResultImageView.image = UIImage(named: "im_error")
+                            
+                            
+                            
+                            self.view.addSubview((self.noResult.view)!);
+                            
+                            
+                            self.view.userInteractionEnabled = true
+                            
+                            
+                            
+                            
+                            self.noResult.didMoveToParentViewController(self)
+                            
+                        }
+                        
+                                 
                 
-                
-                
-                
-                print(error)
-                
-            }
+            } // catch close
             
         } // if dataTask close
         
@@ -1751,6 +1635,8 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         
         
     } //// main func
+    
+  
     
     //MARK:- NO INTERNET TAP GESTURE
     
@@ -1760,7 +1646,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         if(Reachability.isConnectedToNetwork()==true )
         {
             
-            inviteFriends();
+            getChallengeFriendlist();
             
         }
         
@@ -1768,6 +1654,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         
     }
     
+
 
     
     var mutableData = NSMutableData()
@@ -1796,24 +1683,47 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         
         self.loadingView.removeFromSuperview();
         
-        // LoaderFile.hideLoader(self.view)
+        self.RemoveNoInternet();
         
-        let alert = UIAlertController(title: "", message:"something went wrong try again later." , preferredStyle: UIAlertControllerStyle.Alert)
+        self.RemoveNoFrinedResult();
         
-        let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
         
-        alert.addAction(alertAction)
         
-        let alertAction2 = UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler: {
+        
+        
+        if self.view.subviews.contains(self.noResult.view)
             
-            Void in self.inviteFriends();
+        {
             
-        })
+            
+        }
+            
+        else
+            
+        {
+            
+            self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+            
+            self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+            
+            
+            self.noResult.noResultTextLabel.text = "something went wrong."
+            
+            self.noResult.noResultImageView.image = UIImage(named: "im_error")
+            
+            
+            
+            self.view.addSubview((self.noResult.view)!);
+            
+            
+            self.view.userInteractionEnabled = true
+            
+            self.noResult.didMoveToParentViewController(self)
+            
+        }
         
-        alert.addAction(alertAction2)
         
-        
-        self.presentViewController(alert, animated: true, completion: nil)
+
         
         
         
@@ -1837,7 +1747,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         
       print(EmailIds)
         
-        for var i = 0; i<EmailIds.count; i++
+        for i in 0 ..< EmailIds.count
          {
             
             inviteEmailModel = inviteFriendsModel()
@@ -1852,11 +1762,13 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         
         print(inviteEmailModel.InviteEmails)
         
+        EmailIds.removeAll();
         self.InviteFriendsTableView.delegate = self;
         self.InviteFriendsTableView.dataSource = self;
         self.InviteFriendsTableView.reloadData();
     }
 
+    
     
     override func viewDidLoad()
     {
@@ -1868,10 +1780,51 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         
         EmailContacts = [];
         
-        // NSUserDefaults.standardUserDefaults().setObject(msg, forKey: "successMsgOfAddViaEmail")
         
+        if(Reachability.isConnectedToNetwork()==true )
+        {
+            showActivityIndicatory()
+            self.getChallengeFriendlist();
+
+            
+        }
+            
+        else
+        {
+            
+            if self.view.subviews.contains(self.noInternet.view)
+                
+            {
+                
+                //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
+                
+            }
+                
+            else
+                
+            {
+                
+                self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
+                
+                self.noInternet.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
+                
+                self.view.addSubview((self.noInternet.view)!);
+                
+                
+                let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(InviteFriendsViewController.handleTap(_:)))
+                self.noInternet.noInternetLabel.userInteractionEnabled = true
+                
+                
+                self.noInternet.view.addGestureRecognizer(tapRecognizer)
+                
+                self.noInternet.didMoveToParentViewController(self)
+                
+            }
+            
+        }
         
-        self.getChallengeFriendlist();
+
+        
         
      
         self.searchTextField.delegate = self;
@@ -1904,6 +1857,12 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         // Do any additional setup after loading the view.
     }
 
+    
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle
+    {
+        return UIStatusBarStyle.LightContent;
+    }
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()

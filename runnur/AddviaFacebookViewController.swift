@@ -107,7 +107,17 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
                 
             {
                 
-                self.addFbFriends();
+                if(Reachability.isConnectedToNetwork()==true )
+                {
+                  
+                    
+                    showActivityIndicatory();
+                     self.addFbFriends();
+                    
+                }
+                
+
+              
                 
             }
             
@@ -115,8 +125,8 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         }
         else
         {
-            //            self.activityIndicator.stopAnimating();
-            //            self.loadingView.removeFromSuperview();
+                        self.activityIndicator.stopAnimating();
+                        self.loadingView.removeFromSuperview();
             
             let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg, preferredStyle: UIAlertControllerStyle.Alert)
             let okAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil)
@@ -132,6 +142,28 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
     
 
     
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    let loadingView: UIView = UIView()
+    func showActivityIndicatory()
+    {
+        loadingView.frame = CGRectMake(0, 0, 60, 50)
+        loadingView.center = view.center
+        
+        loadingView.backgroundColor = UIColor.grayColor()
+        loadingView.alpha = 0.6
+        loadingView.clipsToBounds = true
+        loadingView.layer.cornerRadius = 10
+        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+                                               loadingView.frame.size.height / 2);
+        loadingView.addSubview(activityIndicator)
+        self.view.addSubview(loadingView)
+        activityIndicator.startAnimating()
+    }
+    
+    
+
     
     
     @IBAction func searchCancelButtonAction(sender: AnyObject)
@@ -652,7 +684,7 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
                             print("actionIndex: \(alertIndex)")
                         }
                         
-                        var title = entry
+                        let title = entry
                         
                         cell.selectedUnselectedImageView.image = UIImage(named: "ic_checked")
                         
@@ -837,15 +869,11 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         
         request.timeoutInterval = 20.0;
         
-        let modelName = UIDevice.currentDevice().modelName
+    
         
-        let systemVersion = UIDevice.currentDevice().systemVersion;
-        
-        let make="iphone"
-        
-        let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
-        
-        
+        let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
+
+    
         
         var cliendIds = [String]()
         var count = 0;
@@ -859,7 +887,7 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
 
             cliendIds.append("friendFbIds[\(count)]=\(i)");
             
-            count++;
+            count += 1;
         }
         
         let  friendFbIds  = cliendIds.joinWithSeparator("&")
@@ -868,7 +896,7 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         
         
         
-        let postString = "os=\(systemVersion)&make=\(make)&model=\(modelName)&userId=\(userId)&\(friendFbIds)";
+        let postString = "userId=\(userId!)&\(friendFbIds)";
         
         print(postString)
         
@@ -887,29 +915,6 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
     }
     
     
-    
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    let loadingView: UIView = UIView()
-    func showActivityIndicatory()
-    {
-        loadingView.frame = CGRectMake(0, 0, 60, 50)
-        loadingView.center = view.center
-        
-        loadingView.backgroundColor = UIColor.grayColor()
-        loadingView.alpha = 0.6
-        loadingView.clipsToBounds = true
-        loadingView.layer.cornerRadius = 10
-        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
-        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
-                                               loadingView.frame.size.height / 2);
-        loadingView.addSubview(activityIndicator)
-        self.view.addSubview(loadingView)
-        activityIndicator.startAnimating()
-    }
-    
-    
-        
     
     //MARK:- NSURLSession delegate methods
     
@@ -947,7 +952,8 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
                     let msg=parseJSON["message"] as? String
                     if(status=="Success")
                     {
-                        
+                        self.activityIndicator.stopAnimating();
+                        self.loadingView.removeFromSuperview();
                         
                         NSOperationQueue.mainQueue().addOperationWithBlock
                             {
@@ -955,7 +961,7 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
                                 
                                 
                                 
-                                NSUserDefaults.standardUserDefaults().setObject(msg, forKey: "successMsgOfAddManually")
+                                NSUserDefaults.standardUserDefaults().setObject(msg, forKey: "AddFBFrndsSucessMSG")
                                 
                                  self.presentingViewController.self!.presentingViewController!.dismissViewControllerAnimated(true, completion: nil);
                                 
@@ -979,7 +985,6 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
                                 
                                 
                                 self.activityIndicator.stopAnimating();
-                                
                                 self.loadingView.removeFromSuperview();
                                 //  LoaderFile.hideLoader(self.view)
                                 
@@ -1007,10 +1012,9 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
             {
                 
                 
-                
                 self.activityIndicator.stopAnimating();
-                
                 self.loadingView.removeFromSuperview();
+                
                 
                 let alert = UIAlertController(title: "", message:"something went wrong try again later." , preferredStyle: UIAlertControllerStyle.Alert)
                 
@@ -1069,7 +1073,6 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         
         
         self.activityIndicator.stopAnimating();
-        
         self.loadingView.removeFromSuperview();
         
         // LoaderFile.hideLoader(self.view)
@@ -1121,49 +1124,6 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
     
     
     
-    
-//    func getAllFriends()
-//        
-//    {
-//        
-//        let params = ["fields": "id, first_name, last_name, middle_name, name, email, picture"]
-//        
-//        let graphRequest: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me/friends", parameters: params)
-//        
-//        graphRequest.startWithCompletionHandler({ (connection, result, error: NSError!) -> Void in
-//            
-//            if error == nil
-//            {
-//                
-//               print(result)
-//                
-//                let friendObjects = result["data"] as! [NSDictionary]
-//                
-//                for friendObject in friendObjects
-//                {
-//                    
-//                    print(friendObject["id"] as! NSString)
-//                    
-//                }
-//                
-//                print("\(friendObjects.count)")
-//                
-//            }
-//            else
-//            {
-//                
-//                print("Error requesting friends list form facebook")
-//                
-//               print("\(error)")
-//                
-//            }
-//            
-//            
-//            
-//        })
-//        
-//    }
-    
     var FirstName = ["Kareena","Deepika","hrithik","ranbir","farhan","alia"]
     var LastName = ["Kapoor","padukon","roshan","kapoor","akhtar","bhatt"]
     
@@ -1200,30 +1160,6 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         
         doneButton.layer.cornerRadius = 2
         doneButton.clipsToBounds = true;
-        
-//        
-//        for var i=0;i<FirstName.count;i++
-//        {
-//            
-//            self.facebookModel = phoneBookModel();
-//            
-//            facebookModel.firstName = FirstName[i]
-//            
-//            facebookModel.lastName = LastName[i]
-//            
-//            facebookModel.conatctImage = photoUrl[i]
-//            
-//            
-//            facebookModel.indexPathRow = i
-//            
-//            self.facebookArray.append(self.facebookModel);
-//            
-//        }
-
-        
-        print(facebookArray.count)
-        
-        print(facebookArray)
         
         
         self.filterValues()

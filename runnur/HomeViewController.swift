@@ -25,6 +25,11 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         }
         
     }
+    
+    
+    
+    
+    
     @IBAction func turnOnBluetooth(sender: AnyObject) {
         
        //  btManager = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionShowPowerAlertKey: true])
@@ -130,8 +135,8 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     override func viewDidLoad()
     {
         super.viewDidLoad();
-       // call();
-             gps.layer.shadowOpacity=0.4;
+        gps.layer.shadowOpacity=0.4;
+
         startActivity.layer.cornerRadius=3.0;
         //startActivity.clipsToBounds=true;
         planRoute.layer.cornerRadius=3.0;

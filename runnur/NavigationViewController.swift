@@ -24,7 +24,6 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
     
     @IBOutlet var emailId: UILabel!
     
-    
   
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
@@ -169,7 +168,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 }
                 
               
-               cell.countLabel.layer.cornerRadius = cell.countLabel.frame.size.width / 2;
+               cell.countLabel.layer.cornerRadius = cell.countLabel.frame.size.height/2;
                cell.countLabel.backgroundColor = colorCode.RedColor
             // cell.countLabel.layer.masksToBounds = true
               cell.countLabel.clipsToBounds = true
@@ -305,15 +304,16 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 break;
                 
             case "Logout":
-                if  NSUserDefaults.standardUserDefaults().integerForKey("loginThroughValue") == 1
-                {
-                    let loginManager:FBSDKLoginManager = FBSDKLoginManager()
+//                if  NSUserDefaults.standardUserDefaults().integerForKey("loginThroughValue") == 1
+//                {
+                
+                let loginManager:FBSDKLoginManager = FBSDKLoginManager()
                     loginManager.logOut();
                     
-                }else{
-                    
-                    
-                }
+//                }else{
+//                    
+//                    
+//                }
                     let appDomain = NSBundle.mainBundle().bundleIdentifier!
                     NSUserDefaults.standardUserDefaults().removePersistentDomainForName(appDomain)
                     NSUserDefaults.standardUserDefaults().removePersistentDomainForName(NSBundle.mainBundle().bundleIdentifier!)
@@ -324,9 +324,9 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                     let mainVC = storyboard.instantiateViewControllerWithIdentifier("FirstViewController")
                     appDelegate.window!.rootViewController = mainVC
                     appDelegate.window!.makeKeyAndVisible()
-                    for view in self.view.window!.subviews {
-                        view.removeFromSuperview()
-                    }
+//                    for view in self.view.window!.subviews {
+//                        view.removeFromSuperview()
+//                    }
                     UIView.transitionWithView(appDelegate.window!, duration: 0.5, options:UIViewAnimationOptions.TransitionFlipFromLeft , animations: { () -> Void in
                         appDelegate.window!.rootViewController = mainVC
                         
@@ -371,8 +371,8 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath)
     {
         let cell = tableView.cellForRowAtIndexPath(indexPath) as!  NavigationCellTableViewCell
-        
-        cell.contentView.backgroundColor = UIColor.clearColor()
+               
+        cell.contentView.backgroundColor = UIColor.clearColor();
     }
     
     
@@ -384,7 +384,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
     var sectionTwoImages = ["ic_history_nav","ic_statistics_nav","ic_heart_rate_nav","ic_winning_balance_nav"]
     
     var sectionThree = ["Settings","Logout","Feedback","FAQ"]
-    var sectionThreeImages = ["ic_settings_nav","ic_settings_nav","ic_feedback_nav","ic_faq_nav"]
+    var sectionThreeImages = ["ic_settings_nav","ic_logout","ic_feedback_nav","ic_faq_nav"]
     override func viewDidLoad()
     {
         super.viewDidLoad()

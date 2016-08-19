@@ -102,12 +102,15 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
             
             
                 EmailIds.append(emailIDTextField.text!)
+            
+            
+               //self.emailIDTextField.text = ""
+            
+               emailIDTextField.resignFirstResponder();
                 addFriends();
             
             
-            self.emailIDTextField.text = ""
-            
-            emailIDTextField.resignFirstResponder();
+        
           
 
             
@@ -115,7 +118,14 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
         else
         {
           
-            
+            let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg, preferredStyle: UIAlertControllerStyle.Alert)
+            let okAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil)
+            let tryAgainAction = UIAlertAction(title: "Try again", style: UIAlertActionStyle.Default, handler: {action  in  self.doneButtonNetwork() })
+            alert.addAction(okAction)
+            alert.addAction(tryAgainAction)
+            self.presentViewController(alert, animated: true, completion: nil)
+            return
+  
          
             
         }
@@ -138,8 +148,9 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
         
         // LoaderFile.showLoader(self.view);
         
-        let myurl = NSURL(string:"http://sentivphp.azurewebsites.net/addFriends.php")
+     //   let myurl = NSURL(string:"http://sentivphp.azurewebsites.net/addFriends.php")
         
+         let myurl = NSURL(string: Url.addFriends)
         
         let request = NSMutableURLRequest(URL: myurl!)
         
@@ -147,13 +158,8 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
         
         request.timeoutInterval = 20.0;
         
-        let modelName = UIDevice.currentDevice().modelName
         
-        let systemVersion = UIDevice.currentDevice().systemVersion;
-        
-        let make="iphone"
-        
-        let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
+        let userId  =  NSUserDefaults.standardUserDefaults().stringForKey("userId");
         
         
         
@@ -163,7 +169,7 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
         {
             
             cliendIds.append("friendEmailIds[\(count)]=\(i)");
-            count++;
+            count += 1;
         }
         
         let  friendEmailIds  = cliendIds.joinWithSeparator("&")
@@ -172,7 +178,7 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
 
         
         
-        let postString = "os=\(systemVersion)&make=\(make)&model=\(modelName)&userId=\(userId)&\(friendEmailIds)";
+        let postString = "userId=\(userId!)&\(friendEmailIds)";
         
         print(postString)
         
@@ -259,16 +265,6 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
                          self.presentingViewController.self!.presentingViewController!.dismissViewControllerAnimated(true, completion: nil);
 
                                 
-                                
-                                
-//                                
-//                                let alert = UIAlertController(title: "", message:msg , preferredStyle: UIAlertControllerStyle.Alert)
-//                                
-//                                let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
-//                                
-//                                alert.addAction(alertAction)
-//                                
-//                                self.presentViewController(alert, animated: true, completion: nil)
                                 
                                 
                                 
