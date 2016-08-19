@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "470CF8791D24DC370001B3BC"
-               BuildableName = "sentiv.app"
+               BuildableName = "Sentiv.app"
                BlueprintName = "runnur"
                ReferencedContainer = "container:runnur.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "470CF8791D24DC370001B3BC"
-            BuildableName = "sentiv.app"
+            BuildableName = "Sentiv.app"
             BlueprintName = "runnur"
             ReferencedContainer = "container:runnur.xcodeproj">
          </BuildableReference>
@@ -56,7 +56,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "470CF8791D24DC370001B3BC"
-            BuildableName = "sentiv.app"
+            BuildableName = "Sentiv.app"
             BlueprintName = "runnur"
             ReferencedContainer = "container:runnur.xcodeproj">
          </BuildableReference>
@@ -75,7 +75,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "470CF8791D24DC370001B3BC"
-            BuildableName = "sentiv.app"
+            BuildableName = "Sentiv.app"
             BlueprintName = "runnur"
             ReferencedContainer = "container:runnur.xcodeproj">
          </BuildableReference>

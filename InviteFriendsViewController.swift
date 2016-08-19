@@ -1267,9 +1267,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
+                        NSOperationQueue.mainQueue().addOperationWithBlock{
                                 
                                 
                                 
@@ -1342,7 +1340,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                 {
                     
                     let status = parseJSON["status"] as? String
-                    let msg=parseJSON["message"] as? String
+                    _=parseJSON["message"] as? String
                     if(status=="Success")
                     {
                         
@@ -1362,7 +1360,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                                             {
                                                 //self.amenitiesName.removeAll();
                                                 
-                                                for var i = 0; i<friendList!.count; i++
+                                                for var i = 0; i<friendList!.count; i += 1
                                                 {
                                                    
                                                     
@@ -1501,6 +1499,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                                             self.noResult.noResultTextLabel.text = msg
                                             
                                             self.noResult.noResultImageView.image = UIImage(named: "im_error")
+
                                             
                                             self.view.addSubview((self.noResult.view)!);
                                             
@@ -1522,9 +1521,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
+                        NSOperationQueue.mainQueue().addOperationWithBlock{
                                 
                                 
                                 

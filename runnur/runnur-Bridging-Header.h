@@ -12,6 +12,7 @@
 //#import <MicrosoftAzureMobile/MicrosoftAzureMobile.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKCoreKit/FBSDKAccessToken.h>
+#import <FBSDKShareKit/FBSDKSharing.h>
 #import <Google/SignIn.h>
 
 #endif

@@ -11,7 +11,7 @@ import GoogleMaps
 import MapKit
 import CoreBluetooth
 
-class HomeViewController: UIViewController,CLLocationManagerDelegate,CBCentralManagerDelegate
+class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentralManagerDelegate*/
 {
     var myManager:CLLocationManager!
     @IBOutlet weak var mapView: GMSMapView!
@@ -23,7 +23,6 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate,CBCentralMa
         {
             self.revealViewController().revealToggle(self);
         }
- 
         
     }
     
@@ -33,7 +32,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate,CBCentralMa
     
     @IBAction func turnOnBluetooth(sender: AnyObject) {
         
-           btManager = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionShowPowerAlertKey: true])
+       //  btManager = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionShowPowerAlertKey: true])
     }
     @IBOutlet weak var gps: UIImageView!
     @IBOutlet weak var planRoute: UIButton!
@@ -47,11 +46,19 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate,CBCentralMa
         
     }
     
+    @IBAction func planRoute(sender: AnyObject) {
+        let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("CreateRouteViewController") as! CreateRouteViewController
+        self.presentViewController(nextViewController, animated: false, completion: nil)
+ 
+        
+    }
     func call(){
         print("os=\(UIDevice.currentDevice().systemVersion)&make=iphone&model=\(UIDevice.currentDevice().modelName)&userId=\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)")
         NetworkRequest.sharedInstance.connectToServer(self.view, urlString: Url.navigationDrawer, postData: "os=\(UIDevice.currentDevice().systemVersion)&make=iphone&model=\(UIDevice.currentDevice().modelName)&userId=\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)", responseData: {(success,error) in
             do
             {
+                
+                
                 let json = try NSJSONSerialization.JSONObjectWithData(success!, options: .MutableContainers) as? NSDictionary
                 if  let parseJSON = json{
                     let status = parseJSON["status"] as? String
@@ -110,11 +117,17 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate,CBCentralMa
     @IBAction func menu(sender: AnyObject) {
           customPopUp = NSBundle.mainBundle().loadNibNamed("CustomPopUp",owner:view,options:nil).last as! CustomPopUp
         customPopUp.backgroundColor = UIColor(white: 0, alpha: 0.5)
-
+        customPopUp.done.addTarget(self, action: #selector(HomeViewController.DonePopUp), forControlEvents: UIControlEvents.TouchUpInside);
           self.view.addSubview(customPopUp)
             customPopUp.frame = self.view.bounds
 
     }
+    func DonePopUp()
+    {
+        customPopUp.removeFromSuperview();
+    }
+    
+    
     
     var lat = String();
     var long = String();
@@ -122,11 +135,8 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate,CBCentralMa
     override func viewDidLoad()
     {
         super.viewDidLoad();
-        
-         call();
-        
-        
         gps.layer.shadowOpacity=0.4;
+
         startActivity.layer.cornerRadius=3.0;
         //startActivity.clipsToBounds=true;
         planRoute.layer.cornerRadius=3.0;
@@ -275,6 +285,11 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate,CBCentralMa
         self.myManager.desiredAccuracy = kCLLocationAccuracyBest;
         
         self.myManager.requestWhenInUseAuthorization()
+        if #available(iOS 9.0, *) {
+            self.myManager.allowsBackgroundLocationUpdates=true
+        } else {
+            // Fallback on earlier versions
+        };
         self.myManager.startUpdatingLocation()
              myManager.startMonitoringSignificantLocationChanges()
         if CLLocationManager.locationServicesEnabled()
@@ -286,10 +301,14 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate,CBCentralMa
     }
     
     @IBAction func startActivity(sender: AnyObject) {
-        
+        if gps.image == UIImage(named: "ic_gps_none"){
         CommonFunctions.showPopup(self,title:"WEAK GPS SIGNAL" , msg: "GPS signal is weak at your current location. Please find a place with direct line of sight to the sky. If you continue, your tracking may not be accurate.", positiveMsg: "Continue", negMsg: "Cancel", show2Buttons: true) {
             let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("StartActivityViewController") as! StartActivityViewController
-            self.presentViewController(nextViewController, animated: true, completion: nil)
+            self.presentViewController(nextViewController, animated: false, completion: nil)
+        }
+        }else{
+            let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("StartActivityViewController") as! StartActivityViewController
+            self.presentViewController(nextViewController, animated: false, completion: nil)
         }
     }
    

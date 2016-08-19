@@ -17,8 +17,6 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
     
     
     
-    
-    
     @IBAction func loginWithFacebookButtonAction(sender: UIButton)
     {
         
@@ -204,6 +202,10 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
                 let payload: [String: String] = ["access_token": self.fbToken]
                 Client.loginWithProvider("facebook", token: payload, completion: { (user, error) in
                     if user != nil{
+                       
+                        NSUserDefaults.standardUserDefaults().setObject( user.userId, forKey: "azureUserId")
+                        NSUserDefaults.standardUserDefaults().setObject( user.mobileServiceAuthenticationToken, forKey: "azureAuthenticationToken")
+                        Client.currentUser = user;
                         print("Login successful");
                          self.call(true, email: self.email, firstName: self.firstName, lastName: self.lastName, id: (user?.userId)!, token: self.fbToken,imageUrl: "http://graph.facebook.com/" + (self.fbId) + "/picture?type=large");
                        }
@@ -279,7 +281,7 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
         {
             postData = "email=\(email)&firstName=\(firstName)&lastName=\(lastName)&googleId=\(id)&googleToken=\(token)&currentDate=\(dateObj)&photoUrl=\(imageUrl)"
         }
-        
+        CommonFunctions.hideActivityIndicator()
         NetworkRequest.sharedInstance.connectToServer(self.view, urlString:Url.loginWithProviders , postData: postData, responseData: {(success,error) in
             
             let dataString = String(data: success!, encoding: NSUTF8StringEncoding)
@@ -314,6 +316,11 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
                                 let photoUrl = elements[i]["photoUrl"] as! String
                                 
                                 NSUserDefaults.standardUserDefaults().setObject(photoUrl, forKey: "photoUrl")
+                                NSUserDefaults.standardUserDefaults().setObject("163", forKey: "weight")
+                                NSUserDefaults.standardUserDefaults().setObject("5", forKey: "heightFt")
+                                NSUserDefaults.standardUserDefaults().setObject("10", forKey: "heightIn")
+                                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "voiceFeedback")
+
                             }//
                         }
                         NSOperationQueue.mainQueue().addOperationWithBlock({
@@ -325,7 +332,7 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
                             
                             let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SWRevealViewController") as! SWRevealViewController
                             
-                            self.presentViewController(nextViewController, animated: true, completion: nil)
+                            self.presentViewController(nextViewController, animated: false, completion: nil)
                         })
                     }
                         
