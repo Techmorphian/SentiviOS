@@ -1340,7 +1340,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                 {
                     
                     let status = parseJSON["status"] as? String
-                    _=parseJSON["message"] as? String
+                    let msg = parseJSON["message"] as? String
                     if(status=="Success")
                     {
                         

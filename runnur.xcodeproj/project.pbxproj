@@ -11,7 +11,6 @@
 		440D64E41D522580004AE539 /* CustomPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 440D64E31D522580004AE539 /* CustomPopUp.xib */; };
 		440D64E61D5225B1004AE539 /* CustomPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440D64E51D5225B1004AE539 /* CustomPopUp.swift */; };
 		4441A8E31D58687B00CBB6A7 /* CurrentDateFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4441A8E11D58676C00CBB6A7 /* CurrentDateFunc.swift */; };
-		444A1D781D659FD800E561B4 /* CreateRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444A1D771D659FD800E561B4 /* CreateRouteViewController.swift */; };
 		444C5E1B1D50B36300A4DB3D /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 444C5E1A1D50B36300A4DB3D /* GoogleMaps.framework */; };
 		444C5E1D1D50B38E00A4DB3D /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 444C5E1C1D50B38E00A4DB3D /* GoogleMapsCore.framework */; };
 		444C5E1F1D50B39900A4DB3D /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 444C5E1E1D50B39900A4DB3D /* GoogleMapsBase.framework */; };
@@ -98,6 +97,8 @@
 		47474C181D3CEF6E008FE197 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47474C171D3CEF6E008FE197 /* ActionButton.swift */; };
 		47474C1A1D3CEF7A008FE197 /* ActionButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47474C191D3CEF7A008FE197 /* ActionButtonItem.swift */; };
 		4748CB8D1D59EE9B0096DB55 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4748CB8C1D59EE9B0096DB55 /* ActivityViewController.swift */; };
+		4788A1AE1D66F440000B2E99 /* CauseFirSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EFFBAB1D58822A00F2A2D7 /* CauseFirSummaryViewController.swift */; };
+		4788A1AF1D66F46C000B2E99 /* CreateRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444A1D771D659FD800E561B4 /* CreateRouteViewController.swift */; };
 		47B8A8F81D45E2E100BACB83 /* ViewGroupFitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B8A8F71D45E2E100BACB83 /* ViewGroupFitViewController.swift */; };
 		47B8A8FA1D45E31600BACB83 /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B8A8F91D45E31600BACB83 /* SummaryViewController.swift */; };
 		47BB027B1D49EC4800273694 /* InviteFriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473D0D7A1D49E7BF004DDC07 /* InviteFriendsTableViewCell.swift */; };
@@ -114,9 +115,6 @@
 		47C78CFC1D26A480006DEACF /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C78CFB1D26A480006DEACF /* SplashScreenViewController.swift */; };
 		47CF1FC11D4CC5620083B1A7 /* challengeFilterXIB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CF1FC01D4CC5620083B1A7 /* challengeFilterXIB.swift */; };
 		47EF173C1D41EE0C00468698 /* dateFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EF173B1D41EE0C00468698 /* dateFunction.swift */; };
-		47EFFBAA1D58689A00F2A2D7 /* CurrentDateFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EFFBA91D58689A00F2A2D7 /* CurrentDateFunc.swift */; };
-		47EFFBAC1D58822A00F2A2D7 /* CauseFirSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EFFBAB1D58822A00F2A2D7 /* CauseFirSummaryViewController.swift */; };
-
 		47F40DFA1D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F40DF91D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift */; };
 		47F97BE31D33CF5C0034B767 /* errorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F97BE21D33CF5C0034B767 /* errorViewController.swift */; };
 		47FEAE0A1D2FD93800881EE8 /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FEAE091D2FD93800881EE8 /* Url.swift */; };
@@ -669,7 +667,6 @@
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 35WVNFXG8X;
 						SystemCapabilities = {
-
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -811,10 +808,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-
-				449A10A91D62E92900E91536 /* TabsViewController.swift in Sources */,
 				4441A8E31D58687B00CBB6A7 /* CurrentDateFunc.swift in Sources */,
-
+				4788A1AF1D66F46C000B2E99 /* CreateRouteViewController.swift in Sources */,
+				4788A1AE1D66F440000B2E99 /* CauseFirSummaryViewController.swift in Sources */,
+				449A10A91D62E92900E91536 /* TabsViewController.swift in Sources */,
 				47BB027B1D49EC4800273694 /* InviteFriendsTableViewCell.swift in Sources */,
 				440D64E61D5225B1004AE539 /* CustomPopUp.swift in Sources */,
 				473D0D921D49E93E004DDC07 /* StatisticsViewController.swift in Sources */,
@@ -840,9 +837,7 @@
 				470CF8951D24E8500001B3BC /* FriendsListCellTableViewCell.swift in Sources */,
 				47F40DFA1D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift in Sources */,
 				470261761D40F83D005261ED /* ChallengeModel.swift in Sources */,
-
 				449A10A51D62E8A100E91536 /* GraphsViewController.swift in Sources */,
-
 				473D0D941D49E955004DDC07 /* FAQViewController.swift in Sources */,
 				47FED24C1D2E6FE5006CAE8A /*  Reachability.swift in Sources */,
 				47474C161D3CBFB1008FE197 /* CreateGroupAndCauseFitViewController.swift in Sources */,
@@ -962,7 +957,6 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.SentivApp;
-
 				PROVISIONING_PROFILE = "a2b70caa-b3f0-43bb-b249-89d5298b229f";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
