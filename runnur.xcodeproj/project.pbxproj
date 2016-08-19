@@ -11,6 +11,7 @@
 		440D64E41D522580004AE539 /* CustomPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 440D64E31D522580004AE539 /* CustomPopUp.xib */; };
 		440D64E61D5225B1004AE539 /* CustomPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440D64E51D5225B1004AE539 /* CustomPopUp.swift */; };
 		4441A8E31D58687B00CBB6A7 /* CurrentDateFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4441A8E11D58676C00CBB6A7 /* CurrentDateFunc.swift */; };
+		444A1D781D659FD800E561B4 /* CreateRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444A1D771D659FD800E561B4 /* CreateRouteViewController.swift */; };
 		444C5E1B1D50B36300A4DB3D /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 444C5E1A1D50B36300A4DB3D /* GoogleMaps.framework */; };
 		444C5E1D1D50B38E00A4DB3D /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 444C5E1C1D50B38E00A4DB3D /* GoogleMapsCore.framework */; };
 		444C5E1F1D50B39900A4DB3D /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 444C5E1E1D50B39900A4DB3D /* GoogleMapsBase.framework */; };
@@ -120,6 +121,7 @@
 		440D64E31D522580004AE539 /* CustomPopUp.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomPopUp.xib; sourceTree = "<group>"; };
 		440D64E51D5225B1004AE539 /* CustomPopUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPopUp.swift; sourceTree = "<group>"; };
 		4441A8E11D58676C00CBB6A7 /* CurrentDateFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentDateFunc.swift; sourceTree = "<group>"; };
+		444A1D771D659FD800E561B4 /* CreateRouteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateRouteViewController.swift; sourceTree = "<group>"; };
 		444C5E1A1D50B36300A4DB3D /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		444C5E1C1D50B38E00A4DB3D /* GoogleMapsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMapsCore.framework; sourceTree = "<group>"; };
 		444C5E1E1D50B39900A4DB3D /* GoogleMapsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMapsBase.framework; sourceTree = "<group>"; };
@@ -266,6 +268,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		444A1D761D659F9C00E561B4 /* Plan Route */ = {
+			isa = PBXGroup;
+			children = (
+				444A1D771D659FD800E561B4 /* CreateRouteViewController.swift */,
+			);
+			name = "Plan Route";
+			sourceTree = "<group>";
+		};
 		44524A1B1D54B83400CC21C8 /* Activities */ = {
 			isa = PBXGroup;
 			children = (
@@ -330,6 +340,7 @@
 				4778115A1D4876AF003B01A4 /* ViewGroupFitChalleneg */,
 				477811631D4878A8003B01A4 /* Home/splash/Login */,
 				4778115D1D487789003B01A4 /* Navigation */,
+				444A1D761D659F9C00E561B4 /* Plan Route */,
 				44524A1B1D54B83400CC21C8 /* Activities */,
 				477811671D4879D3003B01A4 /* Statistics */,
 				477811641D487901003B01A4 /* FAQ */,
@@ -623,13 +634,13 @@
 				TargetAttributes = {
 					470CF8791D24DC370001B3BC = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 44C2WNQ95S;
+						DevelopmentTeam = 35WVNFXG8X;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
 							com.apple.Push = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -837,6 +848,7 @@
 				470CF8A51D25082C0001B3BC /* AddviaGoogleCellTableViewCell.swift in Sources */,
 				470CF8A71D252F540001B3BC /* AddManuallyViewController.swift in Sources */,
 				47EFFBA71D5849B600F2A2D7 /* viewCauseFitViewController.swift in Sources */,
+				444A1D781D659FD800E561B4 /* CreateRouteViewController.swift in Sources */,
 				473D0D801D49E84C004DDC07 /* alertMsg.swift in Sources */,
 				473D0D8A1D49E8D9004DDC07 /* activeChallengeTableViewCell.swift in Sources */,
 				470CF8861D24DC370001B3BC /* runnur.xcdatamodeld in Sources */,
@@ -886,8 +898,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Archana Vetkar (MWEK85FF43)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Archana Vetkar (MWEK85FF43)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Nishant Doctor (35WVNFXG8X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Nishant Doctor (35WVNFXG8X)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -909,8 +921,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.sentiv;
-				PROVISIONING_PROFILE = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.SentivApp;
+				PROVISIONING_PROFILE = "a2b70caa-b3f0-43bb-b249-89d5298b229f";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -935,8 +947,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Archana Vetkar (MWEK85FF43)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Archana Vetkar (MWEK85FF43)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Nishant Doctor (35WVNFXG8X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Nishant Doctor (35WVNFXG8X)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -951,8 +963,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.sentiv;
-				PROVISIONING_PROFILE = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.SentivApp;
+				PROVISIONING_PROFILE = "a2b70caa-b3f0-43bb-b249-89d5298b229f";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -965,8 +977,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Nishant Doctor (35WVNFXG8X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Nishant Doctor (35WVNFXG8X)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/runnur",
@@ -974,7 +986,7 @@
 				INFOPLIST_FILE = runnur/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.sentiv;
+				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.SentivApp;
 				PRODUCT_NAME = Sentiv;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "runnur/runnur-Bridging-Header.h";
@@ -989,8 +1001,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Nishant Doctor (35WVNFXG8X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Nishant Doctor (35WVNFXG8X)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/runnur",
@@ -998,7 +1010,7 @@
 				INFOPLIST_FILE = runnur/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.sentiv;
+				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.SentivApp;
 				PRODUCT_NAME = Sentiv;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "runnur/runnur-Bridging-Header.h";

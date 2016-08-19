@@ -41,6 +41,12 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         
     }
     
+    @IBAction func planRoute(sender: AnyObject) {
+        let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("CreateRouteViewController") as! CreateRouteViewController
+        self.presentViewController(nextViewController, animated: false, completion: nil)
+ 
+        
+    }
     func call(){
         print("os=\(UIDevice.currentDevice().systemVersion)&make=iphone&model=\(UIDevice.currentDevice().modelName)&userId=\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)")
         NetworkRequest.sharedInstance.connectToServer(self.view, urlString: Url.navigationDrawer, postData: "os=\(UIDevice.currentDevice().systemVersion)&make=iphone&model=\(UIDevice.currentDevice().modelName)&userId=\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)", responseData: {(success,error) in

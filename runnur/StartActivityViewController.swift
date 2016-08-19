@@ -313,7 +313,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             speed.text = "0.0"
             self.avgspeed = 0.0;
         }else{
-            //            1609.344
+            //  1609.344
             speed.text = String(format: "%.2f", lastLocation.speed / 0.44704);
             if distanceInMi/elapsedTime < 0
             {
