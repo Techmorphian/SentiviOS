@@ -1,17 +1,3 @@
-# file
-
-#########################################################################
-#                                                                       #
-#       Title         - .gitignore file                                 #
-#       For           - MAC OSX , Xcode7 and Swift Source projects      #
-#       Updated by    - Ramdhan Choudhary                               #
-#       Updated on    - 13 - November - 2015                            #
-#                                                                       #
-#########################################################################
-
-########### Xcode ###########
-# Xcode temporary files that should never be committed
-
 ## Build generated
 build/
 DerivedData

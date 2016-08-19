@@ -51,6 +51,8 @@
 		44BBF3771D5D96E2006618EF /* NSObject+MTNativeFacebookLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BBF3761D5D96E2006618EF /* NSObject+MTNativeFacebookLogin.m */; };
 		44C7967D1D5EF706000118C5 /* SWRevealViewController.h in Resources */ = {isa = PBXBuildFile; fileRef = 470B1B5F1D27A59600E3B5B0 /* SWRevealViewController.h */; };
 		44C7967E1D5EF70D000118C5 /* SWRevealViewController.m in Resources */ = {isa = PBXBuildFile; fileRef = 470B1B611D27A5A100E3B5B0 /* SWRevealViewController.m */; };
+		44D6FFD41D67151200B3F9D8 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 44D6FFD31D67151200B3F9D8 /* .gitignore */; };
+		44D6FFD71D67233E00B3F9D8 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D6FFD61D67233E00B3F9D8 /* HelpViewController.swift */; };
 		470261761D40F83D005261ED /* ChallengeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470261751D40F83D005261ED /* ChallengeModel.swift */; };
 		470728BA1D2BD9BE002B86E1 /* phoneBookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470728B91D2BD9BE002B86E1 /* phoneBookModel.swift */; };
 		470B1B5E1D278B6200E3B5B0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470B1B5D1D278B6200E3B5B0 /* HomeViewController.swift */; };
@@ -99,7 +101,6 @@
 		4748CB8D1D59EE9B0096DB55 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4748CB8C1D59EE9B0096DB55 /* ActivityViewController.swift */; };
 		4788A1AE1D66F440000B2E99 /* CauseFirSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EFFBAB1D58822A00F2A2D7 /* CauseFirSummaryViewController.swift */; };
 		4788A1AF1D66F46C000B2E99 /* CreateRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444A1D771D659FD800E561B4 /* CreateRouteViewController.swift */; };
-		4788A1B21D670AA8000B2E99 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 4788A1B11D670AA8000B2E99 /* .gitignore */; };
 		47B8A8F81D45E2E100BACB83 /* ViewGroupFitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B8A8F71D45E2E100BACB83 /* ViewGroupFitViewController.swift */; };
 		47B8A8FA1D45E31600BACB83 /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B8A8F91D45E31600BACB83 /* SummaryViewController.swift */; };
 		47BB027B1D49EC4800273694 /* InviteFriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473D0D7A1D49E7BF004DDC07 /* InviteFriendsTableViewCell.swift */; };
@@ -170,6 +171,8 @@
 		44BBF3751D5D96D4006618EF /* NSObject+MTNativeFacebookLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MTNativeFacebookLogin.h"; sourceTree = "<group>"; };
 		44BBF3761D5D96E2006618EF /* NSObject+MTNativeFacebookLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MTNativeFacebookLogin.m"; sourceTree = "<group>"; };
 		44C7967C1D5EF65D000118C5 /* Project-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Project-Prefix.pch"; sourceTree = "<group>"; };
+		44D6FFD31D67151200B3F9D8 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		44D6FFD61D67233E00B3F9D8 /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
 		470261751D40F83D005261ED /* ChallengeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengeModel.swift; sourceTree = "<group>"; };
 		470728B91D2BD9BE002B86E1 /* phoneBookModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = phoneBookModel.swift; sourceTree = "<group>"; };
 		470B1B5D1D278B6200E3B5B0 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -221,7 +224,6 @@
 		47474C171D3CEF6E008FE197 /* ActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		47474C191D3CEF7A008FE197 /* ActionButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButtonItem.swift; sourceTree = "<group>"; };
 		4748CB8C1D59EE9B0096DB55 /* ActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityViewController.swift; path = ../ActivityViewController.swift; sourceTree = "<group>"; };
-		4788A1B11D670AA8000B2E99 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		47B8A8F71D45E2E100BACB83 /* ViewGroupFitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewGroupFitViewController.swift; sourceTree = "<group>"; };
 		47B8A8F91D45E31600BACB83 /* SummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
 		47C634841D361D4A005EB1E3 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
@@ -324,9 +326,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		44D6FFD51D67230D00B3F9D8 /* HelpScreenForCreateRoute */ = {
+			isa = PBXGroup;
+			children = (
+				44D6FFD61D67233E00B3F9D8 /* HelpViewController.swift */,
+			);
+			name = HelpScreenForCreateRoute;
+			sourceTree = "<group>";
+		};
 		470CF8711D24DC370001B3BC = {
 			isa = PBXGroup;
 			children = (
+				44D6FFD31D67151200B3F9D8 /* .gitignore */,
 				470CF87C1D24DC370001B3BC /* runnur */,
 				470CF87B1D24DC370001B3BC /* Products */,
 				563C1A8EACAD8D49F842549C /* Pods */,
@@ -345,7 +356,6 @@
 		470CF87C1D24DC370001B3BC /* runnur */ = {
 			isa = PBXGroup;
 			children = (
-				4788A1B01D670A25000B2E99 /* Git */,
 				47C6B0041D5AF5E300410DAE /* ViewActivity */,
 				47EFFBA81D5849D000F2A2D7 /* ViewCauseFitChallenge */,
 				47FD4EC31D48E3EC0059DB55 /* HeartHistory */,
@@ -359,6 +369,7 @@
 				4778115A1D4876AF003B01A4 /* ViewGroupFitChalleneg */,
 				477811631D4878A8003B01A4 /* Home/splash/Login */,
 				4778115D1D487789003B01A4 /* Navigation */,
+				44D6FFD51D67230D00B3F9D8 /* HelpScreenForCreateRoute */,
 				444A1D761D659F9C00E561B4 /* Plan Route */,
 				44524A1B1D54B83400CC21C8 /* Activities */,
 				477811671D4879D3003B01A4 /* Statistics */,
@@ -558,14 +569,6 @@
 			name = AppDelegate;
 			sourceTree = "<group>";
 		};
-		4788A1B01D670A25000B2E99 /* Git */ = {
-			isa = PBXGroup;
-			children = (
-				4788A1B11D670AA8000B2E99 /* .gitignore */,
-			);
-			name = Git;
-			sourceTree = "<group>";
-		};
 		47C6B0041D5AF5E300410DAE /* ViewActivity */ = {
 			isa = PBXGroup;
 			children = (
@@ -708,6 +711,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44D6FFD41D67151200B3F9D8 /* .gitignore in Resources */,
 				44C7967E1D5EF70D000118C5 /* SWRevealViewController.m in Resources */,
 				44C7967D1D5EF706000118C5 /* SWRevealViewController.h in Resources */,
 				470CF88B1D24DC370001B3BC /* LaunchScreen.storyboard in Resources */,
@@ -715,7 +719,6 @@
 				470CF8831D24DC370001B3BC /* Main.storyboard in Resources */,
 				440D64E41D522580004AE539 /* CustomPopUp.xib in Resources */,
 				4485841F1D4A14A20027F141 /* GoogleService-Info.plist in Resources */,
-				4788A1B21D670AA8000B2E99 /* .gitignore in Resources */,
 				444C5E3B1D50C76A00A4DB3D /* GoogleMaps.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -874,6 +877,7 @@
 				470CF89D1D2507770001B3BC /* AddviaFacebookViewController.swift in Sources */,
 				47CF1FC11D4CC5620083B1A7 /* challengeFilterXIB.swift in Sources */,
 				47FED2501D2E84D9006CAE8A /* ChallengesViewController.swift in Sources */,
+				44D6FFD71D67233E00B3F9D8 /* HelpViewController.swift in Sources */,
 				470CF89F1D25079C0001B3BC /* AddViaGoogleViewController.swift in Sources */,
 				4731FC8E1D2A2E4300E860B0 /* GroupFitCellTableViewCell.swift in Sources */,
 				47C6AFFC1D5AF58800410DAE /* userActivityTableViewCell.swift in Sources */,

@@ -116,7 +116,9 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
 //        activityDetailsViewController.mapData=self.mapData;
 //        self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
        
-        CommonFunctions.showPopup(self, title: "ALREADY FINISHED?", msg: "You did not cover enough distance. Are you sure you want to save the activity?", positiveMsg: "Yes, Save", negMsg: "No, Discard", show2Buttons: true, getClick: {
+      
+        
+        CommonFunctions.showPopup(self, title: "ALREADY FINISHED?", msg: "You did not cover enough distance. Are you sure you want to save the activity?", positiveMsg: "Yes, Save", negMsg: "No, Discard", show2Buttons: true, showReverseLayout: false,getClick: {
             // if Reachability.isConnectedToNetwork() == true{
             CommonFunctions.showActivityIndicator(self.view);
             

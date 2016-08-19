@@ -277,29 +277,55 @@ class CommonFunctions : NSObject
     }
     
    
-    
-    
-    static func showPopup(view : UIViewController,title:String = "", msg:String,positiveMsg : String = "OK",negMsg : String = "Cancel",show2Buttons : Bool = false,getClick : GetClick){
-        
-        let popup = UIAlertController(title: title, message: msg, preferredStyle: .Alert)
-        
-        if show2Buttons {
+    static func showPopup(view : UIViewController,title:String = "",msg:String,positiveMsg : String = "OK",negMsg : String = "Cancel",show2Buttons : Bool = false,showReverseLayout : Bool = false,getClick : GetClick){
+        let popup = UIAlertController(title: "", message: msg, preferredStyle: .Alert)
+         if show2Buttons {
+             if showReverseLayout{
+                popup.addAction(UIAlertAction(title: negMsg, style: .Default, handler: {
+                     finised in
+                    getClick()
+                }))
+            }else{
+                popup.addAction(UIAlertAction(title: negMsg, style: .Default, handler: nil))
+            }
+        }
+         if showReverseLayout {
+            popup.addAction(UIAlertAction(title: positiveMsg, style: .Default, handler: nil))
             
-            popup.addAction(UIAlertAction(title: negMsg, style: .Default, handler: nil))
+        }else{
+            popup.addAction(UIAlertAction(title: positiveMsg, style: .Default, handler: {
+                 finished in
+                getClick()
+            }))
             
         }
-
-        popup.addAction(UIAlertAction(title: positiveMsg, style: .Default, handler: {
-        
-        finished in
-            
-            getClick()
-        
-        }))
-        
-        
         view.presentViewController(popup, animated: true, completion: nil)
+        
     }
+    
+
+    
+//    static func showPopup(view : UIViewController,title:String = "", msg:String,positiveMsg : String = "OK",negMsg : String = "Cancel",show2Buttons : Bool = false,getClick : GetClick){
+//        
+//        let popup = UIAlertController(title: title, message: msg, preferredStyle: .Alert)
+//        
+//        if show2Buttons {
+//            
+//            popup.addAction(UIAlertAction(title: negMsg, style: .Default, handler: nil))
+//            
+//        }
+//
+//        popup.addAction(UIAlertAction(title: positiveMsg, style: .Default, handler: {
+//        
+//        finished in
+//            
+//            getClick()
+//        
+//        }))
+//        
+//        
+//        view.presentViewController(popup, animated: true, completion: nil)
+//    }
     
     static func  getLabelHeight(tabelView:UITableView,label:UILabel,text:String,fontSize:CGFloat) -> CGFloat {
         

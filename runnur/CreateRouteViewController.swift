@@ -14,6 +14,8 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         self.dismissViewControllerAnimated(false, completion: nil)
     }
     @IBAction func help(sender: UIButton) {
+        let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("HelpViewController") as! HelpViewController
+        self.presentViewController(nextViewController, animated: false, completion: nil)
     }
     @IBOutlet weak var getMyLocation: UIButton!
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
@@ -35,6 +37,14 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
     var lastMarker = [GMSMarker]();
     var polyline = GMSPolyline();
     
+    var autoRouteDistance = Double();
+    var autoRouteLat = CLLocationDegrees();
+    var autoRouteLang = CLLocationDegrees();
+    var autoRouteSelected = Bool();
+    var firstAngle = Int();
+    var thirdAngle = 90;
+    var backgroudRunning = Bool()
+    
 //  MARK:- all Button Actions  
     var textField = UITextField();
     func configurationTextField(textField: UITextField!)
@@ -54,21 +64,218 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
         alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.Default, handler:{ (UIAlertAction)in
-            
+            if  self.textField.text != nil || self.textField.text != "" {
+            let enteredDistance = self.textField.text!;
+            self.autoRouteDistance = Double(enteredDistance)!
+                self.autoRouteCreation()
+            }
             print(self.textField.text)
         }))
         self.presentViewController(alert, animated: true, completion: nil)
 
     }
+    func autoRouteCreation()  {
+        autoRouteLat = (myManager.location?.coordinate.latitude)!;
+        autoRouteLang = (myManager.location?.coordinate.longitude)!
+        firstAngle = Int(arc4random_uniform(360-0)+0);
+        getSecondLocationPoint(autoRouteLat, Long: autoRouteLang, Distance: autoRouteDistance, firstAngle: firstAngle, thirdAngle: thirdAngle);
+        
+    }
+    func getSecondLocationPoint(lat:CLLocationDegrees,Long:CLLocationDegrees, Distance:Double,firstAngle:Int,thirdAngle:Int)  {
+        autoRouteSelected = true;
+        self.mapView.clear();
+        //Place a starting marker
+        let london = GMSMarker(position: CLLocationCoordinate2D(latitude:lat, longitude: Long))
+        london.icon = UIImage(named: "ic_map_marker_green")
+        london.map = mapView
+        tapCounter += 1;
+        lastMarker.append(london);
+
+        //radius of earth in miles
+        var rEarth = 6371.01 / 1.60934;
+        //threshold for floating point equality
+        var epsilon = 0.000001;
+        
+        var rLat = Double(lat) * M_PI / 180
+        var rLon = Double(Long) * M_PI / 180
+        
+       var routeDistance = Distance * (1 - 0.25);
+        
+        var incrementDistance = Distance / 4;
+        var dSubBearing=Int();
+        
+        for(var i = 0; i < 3; i++) {
+            
+            var fA = Int();
+            fA = abs(360 - firstAngle) % 360;
+            var rBearing = Double(dSubBearing) * M_PI / 180
+            
+            //Normalize to linear distance to radian angle
+            var rDistance = incrementDistance / rEarth;
+            
+            var rLat1 = asin(sin(rLat) * cos(rDistance) + cos(rLat) * sin(rDistance) * cos(rBearing));
+            var rLon1 = Double();
+            
+            if (cos(rLat1) == 0 || abs(cos(rLat1)) < epsilon) {
+                rLon1 = rLon;
+            } else {
+                rLon1 = ((rLon - asin(sin(rBearing) * sin(rDistance) / cos(rLat1))
+                    + M_PI) % (2 * M_PI)) - M_PI;
+            }
+            
+            rLat = rLat1;
+            rLon = rLon1;
+            
+            rLat1 = Double(rLat1) * M_PI / 180
+            rLon1 = Double(rLon1) * M_PI / 180
+            
+            let london = GMSMarker(position: CLLocationCoordinate2D(latitude:rLat1, longitude: rLon1))
+            london.icon = UIImage(named: "ic_map_marker_red")
+            london.map = mapView
+            tapCounter += 1;
+            lastMarker.append(london);
+            
+           
+            if(i==0) {
+               fA = firstAngle + 90;
+            } else if(i == 1){
+                fA = firstAngle + thirdAngle;
+            }
+            
+            if(firstAngle > 360){
+                fA = firstAngle - 360;
+            }
+            //clearElevationInfo();
+            if(i==2) {
+                //markerPoints.add(markerPoints.get(0));
+              passToGetDirections();
+            }
+        }
+    }
     
+    func passToGetDirections() {
+    // Check if number of markers is greater than 2
+    if (lastMarker.count >= 2) {
+        
+    var origin = lastMarker[0];
+    var dest = lastMarker[lastMarker.count-1];
+        if Reachability.isConnectedToNetwork() != true{
+            
+        }else{
+            backgroudRunning = true;
+            
+            var directionsURL = getDirectionsUrl(origin, dest: dest);
+            var urls = NSURL(string: directionsURL)!
+            var dta = NSData(contentsOfURL: urls)!
+            NSString(data: dta, encoding: NSUTF8StringEncoding)!
+            print(NSString(data: dta, encoding: NSUTF8StringEncoding)!, terminator: "\n\n")
+
+//            var dict = (try! NSJSONSerialization.JSONObjectWithData(dta, options: nil) as! [NSObject : AnyObject])
+//            print("\(dict)")
+//            let url:NSURL = NSURL(string: directionsURL)!
+//            
+//            let request:NSMutableURLRequest = NSMutableURLRequest(URL: url)
+//            
+//            request.timeoutInterval=20.0
+//            request.HTTPMethod = "POST"
+//            
+//            let connection = NSURLSession.sharedSession()
+//            
+//            let task = connection.dataTaskWithRequest(request){
+//                
+//                (returnedData, response, error) in
+//                
+//                if (error == nil){
+//                    
+//                    print(NSString(data: returnedData!, encoding: NSUTF8StringEncoding)!, terminator: "\n\n")
+//                    
+//                    
+//                    
+//                }else{
+//                    
+//                    
+//                }
+//                
+//            }
+//            
+//            task.resume()
+            
+        }
+ 
+        
+      
+//
+//    
+//    if (!isNetworkAvailable(this)) {
+//    Toast.makeText(
+//    this,
+//    getString(R.string.no),
+//    Toast.LENGTH_SHORT).show();
+//    } else {
+//    
+//    backgroundRunning = true;
+//    // Getting URL to the Google Directions API
+//    String url = getDirectionsUrl(origin, dest);
+//    
+//    DownloadTask downloadTask = new DownloadTask(0);
+//    
+//    // Start downloading json data from Google Directions API
+//    downloadTask.execute(url);
+//    progress.show();
+//    }
+    }
+    }
+    func getDirectionsUrl(origin:GMSMarker,  dest:GMSMarker) -> String {
+    
+    // Origin of route
+       
+    let str_origin = "origin=" + String(origin.position.latitude) + ","
+    + String(origin.position.longitude);
+    
+    // Destination of route
+    let str_dest = "destination=" + String(dest.position.latitude) + "," + String(dest.position.longitude);
+    
+    // Sensor enabled
+    let sensor = "sensor=false";
+    
+    
+    // add Waypoints
+    var waypoints = "waypoints=";
+    
+    for (var i = 1; i < lastMarker.count - 1; i++) {
+        let point = lastMarker[i];
+    if (i == 1) {
+    waypoints += String(point.position.latitude) + "," + String(point.position.longitude);
+    } else {
+    waypoints += "," + String(point.position.latitude) + "," + String(point.position.longitude);
+    }
+    }
+    
+    // Building the parameters to the web service
+    let parameters = str_origin + "&" + str_dest + "&" + sensor + "&"
+    + waypoints;
+    
+    // Output format
+    let output = "json";
+    
+    // Building the url to the web service
+    let url = "https://maps.googleapis.com/maps/api/directions/"
+    + output + "?" + parameters + "&mode=walking&key=AIzaSyAlNHDmYN0jVM3T6rgvlik0UNEY9ocCmMI";
+    
+    
+    
+    return url;
+    }
     @IBAction func start(sender: UIButton) {
         let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("StartActivityViewController") as! StartActivityViewController
         self.presentViewController(nextViewController, animated: false, completion: nil)
     }
     @IBAction func clear(sender: UIButton) {
-        self.mapView.clear();
-        self.path.removeAllCoordinates();
-        tapCounter = 0;
+        CommonFunctions.showPopup(self, msg: "Are you sure you want to clear the mapped route?", positiveMsg: "yes", negMsg: "no", show2Buttons: true, showReverseLayout: false) {
+            self.mapView.clear();
+            self.path.removeAllCoordinates();
+            self.tapCounter = 0;
+        }
     }
     
     @IBAction func undo(sender: UIButton) {
@@ -118,13 +325,18 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             //            UIView.animateWithDuration(2.0, animations: {
             //                self.arrow.transform = CGAffineTransformMakeRotation((180.0 * CGFloat(M_PI)) / 180.0)
             //            })
-            arrow.image = UIImage(named: "ic_up_down");
+         //   arrow.image = UIImage(named: "ic_up_down");
+            UIView.animateWithDuration(2.0, animations: {
+                self.arrow.transform = CGAffineTransformMakeRotation((180.0 * CGFloat(M_PI)) / 180.0)
+            })
+
             
         }else{
             UIView.animateWithDuration(2.0, animations: {
                 self.arrow.transform = CGAffineTransformMakeRotation((180.0 * CGFloat(M_PI)) / 180.0)
             })
-            arrow.image = UIImage(named: "ic_up_arrow");
+
+                  //      arrow.image = UIImage(named: "ic_up_arrow");
         }
         self.view.layoutIfNeeded()
         
@@ -228,6 +440,13 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    //MARK:- preferredStatusBarStyle
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle
+    {
+        return UIStatusBarStyle.LightContent;
     }
     
 

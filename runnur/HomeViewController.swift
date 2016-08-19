@@ -303,7 +303,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     
     @IBAction func startActivity(sender: AnyObject) {
         if gps.image == UIImage(named: "ic_gps_none"){
-        CommonFunctions.showPopup(self,title:"WEAK GPS SIGNAL" , msg: "GPS signal is weak at your current location. Please find a place with direct line of sight to the sky. If you continue, your tracking may not be accurate.", positiveMsg: "Continue", negMsg: "Cancel", show2Buttons: true) {
+        CommonFunctions.showPopup(self,title:"WEAK GPS SIGNAL" , msg: "GPS signal is weak at your current location. Please find a place with direct line of sight to the sky. If you continue, your tracking may not be accurate.", positiveMsg: "Continue", negMsg: "Cancel", showReverseLayout: false, show2Buttons: true) {
             let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("StartActivityViewController") as! StartActivityViewController
             self.presentViewController(nextViewController, animated: false, completion: nil)
         }
