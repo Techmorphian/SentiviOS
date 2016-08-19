@@ -1,16 +1,14 @@
 //
-//  viewCauseFitViewController.swift
+//  ProgressViewController.swift
 //  runnur
 //
-//  Created by Sonali on 08/08/16.
+//  Created by Sonali on 10/08/16.
 //  Copyright © 2016 Sonali. All rights reserved.
 //
 
 import UIKit
 
-class viewCauseFitViewController: UIViewController
-
-{
+class ProgressViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
