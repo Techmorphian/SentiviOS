@@ -10,7 +10,6 @@
 		20813234FDE7A7F5889F9825 /* Pods_runnur.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C26545E285D446A5AFC1B8F4 /* Pods_runnur.framework */; };
 		440D64E41D522580004AE539 /* CustomPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 440D64E31D522580004AE539 /* CustomPopUp.xib */; };
 		440D64E61D5225B1004AE539 /* CustomPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440D64E51D5225B1004AE539 /* CustomPopUp.swift */; };
-		4441A8E31D58687B00CBB6A7 /* CurrentDateFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4441A8E11D58676C00CBB6A7 /* CurrentDateFunc.swift */; };
 		444C5E1B1D50B36300A4DB3D /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 444C5E1A1D50B36300A4DB3D /* GoogleMaps.framework */; };
 		444C5E1D1D50B38E00A4DB3D /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 444C5E1C1D50B38E00A4DB3D /* GoogleMapsCore.framework */; };
 		444C5E1F1D50B39900A4DB3D /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 444C5E1E1D50B39900A4DB3D /* GoogleMapsBase.framework */; };
@@ -31,6 +30,11 @@
 		44524A1D1D54B8C800CC21C8 /* StartActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44524A1C1D54B8C800CC21C8 /* StartActivityViewController.swift */; };
 		445449261D534EC200995B45 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445449251D534EC200995B45 /* ProfileViewController.swift */; };
 		445449281D535FE600995B45 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445449271D535FE600995B45 /* CheckBox.swift */; };
+		445484761D683EF700482980 /* CircleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473D0D811D49E86A004DDC07 /* CircleLabel.swift */; };
+		445484771D683F0700482980 /* NSObject+MTNativeFacebookLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BBF3761D5D96E2006618EF /* NSObject+MTNativeFacebookLogin.m */; };
+		445484781D68407300482980 /* CurrentDateFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4441A8E11D58676C00CBB6A7 /* CurrentDateFunc.swift */; };
+		4454847A1D685C8500482980 /* RouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445484791D685C8500482980 /* RouteViewController.swift */; };
+		4454847C1D685C9B00482980 /* RouteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4454847B1D685C9B00482980 /* RouteTableViewCell.swift */; };
 		4457FFE21D59C19A0097C598 /* ActivityDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4457FFE11D59C19A0097C598 /* ActivityDetailsViewController.swift */; };
 		4457FFE41D59C2030097C598 /* SummaryActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4457FFE31D59C2030097C598 /* SummaryActivityViewController.swift */; };
 		4457FFE61D5A0E730097C598 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4457FFE51D5A0E730097C598 /* WeatherData.swift */; };
@@ -48,7 +52,6 @@
 		449A10A51D62E8A100E91536 /* GraphsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449A10A41D62E8A100E91536 /* GraphsViewController.swift */; };
 		449A10A71D62E8C800E91536 /* SplitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449A10A61D62E8C800E91536 /* SplitsViewController.swift */; };
 		449A10A91D62E92900E91536 /* TabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449A10A81D62E92900E91536 /* TabsViewController.swift */; };
-		44BBF3771D5D96E2006618EF /* NSObject+MTNativeFacebookLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BBF3761D5D96E2006618EF /* NSObject+MTNativeFacebookLogin.m */; };
 		44C7967D1D5EF706000118C5 /* SWRevealViewController.h in Resources */ = {isa = PBXBuildFile; fileRef = 470B1B5F1D27A59600E3B5B0 /* SWRevealViewController.h */; };
 		44C7967E1D5EF70D000118C5 /* SWRevealViewController.m in Resources */ = {isa = PBXBuildFile; fileRef = 470B1B611D27A5A100E3B5B0 /* SWRevealViewController.m */; };
 		44D6FFD41D67151200B3F9D8 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 44D6FFD31D67151200B3F9D8 /* .gitignore */; };
@@ -83,7 +86,6 @@
 		473D0D7C1D49E7FE004DDC07 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473D0D7B1D49E7FE004DDC07 /* AppDelegate.swift */; };
 		473D0D7E1D49E820004DDC07 /* inviteFriendsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473D0D7D1D49E820004DDC07 /* inviteFriendsModel.swift */; };
 		473D0D801D49E84C004DDC07 /* alertMsg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473D0D7F1D49E84C004DDC07 /* alertMsg.swift */; };
-		473D0D821D49E86A004DDC07 /* CircleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473D0D811D49E86A004DDC07 /* CircleLabel.swift */; };
 		473D0D841D49E87E004DDC07 /* animation1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473D0D831D49E87E004DDC07 /* animation1.swift */; };
 		473D0D861D49E89D004DDC07 /* NoResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473D0D851D49E89D004DDC07 /* NoResultViewController.swift */; };
 		473D0D881D49E8C6004DDC07 /* ActiveChallengesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473D0D871D49E8C6004DDC07 /* ActiveChallengesViewController.swift */; };
@@ -151,6 +153,8 @@
 		44524A1C1D54B8C800CC21C8 /* StartActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartActivityViewController.swift; sourceTree = "<group>"; };
 		445449251D534EC200995B45 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		445449271D535FE600995B45 /* CheckBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
+		445484791D685C8500482980 /* RouteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteViewController.swift; sourceTree = "<group>"; };
+		4454847B1D685C9B00482980 /* RouteTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteTableViewCell.swift; sourceTree = "<group>"; };
 		4457FFE11D59C19A0097C598 /* ActivityDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityDetailsViewController.swift; sourceTree = "<group>"; };
 		4457FFE31D59C2030097C598 /* SummaryActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryActivityViewController.swift; sourceTree = "<group>"; };
 		4457FFE51D5A0E730097C598 /* WeatherData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
@@ -291,6 +295,8 @@
 			isa = PBXGroup;
 			children = (
 				444A1D771D659FD800E561B4 /* CreateRouteViewController.swift */,
+				445484791D685C8500482980 /* RouteViewController.swift */,
+				4454847B1D685C9B00482980 /* RouteTableViewCell.swift */,
 			);
 			name = "Plan Route";
 			sourceTree = "<group>";
@@ -823,7 +829,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4441A8E31D58687B00CBB6A7 /* CurrentDateFunc.swift in Sources */,
+				445484781D68407300482980 /* CurrentDateFunc.swift in Sources */,
+				445484771D683F0700482980 /* NSObject+MTNativeFacebookLogin.m in Sources */,
+				445484761D683EF700482980 /* CircleLabel.swift in Sources */,
 				4788A1AF1D66F46C000B2E99 /* CreateRouteViewController.swift in Sources */,
 				4788A1AE1D66F440000B2E99 /* CauseFirSummaryViewController.swift in Sources */,
 				449A10A91D62E92900E91536 /* TabsViewController.swift in Sources */,
@@ -836,8 +844,6 @@
 				473D0D791D49E7A7004DDC07 /* InviteFriendsViewController.swift in Sources */,
 				473D0D981D49E984004DDC07 /* HistoryViewController.swift in Sources */,
 				4457FFE41D59C2030097C598 /* SummaryActivityViewController.swift in Sources */,
-				44BBF3771D5D96E2006618EF /* NSObject+MTNativeFacebookLogin.m in Sources */,
-				473D0D821D49E86A004DDC07 /* CircleLabel.swift in Sources */,
 				448584211D4A3BE40027F141 /* TourContentViewController.swift in Sources */,
 				473D0D771D49E770004DDC07 /* HeartHistroryViewController.swift in Sources */,
 				473D0D881D49E8C6004DDC07 /* ActiveChallengesViewController.swift in Sources */,
@@ -878,6 +884,7 @@
 				47CF1FC11D4CC5620083B1A7 /* challengeFilterXIB.swift in Sources */,
 				47FED2501D2E84D9006CAE8A /* ChallengesViewController.swift in Sources */,
 				44D6FFD71D67233E00B3F9D8 /* HelpViewController.swift in Sources */,
+				4454847C1D685C9B00482980 /* RouteTableViewCell.swift in Sources */,
 				470CF89F1D25079C0001B3BC /* AddViaGoogleViewController.swift in Sources */,
 				4731FC8E1D2A2E4300E860B0 /* GroupFitCellTableViewCell.swift in Sources */,
 				47C6AFFC1D5AF58800410DAE /* userActivityTableViewCell.swift in Sources */,
@@ -885,6 +892,7 @@
 				473D0D7E1D49E820004DDC07 /* inviteFriendsModel.swift in Sources */,
 				470CF89B1D2505C60001B3BC /* AddviaContactsViewController.swift in Sources */,
 				47C6AFFE1D5AF59B00410DAE /* activityTableViewCell.swift in Sources */,
+				4454847A1D685C8500482980 /* RouteViewController.swift in Sources */,
 				47C6B00A1D5B2ABA00410DAE /* ProgressViewController.swift in Sources */,
 				470CF8991D24FB1C0001B3BC /* AddFriendsCellTableViewCell.swift in Sources */,
 				47474C181D3CEF6E008FE197 /* ActionButton.swift in Sources */,
@@ -949,8 +957,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Nishant Doctor (35WVNFXG8X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Nishant Doctor (35WVNFXG8X)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nishant Doctor (2BV57TCWK9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nishant Doctor (2BV57TCWK9)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -973,7 +981,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.SentivApp;
-				PROVISIONING_PROFILE = "a2b70caa-b3f0-43bb-b249-89d5298b229f";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -998,8 +1006,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Nishant Doctor (35WVNFXG8X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Nishant Doctor (35WVNFXG8X)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nishant Doctor (2BV57TCWK9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nishant Doctor (2BV57TCWK9)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1015,7 +1023,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.SentivApp;
-				PROVISIONING_PROFILE = "a2b70caa-b3f0-43bb-b249-89d5298b229f";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1028,8 +1036,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Nishant Doctor (35WVNFXG8X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Nishant Doctor (35WVNFXG8X)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nishant Doctor (2BV57TCWK9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nishant Doctor (2BV57TCWK9)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/runnur",
@@ -1039,7 +1047,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.SentivApp;
 				PRODUCT_NAME = Sentiv;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "bd46aa77-3e21-4e54-92ef-c5b8c2eaf59f";
 				SWIFT_OBJC_BRIDGING_HEADER = "runnur/runnur-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1052,8 +1060,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Nishant Doctor (35WVNFXG8X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Nishant Doctor (35WVNFXG8X)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nishant Doctor (2BV57TCWK9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nishant Doctor (2BV57TCWK9)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/runnur",
@@ -1063,7 +1071,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.SentivApp;
 				PRODUCT_NAME = Sentiv;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "bd46aa77-3e21-4e54-92ef-c5b8c2eaf59f";
 				SWIFT_OBJC_BRIDGING_HEADER = "runnur/runnur-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

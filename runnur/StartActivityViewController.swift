@@ -369,7 +369,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     }
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-        
+        if fromPlanRoute == false{
         if first == false{
             let camera = GMSCameraPosition.cameraWithLatitude(locValue.latitude, longitude: locValue.longitude, zoom: 16.0)
             self.mapView.camera = camera
@@ -383,6 +383,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             
             self.getAddressFromLatLong(locValue.latitude, longitude: locValue.longitude);
             //  19.069761, 72.829857
+        }
         }
         
         self.mapView.animateToLocation(CLLocationCoordinate2D(latitude:locValue.latitude, longitude: locValue.longitude))
@@ -740,6 +741,10 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         
     }
     var stringStartTime = String();
+    var fromPlanRoute : Bool = false;
+    var planRoute = GMSMutablePath();
+    var planFirstPoint = CLLocationCoordinate2D();
+    var planSecoundPoint = CLLocationCoordinate2D();
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -747,6 +752,19 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             self.audioType(1);
         }
         
+        if fromPlanRoute{
+            let london = GMSMarker(position: CLLocationCoordinate2D(latitude:planFirstPoint.latitude, longitude: planFirstPoint.longitude))
+            london.icon = UIImage(named: "ic_map_marker_green")
+            london.map = mapView
+            let london2 = GMSMarker(position: CLLocationCoordinate2D(latitude:planSecoundPoint.latitude, longitude: planSecoundPoint.longitude))
+            london2.icon = UIImage(named: "ic_map_marker_red")
+            london2.map = mapView
+            let polyline = GMSPolyline(path: planRoute)
+            polyline.strokeColor = UIColor.greenColor();
+            polyline.strokeWidth = 1
+            polyline.geodesic = true
+            polyline.map = mapView
+        }
         
         let date = NSDate()
         startDate = NSDate();

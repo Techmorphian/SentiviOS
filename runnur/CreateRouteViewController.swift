@@ -92,26 +92,26 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         lastMarker.append(london);
 
         //radius of earth in miles
-        var rEarth = 6371.01 / 1.60934;
+        let rEarth = 6371.01 / 1.60934;
         //threshold for floating point equality
-        var epsilon = 0.000001;
+        let epsilon = 0.000001;
         
         var rLat = Double(lat) * M_PI / 180
         var rLon = Double(Long) * M_PI / 180
         
-       var routeDistance = Distance * (1 - 0.25);
+       let routeDistance = Distance * (1 - 0.25);
         
-        var incrementDistance = Distance / 4;
-        var dSubBearing=Int();
+        let incrementDistance = routeDistance / 4;
+        let dSubBearing=Int();
         
-        for(var i = 0; i < 3; i++) {
+        for(var i = 0; i < 3; i += 1) {
             
             var fA = Int();
             fA = abs(360 - firstAngle) % 360;
-            var rBearing = Double(dSubBearing) * M_PI / 180
+            let rBearing = Double(dSubBearing) * M_PI / 180
             
             //Normalize to linear distance to radian angle
-            var rDistance = incrementDistance / rEarth;
+            let rDistance = incrementDistance / rEarth;
             
             var rLat1 = asin(sin(rLat) * cos(rDistance) + cos(rLat) * sin(rDistance) * cos(rBearing));
             var rLon1 = Double();
@@ -157,72 +157,22 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
     // Check if number of markers is greater than 2
     if (lastMarker.count >= 2) {
         
-    var origin = lastMarker[0];
-    var dest = lastMarker[lastMarker.count-1];
+    let origin = lastMarker[0];
+    let dest = lastMarker[lastMarker.count-1];
         if Reachability.isConnectedToNetwork() != true{
             
         }else{
             backgroudRunning = true;
-            
-            var directionsURL = getDirectionsUrl(origin, dest: dest);
-            var urls = NSURL(string: directionsURL)!
-            var dta = NSData(contentsOfURL: urls)!
+        
+            let directionsURL = getDirectionsUrl(origin, dest: dest);
+            let urls = NSURL(string: directionsURL)!
+            let dta = NSData(contentsOfURL: urls)!
             NSString(data: dta, encoding: NSUTF8StringEncoding)!
             print(NSString(data: dta, encoding: NSUTF8StringEncoding)!, terminator: "\n\n")
 
-//            var dict = (try! NSJSONSerialization.JSONObjectWithData(dta, options: nil) as! [NSObject : AnyObject])
-//            print("\(dict)")
-//            let url:NSURL = NSURL(string: directionsURL)!
-//            
-//            let request:NSMutableURLRequest = NSMutableURLRequest(URL: url)
-//            
-//            request.timeoutInterval=20.0
-//            request.HTTPMethod = "POST"
-//            
-//            let connection = NSURLSession.sharedSession()
-//            
-//            let task = connection.dataTaskWithRequest(request){
-//                
-//                (returnedData, response, error) in
-//                
-//                if (error == nil){
-//                    
-//                    print(NSString(data: returnedData!, encoding: NSUTF8StringEncoding)!, terminator: "\n\n")
-//                    
-//                    
-//                    
-//                }else{
-//                    
-//                    
-//                }
-//                
-//            }
-//            
-//            task.resume()
+
             
         }
- 
-        
-      
-//
-//    
-//    if (!isNetworkAvailable(this)) {
-//    Toast.makeText(
-//    this,
-//    getString(R.string.no),
-//    Toast.LENGTH_SHORT).show();
-//    } else {
-//    
-//    backgroundRunning = true;
-//    // Getting URL to the Google Directions API
-//    String url = getDirectionsUrl(origin, dest);
-//    
-//    DownloadTask downloadTask = new DownloadTask(0);
-//    
-//    // Start downloading json data from Google Directions API
-//    downloadTask.execute(url);
-//    progress.show();
-//    }
     }
     }
     func getDirectionsUrl(origin:GMSMarker,  dest:GMSMarker) -> String {
@@ -268,10 +218,14 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
     }
     @IBAction func start(sender: UIButton) {
         let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("StartActivityViewController") as! StartActivityViewController
+        nextViewController.fromPlanRoute = true;
+        nextViewController.planRoute = path;
+        nextViewController.planFirstPoint = lastMarker[0].position;
+        nextViewController.planSecoundPoint = lastMarker[lastMarker.count-1].position;
         self.presentViewController(nextViewController, animated: false, completion: nil)
     }
     @IBAction func clear(sender: UIButton) {
-        CommonFunctions.showPopup(self, msg: "Are you sure you want to clear the mapped route?", positiveMsg: "yes", negMsg: "no", show2Buttons: true, showReverseLayout: false) {
+        CommonFunctions.showPopup(self, msg: "Are you sure you want to clear the mapped route?", positiveMsg: "Yes", negMsg: "No", show2Buttons: true, showReverseLayout: false) {
             self.mapView.clear();
             self.path.removeAllCoordinates();
             self.tapCounter = 0;
@@ -288,9 +242,12 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         
         path.removeLastCoordinate()
         
-           // mapView.clear();
+            mapView.clear();
             polyline.path = path;
             // self.polyline = GMSPolyline(path:path)
+            for i in lastMarker{
+                i.map = self.mapView;
+            }
             polyline.strokeColor = UIColor.redColor();
             polyline.strokeWidth = 1
             polyline.geodesic = true
@@ -300,6 +257,8 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         
     }
     @IBAction func save(sender: UIButton) {
+        
+        
     }
 // MARK:- Move Top View
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

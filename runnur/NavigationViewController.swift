@@ -101,9 +101,6 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             cell.namesLabel.text = sectionOne[indexPath.row]
             cell.naviImageViews.image = UIImage(named: sectionOneImages[indexPath.row])
             
-            
-            
-            
             if indexPath.row == 0
             {
             
@@ -118,9 +115,6 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             if indexPath.row == 2
             {
 //                cell.countLabel.hidden = false;
-//                
-//                
-//              
 //               cell.countLabel.layer.cornerRadius = cell.countLabel.frame.size.width / 2;
 //                cell.countLabel.backgroundColor = UIColor.redColor()
 //              
@@ -239,7 +233,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 
                 
             case "Routes":
-                
+                self.performSegueWithIdentifier("routeView", sender: self)
                 
                 break;
    
@@ -374,8 +368,6 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                
         cell.contentView.backgroundColor = UIColor.clearColor();
     }
-    
-    
         
     var sectionOne = ["Activity","Challenges","Requests","Friends","Routes"]
     var sectionOneImages = ["ic_activity_nav","ic_challenges_nav","ic_requests_nav","ic_friends_nav","ic_routes_nav"]
@@ -418,7 +410,10 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
         let tap = UITapGestureRecognizer(target: self, action: #selector(NavigationViewController.handleTap(_:)));
         
         bgTopImageView.addGestureRecognizer(tap)
-        // self.naviTableView.backgroundColor = colorCode.MediumDarkBlueColor
+        
+        
+        
+               // self.naviTableView.backgroundColor = colorCode.MediumDarkBlueColor
         // Do any additional setup after loading the view.
     }
     func handleTap(sender: UITapGestureRecognizer)  {

@@ -239,22 +239,22 @@ class CommonFunctions : NSObject
     
     static func showActivityIndicator(view:UIView){
         
-        loadingView.frame = CGRectMake(0, 0, view.frame.width/2, view.frame.height/2)
-        
+        loadingView.frame = CGRectMake(0, 0, 70, 70)
+        loadingView.backgroundColor = colorCode.GrayColor
         loadingView.center=view.center
         //loadingView.backgroundColor = colorCode.themeTintColor()
         loadingView.layer.cornerRadius = 10
         loadingView.alpha = 0.7
         loadingView.hidden=false
         loadingView.clipsToBounds=true
-        activityIndicator.color = UIColor.grayColor()
+        activityIndicator.color = UIColor.whiteColor()
         
-        
-        activityIndicator.center=CGPointMake(loadingView.frame.width/2, loadingView.frame.height/2)
+        activityIndicator.activityIndicatorViewStyle = .WhiteLarge
+        activityIndicator.center=CGPointMake(loadingView.frame.width/2, loadingView.frame.height/2-5)
         activityIndicator.hidesWhenStopped=true
-        loadingLable=UILabel(frame: CGRectMake(0, 60, loadingView.bounds.width, loadingView.bounds.height))
+        loadingLable=UILabel(frame: CGRectMake(0, 60, loadingView.bounds.width, 20))
         loadingLable.text="Please wait ..."
-        loadingLable.textColor=UIColor.grayColor()
+        loadingLable.textColor=UIColor.whiteColor()
         loadingLable.font = loadingLable.font.fontWithSize(10)
         loadingLable.lineBreakMode =  .ByWordWrapping
         loadingLable.numberOfLines=0
