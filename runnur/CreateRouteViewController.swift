@@ -217,12 +217,20 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
     return url;
     }
     @IBAction func start(sender: UIButton) {
+        if lastMarker.count == 0
+        {
+            CommonFunctions.showPopup(self, msg: "not enough distance to go ahead?", getClick: {
+                
+            })
+          
+        }else{
         let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("StartActivityViewController") as! StartActivityViewController
         nextViewController.fromPlanRoute = true;
         nextViewController.planRoute = path;
         nextViewController.planFirstPoint = lastMarker[0].position;
         nextViewController.planSecoundPoint = lastMarker[lastMarker.count-1].position;
         self.presentViewController(nextViewController, animated: false, completion: nil)
+        }
     }
     @IBAction func clear(sender: UIButton) {
         CommonFunctions.showPopup(self, msg: "Are you sure you want to clear the mapped route?", positiveMsg: "Yes", negMsg: "No", show2Buttons: true, showReverseLayout: false) {

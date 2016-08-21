@@ -31,5 +31,5 @@ class MapData
     var maxElevationGraphValues : [Double] = [];
     var heartRateGraphValues : [Double] = [];
 
-    
+    var distanceAway = String();
 }
