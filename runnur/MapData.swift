@@ -32,4 +32,7 @@ class MapData
     var heartRateGraphValues : [Double] = [];
 
     var distanceAway = String();
+    
+    var trackLat = [Double]();
+    var trackLong = [Double]();
 }

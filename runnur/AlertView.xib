@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AlertView" customModule="Sentiv" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="AlertView" customModule="Sentiv" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="677" height="74"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gaz-eg-DO8">
+                    <rect key="frame" x="20" y="29" width="597" height="15"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VtO-gz-7xD">
+                    <rect key="frame" x="617" y="24" width="40" height="26"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="0de-8g-vT8"/>
+                    </constraints>
+                    <state key="normal">
+                        <attributedString key="attributedTitle">
+                            <fragment content="Retry">
+                                <attributes>
+                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                    <integer key="NSUnderline" value="1"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                    </state>
+                    <connections>
+                        <action selector="btRetryAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="RTR-FH-X7p"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="VtO-gz-7xD" firstAttribute="leading" secondItem="Gaz-eg-DO8" secondAttribute="trailing" constant="4" id="Kf6-3P-uaB"/>
+                <constraint firstItem="Gaz-eg-DO8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="Ldw-eJ-fBH"/>
+                <constraint firstAttribute="trailing" secondItem="Gaz-eg-DO8" secondAttribute="trailing" constant="60" id="YdQ-EG-DBp"/>
+                <constraint firstAttribute="trailing" secondItem="VtO-gz-7xD" secondAttribute="trailing" constant="20" id="hHN-Tl-6kn"/>
+                <constraint firstItem="Gaz-eg-DO8" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="lY8-jo-uBQ"/>
+                <constraint firstItem="VtO-gz-7xD" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="muo-h4-Ksc"/>
+                <constraint firstItem="Gaz-eg-DO8" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="rCI-Ux-3E8"/>
+                <constraint firstItem="Gaz-eg-DO8" firstAttribute="trailing" secondItem="VtO-gz-7xD" secondAttribute="trailing" constant="-50" id="zRD-VO-I12"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="rCI-Ux-3E8"/>
+                    <exclude reference="zRD-VO-I12"/>
+                    <exclude reference="Kf6-3P-uaB"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="btRetry" destination="VtO-gz-7xD" id="w9h-1s-qkj"/>
+                <outlet property="lblMsg" destination="Gaz-eg-DO8" id="f2g-Vp-h8A"/>
+                <outlet property="lblTraillingCons" destination="YdQ-EG-DBp" id="1YV-sT-YrC"/>
+            </connections>
+            <point key="canvasLocation" x="419.5" y="34"/>
+        </view>
+    </objects>
+</document>

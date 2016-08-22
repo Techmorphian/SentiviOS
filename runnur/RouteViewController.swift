@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GoogleMaps
 
 class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
@@ -15,6 +16,7 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     
     var routeData = MapData();
     var routeDataArray = [MapData]();
+     let path = GMSMutablePath()
 
     @IBAction func createRoute(sender: AnyObject) {
         let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("CreateRouteViewController") as! CreateRouteViewController
@@ -62,7 +64,6 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                     }
                     for item in items {
                         self.routeData = MapData();
-                    
                         if let distance = item["distanceP"] as? String{
                             self.routeData.distance = distance
                         }
@@ -81,20 +82,40 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                         if let distanceAway = item["distanceAwayP"] as? String{
                             self.routeData.distanceAway = distanceAway
                         }
-                        
-                        self.routeDataArray.append(self.routeData);
-                        self.tableView.delegate=self;
-                        self.tableView.dataSource=self;
-                        self.tableView.reloadData();
-                        CommonFunctions.hideActivityIndicator();
+                        if let trackPolylines = item["trackPolylinesP"] as? String{
+                          print(trackPolylines);
+                            
+                            let data: NSData = trackPolylines.dataUsingEncoding(NSUTF8StringEncoding)!
+                            do
+                            {
+                            let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
+                            
+//                            trackPolylines.stringByReplacingOccurrencesOfString("[{}", withString: "")
+//                         trackPolylines.componentsSeparatedByString(",")
+                            for i in 0 ..< json!.count
+                            {
+                            self.routeData.trackLat.append((json![i].objectForKey("latitude") as? Double)!)
+                            self.routeData.trackLong.append((json![i].objectForKey("longitude") as? Double)!)
+                            }
+                            }catch{
+                                
+                            }
+                            
+                        }
+                   
+                       self.routeDataArray.append(self.routeData);
                         print("Todo Item: ", item)
                     }
+                    
+                    self.tableView.delegate=self;
+                    self.tableView.dataSource=self;
+                    self.tableView.reloadData();
+                    CommonFunctions.hideActivityIndicator();
                 }
+                
             }
         }
-
     }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         getData();
@@ -153,7 +174,66 @@ func showNoRoutesView()
         cell.distanceLabel.text = data.distance;
         cell.elevationGain.text = data.elevationGain;
         cell.elevationLoss.text = data.elevationLoss;
+       
+       // cell.mapView.clear();
+        
         return cell;
+    }
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        let celll = cell as! RouteTableViewCell;
+        //celll.mapView.clear();
+       
+       // celll.mapView.animateToZoom(14.0);
+        if self.routeDataArray[indexPath.row].trackLat.count > 0
+        {
+            celll.mapView.animateToLocation(CLLocationCoordinate2D(latitude:self.routeDataArray[indexPath.row].trackLat[0], longitude:self.routeDataArray[indexPath.row].trackLong[0]))
+            let london = GMSMarker(position: CLLocationCoordinate2D(latitude:CLLocationDegrees(self.routeDataArray[indexPath.row].trackLat[0]), longitude: CLLocationDegrees(self.routeDataArray[indexPath.row].trackLong[0])))
+            london.icon = UIImage(named: "im_start_marker")
+            london.map = celll.mapView;
+            
+            let london2 = GMSMarker(position: CLLocationCoordinate2D(latitude:CLLocationDegrees(self.routeDataArray[indexPath.row].trackLat[self.routeDataArray[indexPath.row].trackLat.count-1]), longitude: CLLocationDegrees(self.routeDataArray[indexPath.row].trackLong[self.routeDataArray[indexPath.row].trackLong.count-1])))
+            london2.icon = UIImage(named: "im_stop_marker")
+            london2.map = celll.mapView;
+            
+        }
+        path.removeAllCoordinates()
+        for i in 0 ..< self.routeDataArray[indexPath.row].trackLat.count
+        {
+            
+            path.addLatitude(routeDataArray[indexPath.row].trackLat[i], longitude: routeDataArray[indexPath.row].trackLong[i])
+        }
+        
+        let polyline = GMSPolyline(path: path)
+        polyline.strokeColor = UIColor.redColor();
+        polyline.strokeWidth = 1
+        polyline.geodesic = true
+        polyline.map = celll.mapView
+        
+       
+
+
+    }
+    var selectedCell = Int();
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ViewRouteController") as! ViewRouteController;
+        nextViewController.mapData = self.routeDataArray[indexPath.row];
+        nextViewController.pV = self;
+        selectedCell = indexPath.row
+        self.presentViewController(nextViewController, animated: false, completion: nil);
+
+    }
+    func pushHomeScreen()
+    {
+        let home = self.storyboard?.instantiateViewControllerWithIdentifier("HomeViewController") as! HomeViewController;
+        home.fromRouteView = true;
+        home.trackLat = self.routeDataArray[selectedCell].trackLat;
+        home.trackLong = self.routeDataArray[selectedCell].trackLong;
+        
+                if self.revealViewController() != nil
+                {
+       self.revealViewController().pushFrontViewController(home, animated: true);
+                }
+
     }
 
     override func didReceiveMemoryWarning() {

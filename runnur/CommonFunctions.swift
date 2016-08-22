@@ -339,8 +339,103 @@ class CommonFunctions : NSObject
         return labelHeight.frame.height         
     }
     
+   static var alertView = AlertView();
+    
+    static func showAlert(view: UIView,message : String , showRetry : Bool, getClick  : GetClick){
+        
+        
+        
+        alertView.removeFromSuperview()
+        
+        
+        
+        alertView = NSBundle.mainBundle().loadNibNamed("AlertView", owner: view, options: nil).last as! AlertView
+        
+        alertView.backgroundColor = colorCode.GrayColor;
+        
+        alertView.frame = CGRectMake(0, 63, view.frame.width, 0)
+        
+        alertView.lblMsg.hidden=true
+        
+        alertView.btRetry.hidden = true
+        
+        alertView.onButtonTapped = {
+            
+            getClick()
+            
+            //alertView.removeFromSuperview()
+            
+        }
+        
+        
+        
+        view.addSubview(alertView)
+        
+        
+        
+        UIView.animateWithDuration(0.5, delay: 0, options: .CurveEaseInOut, animations: {
+            
+            
+            
+            alertView.frame = CGRectMake(0, 63, view.frame.width, 30)
+            
+            
+            
+            }, completion: {
+                
+                
+                
+                finished in
+                
+                
+                
+                if showRetry{
+                    
+                    alertView.btRetry.hidden = false
+                    
+                    alertView.lblTraillingCons.constant = 60
+                    
+                    
+                    
+                }else{
+                    
+                    alertView.btRetry.hidden = true
+                    
+                    alertView.lblTraillingCons.constant = 20
+                    
+                }
+                
+                alertView.lblMsg.text = message
+                
+                alertView.lblMsg.hidden=false
+                
+                
+                
+                
+                
+                
+                
+        })
+        
+        
+        
+        
+        
+    }
     
     
+    
+    static func removeAlert(){
+        
+        
+        
+        alertView.removeFromSuperview()
+        
+        
+        
+    }
+    
+
     
     
 }

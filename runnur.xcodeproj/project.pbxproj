@@ -38,6 +38,9 @@
 		4457FFE21D59C19A0097C598 /* ActivityDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4457FFE11D59C19A0097C598 /* ActivityDetailsViewController.swift */; };
 		4457FFE41D59C2030097C598 /* SummaryActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4457FFE31D59C2030097C598 /* SummaryActivityViewController.swift */; };
 		4457FFE61D5A0E730097C598 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4457FFE51D5A0E730097C598 /* WeatherData.swift */; };
+		4466240C1D6B1BE600B65BAA /* ViewRouteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4466240B1D6B1BE600B65BAA /* ViewRouteController.swift */; };
+		4466240E1D6B3B7D00B65BAA /* AlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4466240D1D6B3B7D00B65BAA /* AlertView.xib */; };
+		446624101D6B3B8900B65BAA /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4466240F1D6B3B8900B65BAA /* AlertView.swift */; };
 		446681B91D5AF64D00BFF4B6 /* CaloriesCounterLookUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446681B81D5AF64C00BFF4B6 /* CaloriesCounterLookUp.swift */; };
 		446681BB1D5B47B800BFF4B6 /* MapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446681BA1D5B47B800BFF4B6 /* MapData.swift */; };
 		447473C51D51F8CB0021C561 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447473C41D51F8CB0021C561 /* MapKit.framework */; };
@@ -158,6 +161,9 @@
 		4457FFE11D59C19A0097C598 /* ActivityDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityDetailsViewController.swift; sourceTree = "<group>"; };
 		4457FFE31D59C2030097C598 /* SummaryActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryActivityViewController.swift; sourceTree = "<group>"; };
 		4457FFE51D5A0E730097C598 /* WeatherData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
+		4466240B1D6B1BE600B65BAA /* ViewRouteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewRouteController.swift; sourceTree = "<group>"; };
+		4466240D1D6B3B7D00B65BAA /* AlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertView.xib; sourceTree = "<group>"; };
+		4466240F1D6B3B8900B65BAA /* AlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		446681B81D5AF64C00BFF4B6 /* CaloriesCounterLookUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaloriesCounterLookUp.swift; sourceTree = "<group>"; };
 		446681BA1D5B47B800BFF4B6 /* MapData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapData.swift; sourceTree = "<group>"; };
 		447473C41D51F8CB0021C561 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -297,6 +303,7 @@
 				444A1D771D659FD800E561B4 /* CreateRouteViewController.swift */,
 				445484791D685C8500482980 /* RouteViewController.swift */,
 				4454847B1D685C9B00482980 /* RouteTableViewCell.swift */,
+				4466240B1D6B1BE600B65BAA /* ViewRouteController.swift */,
 			);
 			name = "Plan Route";
 			sourceTree = "<group>";
@@ -451,6 +458,8 @@
 				47FED24B1D2E6FE5006CAE8A /*  Reachability.swift */,
 				47474C171D3CEF6E008FE197 /* ActionButton.swift */,
 				47474C191D3CEF7A008FE197 /* ActionButtonItem.swift */,
+				4466240F1D6B3B8900B65BAA /* AlertView.swift */,
+				4466240D1D6B3B7D00B65BAA /* AlertView.xib */,
 				47CF1FBC1D4CC3130083B1A7 /* challengeFilterXIB.xib */,
 				47CF1FC01D4CC5620083B1A7 /* challengeFilterXIB.swift */,
 				47FEAE091D2FD93800881EE8 /* Url.swift */,
@@ -724,6 +733,7 @@
 				470CF8881D24DC370001B3BC /* Assets.xcassets in Resources */,
 				470CF8831D24DC370001B3BC /* Main.storyboard in Resources */,
 				440D64E41D522580004AE539 /* CustomPopUp.xib in Resources */,
+				4466240E1D6B3B7D00B65BAA /* AlertView.xib in Resources */,
 				4485841F1D4A14A20027F141 /* GoogleService-Info.plist in Resources */,
 				444C5E3B1D50C76A00A4DB3D /* GoogleMaps.bundle in Resources */,
 			);
@@ -843,6 +853,7 @@
 				47C6B0021D5AF5C300410DAE /* chatTableViewCell.swift in Sources */,
 				473D0D791D49E7A7004DDC07 /* InviteFriendsViewController.swift in Sources */,
 				473D0D981D49E984004DDC07 /* HistoryViewController.swift in Sources */,
+				4466240C1D6B1BE600B65BAA /* ViewRouteController.swift in Sources */,
 				4457FFE41D59C2030097C598 /* SummaryActivityViewController.swift in Sources */,
 				448584211D4A3BE40027F141 /* TourContentViewController.swift in Sources */,
 				473D0D771D49E770004DDC07 /* HeartHistroryViewController.swift in Sources */,
@@ -854,6 +865,7 @@
 				44524A1D1D54B8C800CC21C8 /* StartActivityViewController.swift in Sources */,
 				4457FFE21D59C19A0097C598 /* ActivityDetailsViewController.swift in Sources */,
 				470CF8971D24FB010001B3BC /* AddFriendsViewController.swift in Sources */,
+				446624101D6B3B8900B65BAA /* AlertView.swift in Sources */,
 				470B1B621D27A5A100E3B5B0 /* SWRevealViewController.m in Sources */,
 				470CF8951D24E8500001B3BC /* FriendsListCellTableViewCell.swift in Sources */,
 				47F40DFA1D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift in Sources */,

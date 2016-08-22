@@ -26,8 +26,10 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         
     }
     
-    
-    
+    var trackLat = [Double]();
+    var trackLong = [Double]()
+    var fromRouteView :Bool = false;
+      let path = GMSMutablePath()
     
     
     @IBAction func turnOnBluetooth(sender: AnyObject) {
@@ -132,6 +134,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     var lat = String();
     var long = String();
     var btManager = CBCentralManager()
+    
     override func viewDidLoad()
     {
         super.viewDidLoad();
@@ -185,6 +188,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         //  let orgColor = UIColor(red: 255/255, green: 102/255, blue: 102/255, alpha: 1)
         actionButton.backgroundColor = colorCode.BlueColor;
 
+        
         //startActivity.layer.shadowOffset = CGSizeMake(2, 2)
         //        startActivity.layer.shadowColor=UIColor.whiteColor().CGColor;
         //        planRoute.layer.shadowColor=UIColor.whiteColor().CGColor;
@@ -234,9 +238,11 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         //        self.lat = locValue.latitude;
         //        self.long = locValue.longitude
         //let camera = GMSCameraPosition.cameraWithLatitude(CLLocationDegrees(lat)!, longitude: CLLocationDegrees(lat)!, zoom: 6.0)
+        if !fromRouteView{
         let camera = GMSCameraPosition.cameraWithLatitude(locValue.latitude, longitude: locValue.longitude, zoom: 16.0)
         mapView.myLocationEnabled = true
         self.mapView.camera = camera
+        }
         
         // Creates a marker in the center of the map.
         //        let marker = GMSMarker()
@@ -299,6 +305,39 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         }else{
             gps.image = UIImage(named: "ic_gps_none");
         }
+        if fromRouteView {
+            let camera = GMSCameraPosition.cameraWithLatitude(trackLat[0], longitude: trackLong[0], zoom: 16.0)
+            self.mapView.camera = camera
+            print(trackLat[0]);
+            print(trackLong[0]);
+           
+            let london = GMSMarker(position: CLLocationCoordinate2D(latitude:CLLocationDegrees(trackLat[0]), longitude: CLLocationDegrees(trackLong[0])))
+            london.icon = UIImage(named: "im_start_marker")
+            london.map = self.mapView
+            
+            let london2 = GMSMarker(position: CLLocationCoordinate2D(latitude:CLLocationDegrees(trackLat[trackLat.count-1]), longitude: CLLocationDegrees(trackLong[trackLong.count-1])))
+            london2.icon = UIImage(named: "im_stop_marker")
+            london2.map = self.mapView
+
+            
+            for i in 0 ..< trackLat.count
+            {
+                
+                path.addLatitude(trackLat[i], longitude: trackLong[i])
+            }
+            
+            let polyline = GMSPolyline(path: path)
+            polyline.strokeColor = UIColor.redColor();
+            polyline.strokeWidth = 1
+            polyline.geodesic = true
+            polyline.map = self.mapView
+         
+            CommonFunctions.showAlert(self.view, message: "Route Distance: 0.70 mi", showRetry: true, getClick: {
+                CommonFunctions.removeAlert();
+            })
+            
+        }
+
     }
     
     @IBAction func startActivity(sender: AnyObject) {

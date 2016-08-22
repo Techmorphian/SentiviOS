@@ -20,6 +20,12 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
     @IBOutlet weak var getMyLocation: UIButton!
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var arrow: UIImageView!
+   
+    @IBOutlet weak var customViewHeight: NSLayoutConstraint!
+
+    
+    var customViewHeight2: NSLayoutConstraint!
+
     @IBAction func getMyLocation(sender: AnyObject) {
     }
     @IBOutlet weak var mapView: GMSMapView!
@@ -30,6 +36,8 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
      var first = false;
     var startPosition: CGPoint?
     var originalHeight: CGFloat = 0
+    
+
     
     var tapCounter = Int();
     let path = GMSMutablePath()
@@ -272,7 +280,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let touch = touches.first;
         startPosition = touch?.locationInView(self.view);
-        originalHeight = topConstraint.constant;
+        originalHeight = customViewHeight2.constant;
         self.view.layoutIfNeeded()
         
     }
@@ -280,14 +288,14 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         let touch = touches.first;
         let endPosition = touch?.locationInView(self.view);
         let difference = endPosition!.y - startPosition!.y;
-        if originalHeight + difference <= 0 &&  originalHeight + difference >= -87
+        if originalHeight + difference <= 75
         {
             
-            topConstraint.constant = originalHeight + difference;
+            customViewHeight2.constant = originalHeight + difference;
             
         }
         
-        if originalHeight + difference <= 0
+        if originalHeight + difference < 0
         {
             //            UIView.animateWithDuration(2.0, animations: {
             //                self.arrow.transform = CGAffineTransformMakeRotation((180.0 * CGFloat(M_PI)) / 180.0)
@@ -347,9 +355,12 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         polyline.map = mapView
 
     }
+
 //    MARK:- Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+       customViewHeight2 = customViewHeight;
+        
         self.myManager = CLLocationManager();
         self.myManager.delegate = self;
         self.myManager.desiredAccuracy = kCLLocationAccuracyBest;
@@ -359,9 +370,10 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         myManager.startMonitoringSignificantLocationChanges()
         mapView.delegate=self;
         
-        self.topConstraint.constant = -87;
-    
-
+        //  self.topConstraint.constant = -87;
+        
+      
+        
         getMyLocation.layer.cornerRadius = self.getMyLocation.frame.height/2;
         getMyLocation.layer.shadowOpacity=0.4;
         
@@ -403,7 +415,6 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         actionButton.backgroundColor = colorCode.BlueColor;
        
     }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
