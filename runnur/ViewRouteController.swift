@@ -10,7 +10,7 @@ import UIKit
 import GoogleMaps
 
 class ViewRouteController: UIViewController {
-
+    
     @IBAction func back(sender: AnyObject) {
         self.dismissViewControllerAnimated(false, completion: nil);
         
@@ -18,12 +18,13 @@ class ViewRouteController: UIViewController {
     @IBOutlet weak var location: UILabel!
     var actionButton: ActionButton!
     var mapData = MapData();
-  let path = GMSMutablePath()
+    let path = GMSMutablePath()
     var startPosition: CGPoint?
     var originalHeight: CGFloat = 0
     var customViewHeight2: NSLayoutConstraint!
     var pV = RouteViewController();
 
+    
     @IBOutlet weak var arrow: UIImageView!
     @IBOutlet weak var customViewHeight: NSLayoutConstraint!
     var textField = UITextField();
@@ -37,16 +38,16 @@ class ViewRouteController: UIViewController {
         }
     }
     @IBOutlet weak var useThisRoute: UIButton!
-
+    
     @IBAction func useThisRoute(sender: AnyObject) {
         pV.pushHomeScreen();
         self.dismissViewControllerAnimated(false, completion: nil);
-//        let home = self.storyboard?.instantiateViewControllerWithIdentifier("HomeViewController") as! HomeViewController;
-//        if pV.revealViewController() != nil
-//        {
-//             pV.revealViewController().pushFrontViewController(home, animated: true);
-//        }
-       
+        //        let home = self.storyboard?.instantiateViewControllerWithIdentifier("HomeViewController") as! HomeViewController;
+        //        if pV.revealViewController() != nil
+        //        {
+        //             pV.revealViewController().pushFrontViewController(home, animated: true);
+        //        }
+        
     }
     @IBAction func edit(sender: AnyObject) {
         let alert = UIAlertController(title: "", message: "ENTER YOUR TITLE", preferredStyle: UIAlertControllerStyle.Alert)
@@ -104,13 +105,13 @@ class ViewRouteController: UIViewController {
                 self.arrow.transform = CGAffineTransformMakeRotation((180.0 * CGFloat(M_PI)) / 180.0)
             })
             
-                arrow.image = UIImage(named: "ic_up_arrow");
+            arrow.image = UIImage(named: "ic_up_arrow");
         }
         self.view.layoutIfNeeded()
         
     }
     override func viewDidAppear(animated: Bool) {
-       // path.removeAllCoordinates()
+        // path.removeAllCoordinates()
         for i in 0 ..< mapData.trackLat.count
         {
             path.addLatitude(mapData.trackLat[i], longitude: mapData.trackLong[i])
@@ -122,17 +123,19 @@ class ViewRouteController: UIViewController {
         polyline.geodesic = true
         polyline.map = self.mapView
         
+        if mapData.trackLong.count > 0
+        {
+            let camera = GMSCameraPosition.cameraWithLatitude(mapData.trackLat[0], longitude: mapData.trackLong[0], zoom: 16.0)
+            self.mapView.camera = camera
+            let london = GMSMarker(position: CLLocationCoordinate2D(latitude:mapData.trackLat[0], longitude: mapData.trackLong[0]))
+            london.icon = UIImage(named: "im_start_marker")
+            london.map = mapView
+            
+            let london2 = GMSMarker(position: CLLocationCoordinate2D(latitude:mapData.trackLat[mapData.trackLat.count-1], longitude: mapData.trackLong[mapData.trackLong.count-1]))
+            london2.icon = UIImage(named: "im_stop_marker")
+            london2.map = mapView
+        }
         
-        let camera = GMSCameraPosition.cameraWithLatitude(mapData.trackLat[0], longitude: mapData.trackLong[0], zoom: 16.0)
-        self.mapView.camera = camera
-        let london = GMSMarker(position: CLLocationCoordinate2D(latitude:mapData.trackLat[0], longitude: mapData.trackLong[0]))
-        london.icon = UIImage(named: "im_start_marker")
-        london.map = mapView
-        
-        let london2 = GMSMarker(position: CLLocationCoordinate2D(latitude:mapData.trackLat[mapData.trackLat.count-1], longitude: mapData.trackLong[mapData.trackLong.count-1]))
-        london2.icon = UIImage(named: "im_stop_marker")
-        london2.map = mapView
-
     }
     
     override func viewDidLoad() {
@@ -180,23 +183,23 @@ class ViewRouteController: UIViewController {
         self.elevationGain.text = mapData.elevationGain;
         self.elevationLoss.text = mapData.elevationLoss;
         
- 
+        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

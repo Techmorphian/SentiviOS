@@ -351,7 +351,7 @@ class CommonFunctions : NSObject
         
         alertView = NSBundle.mainBundle().loadNibNamed("AlertView", owner: view, options: nil).last as! AlertView
         
-        alertView.backgroundColor = colorCode.GrayColor;
+       // alertView.backgroundColor = colorCode.GrayColor;
         
         alertView.frame = CGRectMake(0, 63, view.frame.width, 0)
         

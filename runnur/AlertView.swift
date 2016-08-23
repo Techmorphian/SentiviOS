@@ -28,12 +28,12 @@ class AlertView: UIView{
     
     
     override func awakeFromNib() {
-        
-        lblMsg.textColor=UIColor.whiteColor()
+        self.backgroundColor = UIColor.whiteColor();
+        lblMsg.textColor=colorCode.BlueColor;
         lblMsg.lineBreakMode = .ByWordWrapping
         lblMsg.numberOfLines = 0
         
-        btRetry.titleLabel?.textColor = Colors.cyan()
+      //  btRetry.titleLabel?.textColor = colorCode.
         
     }
     

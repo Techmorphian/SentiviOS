@@ -23,7 +23,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
    
     @IBOutlet weak var customViewHeight: NSLayoutConstraint!
 
-    
+    var mapData = MapData();
     var customViewHeight2: NSLayoutConstraint!
 
     @IBAction func getMyLocation(sender: AnyObject) {
@@ -75,6 +75,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             if  self.textField.text != nil || self.textField.text != "" {
             let enteredDistance = self.textField.text!;
             self.autoRouteDistance = Double(enteredDistance)!
+                self.mapData.distance = enteredDistance;
                 self.autoRouteCreation()
             }
             print(self.textField.text)
@@ -86,6 +87,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         autoRouteLat = (myManager.location?.coordinate.latitude)!;
         autoRouteLang = (myManager.location?.coordinate.longitude)!
         firstAngle = Int(arc4random_uniform(360-0)+0);
+        
         getSecondLocationPoint(autoRouteLat, Long: autoRouteLang, Distance: autoRouteDistance, firstAngle: firstAngle, thirdAngle: thirdAngle);
         
     }
@@ -134,9 +136,10 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             rLat = rLat1;
             rLon = rLon1;
             
-            rLat1 = Double(rLat1) * M_PI / 180
-            rLon1 = Double(rLon1) * M_PI / 180
-            
+            rLat1 = Double(rLat1) * 180 / M_PI
+            rLon1 = Double(rLon1) * 180 / M_PI
+            print(rLat1);
+            print(rLon1);
             let london = GMSMarker(position: CLLocationCoordinate2D(latitude:rLat1, longitude: rLon1))
             london.icon = UIImage(named: "ic_map_marker_red")
             london.map = mapView
@@ -178,7 +181,13 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             NSString(data: dta, encoding: NSUTF8StringEncoding)!
             print(NSString(data: dta, encoding: NSUTF8StringEncoding)!, terminator: "\n\n")
 
-
+//            arrayOfCLLocationCoordinate2D.append(coordinate);
+//            path.addCoordinate(coordinate);
+//            polyline = GMSPolyline(path: path)
+//            polyline.strokeColor = UIColor.redColor();
+//            polyline.strokeWidth = 1
+//            polyline.geodesic = true
+//            polyline.map = mapView
             
         }
     }
@@ -200,7 +209,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
     // add Waypoints
     var waypoints = "waypoints=";
     
-    for (var i = 1; i < lastMarker.count - 1; i++) {
+    for (var i = 0; i < lastMarker.count - 1; i++) {
         let point = lastMarker[i];
     if (i == 1) {
     waypoints += String(point.position.latitude) + "," + String(point.position.longitude);
@@ -273,7 +282,75 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         
     }
     @IBAction func save(sender: UIButton) {
+        var msg = String();
+        if lastMarker.count > 0 {
+         msg = "No Route Found";
+        }else{
+            msg = "You did not cover enough distance. Are you sure you want to save the activity?";
+        }
         
+        
+            CommonFunctions.showPopup(self, title: "ALREADY FINISHED?", msg:msg , positiveMsg: "Yes, Save", negMsg: "No, Discard", show2Buttons: true, showReverseLayout: false,getClick: {
+                // if Reachability.isConnectedToNetwork() == true{
+                CommonFunctions.showActivityIndicator(self.view);
+                
+                let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
+                let client = delegate!.client!;
+                
+                let user: MSUser = MSUser(userId: NSUserDefaults.standardUserDefaults().stringForKey("azureUserId"));
+                user.mobileServiceAuthenticationToken = NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken");
+                client.currentUser = user
+                
+                
+                
+                let table = client.tableWithName("RouteObject")
+                if client.currentUser != nil{
+                    let date = NSDate()
+                    let dateFormatter = NSDateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd";
+                    let dateString = dateFormatter.stringFromDate(date)
+                    
+                    let newItem : NSDictionary =
+                       // ["id": NSUserDefaults.standardUserDefaults().stringForKey("userId")!,
+                      [  "dateP": dateString,
+                        "distanceP": Double(self.autoRouteDistance),
+                        "elevationGainP": Double(self.mapData.elevationGain!)!,
+                        "elevationLossP": Double(self.mapData.elevationLoss!)!,
+                       // "trackPolylinesP": Double(self.avgPace.text!)!,
+                        // "time": "nil",
+                       // "mileMarkersP": self.lastMarker,
+                        "elevationCoordinatesP": ""];
+//                        "startLocationP": String(self.firstLocation),
+//                        "distanceMarkerP": String(self.altGain),
+//                        "elevationValuesP": String(self.altLoss)] ;
+                    
+                    if Reachability.isConnectedToNetwork() == true{
+                        table.insert(newItem as [NSObject : AnyObject]) { (result, error) in
+                            if let err = error {
+                                CommonFunctions.hideActivityIndicator();
+                                print("ERROR ", err)
+                            } else if let item = result {
+                                CommonFunctions.hideActivityIndicator();
+                                print("RunObject: ", item["distanceP"])
+                                let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
+                                ActivityDetailsViewController;
+                                activityDetailsViewController.mapData=self.mapData;
+                                self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
+                            }
+                        }
+                    }else{
+                        let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
+                        ActivityDetailsViewController;
+                        activityDetailsViewController.mapData=self.mapData;
+                        self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
+                    }
+                    
+                    
+                    
+                    
+                    
+                }
+            })
         
     }
 // MARK:- Move Top View
@@ -346,6 +423,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             tapCounter += 1;
             lastMarker.append(london);
         }
+        passToGetDirections()
         arrayOfCLLocationCoordinate2D.append(coordinate);
          path.addCoordinate(coordinate);
         polyline = GMSPolyline(path: path)

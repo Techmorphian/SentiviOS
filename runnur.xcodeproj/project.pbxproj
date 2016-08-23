@@ -27,6 +27,9 @@
 		444C5E371D50B50600A4DB3D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 444C5E361D50B50600A4DB3D /* SystemConfiguration.framework */; };
 		444C5E391D50B50F00A4DB3D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 444C5E381D50B50F00A4DB3D /* UIKit.framework */; };
 		444C5E3B1D50C76A00A4DB3D /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 444C5E3A1D50C76A00A4DB3D /* GoogleMaps.bundle */; };
+		444CE0F91D6C5A400044FBD9 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444CE0F61D6C5A3F0044FBD9 /* HistoryTableViewCell.swift */; };
+		444CE0FA1D6C5A400044FBD9 /* SlideHistoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444CE0F71D6C5A3F0044FBD9 /* SlideHistoryCollectionViewCell.swift */; };
+		444CE0FB1D6C5A400044FBD9 /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444CE0F81D6C5A3F0044FBD9 /* CenterCellCollectionViewFlowLayout.swift */; };
 		44524A1D1D54B8C800CC21C8 /* StartActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44524A1C1D54B8C800CC21C8 /* StartActivityViewController.swift */; };
 		445449261D534EC200995B45 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445449251D534EC200995B45 /* ProfileViewController.swift */; };
 		445449281D535FE600995B45 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445449271D535FE600995B45 /* CheckBox.swift */; };
@@ -153,6 +156,9 @@
 		444C5E361D50B50600A4DB3D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		444C5E381D50B50F00A4DB3D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		444C5E3A1D50C76A00A4DB3D /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleMaps.bundle; sourceTree = "<group>"; };
+		444CE0F61D6C5A3F0044FBD9 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
+		444CE0F71D6C5A3F0044FBD9 /* SlideHistoryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideHistoryCollectionViewCell.swift; sourceTree = "<group>"; };
+		444CE0F81D6C5A3F0044FBD9 /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		44524A1C1D54B8C800CC21C8 /* StartActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartActivityViewController.swift; sourceTree = "<group>"; };
 		445449251D534EC200995B45 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		445449271D535FE600995B45 /* CheckBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
@@ -552,6 +558,9 @@
 		477811651D4879A8003B01A4 /* History */ = {
 			isa = PBXGroup;
 			children = (
+				444CE0F61D6C5A3F0044FBD9 /* HistoryTableViewCell.swift */,
+				444CE0F71D6C5A3F0044FBD9 /* SlideHistoryCollectionViewCell.swift */,
+				444CE0F81D6C5A3F0044FBD9 /* CenterCellCollectionViewFlowLayout.swift */,
 				473D0D971D49E984004DDC07 /* HistoryViewController.swift */,
 			);
 			name = History;
@@ -882,6 +891,7 @@
 				47F97BE31D33CF5C0034B767 /* errorViewController.swift in Sources */,
 				4457FFE61D5A0E730097C598 /* WeatherData.swift in Sources */,
 				470CF8A31D2508140001B3BC /* AddviaFacebookCellTableViewCell.swift in Sources */,
+				444CE0FB1D6C5A400044FBD9 /* CenterCellCollectionViewFlowLayout.swift in Sources */,
 				470728BA1D2BD9BE002B86E1 /* phoneBookModel.swift in Sources */,
 				4748CB8D1D59EE9B0096DB55 /* ActivityViewController.swift in Sources */,
 				47C78CFC1D26A480006DEACF /* SplashScreenViewController.swift in Sources */,
@@ -896,6 +906,7 @@
 				47CF1FC11D4CC5620083B1A7 /* challengeFilterXIB.swift in Sources */,
 				47FED2501D2E84D9006CAE8A /* ChallengesViewController.swift in Sources */,
 				44D6FFD71D67233E00B3F9D8 /* HelpViewController.swift in Sources */,
+				444CE0FA1D6C5A400044FBD9 /* SlideHistoryCollectionViewCell.swift in Sources */,
 				4454847C1D685C9B00482980 /* RouteTableViewCell.swift in Sources */,
 				470CF89F1D25079C0001B3BC /* AddViaGoogleViewController.swift in Sources */,
 				4731FC8E1D2A2E4300E860B0 /* GroupFitCellTableViewCell.swift in Sources */,
@@ -913,6 +924,7 @@
 				47EF173C1D41EE0C00468698 /* dateFunction.swift in Sources */,
 				470CF8A11D2507FD0001B3BC /* AddviaContactCellTableViewCell.swift in Sources */,
 				473D0D8E1D49E8FB004DDC07 /* completedChallengeTableViewCell.swift in Sources */,
+				444CE0F91D6C5A400044FBD9 /* HistoryTableViewCell.swift in Sources */,
 				47FED2561D2E8D14006CAE8A /* animation2.swift in Sources */,
 				47C78CF81D265520006DEACF /* colorCode.swift in Sources */,
 				471A686A1D30D4E200DD2138 /* NoInternetViewController.swift in Sources */,

@@ -16,7 +16,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     var myManager:CLLocationManager!
     @IBOutlet weak var mapView: GMSMapView!
     var winning = [String]()
-     var actionButton: ActionButton!
+    var actionButton: ActionButton!
     @IBAction func menuButtonAction(sender: AnyObject)
     {
         if self.revealViewController() != nil
@@ -29,12 +29,13 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     var trackLat = [Double]();
     var trackLong = [Double]()
     var fromRouteView :Bool = false;
-      let path = GMSMutablePath()
+    let path = GMSMutablePath();
+    var distance = String()
     
     
     @IBAction func turnOnBluetooth(sender: AnyObject) {
         
-       //  btManager = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionShowPowerAlertKey: true])
+        //  btManager = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionShowPowerAlertKey: true])
     }
     @IBOutlet weak var gps: UIImageView!
     @IBOutlet weak var planRoute: UIButton!
@@ -43,7 +44,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     @IBAction func getMyLocation(sender: AnyObject) {
         mapView.myLocationEnabled = true
         if let _ = mapView.myLocation?.coordinate{
-       self.mapView.camera = GMSCameraPosition.cameraWithTarget((mapView.myLocation?.coordinate)!, zoom: 16.0)
+            self.mapView.camera = GMSCameraPosition.cameraWithTarget((mapView.myLocation?.coordinate)!, zoom: 16.0)
         }
         
     }
@@ -51,7 +52,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     @IBAction func planRoute(sender: AnyObject) {
         let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("CreateRouteViewController") as! CreateRouteViewController
         self.presentViewController(nextViewController, animated: false, completion: nil)
- 
+        
         
     }
     func call(){
@@ -117,12 +118,12 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     var customPopUp = CustomPopUp();
     
     @IBAction func menu(sender: AnyObject) {
-          customPopUp = NSBundle.mainBundle().loadNibNamed("CustomPopUp",owner:view,options:nil).last as! CustomPopUp
+        customPopUp = NSBundle.mainBundle().loadNibNamed("CustomPopUp",owner:view,options:nil).last as! CustomPopUp
         customPopUp.backgroundColor = UIColor(white: 0, alpha: 0.5)
         customPopUp.done.addTarget(self, action: #selector(HomeViewController.DonePopUp), forControlEvents: UIControlEvents.TouchUpInside);
-          self.view.addSubview(customPopUp)
-            customPopUp.frame = self.view.bounds
-
+        self.view.addSubview(customPopUp)
+        customPopUp.frame = self.view.bounds
+        
     }
     func DonePopUp()
     {
@@ -140,7 +141,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         super.viewDidLoad();
         call();
         gps.layer.shadowOpacity=0.4;
-
+        
         startActivity.layer.cornerRadius=3.0;
         //startActivity.clipsToBounds=true;
         planRoute.layer.cornerRadius=3.0;
@@ -150,7 +151,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         getMyLocation.layer.cornerRadius = self.getMyLocation.frame.height/2;
         //getMyLocation.clipsToBounds=true;
         getMyLocation.layer.shadowOpacity=0.4;
-    
+        
         
         let mapImage = UIImage(named: "ic_fab_map")!
         let satelliteImage = UIImage(named: "ic_fab_sattelite")!
@@ -178,7 +179,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
             self.mapView.mapType = kGMSTypeTerrain;
             //coding
         }
-       // let vs:Int = Int(self.view.frame.height - self.getMyLocation.frame.maxY);
+        // let vs:Int = Int(self.view.frame.height - self.getMyLocation.frame.maxY);
         actionButton = ActionButton(attachedToView: self.view, items: [map, Satellite,Terrain], v: 140, h: 15)
         // actionButton = ActionButton(attachedToView: self.view, items: [map, Satellite,Terrain])
         
@@ -187,7 +188,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         
         //  let orgColor = UIColor(red: 255/255, green: 102/255, blue: 102/255, alpha: 1)
         actionButton.backgroundColor = colorCode.BlueColor;
-
+        
         
         //startActivity.layer.shadowOffset = CGSizeMake(2, 2)
         //        startActivity.layer.shadowColor=UIColor.whiteColor().CGColor;
@@ -203,8 +204,8 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         
         if peripheral.state == CBPeripheralManagerState.PoweredOff {
             CommonFunctions.showPopup(self, msg: "Turn On Your Device Bluetooh", getClick: { })
-
-           // simpleAlert("Beacon", message: )
+            
+            // simpleAlert("Beacon", message: )
         }
     }
     func centralManagerDidUpdateState(central: CBCentralManager) {
@@ -229,7 +230,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         case CBCentralManagerState.Unsupported:
             NSLog("CoreBluetooth BLE hardware is unsupported on this platform");
             break;
-        
+            
         }
     }
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -239,9 +240,9 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         //        self.long = locValue.longitude
         //let camera = GMSCameraPosition.cameraWithLatitude(CLLocationDegrees(lat)!, longitude: CLLocationDegrees(lat)!, zoom: 6.0)
         if !fromRouteView{
-        let camera = GMSCameraPosition.cameraWithLatitude(locValue.latitude, longitude: locValue.longitude, zoom: 16.0)
-        mapView.myLocationEnabled = true
-        self.mapView.camera = camera
+            let camera = GMSCameraPosition.cameraWithLatitude(locValue.latitude, longitude: locValue.longitude, zoom: 16.0)
+            mapView.myLocationEnabled = true
+            self.mapView.camera = camera
         }
         
         // Creates a marker in the center of the map.
@@ -277,14 +278,14 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
                 // Full Signal
             }
         }
-   
-//     myManager.startUpdatingLocation()
-//        
-       self.myManager.stopUpdatingLocation()
+        
+        //     myManager.startUpdatingLocation()
+        //
+        self.myManager.stopUpdatingLocation()
         
     }
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-         gps.image = UIImage(named: "ic_gps_none");
+        gps.image = UIImage(named: "ic_gps_none");
     }
     override func viewDidAppear(animated: Bool) {
         self.myManager = CLLocationManager();
@@ -298,7 +299,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
             // Fallback on earlier versions
         };
         self.myManager.startUpdatingLocation()
-             myManager.startMonitoringSignificantLocationChanges()
+        myManager.startMonitoringSignificantLocationChanges()
         if CLLocationManager.locationServicesEnabled()
         {
             print("location on")
@@ -306,19 +307,21 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
             gps.image = UIImage(named: "ic_gps_none");
         }
         if fromRouteView {
-            let camera = GMSCameraPosition.cameraWithLatitude(trackLat[0], longitude: trackLong[0], zoom: 16.0)
-            self.mapView.camera = camera
-            print(trackLat[0]);
-            print(trackLong[0]);
-           
-            let london = GMSMarker(position: CLLocationCoordinate2D(latitude:CLLocationDegrees(trackLat[0]), longitude: CLLocationDegrees(trackLong[0])))
-            london.icon = UIImage(named: "im_start_marker")
-            london.map = self.mapView
-            
-            let london2 = GMSMarker(position: CLLocationCoordinate2D(latitude:CLLocationDegrees(trackLat[trackLat.count-1]), longitude: CLLocationDegrees(trackLong[trackLong.count-1])))
-            london2.icon = UIImage(named: "im_stop_marker")
-            london2.map = self.mapView
-
+            if trackLong.count > 0
+            {
+                let camera = GMSCameraPosition.cameraWithLatitude(trackLat[0], longitude: trackLong[0], zoom: 16.0)
+                self.mapView.camera = camera
+                print(trackLat[0]);
+                print(trackLong[0]);
+                
+                let london = GMSMarker(position: CLLocationCoordinate2D(latitude:CLLocationDegrees(trackLat[0]), longitude: CLLocationDegrees(trackLong[0])))
+                london.icon = UIImage(named: "ic_map_marker_green")
+                london.map = self.mapView
+                
+                let london2 = GMSMarker(position: CLLocationCoordinate2D(latitude:CLLocationDegrees(trackLat[trackLat.count-1]), longitude: CLLocationDegrees(trackLong[trackLong.count-1])))
+                london2.icon = UIImage(named: "ic_map_marker_red")
+                london2.map = self.mapView
+            }
             
             for i in 0 ..< trackLat.count
             {
@@ -327,31 +330,31 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
             }
             
             let polyline = GMSPolyline(path: path)
-            polyline.strokeColor = UIColor.redColor();
+            polyline.strokeColor = UIColor.cyanColor();
             polyline.strokeWidth = 1
             polyline.geodesic = true
             polyline.map = self.mapView
-         
-            CommonFunctions.showAlert(self.view, message: "Route Distance: 0.70 mi", showRetry: true, getClick: {
+            
+            CommonFunctions.showAlert(self.view, message: "Route Distance: \(distance)", showRetry: true, getClick: {
                 CommonFunctions.removeAlert();
             })
             
         }
-
+        
     }
     
     @IBAction func startActivity(sender: AnyObject) {
         if gps.image == UIImage(named: "ic_gps_none"){
-        CommonFunctions.showPopup(self,title:"WEAK GPS SIGNAL" , msg: "GPS signal is weak at your current location. Please find a place with direct line of sight to the sky. If you continue, your tracking may not be accurate.", positiveMsg: "Continue", negMsg: "Cancel", showReverseLayout: false, show2Buttons: true) {
-            let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("StartActivityViewController") as! StartActivityViewController
-            self.presentViewController(nextViewController, animated: false, completion: nil)
-        }
+            CommonFunctions.showPopup(self,title:"WEAK GPS SIGNAL" , msg: "GPS signal is weak at your current location. Please find a place with direct line of sight to the sky. If you continue, your tracking may not be accurate.", positiveMsg: "Continue", negMsg: "Cancel", showReverseLayout: false, show2Buttons: true) {
+                let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("StartActivityViewController") as! StartActivityViewController
+                self.presentViewController(nextViewController, animated: false, completion: nil)
+            }
         }else{
             let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("StartActivityViewController") as! StartActivityViewController
             self.presentViewController(nextViewController, animated: false, completion: nil)
         }
     }
-   
+    
     //MARK:- preferredStatusBarStyle
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle

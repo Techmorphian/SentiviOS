@@ -228,11 +228,11 @@ func showNoRoutesView()
         home.fromRouteView = true;
         home.trackLat = self.routeDataArray[selectedCell].trackLat;
         home.trackLong = self.routeDataArray[selectedCell].trackLong;
-        
-                if self.revealViewController() != nil
-                {
-       self.revealViewController().pushFrontViewController(home, animated: true);
-                }
+        home.distance = self.routeDataArray[selectedCell].distance!;
+        if self.revealViewController() != nil
+        {
+            self.revealViewController().pushFrontViewController(home, animated: true);
+        }
 
     }
 
