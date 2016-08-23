@@ -17,7 +17,103 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
     
     let customDismissAnimationController = CustomPresentBackAnimation()
     
+    var noInternet = NoInternetViewController()
+    
+    var noResult =  NoResultViewController()
+    
     var noFriendResult = NoFriendViewController()
+    
+    
+    
+    
+    /////// func no internet
+    func RemoveNoInternet()
+    {
+        
+        if self.view.subviews.contains(self.noInternet.view)
+            
+        {
+            
+            for i in self.view.subviews
+                
+            {
+                
+                if i == self.noInternet.view
+                    
+                {
+                    
+                    i.removeFromSuperview();
+                    
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+        
+    }
+    
+    
+    func RemoveNoFrinedResult()
+    {
+        
+        
+        if self.view.subviews.contains(self.noFriendResult.view)
+            
+        {
+            
+            for i in self.view.subviews
+                
+            {
+                
+                if i == self.noFriendResult.view
+                    
+                {
+                    
+                    i.removeFromSuperview();
+                    
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+        
+    }
+    
+    
+    func RemoveNoResult()
+    {
+        if self.view.subviews.contains(self.noResult.view)
+            
+        {
+            
+            for i in self.view.subviews
+                
+            {
+                
+                if i == self.noResult.view
+                    
+                {
+                    
+                    i.removeFromSuperview();
+                    
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+        
+        
+        
+    }
 
     
     @IBOutlet var FacebookTableView: UITableView!
@@ -125,8 +221,9 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         }
         else
         {
-                        self.activityIndicator.stopAnimating();
-                        self.loadingView.removeFromSuperview();
+          
+            self.activityIndicator.stopAnimating();
+            self.loadingView.removeFromSuperview();
             
             let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg, preferredStyle: UIAlertControllerStyle.Alert)
             let okAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil)
@@ -192,7 +289,8 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
     var SelectedSearchContactImages = [String]()
     //////////////////////////
 
-    
+    var friendsName = String()
+
     func updateSearchResultsForSearchController(searchController: String)
     {
         self.searchButtonActive = true;
@@ -202,8 +300,10 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         for i in 0..<FBFriendsFilterArray.count
         {
             //////// on i position we get name as well as image position that y we are  appending i position ofcontactImages in to a SearchContactImages
+            friendsName = FBFriendsFilterArray[i].firstName + FBFriendsFilterArray[i].lastName
+
             
-            if let _ =  FBFriendsFilterArray[i].firstName.lowercaseString.rangeOfString(searchController.lowercaseString, options: .RegularExpressionSearch)
+            if let _ = friendsName.lowercaseString.rangeOfString(searchController.lowercaseString, options: .RegularExpressionSearch)
                 
             {
                 
@@ -234,8 +334,40 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
             
         }
         
+        if searchFacebookArray.count == 0
+        {
+            print(true)
+            
+            if self.view.subviews.contains(self.noFriendResult.view)
+                
+            {
+                
+                
+            }
+                
+            else
+                
+            {
+                
+                self.noFriendResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoFriendViewController") as! NoFriendViewController
+                
+                self.noFriendResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+                
+                self.view.addSubview((self.noFriendResult.view)!);
+                
+                self.noFriendResult.didMoveToParentViewController(self)
+                
+            }
+            
+        }
+        
+
         
         self.FacebookTableView.reloadData();
+        
+        
+        
+        
     }
     
     
@@ -250,6 +382,8 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
             if textFieldData == ""
             {
                 searchButtonActive = false;
+                
+                self.RemoveNoFrinedResult();
                 
                 self.FacebookTableView.reloadData();
             }
@@ -296,16 +430,6 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         
                                 j.toShow = false
                                 
-                               
-
-                               // FBFriendsFilterArray.append(j)
-                                
-                               //removeFriendsCount = removeFriendsCount+1
-                                
-                                 // print(facebookArray[j].toShow)
-                                
-                                
-                                
                               
                             }
                             
@@ -345,100 +469,6 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
             
         }
         
-        
-//        
-//        for i in 0 ..< facebookArray.count
-//        {
-//            
-//            
-//            for j in facebookArray
-//            {
-//             
-//                
-//                for k in friendListArray
-//                {
-//                    
-//                    
-//                    
-//                    
-//                    print(facebookArray.count)
-//                    
-//                    
-//                    for i in facebookArray
-//                    {
-//                        
-//                        print(i.toShow)
-//                    }
-//                    
-//                    
-//                    print(friendListArray.count)
-//                    
-//                    
-//                    for i in friendListArray
-//                    {
-//                        
-//                        print(i.toShow)
-//                    }
-//                    
-//
-//                    
-//                    
-//                    
-//                    
-//                    print("frnd fb id \(k.friendFbId)")
-//                   
-//                    print("facebook id \(j.facebookFriendId)")
-//                   
-//                    
-//                   // print(j.facebookFriendId)
-//                    
-//                    
-//                    print(facebookArray[i].toShow)
-//                  
-//                    
-//                    if k.friendFbId == j.facebookFriendId
-//                        
-//                    {
-//                        print(facebookArray[i].toShow)
-//                        
-//                        facebookArray[i].toShow = false
-//                        
-//                          print(facebookArray[i].toShow)
-//                        
-//                        
-//                        
-//                        break;
-//                    }
-//                    
-//                }
-//                
-//            }
-//            
-//            
-//        }
-//        
-//        
-//        if facebookArray.count
-//        {
-//            
-//            
-//            self.noFriendResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoFriendViewController") as! NoFriendViewController
-//            
-//            self.noFriendResult.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
-//            
-//            self.noFriendResult.noResultTextLabel.text = "No phonebook contacts found"
-//            
-//            self.view.addSubview((self.noFriendResult.view)!);
-//            
-//            
-//            self.noFriendResult.didMoveToParentViewController(self)
-//
-//            
-//        }
-//        
-//        
-      
-          //FBFriendsFilterModel.firstName.append(i)
         
         FacebookTableView.delegate = self;
         
@@ -538,10 +568,6 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         }
         else
         {
-            
-        
-            
-            
             
             
             cell.friendsNameLabel.text = FBFriendsFilterArray[indexPath.row].firstName + " " + FBFriendsFilterArray[indexPath.row].lastName
@@ -858,6 +884,9 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         
     {
         
+        
+        self.showActivityIndicatory();
+        
         // LoaderFile.showLoader(self.view);
         
         let myurl = NSURL(string: Url.addFbFriends)
@@ -1016,22 +1045,11 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
                 self.loadingView.removeFromSuperview();
                 
                 
-                let alert = UIAlertController(title: "", message:"something went wrong try again later." , preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "", message:"something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
                 
                 let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
                 
                 alert.addAction(alertAction)
-                
-                let alertAction2 = UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler: {
-                    
-                    Void in self.addFbFriends();
-                    
-                })
-                
-                alert.addAction(alertAction2)
-                
-                
-                
                 self.presentViewController(alert, animated: true, completion: nil)
                 
                 
@@ -1077,23 +1095,40 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         
         // LoaderFile.hideLoader(self.view)
         
-        let alert = UIAlertController(title: "", message:"something went wrong try again later." , preferredStyle: UIAlertControllerStyle.Alert)
+        self.RemoveNoInternet();
+        self.RemoveNoFrinedResult();
         
-        let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
-        
-        alert.addAction(alertAction)
-        
-        let alertAction2 = UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler: {
+        if self.view.subviews.contains(self.noResult.view)
             
-            Void in self.addFbFriends();
+        {
             
-        })
+            
+        }
+            
+        else
+            
+        {
+            
+            self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+            
+            self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+            
+            
+            self.noResult.noResultTextLabel.text = "something went wrong."
+            
+            self.noResult.noResultImageView.image = UIImage(named: "im_error")
+            
+            self.view.addSubview((self.noResult.view)!);
+            
+            
+            self.view.userInteractionEnabled = true
+            
+            
+            self.noResult.didMoveToParentViewController(self)
+            
+        }
         
-        alert.addAction(alertAction2)
-        
-        
-        
-        self.presentViewController(alert, animated: true, completion: nil)
+
         
         
         

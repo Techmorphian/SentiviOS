@@ -26,6 +26,69 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     
     var noInternet = NoInternetViewController()
     
+    /////// func no internet
+    func RemoveNoInternet()
+    {
+        
+        if self.view.subviews.contains(self.noInternet.view)
+            
+        {
+            
+            for i in self.view.subviews
+                
+            {
+                
+                if i == self.noInternet.view
+                    
+                {
+                    
+                    i.removeFromSuperview();
+                    
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+        
+    }
+    
+    
+    
+    func RemoveNoResult()
+    {
+        if self.view.subviews.contains(self.noResult.view)
+            
+        {
+            
+            for i in self.view.subviews
+                
+            {
+                
+                if i == self.noResult.view
+                    
+                {
+                    
+                    i.removeFromSuperview();
+                    
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+        
+        
+        
+    }
+    
+
+    
+    
     /////////////////// to filter values from both screens
     var friendListModel = phoneBookModel()
     
@@ -236,6 +299,38 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             }
             
         }
+        
+        
+        if searchPBArray.count == 0
+        {
+            print(true)
+            
+            if self.view.subviews.contains(self.noResult.view)
+                
+            {
+                
+                
+            }
+                
+            else
+                
+            {
+                
+                self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+                
+                self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+                
+                self.view.addSubview((self.noResult.view)!);
+                
+                self.noResult.noResultTextLabel.text = "No phonebook contacts found."
+                
+                self.noResult.didMoveToParentViewController(self)
+                
+            }
+            
+        }
+
+        
         self.ContactTableView.reloadData();
 
         
@@ -253,6 +348,8 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             if textFieldData == ""
             {
                 searchButtonActive = false;
+                
+                self.RemoveNoResult();
                 
                 self.ContactTableView.reloadData();
             }
@@ -801,45 +898,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                 
             }
 
-            
-            
-//            for i in PBArray
-//            {
-//                if i.indexPathRow == indexPath.row
-//                {
-//                    
-//                    print(indexPath.row)
-//                    
-//                    PBArray.removeAtIndex(indexPath.row)
-//                }
-//                
-//            }
-//
-            
-            
-//            
-//            for email in selectedEmail
-//            {
-//              
-//                    if email == PBArray[indexPath.row].Email
-//                   
-//                    {
-//                        
-//                        let index = selectedEmail.indexOf(email)
-//                        
-////                          let index = selectedEmail.indexOf(email)
-////                        
-////                        selectedEmail.removeAtIndex(index)
-////                        
-//                        
-//                    }
-//                
-//            }
-
-            
-          
-            
-            for i in selectedIndex
+             for i in selectedIndex
             {
                 if Int(i) == indexPath.row
                 {
@@ -876,6 +935,8 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         
     {
         
+        
+        self.showActivityIndicatory();
         // LoaderFile.showLoader(self.view);
         
         let myurl = NSURL(string: Url.addFriends)
@@ -887,15 +948,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         
         request.timeoutInterval = 20.0;
         
-        let modelName = UIDevice.currentDevice().modelName
-        
-        let systemVersion = UIDevice.currentDevice().systemVersion;
-        
-        let make="iphone"
-        
-      
-        
-        let userId  = "C2A2987E-80AA-482A-BF76-BC5CCE039007"
+       let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
         
         
         
@@ -908,14 +961,14 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             
             cliendIds.append("friendEmailIds[\(count)]=\(i)");
             
-            count++;
+            count += 1;
         }
         
         let  friendFbIds  = cliendIds.joinWithSeparator("&")
         print(friendFbIds);
         
         
-        let postString = "os=\(systemVersion)&make=\(make)&model=\(modelName)&userId=\(userId)&\(friendFbIds)";
+        let postString = "userId=\(userId!)&\(friendFbIds)";
         
         print(postString)
         
@@ -1010,17 +1063,6 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
 
                                 
                                 
-                                
-//                                let alert = UIAlertController(title: "", message:msg , preferredStyle: UIAlertControllerStyle.Alert)
-//                                
-//                                let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
-//                                
-//                                alert.addAction(alertAction)
-//                                
-//                                self.presentViewController(alert, animated: true, completion: nil)
-//                                
-                                
-                                
                         } // ns close
                         
                         
@@ -1041,9 +1083,6 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                                 
                                 self.loadingView.removeFromSuperview();
    
-                                
-                             
-                              
                                 
                                 let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
                                 let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
@@ -1069,36 +1108,22 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             {
                 
                 
-                
-                   
-                                self.activityIndicator.stopAnimating();
+                self.activityIndicator.stopAnimating();
                                 
-                                self.loadingView.removeFromSuperview();
+                self.loadingView.removeFromSuperview();
    
-                           
+                print(error)
                 
-                let alert = UIAlertController(title: "", message:"something went wrong try again later." , preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "", message:"something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
                 
                 let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
                 
                 alert.addAction(alertAction)
                 
-                let alertAction2 = UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler: {
-                    
-                    Void in
-                    
-                })
-                
-                alert.addAction(alertAction2)
-                
-                
-                
                 self.presentViewController(alert, animated: true, completion: nil)
                 
-                
-                
-                
-                print(error)
+                return
+               
                 
             }
             
@@ -1136,23 +1161,13 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         
         self.loadingView.removeFromSuperview();
         
-        // LoaderFile.hideLoader(self.view)
+      
         
-        let alert = UIAlertController(title: "", message:"something went wrong try again later." , preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "", message:"something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
         
         let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
         
         alert.addAction(alertAction)
-        
-        let alertAction2 = UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler: {
-            
-            Void in
-            
-        })
-        
-        alert.addAction(alertAction2)
-        
-        
         
         self.presentViewController(alert, animated: true, completion: nil)
         
@@ -1315,14 +1330,11 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                     self.noInternet.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
                     
                     self.view.addSubview((self.noInternet.view)!);
-                    
-                    //  self.DIVC.imageView.image = UIImage(named: "im_no_internet");
-                    
-                    // self.noInternet.imageView.userInteractionEnabled = true
+                   
                     
                     let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddviaContactsViewController.handleTap(_:)))
+                   
                     self.noInternet.noInternetLabel.userInteractionEnabled = true
-                    
                     
                     self.noInternet.view.addGestureRecognizer(tapRecognizer)
                     
@@ -1352,35 +1364,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         
     }
 
-    /////// func no internet
-    func RemoveNoInternet()
-    {
-        
-        if self.view.subviews.contains(self.noInternet.view)
-            
-        {
-            
-            for i in self.view.subviews
-                
-            {
-                
-                if i == self.noInternet.view
-                    
-                {
-                    
-                    i.removeFromSuperview();
-                    
-                    
-                }
-                
-            }
-            
-            
-            
-        }
-        
-    }
-
+  
     
     var conatctImage = NSData()
     
@@ -1448,31 +1432,9 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                     
                                 {
                     
+                                    self.RemoveNoInternet();
                     
-                    
-                                    if self.view.subviews.contains(self.noResult.view)
-                    
-                                    {
-                    
-                                        for i in self.view.subviews
-                    
-                                        {
-                    
-                                            if i == self.noResult.view
-                    
-                                            {
-                    
-                                                i.removeFromSuperview();
-                    
-                    
-                                            }
-                    
-                                        }
-                    
-                    
-                    
-                                    }
-                    
+                                    self.RemoveNoResult();
                     
                                     self.PBModel=phoneBookModel()
                     
@@ -1495,17 +1457,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                     
                                                 print(self.allEmails)
                     
-                    
-                    //                            if self.allEmails.count < self.
-                    //
-                    //                            {
-                    //
-                    //
-                    //
-                    //                            }
-                    
-                    
-                                                // self.emailArray.append(self.allEmails)
+                                    
                     
                                                 if self.allEmails.count > 0
                                                 {
@@ -1515,25 +1467,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                     
                                                         self.PBModel.Email.append(emails as! String);
                     
-                    
-                    
-                    //                                    for k in friendListArray
-                    //                                    {
-                    //
-                    //                                        if k.Email[0] == emails as! String
-                    //
-                    //                                        {
-                    //
-                    //
-                    //                                           PBModel = phoneBookModel()
-                    //
-                    //
-                    //                                            break;
-                    //                                        }
-                    //
-                    //                                    }
-                    
-                    
+                                                        
                                                         print(self.PBModel.Email)
                     
                                                     }
@@ -1635,12 +1569,6 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                                                     } //// phones close
                                                     
                                                     
-                                                    
-                                                    
-                    //                                let image: ABMultiValueRef = (ABPersonCopyImageDataWithFormat(record, kABPersonImageFormatThumbnail)?.takeRetainedValue())!
-                    //                               
-                    //                                    print(image)
-                    //                               
                                                     var image: UIImage?
                                                     
                                                     
@@ -1710,9 +1638,8 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                     
                                 self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
                     
-                                self.noResult.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
-                    
-                                self.noResult.noResultTextLabel.text = "No phonebook contacts found"
+                                self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+                                self.noResult.noResultTextLabel.text = "No phonebook contacts found."
                     
                                 self.view.addSubview((self.noResult.view)!);
                                 

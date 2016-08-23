@@ -321,7 +321,10 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
     }
     
     ////////////////////////////////////////
+  
     
+    
+   // MARK:- DATE COMPARISON FUN
      let challengeNotStarted = 1
     
     let challengeOnGoing = 2
@@ -333,9 +336,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
         let nscurrentDate = NSDate()
         
-        
-        
-        
+             
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
@@ -1469,7 +1470,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                 
                                 self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
                                 
-                                self.noResult.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
+                                self.noResult.view.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height-0);
                                 
                                 
                                 self.noResult.noResultTextLabel.text = msg
@@ -1488,10 +1489,6 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                             }
                             
                             
-
-   
-                            
-                                
                                 
                         }
                         
@@ -1521,7 +1518,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                     
                     self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
                     
-                    self.noResult.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
+                    self.noResult.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);
                     
                     
                     self.noResult.noResultTextLabel.text = "something went wrong."
@@ -1852,11 +1849,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         super.viewDidLoad()
       
 
-        
-       
-
-        
-        
+    
         if(Reachability.isConnectedToNetwork()==true )
         {
             showActivityIndicatory()
@@ -1880,7 +1873,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                 
                 self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
                 
-                self.noInternet.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
+                self.noInternet.view.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height-0);
                 
                 self.view.addSubview((self.noInternet.view)!);
                 

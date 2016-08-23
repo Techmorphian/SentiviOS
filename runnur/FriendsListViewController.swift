@@ -24,9 +24,101 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
     
     var noInternet = NoInternetViewController()
     
-    var error =  errorViewController()
+    var noResult =  NoResultViewController()
     
     var noFriendResult = NoFriendViewController()
+    
+    
+    
+    /////// func no internet
+    func RemoveNoInternet()
+    {
+        
+        if self.view.subviews.contains(self.noInternet.view)
+            
+        {
+            
+            for i in self.view.subviews
+                
+            {
+                
+                if i == self.noInternet.view
+                    
+                {
+                    
+                    i.removeFromSuperview();
+                    
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+        
+    }
+    
+    
+    func RemoveNoFrinedResult()
+    {
+        
+        
+        if self.view.subviews.contains(self.noFriendResult.view)
+            
+        {
+            
+            for i in self.view.subviews
+                
+            {
+                
+                if i == self.noFriendResult.view
+                    
+                {
+                    
+                    i.removeFromSuperview();
+                    
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+        
+    }
+    
+    
+    func RemoveNoResult()
+    {
+        if self.view.subviews.contains(self.noResult.view)
+            
+        {
+            
+            for i in self.view.subviews
+                
+            {
+                
+                if i == self.noResult.view
+                    
+                {
+                    
+                    i.removeFromSuperview();
+                    
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+        
+        
+        
+    }
+
     
     var SelectedconatctNames = [String]()
     
@@ -77,6 +169,8 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
     
     //  MARK:- SEARCH FUNCTION
     
+    var friendsName = String()
+    
     var searchButtonActive = Bool()
     func updateSearchResultsForSearchController(searchController: String)
     {
@@ -90,7 +184,9 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         {
             //////// on i position we get name as well as image position that y we are  appending i position ofcontactImages in to a SearchContactImages
             
-            if let _ =  friendListArray[i].firstName.lowercaseString.rangeOfString(searchController.lowercaseString, options: .RegularExpressionSearch)
+            friendsName = friendListArray[i].firstName + friendListArray[i].lastName
+            
+            if let _ =  friendsName.lowercaseString.rangeOfString(searchController.lowercaseString, options: .RegularExpressionSearch)
                 
             {
                 
@@ -117,10 +213,40 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                 //                SearchContactImages.append(contactImages[i])
                 
                 
+            }
+            
+        }
+        
+        if searchfriendListArray.count == 0
+        {
+            print(true)
+       
+            if self.view.subviews.contains(self.noFriendResult.view)
+                
+            {
+                
+                
+            }
+                
+            else
+                
+            {
+                
+                self.noFriendResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoFriendViewController") as! NoFriendViewController
+                
+                self.noFriendResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+                
+                self.view.addSubview((self.noFriendResult.view)!);
+                
+                
+                
+                self.noFriendResult.didMoveToParentViewController(self)
                 
             }
             
         }
+        
+        
         self.friendsTableView.reloadData();
         
         
@@ -137,6 +263,8 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
             if textFieldData == ""
             {
                 searchButtonActive = false;
+                
+                RemoveNoFrinedResult();
                 
                 self.friendsTableView.reloadData();
             }
@@ -307,6 +435,9 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
     
     func getdeleteRowProtocol(cell: FriendsListCellTableViewCell, text: String, index: Int)
     {
+        
+        
+        
         let indexPath = self.friendsTableView.indexPathForRowAtPoint(cell.center)!
         
         let cell = self.friendsTableView.cellForRowAtIndexPath(indexPath) as! FriendsListCellTableViewCell
@@ -396,15 +527,16 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                                     if(status=="Success")
                                     {
                                         
-                                        NSOperationQueue.mainQueue().addOperationWithBlock
-                                            {
+                                    NSOperationQueue.mainQueue().addOperationWithBlock
+                                        
+                                  {
                                                 
                                                 
-                                                  self.activityIndicator.stopAnimating();
+                                self.activityIndicator.stopAnimating();
                                 
                                 self.loadingView.removeFromSuperview();
                                 
-                                self.loadingView.removeFromSuperview();
+                                
                                          
                                                 
                                                 
@@ -806,83 +938,9 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                                 
                                 
                                 
-                                
-                                if self.view.subviews.contains(self.noInternet.view)
-                                    
-                                {
-                                    
-                                    for i in self.view.subviews
-                                        
-                                    {
-                                        
-                                        if i == self.noInternet.view
-                                            
-                                        {
-                                            
-                                            i.removeFromSuperview();
-                                            
-                                            
-                                        }
-                                        
-                                    }
-                                    
-                                    
-                                    
-                                }
-                                
-
-                                
-                                
-                                if self.view.subviews.contains(self.noFriendResult.view)
-                                    
-                                {
-                                    
-                                    for i in self.view.subviews
-                                        
-                                    {
-                                        
-                                        if i == self.noFriendResult.view
-                                            
-                                        {
-                                            
-                                            i.removeFromSuperview();
-                                            
-                                            
-                                        }
-                                        
-                                    }
-                                    
-                                    
-                                    
-                                }
-
-                                
-                                
-                                if self.view.subviews.contains(self.error.view)
-                                    
-                                {
-                                    
-                                    for i in self.view.subviews
-                                        
-                                    {
-                                        
-                                        if i == self.error.view
-                                            
-                                        {
-                                            
-                                            i.removeFromSuperview();
-                                            
-                                            
-                                        }
-                                        
-                                    }
-                                    
-                                    
-                                    
-                                }
-                                
-
-                          
+                                self.RemoveNoInternet();
+                                self.RemoveNoFrinedResult()
+                                self.RemoveNoResult();
                                 
                                 
                             self.friendsTableView.delegate = self;
@@ -910,64 +968,14 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                                 self.loadingView.removeFromSuperview();
                                 
                               
-
+                                self.RemoveNoInternet();
+                                self.RemoveNoFrinedResult();
+                          
                                 
-                                if self.view.subviews.contains(self.noInternet.view)
+                                if self.view.subviews.contains(self.noResult.view)
                                     
                                 {
                                     
-                                    for i in self.view.subviews
-                                        
-                                    {
-                                        
-                                        if i == self.noInternet.view
-                                            
-                                        {
-                                            
-                                            i.removeFromSuperview();
-                                            
-                                            
-                                        }
-                                        
-                                    }
-                                    
-                                    
-                                    
-                                }
-                                
-                                
-                                
-                                if self.view.subviews.contains(self.noFriendResult.view)
-                                    
-                                {
-                                    
-                                    for i in self.view.subviews
-                                        
-                                    {
-                                        
-                                        if i == self.noFriendResult.view
-                                            
-                                        {
-                                            
-                                            i.removeFromSuperview();
-                                            
-                                            
-                                        }
-                                        
-                                    }
-                                    
-                                    
-                                    
-                                }
-                                
-
-                                
-                                
-                                if self.view.subviews.contains(self.error.view)
-                                    
-                                {
-                                    
-                                    //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
                                     
                                 }
                                     
@@ -975,31 +983,24 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                                     
                                 {
                                     
-                                    self.error = self.storyboard?.instantiateViewControllerWithIdentifier("errorViewController") as! errorViewController
+                                    self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
                                     
-                                    self.error.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
-                                    
-                                    self.view.addSubview((self.error.view)!);
-                                    
-                                    //  self.DIVC.imageView.image = UIImage(named: "im_no_internet");
-                                    
-                                    // self.noInternet.imageView.userInteractionEnabled = true
+                                    self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
                                     
                                     
-                                    let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(FriendsListViewController.handleTap(_:)))
+                                    self.noResult.noResultTextLabel.text = msg
+                                    
+                                    self.noResult.noResultImageView.image = UIImage(named: "im_error")
                                     
                                     
-                                   self.view.userInteractionEnabled = true
+                                    self.view.addSubview((self.noResult.view)!);
                                     
-                                    // self.noInternet.noInternetLabel.userInteractionEnabled = true
+                                    self.view.userInteractionEnabled = true
                                     
                                     
-                                    self.error.view.addGestureRecognizer(tapRecognizer)
-                                    
-                                    self.error.didMoveToParentViewController(self)
+                                    self.noResult.didMoveToParentViewController(self)
                                     
                                 }
-                                
                                 
 
                                 
@@ -1021,55 +1022,10 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                                 self.loadingView.removeFromSuperview();
                                 
                                 
+                                 self.RemoveNoInternet();
+                                self.RemoveNoResult();
+
                                 
-                                
-                                ///// removeing image views
-                                
-                                if self.view.subviews.contains(self.noInternet.view)
-                                    
-                                {
-                                    
-                                    for i in self.view.subviews
-                                        
-                                    {
-                                        
-                                        if i == self.noInternet.view
-                                            
-                                        {
-                                            
-                                            i.removeFromSuperview();
-                                            
-                                            
-                                        }
-                                        
-                                    }
-                                    
-                                    
-                                    
-                                }
-                                
-                                if self.view.subviews.contains(self.error.view)
-                                    
-                                {
-                                    
-                                    for i in self.view.subviews
-                                        
-                                    {
-                                        
-                                        if i == self.error.view
-                                            
-                                        {
-                                            
-                                            i.removeFromSuperview();
-                                            
-                                            
-                                        }
-                                        
-                                    }
-                                    
-                                    
-                                    
-                                }
                                 
                                 
                                 
@@ -1116,9 +1072,43 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
             {
                 
                 
+                self.activityIndicator.stopAnimating();
+                
+                self.loadingView.removeFromSuperview();
                 
                 
-                print(error)
+                self.RemoveNoInternet();
+                self.RemoveNoFrinedResult();
+                                
+                if self.view.subviews.contains(self.noResult.view)
+                    
+                {
+                    
+                    
+                }
+                    
+                else
+                    
+                {
+                    
+                    self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+                    
+                    self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+                    
+                    
+                    self.noResult.noResultTextLabel.text = "something went wrong."
+                    
+                    self.noResult.noResultImageView.image = UIImage(named: "im_error")
+                    
+                    self.view.addSubview((self.noResult.view)!);
+                    
+                    
+                    self.view.userInteractionEnabled = true
+                    self.noResult.didMoveToParentViewController(self)
+                    
+                }
+                
+
                 
             }
             
@@ -1159,71 +1149,16 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         
      self.activityIndicator.stopAnimating();
                                 
-                                self.loadingView.removeFromSuperview();
-                                
-                                self.loadingView.removeFromSuperview();
-       
+    self.loadingView.removeFromSuperview();
         
         
+        self.RemoveNoInternet();
+        self.RemoveNoFrinedResult();
         
-        
-        
-        if self.view.subviews.contains(self.noInternet.view)
+        if self.view.subviews.contains(self.noResult.view)
             
         {
             
-            for i in self.view.subviews
-                
-            {
-                
-                if i == self.noInternet.view
-                    
-                {
-                    
-                    i.removeFromSuperview();
-                    
-                    
-                }
-                
-            }
-            
-            
-            
-        }
-        
-
-        
-        
-        if self.view.subviews.contains(self.noFriendResult.view)
-            
-        {
-            
-            for i in self.view.subviews
-                
-            {
-                
-                if i == self.noFriendResult.view
-                    
-                {
-                    
-                    i.removeFromSuperview();
-                    
-                    
-                }
-                
-            }
-            
-            
-            
-        }
-
-        
-        
-        if self.view.subviews.contains(self.error.view)
-            
-        {
-            
-            //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
             
         }
             
@@ -1231,43 +1166,35 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
             
         {
             
-            self.error = self.storyboard?.instantiateViewControllerWithIdentifier("errorViewController") as! errorViewController
+            self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
             
-            self.error.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
-            
-            self.view.addSubview((self.error.view)!);
-            
-            //  self.DIVC.imageView.image = UIImage(named: "im_no_internet");
-            
-            // self.noInternet.imageView.userInteractionEnabled = true
-            
-           
-            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(FriendsListViewController.handleTap(_:)))
-            
-           // self.noInternet.noInternetLabel.userInteractionEnabled = true
+            self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
             
             
-            self.error.view.addGestureRecognizer(tapRecognizer)
+            self.noResult.noResultTextLabel.text = "something went wrong."
             
-            self.error.didMoveToParentViewController(self)
+            self.noResult.noResultImageView.image = UIImage(named: "im_error")
+            
+            
+            
+            self.view.addSubview((self.noResult.view)!);
+            
+            
+            self.view.userInteractionEnabled = true
+            
+            self.noResult.didMoveToParentViewController(self)
             
         }
+        
 
+        
         
         
     }
     
+    
+    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     //////
     

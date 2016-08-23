@@ -8,14 +8,31 @@
 
 import UIKit
 
-class chatTableViewCell: UITableViewCell {
+class chatTableViewCell: UITableViewCell
+{
 
-    override func awakeFromNib() {
+    @IBOutlet var profileImageView: UIImageView!
+    
+    
+    
+    @IBOutlet var userName: UILabel!
+    
+    
+    
+    @IBOutlet var date: UILabel!
+    
+    
+    @IBOutlet var message: UILabel!
+    
+    
+    override func awakeFromNib()
+    {
         super.awakeFromNib()
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(selected: Bool, animated: Bool)
+    {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

@@ -40,10 +40,6 @@ class Url
     
     static let inviteFriends = baseUrl + "inviteFriends.php"
     static let getChallengeFriendlist = baseUrl + "getChallengeFriendlist.php"
-    
-    
-    
-    
     static let inviteFriendsEmail = baseUrl + "inviteFriendsEmail.php"
     
 
@@ -56,7 +52,18 @@ class Url
    
     
     
+    ////// VIEW ACTIVITY // CHAT // COMMENT
     
+    static let activityInfo = baseUrl + "activityInfo.php"
+    
+    static let likeRunObject = baseUrl + "likeRunObject.php"
+    
+    static let unlikeRunObject = baseUrl + "unlikeRunObject.php"
+    static let getRunObjectComments = baseUrl + "getRunObjectComments.php"
+    
+    static let postComment = baseUrl + "postComment.php"
+    
+     static let postChat = baseUrl + "postChat.php"
     
     
 }

@@ -253,7 +253,7 @@ class CommonFunctions : NSObject
         activityIndicator.center=CGPointMake(loadingView.frame.width/2, loadingView.frame.height/2)
         activityIndicator.hidesWhenStopped=true
         loadingLable=UILabel(frame: CGRectMake(0, 60, loadingView.bounds.width, loadingView.bounds.height))
-        loadingLable.text="Please wait ..."
+        loadingLable.text="Please wait..."
         loadingLable.textColor=UIColor.grayColor()
         loadingLable.font = loadingLable.font.fontWithSize(10)
         loadingLable.lineBreakMode =  .ByWordWrapping

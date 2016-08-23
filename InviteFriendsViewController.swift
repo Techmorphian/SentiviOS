@@ -74,15 +74,6 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
     func RemoveNoFrinedResult()
     {
         
@@ -379,14 +370,40 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                 
                 
             }
-
-            
-        
             
         }
         
         
-        
+        if searchInviteFrndsArray.count == 0 && searchEmailArray.count == 0
+        {
+            print(true)
+            
+            if self.view.subviews.contains(self.noFriendResult.view)
+                
+            {
+                
+                
+            }
+                
+            else
+                
+            {
+                
+                self.noFriendResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoFriendViewController") as! NoFriendViewController
+                
+                self.noFriendResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+                
+                self.view.addSubview((self.noFriendResult.view)!);
+                
+                
+                
+                self.noFriendResult.didMoveToParentViewController(self)
+                
+            }
+            
+        }
+
+            
         self.InviteFriendsTableView.reloadData();
     }
     
@@ -402,6 +419,8 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             {
                 searchButtonActive = false;
                  searchButtonActive2 = false;
+                
+                self.RemoveNoFrinedResult();
                 
                 self.InviteFriendsTableView.reloadData();
             }
@@ -1035,17 +1054,6 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
         return 70.0;//Choose your custom row height
@@ -1071,7 +1079,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         request.timeoutInterval = 20.0;
         
         
-      let userId  =  NSUserDefaults.standardUserDefaults().stringForKey("userId");
+        let userId  =  NSUserDefaults.standardUserDefaults().stringForKey("userId");
         
         
         let ChallengeId = NSUserDefaults.standardUserDefaults().stringForKey("challengeId")
@@ -1683,12 +1691,12 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         
         self.loadingView.removeFromSuperview();
         
+        
         self.RemoveNoInternet();
         
         self.RemoveNoFrinedResult();
         
-        
-        
+
         
         
         if self.view.subviews.contains(self.noResult.view)
@@ -1755,6 +1763,8 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             inviteEmailModel.InviteEmails = EmailIds[i]
             
             self.inviteEmailArray.append(self.inviteEmailModel);
+            
+            self.RemoveNoFrinedResult();
          }
         
         

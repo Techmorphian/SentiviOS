@@ -310,22 +310,13 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
                 
                 
                 
-                let alert = UIAlertController(title: "", message:"something went wrong try again later." , preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "", message:"something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
                 
                 let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
                 
                 alert.addAction(alertAction)
                 
-                let alertAction2 = UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler: {
-                    
-                    Void in
-                    
-                })
-                
-                alert.addAction(alertAction2)
-                
-                
-                
+                                  
                 self.presentViewController(alert, animated: true, completion: nil)
                 
                 

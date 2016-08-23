@@ -30,7 +30,8 @@ class dateFunction
         let newStartDate = df.stringFromDate(nsdate!)
         
         print(newStartDate)
-        if nsdate != nil{
+        if nsdate != nil
+        {
             return newStartDate;
         }else
         {
@@ -41,6 +42,38 @@ class dateFunction
     
 
     
+    static func dateWithTimeFormatFunc(toFormat:String,fromFormat:String,dateToConvert:String) -> String
+    {
+        
+        let df = NSDateFormatter()
+        
+        df.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        
+        df.dateFormat = fromFormat
+        
+        let nsdate =  df.dateFromString(dateToConvert)
+        
+        print(nsdate)
+        
+        
+        df.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        
+        df.dateFormat = toFormat
+        
+        let newStartDate = df.stringFromDate(nsdate!)
+        
+        
+        print(newStartDate)
+        
+        if nsdate != nil
+        {
+            return newStartDate;
+        }else
+        {
+            return "";
+        }
+        
+    }
     
     
     

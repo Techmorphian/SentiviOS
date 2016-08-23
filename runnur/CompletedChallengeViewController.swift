@@ -18,9 +18,11 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
     
     var noInternet = NoInternetViewController()
     
-    var error =  errorViewController()
+
+     var noResult = NoResultViewController()
     
-    var NoResult = NoResultViewController()
+    
+    
     var NoResultMsg = String()
     var ChModel = ChallengeModel()
     
@@ -33,7 +35,64 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
     var  contributingFilterArray = [ChallengeModel]()
     
 
+    /////// func no internet
+    func RemoveNoInternet()
+    {
+        
+        if self.view.subviews.contains(self.noInternet.view)
+            
+        {
+            
+            for i in self.view.subviews
+                
+            {
+                
+                if i == self.noInternet.view
+                    
+                {
+                    
+                    i.removeFromSuperview();
+                    
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+        
+    }
     
+    func RemoveNoResult()
+    {
+        if self.view.subviews.contains(self.noResult.view)
+            
+        {
+            
+            for i in self.view.subviews
+                
+            {
+                
+                if i == self.noResult.view
+                    
+                {
+                    
+                    i.removeFromSuperview();
+                    
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+        
+        
+    }
+    
+
 
     ///////////////////////////////////////////////////////////
     
@@ -261,7 +320,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
         
         if let extractInfo = notification.userInfo
         {
-            NoResult.view.hidden = true;
+            noResult.view.hidden = true;
             if let  book:String = extractInfo["typeId"] as? String
             {
                 self.participatingFilterArray.removeAll();
@@ -279,7 +338,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                     {
                         
                         
-                        if self.view.subviews.contains(self.NoResult.view)
+                        if self.view.subviews.contains(self.noResult.view)
                             
                         {
                             
@@ -287,7 +346,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                                 
                             {
                                 
-                                if i == self.NoResult.view
+                                if i == self.noResult.view
                                     
                                 {
                                     
@@ -345,7 +404,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                     print(book)
                     
                     
-                    if self.view.subviews.contains(self.NoResult.view)
+                    if self.view.subviews.contains(self.noResult.view)
                         
                     {
                         
@@ -353,7 +412,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                             
                         {
                             
-                            if i == self.NoResult.view
+                            if i == self.noResult.view
                                 
                             {
                                 
@@ -418,9 +477,9 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                 {
                     
                     
-                    NoResult.view.hidden = false;
+                    noResult.view.hidden = false;
                     
-                    if self.view.subviews.contains(self.NoResult.view)
+                    if self.view.subviews.contains(self.noResult.view)
                         
                     {
                         
@@ -432,16 +491,16 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                         
                     {
                         
-                        self.NoResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+                        self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
                         
-                        self.NoResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+                        self.noResult.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);
                       
-                        self.NoResult.noResultTextLabel.text = "click on the + button to create challenge"
+                        self.noResult.noResultTextLabel.text = "click on the + button to create challenge"
                         
-                        self.view.addSubview((self.NoResult.view)!);
+                        self.view.addSubview((self.noResult.view)!);
                         
                         
-                        self.NoResult.didMoveToParentViewController(self)
+                        self.noResult.didMoveToParentViewController(self)
                         
                     }
 
@@ -458,7 +517,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
             NSUserDefaults.standardUserDefaults().setBool(false, forKey: "filterActive")
             
             
-            NoResult.view.hidden = true;
+            noResult.view.hidden = true;
 
             self.completedTableView.reloadData();
             
@@ -833,7 +892,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
         
     {
         
-        self.showActivityIndicatory();
+        self.showActivityIndicator();
         
         
         let myurl = NSURL(string: Url.viewCompletedChallenges)
@@ -873,27 +932,65 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
     
     
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    let loadingView: UIView = UIView()
-    func showActivityIndicatory()
+    
+    var loadingLable = UILabel()
+    var loadingView = UIView()
+    
+    // func showActivityIndicator(view:UIView,height:CGFloat=0)
+    func showActivityIndicator()
+        
     {
         
-        loadingView.frame = CGRectMake(self.view.frame.width/2 - 30 ,self.view.frame.height/2 - 100, 60, 50)
+        print(view.frame.height)
+        print(view.frame.width)
         
         
-       // loadingView.center = view.center
         
-        loadingView.backgroundColor = UIColor.grayColor()
-        loadingView.alpha = 0.6
-        loadingView.clipsToBounds = true
+        loadingView.frame = CGRectMake(self.view.frame.width/2-30,self.view.frame.height/2 - 100,60,150)
+        
         loadingView.layer.cornerRadius = 10
-        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+        loadingView.alpha = 0.6
+        
+        
+        loadingView.clipsToBounds = true
+        
+        
+        // activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+        
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        
         activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
                                                loadingView.frame.size.height / 2);
+        
+        
+        
+        //  loadingLable=UILabel(frame: CGRectMake(self.loadingView.frame.width/2-50,self.loadingView.frame.height/2+20, 100,50))
+        
+//        loadingLable=UILabel(frame: CGRectMake(5,100, self.loadingView.frame.width,80))
+//        
+//        loadingLable.text = "Please wait a moment. This may take a while"
+//        
+//        loadingLable.textColor=UIColor.redColor()
+//        
+//        loadingLable.font = loadingLable.font.fontWithSize(10)
+//        loadingLable.lineBreakMode =  .ByWordWrapping
+//        loadingLable.numberOfLines=0
+//        
+//        loadingLable.textAlignment = .Center
+//        
+//        loadingView.addSubview(loadingLable)
+        
         loadingView.addSubview(activityIndicator)
+        
+       // loadingView.addSubview(loadingLable)
+        
         self.view.addSubview(loadingView)
         activityIndicator.startAnimating()
+        
+        //Please wait a moment. This may take a while
+        
     }
+    
     
     
 
@@ -1214,91 +1311,10 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                                     self.completedTableView.dataSource = self;
                                     self.completedTableView.reloadData();
                                     
-                                    
-                                    
-                                    if self.view.subviews.contains(self.noInternet.view)
-                                        
-                                    {
-                                        
-                                        for i in self.view.subviews
-                                            
-                                        {
-                                            
-                                            if i == self.noInternet.view
-                                                
-                                            {
-                                                
-                                                i.removeFromSuperview();
-                                                
-                                                
-                                            }
-                                            
-                                        }
-                                        
-                                        
-                                        
-                                    }
-                                    
-                                    
-                                    
-                                    
-                                    if self.view.subviews.contains(self.NoResult.view)
-                                        
-                                    {
-                                        
-                                        for i in self.view.subviews
-                                            
-                                        {
-                                            
-                                            if i == self.NoResult.view
-                                                
-                                            {
-                                                
-                                                i.removeFromSuperview();
-                                                
-                                                
-                                            }
-                                            
-                                        }
-                                        
-                                        
-                                        
-                                    }
-                                    
-                                    
-                                    
-                                    if self.view.subviews.contains(self.error.view)
-                                        
-                                    {
-                                        
-                                        for i in self.view.subviews
-                                            
-                                        {
-                                            
-                                            if i == self.error.view
-                                                
-                                            {
-                                                
-                                                i.removeFromSuperview();
-                                                
-                                                
-                                            }
-                                            
-                                        }
-                                        
-                                        
-                                        
-                                    }
-                                    
-                                    
-                                    
-                                    
+                                    self.RemoveNoInternet();
+                                    self.RemoveNoResult();
                                     
                             }
-                            
-                            
-                            
-                            
                             
                             
                         } // if response close
@@ -1318,68 +1334,19 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                                 
                                 
                                 
-                                print()
+                             
                                 self.activityIndicator.stopAnimating();
                                 
                                 self.loadingView.removeFromSuperview();
                                 
+                                self.RemoveNoInternet();
                                 
-                                if self.view.subviews.contains(self.noInternet.view)
+                                
+                                if self.view.subviews.contains(self.noResult.view)
                                     
                                 {
                                     
-                                    for i in self.view.subviews
-                                        
-                                    {
-                                        
-                                        if i == self.noInternet.view
-                                            
-                                        {
-                                            
-                                            i.removeFromSuperview();
-                                            
-                                            
-                                        }
-                                        
-                                    }
                                     
-                                    
-                                    
-                                }
-                                
-                                
-                                
-                                if self.view.subviews.contains(self.NoResult.view)
-                                    
-                                {
-                                    
-                                    for i in self.view.subviews
-                                        
-                                    {
-                                        
-                                        if i == self.NoResult.view
-                                            
-                                        {
-                                            
-                                            i.removeFromSuperview();
-                                            
-                                            
-                                        }
-                                        
-                                    }
-                                    
-                                    
-                                    
-                                }
-                                
-                                
-                                
-                                
-                                if self.view.subviews.contains(self.error.view)
-                                    
-                                {
-                                    
-                                    //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
                                     
                                 }
                                     
@@ -1387,28 +1354,16 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                                     
                                 {
                                     
-                                    self.error = self.storyboard?.instantiateViewControllerWithIdentifier("errorViewController") as! errorViewController
+                                    self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
                                     
-                                    self.error.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
+                                    self.noResult.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);
+                                    self.noResult.noResultTextLabel.text = msg
+                                    self.noResult.noResultImageView.image = UIImage(named: "im_error")
                                     
-                                    self.view.addSubview((self.error.view)!);
-                                    
-                                    //  self.DIVC.imageView.image = UIImage(named: "im_no_internet");
-                                    
-                                    // self.noInternet.imageView.userInteractionEnabled = true
-                                    
-                                    
-                                    let tapRecognizer = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
-                                    
-                                    
+                                    self.view.addSubview((self.noResult.view)!);
                                     self.view.userInteractionEnabled = true
                                     
-                                    // self.noInternet.noInternetLabel.userInteractionEnabled = true
-                                    
-                                    
-                                    self.error.view.addGestureRecognizer(tapRecognizer)
-                                    
-                                    self.error.didMoveToParentViewController(self)
+                                    self.noResult.didMoveToParentViewController(self)
                                     
                                 }
                                 
@@ -1433,61 +1388,9 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                                 self.loadingView.removeFromSuperview();
                                 
                                 
+                                self.RemoveNoInternet();
                                 
-                                ///// removeing image views
-                                
-                                if self.view.subviews.contains(self.noInternet.view)
-                                    
-                                {
-                                    
-                                    for i in self.view.subviews
-                                        
-                                    {
-                                        
-                                        if i == self.noInternet.view
-                                            
-                                        {
-                                            
-                                            i.removeFromSuperview();
-                                            
-                                            
-                                        }
-                                        
-                                    }
-                                    
-                                    
-                                    
-                                }
-                                
-                                if self.view.subviews.contains(self.error.view)
-                                    
-                                {
-                                    
-                                    for i in self.view.subviews
-                                        
-                                    {
-                                        
-                                        if i == self.error.view
-                                            
-                                        {
-                                            
-                                            i.removeFromSuperview();
-                                            
-                                            
-                                        }
-                                        
-                                    }
-                                    
-                                    
-                                    
-                                }
-                                
-                                
-                                
-                                
-                                
-                                
-                                if self.view.subviews.contains(self.NoResult.view)
+                                if self.view.subviews.contains(self.noResult.view)
                                     
                                 {
                                     
@@ -1499,20 +1402,15 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                                     
                                 {
                                     
-                                    self.NoResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+                                    self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
                                     
-                                    self.NoResult.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+                                    self.noResult.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);                                    self.noResult.noResultTextLabel.text = msg
+                                    self.noResult.noResultImageView.image = UIImage(named: "im_no_results")
                                     
-                                    
-                                    self.NoResult.noResultTextLabel.text = msg
-                                    
-                                    
-                                        self.NoResultMsg = msg!
-                                    
-                                    self.view.addSubview((self.NoResult.view)!);
+                                    self.view.addSubview((self.noResult.view)!);
                                     
                                     
-                                    self.NoResult.didMoveToParentViewController(self)
+                                    self.noResult.didMoveToParentViewController(self)
                                     
                                 }
                                 
@@ -1530,10 +1428,35 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                 
             {
                 
+                self.RemoveNoInternet();
                 
                 
+                if self.view.subviews.contains(self.noResult.view)
+                    
+                {
+                    
+                }
+                    
+                else
+                    
+                {
+                    
+                    self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+                    
+                    self.noResult.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);
+                    
+                    self.noResult.noResultTextLabel.text = "something went wrong."
+                    
+                    self.noResult.noResultImageView.image = UIImage(named: "im_error")
+                    
+                    self.view.addSubview((self.noResult.view)!);
+                    self.view.userInteractionEnabled = true
+                    
+                    self.noResult.didMoveToParentViewController(self)
+                    
+                }
                 
-                print(error)
+
                 
             }
             
@@ -1592,64 +1515,11 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
         self.activityIndicator.stopAnimating();
         
         self.loadingView.removeFromSuperview();
+        self.RemoveNoInternet();
         
-        
-        
-        
-        if self.view.subviews.contains(self.noInternet.view)
+        if self.view.subviews.contains(self.noResult.view)
             
         {
-            
-            for i in self.view.subviews
-                
-            {
-                
-                if i == self.noInternet.view
-                    
-                {
-                    
-                    i.removeFromSuperview();
-                    
-                    
-                }
-                
-            }
-            
-        }
-        
-        
-        
-        
-        if self.view.subviews.contains(self.NoResult.view)
-            
-        {
-            
-            for i in self.view.subviews
-                
-            {
-                
-                if i == self.NoResult.view
-                    
-                {
-                    
-                    i.removeFromSuperview();
-                    
-                    
-                }
-                
-            }
-            
-            
-            
-        }
-        
-        
-        
-        if self.view.subviews.contains(self.error.view)
-            
-        {
-            
-            //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
             
         }
             
@@ -1657,28 +1527,21 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
             
         {
             
-            self.error = self.storyboard?.instantiateViewControllerWithIdentifier("errorViewController") as! errorViewController
+            self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
             
-            self.error.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
+            self.noResult.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);
             
-            self.view.addSubview((self.error.view)!);
+            self.noResult.noResultTextLabel.text = "something went wrong."
             
-            //  self.DIVC.imageView.image = UIImage(named: "im_no_internet");
+            self.noResult.noResultImageView.image = UIImage(named: "im_error")
             
-            // self.noInternet.imageView.userInteractionEnabled = true
+            self.view.addSubview((self.noResult.view)!);
+            self.view.userInteractionEnabled = true
             
-            
-            let tapRecognizer = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
-            
-            // self.noInternet.noInternetLabel.userInteractionEnabled = true
-            
-            
-            self.error.view.addGestureRecognizer(tapRecognizer)
-            
-            self.error.didMoveToParentViewController(self)
+            self.noResult.didMoveToParentViewController(self)
             
         }
-        
+ 
         
         
     }
@@ -1705,7 +1568,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
         
         if(Reachability.isConnectedToNetwork()==true )
         {
-            showActivityIndicatory();
+            showActivityIndicator();
             
             self.viewCompletedChallenges();
 

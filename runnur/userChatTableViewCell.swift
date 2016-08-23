@@ -8,9 +8,27 @@
 
 import UIKit
 
-class userChatTableViewCell: UITableViewCell {
+class userChatTableViewCell: UITableViewCell
+{
 
-    override func awakeFromNib() {
+    
+    
+    @IBOutlet var profileImageView: UIImageView!
+    
+    
+    @IBOutlet var userName: UILabel!
+    
+    
+    
+    @IBOutlet var date: UILabel!
+    
+    
+    @IBOutlet var message: UILabel!
+    
+    
+    
+    override func awakeFromNib()
+    {
         super.awakeFromNib()
         // Initialization code
     }

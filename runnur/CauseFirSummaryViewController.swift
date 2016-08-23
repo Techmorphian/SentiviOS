@@ -231,7 +231,8 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         {
             
             
-           // self.performSegueWithIdentifier("inviteFriends", sender: nil)
+            self.performSegueWithIdentifier("inviteFriends", sender: nil)
+
             
         }
         
@@ -278,7 +279,8 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         {
             
             
-            //self.performSegueWithIdentifier("inviteFriends", sender: nil)
+            self.performSegueWithIdentifier("inviteFriends", sender: nil)
+
             
         }
         
@@ -326,8 +328,11 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         }
         
     }
-
     
+    
+    
+    
+     // MARK:- DATE COMPARISON FUN
     
     ////////////////////////////////////////
     
@@ -915,7 +920,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                         bottomSmallViewCenterX.constant = self.view.frame.width/2 - 10
                                           bottomButtomViewHeight.constant = 50
                                         
-                                        
+                                         
                                     }
                                     if dateCheck == challengeOnGoing
                                     {
@@ -1051,14 +1056,14 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                     if dateCheck == challengeOnGoing
                                     {
                                         
-                                        buttonOne.hidden = false
+                                        buttonOne.hidden = true
                                         buttonTwo.hidden = true
-                                        
                                         
                                           bottomFrontView.hidden = true
                                         
                                         buttonOne.setTitle("Accepted", forState: .Normal)
                                         
+                                        buttonOne.backgroundColor = UIColor.clearColor();
                                         
                                         bottomSmallViewCenterX.constant = self.view.frame.width/2 - 10
                                         

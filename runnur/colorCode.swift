@@ -37,6 +37,8 @@ class colorCode
     
     
     static var DarkGrayColor = UIColor(red: 76/255, green: 76/255, blue: 76/255, alpha: 1)
+    
+    
       static var GrayColor = UIColor(red: 185/255, green: 185/255, blue: 185/255, alpha: 1)
     
    static  var LightGray3Color = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
