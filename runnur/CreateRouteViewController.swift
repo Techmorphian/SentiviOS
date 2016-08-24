@@ -181,17 +181,134 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             NSString(data: dta, encoding: NSUTF8StringEncoding)!
             print(NSString(data: dta, encoding: NSUTF8StringEncoding)!, terminator: "\n\n")
 
+            do
+            {
+                
+                
+                let json = try NSJSONSerialization.JSONObjectWithData(dta, options: .MutableContainers) as? NSDictionary
+                if  let parseJSON = json{
+//                    let status = parseJSON["routes"] as? String
+//                    let msg=parseJSON["message"] as? String
+//                    dispatch_async(dispatch_get_main_queue(), {
+//                        CommonFunctions.hideActivityIndicator()
+//                    })
+                    
+                    
+//                    if(status=="Success")
+//                    {
+                        if  let elements = parseJSON["routes"] as? NSArray
+                        {
+                            for i in 0 ..< elements.count
+                            {
+                                let legs: AnyObject = elements[i].objectForKey("legs")!;
+                                for i in 0 ..< legs.count
+                                {
+                                    let distance = legs[i]["distance"] as! NSDictionary
+                                    
+                                    mapData.distance = distance.objectForKey("text") as? String;
+                                    
+                                    let steps = legs[i]["steps"] as! NSArray
+                                    for i in 0 ..< steps.count
+                                    {
+                                        let polyLine = (steps[i].objectForKey("polyline") as! NSDictionary).objectForKey("points") as! String
+                                        print(polyLine);
+                                        self.decodePoly(polyLine);
+                                    }
+                                    
+                                }//
+                                
+                                
+                                
+                                
+                            }//
+                        }
+                   // }
+                        
+//                    else if status == "Error"
+//                    {
+//                        NSOperationQueue.mainQueue().addOperationWithBlock
+//                            {
+//                                CommonFunctions.showPopup(self, msg: msg!, getClick: { })
+//                                return
+//                        }
+//                        
+//                    }
+//                        
+//                    else if status == "NoResult"
+//                    {
+//                        NSOperationQueue.mainQueue().addOperationWithBlock
+//                            {
+//                                NSUserDefaults.standardUserDefaults().setObject("", forKey: "winningCount")
+//                                CommonFunctions.showPopup(self, msg: msg!, getClick: { })
+//                                return
+//                        }
+//                    }
+                }
+            }
+            catch
+                
+            {
+                print(error)
+                CommonFunctions.showPopup(self, msg: "Error", getClick: { })
+            }
+            
 //            arrayOfCLLocationCoordinate2D.append(coordinate);
-//            path.addCoordinate(coordinate);
-//            polyline = GMSPolyline(path: path)
-//            polyline.strokeColor = UIColor.redColor();
-//            polyline.strokeWidth = 1
-//            polyline.geodesic = true
-//            polyline.map = mapView
+
             
         }
     }
     }
+    
+    
+ func decodePoly(encoded:String) {
+    
+    //  List<LatLng> poly = new ArrayList<LatLng>();
+    let data = Array(encoded.characters)
+    let index = 0;
+    let len = encoded.characters.count;
+    var lat = 0, lng = 0;
+    
+    while (index < len) {
+        var b = Int();
+        var shift = 0;
+        var result = 0;
+        repeat
+        {
+           
+            let qdf = String(data[index + 1]).unicodeScalars;
+            b = Int(qdf[qdf.startIndex].value) - 63
+            result |= (b & 0x1f) << shift;
+            shift += 5;
+           
+        } while (b >= 0x20);
+        let dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+        lat += dlat;
+        
+        shift = 0;
+        result = 0;
+        repeat {
+           let qdf = String(data[index + 1]).unicodeScalars;
+            
+            b = Int(qdf[qdf.startIndex].value) - 63
+            result |= (b & 0x1f) << shift;
+            shift += 5;
+           
+        } while (b >= 0x20);
+        let dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+        lng += dlng;
+        
+        path.addLatitude(CLLocationDegrees(Double(lat)/0.00001), longitude: CLLocationDegrees(Double(lng)/0.00001));
+
+    }
+    
+                polyline = GMSPolyline(path: path)
+                polyline.strokeColor = UIColor.redColor();
+                polyline.strokeWidth = 1
+                polyline.geodesic = true
+                polyline.map = mapView
+    }
+    
+    
     func getDirectionsUrl(origin:GMSMarker,  dest:GMSMarker) -> String {
     
     // Origin of route
@@ -211,7 +328,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
     
     for (var i = 0; i < lastMarker.count - 1; i++) {
         let point = lastMarker[i];
-    if (i == 1) {
+    if (i == 0) {
     waypoints += String(point.position.latitude) + "," + String(point.position.longitude);
     } else {
     waypoints += "," + String(point.position.latitude) + "," + String(point.position.longitude);
@@ -423,7 +540,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             tapCounter += 1;
             lastMarker.append(london);
         }
-        passToGetDirections()
+      //  passToGetDirections()
         arrayOfCLLocationCoordinate2D.append(coordinate);
          path.addCoordinate(coordinate);
         polyline = GMSPolyline(path: path)

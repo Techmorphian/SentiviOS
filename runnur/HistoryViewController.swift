@@ -30,6 +30,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     
     @IBAction func refresh(sender: UIButton) {
+        self.tableView.reloadData();
     }
     
     @IBAction func sort(sender: UIButton) {
