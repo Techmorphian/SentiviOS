@@ -14,6 +14,17 @@ protocol userActivityCellProtocol
     func getUserActivityLikeProtocol(cell:userActivityTableViewCell,index:Int);
     
     func getUserActivityUnLikeProtocol(cell:userActivityTableViewCell,index:Int);
+    
+    
+    /////// for comment button protocol func
+    
+    
+    func getUsercommentsProtocol(cell:userActivityTableViewCell,index:Int);
+    
+    
+    
+    
+    
 }
 
 
@@ -24,6 +35,9 @@ class userActivityTableViewCell: UITableViewCell
     
     
     var UserActivityDelegate: userActivityCellProtocol?
+    
+    
+    var UseractivitycommentDelegate : userActivityCellProtocol?
     
     
     @IBOutlet var profileImageView: UIImageView!
@@ -95,7 +109,11 @@ class userActivityTableViewCell: UITableViewCell
     
     @IBAction func commentUsercellButtonAction(sender: AnyObject)
     {
+       
         
+        commentButtonTag = commentUserCellButton.tag
+        
+        UseractivitycommentDelegate?.getUsercommentsProtocol(self, index: commentButtonTag)
         
         
     }

@@ -317,6 +317,7 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
                                 let photoUrl = elements[i]["photoUrl"] as! String
                                 
                                 NSUserDefaults.standardUserDefaults().setObject(photoUrl, forKey: "photoUrl")
+                                
                                 NSUserDefaults.standardUserDefaults().setObject("163", forKey: "weight")
                                 NSUserDefaults.standardUserDefaults().setObject("5", forKey: "heightFt")
                                 NSUserDefaults.standardUserDefaults().setObject("10", forKey: "heightIn")

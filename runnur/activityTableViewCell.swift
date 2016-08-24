@@ -11,17 +11,25 @@ import UIKit
 
 protocol activityCellLikeProtocol
 {
+    
+    //// for like button protocol button func 
+    
     func getactivityCellLikeProtocol(cell:activityTableViewCell,index:Int);
     
     func getactivityCellUnLikeProtocol(cell:activityTableViewCell,index:Int);
+    
+    
+    /////// for comment button protocol func
+    
+    
+    func getcommentsProtocol(cell:activityTableViewCell,index:Int);
+    
+   
+    
+    
 }
 
 
-
-protocol activityCellCommentProtocol
-{
-    func getactivityCellLikeProtocol(cell:activityTableViewCell,index:Int);
-}
 
 
 
@@ -34,7 +42,7 @@ class activityTableViewCell: UITableViewCell
     var activityUnLikeDelegate: activityCellLikeProtocol?
     
     
-     var activitycommentDelegate: activityCellLikeProtocol?
+    var activitycommentDelegate: activityCellLikeProtocol?
     
     
     @IBOutlet var profileImageView: UIImageView!
@@ -96,17 +104,6 @@ class activityTableViewCell: UITableViewCell
 
             
         }
-//        
-//        if like.textColor == colorCode.DarkGrayColor
-//        {
-//            activitylikeDelegate?.getactivityCellLikeProtocol(self, index: likeButtonTag)
-//            
-//        }
-//        if like.textColor != colorCode.DarkGrayColor
-//        {
-//            activitylikeDelegate?.getactivityCellUnLikeProtocol(self, index: likeButtonTag)
-//            
-//        }
         
       
         
@@ -119,9 +116,12 @@ class activityTableViewCell: UITableViewCell
         
         commentButtonTag = activityCellCommentButton.tag
         
-        activitycommentDelegate?.getactivityCellLikeProtocol(self, index: commentButtonTag)
+        activitycommentDelegate?.getcommentsProtocol(self, index: commentButtonTag)
+        
         
     }
+    
+    
     
     
     override func awakeFromNib()

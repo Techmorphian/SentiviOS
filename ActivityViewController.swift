@@ -9,7 +9,7 @@
 import UIKit
 
 
-class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,NSURLSessionDelegate,NSURLSessionDataDelegate,activityCellLikeProtocol,userActivityCellProtocol,UITextFieldDelegate
+class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,NSURLSessionDelegate,NSURLSessionDataDelegate,activityCellLikeProtocol,userActivityCellProtocol,UITextViewDelegate
 {
    
     var noInternet = NoInternetViewController()
@@ -17,8 +17,9 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     var noResult = NoResultViewController()
 
     
-    @IBOutlet var messageTextField: UITextField!
+   
     
+    @IBOutlet var messageTextView: UITextView!
     
     
     @IBOutlet var sendButton: UIButton!
@@ -26,7 +27,17 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     @IBOutlet var ActivityTableView: UITableView!
     
     
+    
+    @IBOutlet var heightOfMsgTextView: NSLayoutConstraint!
+    
+    
+    
+    
+    @IBOutlet var heightOfMSGbottomView: NSLayoutConstraint!
 
+    
+    
+    
     /// creating model varibales
     
     var activityModel = ViewActivityModel()
@@ -49,10 +60,31 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     
     
-    
+    // MARK:- SEND BUTTON ACTION
     
     @IBAction func sendButtonAction(sender: AnyObject)
     {
+        
+        
+        self.postChat();
+        
+//       if messageTextField.text != ""
+//       {
+//        self.showActivityIndicator()
+//        if (Reachability.isConnectedToNetwork() == true)
+//        {
+//        self.postChat();
+//            
+//        }
+//        else
+//        
+//        {
+//            
+//            
+//        }
+//        
+//       }
+        
     }
     
     
@@ -83,6 +115,8 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     ///// displying data on row
     
+ //   MARK:- CELL FOR ROW AT INDEX PATH
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         
@@ -92,6 +126,8 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         ///// if user is loged in user then userChatTableViewCell else chat table view cell
         /// log in user id stored in NSUserDefaults
+       
+        
         
         if  NSUserDefaults.standardUserDefaults().stringForKey("userId") == activityChatArray[indexPath.row].userId
         {
@@ -99,6 +135,8 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             //// checking chatObjectTypeArray.count is not empty
             
+            
+           // MARK:- USER CHAT
             if activityChatArray[indexPath.row].isFromChat == true
             {
                 let cell:userChatTableViewCell = tableView.dequeueReusableCellWithIdentifier("userChatTableViewCell")as!
@@ -132,16 +170,16 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 if activityChatArray[indexPath.row].createdAt != ""
                 {
                     
-                    // 2016-08-19 13:22:39.2160000 +00:00
-                    print(activityChatArray[indexPath.row].createdAt)
+//                    // 2016-08-19 13:22:39.2160000 +00:00
+//                    print(activityChatArray[indexPath.row].createdAt)
+//                    
+//                     let date = dateFunction.dateWithTimeFormatFunc("MMMM dd, yyyy kk:mm:ss", fromFormat: "yyyy-MM-dd kk:mm:ss", dateToConvert: activityChatArray[indexPath.row].createdAt)
+//                    
+//                        print(date)
+//                    
                     
-                     let date = dateFunction.dateWithTimeFormatFunc("MMMM dd, yyyy kk:mm:ss", fromFormat: "yyyy-MM-dd kk:mm:ss", dateToConvert: activityChatArray[indexPath.row].createdAt)
                     
-                        print(date)
-                    
-                    
-                    
-                    cell.date.text =  date
+                    cell.date.text =  activityChatArray[indexPath.row].createdAt
                     
                     
                 }
@@ -149,6 +187,8 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 return cell
                 
             }
+            
+            // MARK:- USER ACTIVITY
           if activityChatArray[indexPath.row].isFromActivity == true
             {
                 
@@ -200,13 +240,13 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     
                     print(activityChatArray[indexPath.row].createdAt)
                     
-                     let date = dateFunction.dateWithTimeFormatFunc("MMMM dd, yyyy kk:mm:ss", fromFormat: "yyyy-MM-dd kk:mm:ss", dateToConvert: activityChatArray[indexPath.row].createdAt)
+//                     let date = dateFunction.dateWithTimeFormatFunc("MMMM dd, yyyy kk:mm:ss", fromFormat: "yyyy-MM-dd kk:mm:ss", dateToConvert: activityChatArray[indexPath.row].createdAt)
+//                    
+//                        print(date)
+//                    
                     
-                        print(date)
                     
-                    
-                    
-                    cell.date.text =  date
+                    cell.date.text =  activityChatArray[indexPath.row].createdAt
                     
                     
                 }
@@ -223,7 +263,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             //// checking chatObjectTypeArray.count is not empty
             
-           
+            // MARK:- CHAT
             
             if activityChatArray[indexPath.row].isFromChat == true
             {
@@ -263,20 +303,20 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     // 2016-08-19 13:22:39.2160000 +00:00
                     
                     
-                    
-                    let date = activityChatArray[indexPath.row].createdAt
-                    
-                    let dateFormatter = NSDateFormatter()
-                    
-                    dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
-                 
+//                    
+//                    let date = activityChatArray[indexPath.row].createdAt
+//                    
+//                    let dateFormatter = NSDateFormatter()
+//                    
+//                    dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+//                 
                     
 //                     let date = dateFunction.dateWithTimeFormatFunc("MMMM dd, yyyy kk:mm:ss", fromFormat: "yyyy-MM-dd hh:mm:ss.ms +HH:mm", dateToConvert: chatObjectTypeArray[indexPath.row].createdAt)
 //                    
 //                        print(date)
 //                    
 //                                        
-                   // cell.date.text =  activityObjectTypeArray[indexPath.row].createdAt
+                   cell.date.text =  activityChatArray[indexPath.row].createdAt
                     
                     
                 }
@@ -286,7 +326,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             }
             
             
-            ///// MARK:-  FROM ACTIVITY SCREEN 
+            // MARK:- ACTIVITY
             
             if activityChatArray[indexPath.row].isFromActivity == true
             {
@@ -294,11 +334,20 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 let cell:activityTableViewCell = tableView.dequeueReusableCellWithIdentifier("activityTableViewCell")as!
                 activityTableViewCell
                 
-            ////// delegete of activity like and unlike
+                //MARK:- delegete of activity like and unlike
+                
                 cell.activitylikeDelegate = self;
                 
-                ///// activity cell like button tag
+                cell.activitycommentDelegate = self
+                
+                //MARK:-  activity cell like button tag
+                
                 cell.activityCellLikeButton.tag = indexPath.row
+                
+                cell.activityCellCommentButton.tag = indexPath.row
+                
+                
+                /////////////////////////////////////
                 
                 cell.like.textColor = colorCode.DarkGrayColor
                 
@@ -350,7 +399,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     
                     
                     
-                    //cell.date.text =  activityObjectTypeArray[indexPath.row].createdAt
+                    cell.date.text =  activityChatArray[indexPath.row].createdAt
                     
                     
                 }
@@ -367,6 +416,10 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
     }
     
+    
+    
+     //   MARK:- DID SELECT ROW INDEX PATH
+    
      var selectedRunID = Int()
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
@@ -374,6 +427,8 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     {
         selectedRunID = indexPath.row
     }
+    
+      //   MARK:- HEIGHT FOR ROW INDEX PATH
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
@@ -492,7 +547,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
     {
     
-    showActivityIndicator();
+         showActivityIndicator();
         
         
         let myurl = NSURL(string: Url.activityInfo)
@@ -512,14 +567,14 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         print(userId)
         print(ChallengeId)
-        
-      // let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
+      
+       //let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
         
         print(CurrentDateFunc.currentDate())
         
         let currentDate = "2016-08-21"
         
-      let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(currentDate)";
+     let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(currentDate)";
 
         
         print(postString)
@@ -541,7 +596,65 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
 
     
+    // MARK:- POST CHAT  WEB SERVICE
     
+    func postChat()
+        
+    {
+        
+        showActivityIndicator();
+        
+        
+        let myurl = NSURL(string: Url.postChat)
+        
+        let request = NSMutableURLRequest(URL: myurl!)
+        
+        request.HTTPMethod = "POST"
+        
+        request.timeoutInterval = 20.0;
+        
+        
+        
+        let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
+        
+        let ChallengeId = NSUserDefaults.standardUserDefaults().stringForKey("challengeId")
+        
+        // let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
+        
+        print(CurrentDateFunc.currentDate())
+        
+         var message = String()
+        if messageTextView.text != ""
+        {
+        
+         message = messageTextView.text!
+            
+        }
+        else
+        {
+         message = ""
+        }
+        
+        
+        let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&message=\(message)";
+        
+        
+        print(postString)
+        
+        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+        
+        let session = NSURLSession(configuration: config, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
+        
+        let downloadTask = session.dataTaskWithRequest(request);
+        
+        downloadTask.resume()
+        
+        
+        
+    }
+
 
     var loadingLable = UILabel()
     var loadingView = UIView()
@@ -623,6 +736,8 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         
         print(dataString!)
+        
+    // MARK:-  IF DATA TASK = ACTIVITY INFO WEB SERVICE
         
         if dataTask.currentRequest?.URL! == NSURL(string: Url.activityInfo)
             
@@ -937,8 +1052,13 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                             {
                                                 self.activityModel.message = message
                                             }
+                                      
                                             
+                                            
+                                        
                                         activityChatArray.append(activityModel)
+                                            
+                                           
                                             
                                             
                                         }
@@ -957,6 +1077,9 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                     self.ActivityTableView.delegate = self;
                                     
                                     self.ActivityTableView.dataSource = self;
+                                    
+                                  self.activityChatArray = self.activityChatArray.reverse();
+                                                             
                                     
                                     self.ActivityTableView.reloadData();
                                     
@@ -1055,7 +1178,9 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                     
                                     self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
                                     
-                                    self.noResult.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);                                    self.noResult.noResultTextLabel.text = msg
+                                    self.noResult.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);
+                                    
+                                    self.noResult.noResultTextLabel.text = msg
                                     self.noResult.noResultImageView.image = UIImage(named: "im_no_results")
                                     
                                     self.view.addSubview((self.noResult.view)!);
@@ -1113,6 +1238,226 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             
         } // if dataTask close
+        
+        
+//MARK: IF DATA TASK =  POST CHAT
+        
+        
+        if dataTask.currentRequest?.URL! == NSURL(string: Url.postChat)
+            
+        {
+            
+            do
+                
+            {
+                
+                let json = try NSJSONSerialization.JSONObjectWithData(self.mutableData, options: .MutableContainers) as? NSDictionary
+                
+                if  let parseJSON = json
+                {
+                    
+                    let status = parseJSON["status"] as? String
+                    let msg=parseJSON["message"] as? String
+                    if(status=="Success")
+                    {
+                        
+                        
+                      
+                                
+//                                
+//                                NSUserDefaults.standardUserDefaults().setObject(userId, forKey: "userId")
+//                                NSUserDefaults.standardUserDefaults().setObject(firstName, forKey: "firstName")
+//                                
+//                                NSUserDefaults.standardUserDefaults().setObject(lastName, forKey: "lastName")
+//                                
+//                                NSUserDefaults.standardUserDefaults().setObject(photoUrl, forKey: "photoUrl")
+                                
+                                
+                                
+
+                        
+                        
+                        
+                        
+                        self.activityModel=ViewActivityModel()
+                        
+                        
+                        
+                                                        self.activityModel.isFromChat = true
+                        
+                                                        self.activityModel.isFromActivity = false
+                                let message = messageTextView.text
+                             
+                                if message != ""
+                                {
+                                    self.activityModel.message = message!
+                                }
+
+                                
+                                let date = CurrentDateFunc.currentDate()
+                                
+                                if date != ""
+                                {
+                                    self.activityModel.createdAt = date
+
+                                    
+                                }
+                                
+                                let userId = NSUserDefaults.standardUserDefaults().stringForKey("userId")
+                                
+                                if userId != ""
+                                {
+                                    
+                                    self.activityModel.userId = userId!
+                                }
+                                
+                                
+                                let firstName = NSUserDefaults.standardUserDefaults().stringForKey("firstName")
+                                
+                                if firstName != ""
+                                {
+                                    
+                                    self.activityModel.FirstName = firstName!
+                                }
+                                
+                                
+                                let lastName = NSUserDefaults.standardUserDefaults().stringForKey("lastName")
+                                
+                                if lastName != ""
+                                {
+                                    
+                                    self.activityModel.LastName = lastName!
+                                }
+                                
+                                let photoUrl = NSUserDefaults.standardUserDefaults().stringForKey("photoUrl")
+                                
+                                if lastName != ""
+                                {
+                                    
+                                    self.activityModel.PhotoUrl = photoUrl!
+                                }
+                                
+                                 let ChallengeId = NSUserDefaults.standardUserDefaults().stringForKey("challengeId")
+                                
+                                if ChallengeId != ""
+                                {
+                                    
+                                    activityModel.challengeId = ChallengeId!
+                                }
+                                
+                                 let chatId = "DB5C2BAE-4A95-41CF-B339-F067738AD04C"
+                                
+                                if chatId != ""
+                                {
+                                    
+                                    activityModel.chatId = chatId
+                                }
+
+                                
+                            activityChatArray.append(activityModel)
+
+
+                        
+                        
+                        NSOperationQueue.mainQueue().addOperationWithBlock
+                            {
+                                
+                                
+                                self.activityIndicator.stopAnimating();
+                                
+                                self.loadingView.removeFromSuperview();
+                                
+                                
+                                
+                                self.messageTextView.text = ""
+                                
+                                self.messageTextView.resignFirstResponder();
+                                
+                                
+                              self.ActivityTableView.delegate=self;
+                                self.ActivityTableView.dataSource=self;
+                                
+                              
+                                
+                                self.ActivityTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.ActivityTableView.numberOfRowsInSection(0), inSection: 0)], withRowAnimation: UITableViewRowAnimation.None)
+                               
+                             
+                               self.ActivityTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.ActivityTableView.numberOfRowsInSection(0)-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.None, animated: true);
+                                
+                                
+                                
+                                
+                                
+                        } // ns close
+                        
+                        
+                        
+                        
+                    }
+                        
+                    else if status == "Error"
+                        
+                    {
+                        
+                        NSOperationQueue.mainQueue().addOperationWithBlock
+                            
+                            {
+                                
+                                
+                                self.activityIndicator.stopAnimating();
+                                
+                                self.loadingView.removeFromSuperview();
+                                
+                                
+                                let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
+                                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+                                
+                                alert.addAction(okAction)
+                                
+                                self.presentViewController(alert, animated: true, completion: nil)
+                                return
+                                
+                                
+                        }
+                        
+                    }
+                    
+                    
+                    
+                }
+                
+            }
+                
+            catch
+                
+            {
+                
+                
+                self.activityIndicator.stopAnimating();
+                
+                self.loadingView.removeFromSuperview();
+                
+                print(error)
+                
+                let alert = UIAlertController(title: "", message:"something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
+                
+                let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
+                
+                alert.addAction(alertAction)
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+                
+                return
+                
+                
+            }
+            
+        } // if dataTask close
+        
+
+        
+        
+        
         
         
     } //// main func
@@ -2102,6 +2447,75 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     
+    
+    
+// MARK:- GET COMMENTS PROTOCOL
+    
+    func getcommentsProtocol(cell: activityTableViewCell, index: Int)
+    {
+      
+        
+        if(Reachability.isConnectedToNetwork()==true )
+        {
+
+        
+        let indexPath = self.ActivityTableView.indexPathForRowAtPoint(cell.center)!
+        
+        let cell = self.ActivityTableView.cellForRowAtIndexPath(indexPath) as! activityTableViewCell
+        
+            
+            
+           let comments = self.storyboard?.instantiateViewControllerWithIdentifier("CommentsViewController") as! CommentsViewController
+            
+                
+            
+            NSUserDefaults.standardUserDefaults().setObject(activityChatArray[index].runId, forKey: "runObjectId")
+
+            
+            
+           self.presentViewController(comments, animated: false, completion: nil);
+        
+        }
+        
+        
+    }
+    
+    
+    
+    
+    func getUsercommentsProtocol(cell: userActivityTableViewCell, index: Int)
+    {
+        
+        
+        
+        
+        if(Reachability.isConnectedToNetwork()==true )
+        {
+            
+            
+            let indexPath = self.ActivityTableView.indexPathForRowAtPoint(cell.center)!
+            
+            let cell = self.ActivityTableView.cellForRowAtIndexPath(indexPath) as! activityTableViewCell
+            
+            
+            
+            let comments = self.storyboard?.instantiateViewControllerWithIdentifier("CommentsViewController") as! CommentsViewController
+            
+            
+            
+            NSUserDefaults.standardUserDefaults().setObject(activityChatArray[index].runId, forKey: "runObjectId")
+            
+            
+            
+            self.presentViewController(comments, animated: false, completion: nil);
+            
+        }
+
+    }
+    
+    
+    
+    
     //MARK:- NO INTERNET TAP GESTURE
     
     func handleTap(sender: UITapGestureRecognizer)
@@ -2242,182 +2656,176 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     // MARK:- MESSAGE VIEW  
     
-    /// MARK:- TEXT FIELD DID BEGIN EDITING
+    func value()
+    {
+       
+        
+        let numLines:CGFloat = messageTextView.contentSize.height / (messageTextView.font?.lineHeight)!
+        
+        if numLines <= 5
+        {
+            let textViewFixedWidth: CGFloat = self.messageTextView.frame.size.width
+            let newSize: CGSize = self.messageTextView.sizeThatFits(CGSizeMake(textViewFixedWidth, CGFloat(MAXFLOAT)))
+            var newFrame: CGRect = self.messageTextView.frame
+            //
+            _ = self.messageTextView.frame.origin.y
+            let heightDifference = self.messageTextView.frame.height - newSize.height
+            //
+            if (abs(heightDifference) > 5) {
+                newFrame.size = CGSizeMake(fmax(newSize.width, textViewFixedWidth), newSize.height)
+                newFrame.offsetInPlace(dx: 0.0, dy: heightDifference)
+                //
+                //updateParentView(heightDifference)
+                heightOfMSGbottomView.constant = newFrame.height+20;
+            }
+            self.messageTextView.frame = newFrame
+        }
+
+    }
     
     
-//    func textFieldDidBeginEditing(textField: UITextField)
-//    {
-//        <#code#>
-//    }
-//   
-//    
-//    
-//    // MARK:- TEXT FIELD DID END  EDITING
-//    
-//    func textFieldDidEndEditing(textField: UITextField)
-//    {
-//        <#code#>
-//    }
-//    
     
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool
+    {
+        let text = (textView.text! as NSString).stringByReplacingCharactersInRange(range, withString: text)
+       
+        print(text.characters.count)
+        
+        if (text.characters.count > 0)
+        {
+            sendButton.enabled=true;
+            
+            sendButton.userInteractionEnabled = true
+            sendButton.setImage(UIImage(named: "ic_send"), forState: UIControlState.Normal)
+            
+        }
+        else
+        {
+            sendButton.enabled=false;
+              sendButton.userInteractionEnabled = false
+            
+            sendButton.setImage(UIImage(named: "ic_send"), forState: UIControlState.Normal)
+        }
+        return true;
+    }
+
     
     func textFieldShouldReturn(textField: UITextField) -> Bool
     {
-        messageTextField.resignFirstResponder();
+        messageTextView.resignFirstResponder();
         
         return true
     }
 
-    func registerForKeyboardNotifications()
-        
+    
+   
+    
+    
+    func keyboardWasShown (notification: NSNotification)
     {
         
-        //Adding notifies on keyboard appearing
-        
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ActivityViewController.keyboardWasShown(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ActivityViewController.keyboardWillBeHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
-        
-    }
-    
-    func deregisterFromKeyboardNotifications()
-        
-    {
-        
-        //Removing notifies on keyboard appearing
-        
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
-        
-    }
-    
-    var actualContentInset = UIEdgeInsets()
-    
-    var activeField : AnyObject?
-    
-    
-    func keyboardWasShown(notification: NSNotification)
-    
-    {
-    
-        print("keyboard was shown")
-        
-        let userInfo = notification.userInfo!
-        
-        let keyboardSize = (userInfo [UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue().size;
-        
-       
-        
-        var contentInsets:UIEdgeInsets
-        
+        var info = notification.userInfo
+        if let keyboardSize = (info![UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+            var contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+            
         if UIInterfaceOrientationIsPortrait(UIApplication.sharedApplication().statusBarOrientation)
-        {
+            {
+                
+                contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height, 0.0);
+            }
+            else
+            {
+                contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.width, 0.0);
+                
+            }
             
-            contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize!.height, 0.0);
+            ActivityTableView.contentInset = contentInsets
+            ActivityTableView.scrollIndicatorInsets = ActivityTableView.contentInset
+            
+            ActivityTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.ActivityTableView.numberOfRowsInSection(0) - 1, inSection: 0), atScrollPosition: .Top, animated: false)
+            
+            messageBottomViewConstraint.constant += keyboardSize.height;
+            
         }
-        else
-        {
-            contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize!.width, 0.0);
-            
-        }
-        ActivityTableView.contentInset = contentInsets
-        
-      
-        
-       // ActivityTableView.scrollToRowAtIndexPath(aRect, atScrollPosition: .Top, animated: true)
-        ActivityTableView.scrollIndicatorInsets = ActivityTableView.contentInset
         
         
-            
-            
     }
-    
-    
-//    func keyboardWasShown(notification: NSNotification)
-//        
-//    {
-//        
-//        //Need to calculate keyboard exact size due to Apple suggestions
-//        
-//        self.ScrollView.scrollEnabled = true
-//        
-//        let info : NSDictionary = notification.userInfo!
-//        
-//        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue().size
-//        
-//        let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize!.height, 0.0)
-//        
-//        self.ScrollView.contentInset = contentInsets
-//        
-//        self.ScrollView.scrollIndicatorInsets = contentInsets
-//        
-//        
-//        var aRect : CGRect = self.view.frame
-//        
-//        aRect.size.height -= keyboardSize!.height
-//        
-//        if let _ = activeField
-//            
-//        {
-//            
-//            if (!CGRectContainsPoint(aRect, activeField!.frame.origin))
-//                
-//            {
-//                
-//                self.ScrollView.scrollRectToVisible(activeField!.frame, animated: true)
-//                
-//            }
-//            
-//        }
-//        
-//        
-//    }
-    
-    
-    func keyboardWillBeHidden(notification: NSNotification)
-        
+    func keyboardWillBeHidden (notification: NSNotification)
     {
         
-        self.messageBottomViewConstraint.constant = 0;
-        
-        //Once keyboard disappears, restore original positions
-        
-        self.ActivityTableView.contentInset = actualContentInset
-        
-        self.ActivityTableView.scrollIndicatorInsets = actualContentInset
+        ActivityTableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
+       
+        ActivityTableView.scrollIndicatorInsets = ActivityTableView.contentInset
+        messageBottomViewConstraint.constant = 0;
         
         
+    }
+    
+    func textViewDidChange(textView: UITextView)
+    {
+        print("text view did change\n")
+        value();
     }
 
     
+    
+    
+    func ReceivedNotification(notification: NSNotification)
+    {
+
+        if let extractInfo = notification.userInfo
+        {
+            
+            
+            let rowindex = extractInfo["indexOfRow"] as! Int
+            
+            let rowCount = extractInfo["rowCount"]
+          
+            
+            
+           self.activityChatArray[rowindex].comments = String(rowCount)
+            //rowCount;
+            
+            ActivityTableView.reloadData();
+            
+            
+        }
+        
+    }
     
    //MARK: VIEW DIDLOAD 
     
     override func viewDidLoad()
     {
         super.viewDidLoad();
+  
         
+        messageTextView.delegate = self;
+       
+        messageTextView.autocorrectionType = .No
         
-        ActivityTableView.delegate = self
-        ActivityTableView.dataSource = self
-        
-        messageTextField.delegate = self;
-        
-        messageTextField.autocorrectionType = .No
-        
-        
-        
-        
-        
-        ActivityTableView.reloadData();
+         sendButton.userInteractionEnabled = false
+      
+        ActivityTableView.tableFooterView = UIView()
         
         
         self.activityInfo();
+        
+        
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("ReceivedCommentsCount"), name: "commentsCount", object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ActivityViewController.ReceivedNotification(_:)), name:"commentsCount", object: nil)
+
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ActivityViewController.keyboardWasShown(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ActivityViewController.keyboardWillBeHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        // Do any additional setup after loading the view.
+        
 
     }
 
+  
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
