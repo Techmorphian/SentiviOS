@@ -66,7 +66,7 @@ class FAQViewController: UIViewController,UITableViewDelegate,UITableViewDataSou
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as? FAQCellTableViewCell
+        _ = tableView.cellForRowAtIndexPath(indexPath) as? FAQCellTableViewCell
        
     
 //        selectedRow = indexPath.row

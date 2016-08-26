@@ -170,7 +170,7 @@ class InviteFriendsViaEmailViewController: UIViewController,UITextFieldDelegate,
             toolbar.translucent = true
             toolbar.sizeToFit()
             
-            var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "inputToolbarDonePressed")
+            var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(InviteFriendsViaEmailViewController.inputToolbarDonePressed))
             
             var flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
             
@@ -389,9 +389,7 @@ class InviteFriendsViaEmailViewController: UIViewController,UITextFieldDelegate,
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
+                        NSOperationQueue.mainQueue().addOperationWithBlock ({
                                 
                                 self.activityIndicator.stopAnimating();
                                 
@@ -404,9 +402,8 @@ class InviteFriendsViaEmailViewController: UIViewController,UITextFieldDelegate,
                                 
                                 self.presentViewController(alert, animated: true, completion: nil)
                                 return
-                                
-                                
-                        }
+                                                         
+                        })
                         
                     }
                     

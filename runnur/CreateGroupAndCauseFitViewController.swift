@@ -1532,11 +1532,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
             var fixedSpaceButton = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
             
             var nextButton  = UIBarButtonItem(image: UIImage(named: "bt_fwd"), style: .Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.keyboardNextButton))
-            
-    
-            
-            
-            
+                       
             toolbar.setItems([ fixedSpaceButton,nextButton,fixedSpaceButton, flexibleSpaceButton, doneButton], animated: false)
             toolbar.userInteractionEnabled = true
             
@@ -2142,7 +2138,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                     let status = parseJSON["status"] as? String
                     let msg=parseJSON["message"] as? String
                     
-                    let response=parseJSON["response"] as? String
+                    let response = parseJSON["response"] as? String
                     
 //                    let challengeID=parseJSON["challengeId"] as? String
                     
@@ -2209,9 +2205,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
                                 //  LoaderFile.hideLoader(self.view)
                                 
@@ -2229,7 +2223,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                                 return
                                 
                                 
-                        }
+                        })
                         
                     }
                     
@@ -2350,9 +2344,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
                                 //  LoaderFile.hideLoader(self.view)
                                 
@@ -2368,9 +2360,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                                 
                                 self.presentViewController(alert, animated: true, completion: nil)
                                 return
-                                
-                                
-                        }
+                        })
                         
                     }
                     
@@ -2551,7 +2541,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         
             
             
-            var attributedString =  NSMutableAttributedString(string: string as String, attributes: attributes)
+            let attributedString =  NSMutableAttributedString(string: string as String, attributes: attributes)
             
             
             let boldFontAttribute = [NSFontAttributeName: UIFont.systemFontOfSize(14.0)]
@@ -2621,7 +2611,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
             
             
             
-            var attributedString2 =  NSMutableAttributedString(string: string2 as String, attributes: attributes)
+            let attributedString2 =  NSMutableAttributedString(string: string2 as String, attributes: attributes)
             
             
             let boldFontAttribute = [NSFontAttributeName: UIFont.systemFontOfSize(14.0)]

@@ -136,7 +136,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     {
         super.viewDidLoad();
         
-        self.call();
+        //self.call();
         
         gps.layer.shadowOpacity=0.4;
 

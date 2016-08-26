@@ -527,9 +527,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                                     if(status=="Success")
                                     {
                                         
-                                    NSOperationQueue.mainQueue().addOperationWithBlock
-                                        
-                                  {
+                                    NSOperationQueue.mainQueue().addOperationWithBlock ({
                                                 
                                                 
                                 self.activityIndicator.stopAnimating();
@@ -620,7 +618,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                                                 self.friendsTableView.reloadData();
                                                 
                                                 
-                                        }///ns
+                                        })///ns
                                         
                                     }// if
                                         
@@ -959,9 +957,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
                                 self.activityIndicator.stopAnimating();
                                 
@@ -1001,11 +997,8 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                                     self.noResult.didMoveToParentViewController(self)
                                     
                                 }
-                                
-
-                                
-                                
-                        }
+                            
+                        })
                         
                     }
                         
@@ -1013,9 +1006,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
                               self.activityIndicator.stopAnimating();
                                 
@@ -1024,10 +1015,6 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                                 
                                  self.RemoveNoInternet();
                                 self.RemoveNoResult();
-
-                                
-                                
-                                
                                 
                                 if self.view.subviews.contains(self.noFriendResult.view)
                                     
@@ -1051,13 +1038,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                                     self.noFriendResult.didMoveToParentViewController(self)
                                     
                                 }
-
-                                
-                                
-                       
-                                
-                                
-                        }
+                        })
                         
                     }
                     

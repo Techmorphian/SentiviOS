@@ -9,8 +9,14 @@
 import UIKit
 
 
+
 class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,NSURLSessionDelegate,NSURLSessionDataDelegate,activityCellLikeProtocol,userActivityCellProtocol,UITextViewDelegate
 {
+    
+   
+    var lastDateSent = CurrentDateFunc.currentDate()
+    
+    var isWBCalledFirstTime = true
    
     var noInternet = NoInternetViewController()
     
@@ -18,6 +24,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
 
     
    
+    @IBOutlet var messageView: UIView!
     
     @IBOutlet var messageTextView: UITextView!
     
@@ -430,72 +437,92 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
       //   MARK:- HEIGHT FOR ROW INDEX PATH
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
-    {
-        ///// row height for activity and chat cell
-        
-        if activityChatArray[indexPath.row].isFromActivity == true
-        {
-            
-            return 185;
-        }
-      
-        else
-        {
-            
-            return 100;
-        }
-
-        
-    }
-    
-
+//    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+//    {
+//        ///// row height for activity and chat cell
+//        
+//        
+//        let cell:userChatTableViewCell = tableView.dequeueReusableCellWithIdentifier("userChatTableViewCell")as!
+//        userChatTableViewCell
+//        
+//        if activityChatArray[indexPath.row].isFromActivity == true
+//        {
+//            
+//            return 185;
+//        }
+//      
+//        else
+//        {
+//            
+//            return 100;
+//        }
+//
+//        
+//    }
+//    
+//
     
     
     //MARK:- PAGGING
     
-    var loading = false;
+  
+    
+    
+    
     func scrollViewDidScroll(scrollView: UIScrollView)
     {
         
         
-       // var count = propertyId.count;
+        
+        let paggingValue = CGFloat((activityChatArray.count) *  (25)/(100))
+        
+        let  CeilPaggingValue = Int((ceil(paggingValue)))
+        
+       let check = self.isRowZeroRow(CeilPaggingValue)
+        
+      
         
         
-       // count = count-5;
+        if (check  && shouldCallPagging)
+        {
+            
+            shouldCallPagging = false
+            
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isMyPaggingCalled")
+            
+            
+            self.activityIndicator.stopAnimating();
+            
+            self.loadingView.removeFromSuperview();
+            
+            lastDateSent = CurrentDateFunc.getSubtractedDate(lastDateSent)
+            
+            self.activityInfo()
+            
+            
+            
+            
+        }
+            
+        else
+            
+        {
+            
+            //           NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isMyPaggingCalled")
+            
+        }
         
-      //  let check = self.isRowZeroRow(count)
         
-//        if (check  && !loading)
-//            
-//        {
-//            
-//            
-//            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isMyPaggingCalled")
-//            
-//            
-//            
-//            self.activityIndicator.stopAnimating();
-//            
-//            self.loadingView.removeFromSuperview();
-//            
-//            self.activityInfo()
-//            
-//            loading = true;
-//            
-//            
-//            
-//        }
-//            
-//        else
-//            
-//        {
-//            
-//            //           NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isMyPaggingCalled")
-//            
-//        }
-    }
+        
+        
+        
+  }
     
+    
+    
+    
+    
+
     func isRowZeroRow(data:Int) -> Bool
         
     {
@@ -506,10 +533,13 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         var returnData = true
         
+        
         let indexes = self.ActivityTableView.indexPathsForVisibleRows
         
         
         for index in indexes!
+            
+           
             
         {
             
@@ -542,6 +572,11 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     ///////////////////////////////////////////////////// web service part
     
     // MARK:- ACTIVITY INFO WEB SERVICE
+  
+    /// paging
+    //for pagging variable
+    var shouldCallPagging = false
+    
     
     func activityInfo()
         
@@ -563,18 +598,16 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
         
         let ChallengeId = NSUserDefaults.standardUserDefaults().stringForKey("challengeId")
-        
-        
-        print(userId)
-        print(ChallengeId)
       
-       //let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
         
-        print(CurrentDateFunc.currentDate())
+        
+        let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(lastDateSent)";
+       
+      
         
         let currentDate = "2016-08-21"
         
-     let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(currentDate)";
+   //  let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(currentDate)";
 
         
         print(postString)
@@ -593,6 +626,49 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
     }
     
+
+    
+    func activityInfoWhilePagging()
+        
+    {
+        
+        showActivityIndicator();
+        
+        
+        let myurl = NSURL(string: Url.activityInfo)
+        
+        let request = NSMutableURLRequest(URL: myurl!)
+        request.description
+        
+        request.HTTPMethod = "POST"
+        
+        request.timeoutInterval = 20.0;
+        
+        
+        
+        let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
+        
+        let ChallengeId = NSUserDefaults.standardUserDefaults().stringForKey("challengeId")
+        
+        self.lastDateSent = CurrentDateFunc.getSubtractedDate(lastDateSent)
+        
+        let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(lastDateSent)";
+        
+        print(postString)
+        
+        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+        
+        let session = NSURLSession(configuration: config, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
+        
+        let downloadTask = session.dataTaskWithRequest(request);
+        
+        downloadTask.resume()
+        
+        
+        
+    }
     
 
     
@@ -734,13 +810,9 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let dataString = String(data: self.mutableData, encoding: NSUTF8StringEncoding)
         
         
-        
-        print(dataString!)
-        
-    // MARK:-  IF DATA TASK = ACTIVITY INFO WEB SERVICE
+         // MARK:-  IF DATA TASK = ACTIVITY INFO WEB SERVICE
         
         if dataTask.currentRequest?.URL! == NSURL(string: Url.activityInfo)
-            
             
         {
             
@@ -758,18 +830,32 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     
                     let userStatus=parseJSON["userStatus"] as? String
                     
+                    NSUserDefaults.standardUserDefaults().setObject(userStatus, forKey: "userStatus");
+                    
                     let morePagging=parseJSON["morePagging"] as? String
                     
-                    print("printuserstatus\(userStatus)")
+                   NSUserDefaults.standardUserDefaults().setObject(morePagging, forKey: "userStatus");
+                  
                     
-                    print("printmorePagging\(morePagging)")
+                    if morePagging == "1"
+                    {
+                        
+                        shouldCallPagging = true
+                    }
+                    else
+                    {
+                        
+                        shouldCallPagging = false
+                    }
+                    
+                    
+                    //  MARK:- STATUS = SUCCESS
+
                     if(status=="Success")
                     {
                         
                         
-                        var indexPath : [NSIndexPath] = [NSIndexPath]()
-                        
-                        
+                     var indexPath : [NSIndexPath] = [NSIndexPath]()
                         
                         self.activityIndicator.stopAnimating();
                         
@@ -780,27 +866,13 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         {
                             
                             
-                            if elements.count == 30
-                            {
-                                self.loading = false;
-                            }
-                            else
-                            {
-                                self.loading = true;
-                            }
-                            
-
-                            
-                        
                             for i in 0 ..< elements.count
                             {
                               
                                 
-//                                let lastRowIndex = self.propertyId.count
-//                                
-//                                indexPath.append(NSIndexPath(forRow: lastRowIndex , inSection: 0))
-
+                                let lastRowIndex = self.activityChatArray.count
                                 
+                                indexPath.append(NSIndexPath(forRow: lastRowIndex , inSection: 0))
                                 
                                 
                                 self.activityModel=ViewActivityModel()
@@ -1097,14 +1169,16 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         
                         
                     }
-                        
+                   
+                //  MARK:- STATUS = ERROR
+
                     else if status == "Error"
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
+
+                        
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
                                 
                                 self.activityIndicator.stopAnimating();
@@ -1129,7 +1203,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                     
                                     self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
                                     
-                                    self.noResult.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);
+                                    self.noResult.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-100-45);
                                     self.noResult.noResultTextLabel.text = msg
                                     self.noResult.noResultImageView.image = UIImage(named: "im_error")
                                     
@@ -1141,34 +1215,38 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 }
                                 
                                 
-                                
-                                
-                                
-                        }
+                        } )
                         
                     }
+                      
+                //  MARK:- STATUS = NO RESULT
+
                         
                     else if status == "NoResult"
                         
                     {
+                        self.activityIndicator.stopAnimating();
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
+                        self.loadingView.removeFromSuperview();
+                         self.RemoveNoInternet();
+                        
+                        if  shouldCallPagging
+                        {
                             
-                            {
-                                
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
-                                
-                                
-                                
-                                self.RemoveNoInternet();
+                            lastDateSent = CurrentDateFunc.getSubtractedDate(lastDateSent)
+                            
+                            self.activityInfo();
+                            
+                        }
+                        else
+                        {
+                            
+                            
+                            NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
                                 if self.view.subviews.contains(self.noResult.view)
                                     
                                 {
-                                    
-                                    //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
                                     
                                 }
                                     
@@ -1178,22 +1256,29 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                     
                                     self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
                                     
-                                    self.noResult.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);
+                                    self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100-45);
                                     
                                     self.noResult.noResultTextLabel.text = msg
                                     self.noResult.noResultImageView.image = UIImage(named: "im_no_results")
                                     
+                                    
+                                    
                                     self.view.addSubview((self.noResult.view)!);
                                     
+                                    self.view.bringSubviewToFront(self.messageView)
                                     
                                     self.noResult.didMoveToParentViewController(self)
                                     
                                 }
                                 
                                 
+                            })
+
+                            
                         }
                         
-                    }
+                        
+                    } // ELSE NO RESULT CLOSE
                     
                     
                     
@@ -1283,9 +1368,11 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         
                         
                         
-                                                        self.activityModel.isFromChat = true
+                            self.activityModel.isFromChat = true
                         
-                                                        self.activityModel.isFromActivity = false
+                            self.activityModel.isFromActivity = false
+                        
+                        
                                 let message = messageTextView.text
                              
                                 if message != ""
@@ -1354,8 +1441,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 }
 
                                 
-                            activityChatArray.append(activityModel)
-
+                            activityChatArray.insert(activityModel, atIndex: 0)
 
                         
                         
@@ -1367,9 +1453,14 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 
                                 self.loadingView.removeFromSuperview();
                                 
-                                
+                                self.RemoveNoResult();
                                 
                                 self.messageTextView.text = ""
+                                
+                               self.heightOfMSGbottomView.constant = 45
+                                
+                             self.messageBottomViewConstraint.constant = 0;
+                              
                                 
                                 self.messageTextView.resignFirstResponder();
                                 
@@ -1399,9 +1490,9 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
                             
-                            {
+                        
                                 
                                 
                                 self.activityIndicator.stopAnimating();
@@ -1418,7 +1509,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 return
                                 
                                 
-                        }
+                        })
                         
                     }
                     
@@ -1578,22 +1669,19 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 if  let parseJSON = json
                                 {
                                     let status = parseJSON["status"] as? String
-                                    let msg=parseJSON["message"] as? String
+                                    _=parseJSON["message"] as? String
                                     if(status=="Success")
                                     {
                                         
-                                        NSOperationQueue.mainQueue().addOperationWithBlock
-                                            
-                                            {
+                                        NSOperationQueue.mainQueue().addOperationWithBlock({
                                                 
                                                 self.activityIndicator.stopAnimating();
                                                 
                                                 self.loadingView.removeFromSuperview();
                                                 
+                                            
                                                 
-                                         
-                                                
-                                        }///ns
+                                        })///ns
                                         
                                     }// if
                                         
@@ -1820,13 +1908,13 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             if  let parseJSON = json
                             {
                                 let status = parseJSON["status"] as? String
-                                let msg=parseJSON["message"] as? String
+                                _=parseJSON["message"] as? String
                                 if(status=="Success")
                                 {
                                     
-                                    NSOperationQueue.mainQueue().addOperationWithBlock
+                                    NSOperationQueue.mainQueue().addOperationWithBlock({
                                         
-                                        {
+                                    
                                             
                                             self.activityIndicator.stopAnimating();
                                             
@@ -1836,7 +1924,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                             
                                             
                                             
-                                    }///ns
+                                    })///ns
                                     
                                 }// if
                                     
@@ -2064,13 +2152,13 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             if  let parseJSON = json
                             {
                                 let status = parseJSON["status"] as? String
-                                let msg=parseJSON["message"] as? String
+                                _=parseJSON["message"] as? String
                                 if(status=="Success")
                                 {
                                     
-                                    NSOperationQueue.mainQueue().addOperationWithBlock
+                                    NSOperationQueue.mainQueue().addOperationWithBlock({
                                         
-                                        {
+                                    
                                             
                                             self.activityIndicator.stopAnimating();
                                             
@@ -2079,7 +2167,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                             
                                             
                                             
-                                    }///ns
+                                    })///ns
                                     
                                 }// if
                                     
@@ -2308,23 +2396,19 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             if  let parseJSON = json
                             {
                                 let status = parseJSON["status"] as? String
-                                let msg=parseJSON["message"] as? String
+                                _=parseJSON["message"] as? String
+                                
                                 if(status=="Success")
                                 {
                                     
-                                    NSOperationQueue.mainQueue().addOperationWithBlock
-                                        
-                                        {
+                                    NSOperationQueue.mainQueue().addOperationWithBlock({
                                             
                                             self.activityIndicator.stopAnimating();
                                             
                                             self.loadingView.removeFromSuperview();
-                                            
-                                            
-                                            
-                                            
-                                            
-                                    }///ns
+                                        
+                                        
+                                    })///ns
                                     
                                 }// if
                                     
@@ -2455,19 +2539,18 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     {
       
         
-        if(Reachability.isConnectedToNetwork()==true )
-        {
-
-        
         let indexPath = self.ActivityTableView.indexPathForRowAtPoint(cell.center)!
         
-        let cell = self.ActivityTableView.cellForRowAtIndexPath(indexPath) as! activityTableViewCell
+        _ = self.ActivityTableView.cellForRowAtIndexPath(indexPath) as! activityTableViewCell
         
+            indexForAddCommentsCount = index
             
+            print(indexForAddCommentsCount)
             
            let comments = self.storyboard?.instantiateViewControllerWithIdentifier("CommentsViewController") as! CommentsViewController
             
                 
+             comments.indexForAddCommentsCount = indexForAddCommentsCount
             
             NSUserDefaults.standardUserDefaults().setObject(activityChatArray[index].runId, forKey: "runObjectId")
 
@@ -2475,13 +2558,14 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
            self.presentViewController(comments, animated: false, completion: nil);
         
-        }
-        
         
     }
     
     
+  // MARK:- USER  GET COMMENTS PROTOCOL
     
+    
+    var indexForAddCommentsCount = Int()
     
     func getUsercommentsProtocol(cell: userActivityTableViewCell, index: Int)
     {
@@ -2489,18 +2573,18 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         
         
-        if(Reachability.isConnectedToNetwork()==true )
-        {
-            
             
             let indexPath = self.ActivityTableView.indexPathForRowAtPoint(cell.center)!
             
-            let cell = self.ActivityTableView.cellForRowAtIndexPath(indexPath) as! activityTableViewCell
+            _ = self.ActivityTableView.cellForRowAtIndexPath(indexPath) as! userActivityTableViewCell
             
+            indexForAddCommentsCount = index
             
+            print(indexForAddCommentsCount)
             
             let comments = self.storyboard?.instantiateViewControllerWithIdentifier("CommentsViewController") as! CommentsViewController
             
+            comments.indexForAddCommentsCount = indexForAddCommentsCount
             
             
             NSUserDefaults.standardUserDefaults().setObject(activityChatArray[index].runId, forKey: "runObjectId")
@@ -2509,7 +2593,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             self.presentViewController(comments, animated: false, completion: nil);
             
-        }
+       
 
     }
     
@@ -2656,6 +2740,46 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     // MARK:- MESSAGE VIEW  
     
+    func inputToolbarDonePressed()
+    {
+        messageTextView.resignFirstResponder();
+    }
+    
+    lazy var inputToolbar2: UIToolbar =
+        {
+            var toolbar = UIToolbar()
+            toolbar.barStyle = .Default
+            toolbar.translucent = true
+            toolbar.sizeToFit()
+            
+            var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(ActivityViewController.inputToolbarDonePressed))
+            
+            var flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+            
+            var fixedSpaceButton = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
+            
+        
+          toolbar.setItems([fixedSpaceButton,fixedSpaceButton, flexibleSpaceButton, doneButton], animated: false)
+                      
+            toolbar.userInteractionEnabled = true
+            
+            
+            return toolbar
+            
+    }()
+    
+    
+    
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool
+    {
+        messageTextView.inputAccessoryView = inputToolbar2
+        
+        
+        return true
+        
+    }
+
+    
     func value()
     {
        
@@ -2676,7 +2800,11 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 newFrame.offsetInPlace(dx: 0.0, dy: heightDifference)
                 //
                 //updateParentView(heightDifference)
+                //heightOfMSGbottomView.constant = newFrame.height+20;
+                
                 heightOfMSGbottomView.constant = newFrame.height+20;
+                
+                
             }
             self.messageTextView.frame = newFrame
         }
@@ -2740,12 +2868,25 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 
             }
             
-            ActivityTableView.contentInset = contentInsets
-            ActivityTableView.scrollIndicatorInsets = ActivityTableView.contentInset
             
-            ActivityTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.ActivityTableView.numberOfRowsInSection(0) - 1, inSection: 0), atScrollPosition: .Top, animated: false)
+            
+            print(self.activityChatArray.count)
+            
+            print(keyboardSize.height)
             
             messageBottomViewConstraint.constant += keyboardSize.height;
+            
+            if self.activityChatArray.count != 0
+            {
+                
+                ActivityTableView.contentInset = contentInsets
+                ActivityTableView.scrollIndicatorInsets = ActivityTableView.contentInset
+                            
+            ActivityTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.ActivityTableView.numberOfRowsInSection(0) - 1, inSection: 0), atScrollPosition: .Top, animated: false)
+            
+                
+            }
+           
             
         }
         
@@ -2765,12 +2906,13 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func textViewDidChange(textView: UITextView)
     {
         print("text view did change\n")
+      
         value();
     }
 
     
-    
-    
+   // MARK: RECEIVED NOTIFICATION FOR COMMETS
+    //// receiving row count and row index path  through notification from comments screen  and upading the values
     func ReceivedNotification(notification: NSNotification)
     {
 
@@ -2781,17 +2923,57 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             let rowindex = extractInfo["indexOfRow"] as! Int
             
             let rowCount = extractInfo["rowCount"]
+            
+             self.activityChatArray[rowindex].comments = String(rowCount!)
           
-            
-            
-           self.activityChatArray[rowindex].comments = String(rowCount)
-            //rowCount;
-            
+                      
             ActivityTableView.reloadData();
             
             
         }
         
+    }
+    
+    
+    
+    //////////////////////////////////////////////////////
+    
+    func getLabelHeight(label:UILabel,text:String,fontSize:CGFloat,Width:CGFloat) -> CGFloat
+    {
+        
+        let labelHeight = UILabel(frame: CGRectMake(0, 0, self.ActivityTableView.bounds.size.width-Width, CGFloat.max));
+        
+        
+        labelHeight.text = text;
+        
+        labelHeight.numberOfLines = 0
+        
+        
+        
+        labelHeight.font = UIFont.systemFontOfSize(fontSize)
+        
+        
+        
+        labelHeight.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        
+        
+        
+        labelHeight.sizeToFit()
+        
+        
+        
+        return labelHeight.frame.height
+        
+        
+        
+    }
+    
+    
+     
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
+    {
+        messageTextView.resignFirstResponder();
     }
     
    //MARK: VIEW DIDLOAD 
@@ -2801,6 +2983,11 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         super.viewDidLoad();
   
         
+        
+        print(activityChatArray.count)
+        
+        
+        
         messageTextView.delegate = self;
        
         messageTextView.autocorrectionType = .No
@@ -2809,8 +2996,58 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
       
         ActivityTableView.tableFooterView = UIView()
         
+        sendButton.enabled=false;
         
+        sendButton.userInteractionEnabled = false
+
+        
+        self.ActivityTableView.estimatedRowHeight = 80;
+        self.ActivityTableView.rowHeight = UITableViewAutomaticDimension;
+        
+
+        
+        if Reachability.isConnectedToNetwork() == true
+        {
         self.activityInfo();
+            
+        }
+        
+        else
+        {
+            
+            
+            
+            if self.view.subviews.contains(self.noInternet.view)
+                
+            {
+                
+                //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
+                
+            }
+                
+            else
+                
+            {
+                
+                self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
+                
+                self.noInternet.view.frame = CGRectMake(0, 65, self.view.frame.size.width, self.view.frame.size.height-65);
+                
+                self.view.addSubview((self.noInternet.view)!);
+                
+                
+                let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(FriendsListViewController.handleTap(_:)))
+               
+                self.noInternet.noInternetLabel.userInteractionEnabled = true
+                
+                
+                self.noInternet.view.addGestureRecognizer(tapRecognizer)
+                
+                self.noInternet.didMoveToParentViewController(self)
+                
+            }
+            
+        }
         
         
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("ReceivedCommentsCount"), name: "commentsCount", object: nil)
@@ -2834,6 +3071,13 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     
     
+    //MARK:- preferredStatusBarStyle
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle
+    {
+        return UIStatusBarStyle.LightContent;
+    }
+
 
    
 }

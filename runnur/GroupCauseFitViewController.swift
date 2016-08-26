@@ -173,7 +173,8 @@ class GroupCauseFitViewController: UIViewController,UITableViewDelegate,UITableV
         cell!.expandCollapseImageView?.image = UIImage(named: "ic_collapse")
 
         
-        var selectedRowIndex = indexPath
+        let selectedRowIndex = indexPath
+        
         currentRow = selectedRowIndex.row
         
         tableView.beginUpdates()

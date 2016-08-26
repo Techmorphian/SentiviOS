@@ -1059,7 +1059,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                                     {
                                         //self.amenitiesName.removeAll();
                                         
-                                        for var i = 0; i<participating!.count; i++
+                                        for var i = 0; i<participating!.count; i += 1
                                         {
                                             
                                             self.ChModel=ChallengeModel()
@@ -1182,7 +1182,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                                     {
                                         //self.amenitiesName.removeAll();
                                         
-                                        for var i = 0; i<contributing!.count; i++
+                                        for var i = 0; i<contributing!.count; i += 1
                                         {
                                             
                                             self.ChModel=ChallengeModel()
@@ -1327,14 +1327,9 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
+                        NSOperationQueue.mainQueue().addOperationWithBlock ({
+                                
                             
-                            {
-                                
-                                
-                                
-                                
-                             
                                 self.activityIndicator.stopAnimating();
                                 
                                 self.loadingView.removeFromSuperview();
@@ -1367,11 +1362,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                                     
                                 }
                                 
-                                
-                                
-                                
-                                
-                        }
+                        })
                         
                     }
                         
@@ -1379,9 +1370,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
                                 self.activityIndicator.stopAnimating();
                                 
@@ -1413,9 +1402,8 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                                     self.noResult.didMoveToParentViewController(self)
                                     
                                 }
-                                
-                                
-                        }
+                      
+                        })
                         
                     }
                     
@@ -1600,7 +1588,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                 
                 // self.noInternet.imageView.userInteractionEnabled = true
                 
-                let tapRecognizer = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
+                let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(CompletedChallengeViewController.handleTap(_:)))
                 self.noInternet.noInternetLabel.userInteractionEnabled = true
                 
                 

@@ -732,17 +732,17 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                 FrontView.hidden = true;
                                 
                                 
-                                 let challengeId = elements[i]["challengeId"] as! String
+                                 _ = elements[i]["challengeId"] as! String
                                 
                                 
                                 
                                 
-                                  let challengeName = elements[i]["challengeName"] as! String
+                                  _ = elements[i]["challengeName"] as! String
                                 
                                 
                                 
                                 
-                                let typeId = elements[i]["typeId"] as! String
+                                _ = elements[i]["typeId"] as! String
                                 
                                 
                                 let photoUrl = elements[i]["photoUrl"] as! String
@@ -766,10 +766,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                 
                                 let endDate = elements[i]["endDate"] as! String
                                 
-                                
-                                
-
-                                
+                               
                                 let StartDate = dateFunction.dateFormatFunc("MMM dd", formFormat: "yyyy/MM/dd", dateToConvert: startDate)
                                 
                                  print(StartDate)
@@ -839,7 +836,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
 
                                 
                                 
-                                let usersCount = elements[i]["usersCount"] as! String
+                                _ = elements[i]["usersCount"] as! String
                                 
                                 
                                 
@@ -1449,9 +1446,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                        {
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
                          
                             
@@ -1487,10 +1482,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                 self.noResult.didMoveToParentViewController(self)
                                 
                             }
-                            
-                            
-                                
-                        }
+                        })
                         
                     }
                     
@@ -1600,9 +1592,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
                                 self.activityIndicator.stopAnimating();
                                 
@@ -1617,9 +1607,8 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                 
                                 self.presentViewController(alert, animated: true, completion: nil)
                                 return
-                                
-                                
-                        }
+                       
+                        })
                         
                     }
                     
@@ -1709,12 +1698,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
-                                
-                                
-                                
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
                                 self.activityIndicator.stopAnimating();
                                 
@@ -1729,9 +1713,8 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                 
                                 self.presentViewController(alert, animated: true, completion: nil)
                                 return
-                                
-                                
-                        }
+                            
+                        })
                         
                     }
                     

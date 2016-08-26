@@ -1096,7 +1096,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                                     {
                                        
                                         
-                                        for var i = 0; i<participating!.count; i++
+                                        for var i = 0; i<participating!.count; i += 1
                                         {
                                             
                                             self.ChModel=ChallengeModel()
@@ -1221,7 +1221,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                                     {
                                         //self.amenitiesName.removeAll();
                                         
-                                        for var i = 0; i<contributing!.count; i++
+                                        for var i = 0; i<contributing!.count; i += 1
                                         {
                                             
                                             self.ChModel=ChallengeModel()
@@ -1371,9 +1371,9 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
                             
-                            {
+                        
                                 
                                 
                                 self.activityIndicator.stopAnimating();
@@ -1408,12 +1408,8 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                                     self.noResult.didMoveToParentViewController(self)
                                     
                                 }
-                                
-                                
-                                
-                                
-                                
-                        }
+                            
+                        })
                         
                     }
                         
@@ -1421,9 +1417,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
                                 self.activityIndicator.stopAnimating();
                                 
@@ -1456,9 +1450,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                                     self.noResult.didMoveToParentViewController(self)
                                     
                                 }
-                                
-                                
-                        }
+                        })
                         
                     }
                     

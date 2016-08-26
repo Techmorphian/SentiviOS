@@ -1007,9 +1007,7 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
                                 
                                 
@@ -1024,9 +1022,8 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
                                 
                                 self.presentViewController(alert, animated: true, completion: nil)
                                 return
-                                
-                                
-                        }
+                        
+                        })
                         
                     }
                     

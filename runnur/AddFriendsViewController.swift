@@ -790,9 +790,7 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
                                 
                                 
@@ -810,16 +808,14 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
                                 return
                                 
                                 
-                        }
+                        })
                         
                     }
                     else if status == "NoResult"
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
                                 
                                 
@@ -838,7 +834,7 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
                                 return
                                 
                                 
-                        }
+                        })
                         
                     }
                     

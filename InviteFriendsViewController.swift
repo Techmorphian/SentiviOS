@@ -1475,9 +1475,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                         
                     {
                         
-                                NSOperationQueue.mainQueue().addOperationWithBlock
-                                    
-                                    {
+                                NSOperationQueue.mainQueue().addOperationWithBlock({
                                         
                                         self.activityIndicator.stopAnimating();
                                         
@@ -1519,7 +1517,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                                         }
                                         
                                         
-                                } // ns close
+                                }) // ns close
                                 
                       
                         

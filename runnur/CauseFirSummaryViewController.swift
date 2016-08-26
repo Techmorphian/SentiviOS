@@ -409,10 +409,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         
     }
     
-    
-    
-    
-    
+       
     func getLabelHeight(label:UILabel,text:String,fontSize:CGFloat,Width:CGFloat) -> CGFloat
     {
         
@@ -479,6 +476,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         
         let ChallengeId = NSUserDefaults.standardUserDefaults().stringForKey("challengeId")
         
+        print(ChallengeId)
         
         let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
         
@@ -741,14 +739,14 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                 frontView.hidden = true;
                                 
                                 
-                                let challengeId = elements[i]["challengeId"] as! String
+                                _ = elements[i]["challengeId"] as! String
                                 
                                 
-                                let challengeName = elements[i]["challengeName"] as! String
+                                _ = elements[i]["challengeName"] as! String
                                 
                                 
                                 
-                                let typeId = elements[i]["typeId"] as! String
+                                _ = elements[i]["typeId"] as! String
                                 
                                 
                                 let photoUrl = elements[i]["photoUrl"] as! String
@@ -828,19 +826,16 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                     
                                     
                                 }
+                                                            
                                 
-                                
-                        
-                                
-                                
-                                let potAmount = elements[i]["potAmount"] as! String
+                                _ = elements[i]["potAmount"] as! String
                                 
                                 
                                // potAmountLabel.text = potAmount
                                 
                                 
                                 
-                                let usersCount = elements[i]["usersCount"] as! String
+                                _ = elements[i]["usersCount"] as! String
                                 
                                 
                                 
@@ -1185,9 +1180,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
                                 self.RemoveNoInternet();
                                 
@@ -1221,10 +1214,8 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                     self.noResult.didMoveToParentViewController(self)
                                     
                                 }
-  
-                                
-                                
-                        }
+                        
+                        })
                         
                     }
                     
@@ -1334,9 +1325,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
                                 self.activityIndicator.stopAnimating();
                                 
@@ -1351,9 +1340,8 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                 
                                 self.presentViewController(alert, animated: true, completion: nil)
                                 return
-                                
-                                
-                        }
+                      
+                        })
                         
                     }
                     
@@ -1441,9 +1429,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
                                 
                                 
@@ -1461,9 +1447,8 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                 
                                 self.presentViewController(alert, animated: true, completion: nil)
                                 return
-                                
-                                
-                        }
+                                                           
+                        })
                         
                     }
                     

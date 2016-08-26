@@ -863,9 +863,7 @@ class AddViaGoogleViewController: UIViewController,UITableViewDataSource,UITable
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
                                 
                                 
@@ -881,9 +879,8 @@ class AddViaGoogleViewController: UIViewController,UITableViewDataSource,UITable
                                 
                                 self.presentViewController(alert, animated: true, completion: nil)
                                 return
-                                
-                                
-                        }
+                            
+                        })
                         
                     }
                     
@@ -1069,7 +1066,7 @@ class AddViaGoogleViewController: UIViewController,UITableViewDataSource,UITable
         doneButton.clipsToBounds = true;
         
         
-        for var i=0;i<FirstName.count;i++
+        for var i=0;i<FirstName.count;i += 1
         {
             
             self.googleModel = phoneBookModel();

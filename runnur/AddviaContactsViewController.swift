@@ -654,7 +654,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                             print("actionIndex: \(alertIndex)")
                         }
                         
-                        var title = entry
+                        let title = entry
                         
                         
                         self.selectedEmail.append(title)
@@ -745,7 +745,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                                     print("actionIndex: \(alertIndex)")
                                 }
                                
-                                var title = entry
+                                let title = entry
                                 
                               //selectedEmail.append(PBArray[indexPath.row].selectedEmail)
                                 
@@ -1074,9 +1074,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
                                    
                                 self.activityIndicator.stopAnimating();
@@ -1091,9 +1089,8 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                                 
                                 self.presentViewController(alert, animated: true, completion: nil)
                                 return
-                                
-                                
-                        }
+                                                         
+                        })
                         
                     }
                   
@@ -1576,7 +1573,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                                                     if ABPersonHasImageData(record)
                                                     {
                                                         
-                                                        var data = ABPersonCopyImageDataWithFormat(record, kABPersonImageFormatThumbnail).takeRetainedValue()
+                                                        let data = ABPersonCopyImageDataWithFormat(record, kABPersonImageFormatThumbnail).takeRetainedValue()
                                                         
                                                        // conatctImage = data
                                                         

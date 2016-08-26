@@ -279,9 +279,7 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
                         
                     {
                         
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            
-                            {
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
                                 //  LoaderFile.hideLoader(self.view)
                                 
@@ -292,9 +290,8 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
                                 
                                 self.presentViewController(alert, animated: true, completion: nil)
                                 return
-                                
-                                
-                        }
+                            
+                        })
                         
                     }
                     
@@ -417,7 +414,7 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
             toolbar.translucent = true
             toolbar.sizeToFit()
             
-            var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "inputToolbarDonePressed")
+            var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(AddManuallyViewController.inputToolbarDonePressed))
             
             var flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
             

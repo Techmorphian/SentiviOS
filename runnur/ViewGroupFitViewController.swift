@@ -665,11 +665,11 @@ class ViewGroupFitViewController: UIViewController
         
     
         
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGestureRight")
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(ViewGroupFitViewController.respondToSwipeGestureRight))
         swipeRight.direction = UISwipeGestureRecognizerDirection.Right
         self.view.addGestureRecognizer(swipeRight)
         
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGestureLeft")
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(ViewGroupFitViewController.respondToSwipeGestureLeft))
         swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
         self.view.addGestureRecognizer(swipeLeft)
         
@@ -688,14 +688,10 @@ class ViewGroupFitViewController: UIViewController
         
         LeaderboardBottomView.backgroundColor = colorCode.DarkBlueColor
         
-    
-        
         
         print(NSUserDefaults.standardUserDefaults().stringForKey("challengeName"))
         
         challengeNameLabel.text = NSUserDefaults.standardUserDefaults().stringForKey("challengeName")
-        
-        
         
        //  NSUserDefaults.standardUserDefaults().setObject(TypeId, forKey: "TypeId")
         

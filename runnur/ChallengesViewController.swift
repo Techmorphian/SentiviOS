@@ -258,11 +258,11 @@ class ChallengesViewController: UIViewController
         super.viewDidLoad()
     
         
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGestureRight")
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(ChallengesViewController.respondToSwipeGestureRight))
         swipeRight.direction = UISwipeGestureRecognizerDirection.Right
         self.view.addGestureRecognizer(swipeRight)
         
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGestureLeft")
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(ChallengesViewController.respondToSwipeGestureLeft))
         swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
         self.view.addGestureRecognizer(swipeLeft)
         
