@@ -116,7 +116,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         self.tableView.delegate=self;
         self.tableView.dataSource=self;
         self.tableView.reloadData();
-         let collectionViewLayout: CenterCellCollectionViewFlowLayout = CenterCellCollectionViewFlowLayout()
+        let collectionViewLayout: CenterCellCollectionViewFlowLayout = CenterCellCollectionViewFlowLayout()
         collectionViewLayout.itemSize = CGSizeMake(180, 120)
         collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         collectionViewLayout.minimumInteritemSpacing = 0

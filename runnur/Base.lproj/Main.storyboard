@@ -1457,7 +1457,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ROUTE DISTANCE" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jrt-YP-8s1">
-                                                <rect key="frame" x="1" y="8" width="193" height="15"/>
+                                                <rect key="frame" x="0.0" y="8" width="195" height="15"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -1466,9 +1466,9 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="VPi-cD-bgs" firstAttribute="centerX" secondItem="jrt-YP-8s1" secondAttribute="centerX" id="Yor-ax-GcA"/>
-                                            <constraint firstAttribute="trailing" secondItem="jrt-YP-8s1" secondAttribute="trailing" constant="1" id="ZRc-B8-wVm"/>
+                                            <constraint firstAttribute="trailing" secondItem="jrt-YP-8s1" secondAttribute="trailing" id="ZRc-B8-wVm"/>
                                             <constraint firstItem="jrt-YP-8s1" firstAttribute="top" secondItem="KjB-CK-30O" secondAttribute="top" constant="8" id="bUc-OW-ING"/>
-                                            <constraint firstItem="jrt-YP-8s1" firstAttribute="leading" secondItem="KjB-CK-30O" secondAttribute="leading" constant="1" id="eZg-8u-Fnc"/>
+                                            <constraint firstItem="jrt-YP-8s1" firstAttribute="leading" secondItem="KjB-CK-30O" secondAttribute="leading" id="eZg-8u-Fnc"/>
                                             <constraint firstItem="VPi-cD-bgs" firstAttribute="top" secondItem="jrt-YP-8s1" secondAttribute="bottom" constant="5" id="m5K-OL-d2m"/>
                                         </constraints>
                                     </view>
