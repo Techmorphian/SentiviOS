@@ -227,7 +227,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 
             case "Requests":
               
-                
+                 self.performSegueWithIdentifier("Requests", sender: nil)
                 
                 
                 break;

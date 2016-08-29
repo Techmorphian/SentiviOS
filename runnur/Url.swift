@@ -63,7 +63,18 @@ class Url
     
     static let postComment = baseUrl + "postComment.php"
     
-     static let postChat = baseUrl + "postChat.php"
+    static let postChat = baseUrl + "postChat.php"
+    
+    
+   /// REQUEST 
+    
+    
+    static let viewRequest = baseUrl + "viewRequest.php"
+
+    
+    
+    
+    
     
     
 }

@@ -130,214 +130,208 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         var tableViewCell = UITableViewCell()
         
         
+        /////  new
         
-        ///// if user is loged in user then userChatTableViewCell else chat table view cell
-        /// log in user id stored in NSUserDefaults
-       
+        if  activityChatArray[indexPath.row].isFromUserChat == true
         
-        
-        if  NSUserDefaults.standardUserDefaults().stringForKey("userId") == activityChatArray[indexPath.row].userId
         {
-           
             
-            //// checking chatObjectTypeArray.count is not empty
+            let cell:userChatTableViewCell = tableView.dequeueReusableCellWithIdentifier("userChatTableViewCell")as!
+            userChatTableViewCell
+            
+            cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.size.width / 2;
+            cell.profileImageView.clipsToBounds = true;
+            cell.profileImageView.layer.borderWidth = 1
+            cell.profileImageView.layer.borderColor = colorCode.GrayColor.CGColor
             
             
-           // MARK:- USER CHAT
-            if activityChatArray[indexPath.row].isFromChat == true
+            if  activityChatArray[indexPath.row].PhotoUrl != ""
             {
-                let cell:userChatTableViewCell = tableView.dequeueReusableCellWithIdentifier("userChatTableViewCell")as!
-                userChatTableViewCell
                 
-                cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.size.width / 2;
-                cell.profileImageView.clipsToBounds = true;
-                cell.profileImageView.layer.borderWidth = 1
-                cell.profileImageView.layer.borderColor = colorCode.GrayColor.CGColor
+                cell.profileImageView.kf_setImageWithURL(NSURL(string: activityChatArray[indexPath.row].PhotoUrl)!, placeholderImage: UIImage(named:"im_default_profile"))
                 
+            }
                 
-                if  activityChatArray[indexPath.row].PhotoUrl != ""
-                {
-                    
-                    cell.profileImageView.kf_setImageWithURL(NSURL(string: activityChatArray[indexPath.row].PhotoUrl)!, placeholderImage: UIImage(named:"im_default_profile"))
-                    
-                }
-                    
-                else
-                {
-                    cell.profileImageView.image = UIImage(named:"im_default_profile")
-                }
+            else
+            {
+                cell.profileImageView.image = UIImage(named:"im_default_profile")
+            }
+            
+            
+            cell.userName.text = activityChatArray[indexPath.row].FirstName + " " + activityChatArray[indexPath.row].LastName
+            
+            
+            cell.message.text = activityChatArray[indexPath.row].message
+            
+            
+            if activityChatArray[indexPath.row].createdAt != ""
+            {
                 
+                cell.date.text =  activityChatArray[indexPath.row].createdAt
                 
-                cell.userName.text = activityChatArray[indexPath.row].FirstName + " " + activityChatArray[indexPath.row].LastName
-                
-                
-                cell.message.text = activityChatArray[indexPath.row].message
-                
-                
-                if activityChatArray[indexPath.row].createdAt != ""
-                {
-                    
-//                    // 2016-08-19 13:22:39.2160000 +00:00
-//                    print(activityChatArray[indexPath.row].createdAt)
-//                    
-//                     let date = dateFunction.dateWithTimeFormatFunc("MMMM dd, yyyy kk:mm:ss", fromFormat: "yyyy-MM-dd kk:mm:ss", dateToConvert: activityChatArray[indexPath.row].createdAt)
-//                    
-//                        print(date)
-//                    
-                    
-                    
-                    cell.date.text =  activityChatArray[indexPath.row].createdAt
-                    
-                    
-                }
-              
-                return cell
                 
             }
             
-            // MARK:- USER ACTIVITY
-          if activityChatArray[indexPath.row].isFromActivity == true
-            {
-                
-                let cell:userActivityTableViewCell = tableView.dequeueReusableCellWithIdentifier("userActivityTableViewCell")as!
-                userActivityTableViewCell
-                
-                
-                
-               
-                
-                cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.size.width / 2;
-                cell.profileImageView.clipsToBounds = true;
-                cell.profileImageView.layer.borderWidth = 1
-                cell.profileImageView.layer.borderColor = colorCode.GrayColor.CGColor
-                
-                
-                if  activityChatArray[indexPath.row].PhotoUrl != ""
-                {
-                    
-                    cell.profileImageView.kf_setImageWithURL(NSURL(string: activityChatArray[indexPath.row].PhotoUrl)!, placeholderImage: UIImage(named:"im_default_profile"))
-                    
-                }
-                    
-                else
-                {
-                    cell.profileImageView.image = UIImage(named:"im_default_profile")
-                }
-                
-                
-                cell.userName.text = activityChatArray[indexPath.row].FirstName + " " + activityChatArray[indexPath.row].LastName
-                
-                
-                cell.activityName.text = activityChatArray[indexPath.row].activityName
-                
-                cell.distance.text = activityChatArray[indexPath.row].distance
-                 cell.duration.text = activityChatArray[indexPath.row].elapsedTime
-                 cell.calories.text = activityChatArray[indexPath.row].caloriesBurnedS
-                
-                
-                cell.like.text = activityChatArray[indexPath.row].likes + " " + "Likes"
-                
-                cell.comments.text = activityChatArray[indexPath.row].comments + " " + "Comments"
+            tableViewCell =  cell
 
-                
-                if activityChatArray[indexPath.row].createdAt != ""
-                {
-                    
-                    // 2016-08-19 13:22:39.2160000 +00:00
-                    
-                    print(activityChatArray[indexPath.row].createdAt)
-                    
-//                     let date = dateFunction.dateWithTimeFormatFunc("MMMM dd, yyyy kk:mm:ss", fromFormat: "yyyy-MM-dd kk:mm:ss", dateToConvert: activityChatArray[indexPath.row].createdAt)
-//                    
-//                        print(date)
-//                    
-                    
-                    
-                    cell.date.text =  activityChatArray[indexPath.row].createdAt
-                    
-                    
-                }
-                
-             return cell
-                
-            }
+            
             
         }
         
-        if  NSUserDefaults.standardUserDefaults().stringForKey("userId") != activityChatArray[indexPath.row].userId
-
+        else if activityChatArray[indexPath.row].isFromChat == true
+        
         {
             
-            //// checking chatObjectTypeArray.count is not empty
+            let cell:chatTableViewCell = tableView.dequeueReusableCellWithIdentifier("chatTableViewCell")as!
+            chatTableViewCell
             
-            // MARK:- CHAT
+            cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.size.width / 2;
+            cell.profileImageView.clipsToBounds = true;
+            cell.profileImageView.layer.borderWidth = 1
+            cell.profileImageView.layer.borderColor = colorCode.GrayColor.CGColor
             
-            if activityChatArray[indexPath.row].isFromChat == true
+            
+            if  activityChatArray[indexPath.row].PhotoUrl != ""
             {
-                let cell:chatTableViewCell = tableView.dequeueReusableCellWithIdentifier("chatTableViewCell")as!
-                chatTableViewCell
                 
-                cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.size.width / 2;
-                cell.profileImageView.clipsToBounds = true;
-                cell.profileImageView.layer.borderWidth = 1
-                cell.profileImageView.layer.borderColor = colorCode.GrayColor.CGColor
+                cell.profileImageView.kf_setImageWithURL(NSURL(string: activityChatArray[indexPath.row].PhotoUrl)!, placeholderImage: UIImage(named:"im_default_profile"))
                 
+            }
                 
-                if  activityChatArray[indexPath.row].PhotoUrl != ""
-                {
-                    
-                    cell.profileImageView.kf_setImageWithURL(NSURL(string: activityChatArray[indexPath.row].PhotoUrl)!, placeholderImage: UIImage(named:"im_default_profile"))
-                    
-                }
-                    
-                else
-                {
-                    cell.profileImageView.image = UIImage(named:"im_default_profile")
-                }
-                
-                
-                cell.userName.text = activityChatArray[indexPath.row].FirstName + " " + activityChatArray[indexPath.row].LastName
-                
-                
-                cell.message.text = activityChatArray[indexPath.row].message
-                
-                
-                
-                
-                if activityChatArray[indexPath.row].createdAt != ""
-                {
-                    
-                    // 2016-08-19 13:22:39.2160000 +00:00
-                    
-                    
-//                    
-//                    let date = activityChatArray[indexPath.row].createdAt
-//                    
-//                    let dateFormatter = NSDateFormatter()
-//                    
-//                    dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
-//                 
-                    
-//                     let date = dateFunction.dateWithTimeFormatFunc("MMMM dd, yyyy kk:mm:ss", fromFormat: "yyyy-MM-dd hh:mm:ss.ms +HH:mm", dateToConvert: chatObjectTypeArray[indexPath.row].createdAt)
-//                    
-//                        print(date)
-//                    
-//                                        
-                   cell.date.text =  activityChatArray[indexPath.row].createdAt
-                    
-                    
-                }
-               
-                tableViewCell = cell
-
+            else
+            {
+                cell.profileImageView.image = UIImage(named:"im_default_profile")
             }
             
             
-            // MARK:- ACTIVITY
+            cell.userName.text = activityChatArray[indexPath.row].FirstName + " " + activityChatArray[indexPath.row].LastName
             
-            if activityChatArray[indexPath.row].isFromActivity == true
+            
+            cell.message.text = activityChatArray[indexPath.row].message
+            
+            
+            
+            
+            if activityChatArray[indexPath.row].createdAt != ""
             {
                 
+                // 2016-08-19 13:22:39.2160000 +00:00
+                
+                
+                //
+                //                    let date = activityChatArray[indexPath.row].createdAt
+                //
+                //                    let dateFormatter = NSDateFormatter()
+                //
+                //                    dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+                //
+                
+                //                     let date = dateFunction.dateWithTimeFormatFunc("MMMM dd, yyyy kk:mm:ss", fromFormat: "yyyy-MM-dd hh:mm:ss.ms +HH:mm", dateToConvert: chatObjectTypeArray[indexPath.row].createdAt)
+                //
+                //                        print(date)
+                //
+                //
+                cell.date.text =  activityChatArray[indexPath.row].createdAt
+                
+                
+            }
+
+            tableViewCell =  cell
+        }
+        
+         else if activityChatArray[indexPath.row].isFromUserActivity == true
+        
+        {
+            
+            
+            let cell:userActivityTableViewCell = tableView.dequeueReusableCellWithIdentifier("userActivityTableViewCell")as!
+            userActivityTableViewCell
+            
+            cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.size.width / 2;
+            cell.profileImageView.clipsToBounds = true;
+            cell.profileImageView.layer.borderWidth = 1
+            cell.profileImageView.layer.borderColor = colorCode.GrayColor.CGColor
+            
+            
+            if  activityChatArray[indexPath.row].PhotoUrl != ""
+            {
+                
+                cell.profileImageView.kf_setImageWithURL(NSURL(string: activityChatArray[indexPath.row].PhotoUrl)!, placeholderImage: UIImage(named:"im_default_profile"))
+                
+            }
+                
+            else
+            {
+                cell.profileImageView.image = UIImage(named:"im_default_profile")
+            }
+            
+            
+            cell.userName.text = activityChatArray[indexPath.row].FirstName + " " + activityChatArray[indexPath.row].LastName
+            
+            
+            if  activityChatArray[indexPath.row].activityName != ""
+            {
+                
+                cell.activityName.text = activityChatArray[indexPath.row].activityName
+
+            }
+            else
+            {
+                cell.activityName.text = "-"
+                
+            }
+            
+            
+            cell.distance.text = activityChatArray[indexPath.row].distance
+            cell.duration.text = activityChatArray[indexPath.row].elapsedTime
+            cell.calories.text = activityChatArray[indexPath.row].caloriesBurnedS
+            
+            cell.like.text = activityChatArray[indexPath.row].likes + " " + "Likes"
+            
+            cell.comments.text = activityChatArray[indexPath.row].comments + " " + "Comments"
+
+            
+            if  activityChatArray[indexPath.row].youLike == "0"
+            {
+               
+                cell.like.textColor = colorCode.DarkGrayColor
+            }
+            
+            else
+            {
+                
+                 cell.like.textColor = UIColor.redColor()
+            }
+            
+            
+            
+            if activityChatArray[indexPath.row].createdAt != ""
+            {
+                
+                // 2016-08-19 13:22:39.2160000 +00:00
+                
+                print(activityChatArray[indexPath.row].createdAt)
+                
+                //                     let date = dateFunction.dateWithTimeFormatFunc("MMMM dd, yyyy kk:mm:ss", fromFormat: "yyyy-MM-dd kk:mm:ss", dateToConvert: activityChatArray[indexPath.row].createdAt)
+                //
+                //                        print(date)
+                //
+                
+                
+                cell.date.text =  activityChatArray[indexPath.row].createdAt
+                
+                
+            }
+            
+           tableViewCell =  cell
+
+            
+        }
+        
+        else if activityChatArray[indexPath.row].isFromActivity == true
+            
+        {
+            
                 let cell:activityTableViewCell = tableView.dequeueReusableCellWithIdentifier("activityTableViewCell")as!
                 activityTableViewCell
                 
@@ -383,26 +377,52 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 
                 cell.userName.text = activityChatArray[indexPath.row].FirstName + " " + activityChatArray[indexPath.row].LastName
                 
+            if  activityChatArray[indexPath.row].activityName != ""
+            {
                 
                 cell.activityName.text = activityChatArray[indexPath.row].activityName
+                
+            }
+            else
+            {
+                cell.activityName.text = "-"
+                
+            }
+
                 
                 cell.distance.text = activityChatArray[indexPath.row].distance
                 cell.duration.text = activityChatArray[indexPath.row].elapsedTime
                 cell.calories.text = activityChatArray[indexPath.row].caloriesBurnedS
                 cell.like.text = activityChatArray[indexPath.row].likes + " " + "Likes"
+            
+            
+            if  activityChatArray[indexPath.row].youLike == "0"
+            {
+                
+                cell.like.textColor = colorCode.DarkGrayColor
+            }
+                
+            else
+            {
+                
+                cell.like.textColor = UIColor.redColor()
+            }
+
                 
                 cell.comments.text = activityChatArray[indexPath.row].comments + " " + "Comments"
+            
+            
                 
                 if activityChatArray[indexPath.row].createdAt != ""
                 {
                     
-                   //  2016-08-19 13:22:39.2160000 +00:00
+                    //  2016-08-19 13:22:39.2160000 +00:00
                     
-                       print(activityChatArray[indexPath.row].createdAt)
-//                    
-//                     let date = dateFunction.dateWithTimeFormatFunc("MMMM dd, yyyy kk:mm:ss", fromFormat: "yyyy-MM-dd kk:mm:ss", dateToConvert: activityObjectTypeArray[indexPath.row].createdAt)
-//                    
-//                        print(date)
+                    print(activityChatArray[indexPath.row].createdAt)
+                    //
+                    //                     let date = dateFunction.dateWithTimeFormatFunc("MMMM dd, yyyy kk:mm:ss", fromFormat: "yyyy-MM-dd kk:mm:ss", dateToConvert: activityObjectTypeArray[indexPath.row].createdAt)
+                    //
+                    //                        print(date)
                     
                     
                     
@@ -411,17 +431,17 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     
                 }
                 
-                tableViewCell = cell
-
-                
-            }
-
+              tableViewCell =  cell
+            
             
         }
         
+        
+        
+        
         return tableViewCell
         
-    }
+    }  // close func
     
     
     
@@ -434,53 +454,50 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     {
         selectedRunID = indexPath.row
     }
-    
-      //   MARK:- HEIGHT FOR ROW INDEX PATH
-    
+//    
+//      //   MARK:- HEIGHT FOR ROW INDEX PATH
+//    
 //    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
 //    {
 //        ///// row height for activity and chat cell
 //        
-//        
-//        let cell:userChatTableViewCell = tableView.dequeueReusableCellWithIdentifier("userChatTableViewCell")as!
-//        userChatTableViewCell
+//     
 //        
 //        if activityChatArray[indexPath.row].isFromActivity == true
 //        {
 //            
-//            return 185;
+//            self.ActivityTableView.estimatedRowHeight = 178;
+//            self.ActivityTableView.rowHeight = UITableViewAutomaticDimension;
+//            
+//            return 178;
 //        }
-//      
+//        
 //        else
 //        {
+//    
 //            
-//            return 100;
+//            self.ActivityTableView.estimatedRowHeight = 80;
+//            self.ActivityTableView.rowHeight = UITableViewAutomaticDimension;
+//            
+//             return 80;
+//            
 //        }
-//
 //        
 //    }
-//    
-//
+    
+
     
     
     //MARK:- PAGGING
     
   
-    
-    
-    
-    func scrollViewDidScroll(scrollView: UIScrollView)
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath)
     {
-        
-        
-        
         let paggingValue = CGFloat((activityChatArray.count) *  (25)/(100))
         
         let  CeilPaggingValue = Int((ceil(paggingValue)))
         
-       let check = self.isRowZeroRow(CeilPaggingValue)
-        
-      
+        let check = self.isRowZeroRow(CeilPaggingValue)
         
         
         if (check  && shouldCallPagging)
@@ -497,10 +514,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             lastDateSent = CurrentDateFunc.getSubtractedDate(lastDateSent)
             
-            self.activityInfo()
-            
-            
-            
+            self.activityInfo();
             
         }
             
@@ -508,11 +522,60 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
         {
             
-            //           NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isMyPaggingCalled")
+            //  NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isMyPaggingCalled")
             
         }
         
         
+
+    }
+    
+    
+    
+    func scrollViewDidScroll(scrollView: UIScrollView)
+    {
+        
+        
+        
+//        let paggingValue = CGFloat((activityChatArray.count) *  (25)/(100))
+//        
+//        let  CeilPaggingValue = Int((ceil(paggingValue)))
+//        
+//       let check = self.isRowZeroRow(CeilPaggingValue)
+//        
+//      
+//        
+//        
+//        if (check  && shouldCallPagging)
+//        {
+//            
+//            shouldCallPagging = false
+//            
+//            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isMyPaggingCalled")
+//            
+//            
+//            self.activityIndicator.stopAnimating();
+//            
+//            self.loadingView.removeFromSuperview();
+//            
+//            lastDateSent = CurrentDateFunc.getSubtractedDate(lastDateSent)
+//            
+//            self.activityInfo()
+//            
+//            
+//            
+//            
+//        }
+//            
+//        else
+//            
+//        {
+//            
+//              //  NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isMyPaggingCalled")
+//            
+//        }
+//        
+//        
         
         
         
@@ -628,49 +691,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
 
     
-    func activityInfoWhilePagging()
-        
-    {
-        
-        showActivityIndicator();
-        
-        
-        let myurl = NSURL(string: Url.activityInfo)
-        
-        let request = NSMutableURLRequest(URL: myurl!)
-        request.description
-        
-        request.HTTPMethod = "POST"
-        
-        request.timeoutInterval = 20.0;
-        
-        
-        
-        let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
-        
-        let ChallengeId = NSUserDefaults.standardUserDefaults().stringForKey("challengeId")
-        
-        self.lastDateSent = CurrentDateFunc.getSubtractedDate(lastDateSent)
-        
-        let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(lastDateSent)";
-        
-        print(postString)
-        
-        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
-        
-        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
-        
-        let session = NSURLSession(configuration: config, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
-        
-        let downloadTask = session.dataTaskWithRequest(request);
-        
-        downloadTask.resume()
-        
-        
-        
-    }
-    
-
+   
     
     // MARK:- POST CHAT  WEB SERVICE
     
@@ -716,6 +737,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         
         print(postString)
+        
         
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -808,7 +830,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     {
         
         let dataString = String(data: self.mutableData, encoding: NSUTF8StringEncoding)
-        
+        print(dataString);
         
          // MARK:-  IF DATA TASK = ACTIVITY INFO WEB SERVICE
         
@@ -837,10 +859,24 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                    NSUserDefaults.standardUserDefaults().setObject(morePagging, forKey: "userStatus");
                   
                     
+                    
+                    self.activityModel.isFromActivity = false
+                    
+                    self.activityModel.isFromUserActivity = false
+
+                    
+                    
                     if morePagging == "1"
                     {
                         
                         shouldCallPagging = true
+                        
+                        
+                        self.activityModel.isFromActivity = false
+                       
+                        self.activityModel.isFromUserActivity = false
+
+                        
                     }
                     else
                     {
@@ -887,9 +923,56 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                         if let activityData = elements[i]["data"]
                                         {
                                             
-                                            self.activityModel.isFromActivity = true
+                                           
                                             
                                             self.activityModel.isFromChat = false
+                                            
+                                            self.activityModel.isFromUserChat = false
+                                            
+                                            /////////////////////
+                                            
+                                            let userId = activityData!["userId"] as! String
+                                            
+
+                                            if userId != ""
+                                            {
+                                                self.activityModel.userId = userId
+                                            }
+                                            
+                                            
+                                            if  NSUserDefaults.standardUserDefaults().stringForKey("userId") == userId
+                                            {
+                                                self.activityModel.isFromUserActivity = true
+                                                
+                                                
+                                                
+                                                self.activityModel.isFromActivity = false
+                                                
+                                                
+                                                self.activityModel.isFromUserChat = false
+                                                
+                                                self.activityModel.isFromChat = false
+
+
+                                                
+                                            }
+                                                
+                                            else
+                                            {
+                                                
+                                                self.activityModel.isFromActivity = true
+                                                
+                                                self.activityModel.isFromUserActivity = false
+                                                
+                                                self.activityModel.isFromUserChat = false
+                                                
+                                                self.activityModel.isFromChat = false
+
+
+                                                
+                                            }
+
+                                            
                                         
                                             let runId = activityData!["runId"] as! String
                                             if runId != ""
@@ -897,15 +980,6 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                                 self.activityModel.runId = runId
                                             }
                                             
-                                            /////////////////////
-                                            
-                                            let userId = activityData!["userId"] as! String
-                                            
-                                            
-                                            if userId != ""
-                                            {
-                                                self.activityModel.userId = userId
-                                            }
                                             
                                             /////////////////////
                                             
@@ -1035,22 +1109,69 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                             }
 
                                             
-                                            activityChatArray.append(activityModel)
+                                            if NSUserDefaults.standardUserDefaults().boolForKey("isMyPaggingCalled") == true
+                                                
+                                            {
+                                                activityChatArray.insert(activityModel, atIndex: 0)
+                                            }else{
+                                                activityChatArray.append(activityModel)
+                                            }
                                             
                                         }
                                         
                                         
                                     }
-                                    else
+                                    else  if element as! String == "chat"
                                     {
                                         
                                         if let activityData = elements[i]["data"]
                                         {
                                            
-                                             self.activityModel.isFromChat = true
+                                            
                                             
                                             self.activityModel.isFromActivity = false
-                                           
+                                            
+                                            self.activityModel.isFromUserActivity = false
+
+                                            /////////////////////
+                                            
+                                            let userId = activityData!["userId"] as! String
+                                            
+                                            
+                                            if userId != ""
+                                            {
+                                                self.activityModel.userId = userId
+                                            }
+                                            
+                                            if  NSUserDefaults.standardUserDefaults().stringForKey("userId") == userId
+                                            {
+                                                self.activityModel.isFromUserChat = true
+                                                
+                                                self.activityModel.isFromChat = false
+                                                
+                                                
+                                                self.activityModel.isFromUserActivity = false
+                                                
+                                                self.activityModel.isFromActivity = false
+
+                                                
+                                            }
+                                                
+                                            else
+                                            {
+                                                
+                                                self.activityModel.isFromChat = true
+                                                
+                                                self.activityModel.isFromUserChat = false
+                                                
+                                                self.activityModel.isFromUserActivity = false
+                                                
+                                                self.activityModel.isFromActivity = false
+                                                
+                                            }
+                                            
+                                    //////////////////////////////////////////////////////////////
+                                            
                                             let chatId = activityData!["chatId"] as! String
                                             if chatId != ""
                                             {
@@ -1065,15 +1186,6 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                                 self.activityModel.challengeId = challengeId
                                             }
                                             
-                                            /////////////////////
-                                            
-                                            let userId = activityData!["userId"] as! String
-                                            
-                                            
-                                            if userId != ""
-                                            {
-                                                self.activityModel.userId = userId
-                                            }
                                             
                                             /////////////////////
                                             
@@ -1127,8 +1239,14 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                       
                                             
                                             
-                                        
-                                        activityChatArray.append(activityModel)
+                                            if NSUserDefaults.standardUserDefaults().boolForKey("isMyPaggingCalled") == true
+                                                
+                                            {
+                                                activityChatArray.insert(activityModel, atIndex: 0)
+                                            }else{
+                                               activityChatArray.append(activityModel)
+                                            }
+                                       
                                             
                                            
                                             
@@ -1144,20 +1262,30 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             
                             NSOperationQueue.mainQueue().addOperationWithBlock
                                 {
-                                    
+                                    if NSUserDefaults.standardUserDefaults().boolForKey("isMyPaggingCalled") == true
+                                        
+                                    {
+                                       self.ActivityTableView.beginUpdates();
+                                       //  self.activityChatArray = self.activityChatArray.reverse();
+                                        self.ActivityTableView.insertRowsAtIndexPaths(indexPath , withRowAnimation: UITableViewRowAnimation.None);
+                                       self.ActivityTableView.endUpdates();
+                                    }
+                                    else{
                                     
                                     self.ActivityTableView.delegate = self;
                                     
                                     self.ActivityTableView.dataSource = self;
                                     
-                                  self.activityChatArray = self.activityChatArray.reverse();
-                                                             
+                                  //  self.activityChatArray = self.activityChatArray.reverse();
+                                    
                                     
                                     self.ActivityTableView.reloadData();
+                                    self.ActivityTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.ActivityTableView.numberOfRowsInSection(0) - 1, inSection: 0), atScrollPosition: .None, animated: false)
                                     
                                     self.RemoveNoInternet();
                                     
                                     self.RemoveNoResult();
+                                    }
                                     
                                     
                             }
@@ -1256,7 +1384,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                     
                                     self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
                                     
-                                    self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100-45);
+                                    self.noResult.view.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height-100-45);
                                     
                                     self.noResult.noResultTextLabel.text = msg
                                     self.noResult.noResultImageView.image = UIImage(named: "im_no_results")
@@ -1274,7 +1402,6 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 
                             })
 
-                            
                         }
                         
                         
@@ -1347,30 +1474,9 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     {
                         
                         
-                      
-                                
-//                                
-//                                NSUserDefaults.standardUserDefaults().setObject(userId, forKey: "userId")
-//                                NSUserDefaults.standardUserDefaults().setObject(firstName, forKey: "firstName")
-//                                
-//                                NSUserDefaults.standardUserDefaults().setObject(lastName, forKey: "lastName")
-//                                
-//                                NSUserDefaults.standardUserDefaults().setObject(photoUrl, forKey: "photoUrl")
-                                
-                                
-                                
-
-                        
-                        
                         
                         
                         self.activityModel=ViewActivityModel()
-                        
-                        
-                        
-                            self.activityModel.isFromChat = true
-                        
-                            self.activityModel.isFromActivity = false
                         
                         
                                 let message = messageTextView.text
@@ -1395,19 +1501,36 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 if userId != ""
                                 {
                                     
+                                    
+                                    self.activityModel.isFromUserChat = true
+                                    
                                     self.activityModel.userId = userId!
                                 }
-                                
-                                
-                                let firstName = NSUserDefaults.standardUserDefaults().stringForKey("firstName")
-                                
+                        
+                                else
+                                    
+                                {
+                                    
+                                    
+                                    self.activityModel.isFromActivity = false
+                                    
+                                    
+                                    self.activityModel.isFromUserActivity = false
+                                    
+                                    self.activityModel.isFromChat = false
+
+                                    
+                                }
+                        
+                            let firstName = NSUserDefaults.standardUserDefaults().stringForKey("firstName")
+                        
                                 if firstName != ""
                                 {
                                     
                                     self.activityModel.FirstName = firstName!
                                 }
-                                
-                                
+                        
+                        
                                 let lastName = NSUserDefaults.standardUserDefaults().stringForKey("lastName")
                                 
                                 if lastName != ""
@@ -1441,7 +1564,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 }
 
                                 
-                            activityChatArray.insert(activityModel, atIndex: 0)
+                            activityChatArray.insert(activityModel, atIndex: activityChatArray.count)
 
                         
                         
@@ -2839,15 +2962,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
 
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool
-    {
-        messageTextView.resignFirstResponder();
-        
-        return true
-    }
-
     
-   
     
     
     func keyboardWasShown (notification: NSNotification)
@@ -2892,6 +3007,10 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         
     }
+    
+    
+    
+    
     func keyboardWillBeHidden (notification: NSNotification)
     {
         
@@ -2968,8 +3087,33 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
     }
     
+    /////MARK:- TEXT VIEW
     
-     
+    func textViewDidBeginEditing(textView: UITextView)
+    {
+        if messageTextView.textColor ==  UIColor(red: 139/255, green: 139/255, blue: 139/255, alpha: 1)
+            
+            
+        {
+            messageTextView.text = nil
+            messageTextView.textColor = UIColor.blackColor()
+        }
+        
+    }
+    
+    
+    func textViewDidEndEditing(textView: UITextView)
+    {
+        if textView.text.isEmpty
+        {
+            
+            messageTextView.text = "Write your message here..."
+            messageTextView.textColor = UIColor(red: 139/255, green: 139/255, blue: 139/255, alpha: 1)
+            
+        }
+    }
+
+    
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
@@ -2982,7 +3126,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     {
         super.viewDidLoad();
   
-        
+          NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isMyPaggingCalled")
         
         print(activityChatArray.count)
         
@@ -2991,6 +3135,10 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         messageTextView.delegate = self;
        
         messageTextView.autocorrectionType = .No
+        
+        messageTextView.text = "Write your message here..."
+        messageTextView.textColor = colorCode.Gray1Color
+
         
          sendButton.userInteractionEnabled = false
       

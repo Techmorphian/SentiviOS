@@ -95,6 +95,9 @@
 		47474C181D3CEF6E008FE197 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47474C171D3CEF6E008FE197 /* ActionButton.swift */; };
 		47474C1A1D3CEF7A008FE197 /* ActionButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47474C191D3CEF7A008FE197 /* ActionButtonItem.swift */; };
 		4748CB8D1D59EE9B0096DB55 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4748CB8C1D59EE9B0096DB55 /* ActivityViewController.swift */; };
+		4785E06F1D744A7E0003ABC0 /* RequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4785E06E1D744A7E0003ABC0 /* RequestsViewController.swift */; };
+		4785E0781D745A620003ABC0 /* RequestWithoutActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4785E0771D745A620003ABC0 /* RequestWithoutActionTableViewCell.swift */; };
+		4785E07A1D745A790003ABC0 /* RequestWithActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4785E0791D745A790003ABC0 /* RequestWithActionTableViewCell.swift */; };
 		4788A1AE1D66F440000B2E99 /* CauseFirSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EFFBAB1D58822A00F2A2D7 /* CauseFirSummaryViewController.swift */; };
 		4788A1AF1D66F46C000B2E99 /* CreateRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444A1D771D659FD800E561B4 /* CreateRouteViewController.swift */; };
 		47B8A8F81D45E2E100BACB83 /* ViewGroupFitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B8A8F71D45E2E100BACB83 /* ViewGroupFitViewController.swift */; };
@@ -222,6 +225,9 @@
 		47474C171D3CEF6E008FE197 /* ActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		47474C191D3CEF7A008FE197 /* ActionButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButtonItem.swift; sourceTree = "<group>"; };
 		4748CB8C1D59EE9B0096DB55 /* ActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityViewController.swift; path = ../ActivityViewController.swift; sourceTree = "<group>"; };
+		4785E06E1D744A7E0003ABC0 /* RequestsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsViewController.swift; sourceTree = "<group>"; };
+		4785E0771D745A620003ABC0 /* RequestWithoutActionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestWithoutActionTableViewCell.swift; sourceTree = "<group>"; };
+		4785E0791D745A790003ABC0 /* RequestWithActionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestWithActionTableViewCell.swift; sourceTree = "<group>"; };
 		47B8A8F71D45E2E100BACB83 /* ViewGroupFitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewGroupFitViewController.swift; sourceTree = "<group>"; };
 		47B8A8F91D45E31600BACB83 /* SummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
 		47BBED1E1D6AC9DA00EAEDE9 /* ViewActivityModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewActivityModel.swift; sourceTree = "<group>"; };
@@ -347,6 +353,7 @@
 		470CF87C1D24DC370001B3BC /* runnur */ = {
 			isa = PBXGroup;
 			children = (
+				4785E0701D744A890003ABC0 /* Requests */,
 				47C6B0041D5AF5E300410DAE /* ViewActivity */,
 				47EFFBA81D5849D000F2A2D7 /* ViewCauseFitChallenge */,
 				47FD4EC31D48E3EC0059DB55 /* HeartHistory */,
@@ -558,6 +565,16 @@
 				473D0D7B1D49E7FE004DDC07 /* AppDelegate.swift */,
 			);
 			name = AppDelegate;
+			sourceTree = "<group>";
+		};
+		4785E0701D744A890003ABC0 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				4785E06E1D744A7E0003ABC0 /* RequestsViewController.swift */,
+				4785E0771D745A620003ABC0 /* RequestWithoutActionTableViewCell.swift */,
+				4785E0791D745A790003ABC0 /* RequestWithActionTableViewCell.swift */,
+			);
+			name = Requests;
 			sourceTree = "<group>";
 		};
 		47C6B0041D5AF5E300410DAE /* ViewActivity */ = {
@@ -834,6 +851,7 @@
 				473D0D881D49E8C6004DDC07 /* ActiveChallengesViewController.swift in Sources */,
 				473D0D901D49E927004DDC07 /* LoginScreenViewController.swift in Sources */,
 				473D0D841D49E87E004DDC07 /* animation1.swift in Sources */,
+				4785E06F1D744A7E0003ABC0 /* RequestsViewController.swift in Sources */,
 				47B8A8F81D45E2E100BACB83 /* ViewGroupFitViewController.swift in Sources */,
 				445449261D534EC200995B45 /* ProfileViewController.swift in Sources */,
 				44524A1D1D54B8C800CC21C8 /* StartActivityViewController.swift in Sources */,
@@ -883,11 +901,13 @@
 				445449281D535FE600995B45 /* CheckBox.swift in Sources */,
 				47474C1A1D3CEF7A008FE197 /* ActionButtonItem.swift in Sources */,
 				47EF173C1D41EE0C00468698 /* dateFunction.swift in Sources */,
+				4785E0781D745A620003ABC0 /* RequestWithoutActionTableViewCell.swift in Sources */,
 				470CF8A11D2507FD0001B3BC /* AddviaContactCellTableViewCell.swift in Sources */,
 				473D0D8E1D49E8FB004DDC07 /* completedChallengeTableViewCell.swift in Sources */,
 				47FED2561D2E8D14006CAE8A /* animation2.swift in Sources */,
 				47C78CF81D265520006DEACF /* colorCode.swift in Sources */,
 				471A686A1D30D4E200DD2138 /* NoInternetViewController.swift in Sources */,
+				4785E07A1D745A790003ABC0 /* RequestWithActionTableViewCell.swift in Sources */,
 				470CF8A51D25082C0001B3BC /* AddviaGoogleCellTableViewCell.swift in Sources */,
 				470CF8A71D252F540001B3BC /* AddManuallyViewController.swift in Sources */,
 				47C6B0001D5AF5B300410DAE /* userChatTableViewCell.swift in Sources */,
