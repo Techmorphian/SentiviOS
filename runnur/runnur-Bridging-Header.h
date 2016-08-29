@@ -14,5 +14,5 @@
 #import <FBSDKCoreKit/FBSDKAccessToken.h>
 #import <FBSDKShareKit/FBSDKSharing.h>
 #import <Google/SignIn.h>
-
+#import <GoogleSignIn/GoogleSignIn.h>
 #endif

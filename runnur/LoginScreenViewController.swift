@@ -22,72 +22,20 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
         
         CommonFunctions.showActivityIndicator(self.view);
         self.authenticate(self);
-        
-        
-//        let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
-//        let Client = delegate!.client!;
-//         let client = Client
-//        client.loginWithProvider("facebook", controller: self, animated: true) { (user, error) in
-//            print(user)
-////            self.refreshControl?.beginRefreshing()
-////            self.onRefresh(self.refreshControl)
-//        }
-        
-//    authenticate(self) { (user, error) in
-//            if (error == nil) {
-//                if user != nil{
-//                    let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
-//                    let Client = delegate!.client!;
-//                    print(user?.userId);
-//                    if user != nil{
-//                        print("Login successful");
-//                       // self.call(false, email: email, firstName: firstName, lastName: lastName, id: (user?.userId)!, token: self.fbToken,imageUrl: imageUrl);
-//                    }
-//                    /../.auth/me
-//                    Client.invokeAPI("/me", body: nil, HTTPMethod: "GET", parameters: ["fields":"name , email"], headers: nil, completion: { (result, response, error) in
-//                        print(result)
-//                        var email = String();
-//                        var firstName = String();
-//                        var lastName = String();
-//                        var imageUrl = String();
-//                        let userClaims = result![0]?.objectForKey("user_claims") as! NSArray;
-//                        for i in userClaims{
-//                            print("prinnting i \(i)");
-//                            if i.valueForKey("typ") as! String == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"{
-//                                email = i.valueForKey("val") as! String
-//                                print(i.valueForKey("val") as! String)
-//                            }
-//                            if i.valueForKey("typ") as! String == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname"{
-//                                firstName = i.valueForKey("val") as! String
-//                                print(i.valueForKey("val") as! String)
-//                            }
-//                            if i.valueForKey("typ") as! String == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname"{
-//                                lastName = i.valueForKey("val") as! String
-//                                print(i.valueForKey("val") as! String)
-//                            }
-//                            if i.valueForKey("typ") as! String == "picture"{
-//                                imageUrl = i.valueForKey("val") as! String
-//                                print(i.valueForKey("val") as! String)
-//                            }
-//                        }
-                    
-                      //  self.call(false, email: email, firstName: firstName, lastName: lastName, id: (user?.userId)!, token: self.fbToken,imageUrl: imageUrl);
-//                    })
-                    
-                    
-//                }else{
-//                    print(error!)
-//                }
-//            }
-//            print(error)
-//        }
-        
-  
+ 
     }
     
     @IBAction func loginWithGoogleButtonAction(sender: AnyObject)
     {
         GIDSignIn.sharedInstance().signIn();
+    }
+    
+    func signIn(signIn: GIDSignIn!, didDisconnectWithUser user: GIDGoogleUser!, withError error: NSError!) {
+        print("didDisconnectWithUser");
+    }
+    
+    func signInWillDispatch(signIn: GIDSignIn!, error: NSError!) {
+        print(error);
     }
     
     func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!,
@@ -97,9 +45,18 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
           //  let driveScope = "https://www.googleapis.com/auth/userinfo.profile";
             let imageUrl:NSURL = user.profile.imageURLWithDimension(500)
             print(imageUrl)
+           
+//            user.authentication.refreshTokensWithHandler({ (GIDAuthentication, NSError) in
+//                print(GIDAuthentication.idToken)
+//            })
+           
+             //signIn.clientID = "749302522741-1dik8vb93l9uvb6rpq9p978s36ddugm7.apps.googleusercontent.com"
             
            // GIDSignIn.sharedInstance().scopes.append(driveScope);
             let googleId = user.userID
+            print(user.authentication.idToken.utf8);
+            print(user.authentication.idToken.propertyList());
+            
             let idToken:String = user.authentication.idToken // Safe to send to the server
             let Name: String = user.profile.name
             var myStringArr = Name.componentsSeparatedByString(" ")
@@ -116,7 +73,10 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
                 let client = delegate!.client!;
 //                let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SWRevealViewController") as! SWRevealViewController
 //                self.presentViewController(nextViewController, animated: true, completion: nil)
-                   let payload: [String: String] = ["id_token": idToken]
+                
+              
+                
+                let payload: [String: String] = ["id_token": idToken]
                 client.loginWithProvider("google", token: payload, completion: { (user, error) in
                 
                     if error != nil{
@@ -370,16 +330,36 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
 
     override func viewDidLoad()
     {
-        super.viewDidLoad()
+        super.viewDidLoad();
+        
         GIDSignIn.sharedInstance().signOut()
+        
+        GIDSignIn.sharedInstance().scopes.append("https://www.googleapis.com/auth/plus.login");
+        
+        GIDSignIn.sharedInstance().clientID = "749302522741-sst6f9goq59ibkdounlk78hfij5t0blf.apps.googleusercontent.com";
+        GIDSignIn.sharedInstance().serverClientID = "749302522741-1dik8vb93l9uvb6rpq9p978s36ddugm7.apps.googleusercontent.com"
+        
+        
         GIDSignIn.sharedInstance().delegate = self;
         GIDSignIn.sharedInstance().uiDelegate = self
         
+        
+        
+        
+        
+        //     GIDSignIn.sharedInstance().disconnect()
+        
+        //  GIDSignIn.sharedInstance().scopes.append("https://www.googleapis.com/auth/plus.me");
+        
+        
+        //        let GOOGLE_SCOPE_TAKE2 = "audience:server:client_id:";
+        //        let CLIENT_ID_WEB_APPS = "749302522741-1dik8vb93l9uvb6rpq9p978s36ddugm7.apps.googleusercontent.com";
+        //        let GOOGLE_ID_TOKEN_SCOPE = GOOGLE_SCOPE_TAKE2 + CLIENT_ID_WEB_APPS;
+        
         //  new   749302522741-1dik8vb93l9uvb6rpq9p978s36ddugm7.apps.googleusercontent.com
         //749302522741-sst6f9goq59ibkdounlk78hfij5t0blf.apps.googleusercontent.com     com.googleusercontent.apps.749302522741-sst6f9goq59ibkdounlk78hfij5t0blf
-        
-        GIDSignIn.sharedInstance().clientID = "749302522741-1dik8vb93l9uvb6rpq9p978s36ddugm7.apps.googleusercontent.com";
-     //  GIDSignIn.sharedInstance().serverClientID = "749302522741-1dik8vb93l9uvb6rpq9p978s36ddugm7.apps.googleusercontent.com"
+        // "749302522741-1dik8vb93l9uvb6rpq9p978s36ddugm7.apps.googleusercontent.com";
+
         // Do any additional setup after loading the view.
     }
     //MARK:- preferredStatusBarStyle
