@@ -3109,7 +3109,7 @@
                                 <rect key="frame" x="0.0" y="65" width="600" height="535"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RequestWithoutActionTableViewCell" rowHeight="62" id="HEt-z3-Co6" customClass="RequestWithoutActionTableViewCell" customModule="Sentiv" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="RequestWithoutActionTableViewCell" rowHeight="62" id="HEt-z3-Co6" customClass="RequestWithoutActionTableViewCell" customModule="Sentiv" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="62"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HEt-z3-Co6" id="c3i-OG-gvg">
@@ -3181,7 +3181,7 @@
                                             <outlet property="userPhoto" destination="tfG-DD-AuB" id="R9c-4a-gA7"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RequestWithActionTableViewCell" rowHeight="103" id="0lE-GS-Q4z" customClass="RequestWithActionTableViewCell" customModule="Sentiv" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="RequestWithActionTableViewCell" rowHeight="103" id="0lE-GS-Q4z" customClass="RequestWithActionTableViewCell" customModule="Sentiv" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="90" width="600" height="103"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0lE-GS-Q4z" id="acH-IP-ul2">

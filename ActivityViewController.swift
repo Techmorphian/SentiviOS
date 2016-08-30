@@ -1792,7 +1792,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 if  let parseJSON = json
                                 {
                                     let status = parseJSON["status"] as? String
-                                    _=parseJSON["message"] as? String
+                                    let c = parseJSON["message"] as? String
                                     if(status=="Success")
                                     {
                                         

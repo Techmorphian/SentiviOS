@@ -12,6 +12,8 @@ import FBSDKCoreKit
 import GoogleMaps
 
 
+
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate
 {
@@ -22,6 +24,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     {
         // Override point for customization after application launch.
+        
+        
+        
+        //Add this line. Replace '5eb5a37e-b458-11e3-ac11-000c2940e62c' with your OneSignal App ID.
+        OneSignal(launchOptions: launchOptions, appId: "a62ddded-7c71-4583-9fd4-b9a39101ff8d")
+        
+        
+        //////////////////////
         
         GMSServices.provideAPIKey("AIzaSyBWIi7VAXpFbu1dqX3cXuhu9bB30gUb6u0")
         self.client = MSClient(
@@ -37,7 +47,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         return true
     }
     
-   
+   // MARK:- APPLICATION DID RECEIVE REMOTE NOTIFICATION
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject])
+    {
+        
+         NSNotificationCenter.defaultCenter().postNotificationName("showAlert", object: nil, userInfo: userInfo)
+        
+        
+        
+    }
+    
+    func application( application: UIApplication,didReceiveRemoteNotification userInfo: [NSObject : AnyObject],
+    fetchCompletionHandler handler: (UIBackgroundFetchResult) -> Void)
+    {
+        
+        if application.applicationState == UIApplicationState.Active
+            
+        {
+//            var badgeNum = NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter")
+//            
+//            NSUserDefaults.standardUserDefaults().setObject( ++badgeNum , forKey: "badgeCounter")
+//            
+//            UIApplication.sharedApplication().applicationIconBadgeNumber =  NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter")
+            
+            
+            NSNotificationCenter.defaultCenter().postNotificationName("showAlert", object: nil, userInfo: userInfo)
+        }
+        else
+        {
+//            var badgeNum = NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter")
+//            
+//            NSUserDefaults.standardUserDefaults().setObject( ++badgeNum , forKey: "badgeCounter")
+//            
+//            UIApplication.sharedApplication().applicationIconBadgeNumber =  NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter")
+            
+            
+        }
+
+        
+        
+        
+    }
+
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool
     {

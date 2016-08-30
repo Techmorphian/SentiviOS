@@ -737,9 +737,10 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                 
                                 
                                 
-                                  _ = elements[i]["challengeName"] as! String
+                                let challengeName = elements[i]["challengeName"] as! String
                                 
-                                
+                                NSUserDefaults.standardUserDefaults().setObject(challengeName, forKey: "challengeName")
+
                                 
                                 
                                 _ = elements[i]["typeId"] as! String

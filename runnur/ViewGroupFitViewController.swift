@@ -120,6 +120,9 @@ class ViewGroupFitViewController: UIViewController
         
 
         
+        
+        
+        
         if NSUserDefaults.standardUserDefaults().stringForKey("TypeIdParticipating") == "1"
         {
             
@@ -139,7 +142,7 @@ class ViewGroupFitViewController: UIViewController
                 
             }, completion: {action in
                 
-          
+          self.challengeNameLabel.text = NSUserDefaults.standardUserDefaults().stringForKey("challengeName")
                // self.summaryView.view.hidden=false;
         })
         
@@ -659,7 +662,11 @@ class ViewGroupFitViewController: UIViewController
     }
     
     
-       override func viewDidLoad()
+    
+    
+    
+    
+    override func viewDidLoad()
     {
         super.viewDidLoad()
         
@@ -673,31 +680,45 @@ class ViewGroupFitViewController: UIViewController
         swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
         self.view.addGestureRecognizer(swipeLeft)
         
-
-        summaryButton.titleLabel?.textColor  = UIColor.whiteColor();
-        summaryBottomView.backgroundColor = UIColor.whiteColor();
+//////////////////////////////////////////////
+       
+   /////////////////////////////////////////////////////
+        
        
         
-        ActivityButton.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
-
         
-        activityBottomView.backgroundColor = colorCode.DarkBlueColor
-        
-        
-        LeaderboardButton.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
-        
-        LeaderboardBottomView.backgroundColor = colorCode.DarkBlueColor
-        
-        
-        print(NSUserDefaults.standardUserDefaults().stringForKey("challengeName"))
         
         challengeNameLabel.text = NSUserDefaults.standardUserDefaults().stringForKey("challengeName")
         
-       //  NSUserDefaults.standardUserDefaults().setObject(TypeId, forKey: "TypeId")
+     
+        
+        
+       // if NSUserDefaults.standardUserDefaults().boolForKey("PresentActivityScreen") == true
+       
+        
+            summaryButton.titleLabel?.textColor  = UIColor.whiteColor();
+            summaryBottomView.backgroundColor = UIColor.whiteColor();
+            
+            
+            ActivityButton.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+            
+            
+            activityBottomView.backgroundColor = colorCode.DarkBlueColor
+            
+            
+            LeaderboardButton.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+            
+            LeaderboardBottomView.backgroundColor = colorCode.DarkBlueColor
+        
+        //// adding subvies in viewload 
+        
+       /// whem type id == 1 -> group fit else cause fit views are added
         
         if NSUserDefaults.standardUserDefaults().stringForKey("TypeIdParticipating") == "1"
         {
         
+                       
+            
         self.summaryView = storyboard?.instantiateViewControllerWithIdentifier("SummaryViewController") as! SummaryViewController
         
         self.summaryView.view.frame = CGRectMake(0, 100, self.view.frame.width, self.view.frame.height - 100)
@@ -751,6 +772,9 @@ class ViewGroupFitViewController: UIViewController
         else
         {
             
+            
+            
+           
             
             self.CauseFirSummary = storyboard?.instantiateViewControllerWithIdentifier("CauseFirSummaryViewController") as! CauseFirSummaryViewController
             
@@ -808,9 +832,57 @@ class ViewGroupFitViewController: UIViewController
             self.ProgressView.didMoveToParentViewController(self);
 
             
-        }
+        } /// else close
         
     
+        
+        if NSUserDefaults.standardUserDefaults().boolForKey("PresentActivityScreen") == true
+        
+        {
+            
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "PresentActivityScreen")
+
+            
+             print(NSUserDefaults.standardUserDefaults().stringForKey("TypeIdParticipating"))
+            
+            
+            
+            LeaderboardButton.titleLabel?.textColor  = UIColor.whiteColor();
+            LeaderboardBottomView.backgroundColor = UIColor.whiteColor();
+            
+            
+            ActivityButton.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+            
+            
+            activityBottomView.backgroundColor = colorCode.DarkBlueColor
+            
+            
+            summaryButton.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+            
+            summaryBottomView.backgroundColor = colorCode.DarkBlueColor
+
+            
+            self.CauseFirSummary.view.frame.origin.x = -self.view.frame.size.width;
+            
+            self.ProgressView.view.frame.origin.x = -self.view.frame.size.width;
+            
+            self.ActivityView.view.frame.origin.x = 0;
+            
+            
+        }
+        
+        
+        else
+        {
+            
+            
+            
+            
+        }
+        
+        
+            
+   
     }
 
     

@@ -129,6 +129,66 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     
     
     
+    //////////////////// push 
+    
+    
+    func methodOfReceivedNotification(notification: NSNotification)
+    {
+        
+        //// push notification alert and parsing
+        
+        
+//        
+//        if  NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter") != 0
+//        {
+//            
+//            self.badgeCounterLabel.hidden = false
+//            
+//            
+//            if NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter") > 99
+//            {
+//                
+//                self.badgeCounterLabel.text = String(NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter")) + "+"
+//                
+//            }
+//            else
+//            {
+//                
+//                self.badgeCounterLabel.text = String(NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter"))
+//                
+//            }
+//            
+//        }
+        
+        
+        let elemets = notification.userInfo
+        
+        
+        
+        
+        let myAlert = UIAlertController(title:"", message: "ttttttt" , preferredStyle: UIAlertControllerStyle.Alert)
+        myAlert.addAction(UIAlertAction(title: "View", style: UIAlertActionStyle.Default, handler: { void in
+            
+            
+            
+        }))
+        
+        myAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: {void in
+            
+            
+            
+        }))
+        
+        
+        self.presentViewController(myAlert, animated: true, completion: nil)
+        
+    }
+    
+
+    
+    
+    ////////////////////
+    
     var lat = String();
     var long = String();
     var btManager = CBCentralManager()
@@ -137,6 +197,11 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         super.viewDidLoad();
         
         //self.call();
+        
+        
+        ////// push notification
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HomeViewController.methodOfReceivedNotification(_:)), name:"showAlert", object: nil)
         
         gps.layer.shadowOpacity=0.4;
 

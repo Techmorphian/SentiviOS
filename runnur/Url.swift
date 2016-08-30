@@ -72,8 +72,10 @@ class Url
     static let viewRequest = baseUrl + "viewRequest.php"
 
     
-    
-    
+    static let acceptFriendRequest = baseUrl + "acceptFriendRequest.php"
+
+    static let declineFriendRequest = baseUrl + "declineFriendRequest.php"
+
     
     
     

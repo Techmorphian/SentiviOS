@@ -8,6 +8,7 @@ target 'runnur' do
 pod 'Charts'
 pod 'Kingfisher', '~> 2.4'
 pod 'Google/SignIn'
+pod 'OneSignal'
   # Pods for runnur
 
 end
