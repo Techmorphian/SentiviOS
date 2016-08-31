@@ -235,24 +235,13 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     }
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-        //  print("locations = \(locValue.latitude) \(locValue.longitude)")
-        //        self.lat = locValue.latitude;
-        //        self.long = locValue.longitude
-        //let camera = GMSCameraPosition.cameraWithLatitude(CLLocationDegrees(lat)!, longitude: CLLocationDegrees(lat)!, zoom: 6.0)
         if !fromRouteView{
             let camera = GMSCameraPosition.cameraWithLatitude(locValue.latitude, longitude: locValue.longitude, zoom: 16.0)
             mapView.myLocationEnabled = true
             self.mapView.camera = camera
         }
         
-        // Creates a marker in the center of the map.
-        //        let marker = GMSMarker()
-        //        marker.position = CLLocationCoordinate2D(latitude: locValue.latitude, longitude: locValue.longitude)
-        ////        marker.title = "Sydney"
-        ////        marker.snippet = "Australia"
-        //        marker.map = self.mapView
-        //mapView.myLocationEnabled = true
-        if !CLLocationManager.locationServicesEnabled()
+         if !CLLocationManager.locationServicesEnabled()
         {
             gps.image = UIImage(named: "ic_gps_none");
         }else{

@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         
         GMSServices.provideAPIKey("AIzaSyBWIi7VAXpFbu1dqX3cXuhu9bB30gUb6u0")
         self.client = MSClient(
-            applicationURLString:"http://runningappjs.azure-mobile.net"
+            applicationURLString:"https://runningappjs.azure-mobile.net"
         )
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         let notificationTypes: UIUserNotificationType = [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]

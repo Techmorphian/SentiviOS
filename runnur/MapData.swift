@@ -24,6 +24,7 @@ class MapData
     var startLong = Double();
     var endLat = Double();
     var endLong = Double();
+    var trackPlyline = String();
 
     var heartRate = String();
     var splitGraphValues : [Double] = [];

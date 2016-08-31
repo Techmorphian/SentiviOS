@@ -34,9 +34,9 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
         print("didDisconnectWithUser");
     }
     
-    func signInWillDispatch(signIn: GIDSignIn!, error: NSError!) {
-        print(error);
-    }
+//    func signInWillDispatch(signIn: GIDSignIn!, error: NSError!) {
+//        print(error);
+//    }
     
     func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!,
                 withError error: NSError!) {
@@ -84,6 +84,7 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
                     }
                     if user != nil{
                         print(user)
+                        
                         print("Google Login Sucess")
                          self.call(false, email: email, firstName: firstName, lastName: lastName, id: googleId, token: idToken,imageUrl: imageUrl.absoluteString)
                     }
@@ -211,6 +212,17 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
         });
         
     }
+    
+    func cacheUser(user:MSUser) {
+        
+  
+    }
+    
+    
+    
+    
+    
+    
     func call(isFacebook:Bool,email:String,firstName:String,lastName:String,id:String,token:String,imageUrl:String){
         var postData = String();
         let dateFormatter = NSDateFormatter()
