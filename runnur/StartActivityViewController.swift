@@ -195,19 +195,81 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                 //, "GPSAcc": Double(accuracy), "EmailS": [""],"graphDistanceS": [Double("1.4")],"graphPaceS": [Double("1.4")],"graphSpeedS": [Double("1.4")],"graphAltitudeS": ["\(altitude)"], "mileMarkerS": [""],"splitSpeedS": ["0"], "splitDistanceS": ["0"], "graphHRS": [""],"splitTimeLog": ["custom-id"], "UriBlob": "my new item", "UUIDBlob": "ui", "activityLog": "my new item"
                 
                 if Reachability.isConnectedToNetwork() == true{
-                    table.insert(newItem as [NSObject : AnyObject]) { (result, error) in
-                        if let err = error {
-                            CommonFunctions.hideActivityIndicator();
-                            print("ERROR ", err)
-                        } else if let item = result {
-                            CommonFunctions.hideActivityIndicator();
-                            print("RunObject: ", item["altGainS"])
-                            let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
-                            ActivityDetailsViewController;
-                            activityDetailsViewController.mapData=self.mapData;
-                            self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
+//                    table.insert(newItem as [NSObject : AnyObject]) { (result, error) in
+//                        if let err = error {
+//                            CommonFunctions.hideActivityIndicator();
+//                            print("ERROR ", err)
+//                        } else if let item = result {
+//                            CommonFunctions.hideActivityIndicator();
+//                            print("RunObject: ", item["altGainS"])
+////                            let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
+////                            ActivityDetailsViewController;
+////                            activityDetailsViewController.mapData=self.mapData;
+////                            self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
+//                        }
+//                    }
+                    /***
+                     * Remove all dots and all strings including after "@" and then store the name as the blobname
+                     */
+                    var email =  NSUserDefaults.standardUserDefaults().stringForKey("email");
+                    email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
+                    let words =  email?.componentsSeparatedByString("@");
+                    let contName = words![0]
+                    let newItem2 : NSDictionary = ["rundetailcontainerblob": "\(contName)",
+                        "RunDetailResource":"\(uuid)",
+                        "complete":false
+                    ];
+                    
+                    let table2 = client.tableWithName("RunObjectBlob")
+                    if client.currentUser != nil{
+                    
+                        table2.insert(newItem2 as [NSObject : AnyObject]) { (result, error) in
+                            if let err = error {
+                                CommonFunctions.hideActivityIndicator();
+                                print("ERROR ", err)
+                            } else if let item = result {
+                                print(result);
+                                CommonFunctions.hideActivityIndicator();
+                                print("RunObject: ", item["userId"])
+                                var error:NSError?
+                                let sasQueryString = item["sasQueryString"]!
+                              let cred = AZSStorageCredentials(SASToken: sasQueryString as! String)
+                                let UriBlob = item["Uri"]!;
+                                let UriForBlob:NSURL = NSURL(string: UriBlob as! String)!
+                                let blobFromSASCredential =  AZSCloudBlockBlob(url: UriForBlob  , credentials: cred, snapshotTime: "30", error: &error);
+                                blobFromSASCredential.uploadFromText("welcome", completionHandler: { (error) in
+                                    if error != nil{
+                                        print(error);
+                                    }else{
+                                    print("succesful upload");
+                                    }
+                                })
+                                
+                                
+                              
+                                
+//                                let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
+//                                ActivityDetailsViewController;
+//                                activityDetailsViewController.mapData=self.mapData;
+//                                self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
+                            }
                         }
+                        
+                        
+
+                        
+                        
                     }
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                 }else{
                     let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
                     ActivityDetailsViewController;

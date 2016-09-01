@@ -41,6 +41,9 @@
 		4457FFE21D59C19A0097C598 /* ActivityDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4457FFE11D59C19A0097C598 /* ActivityDetailsViewController.swift */; };
 		4457FFE41D59C2030097C598 /* SummaryActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4457FFE31D59C2030097C598 /* SummaryActivityViewController.swift */; };
 		4457FFE61D5A0E730097C598 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4457FFE51D5A0E730097C598 /* WeatherData.swift */; };
+		446103D91D77F1C80084E20A /* AZSClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 446103D81D77F1C80084E20A /* AZSClient.framework */; };
+		446103DB1D77F22C0084E20A /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 446103DA1D77F22C0084E20A /* libxml2.2.tbd */; };
+		446103DE1D77FB4B0084E20A /* DownloadFromBlob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446103DD1D77FB4B0084E20A /* DownloadFromBlob.swift */; };
 		4466240C1D6B1BE600B65BAA /* ViewRouteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4466240B1D6B1BE600B65BAA /* ViewRouteController.swift */; };
 		4466240E1D6B3B7D00B65BAA /* AlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4466240D1D6B3B7D00B65BAA /* AlertView.xib */; };
 		446624101D6B3B8900B65BAA /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4466240F1D6B3B8900B65BAA /* AlertView.swift */; };
@@ -167,6 +170,9 @@
 		4457FFE11D59C19A0097C598 /* ActivityDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityDetailsViewController.swift; sourceTree = "<group>"; };
 		4457FFE31D59C2030097C598 /* SummaryActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryActivityViewController.swift; sourceTree = "<group>"; };
 		4457FFE51D5A0E730097C598 /* WeatherData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
+		446103D81D77F1C80084E20A /* AZSClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AZSClient.framework; sourceTree = "<group>"; };
+		446103DA1D77F22C0084E20A /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
+		446103DD1D77FB4B0084E20A /* DownloadFromBlob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadFromBlob.swift; sourceTree = "<group>"; };
 		4466240B1D6B1BE600B65BAA /* ViewRouteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewRouteController.swift; sourceTree = "<group>"; };
 		4466240D1D6B3B7D00B65BAA /* AlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertView.xib; sourceTree = "<group>"; };
 		4466240F1D6B3B8900B65BAA /* AlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
@@ -273,6 +279,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				446103DB1D77F22C0084E20A /* libxml2.2.tbd in Frameworks */,
 				447473C51D51F8CB0021C561 /* MapKit.framework in Frameworks */,
 				444C5E391D50B50F00A4DB3D /* UIKit.framework in Frameworks */,
 				444C5E371D50B50600A4DB3D /* SystemConfiguration.framework in Frameworks */,
@@ -286,6 +293,7 @@
 				444C5E271D50B40800A4DB3D /* CoreLocation.framework in Frameworks */,
 				444C5E251D50B3F900A4DB3D /* CoreGraphics.framework in Frameworks */,
 				444C5E231D50B3E900A4DB3D /* CoreData.framework in Frameworks */,
+				446103D91D77F1C80084E20A /* AZSClient.framework in Frameworks */,
 				444C5E211D50B3D000A4DB3D /* Accelerate.framework in Frameworks */,
 				4485841B1D4A0C4E0027F141 /* WebKit.framework in Frameworks */,
 				448584181D4A0AB40027F141 /* Bolts.framework in Frameworks */,
@@ -329,9 +337,18 @@
 			name = Activities;
 			sourceTree = "<group>";
 		};
+		446103DC1D77FB180084E20A /* BlobFiles */ = {
+			isa = PBXGroup;
+			children = (
+				446103DD1D77FB4B0084E20A /* DownloadFromBlob.swift */,
+			);
+			name = BlobFiles;
+			sourceTree = "<group>";
+		};
 		448584151D4A0A980027F141 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				446103D81D77F1C80084E20A /* AZSClient.framework */,
 				444C5E3A1D50C76A00A4DB3D /* GoogleMaps.bundle */,
 				444C5E1E1D50B39900A4DB3D /* GoogleMapsBase.framework */,
 				444C5E1C1D50B38E00A4DB3D /* GoogleMapsCore.framework */,
@@ -398,6 +415,7 @@
 				477811611D487871003B01A4 /* AddViaFacebook */,
 				477811601D48785F003B01A4 /* AddViaGoogle */,
 				4778115F1D487846003B01A4 /* Friend List */,
+				446103DC1D77FB180084E20A /* BlobFiles */,
 				4778115E1D48782B003B01A4 /* Add Friends */,
 				44BBF3751D5D96D4006618EF /* NSObject+MTNativeFacebookLogin.h */,
 				44BBF3761D5D96E2006618EF /* NSObject+MTNativeFacebookLogin.m */,
@@ -645,6 +663,7 @@
 		E81A32A4CAE00AD216210983 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				446103DA1D77F22C0084E20A /* libxml2.2.tbd */,
 				447473C41D51F8CB0021C561 /* MapKit.framework */,
 				444C5E381D50B50F00A4DB3D /* UIKit.framework */,
 				444C5E361D50B50600A4DB3D /* SystemConfiguration.framework */,
@@ -888,6 +907,7 @@
 				47B8A8F81D45E2E100BACB83 /* ViewGroupFitViewController.swift in Sources */,
 				445449261D534EC200995B45 /* ProfileViewController.swift in Sources */,
 				44524A1D1D54B8C800CC21C8 /* StartActivityViewController.swift in Sources */,
+				446103DE1D77FB4B0084E20A /* DownloadFromBlob.swift in Sources */,
 				4457FFE21D59C19A0097C598 /* ActivityDetailsViewController.swift in Sources */,
 				470CF8971D24FB010001B3BC /* AddFriendsViewController.swift in Sources */,
 				446624101D6B3B8900B65BAA /* AlertView.swift in Sources */,

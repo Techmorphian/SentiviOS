@@ -15,4 +15,5 @@
 #import <FBSDKShareKit/FBSDKSharing.h>
 #import <Google/SignIn.h>
 #import <GoogleSignIn/GoogleSignIn.h>
+#import <AZSClient/AZSClient.h>
 #endif
