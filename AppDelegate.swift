@@ -30,6 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         //Add this line. Replace '5eb5a37e-b458-11e3-ac11-000c2940e62c' with your OneSignal App ID.
         OneSignal(launchOptions: launchOptions, appId: "a62ddded-7c71-4583-9fd4-b9a39101ff8d")
         
+    
+        
         
         //////////////////////
         
@@ -43,6 +45,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         
         application.registerUserNotificationSettings(pushNotificationSettings)
         application.registerForRemoteNotifications()
+        
+        
+        if let options = launchOptions
+            
+        {
+            
+            if let _ = options[UIApplicationLaunchOptionsRemoteNotificationKey] as? [NSObject : AnyObject]
+                
+            {
+                
+//                var badgeNum = NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter")
+//                
+//                NSUserDefaults.standardUserDefaults().setObject( 0 , forKey: "badgeCounter")
+//                
+//                UIApplication.sharedApplication().applicationIconBadgeNumber =  0
+                
+                self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                
+                let initialViewController = storyboard.instantiateViewControllerWithIdentifier("RequestsViewController") as! RequestsViewController
+                
+                
+                self.window?.makeKeyAndVisible()
+                
+                
+                self.window?.rootViewController?.presentViewController(initialViewController, animated: true, completion: nil)
+                self.window?.rootViewController = initialViewController
+                
+            }
+            
+            return true
+        }
+        
+
         
         return true
     }
@@ -61,20 +98,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     fetchCompletionHandler handler: (UIBackgroundFetchResult) -> Void)
     {
         
+        print(userInfo)
+        
         if application.applicationState == UIApplicationState.Active
             
         {
-//            var badgeNum = NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter")
-//            
-//            NSUserDefaults.standardUserDefaults().setObject( ++badgeNum , forKey: "badgeCounter")
-//            
-//            UIApplication.sharedApplication().applicationIconBadgeNumber =  NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter")
+            
+            print(userInfo)
+
+  
+        NSNotificationCenter.defaultCenter().postNotificationName("showAlert", object: nil, userInfo: userInfo)
             
             
-            NSNotificationCenter.defaultCenter().postNotificationName("showAlert", object: nil, userInfo: userInfo)
         }
         else
         {
+            
+            
+            
+            print(userInfo)
+            
+            
+
 //            var badgeNum = NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter")
 //            
 //            NSUserDefaults.standardUserDefaults().setObject( ++badgeNum , forKey: "badgeCounter")
@@ -83,11 +128,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             
             
         }
-
         
+    }
+    
+    
+    
+  //MARK: - DID REGISTER FOR REMOTE NOTIFICATIONS WITH DEVICE TOKEN
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData)
+    {
+        let tokenChars = UnsafePointer<CChar>(deviceToken.bytes)
+        var tokenString = ""
+        
+        for i in 0..<deviceToken.length
+        {
+            tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
+        }
+        
+        print("Device Token:", tokenString)
         
         
     }
+    
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        print("Failed to register:", error)
+    }
+    
+    
+    
 
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool

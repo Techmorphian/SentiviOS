@@ -332,32 +332,77 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
     
     func dateComparison(startDate: String,endDate : String) -> Int
     {
+        
+        
+        let date = NSDate()
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components([.Day , .Month , .Year], fromDate: date)
+        
+        let year =  components.year
+        let month = components.month
+        let day = components.day
+        
+        print(year)
+        print(month)
+        print(day)
+        
+    let nsdateString = String(year) + "-" + String(month) +  "-" + String(day)
+        print(nsdateString)
+        
+        let dateFormatter = NSDateFormatter()
+        
+         dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        let nscurrentDate = dateFormatter.dateFromString(nsdateString)
+        
+        print(nscurrentDate)
+        
+        
+//        
+//        let nscurrentDate = NSDate()
+//        
+//        let dateFormatter = NSDateFormatter()
+//        
+//        dateFormatter.dateFormat = "yyyy-MM-dd"
+//        
+//        
+//        
+//        let currentDate = dateFormatter.stringFromDate(nscurrentDate)
+//        
+//        print(currentDate)
+//        
+//        dateFormatter.dateFormat = "yyyy-MM-dd"
+
     
         
-        let nscurrentDate = NSDate()
+        ///////
         
-             
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
+    let dateFormatter2 = NSDateFormatter()
         
-        let currentDate = dateFormatter.stringFromDate(nscurrentDate)
+        dateFormatter2.dateFormat = "yyyy-MM-dd"
         
-        print(currentDate)
-
+        dateFormatter2.timeZone = NSTimeZone(name: "GMT")
         
-        let nsStartDate = dateFormatter.dateFromString(startDate)
+        let nsStartDate = dateFormatter2.dateFromString(startDate)
         
         print(nsStartDate)
         
-         let nsEndDate = dateFormatter.dateFromString(endDate)
+       let nsEndDate = dateFormatter2.dateFromString(endDate)
         
-         print(nsEndDate)
+        print(nsEndDate)
+
         
+      
         
-        if nscurrentDate.compare(nsEndDate!) == .OrderedDescending
+       
+       
+        
+        /////////////
+        
+        if nscurrentDate!.compare(nsEndDate!) == .OrderedDescending
         {
             
-             print("over")
+            print("over")
             
         }
         else
@@ -365,16 +410,16 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
             
             
             
-            if nsStartDate?.compare(nscurrentDate) == .OrderedAscending && nsEndDate?.compare(nscurrentDate) == .OrderedDescending
+            if nsStartDate?.compare(nscurrentDate!) == .OrderedAscending && nsEndDate?.compare(nscurrentDate!) == .OrderedDescending
             {
-                 print("could be going")
+                print("could be going")
                 return challengeOnGoing
-               
+                
             }
-            else if nsStartDate?.compare(nscurrentDate) == .OrderedSame || nsEndDate?.compare(nscurrentDate) == .OrderedSame
-
+            else if nsStartDate?.compare(nscurrentDate!) == .OrderedSame || nsEndDate?.compare(nscurrentDate!) == .OrderedSame
+                
             {
-                 print("could be going")
+                print("could be going")
                 return challengeOnGoing
                 
             }
@@ -383,13 +428,51 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                 print("not started")
                 
                 return challengeNotStarted
-               
+                
             }
             
             
             
         }
         
+
+        
+//        if nscurrentDate.compare(nsEndDate!) == .OrderedDescending
+//        {
+//            
+//             print("over")
+//            
+//        }
+//        else
+//        {
+//            
+//            
+//            
+//            if nsStartDate?.compare(nscurrentDate) == .OrderedAscending && nsEndDate?.compare(nscurrentDate) == .OrderedDescending
+//            {
+//                 print("could be going")
+//                return challengeOnGoing
+//               
+//            }
+//            else if nsStartDate?.compare(nscurrentDate) == .OrderedSame || nsEndDate?.compare(nscurrentDate) == .OrderedSame
+//
+//            {
+//                 print("could be going")
+//                return challengeOnGoing
+//                
+//            }
+//            else
+//            {
+//                print("not started")
+//                
+//                return challengeNotStarted
+//               
+//            }
+//            
+//            
+//            
+//        }
+//        
         
         
         return challengeOver
@@ -680,7 +763,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                         challenegeOverImagView.hidden = false
                         challengeOverLabel.text = msg
                         
-                        challenegeOverImagView.image = UIImage(named: "")
+                        challenegeOverImagView.image = UIImage(named: "ic_challenge_over")
                         
                         
                         challengeViewHeightConstarint.constant = 50
@@ -1826,13 +1909,64 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
     
 
     
+    //MARK:- METHOD OR RECEIVED PUSH NOTIFICATION
     
+    func methodOfReceivedNotification(notification: NSNotification)
+    {
+        
+        //// push notification alert and parsing
+        
+        let data = notification.userInfo as! NSDictionary
+        
+        let aps = data.objectForKey("aps")
+        
+        print(aps)
+        
+        let NotificationMessage = aps!["alert"] as! String
+        
+        print(NotificationMessage)
+        
+        
+        let custom = data.objectForKey("custom")
+        
+        print(custom)
+        
+        
+        let alert = UIAlertController(title: "", message: NotificationMessage , preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let viewAction = UIAlertAction(title: "View", style: UIAlertActionStyle.Default, handler: {
+            
+            void in
+            
+            
+            let cat = self.storyboard?.instantiateViewControllerWithIdentifier("RequestsViewController") as! RequestsViewController;
+            
+            
+            self.revealViewController().pushFrontViewController(cat, animated: false)
+            
+        })
+        
+        let DismissAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil)
+        
+        
+        alert.addAction(viewAction)
+        
+        alert.addAction(DismissAction)
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+        
+    }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-      
-
+        
+    //// push notification
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SummaryViewController.methodOfReceivedNotification(_:)), name:"showAlert", object: nil)
+        
+        
     
         if(Reachability.isConnectedToNetwork()==true )
         {

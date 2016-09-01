@@ -8,7 +8,8 @@
 
 import UIKit
 
-class ViewGroupFitViewController: UIViewController
+class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSessionDataDelegate
+
 {
 
     
@@ -79,6 +80,73 @@ class ViewGroupFitViewController: UIViewController
         
     }
     
+    
+    
+    
+    
+    // FUNC ACTIVITY INDICATOR
+    
+    var loadingLable = UILabel()
+    var loadingView = UIView()
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    // func showActivityIndicator(view:UIView,height:CGFloat=0)
+    func showActivityIndicator()
+        
+    {
+        
+        print(view.frame.height)
+        print(view.frame.width)
+        
+        
+        /// x-30 is a width of loadingView/2 mns 60/2
+        ////// y-100 mns height of parent view(upper view only)
+        
+        loadingView.frame = CGRectMake(self.view.frame.width/2-30,self.view.frame.height/2 - 100,60,150)
+        
+        loadingView.layer.cornerRadius = 10
+        loadingView.alpha = 0.6
+        
+        
+        loadingView.clipsToBounds = true
+        
+        
+        // activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+        
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        
+        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+                                               loadingView.frame.size.height / 2);
+        
+        
+        
+        //  loadingLable=UILabel(frame: CGRectMake(self.loadingView.frame.width/2-50,self.loadingView.frame.height/2+20, 100,50))
+        
+        //        loadingLable=UILabel(frame: CGRectMake(5,100, self.loadingView.frame.width,80))
+        //
+        //        loadingLable.text = "Please wait a moment. This may take a while"
+        //
+        //        loadingLable.textColor=UIColor.redColor()
+        //
+        //        loadingLable.font = loadingLable.font.fontWithSize(10)
+        //        loadingLable.lineBreakMode =  .ByWordWrapping
+        //        loadingLable.numberOfLines=0
+        //
+        //         loadingLable.textAlignment = .Center
+        //
+        //        loadingView.addSubview(loadingLable)
+        
+        loadingView.addSubview(activityIndicator)
+        
+        
+        self.view.addSubview(loadingView)
+        activityIndicator.startAnimating()
+        
+        
+    }
+    
+    
+
+    
        var button = UIButton()
     
     @IBAction func overFlowButtonAction(sender: AnyObject)
@@ -89,7 +157,15 @@ class ViewGroupFitViewController: UIViewController
         
         let noAction = UIAlertAction(title: "NO", style: UIAlertActionStyle.Default, handler: nil)
         
-        let yesAction = UIAlertAction(title: "YES", style: UIAlertActionStyle.Default, handler: nil)
+        let yesAction = UIAlertAction(title: "YES", style: UIAlertActionStyle.Default, handler: {
+            
+            
+            action in
+            
+            self.exitChallenge()
+            
+            
+            })
         
         alert.addAction(noAction)
         alert.addAction(yesAction)
@@ -98,6 +174,201 @@ class ViewGroupFitViewController: UIViewController
         return
         
 
+        
+        
+    }
+    // MARK:-  EXIT CHALLENGE WB
+    
+    func exitChallenge()
+        
+    {
+        
+        let myurl = NSURL(string: Url.exitChallenge)
+        
+        let request = NSMutableURLRequest(URL: myurl!)
+        
+        request.HTTPMethod = "POST"
+        
+        request.timeoutInterval = 20.0;
+        
+        
+        let userId  =  NSUserDefaults.standardUserDefaults().stringForKey("userId");
+        
+        let challengeId =  NSUserDefaults.standardUserDefaults().stringForKey("challengeId")
+
+        let postString = "userId=\(userId!)&challengeId=\(challengeId!)&currentDate=\(CurrentDateFunc.currentDate()))";
+        
+        print(postString)
+        
+        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+        
+        let session = NSURLSession(configuration: config, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
+        
+        let downloadTask = session.dataTaskWithRequest(request);
+        
+        downloadTask.resume()
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    //MARK:- NSURLSession delegate methods
+    
+    func URLSessionDidFinishEventsForBackgroundURLSession(session: NSURLSession)
+    {
+        
+        
+        
+    }
+    
+    func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, willCacheResponse proposedResponse: NSCachedURLResponse, completionHandler: (NSCachedURLResponse?) -> Void)
+    {
+        
+        let dataString = String(data: self.mutableData, encoding: NSUTF8StringEncoding)
+        
+        
+        
+        print(dataString!)
+        
+        
+        if dataTask.currentRequest?.URL! == NSURL(string: Url.exitChallenge)
+            
+        {
+            
+            do
+                
+            {
+                
+                let json = try NSJSONSerialization.JSONObjectWithData(self.mutableData, options: .MutableContainers) as? NSDictionary
+                
+                if  let parseJSON = json
+                {
+                    
+                    let status = parseJSON["status"] as? String
+                    let msg=parseJSON["message"] as? String
+                    if(status=="Success")
+                    {
+                        
+                        
+                        let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
+                        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+                        
+                        alert.addAction(okAction)
+                        
+                        self.presentViewController(alert, animated: true, completion: nil)
+                        return
+
+                        
+                        
+                        
+                        
+                    }
+                        
+                    else if status == "Error"
+                        
+                    {
+                        
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
+                            
+                            //  LoaderFile.hideLoader(self.view)
+                            
+                            let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
+                            let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+                            
+                            alert.addAction(okAction)
+                            
+                            self.presentViewController(alert, animated: true, completion: nil)
+                            return
+                            
+                        })
+                        
+                    }
+                    
+                    
+                    
+                }
+                
+            }
+                
+            catch
+                
+            {
+                
+                
+                
+                let alert = UIAlertController(title: "", message:"something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
+                
+                let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
+                
+                alert.addAction(alertAction)
+                
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+                
+                
+                
+                
+                print(error)
+                
+            }
+            
+        } // if dataTask close
+        
+        
+        
+        
+    } //// main func
+    
+    
+    
+    var mutableData = NSMutableData()
+    func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData)
+    {
+        
+        self.mutableData.appendData(data);
+        
+        
+        
+    }
+    
+    func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveResponse response: NSURLResponse, completionHandler: (NSURLSessionResponseDisposition) -> Void) {
+        
+        self.mutableData.setData(NSData())
+        
+        completionHandler(NSURLSessionResponseDisposition.Allow)
+        
+    }
+    
+    func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?)
+    {
+        
+        // LoaderFile.hideLoader(self.view)
+        
+        let alert = UIAlertController(title: "", message:"something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
+        
+        alert.addAction(alertAction)
+        
+        let alertAction2 = UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler: {
+            
+            Void in
+            
+        })
+        
+        alert.addAction(alertAction2)
+        
+        
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
         
         
     }
@@ -670,6 +941,10 @@ class ViewGroupFitViewController: UIViewController
     {
         super.viewDidLoad()
         
+        
+        
+        print(NSUserDefaults.standardUserDefaults().stringForKey("challengeId"))
+
     
         
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(ViewGroupFitViewController.respondToSwipeGestureRight))
@@ -693,8 +968,7 @@ class ViewGroupFitViewController: UIViewController
      
         
         
-       // if NSUserDefaults.standardUserDefaults().boolForKey("PresentActivityScreen") == true
-       
+        
         
             summaryButton.titleLabel?.textColor  = UIColor.whiteColor();
             summaryBottomView.backgroundColor = UIColor.whiteColor();
@@ -871,14 +1145,7 @@ class ViewGroupFitViewController: UIViewController
             
         }
         
-        
-        else
-        {
-            
-            
-            
-            
-        }
+    
         
         
             

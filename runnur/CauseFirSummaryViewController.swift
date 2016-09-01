@@ -8,11 +8,12 @@
 
 import UIKit
 
-class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionDataDelegate,UITextFieldDelegate
+class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionDataDelegate,UITextFieldDelegate,UIScrollViewDelegate
 {
 
     
     
+    @IBOutlet var ScrollView: UIScrollView!
     
     var noInternet = NoInternetViewController()
    
@@ -301,7 +302,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
             {
                 
                 
-                let alert = UIAlertController(title: "", message: "Are you sure you want to decline this causeFit?" , preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "", message: "Max.amount must be greater than zero." , preferredStyle: UIAlertControllerStyle.Alert)
                 
                 let OkAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
                 
@@ -500,7 +501,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
     
     //////////////////////////////////////////////////// web service part
     
-    // MARK:- DECLINE WEB SERVICE
+    // MARK:- ACCEPT CAUSE FIT  WEB SERVICE
     
    
     
@@ -1056,15 +1057,17 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                         
                                           bottomFrontView.hidden = true
                                         
-                                        buttonOne.setTitle("Accepted", forState: .Normal)
+                                    ///he cant start activity bcz he is contributing
+                                        
+                                  
                                         
                                         buttonOne.backgroundColor = UIColor.clearColor();
                                         
                                         bottomSmallViewCenterX.constant = self.view.frame.width/2 - 10
                                         
-                                        bottomButtomViewHeight.constant = 50
+                                        bottomButtomViewHeight.constant = 0
                                         
-                                           bottomButtomViewHeight.constant = 50
+                                        bottomButtomViewHeight.constant = 0
                                         
                                     }
                                     
@@ -1303,7 +1306,12 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                 
                                 
                                 let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
-                                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in print("ok") })
+                                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
+                                    
+                                    self.viewCauseChallengeDetail();
+                                    
+                                    
+                                     })
                                 
                                 
                                 alert.addAction(okAction)
@@ -1561,13 +1569,219 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         
     }
     
+    // MARK:- KEYBOARD
     
+    
+    
+    
+    
+    func inputToolbarDonePressed()
+    {
+         maxAmountContributionTxtField.resignFirstResponder();
+        
+    }
+    
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool
+    {
+        
+        if textField == self.maxAmountContributionTxtField
+        {
+            
+            textField.inputAccessoryView = inputToolbar
+            
+        }
+        
+       return true;
+        
+    }
+    
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool
+    {
+        if textField == maxAmountContributionTxtField
+        {
+            maxAmountContributionTxtField.resignFirstResponder();
+            
+        }
+      return true;
+    }
+    
+    
+    
+    func registerForKeyboardNotifications()
+        
+    {
+        
+        //Adding notifies on keyboard appearing
+        
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CauseFirSummaryViewController.keyboardWasShown(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CauseFirSummaryViewController.keyboardWillBeHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        
+    }
+    
+    func deregisterFromKeyboardNotifications()
+        
+    {
+        
+        //Removing notifies on keyboard appearing
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        
+    }
+    
+    
+    var actualContentInset = UIEdgeInsets()
+    
+    var activeField : AnyObject?
+    
+    func keyboardWasShown(notification: NSNotification)
+        
+    {
+        
+        //Need to calculate keyboard exact size due to Apple suggestions
+        
+        self.ScrollView.scrollEnabled = true
+        
+        let info : NSDictionary = notification.userInfo!
+        
+        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue().size
+        
+        let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize!.height, 0.0)
+        
+        self.ScrollView.contentInset = contentInsets
+        
+        self.ScrollView.scrollIndicatorInsets = contentInsets
+        
+        
+        var aRect : CGRect = self.view.frame
+        
+        aRect.size.height -= keyboardSize!.height
+        
+        if let _ = activeField
+            
+        {
+            
+            if (!CGRectContainsPoint(aRect, activeField!.frame.origin))
+                
+            {
+                
+                self.ScrollView.scrollRectToVisible(activeField!.frame, animated: true)
+                
+            }
+            
+        }
+        
+        
+    }
+    
+    
+    
+    func keyboardWillBeHidden(notification: NSNotification)
+        
+    {
+        
+        self.ScrollView.contentOffset.y = 0;
+        
+        //Once keyboard disappears, restore original positions
+        
+        self.ScrollView.contentInset = actualContentInset
+        
+        self.ScrollView.scrollIndicatorInsets = actualContentInset
+        
+        
+    }
+    
+    
+ // mark:- toolbar
+    lazy var inputToolbar: UIToolbar =
+        {
+            var toolbar = UIToolbar()
+            toolbar.barStyle = .Default
+            toolbar.translucent = true
+            toolbar.sizeToFit()
+            
+            var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(CauseFirSummaryViewController.inputToolbarDonePressed))
+            
+            var flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+            
+            var fixedSpaceButton = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
+            
+            
+            toolbar.setItems([fixedSpaceButton, fixedSpaceButton, flexibleSpaceButton, doneButton], animated: false)
+            toolbar.userInteractionEnabled = true
+            
+            return toolbar
+    }()
+
+    
+    
+    //MARK:- METHOD OR RECEIVED PUSH NOTIFICATION
+    
+    func methodOfReceivedNotification(notification: NSNotification)
+    {
+        
+        //// push notification alert and parsing
+        
+        let data = notification.userInfo as! NSDictionary
+        
+        let aps = data.objectForKey("aps")
+        
+        print(aps)
+        
+        let NotificationMessage = aps!["alert"] as! String
+        
+        print(NotificationMessage)
+        
+        
+        let custom = data.objectForKey("custom")
+        
+        print(custom)
+        
+        
+        let alert = UIAlertController(title: "", message: NotificationMessage , preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let viewAction = UIAlertAction(title: "View", style: UIAlertActionStyle.Default, handler: {
+            
+            void in
+            
+            
+            let cat = self.storyboard?.instantiateViewControllerWithIdentifier("RequestsViewController") as! RequestsViewController;
+            
+            
+            self.revealViewController().pushFrontViewController(cat, animated: false)
+            
+        })
+        
+        let DismissAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil)
+        
+        
+        alert.addAction(viewAction)
+        
+        alert.addAction(DismissAction)
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+        
+    }
+
 
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
+        
+        
+        //// push notification
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CauseFirSummaryViewController.methodOfReceivedNotification(_:)), name:"showAlert", object: nil)
+
+        
+         self.ScrollView.delegate = self;
         
         challengeMSGView.hidden = true
         challenegMSGSmallView.hidden = true
@@ -1588,7 +1802,8 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         maxAmountContributionTxtField.attributedPlaceholder = placeholder1
 
         
-        
+        anonymous = "0"
+
         
         
         if(Reachability.isConnectedToNetwork()==true )

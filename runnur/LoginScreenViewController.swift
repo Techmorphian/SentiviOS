@@ -322,6 +322,12 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
                                 NSUserDefaults.standardUserDefaults().setObject("5", forKey: "heightFt")
                                 NSUserDefaults.standardUserDefaults().setObject("10", forKey: "heightIn")
                                 NSUserDefaults.standardUserDefaults().setBool(true, forKey: "voiceFeedback")
+                                
+                                let test = OneSignal.defaultClient()
+                                
+                                test.sendTags(["User": userId]);
+                                
+                                
 
                             }//
                         }

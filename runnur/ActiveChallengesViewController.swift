@@ -838,6 +838,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     var selectedTypeId2 = Int()
 
     
+   // MARK:-  DID SELECT ROW INDEX PATH
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
@@ -850,6 +851,8 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
             let challengeId =  participatingArray[indexPath.row].challengeId
             
               NSUserDefaults.standardUserDefaults().setObject(challengeId, forKey: "challengeId")
+            
+             print(NSUserDefaults.standardUserDefaults().stringForKey("challengeId"))
             
             
              let challengeName = participatingArray[indexPath.row].challengeName
@@ -878,7 +881,8 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
             let challengeId =  contributingArray[indexPath.row].challengeId
             NSUserDefaults.standardUserDefaults().setObject(challengeId, forKey: "challengeId")
             
-            
+            print(NSUserDefaults.standardUserDefaults().stringForKey("challengeId"))
+
             
             let challengeName = contributingArray[indexPath.row].challengeName
             NSUserDefaults.standardUserDefaults().setObject(challengeName, forKey: "challengeName")

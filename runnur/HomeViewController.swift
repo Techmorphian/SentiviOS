@@ -129,8 +129,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     
     
     
-    //////////////////// push 
-    
+    //MARK:- METHOD OR RECEIVED PUSH NOTIFICATION
     
     func methodOfReceivedNotification(notification: NSNotification)
     {
@@ -138,49 +137,46 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         //// push notification alert and parsing
         
         
-//        
-//        if  NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter") != 0
-//        {
-//            
-//            self.badgeCounterLabel.hidden = false
-//            
-//            
-//            if NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter") > 99
-//            {
-//                
-//                self.badgeCounterLabel.text = String(NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter")) + "+"
-//                
-//            }
-//            else
-//            {
-//                
-//                self.badgeCounterLabel.text = String(NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter"))
-//                
-//            }
-//            
-//        }
+         let data = notification.userInfo as! NSDictionary
         
+         let aps = data.objectForKey("aps")
         
-        let elemets = notification.userInfo
+        print(aps)
+       
+        var NotificationMessage = String()
+      
+        NotificationMessage = aps!["alert"] as! String
+                          
+       
+        let custom = data.objectForKey("custom")
         
+      
         
-        
-        
-        let myAlert = UIAlertController(title:"", message: "ttttttt" , preferredStyle: UIAlertControllerStyle.Alert)
-        myAlert.addAction(UIAlertAction(title: "View", style: UIAlertActionStyle.Default, handler: { void in
+            
+            let alert = UIAlertController(title: "", message: NotificationMessage , preferredStyle: UIAlertControllerStyle.Alert)
+            
+            let viewAction = UIAlertAction(title: "View", style: UIAlertActionStyle.Default, handler: {
+                
+                void in
+                
+                
+                let cat = self.storyboard?.instantiateViewControllerWithIdentifier("RequestsViewController") as! RequestsViewController;
+                
+                
+                self.revealViewController().pushFrontViewController(cat, animated: false)
+                
+            })
+            
+            let DismissAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil)
             
             
+            alert.addAction(viewAction)
             
-        }))
+            alert.addAction(DismissAction)
+            
+            self.presentViewController(alert, animated: true, completion: nil)
         
-        myAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: {void in
-            
-            
-            
-        }))
-        
-        
-        self.presentViewController(myAlert, animated: true, completion: nil)
+  
         
     }
     
@@ -188,6 +184,23 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     
     
     ////////////////////
+    
+  //  MARK:- VIEW DIDLOAD
+    
+//    [aps: {
+//    alert = "Sonali Pawar become your friend";
+//    badge = 1;
+//    sound = default;
+//    }, custom: {
+//    a =     {
+//    "request_type" = 2;
+//    "sender_id" = "992A9BA6-5B4B-4A33-B013-8A8A33027763";
+//    };
+//    i = "734873ee-5034-4861-ba86-cf2199bd29da";
+//    }]
+    
+    
+    
     
     var lat = String();
     var long = String();
@@ -197,6 +210,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         super.viewDidLoad();
         
         //self.call();
+        
         
         
         ////// push notification

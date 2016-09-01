@@ -75,8 +75,16 @@ class Url
     static let acceptFriendRequest = baseUrl + "acceptFriendRequest.php"
 
     static let declineFriendRequest = baseUrl + "declineFriendRequest.php"
+    
+   static let declineExitRequest = baseUrl + "declineExitRequest.php"
+    
+    static let removedWithoutMoneyBack = baseUrl + "removedChallenge.php"
+    
+    static let removedWithMoneyBack = baseUrl + "removedWithMoneyBack.php"
+    
+    
+    
+    
+    static let  exitChallenge = baseUrl + "exitChallenge.php"
 
-    
-    
-    
 }
