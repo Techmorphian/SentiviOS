@@ -91,38 +91,6 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     }
     private func saveData()
     {
-        //        let date = self.lastLocation.timestamp
-        //        let dateFormatter = NSDateFormatter()
-        //        dateFormatter.dateFormat = "yyyy-MM-dd";
-        //        let dateString = dateFormatter.stringFromDate(date)
-        //
-        //        self.mapData = MapData();
-        //        self.mapData.distance = self.distance.text!;
-        //        self.mapData.date = dateString;
-        //        self.mapData.elevationLoss = String(self.altLoss);
-        //        self.mapData.elevationGain = String(self.altGain);
-        //        self.mapData.avgSpeed = self.avgSpeed.text!;
-        //        self.mapData.avgPace = self.avgPace.text!;
-        //        self.mapData.duration = self.duration.text!;
-        //        self.mapData.weatherData = self.weatherData;
-        //        self.mapData.activityType = "Run";
-        //        self.mapData.maxElevation = "";
-        //        self.mapData.maxSpeed = "";
-        //        self.mapData.startTime = self.stringStartTime;
-        //        self.mapData.streak = "1"
-        //        self.mapData.caloriesBurned = String(self.caloriesburned);
-        //        self.mapData.location = self.locationName;
-        //        self.mapData.startLat = self.firstLocation.coordinate.latitude;
-        //        self.mapData.startLong = self.firstLocation.coordinate.longitude;
-        //        self.mapData.endLat = self.lastLocation.coordinate.latitude;
-        //        self.mapData.endLong = self.lastLocation.coordinate.longitude;
-        //
-        //
-        //        let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
-        //        ActivityDetailsViewController;
-        //        activityDetailsViewController.mapData=self.mapData;
-        //        self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
-        
         
         
         CommonFunctions.showPopup(self, title: "ALREADY FINISHED?", msg: "You did not cover enough distance. Are you sure you want to save the activity?", positiveMsg: "Yes, Save", negMsg: "No, Discard", show2Buttons: true, showReverseLayout: false,getClick: {
@@ -219,7 +187,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                         "RunDetailResource":"\(uuid)",
                         "complete":false
                     ];
-                    
+                    var runObjectDetailJson = String();
                     let table2 = client.tableWithName("RunObjectBlob")
                     if client.currentUser != nil{
                     
@@ -233,25 +201,60 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                                 print("RunObject: ", item["userId"])
                                 var error:NSError?
                                 let sasQueryString = item["sasQueryString"]!
-                              let cred = AZSStorageCredentials(SASToken: sasQueryString as! String)
+                                //let cred =  AZSStorageCredentials(SASToken:  sasQueryString as! String);
+                                
+                                //  , accountName: "runobjectblob"
+                                let cred = AZSStorageCredentials(SASToken: sasQueryString as! String);
+                                
+                              //let cred = AZSStorageCredentials(SASToken: sasQueryString as! String)
                                 let UriBlob = item["Uri"]!;
                                 let UriForBlob:NSURL = NSURL(string: UriBlob as! String)!
-                                let blobFromSASCredential =  AZSCloudBlockBlob(url: UriForBlob  , credentials: cred, snapshotTime: "30", error: &error);
-                                blobFromSASCredential.uploadFromText("welcome", completionHandler: { (error) in
+                               // var sasToken = "SharedAccessSignature=\(sasQueryString);BlobEndpoint=\(UriBlob)"
+
+                                print(UriForBlob)
+                                print(cred);
+                         
+                                // let uri = AZSStorageUri(primaryUri: UriForBlob)
+                                // let blobFromSASCredential =  AZSCloudBlockBlob(storageUri: uri, credentials: cred, snapshotTime: nil, error: &error)
+                                
+                                let blobFromSASCredential =  AZSCloudBlockBlob(url: UriForBlob, credentials: cred, snapshotTime: nil, error: &error);
+                                
+                                if error == nil{
+                                
+                                if NSJSONSerialization.isValidJSONObject(newItem){
+                                    let jsonData = try! NSJSONSerialization.dataWithJSONObject(newItem, options: NSJSONWritingOptions())
+                                    let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
+                                    runObjectDetailJson = jsonString;
+                                }
+                                    
+                                    
+                                
+                                    
+                                blobFromSASCredential.uploadFromText("gvhv", completionHandler: { (error) in
                                     if error != nil{
                                         print(error);
                                     }else{
+                                        let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
+                                        ActivityDetailsViewController;
+                                        activityDetailsViewController.mapData=self.mapData;
+                                        self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
                                     print("succesful upload");
                                     }
                                 })
                                 
                                 
+                                }else{
+                                    print(error?.localizedDescription);
+                                    print(error?.localizedFailureReason);
+                                    print(error?.localizedRecoveryOptions);
+                                    print(error?.localizedRecoverySuggestion);
+
+                                }
+                                
+                                
                               
                                 
-//                                let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
-//                                ActivityDetailsViewController;
-//                                activityDetailsViewController.mapData=self.mapData;
-//                                self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
+
                             }
                         }
                         

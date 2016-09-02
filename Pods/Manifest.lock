@@ -34,7 +34,7 @@ PODS:
 
 DEPENDENCIES:
   - Charts
-  - Google/SignIn
+  - Google/SignIn (~> 3.0)
   - Kingfisher (~> 2.4)
 
 SPEC CHECKSUMS:
@@ -51,6 +51,6 @@ SPEC CHECKSUMS:
   GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
   Kingfisher: 41aed5b6c1ed8fa98cf6d75283ce89cf7890f517
 
-PODFILE CHECKSUM: db5c9272ae1080630718314b4f94076d7397cf8e
+PODFILE CHECKSUM: bbae2a217b2dfa143780ea10514934363bb052ff
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.0.0

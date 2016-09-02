@@ -7,7 +7,7 @@ target 'runnur' do
 
 pod 'Charts'
 pod 'Kingfisher', '~> 2.4'
-pod 'Google/SignIn'
+pod 'Google/SignIn', '~> 3.0'
   # Pods for runnur
 
 end

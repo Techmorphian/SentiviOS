@@ -31,39 +31,34 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
 
     }
     @IBOutlet weak var tableView: UITableView!
+    
     func getData()
     {
         CommonFunctions.showActivityIndicator(self.view);
         
-        let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
-        let client = delegate!.client!;
+         let file = "routeData.txt" //this is the file. we will write to and read from it
+       
+        let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
+        print(paths);
         
-        let user: MSUser = MSUser(userId: NSUserDefaults.standardUserDefaults().stringForKey("azureUserId"));
-        user.mobileServiceAuthenticationToken = NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken");
-        client.currentUser = user
+        let getImagePath = paths.URLByAppendingPathComponent(file)
         
-        
-        
-        let table = client.tableWithName("RouteObject")
-        if client.currentUser != nil{
-            
-//            let predicate =  NSPredicate(format: "userId == \(NSUserDefaults.standardUserDefaults().stringForKey("userId"))")
-//            // Query the TodoItem table
-//            table.readWithPredicate(predicate){ (result, error) in
-//                print("this is predicate results \(result)")
-//            }
-            
-            table.readWithCompletion { (result, error) in
-                if let err = error {
-                    self.showNoRoutesView();
-                    print("ERROR ", err)
-                } else if let items = result?.items {
-                    if items.count == 0
-                    {
-                        self.showNoRoutesView();
-                    }
+        let checkValidation = NSFileManager.defaultManager();
+        if (checkValidation.fileExistsAtPath(getImagePath.path!))
+        {
+            print("FILE AVAILABLE");
+            do {
+                let path = NSURL(fileURLWithPath: paths.absoluteString).URLByAppendingPathComponent(file);
+                let text2 = try NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding)
+                print(text2);
+                let data = text2.dataUsingEncoding(NSUTF8StringEncoding)
+                  let jsonData = try! NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as! NSArray
+                
+                    let items = jsonData;
                     for item in items {
+                        
                         self.routeData = MapData();
+                        
                         if let distance = item["distanceP"] as? String{
                             self.routeData.distance = distance
                         }
@@ -83,28 +78,147 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                             self.routeData.distanceAway = distanceAway
                         }
                         if let trackPolylines = item["trackPolylinesP"] as? String{
-                          print(trackPolylines);
+                            print(trackPolylines);
                             
                             let data: NSData = trackPolylines.dataUsingEncoding(NSUTF8StringEncoding)!
                             do
                             {
-                            let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
-                            
-//                            trackPolylines.stringByReplacingOccurrencesOfString("[{}", withString: "")
-//                         trackPolylines.componentsSeparatedByString(",")
-                            for i in 0 ..< json!.count
-                            {
-                            self.routeData.trackLat.append((json![i].objectForKey("latitude") as? Double)!)
-                            self.routeData.trackLong.append((json![i].objectForKey("longitude") as? Double)!)
-                            }
+                                let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
+                                
+                                for i in 0 ..< json!.count
+                                {
+                                    self.routeData.trackLat.append((json![i].objectForKey("latitude") as? Double)!)
+                                    self.routeData.trackLong.append((json![i].objectForKey("longitude") as? Double)!)
+                                }
                             }catch{
                                 
                             }
                             
                         }
-                   
-                       self.routeDataArray.append(self.routeData);
-                        print("Todo Item: ", item)
+                        
+                        self.routeDataArray.append(self.routeData);
+                        // print("Todo Item: ", item)
+                    }
+                    
+                    self.tableView.delegate=self;
+                    self.tableView.dataSource=self;
+                    self.tableView.reloadData();
+                    CommonFunctions.hideActivityIndicator();
+                
+                
+            }
+            catch {/* error handling here */
+            }
+           
+        }
+        else
+        {
+            print("FILE NOT AVAILABLE");
+            
+        
+        let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
+        let client = delegate!.client!;
+        
+        let user: MSUser = MSUser(userId: NSUserDefaults.standardUserDefaults().stringForKey("azureUserId"));
+        user.mobileServiceAuthenticationToken = NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken");
+        client.currentUser = user
+        
+        
+        
+        let table = client.tableWithName("RouteObject")
+        if client.currentUser != nil{
+            
+          //  let query = table.queryWithPredicate(NSPredicate(format: "runnerId == \(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)"))
+            
+            let query = table.query();
+            
+            query.orderByDescending("__createdAt");
+            
+            query.readWithCompletion({ (result, error) in
+                if let err = error {
+                    self.showNoRoutesView();
+                    print("ERROR ", err)
+                } else if let items = result?.items {
+                    if items.count == 0
+                    {
+                        self.showNoRoutesView();
+                    }else{
+                        
+                            var text = "";
+                            if NSJSONSerialization.isValidJSONObject(items){
+                                let jsonData = try! NSJSONSerialization.dataWithJSONObject(items, options: NSJSONWritingOptions())
+                                let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
+                                text = jsonString;
+                            } //just a text
+                            
+//                            if let dir = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
+                              let path = paths.URLByAppendingPathComponent(file)
+                        
+                                //writing
+                                do {
+                                    
+//                                    _ = try? checkValidation.createDirectoryAtPath( "\(paths)/\(file)",
+//                                        withIntermediateDirectories: true,
+//                                        attributes: nil )
+                                    try text.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
+                                }
+                                catch {/* error handling here */
+                                    print(error);
+                                    print("error while write");
+                        }
+                                
+                                //reading
+                                do {
+                                    let text2 = try NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding)
+                                    print(text2);
+                                }
+                                catch {/* error handling here */}
+                          //  }
+                        }
+                    for item in items {
+                        
+                            self.routeData = MapData();
+                        if let distance = item["distanceP"] as? String{
+                            self.routeData.distance = distance
+                        }
+                        if let elevationLoss = item["elevationLossP"] as? String{
+                            self.routeData.elevationLoss = elevationLoss
+                        }
+                        if let elevationGain = item["elevationGainP"] as? String{
+                            self.routeData.elevationGain = elevationGain
+                        }
+                        if let startLocation = item["startLocationP"] as? String{
+                            self.routeData.location = startLocation
+                        }
+                        if let date = item["dateP"] as? String{
+                            self.routeData.date = date
+                        }
+                        if let distanceAway = item["distanceAwayP"] as? String{
+                            self.routeData.distanceAway = distanceAway
+                        }
+                        if let trackPolylines = item["trackPolylinesP"] as? String{
+                            print(trackPolylines);
+                            
+                            let data: NSData = trackPolylines.dataUsingEncoding(NSUTF8StringEncoding)!
+                            do
+                            {
+                                let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
+                                
+                                //                            trackPolylines.stringByReplacingOccurrencesOfString("[{}", withString: "")
+                                //                         trackPolylines.componentsSeparatedByString(",")
+                                for i in 0 ..< json!.count
+                                {
+                                    self.routeData.trackLat.append((json![i].objectForKey("latitude") as? Double)!)
+                                    self.routeData.trackLong.append((json![i].objectForKey("longitude") as? Double)!)
+                                }
+                            }catch{
+                                
+                            }
+                            
+                        }
+                        
+                        self.routeDataArray.append(self.routeData);
+                       // print("Todo Item: ", item)
                     }
                     
                     self.tableView.delegate=self;
@@ -112,8 +226,8 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                     self.tableView.reloadData();
                     CommonFunctions.hideActivityIndicator();
                 }
-                
-            }
+            })
+        }
         }
     }
     override func viewDidLoad() {
