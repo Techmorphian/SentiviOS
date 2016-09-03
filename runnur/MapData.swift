@@ -36,4 +36,8 @@ class MapData
     
     var trackLat = [Double]();
     var trackLong = [Double]();
+    
+    var elevationLat = [Double]();
+     var elevationLong = [Double]();
+    var itemID = String();
 }

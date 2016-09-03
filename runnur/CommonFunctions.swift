@@ -47,7 +47,6 @@ class CommonFunctions : NSObject
             
         }
         
-        
     }
 
     static func addKeyboardNotification(scrollView:UIScrollView, view:UIView, activeField:UITextField?, activeTextView:UITextView?,actualContentInset:UIEdgeInsets)

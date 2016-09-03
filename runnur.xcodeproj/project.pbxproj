@@ -65,6 +65,7 @@
 		44C7967E1D5EF70D000118C5 /* SWRevealViewController.m in Resources */ = {isa = PBXBuildFile; fileRef = 470B1B611D27A5A100E3B5B0 /* SWRevealViewController.m */; };
 		44D6FFD41D67151200B3F9D8 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 44D6FFD31D67151200B3F9D8 /* .gitignore */; };
 		44D6FFD71D67233E00B3F9D8 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D6FFD61D67233E00B3F9D8 /* HelpViewController.swift */; };
+		44F74E951D7A8DAD00D43DB3 /* GoogleMapsElevation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F74E941D7A8DAD00D43DB3 /* GoogleMapsElevation.swift */; };
 		470261761D40F83D005261ED /* ChallengeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470261751D40F83D005261ED /* ChallengeModel.swift */; };
 		470728BA1D2BD9BE002B86E1 /* phoneBookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470728B91D2BD9BE002B86E1 /* phoneBookModel.swift */; };
 		470B1B5E1D278B6200E3B5B0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470B1B5D1D278B6200E3B5B0 /* HomeViewController.swift */; };
@@ -195,6 +196,7 @@
 		44C7967C1D5EF65D000118C5 /* Project-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Project-Prefix.pch"; sourceTree = "<group>"; };
 		44D6FFD31D67151200B3F9D8 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		44D6FFD61D67233E00B3F9D8 /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
+		44F74E941D7A8DAD00D43DB3 /* GoogleMapsElevation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleMapsElevation.swift; sourceTree = "<group>"; };
 		470261751D40F83D005261ED /* ChallengeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengeModel.swift; sourceTree = "<group>"; };
 		470728B91D2BD9BE002B86E1 /* phoneBookModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = phoneBookModel.swift; sourceTree = "<group>"; };
 		470B1B5D1D278B6200E3B5B0 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -318,6 +320,7 @@
 				445484791D685C8500482980 /* RouteViewController.swift */,
 				4454847B1D685C9B00482980 /* RouteTableViewCell.swift */,
 				4466240B1D6B1BE600B65BAA /* ViewRouteController.swift */,
+				44F74E941D7A8DAD00D43DB3 /* GoogleMapsElevation.swift */,
 			);
 			name = "Plan Route";
 			sourceTree = "<group>";
@@ -916,6 +919,7 @@
 				47F40DFA1D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift in Sources */,
 				470261761D40F83D005261ED /* ChallengeModel.swift in Sources */,
 				449A10A51D62E8A100E91536 /* GraphsViewController.swift in Sources */,
+				44F74E951D7A8DAD00D43DB3 /* GoogleMapsElevation.swift in Sources */,
 				473D0D941D49E955004DDC07 /* FAQViewController.swift in Sources */,
 				47FED24C1D2E6FE5006CAE8A /*  Reachability.swift in Sources */,
 				47474C161D3CBFB1008FE197 /* CreateGroupAndCauseFitViewController.swift in Sources */,

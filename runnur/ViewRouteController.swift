@@ -56,8 +56,31 @@ class ViewRouteController: UIViewController {
         
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
         alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.Default, handler:{ (UIAlertAction)in
+ 
             self.location.text = self.textField.text;
-            print(self.textField.text)
+
+            let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
+            let client = delegate!.client!;
+            
+            let user: MSUser = MSUser(userId: NSUserDefaults.standardUserDefaults().stringForKey("azureUserId"));
+            user.mobileServiceAuthenticationToken = NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken");
+            client.currentUser = user
+            
+            
+            let table2 = client.tableWithName("RouteObject")
+            table2.readWithId("\(self.mapData.itemID)", completion: { (itemInfo, error) in
+                
+                if error == nil{
+                    print("\(self.mapData.itemID)");
+                    
+                    print(itemInfo);
+                }else{
+                    
+                    print(error.localizedDescription)
+                }
+                
+            })
+             print(self.textField.text)
         }))
         self.presentViewController(alert, animated: true, completion: nil)
     }
@@ -112,6 +135,7 @@ class ViewRouteController: UIViewController {
     }
     override func viewDidAppear(animated: Bool) {
         // path.removeAllCoordinates()
+        GoogleMapsElevation.drawElevation();
         for i in 0 ..< mapData.trackLat.count
         {
             path.addLatitude(mapData.trackLat[i], longitude: mapData.trackLong[i])

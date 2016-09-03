@@ -16,7 +16,8 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     
     var routeData = MapData();
     var routeDataArray = [MapData]();
-     let path = GMSMutablePath()
+    let path = GMSMutablePath();
+    var noInternet = NoInternetViewController();
 
     @IBAction func createRoute(sender: AnyObject) {
         let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("CreateRouteViewController") as! CreateRouteViewController
@@ -31,7 +32,7 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
 
     }
     @IBOutlet weak var tableView: UITableView!
-    
+// get route data from file or else dowmnload from routeObject table
     func getData()
     {
         CommonFunctions.showActivityIndicator(self.view);
@@ -41,10 +42,10 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
         print(paths);
         
-        let getImagePath = paths.URLByAppendingPathComponent(file)
+        let getFilePath = paths.URLByAppendingPathComponent(file)
         
         let checkValidation = NSFileManager.defaultManager();
-        if (checkValidation.fileExistsAtPath(getImagePath.path!))
+        if (checkValidation.fileExistsAtPath(getFilePath.path!))
         {
             print("FILE AVAILABLE");
             do {
@@ -59,8 +60,8 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                         
                         self.routeData = MapData();
                         
-                        if let distance = item["distanceP"] as? String{
-                            self.routeData.distance = distance
+                        if let distance = item["distanceP"] as? Double{
+                            self.routeData.distance = String(distance);
                         }
                         if let elevationLoss = item["elevationLossP"] as? String{
                             self.routeData.elevationLoss = elevationLoss
@@ -76,6 +77,28 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                         }
                         if let distanceAway = item["distanceAwayP"] as? String{
                             self.routeData.distanceAway = distanceAway
+                        }
+                         if let itemID = item["id"] as? String{
+                            self.routeData.itemID = itemID
+                        }
+
+                        if let elevationCoordinatesP = item["elevationCoordinatesP"] as? String{
+                           // self.routeData.distanceAway = distanceAway
+                            print(elevationCoordinatesP);
+                            
+                            let data: NSData = elevationCoordinatesP.dataUsingEncoding(NSUTF8StringEncoding)!
+                            do
+                            {
+                                let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
+                                
+                                for i in 0 ..< json!.count
+                                {
+                                    self.routeData.elevationLat.append((json![i].objectForKey("latitude") as? Double)!)
+                                    self.routeData.elevationLong.append((json![i].objectForKey("longitude") as? Double)!)
+                                }
+                            }catch{
+                                
+                        }
                         }
                         if let trackPolylines = item["trackPolylinesP"] as? String{
                             print(trackPolylines);
@@ -114,8 +137,8 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         else
         {
             print("FILE NOT AVAILABLE");
-            
-        
+// requesting route data from route table
+    if Reachability.isConnectedToNetwork() == true{
         let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
         let client = delegate!.client!;
         
@@ -126,19 +149,27 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         
         
         let table = client.tableWithName("RouteObject")
+        
+        
         if client.currentUser != nil{
             
           //  let query = table.queryWithPredicate(NSPredicate(format: "runnerId == \(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)"))
             
             let query = table.query();
             
+        
+            print("runnurId \(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)")
+            query.parameters = ["runnurId": "\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)"];
             query.orderByDescending("__createdAt");
+            
             
             query.readWithCompletion({ (result, error) in
                 if let err = error {
                     self.showNoRoutesView();
                     print("ERROR ", err)
                 } else if let items = result?.items {
+                    print(result);
+                    print(result?.items)
                     if items.count == 0
                     {
                         self.showNoRoutesView();
@@ -151,15 +182,11 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                                 text = jsonString;
                             } //just a text
                             
-//                            if let dir = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
                               let path = paths.URLByAppendingPathComponent(file)
                         
                                 //writing
                                 do {
                                     
-//                                    _ = try? checkValidation.createDirectoryAtPath( "\(paths)/\(file)",
-//                                        withIntermediateDirectories: true,
-//                                        attributes: nil )
                                     try text.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
                                 }
                                 catch {/* error handling here */
@@ -196,6 +223,27 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                         if let distanceAway = item["distanceAwayP"] as? String{
                             self.routeData.distanceAway = distanceAway
                         }
+                        if let itemID = item["id"] as? String{
+                            self.routeData.itemID = itemID
+                        }
+                        if let elevationCoordinatesP = item["elevationCoordinatesP"] as? String{
+                            // self.routeData.distanceAway = distanceAway
+                            print(elevationCoordinatesP);
+                            
+                            let data: NSData = elevationCoordinatesP.dataUsingEncoding(NSUTF8StringEncoding)!
+                            do
+                            {
+                                let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
+                                
+                                for i in 0 ..< json!.count
+                                {
+                                    self.routeData.elevationLat.append((json![i].objectForKey("latitude") as? Double)!)
+                                    self.routeData.elevationLong.append((json![i].objectForKey("longitude") as? Double)!)
+                                }
+                            }catch{
+                                
+                            }
+                        }
                         if let trackPolylines = item["trackPolylinesP"] as? String{
                             print(trackPolylines);
                             
@@ -228,7 +276,42 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 }
             })
         }
+    }else{
+        
+        
+        self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
+        
+        self.noInternet.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
+        self.noInternet.view.backgroundColor=UIColor.clearColor()
+        self.view.addSubview((self.noInternet.view)!);
+        
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(SummaryViewController.handleTap(_:)))
+        self.noInternet.noInternetLabel.userInteractionEnabled = true
+        
+        
+        self.noInternet.view.addGestureRecognizer(tapRecognizer)
+        
+        self.noInternet.didMoveToParentViewController(self)
+        
+        
+        
+        
+            }
         }
+    }
+    override func viewDidAppear(animated: Bool) {
+//        do {
+//            let file = "routeData.txt"
+//            let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
+//            print(paths);
+//            
+//            let getImagePath = paths.URLByAppendingPathComponent(file)
+//            try NSFileManager.defaultManager().removeItemAtPath(getImagePath.path!)
+//        }
+//        catch let error as NSError {
+//            print("Ooops! Something went wrong: \(error)")
+//        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -247,8 +330,9 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         // Do any additional setup after loading the view.
     }
     
-//    MARK:- tableView Delegate Methods
-    let routeViewButton = UIButton();
+
+//   For noRoute show No saved route images
+let routeViewButton = UIButton();
 func showNoRoutesView()
 {
     let mainView = UIView();
@@ -261,7 +345,7 @@ func showNoRoutesView()
     label.textAlignment = .Center;
     
     let imageView = UIImageView(frame: CGRectMake(0, 55, mainView.frame.width, 210-80));
-    imageView.image = UIImage(named: "download (3)");
+    imageView.image = UIImage(named: "im_no_routes");
     routeViewButton.frame = CGRectMake(0, imageView.frame.origin.y+imageView.frame.height+4, mainView.frame.width, 30);
     routeViewButton.setTitleColor(UIColor.blueColor(), forState: .Normal)
     routeViewButton.setTitle("CREATE NEW ROUTE", forState: .Normal);
@@ -275,7 +359,7 @@ func showNoRoutesView()
     func createRouteClicked()   {
         createRoute.sendActionsForControlEvents(UIControlEvents.TouchUpInside);
     }
-    
+//    MARK:- tableView Delegate Methods
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return routeDataArray.count
     }
@@ -285,7 +369,7 @@ func showNoRoutesView()
         cell.address.text = data.location;
         cell.dateAndTime.text = data.date;
         cell.distance.text = data.distanceAway;
-        cell.distanceLabel.text = data.distance;
+        cell.distanceLabel.text = data.distance! + " mi";
         cell.elevationGain.text = data.elevationGain;
         cell.elevationLoss.text = data.elevationLoss;
        
@@ -295,9 +379,6 @@ func showNoRoutesView()
     }
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         let celll = cell as! RouteTableViewCell;
-        //celll.mapView.clear();
-       
-       // celll.mapView.animateToZoom(14.0);
         if self.routeDataArray[indexPath.row].trackLat.count > 0
         {
             celll.mapView.animateToLocation(CLLocationCoordinate2D(latitude:self.routeDataArray[indexPath.row].trackLat[0], longitude:self.routeDataArray[indexPath.row].trackLong[0]))

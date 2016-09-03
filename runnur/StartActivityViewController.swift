@@ -96,7 +96,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         CommonFunctions.showPopup(self, title: "ALREADY FINISHED?", msg: "You did not cover enough distance. Are you sure you want to save the activity?", positiveMsg: "Yes, Save", negMsg: "No, Discard", show2Buttons: true, showReverseLayout: false,getClick: {
             // if Reachability.isConnectedToNetwork() == true{
             CommonFunctions.showActivityIndicator(self.view);
-            
+//  Connecting to azure client
             let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
             let client = delegate!.client!;
             
@@ -114,7 +114,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                 let dateString = dateFormatter.stringFromDate(date)
                 let uuid = NSUUID().UUIDString;
                 
-                
+// creating dictionary to send data to azure
                 
                 let newItem : NSDictionary = ["id": uuid,
                     "date": dateString,
@@ -134,7 +134,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                     // "graphPaceS" : graphPace
                     // "graphSpeedS" : graphSpeed
                 ] ;
-                
+// Saving whole route data
                 self.mapData = MapData();
                 self.mapData.distance = self.distance.text!;
                 self.mapData.date = dateString;
@@ -157,12 +157,13 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                 self.mapData.endLong = self.lastLocation.coordinate.longitude;
                 self.mapData.trackPlyline = self.saveTrackPolyline;
                 
-                //     TODO:- add more data
+//     TODO:- add more data
                 
                 
                 //, "GPSAcc": Double(accuracy), "EmailS": [""],"graphDistanceS": [Double("1.4")],"graphPaceS": [Double("1.4")],"graphSpeedS": [Double("1.4")],"graphAltitudeS": ["\(altitude)"], "mileMarkerS": [""],"splitSpeedS": ["0"], "splitDistanceS": ["0"], "graphHRS": [""],"splitTimeLog": ["custom-id"], "UriBlob": "my new item", "UUIDBlob": "ui", "activityLog": "my new item"
-                
+// is no internet pass data to azure else save offline
                 if Reachability.isConnectedToNetwork() == true{
+//                    
 //                    table.insert(newItem as [NSObject : AnyObject]) { (result, error) in
 //                        if let err = error {
 //                            CommonFunctions.hideActivityIndicator();
@@ -201,21 +202,12 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                                 print("RunObject: ", item["userId"])
                                 var error:NSError?
                                 let sasQueryString = item["sasQueryString"]!
-                                //let cred =  AZSStorageCredentials(SASToken:  sasQueryString as! String);
-                                
-                                //  , accountName: "runobjectblob"
                                 let cred = AZSStorageCredentials(SASToken: sasQueryString as! String);
-                                
-                              //let cred = AZSStorageCredentials(SASToken: sasQueryString as! String)
+ 
                                 let UriBlob = item["Uri"]!;
                                 let UriForBlob:NSURL = NSURL(string: UriBlob as! String)!
-                               // var sasToken = "SharedAccessSignature=\(sasQueryString);BlobEndpoint=\(UriBlob)"
-
                                 print(UriForBlob)
                                 print(cred);
-                         
-                                // let uri = AZSStorageUri(primaryUri: UriForBlob)
-                                // let blobFromSASCredential =  AZSCloudBlockBlob(storageUri: uri, credentials: cred, snapshotTime: nil, error: &error)
                                 
                                 let blobFromSASCredential =  AZSCloudBlockBlob(url: UriForBlob, credentials: cred, snapshotTime: nil, error: &error);
                                 
@@ -363,6 +355,9 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     func DonePopUp()
     {
         customPopUp.removeFromSuperview();
+      
+    
+        
     }
     
     

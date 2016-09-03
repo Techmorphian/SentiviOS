@@ -326,6 +326,8 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
             
             CommonFunctions.showAlert(self.view, message: "Route Distance: \(distance)", showRetry: true, getClick: {
                 CommonFunctions.removeAlert();
+                self.path.removeAllCoordinates();
+                self.mapView.clear();
             })
             
         }
