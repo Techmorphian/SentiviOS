@@ -34,11 +34,9 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     @IBOutlet var ActivityTableView: UITableView!
     
     
+    @IBOutlet var icSendImageView: UIImageView!
     
-    @IBOutlet var heightOfMsgTextView: NSLayoutConstraint!
-    
-    
-    
+         
     
     @IBOutlet var heightOfMSGbottomView: NSLayoutConstraint!
 
@@ -64,6 +62,35 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     
     
+    //MARK:-propertyDetailNetwork
+    func sendButtonNetwork()
+    {
+        
+        view.endEditing(true);
+        
+        if(Reachability.isConnectedToNetwork()==true )
+        {
+            
+            self.postChat();
+            
+            
+        }
+        else
+        {
+            
+            let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg, preferredStyle: UIAlertControllerStyle.Alert)
+            let okAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil)
+            let tryAgainAction = UIAlertAction(title: "Try again", style: UIAlertActionStyle.Default, handler: {action  in  self.sendButtonNetwork() })
+            alert.addAction(okAction)
+            alert.addAction(tryAgainAction)
+            self.presentViewController(alert, animated: true, completion: nil)
+            return
+            
+            
+            
+        }
+        
+    }
     
     
     
@@ -72,25 +99,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     @IBAction func sendButtonAction(sender: AnyObject)
     {
         
-        
-        self.postChat();
-        
-//       if messageTextField.text != ""
-//       {
-//        self.showActivityIndicator()
-//        if (Reachability.isConnectedToNetwork() == true)
-//        {
-//        self.postChat();
-//            
-//        }
-//        else
-//        
-//        {
-//            
-//            
-//        }
-//        
-//       }
+        self.sendButtonNetwork();
         
     }
     
@@ -167,12 +176,44 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             if activityChatArray[indexPath.row].createdAt != ""
             {
                 
-                cell.date.text =  activityChatArray[indexPath.row].createdAt
-                
+//                
+//                let dateAsString1  =  activityChatArray[indexPath.row].createdAt
+//                
+//                print(dateAsString1)
+//                
+//                let dateFormatter1 = NSDateFormatter()
+//                
+//                dateFormatter1.dateFormat = "yyyy-MM-dd hh:mm:ss"
+//                
+//                let date = dateFormatter1.dateFromString(dateAsString1)
+//                
+//                print(date)
+//                
+//                
+//                if date != ""
+//                {
+//                    let dateFormatter2 = NSDateFormatter()
+//                    
+//                    
+//                    dateFormatter2.dateFormat = "MMM dd, yyyy  hh:mm:ss"
+//                    
+//                    dateFormatter2.timeZone = NSTimeZone()
+//                    
+//                    let date2 = dateFormatter2.stringFromDate(date!)
+//                    
+//                    if date2 != ""
+//                    {
+//                        
+//                        cell.date.text = String(date2)
+//                        
+//                    }
+//                    
+//                    
+//                }
                 
             }
             
-            tableViewCell =  cell
+            tableViewCell = cell
 
             
             
@@ -215,25 +256,42 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             if activityChatArray[indexPath.row].createdAt != ""
             {
                 
-                // 2016-08-19 13:22:39.2160000 +00:00
                 
                 
-                //
-                //                    let date = activityChatArray[indexPath.row].createdAt
-                //
-                //                    let dateFormatter = NSDateFormatter()
-                //
-                //                    dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
-                //
-                
-                //                     let date = dateFunction.dateWithTimeFormatFunc("MMMM dd, yyyy kk:mm:ss", fromFormat: "yyyy-MM-dd hh:mm:ss.ms +HH:mm", dateToConvert: chatObjectTypeArray[indexPath.row].createdAt)
-                //
-                //                        print(date)
-                //
-                //
-                cell.date.text =  activityChatArray[indexPath.row].createdAt
-                
-                
+//                let dateAsString1  =  activityChatArray[indexPath.row].createdAt
+//                
+//                print(dateAsString1)
+//                
+//                let dateFormatter1 = NSDateFormatter()
+//                
+//                dateFormatter1.dateFormat = "yyyy-MM-dd hh:mm:ss"
+//                
+//                let date = dateFormatter1.dateFromString(dateAsString1)
+//                
+//                print(date)
+//                
+//                
+//                if date != ""
+//                {
+//                let dateFormatter2 = NSDateFormatter()
+//                
+//                
+//                dateFormatter2.dateFormat = "MMM dd, yyyy  hh:mm:ss"
+//                
+//                dateFormatter2.timeZone = NSTimeZone()
+//                
+//                let date2 = dateFormatter2.stringFromDate(date!)
+//                
+//                if date2 != ""
+//                {
+//                
+//                cell.date.text = String(date2)
+//                    
+//                }
+//                
+//                    
+//               }
+//                
             }
 
             tableViewCell =  cell
@@ -308,19 +366,42 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             if activityChatArray[indexPath.row].createdAt != ""
             {
                 
-                // 2016-08-19 13:22:39.2160000 +00:00
                 
-                print(activityChatArray[indexPath.row].createdAt)
-                
-                //                     let date = dateFunction.dateWithTimeFormatFunc("MMMM dd, yyyy kk:mm:ss", fromFormat: "yyyy-MM-dd kk:mm:ss", dateToConvert: activityChatArray[indexPath.row].createdAt)
-                //
-                //                        print(date)
-                //
-                
-                
-                cell.date.text =  activityChatArray[indexPath.row].createdAt
-                
-                
+//                let dateAsString1  =  activityChatArray[indexPath.row].createdAt
+//                
+//                print(dateAsString1)
+//                
+//                let dateFormatter1 = NSDateFormatter()
+//                
+//                dateFormatter1.dateFormat = "yyyy-MM-dd hh:mm:ss"
+//                
+//                let date = dateFormatter1.dateFromString(dateAsString1)
+//                
+//                print(date)
+//                
+//                
+//                if date != ""
+//                {
+//                    let dateFormatter2 = NSDateFormatter()
+//                    
+//                    
+//                    dateFormatter2.dateFormat = "MMM dd, yyyy  hh:mm:ss"
+//                    
+//                    dateFormatter2.timeZone = NSTimeZone()
+//                    
+//                    let date2 = dateFormatter2.stringFromDate(date!)
+//                    
+//                    if date2 != ""
+//                    {
+//                        
+//                        cell.date.text = String(date2)
+//                        
+//                    }
+//                    
+//                    
+//                }
+//                
+//                
             }
             
            tableViewCell =  cell
@@ -416,17 +497,40 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 if activityChatArray[indexPath.row].createdAt != ""
                 {
                     
-                    //  2016-08-19 13:22:39.2160000 +00:00
                     
-                    print(activityChatArray[indexPath.row].createdAt)
-                    //
-                    //                     let date = dateFunction.dateWithTimeFormatFunc("MMMM dd, yyyy kk:mm:ss", fromFormat: "yyyy-MM-dd kk:mm:ss", dateToConvert: activityObjectTypeArray[indexPath.row].createdAt)
-                    //
-                    //                        print(date)
-                    
-                    
-                    
-                    cell.date.text =  activityChatArray[indexPath.row].createdAt
+//                    let dateAsString1  =  activityChatArray[indexPath.row].createdAt
+//                    
+//                    print(dateAsString1)
+//                    
+//                    let dateFormatter1 = NSDateFormatter()
+//                    
+//                    dateFormatter1.dateFormat = "yyyy-MM-dd hh:mm:ss"
+//                    
+//                    let date = dateFormatter1.dateFromString(dateAsString1)
+//                    
+//                    print(date)
+//                    
+//                    
+//                    if date != ""
+//                    {
+//                        let dateFormatter2 = NSDateFormatter()
+//                        
+//                        
+//                        dateFormatter2.dateFormat = "MMM dd, yyyy  hh:mm:ss"
+//                        
+//                        dateFormatter2.timeZone = NSTimeZone()
+//                        
+//                        let date2 = dateFormatter2.stringFromDate(date!)
+//                        
+//                        if date2 != ""
+//                        {
+//                            
+//                            cell.date.text = String(date2)
+//                            
+//                        }
+//                        
+//                        
+//                    }
                     
                     
                 }
@@ -493,14 +597,17 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
   
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath)
     {
-        let paggingValue = CGFloat((activityChatArray.count) *  (25)/(100))
+        let paggingValue = CGFloat((activityChatArray.count) *  (25)/(100));
         
-        let  CeilPaggingValue = Int((ceil(paggingValue)))
+        let  CeilPaggingValue = Int((ceil(paggingValue)));
         
-        let check = self.isRowZeroRow(CeilPaggingValue)
+        //let check = self.isRowZeroRow(CeilPaggingValue);
+        let check = indexPath.row
         
         
-        if (check  && shouldCallPagging)
+       
+        
+        if (check <= 5 && shouldCallPagging)
         {
             
             shouldCallPagging = false
@@ -522,7 +629,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
         {
             
-            //  NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isMyPaggingCalled")
+            // NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isMyPaggingCalled")
             
         }
         
@@ -645,7 +752,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
     {
     
-         showActivityIndicator();
+        // showActivityIndicator();
         
         
         let myurl = NSURL(string: Url.activityInfo)
@@ -1243,7 +1350,10 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                                 
                                             {
                                                 activityChatArray.insert(activityModel, atIndex: 0)
-                                            }else{
+                                            }else
+                                            {
+                                                
+                                             
                                                activityChatArray.append(activityModel)
                                             }
                                        
@@ -1270,21 +1380,29 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                         self.ActivityTableView.insertRowsAtIndexPaths(indexPath , withRowAnimation: UITableViewRowAnimation.None);
                                        self.ActivityTableView.endUpdates();
                                     }
-                                    else{
+                                    else
                                     
+                                    {
+                                        
+                                        
+                                  
+                                        
+                                        self.RemoveNoInternet();
+                                        
+                                        self.RemoveNoResult();
+                                     self.activityChatArray = self.activityChatArray.reverse();
+                                        
+                                        
                                     self.ActivityTableView.delegate = self;
-                                    
+                                        
                                     self.ActivityTableView.dataSource = self;
-                                    
-                                  //  self.activityChatArray = self.activityChatArray.reverse();
-                                    
-                                    
+
                                     self.ActivityTableView.reloadData();
+                                        
                                     self.ActivityTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.ActivityTableView.numberOfRowsInSection(0) - 1, inSection: 0), atScrollPosition: .None, animated: false)
+                                  
                                     
-                                    self.RemoveNoInternet();
                                     
-                                    self.RemoveNoResult();
                                     }
                                     
                                     
@@ -1358,10 +1476,12 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         self.loadingView.removeFromSuperview();
                          self.RemoveNoInternet();
                         
-                        if  shouldCallPagging
+                        if  NSUserDefaults.standardUserDefaults().boolForKey("isMyPaggingCalled") == false
                         {
                             
                             lastDateSent = CurrentDateFunc.getSubtractedDate(lastDateSent)
+                            
+                            RemoveNoResult();
                             
                             self.activityInfo();
                             
@@ -1564,34 +1684,51 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 }
 
                                 
-                            activityChatArray.insert(activityModel, atIndex: activityChatArray.count)
+                   activityChatArray.insert(activityModel, atIndex: activityChatArray.count)
 
                         
                         
                         NSOperationQueue.mainQueue().addOperationWithBlock
                             {
                                 
+                                self.RemoveNoResult();
+                                
+                                self.RemoveNoInternet();
+                                
+                                
                                 
                                 self.activityIndicator.stopAnimating();
                                 
                                 self.loadingView.removeFromSuperview();
                                 
-                                self.RemoveNoResult();
-                                
-                                self.messageTextView.text = ""
+                               
                                 
                                self.heightOfMSGbottomView.constant = 45
                                 
                              self.messageBottomViewConstraint.constant = 0;
                               
                                 
+                                
+                                self.messageTextView.text = ""
+                                
+                                
+                                self.sendButton.enabled = false;
+                                
+                                
+                                self.icSendImageView.alpha = 0.4
+                                self.messageTextView.text = "Write your message here..."
+                                self.messageTextView.textColor = UIColor(red: 139/255, green: 139/255, blue: 139/255, alpha: 1)
+                                
                                 self.messageTextView.resignFirstResponder();
+                                
+                              
+                                
                                 
                                 
                               self.ActivityTableView.delegate=self;
                                 self.ActivityTableView.dataSource=self;
                                 
-                              
+                            
                                 
                                 self.ActivityTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.ActivityTableView.numberOfRowsInSection(0), inSection: 0)], withRowAnimation: UITableViewRowAnimation.None)
                                
@@ -1600,12 +1737,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 
                                 
                                 
-                                
-                                
                         } // ns close
-                        
-                        
-                        
                         
                     }
                         
@@ -1615,9 +1747,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         
                         NSOperationQueue.mainQueue().addOperationWithBlock({
                             
-                        
-                                
-                                
+                            
                                 self.activityIndicator.stopAnimating();
                                 
                                 self.loadingView.removeFromSuperview();
@@ -1636,8 +1766,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         
                     }
                     
-                    
-                    
+                                    
                 }
                 
             }
@@ -2771,11 +2900,13 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         self.loadingView.removeFromSuperview();
         
-        self.RemoveNoInternet();
+        self.RemoveNoResult();
         
-        if self.view.subviews.contains(self.noResult.view)
+        if self.view.subviews.contains(self.noInternet.view)
             
         {
+            
+            //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
             
         }
             
@@ -2783,18 +2914,21 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
         {
             
-            self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+            self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
             
-            self.noResult.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);
+            self.noInternet.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
             
-            self.noResult.noResultTextLabel.text = "something went wrong."
+            self.view.addSubview((self.noInternet.view)!);
             
-            self.noResult.noResultImageView.image = UIImage(named: "im_error")
             
-            self.view.addSubview((self.noResult.view)!);
-            self.view.userInteractionEnabled = true
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ActivityViewController.handleTap(_:)))
             
-            self.noResult.didMoveToParentViewController(self)
+            self.noInternet.noInternetLabel.userInteractionEnabled = true
+            
+            
+            self.noInternet.view.addGestureRecognizer(tapRecognizer)
+            
+            self.noInternet.didMoveToParentViewController(self)
             
         }
         
@@ -2903,9 +3037,43 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
 
     
+    
+    //MARK:- SHOULD CHANGE TEXT IN RANGE
+    
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool
+    {
+        let text = (textView.text! as NSString).stringByReplacingCharactersInRange(range, withString: text)
+       
+        print(text.characters.count)
+        
+        if (text.characters.count > 0)
+        {
+            sendButton.enabled=true;
+            
+            sendButton.userInteractionEnabled = true
+            sendButton.setImage(UIImage(named: "ic_send"), forState: UIControlState.Normal)
+            
+            icSendImageView.alpha = 1
+
+            
+        }
+        else
+        {
+            sendButton.enabled=false;
+            sendButton.userInteractionEnabled = false
+            
+            icSendImageView.alpha = 0.4
+            
+            sendButton.setImage(UIImage(named: "ic_send"), forState: UIControlState.Normal)
+        }
+        return true;
+    }
+
+    
     func value()
     {
-       
+        
         
         let numLines:CGFloat = messageTextView.contentSize.height / (messageTextView.font?.lineHeight)!
         
@@ -2931,39 +3099,17 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             }
             self.messageTextView.frame = newFrame
         }
-
-    }
-    
-    
-    
-    
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool
-    {
-        let text = (textView.text! as NSString).stringByReplacingCharactersInRange(range, withString: text)
-       
-        print(text.characters.count)
         
-        if (text.characters.count > 0)
-        {
-            sendButton.enabled=true;
-            
-            sendButton.userInteractionEnabled = true
-            sendButton.setImage(UIImage(named: "ic_send"), forState: UIControlState.Normal)
-            
-        }
-        else
-        {
-            sendButton.enabled=false;
-              sendButton.userInteractionEnabled = false
-            
-            sendButton.setImage(UIImage(named: "ic_send"), forState: UIControlState.Normal)
-        }
-        return true;
+    }
+    
+
+    func textViewDidChange(textView: UITextView)
+    {
+        print("text view did change\n")
+        
+        value();
     }
 
-    
-    
-    
     
     func keyboardWasShown (notification: NSNotification)
     {
@@ -2984,10 +3130,6 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             }
             
             
-            
-            print(self.activityChatArray.count)
-            
-            print(keyboardSize.height)
             
             messageBottomViewConstraint.constant += keyboardSize.height;
             
@@ -3022,13 +3164,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
     }
     
-    func textViewDidChange(textView: UITextView)
-    {
-        print("text view did change\n")
-      
-        value();
-    }
-
+ 
     
    // MARK: RECEIVED NOTIFICATION FOR COMMETS
     //// receiving row count and row index path  through notification from comments screen  and upading the values
@@ -3050,40 +3186,6 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             
         }
-        
-    }
-    
-    
-    
-    //////////////////////////////////////////////////////
-    
-    func getLabelHeight(label:UILabel,text:String,fontSize:CGFloat,Width:CGFloat) -> CGFloat
-    {
-        
-        let labelHeight = UILabel(frame: CGRectMake(0, 0, self.ActivityTableView.bounds.size.width-Width, CGFloat.max));
-        
-        
-        labelHeight.text = text;
-        
-        labelHeight.numberOfLines = 0
-        
-        
-        
-        labelHeight.font = UIFont.systemFontOfSize(fontSize)
-        
-        
-        
-        labelHeight.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        
-        
-        
-        labelHeight.sizeToFit()
-        
-        
-        
-        return labelHeight.frame.height
-        
-        
         
     }
     
@@ -3113,7 +3215,6 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
     }
 
-    
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
@@ -3188,7 +3289,8 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         print(activityChatArray.count)
         
         
-        
+        //////////////////////////////////////////////
+
         messageTextView.delegate = self;
        
         messageTextView.autocorrectionType = .No
@@ -3197,19 +3299,31 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         messageTextView.textColor = colorCode.Gray1Color
 
         
-         sendButton.userInteractionEnabled = false
       
+        
+      
+         //////////////////////////////////////////////
         ActivityTableView.tableFooterView = UIView()
         
-        sendButton.enabled=false;
-        
-        sendButton.userInteractionEnabled = false
-
+        self.ActivityTableView.separatorColor = UIColor.clearColor()
         
         self.ActivityTableView.estimatedRowHeight = 80;
         self.ActivityTableView.rowHeight = UITableViewAutomaticDimension;
         
+        
+        ////////////////////////////////////////////// send button
+        
 
+        sendButton.enabled=false;
+        
+        sendButton.userInteractionEnabled = false
+        
+        icSendImageView.alpha = 0.4
+
+        //////////////////////////////////////////////
+
+        
+        
         
         if Reachability.isConnectedToNetwork() == true
         {
@@ -3241,7 +3355,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 self.view.addSubview((self.noInternet.view)!);
                 
                 
-                let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(FriendsListViewController.handleTap(_:)))
+                let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ActivityViewController.handleTap(_:)))
                
                 self.noInternet.noInternetLabel.userInteractionEnabled = true
                 
@@ -3254,8 +3368,6 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
         }
         
-        
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("ReceivedCommentsCount"), name: "commentsCount", object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ActivityViewController.ReceivedNotification(_:)), name:"commentsCount", object: nil)
 

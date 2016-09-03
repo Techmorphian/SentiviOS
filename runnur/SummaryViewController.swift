@@ -334,46 +334,50 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
     {
         
         
-        let date = NSDate()
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Day , .Month , .Year], fromDate: date)
-        
-        let year =  components.year
-        let month = components.month
-        let day = components.day
-        
-        print(year)
-        print(month)
-        print(day)
-        
-    let nsdateString = String(year) + "-" + String(month) +  "-" + String(day)
-        print(nsdateString)
-        
-        let dateFormatter = NSDateFormatter()
-        
-         dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        let nscurrentDate = dateFormatter.dateFromString(nsdateString)
-        
-        print(nscurrentDate)
-        
+//        let date = NSDate()
+//        let calendar = NSCalendar.currentCalendar()
+//        let components = calendar.components([.Day , .Month , .Year], fromDate: date)
+//        
+//        let year =  components.year
+//        let month = components.month
+//        let day = components.day
+//        
+//        print(year)
+//        print(month)
+//        print(day)
+//
+//        let nsdateString = String(year) + "-" + String(month) +  "-" + String(day)
+//        print(nsdateString)
+//
+//        let dateFormatter = NSDateFormatter()
+//        
+//         dateFormatter.dateFormat = "yyyy-MM-dd"
+//        
+//        let nscurrentDate = dateFormatter.dateFromString(nsdateString)
+//        
+//        print(nscurrentDate)
+//        
         
 //        
-//        let nscurrentDate = NSDate()
+      let nscurrentDate = NSDate()
+//        
+//        print(nscurrentDate)
 //        
 //        let dateFormatter = NSDateFormatter()
 //        
 //        dateFormatter.dateFormat = "yyyy-MM-dd"
 //        
-//        
-//        
 //        let currentDate = dateFormatter.stringFromDate(nscurrentDate)
 //        
 //        print(currentDate)
 //        
-//        dateFormatter.dateFormat = "yyyy-MM-dd"
-
-    
+      
+      
+        
+        let toDay = NSCalendar.currentCalendar().startOfDayForDate(NSDate())
+        
+        print(toDay)
+        
         
         ///////
         
@@ -392,17 +396,115 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         print(nsEndDate)
 
         
-      
+//        var order = NSCalendar.currentCalendar().compareDate(nscurrentDate, toDate: nsStartDate!, toUnitGranularity: .Day)
+//        
+//        switch order
+//        {
+//        case .OrderedDescending:
+//            print("DESCENDING")
+//            
+//            
+//            var order = NSCalendar.currentCalendar().compareDate(nsStartDate!, toDate: nsEndDate!, toUnitGranularity: .Day)
+//            
+//            switch order
+//            {
+//            case .OrderedDescending:
+//                print("DESCENDING")
+//            case .OrderedAscending:
+//                //   strat date < end date
+//                
+//                print("on going")
+//
+//            case .OrderedSame:
+//                print("on going")
+//                
+//                
+//                
+//                
+//            }
+//            
+//
+//            
+//        case .OrderedAscending:
+//          //   strat date < end date
+//            
+//            print("ASCENDING")
+//        case .OrderedSame:
+//            print("SAME")
+//            
+//            
+//            var order = NSCalendar.currentCalendar().compareDate(nsStartDate!, toDate: nsEndDate!, toUnitGranularity: .Day)
+//            
+//            switch order
+//            {
+//            case .OrderedDescending:
+//                print("DESCENDING")
+//            case .OrderedAscending:
+//                //   strat date < end date
+//                
+//                print("on going")
+//
+//            case .OrderedSame:
+//                print("on going")
+//
+//                
+//                
+//                
+//                
+//            }
+//
+//            
+//            
+//            
+//        }
+//       
+//       
+//        
+//        /////////////
+//        
+//        if nscurrentDate!.compare(nsEndDate!) == .OrderedDescending
+//                {
+//        
+//                     print("over")
+//        
+//                }
+//                else
+//                {
+//        
+//        
+//        
+//                    if nsStartDate?.compare(nscurrentDate!) == .OrderedAscending && nsEndDate?.compare(nscurrentDate!) == .OrderedDescending
+//                    {
+//                         print("could be going")
+//                        return challengeOnGoing
+//        
+//                    }
+//                    else if nsStartDate?.compare(nscurrentDate!) == .OrderedSame || nsEndDate?.compare(nscurrentDate!) == .OrderedSame
+//        
+//                    {
+//                         print("could be going")
+//                        return challengeOnGoing
+//        
+//                    }
+//                    else
+//                    {
+//                        print("not started")
+//                        
+//                        return challengeNotStarted
+//                       
+//                    }
+//                    
+//                    
+//                    
+//                }
+
+
+        ////// old
         
-       
-       
-        
-        /////////////
-        
-        if nscurrentDate!.compare(nsEndDate!) == .OrderedDescending
+        if nscurrentDate.compare(nsEndDate!) == .OrderedDescending
         {
             
-            print("over")
+             print("over")
             
         }
         else
@@ -410,16 +512,16 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
             
             
             
-            if nsStartDate?.compare(nscurrentDate!) == .OrderedAscending && nsEndDate?.compare(nscurrentDate!) == .OrderedDescending
+            if nsStartDate?.compare(nscurrentDate) == .OrderedAscending && nsEndDate?.compare(nscurrentDate) == .OrderedDescending
             {
-                print("could be going")
+                 print("could be going")
                 return challengeOnGoing
-                
+               
             }
-            else if nsStartDate?.compare(nscurrentDate!) == .OrderedSame || nsEndDate?.compare(nscurrentDate!) == .OrderedSame
-                
+            else if nsStartDate?.compare(nscurrentDate) == .OrderedSame || nsEndDate?.compare(nscurrentDate) == .OrderedSame
+
             {
-                print("could be going")
+                 print("could be going")
                 return challengeOnGoing
                 
             }
@@ -428,51 +530,13 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                 print("not started")
                 
                 return challengeNotStarted
-                
+               
             }
             
             
             
         }
         
-
-        
-//        if nscurrentDate.compare(nsEndDate!) == .OrderedDescending
-//        {
-//            
-//             print("over")
-//            
-//        }
-//        else
-//        {
-//            
-//            
-//            
-//            if nsStartDate?.compare(nscurrentDate) == .OrderedAscending && nsEndDate?.compare(nscurrentDate) == .OrderedDescending
-//            {
-//                 print("could be going")
-//                return challengeOnGoing
-//               
-//            }
-//            else if nsStartDate?.compare(nscurrentDate) == .OrderedSame || nsEndDate?.compare(nscurrentDate) == .OrderedSame
-//
-//            {
-//                 print("could be going")
-//                return challengeOnGoing
-//                
-//            }
-//            else
-//            {
-//                print("not started")
-//                
-//                return challengeNotStarted
-//               
-//            }
-//            
-//            
-//            
-//        }
-//        
         
         
         return challengeOver
@@ -1874,10 +1938,9 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         self.loadingView.removeFromSuperview();
        
         
-        self.RemoveNoInternet();
+        self.RemoveNoResult();
         
-        
-        if self.view.subviews.contains(self.noResult.view)
+        if self.view.subviews.contains(self.noInternet.view)
             
         {
             
@@ -1888,20 +1951,23 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
             
         {
             
-            self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+            self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
             
-            self.noResult.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
+            self.noInternet.view.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height-0);
             
-            self.noResult.noResultTextLabel.text = "something went wrong."
+            self.view.addSubview((self.noInternet.view)!);
             
-            self.noResult.noResultImageView.image = UIImage(named: "im_error")
-
-            self.view.addSubview((self.noResult.view)!);
-         
             
-            self.noResult.didMoveToParentViewController(self)
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(SummaryViewController.handleTap(_:)))
+            self.noInternet.noInternetLabel.userInteractionEnabled = true
+            
+            
+            self.noInternet.view.addGestureRecognizer(tapRecognizer)
+            
+            self.noInternet.didMoveToParentViewController(self)
             
         }
+        
         
         
         
@@ -2045,4 +2111,23 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
     }
     
 }
+
+extension NSCalendar {
+    func myStartOfDayForDate(date: NSDate!) -> NSDate!
+    {
+        let systemVersion:NSString = UIDevice.currentDevice().systemVersion
+        if systemVersion.floatValue >= 8.0 {
+            return self.startOfDayForDate(date)
+        } else
+        {
+//            return self.dateFromComponents(self.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitDay, fromDate: date))
+            
+          //  let flags = NSCalendarUnit.Year | NSCalendarUnit.Month | NSCalendarUnit.Day;
+                
+            return self.dateFromComponents(self.components([.Year,.Month,.Day], fromDate: date))
+            
+        }
+    }
+}
+
 

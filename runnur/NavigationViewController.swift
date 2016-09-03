@@ -117,16 +117,30 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             
             if indexPath.row == 2
             {
-//                cell.countLabel.hidden = false;
-//                
-//                
-//              
-//               cell.countLabel.layer.cornerRadius = cell.countLabel.frame.size.width / 2;
-//                cell.countLabel.backgroundColor = UIColor.redColor()
-//              
-//                cell.countLabel.layer.borderWidth = 1
-//               cell.countLabel.clipsToBounds = true
-//                
+                
+                
+                cell.countLabel.hidden = false;
+                
+                
+                if NSUserDefaults.standardUserDefaults().stringForKey("badgeCount") != nil
+                {
+                cell.countLabel.text = NSUserDefaults.standardUserDefaults().stringForKey("badgeCount")
+                    
+                    print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCount"))
+               // cell.countLabel.text = "00"
+                }
+                
+                else
+                
+                {
+                    
+                   cell.countLabel.text = "0"
+                    
+                }
+                cell.countLabel.layer.cornerRadius = cell.countLabel.frame.size.height/2;
+                cell.countLabel.backgroundColor = colorCode.RedColor
+               
+                cell.countLabel.clipsToBounds = true
                 
                 
 

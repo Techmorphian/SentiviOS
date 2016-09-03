@@ -128,6 +128,20 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     }
     
     
+    //    [aps: {
+    //    alert = "Sonali Pawar become your friend";
+    //    badge = 1;
+    //    sound = default;
+    //    }, custom: {
+    //    a =     {
+    //    "request_type" = 2;
+    //    "sender_id" = "992A9BA6-5B4B-4A33-B013-8A8A33027763";
+    //    };
+    //    i = "734873ee-5034-4861-ba86-cf2199bd29da";
+    //    }]
+    
+
+    
     
     //MARK:- METHOD OR RECEIVED PUSH NOTIFICATION
     
@@ -144,10 +158,19 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         print(aps)
        
         var NotificationMessage = String()
-      
         NotificationMessage = aps!["alert"] as! String
-                          
-       
+        
+        var badgeCount = Int()
+        
+        badgeCount = aps!["badge"] as! Int
+        
+        print(badgeCount)
+        
+        NSUserDefaults.standardUserDefaults().setObject(badgeCount, forKey: "badgeCount")
+        
+        print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCount"))
+        
+        
         let custom = data.objectForKey("custom")
         
       
