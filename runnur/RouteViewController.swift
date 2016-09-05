@@ -148,21 +148,21 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         
         
         
-        let table = client.tableWithName("RouteObject")
-        
+        let table = client.tableWithName("RouteObject");
+    
         
         if client.currentUser != nil{
             
-          //  let query = table.queryWithPredicate(NSPredicate(format: "runnerId == \(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)"))
-            
             let query = table.query();
             
-        
             print("runnurId \(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)")
-            query.parameters = ["runnurId": "\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)"];
+           // query.parameters = ["runnurId": "\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)"];
+            query.fetchLimit=100;
+            
+            query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
             query.orderByDescending("__createdAt");
-            
-            
+           
+    
             query.readWithCompletion({ (result, error) in
                 if let err = error {
                     self.showNoRoutesView();
@@ -241,7 +241,7 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                                     self.routeData.elevationLong.append((json![i].objectForKey("longitude") as? Double)!)
                                 }
                             }catch{
-                                
+//                                19.2171975,72.8241082
                             }
                         }
                         if let trackPolylines = item["trackPolylinesP"] as? String{
@@ -301,6 +301,27 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         }
     }
     override func viewDidAppear(animated: Bool) {
+        if Reachability.isConnectedToNetwork() == true{
+            self.routeDataArray.removeAll();
+            getData();
+        }
+        else{
+            self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
+            
+            self.noInternet.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
+            //self.noInternet.view.backgroundColor=UIColor.clearColor()
+            self.view.addSubview((self.noInternet.view)!);
+            
+            
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(SummaryViewController.handleTap(_:)))
+            self.noInternet.noInternetLabel.userInteractionEnabled = true
+            
+            
+            self.noInternet.view.addGestureRecognizer(tapRecognizer)
+            
+            self.noInternet.didMoveToParentViewController(self)
+        }
+
 //        do {
 //            let file = "routeData.txt"
 //            let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
@@ -315,8 +336,7 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        getData();
-       // self.showNoRoutesView();
+               // self.showNoRoutesView();
 
         self.tableView.estimatedRowHeight=106;
         self.tableView.rowHeight=UITableViewAutomaticDimension;
@@ -369,7 +389,7 @@ func showNoRoutesView()
         cell.address.text = data.location;
         cell.dateAndTime.text = data.date;
         cell.distance.text = data.distanceAway;
-        cell.distanceLabel.text = data.distance! + " mi";
+        cell.distanceLabel.text = data.distance!;
         cell.elevationGain.text = data.elevationGain;
         cell.elevationLoss.text = data.elevationLoss;
        

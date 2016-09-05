@@ -86,6 +86,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
 
     }
     func autoRouteCreation()  {
+        
         autoRouteLat = (myManager.location?.coordinate.latitude)!;
         autoRouteLang = (myManager.location?.coordinate.longitude)!
         firstAngle = Int(arc4random_uniform(360-0)+0);
@@ -204,17 +205,19 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                                     mapData.distance = distance.objectForKey("text") as? String;
                                     
                                     let steps = legs[i]["steps"] as! NSArray
+                                    
                                     for i in 0 ..< steps.count
                                     {
                                         let polyLinePoints = (steps[i].objectForKey("polyline") as! NSDictionary).objectForKey("points") as! String
                                         print(polyLinePoints);
-                                        
+                                        print("polyline Point");
+                                        print(decodePolyline(polyLinePoints))
                                         let polyLinePath =  GMSPath(fromEncodedPath: polyLinePoints);
                                         print(polyLinePath);
                                         
                                        // polyLineWithEncodedString(polyLinePoints);
                                     
-                                    
+                                        
                                         
                                         polyline = GMSPolyline(path: polyLinePath)
                                         polyline.strokeColor = UIColor.redColor();
@@ -222,7 +225,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                                         polyline.geodesic = true
                                         polyline.map = mapView
                                     }
-                                    
+                                    print();
                                 }
                             }
                         }
@@ -408,7 +411,20 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             msg = "You did not cover enough distance. Are you sure you want to save the activity?";
         }
         
+//        let data = self.polyline.path?.encodedPath().dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
+//        
+////var properString = data!.stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+// print(data)
+//         let jsonString = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+//        print(jsonString)
+//        
+//        if NSJSONSerialization.isValidJSONObject(data!){
+//            let jsonData = try! NSJSONSerialization.dataWithJSONObject(data!, options: NSJSONWritingOptions())
+//            let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
+//            print(jsonString);
+//        }
         
+   /*
             CommonFunctions.showPopup(self, title: "ALREADY FINISHED?", msg:msg , positiveMsg: "Yes, Save", negMsg: "No, Discard", show2Buttons: true, showReverseLayout: false,getClick: {
                 // if Reachability.isConnectedToNetwork() == true{
                 CommonFunctions.showActivityIndicator(self.view);
@@ -420,8 +436,29 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                 user.mobileServiceAuthenticationToken = NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken");
                 client.currentUser = user
                 
+                var cor = [CLLocationCoordinate2D]();
+               let c = Int((self.polyline.path?.count())!)
                 
+                //self.polyline.path?.encodedPath()
                 
+                for i in 0 ..< c
+                {
+                    
+                    cor.append((self.polyline.path?.coordinateAtIndex(UInt(i)))!);
+                }
+              
+                var trackPolyline = [NSDictionary]();
+                for i in cor{
+                trackPolyline.append(["latitude":Double(i.latitude),"longitude":Double(i.longitude)])
+                }
+                var saveTrackPolyline = String();
+                
+            
+                if NSJSONSerialization.isValidJSONObject(trackPolyline){
+                    let jsonData = try! NSJSONSerialization.dataWithJSONObject(trackPolyline, options: NSJSONWritingOptions())
+                    let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
+                    saveTrackPolyline = jsonString;
+                }
                 let table = client.tableWithName("RouteObject")
                 if client.currentUser != nil{
                     let date = NSDate()
@@ -435,11 +472,12 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                         "distanceP": Double(self.autoRouteDistance),
                         "elevationGainP": Double(self.mapData.elevationGain!)!,
                         "elevationLossP": Double(self.mapData.elevationLoss!)!,
-                       // "trackPolylinesP": Double(self.avgPace.text!)!,
+                        "runnurId": "\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)",
+                        "trackPolylinesP": saveTrackPolyline,
                         // "time": "nil",
                        // "mileMarkersP": self.lastMarker,
-                        "elevationCoordinatesP": ""];
-//                        "startLocationP": String(self.firstLocation),
+                        "elevationCoordinatesP": "",
+                        "startLocationP": self.locationName];
 //                        "distanceMarkerP": String(self.altGain),
 //                        "elevationValuesP": String(self.altLoss)] ;
                     
@@ -450,7 +488,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                                 print("ERROR ", err)
                             } else if let item = result {
                                 CommonFunctions.hideActivityIndicator();
-                                print("RunObject: ", item["distanceP"])
+                                print("RunObject: ", item["trackPolylinesP"])
                                 let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
                                 ActivityDetailsViewController;
                                 activityDetailsViewController.mapData=self.mapData;
@@ -470,8 +508,123 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                     
                 }
             })
-        
+ */
     }
+    var locationName = String();
+    func getAddressFromLatLong(latitude:Double,longitude:Double)
+    {
+        if Reachability.isConnectedToNetwork() == true{
+            let geoCoder = CLGeocoder()
+            let location = CLLocation(latitude: latitude, longitude: longitude)
+            
+            geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
+                
+                // Place details
+                var placeMark: CLPlacemark!
+                placeMark = placemarks?[0]
+                
+                // Address dictionary
+                //                print(placeMark.addressDictionary)
+                
+                // Location name
+                if let locationName = placeMark.addressDictionary?["Name"] as? NSString {
+                    self.locationName = locationName as String;
+                }
+                
+                //                // Street address
+                //                if let street = placeMark.addressDictionary!["Thoroughfare"] as? NSString {
+                //                }
+                
+                // City
+                if let city = placeMark.addressDictionary!["City"] as? NSString {
+                    
+                    if city != ""
+                    {
+                        self.locationName = self.locationName+", "+(city as String);
+                    }
+                }
+                
+                //                // Zip code
+                //                if let zip = placeMark.addressDictionary!["ZIP"] as? NSString {
+                //                    print(zip)
+                //                }
+                //
+                //                // Country
+                //                if let country = placeMark.addressDictionary!["Country"] as? NSString {
+                //                    print(country)
+                //                }
+                
+            })
+        }
+    }
+//    MARK:- DecodePolyline
+    internal func decodePolyline(encodedPolyline: String, precision: Double = 1e5) -> [CLLocationCoordinate2D]? {
+        
+        let data = encodedPolyline.dataUsingEncoding(NSUTF8StringEncoding)!
+        
+        let byteArray = unsafeBitCast(data.bytes, UnsafePointer<Int8>.self)
+        let length = Int(data.length)
+        var position = Int(0)
+        
+        var decodedCoordinates = [CLLocationCoordinate2D]()
+        
+        var lat = 0.0
+        var lon = 0.0
+        
+        while position < length {
+            
+            do {
+                let resultingLat = try decodeSingleCoordinate(byteArray: byteArray, length: length, position: &position, precision: precision)
+                lat += resultingLat
+                
+                let resultingLon = try decodeSingleCoordinate(byteArray: byteArray, length: length, position: &position, precision: precision)
+                lon += resultingLon
+            } catch {
+                return nil
+            }
+            
+            decodedCoordinates.append(CLLocationCoordinate2D(latitude: lat, longitude: lon))
+        }
+        return decodedCoordinates
+    }
+    var er : NSError?
+    private func decodeSingleCoordinate(byteArray byteArray: UnsafePointer<Int8>, length: Int, inout position: Int, precision: Double = 1e5) throws -> Double {
+        
+        guard position < length else {
+            throw er!
+        
+        }
+        
+        let bitMask = Int8(0x1F)
+        
+        var coordinate: Int32 = 0
+        
+        var currentChar: Int8
+        var componentCounter: Int32 = 0
+        var component: Int32 = 0
+        
+        repeat {
+            currentChar = byteArray[position] - 63
+            component = Int32(currentChar & bitMask)
+            coordinate |= (component << (5*componentCounter))
+            position += 1
+            componentCounter += 1
+        } while ((currentChar & 0x20) == 0x20) && (position < length) && (componentCounter < 6)
+        
+        if (componentCounter == 6) && ((currentChar & 0x20) == 0x20) {
+            print("error");
+        }
+        
+        if (coordinate & 0x01) == 0x01 {
+            coordinate = ~(coordinate >> 1)
+        } else {
+            coordinate = coordinate >> 1
+        }
+        
+        return Double(coordinate) / precision
+    }
+
+    
 // MARK:- Move Top View
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let touch = touches.first;
@@ -535,6 +688,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             london.map = mapView
             tapCounter += 1;
             lastMarker.append(london);
+            self.getAddressFromLatLong(coordinate.latitude, longitude: coordinate.longitude)
         }else{
             let london = GMSMarker(position: CLLocationCoordinate2D(latitude:coordinate.latitude, longitude: coordinate.longitude))
             london.icon = UIImage(named: "ic_map_marker_red")

@@ -72,7 +72,18 @@ class ViewRouteController: UIViewController {
                 
                 if error == nil{
                     print("\(self.mapData.itemID)");
-                    
+                    let oldItem = itemInfo as NSDictionary
+                    if let newItem = oldItem.mutableCopy() as? NSMutableDictionary {
+                        newItem["startLocationP"] = "\(self.textField.text!)"
+                        //print(newItem);
+                        table2.update(newItem as [NSObject: AnyObject], completion: { (result, error) -> Void in
+                            if let err = error {
+                                print("ERROR ", err)
+                            } else if let item = result {
+                                print("Todo Item: ", item["startLocationP"])
+                            }
+                        })
+                    }
                     print(itemInfo);
                 }else{
                     
@@ -192,7 +203,7 @@ class ViewRouteController: UIViewController {
             //coding
         }
         // let vs:Int = Int(self.view.frame.height - self.getMyLocation.frame.maxY);
-        actionButton = ActionButton(attachedToView: self.view, items: [map, Satellite,Terrain], v: 140, h: 15)
+        actionButton = ActionButton(attachedToView: self.view, items: [map, Satellite,Terrain], v: 90, h: 15)
         // actionButton = ActionButton(attachedToView: self.view, items: [map, Satellite,Terrain])
         
         actionButton.action = { button in button.toggleMenu() }

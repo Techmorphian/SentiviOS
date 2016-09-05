@@ -10178,8 +10178,8 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DISTANCE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1lJ-Qy-Pd6">
-                                                            <rect key="frame" x="1" y="28" width="143" height="11"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                                            <rect key="frame" x="1" y="28" width="143" height="10"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -10205,8 +10205,8 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ELEV.LOSS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZqS-W6-kpe">
-                                                            <rect key="frame" x="0.0" y="28" width="145" height="11"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                                            <rect key="frame" x="0.0" y="28" width="145" height="10"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -10232,8 +10232,8 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ELEV.GAIN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2re-i8-K0U">
-                                                            <rect key="frame" x="1" y="28" width="142" height="11"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                                            <rect key="frame" x="1" y="28" width="142" height="10"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
