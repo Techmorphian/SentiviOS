@@ -41,7 +41,6 @@
 		4457FFE21D59C19A0097C598 /* ActivityDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4457FFE11D59C19A0097C598 /* ActivityDetailsViewController.swift */; };
 		4457FFE41D59C2030097C598 /* SummaryActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4457FFE31D59C2030097C598 /* SummaryActivityViewController.swift */; };
 		4457FFE61D5A0E730097C598 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4457FFE51D5A0E730097C598 /* WeatherData.swift */; };
-		446103D91D77F1C80084E20A /* AZSClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 446103D81D77F1C80084E20A /* AZSClient.framework */; };
 		446103DB1D77F22C0084E20A /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 446103DA1D77F22C0084E20A /* libxml2.2.tbd */; };
 		446103DE1D77FB4B0084E20A /* DownloadFromBlob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446103DD1D77FB4B0084E20A /* DownloadFromBlob.swift */; };
 		4466240C1D6B1BE600B65BAA /* ViewRouteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4466240B1D6B1BE600B65BAA /* ViewRouteController.swift */; };
@@ -51,6 +50,7 @@
 		446681BB1D5B47B800BFF4B6 /* MapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446681BA1D5B47B800BFF4B6 /* MapData.swift */; };
 		447473C51D51F8CB0021C561 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447473C41D51F8CB0021C561 /* MapKit.framework */; };
 		447B235B1D4B863700D79823 /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447B235A1D4B863700D79823 /* WindowsAzureMobileServices.framework */; };
+		447F1E1B1D7EB11A00B903B1 /* AZSClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447F1E1A1D7EB11A00B903B1 /* AZSClient.framework */; };
 		448584141D4A0A240027F141 /* CommonFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448584131D4A0A240027F141 /* CommonFunctions.swift */; };
 		448584181D4A0AB40027F141 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 448584161D4A0AB40027F141 /* Bolts.framework */; };
 		4485841B1D4A0C4E0027F141 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4485841A1D4A0C4E0027F141 /* WebKit.framework */; };
@@ -171,7 +171,6 @@
 		4457FFE11D59C19A0097C598 /* ActivityDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityDetailsViewController.swift; sourceTree = "<group>"; };
 		4457FFE31D59C2030097C598 /* SummaryActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryActivityViewController.swift; sourceTree = "<group>"; };
 		4457FFE51D5A0E730097C598 /* WeatherData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
-		446103D81D77F1C80084E20A /* AZSClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AZSClient.framework; sourceTree = "<group>"; };
 		446103DA1D77F22C0084E20A /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
 		446103DD1D77FB4B0084E20A /* DownloadFromBlob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadFromBlob.swift; sourceTree = "<group>"; };
 		4466240B1D6B1BE600B65BAA /* ViewRouteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewRouteController.swift; sourceTree = "<group>"; };
@@ -181,6 +180,7 @@
 		446681BA1D5B47B800BFF4B6 /* MapData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapData.swift; sourceTree = "<group>"; };
 		447473C41D51F8CB0021C561 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		447B235A1D4B863700D79823 /* WindowsAzureMobileServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WindowsAzureMobileServices.framework; sourceTree = "<group>"; };
+		447F1E1A1D7EB11A00B903B1 /* AZSClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AZSClient.framework; sourceTree = "<group>"; };
 		448584131D4A0A240027F141 /* CommonFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonFunctions.swift; sourceTree = "<group>"; };
 		448584161D4A0AB40027F141 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		4485841A1D4A0C4E0027F141 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -291,11 +291,11 @@
 				444C5E2F1D50B4BE00A4DB3D /* libc++.1.dylib in Frameworks */,
 				444C5E2D1D50B42F00A4DB3D /* ImageIO.framework in Frameworks */,
 				444C5E2B1D50B42300A4DB3D /* GLKit.framework in Frameworks */,
+				447F1E1B1D7EB11A00B903B1 /* AZSClient.framework in Frameworks */,
 				444C5E291D50B41700A4DB3D /* CoreText.framework in Frameworks */,
 				444C5E271D50B40800A4DB3D /* CoreLocation.framework in Frameworks */,
 				444C5E251D50B3F900A4DB3D /* CoreGraphics.framework in Frameworks */,
 				444C5E231D50B3E900A4DB3D /* CoreData.framework in Frameworks */,
-				446103D91D77F1C80084E20A /* AZSClient.framework in Frameworks */,
 				444C5E211D50B3D000A4DB3D /* Accelerate.framework in Frameworks */,
 				4485841B1D4A0C4E0027F141 /* WebKit.framework in Frameworks */,
 				448584181D4A0AB40027F141 /* Bolts.framework in Frameworks */,
@@ -351,7 +351,7 @@
 		448584151D4A0A980027F141 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				446103D81D77F1C80084E20A /* AZSClient.framework */,
+				447F1E1A1D7EB11A00B903B1 /* AZSClient.framework */,
 				444C5E3A1D50C76A00A4DB3D /* GoogleMaps.bundle */,
 				444C5E1E1D50B39900A4DB3D /* GoogleMapsBase.framework */,
 				444C5E1C1D50B38E00A4DB3D /* GoogleMapsCore.framework */,
@@ -1086,6 +1086,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.SentivApp;
 				PROVISIONING_PROFILE = "bd46aa77-3e21-4e54-92ef-c5b8c2eaf59f";
 				SDKROOT = iphoneos;
@@ -1107,7 +1108,7 @@
 					"$(PROJECT_DIR)/runnur",
 				);
 				INFOPLIST_FILE = runnur/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.SentivApp;
 				PRODUCT_NAME = Sentiv;
@@ -1131,7 +1132,7 @@
 					"$(PROJECT_DIR)/runnur",
 				);
 				INFOPLIST_FILE = runnur/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.SentivApp;
 				PRODUCT_NAME = Sentiv;

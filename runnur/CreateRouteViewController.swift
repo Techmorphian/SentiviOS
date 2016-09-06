@@ -52,10 +52,11 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
     var firstAngle = Int();
     var thirdAngle = 90;
     var backgroudRunning = Bool()
+    var distance = Double();
     
     
     
-//  MARK:- all Button Actions  
+//  MARK:- all Button Actions AutoRoute
     var textField = UITextField();
     func configurationTextField(textField: UITextField!)
     {
@@ -406,10 +407,19 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
     @IBAction func save(sender: UIButton) {
         var msg = String();
         if lastMarker.count > 0 {
-         msg = "No Route Found";
+            
+            CommonFunctions.showPopup(self, msg: "No Route Found", getClick: {
+                
+            })
+            
+        
         }else{
+            if distance < 0.1{
             msg = "You did not cover enough distance. Are you sure you want to save the activity?";
-        }
+            }else{
+            msg = "Are you sure you want to save the activity?";
+            }
+       
         
 //        let data = self.polyline.path?.encodedPath().dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
 //        
@@ -424,7 +434,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
 //            print(jsonString);
 //        }
         
-   /*
+   
             CommonFunctions.showPopup(self, title: "ALREADY FINISHED?", msg:msg , positiveMsg: "Yes, Save", negMsg: "No, Discard", show2Buttons: true, showReverseLayout: false,getClick: {
                 // if Reachability.isConnectedToNetwork() == true{
                 CommonFunctions.showActivityIndicator(self.view);
@@ -508,7 +518,8 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                     
                 }
             })
- */
+    }
+ 
     }
     var locationName = String();
     func getAddressFromLatLong(latitude:Double,longitude:Double)

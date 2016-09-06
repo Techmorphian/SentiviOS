@@ -8,7 +8,7 @@
 
 import UIKit
 import GoogleMaps
-
+import Charts
 class ViewRouteController: UIViewController {
     
     @IBAction func back(sender: AnyObject) {
@@ -24,6 +24,9 @@ class ViewRouteController: UIViewController {
     var customViewHeight2: NSLayoutConstraint!
     var pV = RouteViewController();
 
+    var dataPoints = [String]()
+   
+    @IBOutlet weak var lineChart: LineChartView!
     
     @IBOutlet weak var arrow: UIImageView!
     @IBOutlet weak var customViewHeight: NSLayoutConstraint!
@@ -75,7 +78,7 @@ class ViewRouteController: UIViewController {
                     let oldItem = itemInfo as NSDictionary
                     if let newItem = oldItem.mutableCopy() as? NSMutableDictionary {
                         newItem["startLocationP"] = "\(self.textField.text!)"
-                        //print(newItem);
+                        print(newItem);
                         table2.update(newItem as [NSObject: AnyObject], completion: { (result, error) -> Void in
                             if let err = error {
                                 print("ERROR ", err)
@@ -102,7 +105,47 @@ class ViewRouteController: UIViewController {
     @IBOutlet weak var routeDistance: UILabel!
     @IBOutlet weak var mapView: GMSMapView!
     
-    
+    //    MARK:- Graph Elevation
+    func setChart(valuesForElevation: [Double]) {
+        //   barChartView.noDataText = "You need to provide data for the chart."
+        
+        if valuesForElevation.count != 0
+        {
+            var dataEntries: [ChartDataEntry] = []
+            
+            for i in 0..<valuesForElevation.count {
+                let dataEntry = ChartDataEntry(value: valuesForElevation[i], xIndex: i)
+                dataEntries.append(dataEntry)
+                dataPoints.append("");
+            }
+            
+            let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "Elevation")
+            let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet)
+            lineChartDataSet.circleColors = [colorCode.BlueColor];
+            lineChartDataSet.circleRadius = 0.0;
+            lineChartDataSet.lineWidth = 2;
+            lineChartDataSet.drawCubicEnabled = true;
+            //lineChartDataSet.drawFilledEnabled = true;
+            lineChartDataSet.colors = [colorCode.BlueColor]
+            
+            lineChartDataSet.drawCirclesEnabled = false
+            //remove xAxis line
+            lineChart.xAxis.drawGridLinesEnabled = false
+            lineChart.xAxis.drawAxisLineEnabled = false
+            
+            
+            lineChart.data = lineChartData
+            lineChart.leftAxis.labelTextColor = colorCode.BlueColor;
+            lineChart.xAxis.labelTextColor = colorCode.BlueColor;
+            lineChart.rightAxis.labelTextColor = UIColor.clearColor();
+            
+//            let ll = ChartLimitLine(limit: 10.5, label: "Avg Speed")
+//            lineChart.rightAxis.addLimitLine(ll)
+        }
+       // lineChart.noDataText = "No  Data Available"
+        
+        
+    }
     
     // MARK:- Move Top View
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -169,6 +212,11 @@ class ViewRouteController: UIViewController {
             let london2 = GMSMarker(position: CLLocationCoordinate2D(latitude:mapData.trackLat[mapData.trackLat.count-1], longitude: mapData.trackLong[mapData.trackLong.count-1]))
             london2.icon = UIImage(named: "im_stop_marker")
             london2.map = mapView
+        }
+        if mapData.trackLat.count > 0
+        {
+           // ,dataPoints:[-122.03312,-122.0324,-122.03218,-122.03152999999999,-122.03152999999999,-122.03140999999999,-122.03053999999999]
+            setChart([37.33023,37.33023,37.33023,37.330250000000007,37.33026000000001,37.330280000000009,37.330520000000007]);
         }
         
     }

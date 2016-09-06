@@ -9099,7 +9099,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ayb-17-fGI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2102" y="2489"/>
+            <point key="canvasLocation" x="2056" y="2587"/>
         </scene>
         <!--Addvia Facebook View Controller-->
         <scene sceneID="3O1-hV-hN2">
@@ -9978,7 +9978,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RFy-Zo-P5K" customClass="BarChartView" customModule="Charts">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RFy-Zo-P5K" customClass="LineChartView" customModule="Charts">
                                 <rect key="frame" x="0.0" y="145" width="600" height="0.0"/>
                                 <color key="backgroundColor" red="0.19215686269999999" green="0.54901960780000003" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -10077,6 +10077,7 @@
                         <outlet property="customViewHeight" destination="LLm-ay-Y0F" id="qtk-cg-UBr"/>
                         <outlet property="elevationGain" destination="evt-Ye-oCh" id="zHw-Ao-Cf8"/>
                         <outlet property="elevationLoss" destination="8OB-zI-V0u" id="ZBw-C4-bLy"/>
+                        <outlet property="lineChart" destination="RFy-Zo-P5K" id="t6r-By-Hw3"/>
                         <outlet property="location" destination="txd-Vs-3EU" id="eow-KL-9nZ"/>
                         <outlet property="mapView" destination="NCF-pJ-DSO" id="SUF-98-sdM"/>
                         <outlet property="routeDistance" destination="4cO-uX-73q" id="Dl6-UY-ScJ"/>
