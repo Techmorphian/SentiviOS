@@ -892,7 +892,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
         
     {
         
-        self.showActivityIndicator();
+        self.showActivityIndicatory();
         
         
         let myurl = NSURL(string: Url.viewCompletedChallenges)
@@ -929,70 +929,91 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
     }
     
     
-    
-    
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    
-    var loadingLable = UILabel()
-    var loadingView = UIView()
-    
-    // func showActivityIndicator(view:UIView,height:CGFloat=0)
-    func showActivityIndicator()
-        
+    let loadingView: UIView = UIView()
+    func showActivityIndicatory()
     {
+        loadingView.frame = CGRectMake(0, 0, 60, 50)
+        loadingView.center = view.center
         
-        print(view.frame.height)
-        print(view.frame.width)
-        
-        
-        
-        loadingView.frame = CGRectMake(self.view.frame.width/2-30,self.view.frame.height/2 - 100,60,150)
-        
-        loadingView.layer.cornerRadius = 10
+        loadingView.backgroundColor = UIColor.grayColor()
         loadingView.alpha = 0.6
-        
-        
         loadingView.clipsToBounds = true
-        
-        
-        // activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
-        
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        
+        loadingView.layer.cornerRadius = 10
+        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
         activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
                                                loadingView.frame.size.height / 2);
-        
-        
-        
-        //  loadingLable=UILabel(frame: CGRectMake(self.loadingView.frame.width/2-50,self.loadingView.frame.height/2+20, 100,50))
-        
-//        loadingLable=UILabel(frame: CGRectMake(5,100, self.loadingView.frame.width,80))
-//        
-//        loadingLable.text = "Please wait a moment. This may take a while"
-//        
-//        loadingLable.textColor=UIColor.redColor()
-//        
-//        loadingLable.font = loadingLable.font.fontWithSize(10)
-//        loadingLable.lineBreakMode =  .ByWordWrapping
-//        loadingLable.numberOfLines=0
-//        
-//        loadingLable.textAlignment = .Center
-//        
-//        loadingView.addSubview(loadingLable)
-        
         loadingView.addSubview(activityIndicator)
-        
-       // loadingView.addSubview(loadingLable)
-        
         self.view.addSubview(loadingView)
         activityIndicator.startAnimating()
-        
-        //Please wait a moment. This may take a while
-        
     }
     
+
     
     
+//    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+//    
+//    var loadingLable = UILabel()
+//    var loadingView = UIView()
+//    
+//    // func showActivityIndicator(view:UIView,height:CGFloat=0)
+//    func showActivityIndicator()
+//        
+//    {
+//        
+//        print(view.frame.height)
+//        print(view.frame.width)
+//        
+//        
+//        
+//        loadingView.frame = CGRectMake(self.view.frame.width/2-30,self.view.frame.height/2 - 100,60,150)
+//        
+//        loadingView.layer.cornerRadius = 10
+//        loadingView.alpha = 0.6
+//        
+//        
+//        loadingView.clipsToBounds = true
+//        
+//        
+//        // activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+//        
+//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+//        
+//        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+//                                               loadingView.frame.size.height / 2);
+//        
+//        
+//        
+//        //  loadingLable=UILabel(frame: CGRectMake(self.loadingView.frame.width/2-50,self.loadingView.frame.height/2+20, 100,50))
+//        
+////        loadingLable=UILabel(frame: CGRectMake(5,100, self.loadingView.frame.width,80))
+////        
+////        loadingLable.text = "Please wait a moment. This may take a while"
+////        
+////        loadingLable.textColor=UIColor.redColor()
+////        
+////        loadingLable.font = loadingLable.font.fontWithSize(10)
+////        loadingLable.lineBreakMode =  .ByWordWrapping
+////        loadingLable.numberOfLines=0
+////        
+////        loadingLable.textAlignment = .Center
+////        
+////        loadingView.addSubview(loadingLable)
+//        
+//        loadingView.addSubview(activityIndicator)
+//        
+//       // loadingView.addSubview(loadingLable)
+//        
+//        self.view.addSubview(loadingView)
+//        activityIndicator.startAnimating()
+//        
+//        //Please wait a moment. This may take a while
+//        
+//    }
+//    
+//    
+//    
 
     
     //MARK:- NSURLSession delegate methods
@@ -1556,7 +1577,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
         
         if(Reachability.isConnectedToNetwork()==true )
         {
-            showActivityIndicator();
+            showActivityIndicatory();
             
             self.viewCompletedChallenges();
 

@@ -30,8 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         //Add this line. Replace '5eb5a37e-b458-11e3-ac11-000c2940e62c' with your OneSignal App ID.
         OneSignal(launchOptions: launchOptions, appId: "a62ddded-7c71-4583-9fd4-b9a39101ff8d")
         
-        var badgeNum = NSUserDefaults.standardUserDefaults().integerForKey("numLaunches")
-        NSUserDefaults.standardUserDefaults().setObject( ++badgeNum , forKey: "numLaunches")
+//        var badgeNum = NSUserDefaults.standardUserDefaults().integerForKey("numLaunches")
+//        NSUserDefaults.standardUserDefaults().setObject( ++badgeNum , forKey: "numLaunches")
         
         
         //////////////////////
@@ -41,6 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             applicationURLString:"http://runningappjs.azure-mobile.net"
         )
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
         let notificationTypes: UIUserNotificationType = [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]
         let pushNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
         
@@ -80,7 +81,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             return true
         }
         
-
+        
+        
+      
         
         return true
     }
@@ -89,7 +92,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject])
     {
         
+        
+        
+        let data = userInfo as NSDictionary
+        
+        let aps = data.objectForKey("aps")
+        
+        print(aps)
+        
+        var NotificationMessage = String()
+        NotificationMessage = aps!["alert"] as! String
+        
+        var badgeCount = Int()
+        
+        badgeCount = aps!["badge"] as! Int
+        
+        print(badgeCount)
+        
+        NSUserDefaults.standardUserDefaults().setObject(badgeCount, forKey: "badgeCount")
+        
+        print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCount"))
+
+        
          NSNotificationCenter.defaultCenter().postNotificationName("showAlert", object: nil, userInfo: userInfo)
+        
+        if application.applicationState == UIApplicationState.Active
+            
+        {
+         
+            
+        }
+        
+        if  application.applicationState == UIApplicationState.Background
+        {
+            
+            
+            // go to screen relevant to Notification content
+        }
+        
+        
+        if  application.applicationState == UIApplicationState.Inactive
+        {
+            // go to screen relevant to Notification content
+        }
+
         
         
         
@@ -106,20 +152,62 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         {
             
             print(userInfo)
+            
+            let data = userInfo as NSDictionary
+            
+            let aps = data.objectForKey("aps")
+            
+            print(aps)
+            
+            var NotificationMessage = String()
+            NotificationMessage = aps!["alert"] as! String
+            
+            var badgeCount = Int()
+            
+            badgeCount = aps!["badge"] as! Int
+            
+            print(badgeCount)
+            
+            NSUserDefaults.standardUserDefaults().setObject(badgeCount, forKey: "badgeCount")
+            
+            print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCount"))
+            
+
 
   
         NSNotificationCenter.defaultCenter().postNotificationName("showAlert", object: nil, userInfo: userInfo)
+            
+            
             
             
         }
         else
         {
             
-            
-            
             print(userInfo)
             
+            let data = userInfo as NSDictionary
             
+            let aps = data.objectForKey("aps")
+            
+            print(aps)
+            
+            var NotificationMessage = String()
+            NotificationMessage = aps!["alert"] as! String
+            
+            var badgeCount = Int()
+            
+            badgeCount = aps!["badge"] as! Int
+            
+            print(badgeCount)
+            
+            NSUserDefaults.standardUserDefaults().setObject(badgeCount, forKey: "badgeCount")
+            
+            print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCount"))
+            
+            NSNotificationCenter.defaultCenter().postNotificationName("showAlert", object: nil, userInfo: userInfo)
+            
+
 
 //            var badgeNum = NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter")
 //            
@@ -128,6 +216,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 //            UIApplication.sharedApplication().applicationIconBadgeNumber =  NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter")
             
             
+        }
+        
+        
+        if  application.applicationState == UIApplicationState.Background
+        {
+        
+            
+            // go to screen relevant to Notification content
+        }
+        
+        
+        if  application.applicationState == UIApplicationState.Inactive
+        {
+            // go to screen relevant to Notification content
         }
         
     }
@@ -196,7 +298,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
         
         FBSDKAppEvents.activateApp();
-       
+        
+        NSUserDefaults.standardUserDefaults().setObject(UIApplication.sharedApplication().applicationIconBadgeNumber, forKey: "badgeCount")
+        
+        
+        print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCount"))
+
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("UIApplicationDidBecomeActiveNotification", object: nil)
+
+        
+        
+        
         
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }

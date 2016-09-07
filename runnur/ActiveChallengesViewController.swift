@@ -912,7 +912,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
        // showActivityIndicatory()
         
-        showActivityIndicator();
+        showActivityIndicatory();
         
         
         let myurl = NSURL(string: Url.viewActiveChallenges)
@@ -951,91 +951,85 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     
-    
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-//    let loadingView: UIView = UIView()
-//    func showActivityIndicatory()
+    let loadingView: UIView = UIView()
+    func showActivityIndicatory()
+    {
+        loadingView.frame = CGRectMake(0, 0, 60, 50)
+        loadingView.center = view.center
+        
+        loadingView.backgroundColor = UIColor.grayColor()
+        loadingView.alpha = 0.6
+        loadingView.clipsToBounds = true
+        loadingView.layer.cornerRadius = 10
+        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+                                               loadingView.frame.size.height / 2);
+        loadingView.addSubview(activityIndicator)
+        self.view.addSubview(loadingView)
+        activityIndicator.startAnimating()
+    }
+    
+//  var loadingLable = UILabel()
+//   var loadingView = UIView()
+//    
+//     // func showActivityIndicator(view:UIView,height:CGFloat=0)
+//    func showActivityIndicator()
+//    
 //    {
-//        loadingView.frame = CGRectMake(self.view.frame.width/2 - 30 ,self.view.frame.height/2 - 100, 60, 50)
+//        
+//        print(view.frame.height)
+//        print(view.frame.width)
+//        
+//        
+//         /// x-30 is a width of loadingView/2 mns 60/2
+//        ////// y-100 mns height of parent view(upper view only)
+//        
+//        loadingView.frame = CGRectMake(self.view.frame.width/2-30,self.view.frame.height/2 - 100,60,150)
 //        
 //        loadingView.layer.cornerRadius = 10
 //        loadingView.alpha = 0.6
-//        loadingView.backgroundColor = UIColor.grayColor()
-//      
+//        
+//        
 //        loadingView.clipsToBounds = true
 //        
-//      
-//        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
 //        
-//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+//       // activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
 //        
-//        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
-//                                               loadingView.frame.size.height / 2);
+//      activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+//        
+//       activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+//                          loadingView.frame.size.height / 2);
+//        
+//        
+//        
+//      //  loadingLable=UILabel(frame: CGRectMake(self.loadingView.frame.width/2-50,self.loadingView.frame.height/2+20, 100,50))
+//        
+////        loadingLable=UILabel(frame: CGRectMake(5,100, self.loadingView.frame.width,80))
+////        
+////        loadingLable.text = "Please wait a moment. This may take a while"
+////        
+////        loadingLable.textColor=UIColor.redColor()
+////        
+////        loadingLable.font = loadingLable.font.fontWithSize(10)
+////        loadingLable.lineBreakMode =  .ByWordWrapping
+////        loadingLable.numberOfLines=0
+////        
+////         loadingLable.textAlignment = .Center
+////        
+////        loadingView.addSubview(loadingLable)
+//
 //        loadingView.addSubview(activityIndicator)
+//       
+//        
 //        self.view.addSubview(loadingView)
 //        activityIndicator.startAnimating()
-//    }
 //    
-    
-  var loadingLable = UILabel()
-   var loadingView = UIView()
-    
-     // func showActivityIndicator(view:UIView,height:CGFloat=0)
-    func showActivityIndicator()
-    
-    {
-        
-        print(view.frame.height)
-        print(view.frame.width)
-        
-        
-         /// x-30 is a width of loadingView/2 mns 60/2
-        ////// y-100 mns height of parent view(upper view only)
-        
-        loadingView.frame = CGRectMake(self.view.frame.width/2-30,self.view.frame.height/2 - 100,60,150)
-        
-        loadingView.layer.cornerRadius = 10
-        loadingView.alpha = 0.6
-        
-        
-        loadingView.clipsToBounds = true
-        
-        
-       // activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
-        
-      activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        
-       activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
-                          loadingView.frame.size.height / 2);
-        
-        
-        
-      //  loadingLable=UILabel(frame: CGRectMake(self.loadingView.frame.width/2-50,self.loadingView.frame.height/2+20, 100,50))
-        
-//        loadingLable=UILabel(frame: CGRectMake(5,100, self.loadingView.frame.width,80))
 //        
-//        loadingLable.text = "Please wait a moment. This may take a while"
-//        
-//        loadingLable.textColor=UIColor.redColor()
-//        
-//        loadingLable.font = loadingLable.font.fontWithSize(10)
-//        loadingLable.lineBreakMode =  .ByWordWrapping
-//        loadingLable.numberOfLines=0
-//        
-//         loadingLable.textAlignment = .Center
-//        
-//        loadingView.addSubview(loadingLable)
-
-        loadingView.addSubview(activityIndicator)
-       
-        
-        self.view.addSubview(loadingView)
-        activityIndicator.startAnimating()
-    
-        
-    }
-
-    
+//    }
+//
+//    
     
     
     

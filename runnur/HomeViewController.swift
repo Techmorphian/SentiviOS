@@ -225,6 +225,19 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     
     
     
+    
+    func applicationDidBecomeActive(notification: NSNotification)
+    {
+        
+          print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCount"))       
+        
+    }
+
+    
+    
+    
+    
+    
     var lat = String();
     var long = String();
     var btManager = CBCentralManager()
@@ -234,11 +247,19 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         
         //self.call();
         
-        
+         print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCount"))
         
         ////// push notification
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HomeViewController.methodOfReceivedNotification(_:)), name:"showAlert", object: nil)
+        
+        
+        //// addObserver for applicationDidBecomeActive (every time refresh)
+        NSNotificationCenter.defaultCenter().addObserver(self,selector: #selector(UIApplicationDelegate.applicationDidBecomeActive(_:)),
+                                                         name: "UIApplicationDidBecomeActiveNotification",
+                                                         object: nil)
+
+        
         
         gps.layer.shadowOpacity=0.4;
 

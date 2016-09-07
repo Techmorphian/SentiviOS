@@ -50,6 +50,7 @@ class activityTableViewCell: UITableViewCell
     
     
     
+    
     @IBOutlet var userName: UILabel!
     
     

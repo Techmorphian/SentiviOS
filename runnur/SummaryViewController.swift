@@ -334,54 +334,25 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
     {
         
         
-//        let date = NSDate()
-//        let calendar = NSCalendar.currentCalendar()
-//        let components = calendar.components([.Day , .Month , .Year], fromDate: date)
-//        
-//        let year =  components.year
-//        let month = components.month
-//        let day = components.day
-//        
-//        print(year)
-//        print(month)
-//        print(day)
-//
-//        let nsdateString = String(year) + "-" + String(month) +  "-" + String(day)
-//        print(nsdateString)
-//
-//        let dateFormatter = NSDateFormatter()
-//        
-//         dateFormatter.dateFormat = "yyyy-MM-dd"
-//        
-//        let nscurrentDate = dateFormatter.dateFromString(nsdateString)
-//        
-//        print(nscurrentDate)
-//        
         
-//        
+       
       let nscurrentDate = NSDate()
-//        
-//        print(nscurrentDate)
-//        
-//        let dateFormatter = NSDateFormatter()
-//        
-//        dateFormatter.dateFormat = "yyyy-MM-dd"
-//        
-//        let currentDate = dateFormatter.stringFromDate(nscurrentDate)
-//        
-//        print(currentDate)
-//        
+        
+        print(nscurrentDate)
+        
+        let dateFormatter = NSDateFormatter()
+        
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        let currentDate = dateFormatter.stringFromDate(nscurrentDate)
+        
+        print(currentDate)
+        
       
-      
-        
-        let toDay = NSCalendar.currentCalendar().startOfDayForDate(NSDate())
-        
-        print(toDay)
-        
         
         ///////
         
-    let dateFormatter2 = NSDateFormatter()
+       let dateFormatter2 = NSDateFormatter()
         
         dateFormatter2.dateFormat = "yyyy-MM-dd"
         
@@ -391,137 +362,40 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
         print(nsStartDate)
         
-       let nsEndDate = dateFormatter2.dateFromString(endDate)
+       let nsEndDatee = dateFormatter2.dateFromString(endDate)
+        
+        print(nsEndDatee)
+        
+        
+        let nsEndDate = nsEndDatee?.dateByAddingTimeInterval(86399)
         
         print(nsEndDate)
 
         
-//        var order = NSCalendar.currentCalendar().compareDate(nscurrentDate, toDate: nsStartDate!, toUnitGranularity: .Day)
-//        
-//        switch order
-//        {
-//        case .OrderedDescending:
-//            print("DESCENDING")
-//            
-//            
-//            var order = NSCalendar.currentCalendar().compareDate(nsStartDate!, toDate: nsEndDate!, toUnitGranularity: .Day)
-//            
-//            switch order
-//            {
-//            case .OrderedDescending:
-//                print("DESCENDING")
-//            case .OrderedAscending:
-//                //   strat date < end date
-//                
-//                print("on going")
-//
-//            case .OrderedSame:
-//                print("on going")
-//                
-//                
-//                
-//                
-//            }
-//            
-//
-//            
-//        case .OrderedAscending:
-//          //   strat date < end date
-//            
-//            print("ASCENDING")
-//        case .OrderedSame:
-//            print("SAME")
-//            
-//            
-//            var order = NSCalendar.currentCalendar().compareDate(nsStartDate!, toDate: nsEndDate!, toUnitGranularity: .Day)
-//            
-//            switch order
-//            {
-//            case .OrderedDescending:
-//                print("DESCENDING")
-//            case .OrderedAscending:
-//                //   strat date < end date
-//                
-//                print("on going")
-//
-//            case .OrderedSame:
-//                print("on going")
-//
-//                
-//                
-//                
-//                
-//            }
-//
-//            
-//            
-//            
-//        }
-//       
-//       
-//        
-//        /////////////
-//        
-//        if nscurrentDate!.compare(nsEndDate!) == .OrderedDescending
-//                {
-//        
-//                     print("over")
-//        
-//                }
-//                else
-//                {
-//        
-//        
-//        
-//                    if nsStartDate?.compare(nscurrentDate!) == .OrderedAscending && nsEndDate?.compare(nscurrentDate!) == .OrderedDescending
-//                    {
-//                         print("could be going")
-//                        return challengeOnGoing
-//        
-//                    }
-//                    else if nsStartDate?.compare(nscurrentDate!) == .OrderedSame || nsEndDate?.compare(nscurrentDate!) == .OrderedSame
-//        
-//                    {
-//                         print("could be going")
-//                        return challengeOnGoing
-//        
-//                    }
-//                    else
-//                    {
-//                        print("not started")
-//                        
-//                        return challengeNotStarted
-//                       
-//                    }
-//                    
-//                    
-//                    
-//                }
-
-
-        ////// old
-        
+        ///// nscurrent date is equal to end date challenge over
         if nscurrentDate.compare(nsEndDate!) == .OrderedDescending
         {
             
-             print("over")
+            print("over")
             
         }
         else
         {
             
-            
+           // start date less than equal to current date and end  date less than equal to current date
             
             if nsStartDate?.compare(nscurrentDate) == .OrderedAscending && nsEndDate?.compare(nscurrentDate) == .OrderedDescending
             {
-                 print("could be going")
+                print("could be going")
                 return challengeOnGoing
-               
+                
             }
+            // start date  equal to current date and end  date equal to current date
+                
             else if nsStartDate?.compare(nscurrentDate) == .OrderedSame || nsEndDate?.compare(nscurrentDate) == .OrderedSame
-
+                
             {
-                 print("could be going")
+                print("could be going")
                 return challengeOnGoing
                 
             }
@@ -530,13 +404,54 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                 print("not started")
                 
                 return challengeNotStarted
-               
+                
             }
             
             
             
         }
         
+
+
+
+        ////// old
+        
+//        if nscurrentDate.compare(nsEndDate!) == .OrderedDescending
+//        {
+//            
+//             print("over")
+//            
+//        }
+//        else
+//        {
+//            
+//            
+//            
+//            if nsStartDate?.compare(nscurrentDate) == .OrderedAscending && nsEndDate?.compare(nscurrentDate) == .OrderedDescending
+//            {
+//                 print("could be going")
+//                return challengeOnGoing
+//               
+//            }
+//            else if nsStartDate?.compare(nscurrentDate) == .OrderedSame || nsEndDate?.compare(nscurrentDate) == .OrderedSame
+//
+//            {
+//                 print("could be going")
+//                return challengeOnGoing
+//                
+//            }
+//            else
+//            {
+//                print("not started")
+//                
+//                return challengeNotStarted
+//               
+//            }
+//            
+//            
+//            
+//        }
+//        
         
         
         return challengeOver

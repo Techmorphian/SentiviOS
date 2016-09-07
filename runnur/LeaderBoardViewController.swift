@@ -8,15 +8,86 @@
 
 import UIKit
 
-class LeaderBoardViewController: UIViewController
+class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
 {
     
     
     
+    @IBOutlet var leaderBoardTableView: UITableView!
     
     
     
   
+    @IBOutlet var myRankView: UIView!
+    
+    
+    
+    @IBOutlet var myRankProfileImagevIew: UIImageView!
+    
+    
+    @IBOutlet var myRankUserNameLabel: UILabel!
+    
+    
+    
+    
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    {
+        
+        return 1
+        
+    }
+    
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        
+        return 10
+        
+    }
+    
+    
+    
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    {
+        
+        
+        
+        
+        let cell:LeaderBoardWinnerTableViewCell = tableView.dequeueReusableCellWithIdentifier("LeaderBoardWinnerTableViewCell")as!
+        
+        LeaderBoardWinnerTableViewCell
+        
+        
+        
+        
+        
+        return cell
+        
+        
+    }
+    
+//    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+//    
+//    {
+//        <#code#>
+//    }
+//    
+//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+//    
+//    {
+//        <#code#>
+//    }
+//    
+    
+
+    
+    
+    
+    
+    
+    
     
     
     
@@ -77,6 +148,16 @@ class LeaderBoardViewController: UIViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        
+        leaderBoardTableView.dataSource = self;
+        
+        leaderBoardTableView.delegate = self;
+        
+        leaderBoardTableView.reloadData();
+        
+        
+        leaderBoardTableView.tableFooterView = UIView()
         
         
         //// push notification

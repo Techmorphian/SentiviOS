@@ -49,6 +49,8 @@
 		449A10A71D62E8C800E91536 /* SplitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449A10A61D62E8C800E91536 /* SplitsViewController.swift */; };
 		449A10A91D62E92900E91536 /* TabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449A10A81D62E92900E91536 /* TabsViewController.swift */; };
 		44BBF3771D5D96E2006618EF /* NSObject+MTNativeFacebookLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BBF3761D5D96E2006618EF /* NSObject+MTNativeFacebookLogin.m */; };
+		470045E41D8049FB0011805A /* LeaderBoardWinnerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470045E31D8049FB0011805A /* LeaderBoardWinnerTableViewCell.swift */; };
+		470045E61D804A610011805A /* LeaderBoardUsersNotWinnersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470045E51D804A610011805A /* LeaderBoardUsersNotWinnersTableViewCell.swift */; };
 		470261761D40F83D005261ED /* ChallengeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470261751D40F83D005261ED /* ChallengeModel.swift */; };
 		470728BA1D2BD9BE002B86E1 /* phoneBookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470728B91D2BD9BE002B86E1 /* phoneBookModel.swift */; };
 		470B1B5E1D278B6200E3B5B0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470B1B5D1D278B6200E3B5B0 /* HomeViewController.swift */; };
@@ -174,6 +176,8 @@
 		44BBF3751D5D96D4006618EF /* NSObject+MTNativeFacebookLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MTNativeFacebookLogin.h"; sourceTree = "<group>"; };
 		44BBF3761D5D96E2006618EF /* NSObject+MTNativeFacebookLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MTNativeFacebookLogin.m"; sourceTree = "<group>"; };
 		44C7967C1D5EF65D000118C5 /* Project-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Project-Prefix.pch"; sourceTree = "<group>"; };
+		470045E31D8049FB0011805A /* LeaderBoardWinnerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderBoardWinnerTableViewCell.swift; sourceTree = "<group>"; };
+		470045E51D804A610011805A /* LeaderBoardUsersNotWinnersTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderBoardUsersNotWinnersTableViewCell.swift; sourceTree = "<group>"; };
 		470261751D40F83D005261ED /* ChallengeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengeModel.swift; sourceTree = "<group>"; };
 		470728B91D2BD9BE002B86E1 /* phoneBookModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = phoneBookModel.swift; sourceTree = "<group>"; };
 		470B1B5D1D278B6200E3B5B0 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -332,6 +336,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		470045E21D8040D50011805A /* LeaderBoard */ = {
+			isa = PBXGroup;
+			children = (
+				47C6AFF91D5AF12700410DAE /* LeaderBoardViewController.swift */,
+				470045E31D8049FB0011805A /* LeaderBoardWinnerTableViewCell.swift */,
+				470045E51D804A610011805A /* LeaderBoardUsersNotWinnersTableViewCell.swift */,
+			);
+			name = LeaderBoard;
+			sourceTree = "<group>";
+		};
 		470CF8711D24DC370001B3BC = {
 			isa = PBXGroup;
 			children = (
@@ -353,6 +367,7 @@
 		470CF87C1D24DC370001B3BC /* runnur */ = {
 			isa = PBXGroup;
 			children = (
+				470045E21D8040D50011805A /* LeaderBoard */,
 				4785E0701D744A890003ABC0 /* Requests */,
 				47C6B0041D5AF5E300410DAE /* ViewActivity */,
 				47EFFBA81D5849D000F2A2D7 /* ViewCauseFitChallenge */,
@@ -594,7 +609,6 @@
 		47EFFBA81D5849D000F2A2D7 /* ViewCauseFitChallenge */ = {
 			isa = PBXGroup;
 			children = (
-				47C6AFF91D5AF12700410DAE /* LeaderBoardViewController.swift */,
 				47EFFBAB1D58822A00F2A2D7 /* CauseFirSummaryViewController.swift */,
 			);
 			name = ViewCauseFitChallenge;
@@ -850,6 +864,7 @@
 				473D0D771D49E770004DDC07 /* HeartHistroryViewController.swift in Sources */,
 				473D0D881D49E8C6004DDC07 /* ActiveChallengesViewController.swift in Sources */,
 				473D0D901D49E927004DDC07 /* LoginScreenViewController.swift in Sources */,
+				470045E61D804A610011805A /* LeaderBoardUsersNotWinnersTableViewCell.swift in Sources */,
 				473D0D841D49E87E004DDC07 /* animation1.swift in Sources */,
 				4785E06F1D744A7E0003ABC0 /* RequestsViewController.swift in Sources */,
 				47B8A8F81D45E2E100BACB83 /* ViewGroupFitViewController.swift in Sources */,
@@ -889,6 +904,7 @@
 				47CF1FC11D4CC5620083B1A7 /* challengeFilterXIB.swift in Sources */,
 				47FED2501D2E84D9006CAE8A /* ChallengesViewController.swift in Sources */,
 				470CF89F1D25079C0001B3BC /* AddViaGoogleViewController.swift in Sources */,
+				470045E41D8049FB0011805A /* LeaderBoardWinnerTableViewCell.swift in Sources */,
 				4731FC8E1D2A2E4300E860B0 /* GroupFitCellTableViewCell.swift in Sources */,
 				47C6AFFC1D5AF58800410DAE /* userActivityTableViewCell.swift in Sources */,
 				47B8A8FA1D45E31600BACB83 /* SummaryViewController.swift in Sources */,

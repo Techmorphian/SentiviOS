@@ -102,20 +102,18 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             cell.naviImageViews.image = UIImage(named: sectionOneImages[indexPath.row])
             
             
-            
-            
-            if indexPath.row == 0
+            if indexPath.row == 0   /// activity
             {
             
                  cell.countLabel.hidden = true;
             }
-            if indexPath.row == 1
+            if indexPath.row == 1 /// challenge
             {
                  cell.countLabel.hidden = true;
             }
             
             
-            if indexPath.row == 2
+            if indexPath.row == 2 /// requests
             {
                 
                 
@@ -127,7 +125,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 cell.countLabel.text = NSUserDefaults.standardUserDefaults().stringForKey("badgeCount")
                     
                     print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCount"))
-               // cell.countLabel.text = "00"
+             
                 }
                 
                 else
@@ -147,10 +145,17 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             }
             
             
-            if indexPath.row == 3
+            if indexPath.row == 3 // friends
             {
                 cell.countLabel.hidden = true;
             }
+            
+            
+            if indexPath.row == 4 // routes
+            {
+                cell.countLabel.hidden = true;
+            }
+
             
             
         }
@@ -159,21 +164,21 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             cell.namesLabel.text = sectionTwo[indexPath.row]
             cell.naviImageViews.image = UIImage(named: sectionTwoImages[indexPath.row])
             
-            if indexPath.row == 0
+            if indexPath.row == 0 /// history
             {
                  cell.countLabel.hidden = true;
             }
             
-            if indexPath.row == 1
+            if indexPath.row == 1  // statistics
             {
                 cell.countLabel.hidden = true;
             }
-            if indexPath.row == 2
+            if indexPath.row == 2 // heart rate
             {
                 cell.countLabel.hidden = true;
             }
             
-            if indexPath.row == 3
+            if indexPath.row == 3 /// winnings
             {
                
                 cell.countLabel.hidden = false;
