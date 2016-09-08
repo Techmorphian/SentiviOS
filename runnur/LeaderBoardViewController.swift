@@ -8,8 +8,30 @@
 
 import UIKit
 
-class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
+class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,NSURLSessionDelegate,NSURLSessionDataDelegate
 {
+    
+    
+    
+    var noInternet = NoInternetViewController()
+    
+    var noResult = NoResultViewController()
+    
+    
+    
+    var defaultModel = LeaderBoardModel()
+    
+    var ArrayModel = LeaderBoardModel()
+    
+    var WinnerAndUsersArray = [LeaderBoardModel]()
+    
+    
+    
+    //////////////////////////////
+    var WinnerModel = LeaderBoardModel()
+    
+    var usersModel = LeaderBoardModel()
+    
     
     
     
@@ -17,7 +39,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
     
     
     
-  
+    
     @IBOutlet var myRankView: UIView!
     
     
@@ -29,7 +51,15 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
     
     
     
+    @IBOutlet var distance: UILabel!
     
+    @IBOutlet var runCountLabel: UILabel!
+    
+    
+    @IBOutlet var rank: UILabel!
+    
+    
+    @IBOutlet var distanceImageView: UIImageView!
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
@@ -42,7 +72,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         
-        return 10
+        return WinnerAndUsersArray.count
         
     }
     
@@ -56,9 +86,265 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
         
         
         let cell:LeaderBoardWinnerTableViewCell = tableView.dequeueReusableCellWithIdentifier("LeaderBoardWinnerTableViewCell")as!
-        
+            
         LeaderBoardWinnerTableViewCell
         
+        
+        //      let cell:LeaderBoardUsersNotWinnersTableViewCell = tableView.dequeueReusableCellWithIdentifier("LeaderBoardUsersNotWinnersTableViewCell")as!
+        //LeaderBoardUsersNotWinnersTableViewCell
+        
+        print(indexPath.row)
+        
+        
+        if  WinnerAndUsersArray[indexPath.row].array.count == 1
+        {
+            
+            cell.SecWinnerView.hidden = true
+            
+            cell.ThirdWinnerView.hidden = true
+            
+            cell.FisrtWinnerImageView.layer.cornerRadius = cell.FisrtWinnerImageView.frame.size.width / 2;
+            cell.FisrtWinnerImageView.clipsToBounds = true;
+            cell.FisrtWinnerImageView.layer.borderWidth = 1
+            cell.FisrtWinnerImageView.layer.borderColor = colorCode.GrayColor.CGColor
+            
+            
+            cell.FirstWinnerName.text =  WinnerAndUsersArray[indexPath.row].array[0].FirstName + " " + WinnerAndUsersArray[indexPath.row].array[0].LastName
+            
+            
+            if  WinnerAndUsersArray[indexPath.row].array[0].PhotoUrl != ""
+            {
+                
+                cell.FisrtWinnerImageView.kf_setImageWithURL(NSURL(string:  WinnerAndUsersArray[indexPath.row].array[0].PhotoUrl)!, placeholderImage: UIImage(named:"im_default_profile"))
+                
+            }
+                
+            else
+            {
+                cell.FisrtWinnerImageView.image = UIImage(named:"im_default_profile")
+                
+            }
+            
+            cell.FirstWinnerTotalActivityLabel.text =  "Total Activity" + " " + WinnerAndUsersArray[indexPath.row].array[0].runCount
+            
+            
+            cell.FirstWinnerDistance.text = WinnerAndUsersArray[indexPath.row].array[0].value
+            
+            
+            
+            
+        }
+        
+        
+        if  WinnerAndUsersArray[indexPath.row].array.count == 2
+        {
+            
+            
+           
+            
+            cell.ThirdWinnerView.hidden = true
+            
+            cell.FisrtWinnerImageView.layer.cornerRadius = cell.FisrtWinnerImageView.frame.size.width / 2;
+            cell.FisrtWinnerImageView.clipsToBounds = true;
+            cell.FisrtWinnerImageView.layer.borderWidth = 1
+            cell.FisrtWinnerImageView.layer.borderColor = colorCode.GrayColor.CGColor
+            
+            
+            cell.FirstWinnerName.text =  WinnerAndUsersArray[indexPath.row].array[0].FirstName + " " + WinnerAndUsersArray[indexPath.row].array[0].LastName
+            
+            
+            if  WinnerAndUsersArray[indexPath.row].array[0].PhotoUrl != ""
+            {
+                
+                cell.FisrtWinnerImageView.kf_setImageWithURL(NSURL(string:  WinnerAndUsersArray[indexPath.row].array[0].PhotoUrl)!, placeholderImage: UIImage(named:"im_default_profile"))
+                
+            }
+                
+            else
+            {
+                cell.FisrtWinnerImageView.image = UIImage(named:"im_default_profile")
+                
+            }
+            
+            cell.FirstWinnerTotalActivityLabel.text = "Total Activity" + " " + WinnerAndUsersArray[indexPath.row].array[0].runCount
+            
+            
+            cell.FirstWinnerDistance.text = WinnerAndUsersArray[indexPath.row].array[0].value
+            
+            
+            
+            ///////////////////////////////
+            
+            cell.SecWinnerImageView.layer.cornerRadius = cell.SecWinnerImageView.frame.size.width / 2;
+            cell.SecWinnerImageView.clipsToBounds = true;
+            cell.SecWinnerImageView.layer.borderWidth = 1
+            cell.SecWinnerImageView.layer.borderColor = colorCode.GrayColor.CGColor
+            
+            
+            cell.SecWinnerName.text =  WinnerAndUsersArray[indexPath.row].array[1].FirstName + " " + WinnerAndUsersArray[indexPath.row].array[1].LastName
+            
+            
+            if  WinnerAndUsersArray[indexPath.row].array[1].PhotoUrl != ""
+            {
+                
+                cell.SecWinnerImageView.kf_setImageWithURL(NSURL(string:  WinnerAndUsersArray[indexPath.row].array[1].PhotoUrl)!, placeholderImage: UIImage(named:"im_default_profile"))
+                
+            }
+                
+            else
+            {
+                cell.SecWinnerImageView.image = UIImage(named:"im_default_profile")
+                
+            }
+            
+            cell.secWinnerTotalActivityLabel.text = "Total Activity" + " " +  WinnerAndUsersArray[indexPath.row].array[1].runCount
+            
+            
+            cell.SecWinnerDistance.text = WinnerAndUsersArray[indexPath.row].array[1].value
+            
+            
+            
+        }
+        
+        
+        if  WinnerAndUsersArray[indexPath.row].array.count == 3
+        {
+            
+            
+            
+            cell.FisrtWinnerImageView.layer.cornerRadius = cell.FisrtWinnerImageView.frame.size.width / 2;
+            cell.FisrtWinnerImageView.clipsToBounds = true;
+            cell.FisrtWinnerImageView.layer.borderWidth = 1
+            cell.FisrtWinnerImageView.layer.borderColor = colorCode.GrayColor.CGColor
+            
+            
+            cell.FirstWinnerName.text =  WinnerAndUsersArray[indexPath.row].array[0].FirstName + " " + WinnerAndUsersArray[indexPath.row].array[0].LastName
+            
+            
+            if  WinnerAndUsersArray[indexPath.row].array[0].PhotoUrl != ""
+            {
+                
+                cell.FisrtWinnerImageView.kf_setImageWithURL(NSURL(string:  WinnerAndUsersArray[indexPath.row].array[0].PhotoUrl)!, placeholderImage: UIImage(named:"im_default_profile"))
+                
+            }
+                
+            else
+            {
+                cell.FisrtWinnerImageView.image = UIImage(named:"im_default_profile")
+                
+            }
+            
+            cell.FirstWinnerTotalActivityLabel.text = "Total Activity" + " " + WinnerAndUsersArray[indexPath.row].array[0].runCount
+            
+            
+            cell.FirstWinnerDistance.text = WinnerAndUsersArray[indexPath.row].array[0].value
+            
+            
+            
+            ///////////////////////////////
+            
+            cell.SecWinnerImageView.layer.cornerRadius = cell.SecWinnerImageView.frame.size.width / 2;
+            cell.SecWinnerImageView.clipsToBounds = true;
+            cell.SecWinnerImageView.layer.borderWidth = 1
+            cell.SecWinnerImageView.layer.borderColor = colorCode.GrayColor.CGColor
+            
+            
+            cell.SecWinnerName.text =  WinnerAndUsersArray[indexPath.row].array[1].FirstName + " " + WinnerAndUsersArray[indexPath.row].array[1].LastName
+            
+            
+            if  WinnerAndUsersArray[indexPath.row].array[1].PhotoUrl != ""
+            {
+                
+                cell.SecWinnerImageView.kf_setImageWithURL(NSURL(string:  WinnerAndUsersArray[indexPath.row].array[1].PhotoUrl)!, placeholderImage: UIImage(named:"im_default_profile"))
+                
+            }
+                
+            else
+            {
+                cell.SecWinnerImageView.image = UIImage(named:"im_default_profile")
+                
+            }
+            
+            cell.secWinnerTotalActivityLabel.text =  "Total Activity" + " " + WinnerAndUsersArray[indexPath.row].array[1].runCount
+            
+            
+            cell.SecWinnerDistance.text = WinnerAndUsersArray[indexPath.row].array[1].value
+            
+            
+            
+            ///////////////////////////////
+            
+            cell.ThirdWinnerImageView.layer.cornerRadius = cell.ThirdWinnerImageView.frame.size.width / 2;
+            cell.ThirdWinnerImageView.clipsToBounds = true;
+            cell.ThirdWinnerImageView.layer.borderWidth = 1
+            cell.ThirdWinnerImageView.layer.borderColor = colorCode.GrayColor.CGColor
+            
+            
+            cell.ThirdWinnerName.text =  WinnerAndUsersArray[indexPath.row].array[3].FirstName + " " + WinnerAndUsersArray[indexPath.row].array[3].LastName
+            
+            
+            if  WinnerAndUsersArray[indexPath.row].array[3].PhotoUrl != ""
+            {
+                
+                cell.ThirdWinnerImageView.kf_setImageWithURL(NSURL(string:  WinnerAndUsersArray[indexPath.row].array[3].PhotoUrl)!, placeholderImage: UIImage(named:"im_default_profile"))
+                
+            }
+                
+            else
+            {
+                cell.ThirdWinnerImageView.image = UIImage(named:"im_default_profile")
+                
+            }
+            
+            cell.ThirdWinnerTotalActivityLabel.text = "Total Activity" + " " + WinnerAndUsersArray[indexPath.row].array[3].runCount
+            
+            
+            cell.ThirdWinnerDistance.text = WinnerAndUsersArray[indexPath.row].array[3].value
+            
+            
+        }
+        
+        if indexPath.row > 0
+            
+        {
+            
+            let cell:LeaderBoardUsersNotWinnersTableViewCell = tableView.dequeueReusableCellWithIdentifier("LeaderBoardUsersNotWinnersTableViewCell")as!
+            LeaderBoardUsersNotWinnersTableViewCell
+            
+            cell.ProfileImageView.layer.cornerRadius = cell.ProfileImageView.frame.size.width / 2;
+            cell.ProfileImageView.clipsToBounds = true;
+            cell.ProfileImageView.layer.borderWidth = 1
+            cell.ProfileImageView.layer.borderColor = colorCode.GrayColor.CGColor
+            
+            
+            cell.Names.text =  WinnerAndUsersArray[indexPath.row].FirstName + " " + WinnerAndUsersArray[indexPath.row].LastName
+            
+            
+            if  WinnerAndUsersArray[indexPath.row].PhotoUrl != ""
+            {
+                
+                cell.ProfileImageView.kf_setImageWithURL(NSURL(string:  WinnerAndUsersArray[indexPath.row].PhotoUrl)!, placeholderImage: UIImage(named:"im_default_profile"))
+                
+            }
+                
+            else
+            {
+                cell.ProfileImageView.image = UIImage(named:"im_default_profile")
+                
+            }
+            
+            cell.runCount.text =  WinnerAndUsersArray[indexPath.row].runCount
+            
+            
+            cell.distance.text = WinnerAndUsersArray[indexPath.row].value
+            
+            
+            
+            
+            
+            
+            
+        }
         
         
         
@@ -68,20 +354,1185 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
         
     }
     
-//    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
-//    
-//    {
-//        <#code#>
-//    }
-//    
-//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
-//    
-//    {
-//        <#code#>
-//    }
-//    
+    //    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    //
+    //    {
+    //        <#code#>
+    //    }
+    //
+    //    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    //
+    //    {
+    //        <#code#>
+    //    }
+    //
     
+    
+    
+    
+    
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    let loadingView: UIView = UIView()
+    func showActivityIndicatory()
+    {
+        loadingView.frame = CGRectMake(0, 0, 60, 50)
+        loadingView.center = view.center
+        
+        loadingView.backgroundColor = UIColor.grayColor()
+        loadingView.alpha = 0.6
+        loadingView.clipsToBounds = true
+        loadingView.layer.cornerRadius = 10
+        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+                                               loadingView.frame.size.height / 2);
+        loadingView.addSubview(activityIndicator)
+        self.view.addSubview(loadingView)
+        activityIndicator.startAnimating()
+    }
+    
+    
+    func leaderboard()
+        
+    {
+        
+        showActivityIndicatory()
+        
+        let myurl = NSURL(string: Url.leaderboard)
+        
+        let request = NSMutableURLRequest(URL: myurl!)
+        
+        request.HTTPMethod = "POST"
+        
+        request.timeoutInterval = 20.0;
+        
+        
+        
+        let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
+        
+        let ChallengeId = NSUserDefaults.standardUserDefaults().stringForKey("challengeId")
+        
+        
+        
+        let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
+        
+        
+        
+        print(postString)
+        
+        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+        
+        let session = NSURLSession(configuration: config, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
+        
+        let downloadTask = session.dataTaskWithRequest(request);
+        
+        downloadTask.resume()
+        
+        
+        
+    }
+    
+    var  userId =  [String]()
+    var  FirstName =  [String]()
+    var  LastName =  [String]()
+    var PhotoUrl =  [String]()
+    var runcount =  [String]()
+    var activityType =  [String]()
+    var parameters =  [String]()
+    var averageSpeed =  [String]()
+    var distanceCovered =  [String]()
+    var unit =  [String]()
+    
+    var value =  [String]()
+    var calories =  [String]()
+    
+    //MARK:- NSURLSession delegate methods
+    
+    func URLSessionDidFinishEventsForBackgroundURLSession(session: NSURLSession)
+    {
+        
+        
+        
+    }
+    
+    func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, willCacheResponse proposedResponse: NSCachedURLResponse, completionHandler: (NSCachedURLResponse?) -> Void)
+    {
+        
+        let dataString = String(data: self.mutableData, encoding: NSUTF8StringEncoding)
+        
+        
+        
+        print(dataString!)
+        
+        // MARK:-  IF DATA TASK =  LEADERBOARD
+        
+        if dataTask.currentRequest?.URL! == NSURL(string: Url.leaderboard)
+            
+            
+        {
+            
+            do
+                
+            {
+                
+                let json = try NSJSONSerialization.JSONObjectWithData(self.mutableData, options: .MutableContainers) as? NSDictionary
+                
+                if  let parseJSON = json
+                {
+                    
+                    let status = parseJSON["status"] as? String
+                    let msg=parseJSON["message"] as? String
+                    let userStatus=parseJSON["userStatus"] as? String
+                    print(userStatus)
+                    
+                    //MARK: - STATUS = SUCCESS
+                    
+                    if(status=="Success")
+                    {
+                        
+                        
+                        self.RemoveNoInternet();
+                        
+                        self.RemoveNoResult();
+                        
+                        self.activityIndicator.stopAnimating();
+                        
+                        self.loadingView.removeFromSuperview();
+                        
+                        
+                        if  let elements: AnyObject = json!["response"]
+                        {
+                            
+                            print(elements.count)
+                            
+                            defaultModel=LeaderBoardModel()
+                            
+                            for i in 0 ..< elements.count
+                            {
+                                
+                                
+                                ArrayModel=LeaderBoardModel()
+                                
+                                if elements.count == 1
+                                {
+                                    
+                                    
+                                    let userId = elements[i]["userId"] as! String
+                                    
+                                    if userId != ""
+                                    {
+                                        
+                                        self.ArrayModel.userId = userId
+                                        
+                                    }
+                                    
+                                    
+                                    if userId ==  NSUserDefaults.standardUserDefaults().stringForKey("userId")
+                                    {
+                                        
+                                        
+                                        let FirstName = elements[i]["FirstName"] as! String
+                                        
+                                        let LastName = elements[i]["LastName"] as! String
+                                        let value = elements[i]["value"] as! String
+                                        
+                                        let runCount = elements[i]["runCount"] as! String
+                                        
+                                        let parameters = elements[i]["parameters"] as! String
+                                        
+                                        let PhotoUrl = elements[i]["PhotoUrl"] as! String
+                                        
+                                        let unit = elements[i]["unit"] as! String
+                                        
+                                        myRankProfileImagevIew.layer.cornerRadius = myRankProfileImagevIew.frame.size.width / 2;
+                                        myRankProfileImagevIew.clipsToBounds = true;
+                                        myRankProfileImagevIew.layer.borderWidth = 1
+                                        myRankProfileImagevIew.layer.borderColor = colorCode.GrayColor.CGColor
+                                        
+                                        
+                                        
+                                        if PhotoUrl != ""
+                                        {
+                                            
+                                            myRankProfileImagevIew.kf_setImageWithURL(NSURL(string: PhotoUrl)!, placeholderImage: UIImage(named:"im_default_profile"))
+                                            
+                                        }
+                                            
+                                        else
+                                        {
+                                            myRankProfileImagevIew.image = UIImage(named:"im_default_profile")
+                                            
+                                        }
+                                        
+                                        
+                                        myRankUserNameLabel.text = FirstName + " " + LastName
+                                        
+                                        distance.text = value + unit
+                                        
+                                        runCountLabel.text = runCount
+                                        
+                                        if parameters == "1"
+                                        {
+                                            
+                                            distanceImageView.image = UIImage(named: "ic_distance")
+                                            
+                                            
+                                        }
+                                        if parameters == "2"
+                                        {
+                                            
+                                            
+                                            distanceImageView.image = UIImage(named: "ic_time")
+                                            
+                                        }
+                                        if parameters == "3"
+                                        {
+                                            distanceImageView.image = UIImage(named: "ic_calorie")
+                                            
+                                        }
+                                        
+                                        
+                                        
+                                    }
+                                    
+                                     ///////////////////////////////////////
+                                    
+                                    let FirstName = elements[i]["FirstName"] as! String
+                                    
+                                    if FirstName != ""
+                                    {
+                                        
+                                        self.ArrayModel.FirstName = FirstName
+                                        
+                                    }
+                                    
+                                    
+                                    let LastName = elements[i]["LastName"] as! String
+                                    
+                                    if LastName != ""
+                                    {
+                                        
+                                        self.ArrayModel.LastName = LastName
+                                        
+                                    }
+                                    
+                                    let PhotoUrl = elements[i]["PhotoUrl"] as! String
+                                    
+                                    if PhotoUrl != ""
+                                    {
+                                        
+                                        self.ArrayModel.PhotoUrl = PhotoUrl
+                                        
+                                    }
+                                    
+                                    
+                                    let runCount = elements[i]["runCount"] as! String
+                                    
+                                    if runCount != ""
+                                    {
+                                        
+                                        self.ArrayModel.runCount = runCount
+                                        
+                                    }
+                                    
+                                    let activityType = elements[i]["activityType"] as! String
+                                    
+                                    if activityType != ""
+                                    {
+                                        
+                                        self.ArrayModel.activityType = activityType
+                                        
+                                    }
+                                    
+                                    
+                                    let parameters = elements[i]["parameters"] as! String
+                                    
+                                    if parameters != ""
+                                    {
+                                        
+                                        self.ArrayModel.parameters = parameters
+                                        
+                                    }
+                                    
+                                    let value = elements[i]["value"] as! String
+                                    
+                                    if value != ""
+                                    {
+                                        
+                                        self.ArrayModel.value = value
+                                        
+                                    }
+                                    
+                                    let averageSpeed = elements[i]["averageSpeed"] as! String
+                                    
+                                    if averageSpeed != ""
+                                    {
+                                        
+                                        self.ArrayModel.averageSpeed = averageSpeed
+                                        
+                                    }
+                                    
+                                    let unit = elements[i]["unit"] as! String
+                                    
+                                    if unit != ""
+                                    {
+                                        
+                                        self.ArrayModel.unit = unit
+                                        
+                                        
+                                    }
+                                    
+                                    
+                                    defaultModel.array.append(ArrayModel)
+                                    
+                                    WinnerAndUsersArray.append(defaultModel)
+                                    
+                                    
+                                    
+                                } /// if element 1 close
+                                
+                                
+                                if elements.count == 2
+                                {
+                                    
+                                    let userId = elements[i]["userId"] as! String
+                                    
+                                    if userId != ""
+                                    {
+                                        
+                                        self.ArrayModel.userId = userId
+                                        
+                                    }
+                                    
+                                    if userId ==  NSUserDefaults.standardUserDefaults().stringForKey("userId")
+                                                {
+                                    
+                                    
+                                                    let FirstName = elements[i]["FirstName"] as! String
+                                    
+                                                    let LastName = elements[i]["LastName"] as! String
+                                                    let value = elements[i]["value"] as! String
+                                    
+                                                    let runCount = elements[i]["runCount"] as! String
+                                    
+                                                    let parameters = elements[i]["parameters"] as! String
+                                    
+                                                    let PhotoUrl = elements[i]["PhotoUrl"] as! String
+                                                    
+                                                    let unit = elements[i]["unit"] as! String
+                                    
+                                                    myRankProfileImagevIew.layer.cornerRadius = myRankProfileImagevIew.frame.size.width / 2;
+                                                    myRankProfileImagevIew.clipsToBounds = true;
+                                                    myRankProfileImagevIew.layer.borderWidth = 1
+                                                    myRankProfileImagevIew.layer.borderColor = colorCode.GrayColor.CGColor
+                                                    
+                                                   
+                                    
+                                                    if PhotoUrl != ""
+                                                    {
+                                    
+                                                        myRankProfileImagevIew.kf_setImageWithURL(NSURL(string: PhotoUrl)!, placeholderImage: UIImage(named:"im_default_profile"))
+                                    
+                                                    }
+                                    
+                                                    else
+                                                    {
+                                                        myRankProfileImagevIew.image = UIImage(named:"im_default_profile")
+                                    
+                                                    }
+                                    
+                                    
+                                                    myRankUserNameLabel.text = FirstName + " " + LastName
+                                    
+                                                    distance.text = value + unit
+                                                    
+                                                    runCountLabel.text = runCount
+                                    
+                                                    if parameters == "1"
+                                                    {
+                                    
+                                                        distanceImageView.image = UIImage(named: "ic_distance")
+                                    
+                                    
+                                                    }
+                                                    if parameters == "2"
+                                                    {
+                                    
+                                    
+                                                        distanceImageView.image = UIImage(named: "ic_time")
+                                    
+                                                    }
+                                                    if parameters == "3"
+                                                    {
+                                                        distanceImageView.image = UIImage(named: "ic_calorie")
+                                    
+                                                    }
+                                    
+                                    
+                                    
+                                        }
 
+                                    
+                                    
+                                    let FirstName = elements[i]["FirstName"] as! String
+                                    
+                                    if FirstName != ""
+                                    {
+                                        
+                                        self.ArrayModel.FirstName = FirstName
+                                        
+                                    }
+                                    
+                                    
+                                    let LastName = elements[i]["LastName"] as! String
+                                    
+                                    if LastName != ""
+                                    {
+                                        
+                                        self.ArrayModel.LastName = LastName
+                                        
+                                    }
+                                    
+                                    let PhotoUrl = elements[i]["PhotoUrl"] as! String
+                                    
+                                    if PhotoUrl != ""
+                                    {
+                                        
+                                        self.ArrayModel.PhotoUrl = PhotoUrl
+                                        
+                                    }
+                                    
+                                    
+                                    let runCount = elements[i]["runCount"] as! String
+                                    
+                                    if runCount != ""
+                                    {
+                                        
+                                        self.ArrayModel.runCount = runCount
+                                        
+                                    }
+                                    
+                                    let activityType = elements[i]["activityType"] as! String
+                                    
+                                    if activityType != ""
+                                    {
+                                        
+                                        self.ArrayModel.activityType = activityType
+                                        
+                                    }
+                                    
+                                    
+                                    let parameters = elements[i]["parameters"] as! String
+                                    
+                                    if parameters != ""
+                                    {
+                                        
+                                        self.ArrayModel.parameters = parameters
+                                        
+                                    }
+                                    
+                                    let value = elements[i]["value"] as! String
+                                    
+                                    if value != ""
+                                    {
+                                        
+                                        self.ArrayModel.value = value
+                                        
+                                    }
+                                    
+                                    let averageSpeed = elements[i]["averageSpeed"] as! String
+                                    
+                                    if averageSpeed != ""
+                                    {
+                                        
+                                        self.ArrayModel.averageSpeed = averageSpeed
+                                        
+                                    }
+                                    
+                                    let unit = elements[i]["unit"] as! String
+                                    
+                                    if unit != ""
+                                    {
+                                        
+                                        self.ArrayModel.unit = unit
+                                        
+                                        
+                                    }
+                                    
+                                    
+                                    defaultModel.array.append(ArrayModel)
+                                    
+                                    if i == 1
+                                    {
+                                        WinnerAndUsersArray.append(defaultModel);
+                                        
+                                        
+                                        
+                                        
+                                    }
+                                    //  print(WinnerAndUsersArray.count)
+                                    
+                                }
+                                if elements.count == 3
+                                {
+                                    
+                                    
+                                    let userId = elements[i]["userId"] as! String
+                                    
+                                    if userId != ""
+                                    {
+                                        
+                                        self.ArrayModel.userId = userId
+                                        
+                                    }
+                                    
+                                    
+                                    if userId ==  NSUserDefaults.standardUserDefaults().stringForKey("userId")
+                                    {
+                                        
+                                        
+                                        let FirstName = elements[i]["FirstName"] as! String
+                                        
+                                        let LastName = elements[i]["LastName"] as! String
+                                        let value = elements[i]["value"] as! String
+                                        
+                                        let runCount = elements[i]["runCount"] as! String
+                                        
+                                        let parameters = elements[i]["parameters"] as! String
+                                        
+                                        let PhotoUrl = elements[i]["PhotoUrl"] as! String
+                                        
+                                        let unit = elements[i]["unit"] as! String
+                                        
+                                        myRankProfileImagevIew.layer.cornerRadius = myRankProfileImagevIew.frame.size.width / 2;
+                                        myRankProfileImagevIew.clipsToBounds = true;
+                                        myRankProfileImagevIew.layer.borderWidth = 1
+                                        myRankProfileImagevIew.layer.borderColor = colorCode.GrayColor.CGColor
+                                        
+                                        
+                                        
+                                        if PhotoUrl != ""
+                                        {
+                                            
+                                            myRankProfileImagevIew.kf_setImageWithURL(NSURL(string: PhotoUrl)!, placeholderImage: UIImage(named:"im_default_profile"))
+                                            
+                                        }
+                                            
+                                        else
+                                        {
+                                            myRankProfileImagevIew.image = UIImage(named:"im_default_profile")
+                                            
+                                        }
+                                        
+                                        
+                                        myRankUserNameLabel.text = FirstName + " " + LastName
+                                        
+                                        distance.text = value + unit
+                                        
+                                        runCountLabel.text = runCount
+                                        
+                                        if parameters == "1"
+                                        {
+                                            
+                                            distanceImageView.image = UIImage(named: "ic_distance")
+                                            
+                                            
+                                        }
+                                        if parameters == "2"
+                                        {
+                                            
+                                            
+                                            distanceImageView.image = UIImage(named: "ic_time")
+                                            
+                                        }
+                                        if parameters == "3"
+                                        {
+                                            distanceImageView.image = UIImage(named: "ic_calorie")
+                                            
+                                        }
+                                        
+                                        
+                                        
+                                    }
+                                    
+                                    ///////////////////////////////////////
+
+                                    
+                                    
+                                    let FirstName = elements[i]["FirstName"] as! String
+                                    
+                                    if FirstName != ""
+                                    {
+                                        
+                                        self.ArrayModel.FirstName = FirstName
+                                        
+                                    }
+                                    
+                                    
+                                    let LastName = elements[i]["LastName"] as! String
+                                    
+                                    if LastName != ""
+                                    {
+                                        
+                                        self.ArrayModel.LastName = LastName
+                                        
+                                    }
+                                    
+                                    let PhotoUrl = elements[i]["PhotoUrl"] as! String
+                                    
+                                    if PhotoUrl != ""
+                                    {
+                                        
+                                        self.ArrayModel.PhotoUrl = PhotoUrl
+                                        
+                                    }
+                                    
+                                    
+                                    let runCount = elements[i]["runCount"] as! String
+                                    
+                                    if runCount != ""
+                                    {
+                                        
+                                        self.ArrayModel.runCount = runCount
+                                        
+                                    }
+                                    
+                                    let activityType = elements[i]["activityType"] as! String
+                                    
+                                    if activityType != ""
+                                    {
+                                        
+                                        self.ArrayModel.activityType = activityType
+                                        
+                                    }
+                                    
+                                    
+                                    let parameters = elements[i]["parameters"] as! String
+                                    
+                                    if parameters != ""
+                                    {
+                                        
+                                        self.ArrayModel.parameters = parameters
+                                        
+                                    }
+                                    
+                                    let value = elements[i]["value"] as! String
+                                    
+                                    if value != ""
+                                    {
+                                        
+                                        self.ArrayModel.value = value
+                                        
+                                    }
+                                    
+                                    let averageSpeed = elements[i]["averageSpeed"] as! String
+                                    
+                                    if averageSpeed != ""
+                                    {
+                                        
+                                        self.ArrayModel.averageSpeed = averageSpeed
+                                        
+                                    }
+                                    
+                                    let unit = elements[i]["unit"] as! String
+                                    
+                                    if unit != ""
+                                    {
+                                        
+                                        self.ArrayModel.unit = unit
+                                        
+                                        
+                                    }
+                                    
+                                    defaultModel.array.append(ArrayModel)
+                                    if i == 2
+                                    {
+                                        WinnerAndUsersArray.append(defaultModel);
+                                    }
+                                    
+                                }
+                                if elements.count > 3
+                                    
+                                {
+                                    
+                                    
+                                    let userId = elements[i]["userId"] as! String
+                                    
+                                    if userId != ""
+                                    {
+                                        
+                                        self.defaultModel.userId = userId
+                                        
+                                    }
+                                    
+                                    
+                                    if userId ==  NSUserDefaults.standardUserDefaults().stringForKey("userId")
+                                    {
+                                        
+                                        
+                                        let FirstName = elements[i]["FirstName"] as! String
+                                        
+                                        let LastName = elements[i]["LastName"] as! String
+                                        let value = elements[i]["value"] as! String
+                                        
+                                        let runCount = elements[i]["runCount"] as! String
+                                        
+                                        let parameters = elements[i]["parameters"] as! String
+                                        
+                                        let PhotoUrl = elements[i]["PhotoUrl"] as! String
+                                        
+                                        let unit = elements[i]["unit"] as! String
+                                        
+                                        myRankProfileImagevIew.layer.cornerRadius = myRankProfileImagevIew.frame.size.width / 2;
+                                        myRankProfileImagevIew.clipsToBounds = true;
+                                        myRankProfileImagevIew.layer.borderWidth = 1
+                                        myRankProfileImagevIew.layer.borderColor = colorCode.GrayColor.CGColor
+                                        
+                                        
+                                        
+                                        if PhotoUrl != ""
+                                        {
+                                            
+                                            myRankProfileImagevIew.kf_setImageWithURL(NSURL(string: PhotoUrl)!, placeholderImage: UIImage(named:"im_default_profile"))
+                                            
+                                        }
+                                            
+                                        else
+                                        {
+                                            myRankProfileImagevIew.image = UIImage(named:"im_default_profile")
+                                            
+                                        }
+                                        
+                                        
+                                        myRankUserNameLabel.text = FirstName + " " + LastName
+                                        
+                                        distance.text = value + unit
+                                        
+                                        runCountLabel.text = runCount
+                                        
+                                        if parameters == "1"
+                                        {
+                                            
+                                            distanceImageView.image = UIImage(named: "ic_distance")
+                                            
+                                            
+                                        }
+                                        if parameters == "2"
+                                        {
+                                            
+                                            
+                                            distanceImageView.image = UIImage(named: "ic_time")
+                                            
+                                        }
+                                        if parameters == "3"
+                                        {
+                                            distanceImageView.image = UIImage(named: "ic_calorie")
+                                            
+                                        }
+                                        
+                                        
+                                        
+                                    }
+                                    
+                                    ///////////////////////////////////////
+
+                                    
+                                    
+                                    let FirstName = elements[i]["FirstName"] as! String
+                                    
+                                    if FirstName != ""
+                                    {
+                                        
+                                        self.defaultModel.FirstName = FirstName
+                                        
+                                    }
+                                    
+                                    
+                                    let LastName = elements[i]["LastName"] as! String
+                                    
+                                    if LastName != ""
+                                    {
+                                        
+                                        self.defaultModel.LastName = LastName
+                                        
+                                    }
+                                    
+                                    let PhotoUrl = elements[i]["PhotoUrl"] as! String
+                                    
+                                    if PhotoUrl != ""
+                                    {
+                                        
+                                        self.defaultModel.PhotoUrl = PhotoUrl
+                                        
+                                    }
+                                    
+                                    
+                                    let runCount = elements[i]["runCount"] as! String
+                                    
+                                    if runCount != ""
+                                    {
+                                        
+                                        self.defaultModel.runCount = runCount
+                                        
+                                    }
+                                    
+                                    let activityType = elements[i]["activityType"] as! String
+                                    
+                                    if activityType != ""
+                                    {
+                                        
+                                        self.defaultModel.activityType = activityType
+                                        
+                                    }
+                                    
+                                    
+                                    let parameters = elements[i]["parameters"] as! String
+                                    
+                                    if parameters != ""
+                                    {
+                                        
+                                        self.defaultModel.parameters = parameters
+                                        
+                                    }
+                                    
+                                    let value = elements[i]["value"] as! String
+                                    
+                                    if value != ""
+                                    {
+                                        
+                                        self.defaultModel.value = value
+                                        
+                                    }
+                                    
+                                    let averageSpeed = elements[i]["averageSpeed"] as! String
+                                    
+                                    if averageSpeed != ""
+                                    {
+                                        
+                                        self.defaultModel.averageSpeed = averageSpeed
+                                        
+                                    }
+                                    
+                                    let unit = elements[i]["unit"] as! String
+                                    
+                                    if unit != ""
+                                    {
+                                        
+                                        self.defaultModel.unit = unit
+                                        
+                                        
+                                    }
+                                    
+                                    if i > 1
+                                    {
+                                        WinnerAndUsersArray.append(defaultModel)
+                                    }
+                                    
+                                }
+                                
+                                
+                            }
+                            
+                            print(WinnerAndUsersArray.count)
+                            
+                            NSOperationQueue.mainQueue().addOperationWithBlock
+                                {
+                                    
+                                    
+                                    self.RemoveNoInternet();
+                                    
+                                    self.RemoveNoResult();
+                                    
+                                    self.leaderBoardTableView.dataSource = self;
+                                    
+                                    self.leaderBoardTableView.delegate = self;
+                                    
+                                    self.leaderBoardTableView.reloadData();
+                                    
+                                    
+                            }
+                            
+                            
+                        } // if response close
+                        
+                        
+                    }
+                        
+                        //MARK: - STATUS = ERROR
+                        
+                        
+                    else if status == "Error"
+                        
+                    {
+                        
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
+                            
+                            
+                            self.activityIndicator.stopAnimating();
+                            
+                            self.loadingView.removeFromSuperview();
+                            
+                            
+                            self.RemoveNoInternet();
+                            
+                            
+                            if self.view.subviews.contains(self.noResult.view)
+                                
+                            {
+                                
+                                
+                                
+                            }
+                                
+                            else
+                                
+                            {
+                                
+                                self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+                                
+                                self.noResult.view.frame = CGRectMake(0, 65, self.view.frame.size.width, self.view.frame.size.height-65);
+                                self.noResult.noResultTextLabel.text = msg
+                                self.noResult.noResultImageView.image = UIImage(named: "im_error")
+                                
+                                self.view.addSubview((self.noResult.view)!);
+                                self.view.userInteractionEnabled = true
+                                
+                                self.noResult.didMoveToParentViewController(self)
+                                
+                            }
+                        })
+                        
+                    }
+                        
+                        //MARK: - STATUS = NO RESULT
+                        
+                        
+                    else if status == "NoResult"
+                        
+                    {
+                        
+                        NSOperationQueue.mainQueue().addOperationWithBlock({
+                            
+                            self.activityIndicator.stopAnimating();
+                            
+                            self.loadingView.removeFromSuperview();
+                            
+                            
+                            
+                            self.RemoveNoInternet();
+                            
+                            if self.view.subviews.contains(self.noResult.view)
+                                
+                            {
+                                
+                                //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
+                                
+                            }
+                                
+                            else
+                                
+                            {
+                                
+                                self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+                                
+                                self.noResult.view.frame = CGRectMake(0, 65, self.view.frame.size.width, self.view.frame.size.height-65-45);
+                                
+                                self.noResult.noResultTextLabel.text = msg
+                                self.noResult.noResultImageView.image = UIImage(named: "im_no_results")
+                                
+                                self.view.addSubview((self.noResult.view)!);
+                                
+                                
+                                self.noResult.didMoveToParentViewController(self)
+                                
+                            }
+                        })
+                        
+                    }
+                    
+                    
+                    
+                }
+                
+            }
+            catch
+                
+            {
+                
+                self.RemoveNoInternet();
+                
+                
+                if self.view.subviews.contains(self.noResult.view)
+                    
+                {
+                    
+                }
+                    
+                else
+                    
+                {
+                    
+                    self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+                    
+                    self.noResult.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);
+                    
+                    self.noResult.noResultTextLabel.text = "something went wrong."
+                    
+                    self.noResult.noResultImageView.image = UIImage(named: "im_error")
+                    
+                    self.view.addSubview((self.noResult.view)!);
+                    self.view.userInteractionEnabled = true
+                    
+                    self.noResult.didMoveToParentViewController(self)
+                    
+                }
+                
+                print(error)
+                
+            }
+            
+            
+        } // if dataTask close
+    }
+    
+    var mutableData = NSMutableData()
+    func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData)
+    {
+        
+        self.mutableData.appendData(data);
+        
+        
+        
+    }
+    
+    func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveResponse response: NSURLResponse, completionHandler: (NSURLSessionResponseDisposition) -> Void) {
+        
+        self.mutableData.setData(NSData())
+        
+        completionHandler(NSURLSessionResponseDisposition.Allow)
+        
+    }
+    
+    
+    
+    
+    func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?)
+    {
+        
+        
+        print(error)
+        
+        self.activityIndicator.stopAnimating();
+        
+        self.loadingView.removeFromSuperview();
+        
+        self.RemoveNoInternet();
+        
+        if self.view.subviews.contains(self.noResult.view)
+            
+        {
+            
+        }
+            
+        else
+            
+        {
+            
+            self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+            
+            self.noResult.view.frame = CGRectMake(0,65, self.view.frame.size.width, self.view.frame.size.height-65);
+            
+            self.noResult.noResultTextLabel.text = "something went wrong."
+            
+            self.noResult.noResultImageView.image = UIImage(named: "im_error")
+            
+            self.view.addSubview((self.noResult.view)!);
+            self.view.userInteractionEnabled = true
+            
+            self.noResult.didMoveToParentViewController(self)
+            
+        }
+        
+    }
+    
+    
+    
+    //MARK:- NO INTERNET TAP GESTURE
+    
+    func handleTap(sender: UITapGestureRecognizer)
+    {
+        
+        if(Reachability.isConnectedToNetwork()==true )
+        {
+            
+            self.leaderboard();
+            
+        }
+        
+        
+        
+    }
+    
+    
+    
+    //MARK:-  NO INTERNET / NO RESULT FUNC
+    func RemoveNoInternet()
+    {
+        
+        if self.view.subviews.contains(self.noInternet.view)
+            
+        {
+            
+            for i in self.view.subviews
+                
+            {
+                
+                if i == self.noInternet.view
+                    
+                {
+                    
+                    i.removeFromSuperview();
+                    
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+        
+    }
+    
+    func RemoveNoResult()
+    {
+        if self.view.subviews.contains(self.noResult.view)
+            
+        {
+            
+            for i in self.view.subviews
+                
+            {
+                
+                if i == self.noResult.view
+                    
+                {
+                    
+                    i.removeFromSuperview();
+                    
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+        
+        
+    }
     
     
     
@@ -143,18 +1594,12 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
         
     }
     
-
+    
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        
-        leaderBoardTableView.dataSource = self;
-        
-        leaderBoardTableView.delegate = self;
-        
-        leaderBoardTableView.reloadData();
         
         
         leaderBoardTableView.tableFooterView = UIView()
@@ -164,25 +1609,463 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LeaderBoardViewController.methodOfReceivedNotification(_:)), name:"showAlert", object: nil)
         
-
-
+        
+        if Reachability.isConnectedToNetwork() == true
+        {
+            
+            self.leaderboard();
+        }
+            
+        else
+        {
+            
+            
+            if self.view.subviews.contains(self.noInternet.view)
+                
+            {
+                
+                //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
+                
+            }
+                
+            else
+                
+            {
+                
+                self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
+                
+                self.noInternet.view.frame = CGRectMake(0, 65, self.view.frame.size.width, self.view.frame.size.height-65);
+                
+                self.view.addSubview((self.noInternet.view)!);
+                
+                
+                let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(CommentsViewController.handleTap(_:)))
+                
+                self.noInternet.noInternetLabel.userInteractionEnabled = true
+                
+                
+                self.noInternet.view.addGestureRecognizer(tapRecognizer)
+                
+                self.noInternet.didMoveToParentViewController(self)
+                
+            }
+            
+        }
+        
+        
+        self.leaderBoardTableView.estimatedRowHeight = 80;
+        self.leaderBoardTableView.rowHeight = UITableViewAutomaticDimension;
+        
+        
+        
+        
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
+
+
+
+//
+//
+//if  let elements: AnyObject = json!["response"]
+//{
+//    self.WinnerModel=LeaderBoardModel()
+//
+//
+//    for i in 0 ..< elements.count
+//    {
+//
+//        self.usersModel = LeaderBoardModel()
+//
+//        if elements.count == 1
+//        {
+//
+//        }
+//        if elements.count == 2
+//        {
+//
+//        }
+//        if elements.count == 3
+//        {
+//
+//        }else{
+//
+//        }
+//        if i == 0
+//        {
+//
+//            let userId = elements[i]["userId"] as! String
+//
+//            if userId != ""
+//            {
+//                self.WinnerModel.userId = userId
+//            }
+//
+//
+//            //                                    if userId ==  NSUserDefaults.standardUserDefaults().stringForKey("userId")
+//            //                                    {
+//            //
+//            //
+//            //                                        let FirstName = elements[i]["FirstName"] as! String
+//            //
+//            //                                        let LastName = elements[i]["LastName"] as! String
+//            //                                        let value = elements[i]["value"] as! String
+//            //
+//            //                                        let count = elements[i]["runCount"] as! String
+//            //
+//            //                                        let parameters = elements[i]["parameters"] as! String
+//            //
+//            //                                        let PhotoUrl = elements[i]["PhotoUrl"] as! String
+//            //
+//            //                                        myRankProfileImagevIew.layer.cornerRadius = myRankProfileImagevIew.frame.size.width / 2;
+//            //                                        myRankProfileImagevIew.clipsToBounds = true;
+//            //                                        myRankProfileImagevIew.layer.borderWidth = 1
+//            //                                        myRankProfileImagevIew.layer.borderColor = colorCode.GrayColor.CGColor
+//            //
+//            //
+//            //                                        if PhotoUrl != ""
+//            //                                        {
+//            //
+//            //                                            myRankProfileImagevIew.kf_setImageWithURL(NSURL(string: PhotoUrl)!, placeholderImage: UIImage(named:"im_default_profile"))
+//            //
+//            //                                        }
+//            //
+//            //                                        else
+//            //                                        {
+//            //                                            myRankProfileImagevIew.image = UIImage(named:"im_default_profile")
+//            //
+//            //                                        }
+//            //
+//            //
+//            //                                        myRankUserNameLabel.text = FirstName + " " + LastName
+//            //
+//            //                                        distance.text = value
+//            //
+//            //                                        if parameters == "1"
+//            //                                        {
+//            //
+//            //                                            distanceImageView.image = UIImage(named: "ic_distance")
+//            //
+//            //
+//            //                                        }
+//            //                                        if parameters == "2"
+//            //                                        {
+//            //
+//            //
+//            //                                            distanceImageView.image = UIImage(named: "ic_time")
+//            //
+//            //                                        }
+//            //                                        if parameters == "3"
+//            //                                        {
+//            //                                            distanceImageView.image = UIImage(named: "ic_calorie")
+//            //
+//            //                                        }
+//            //
+//            //
+//            //
+//            //                                    }
+//
+//            //////////////////////////////////////////////////
+//
+//            let FirstName = elements[i]["FirstName"] as! String
+//
+//            if FirstName != ""
+//            {
+//
+//                self.WinnerModel.FirstName = FirstName
+//
+//            }
+//
+//
+//            let LastName = elements[i]["LastName"] as! String
+//
+//            if LastName != ""
+//            {
+//
+//                self.WinnerModel.LastName = LastName
+//
+//            }
+//
+//            let PhotoUrl = elements[i]["PhotoUrl"] as! String
+//
+//            if PhotoUrl != ""
+//            {
+//
+//                self.WinnerModel.PhotoUrl = PhotoUrl
+//
+//            }
+//
+//
+//            let runCount = elements[i]["runCount"] as! String
+//
+//            if runCount != ""
+//            {
+//
+//                self.WinnerModel.runCount = runCount
+//
+//            }
+//
+//            let activityType = elements[i]["activityType"] as! String
+//
+//            if activityType != ""
+//            {
+//
+//                self.WinnerModel.activityType = activityType
+//
+//            }
+//
+//
+//            let parameters = elements[i]["parameters"] as! String
+//
+//            if parameters != ""
+//            {
+//
+//                self.WinnerModel.parameters = parameters
+//
+//            }
+//
+//            let value = elements[i]["value"] as! String
+//
+//            if value != ""
+//            {
+//
+//                self.WinnerModel.value = value
+//
+//            }
+//
+//            let averageSpeed = elements[i]["averageSpeed"] as! String
+//
+//            if averageSpeed != ""
+//            {
+//
+//                self.WinnerModel.averageSpeed = averageSpeed
+//
+//            }
+//
+//            let unit = elements[i]["unit"] as! String
+//
+//            if unit != ""
+//            {
+//
+//                self.WinnerModel.unit = unit
+//
+//
+//            }
+//
+//            WinnerAndUsersArray.append(WinnerModel)
+//
+//        }
+//
+//        else
+//
+//        {
+//
+//            let userId = elements[i]["userId"] as! String
+//
+//            if userId != ""
+//            {
+//                self.usersModel.userId = userId
+//            }
+//
+//            if userId ==  NSUserDefaults.standardUserDefaults().stringForKey("userId")
+//            {
+//
+//
+//                let FirstName = elements[i]["FirstName"] as! String
+//
+//                let LastName = elements[i]["LastName"] as! String
+//                let value = elements[i]["value"] as! String
+//
+//                let count = elements[i]["runCount"] as! String
+//
+//                let parameters = elements[i]["parameters"] as! String
+//
+//                let PhotoUrl = elements[i]["PhotoUrl"] as! String
+//
+//                myRankProfileImagevIew.layer.cornerRadius = myRankProfileImagevIew.frame.size.width / 2;
+//                myRankProfileImagevIew.clipsToBounds = true;
+//                myRankProfileImagevIew.layer.borderWidth = 1
+//                myRankProfileImagevIew.layer.borderColor = colorCode.GrayColor.CGColor
+//
+//
+//                if PhotoUrl != ""
+//                {
+//
+//                    myRankProfileImagevIew.kf_setImageWithURL(NSURL(string: PhotoUrl)!, placeholderImage: UIImage(named:"im_default_profile"))
+//
+//                }
+//
+//                else
+//                {
+//                    myRankProfileImagevIew.image = UIImage(named:"im_default_profile")
+//
+//                }
+//
+//
+//                myRankUserNameLabel.text = FirstName + " " + LastName
+//
+//                distance.text = value
+//
+//                if parameters == "1"
+//                {
+//
+//                    distanceImageView.image = UIImage(named: "ic_distance")
+//
+//
+//                }
+//                if parameters == "2"
+//                {
+//
+//
+//                    distanceImageView.image = UIImage(named: "ic_time")
+//
+//                }
+//                if parameters == "3"
+//                {
+//                    distanceImageView.image = UIImage(named: "ic_calorie")
+//
+//                }
+//
+//
+//
+//            }
+//            ///////////////////////////////////////////////
+//
+//            let FirstName = elements[i]["FirstName"] as! String
+//
+//            if FirstName != ""
+//            {
+//
+//                self.usersModel.FirstName = FirstName
+//
+//            }
+//
+//
+//            let LastName = elements[i]["LastName"] as! String
+//
+//            if LastName != ""
+//            {
+//
+//                self.usersModel.LastName = LastName
+//
+//            }
+//
+//            let PhotoUrl = elements[i]["PhotoUrl"] as! String
+//
+//            if PhotoUrl != ""
+//            {
+//
+//                self.usersModel.PhotoUrl = PhotoUrl
+//
+//            }
+//
+//
+//            let runCount = elements[i]["runCount"] as! String
+//
+//            if runCount != ""
+//            {
+//
+//                self.usersModel.runCount = runCount
+//
+//            }
+//
+//            let activityType = elements[i]["activityType"] as! String
+//
+//            if activityType != ""
+//            {
+//
+//                self.usersModel.activityType = activityType
+//
+//            }
+//
+//
+//            let parameters = elements[i]["parameters"] as! String
+//
+//            if parameters != ""
+//            {
+//
+//                self.usersModel.parameters = parameters
+//
+//            }
+//
+//            let value = elements[i]["value"] as! String
+//
+//            if value != ""
+//            {
+//
+//                self.usersModel.value = value
+//
+//            }
+//
+//            let averageSpeed = elements[i]["averageSpeed"] as! String
+//
+//            if averageSpeed != ""
+//            {
+//
+//                self.usersModel.averageSpeed = averageSpeed
+//
+//            }
+//
+//            let unit = elements[i]["unit"] as! String
+//
+//            if unit != ""
+//            {
+//
+//                self.usersModel.unit = unit
+//
+//
+//            }
+//
+//
+//            WinnerAndUsersArray.append(usersModel)
+//
+//
+//        } /// else close
+//
+//
+//
+//
+//
+//    }
+//
+//    print(WinnerAndUsersArray.count)
+//
+//    NSOperationQueue.mainQueue().addOperationWithBlock
+//        {
+//            
+//            
+//            self.RemoveNoInternet();
+//            
+//            self.RemoveNoResult();
+//            
+//            self.leaderBoardTableView.dataSource = self;
+//            
+//            self.leaderBoardTableView.delegate = self;
+//            
+//            self.leaderBoardTableView.reloadData();
+//            
+//            
+//    }
+//    
+//    
+//    
+//} // if response close
+
+

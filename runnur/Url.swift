@@ -86,5 +86,15 @@ class Url
     
     
     static let  exitChallenge = baseUrl + "exitChallenge.php"
+    
+    
+    //////////// leaderBoard
+    
+    
+    static let leaderboard = baseUrl + "leaderboard.php"
+    
+      //////////// Progress
+     static let progress = baseUrl + "progress.php"
+    
 
 }

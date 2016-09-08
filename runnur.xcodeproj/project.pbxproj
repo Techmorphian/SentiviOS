@@ -118,6 +118,7 @@
 		47C78CF81D265520006DEACF /* colorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C78CF71D265520006DEACF /* colorCode.swift */; };
 		47C78CFC1D26A480006DEACF /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C78CFB1D26A480006DEACF /* SplashScreenViewController.swift */; };
 		47CF1FC11D4CC5620083B1A7 /* challengeFilterXIB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CF1FC01D4CC5620083B1A7 /* challengeFilterXIB.swift */; };
+		47DA6B0D1D81509B005E8F5E /* LeaderBoardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DA6B0C1D81509B005E8F5E /* LeaderBoardModel.swift */; };
 		47E7EE3E1D6C8C44008DD370 /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E7EE3D1D6C8C44008DD370 /* CommentsViewController.swift */; };
 		47EF173C1D41EE0C00468698 /* dateFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EF173B1D41EE0C00468698 /* dateFunction.swift */; };
 		47F40DFA1D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F40DF91D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift */; };
@@ -248,6 +249,7 @@
 		47C78CFB1D26A480006DEACF /* SplashScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
 		47CF1FBC1D4CC3130083B1A7 /* challengeFilterXIB.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = challengeFilterXIB.xib; sourceTree = "<group>"; };
 		47CF1FC01D4CC5620083B1A7 /* challengeFilterXIB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = challengeFilterXIB.swift; sourceTree = "<group>"; };
+		47DA6B0C1D81509B005E8F5E /* LeaderBoardModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderBoardModel.swift; sourceTree = "<group>"; };
 		47E7EE3D1D6C8C44008DD370 /* CommentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
 		47EF173B1D41EE0C00468698 /* dateFunction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dateFunction.swift; sourceTree = "<group>"; };
 		47EFFBA91D58689A00F2A2D7 /* CurrentDateFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentDateFunc.swift; sourceTree = "<group>"; };
@@ -436,6 +438,7 @@
 				47BBED1E1D6AC9DA00EAEDE9 /* ViewActivityModel.swift */,
 				473D0D7D1D49E820004DDC07 /* inviteFriendsModel.swift */,
 				470261751D40F83D005261ED /* ChallengeModel.swift */,
+				47DA6B0C1D81509B005E8F5E /* LeaderBoardModel.swift */,
 				470728B91D2BD9BE002B86E1 /* phoneBookModel.swift */,
 				4457FFE51D5A0E730097C598 /* WeatherData.swift */,
 			);
@@ -858,6 +861,7 @@
 				473D0D791D49E7A7004DDC07 /* InviteFriendsViewController.swift in Sources */,
 				473D0D981D49E984004DDC07 /* HistoryViewController.swift in Sources */,
 				4457FFE41D59C2030097C598 /* SummaryActivityViewController.swift in Sources */,
+				47DA6B0D1D81509B005E8F5E /* LeaderBoardModel.swift in Sources */,
 				44BBF3771D5D96E2006618EF /* NSObject+MTNativeFacebookLogin.m in Sources */,
 				473D0D821D49E86A004DDC07 /* CircleLabel.swift in Sources */,
 				448584211D4A3BE40027F141 /* TourContentViewController.swift in Sources */,
