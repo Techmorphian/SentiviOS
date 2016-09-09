@@ -56,7 +56,8 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
     @IBOutlet var runCountLabel: UILabel!
     
     
-    @IBOutlet var rank: UILabel!
+    @IBOutlet var rankLabel: UILabel!
+    
     
     
     @IBOutlet var distanceImageView: UIImageView!
@@ -280,13 +281,13 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
             cell.ThirdWinnerImageView.layer.borderColor = colorCode.GrayColor.CGColor
             
             
-            cell.ThirdWinnerName.text =  WinnerAndUsersArray[indexPath.row].array[3].FirstName + " " + WinnerAndUsersArray[indexPath.row].array[3].LastName
+            cell.ThirdWinnerName.text =  WinnerAndUsersArray[indexPath.row].array[2].FirstName + " " + WinnerAndUsersArray[indexPath.row].array[2].LastName
             
             
-            if  WinnerAndUsersArray[indexPath.row].array[3].PhotoUrl != ""
+            if  WinnerAndUsersArray[indexPath.row].array[2].PhotoUrl != ""
             {
                 
-                cell.ThirdWinnerImageView.kf_setImageWithURL(NSURL(string:  WinnerAndUsersArray[indexPath.row].array[3].PhotoUrl)!, placeholderImage: UIImage(named:"im_default_profile"))
+                cell.ThirdWinnerImageView.kf_setImageWithURL(NSURL(string:  WinnerAndUsersArray[indexPath.row].array[2].PhotoUrl)!, placeholderImage: UIImage(named:"im_default_profile"))
                 
             }
                 
@@ -296,10 +297,10 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                 
             }
             
-            cell.ThirdWinnerTotalActivityLabel.text = "Total Activity" + " " + WinnerAndUsersArray[indexPath.row].array[3].runCount
+            cell.ThirdWinnerTotalActivityLabel.text = "Total Activity" + " " + WinnerAndUsersArray[indexPath.row].array[2].runCount
             
             
-            cell.ThirdWinnerDistance.text = WinnerAndUsersArray[indexPath.row].array[3].value
+            cell.ThirdWinnerDistance.text = WinnerAndUsersArray[indexPath.row].array[2].value
             
             
         }
@@ -338,10 +339,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
             
             cell.distance.text = WinnerAndUsersArray[indexPath.row].value
             
-            
-            
-            
-            
+                  
             
             
         }
@@ -519,6 +517,16 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                                 {
                                     
                                     
+                                    let rank = i + 1
+                                    
+                                    if rank != 0
+                                    {
+                                        self.ArrayModel.Rank = rank
+                                        
+                                    }
+
+                                    
+                                    
                                     let userId = elements[i]["userId"] as! String
                                     
                                     if userId != ""
@@ -532,6 +540,10 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                                     if userId ==  NSUserDefaults.standardUserDefaults().stringForKey("userId")
                                     {
                                         
+                                        
+                                        let userRank = i + 1
+                                        
+                                        rankLabel.text = "#" + String(userRank)
                                         
                                         let FirstName = elements[i]["FirstName"] as! String
                                         
@@ -697,6 +709,18 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                                 if elements.count == 2
                                 {
                                     
+                                    
+                                    
+                                    
+                                    let rank = i + 1
+                                    
+                                    if rank != 0
+                                    {
+                                        self.ArrayModel.Rank = rank
+                                        
+                                    }
+
+                                    
                                     let userId = elements[i]["userId"] as! String
                                     
                                     if userId != ""
@@ -709,6 +733,11 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                                     if userId ==  NSUserDefaults.standardUserDefaults().stringForKey("userId")
                                                 {
                                     
+                                                    
+                                                    
+                                                    let userRank = i + 1
+                                                    
+                                                    rankLabel.text = "#" + String(userRank)
                                     
                                                     let FirstName = elements[i]["FirstName"] as! String
                                     
@@ -879,6 +908,18 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                                 {
                                     
                                     
+                                    
+                                    let rank = i + 1
+                                    
+                                    if rank != 0
+                                    {
+                                        self.ArrayModel.Rank = rank
+                                        
+                                    }
+                                    
+                                    print(rank)
+                                  
+                                    
                                     let userId = elements[i]["userId"] as! String
                                     
                                     if userId != ""
@@ -891,6 +932,13 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                                     
                                     if userId ==  NSUserDefaults.standardUserDefaults().stringForKey("userId")
                                     {
+                                        
+                                
+                                     
+                                        let userRank = i + 1
+                                        
+                                        rankLabel.text = "#" + String(userRank)
+                                        
                                         
                                         
                                         let FirstName = elements[i]["FirstName"] as! String
@@ -911,7 +959,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                                         myRankProfileImagevIew.layer.borderWidth = 1
                                         myRankProfileImagevIew.layer.borderColor = colorCode.GrayColor.CGColor
                                         
-                                        
+                                       
                                         
                                         if PhotoUrl != ""
                                         {
@@ -1058,6 +1106,18 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                                 {
                                     
                                     
+                                   
+                                    
+                                    
+                                    let rank = i + 1
+                                    
+                                    if rank != 0
+                                    {
+                                        self.defaultModel.Rank = rank
+                                        
+                                    }
+
+                                    
                                     let userId = elements[i]["userId"] as! String
                                     
                                     if userId != ""
@@ -1070,6 +1130,13 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                                     
                                     if userId ==  NSUserDefaults.standardUserDefaults().stringForKey("userId")
                                     {
+                                        
+                                     
+                                        
+                                        let userRank = i + 1
+                                        
+                                        rankLabel.text = String(userRank)
+
                                         
                                         
                                         let FirstName = elements[i]["FirstName"] as! String

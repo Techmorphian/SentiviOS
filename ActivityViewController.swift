@@ -237,7 +237,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             
                             
                             
-                        }
+                        } /// if close
                         
                         tableViewCell = cell
             
@@ -409,56 +409,51 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     }
         
         
-        
-                    if activityChatArray[indexPath.row].createdAt != ""
-                    {
-        
-        
-                        let dateAsString1  =  activityChatArray[indexPath.row].createdAt
-        
-                      //  //(dateAsString1)
-        
-                        let dateFormatter1 = NSDateFormatter()
-        
-                        dateFormatter1.timeZone = NSTimeZone(name: "GMT")
-        
-        
-        
-                        dateFormatter1.dateFormat = "yyyy-MM-dd hh:mm:ss"
-        
-        
-        
-                        let date = dateFormatter1.dateFromString(dateAsString1)
-        
-                        //print(date)
-        
-        
-                        if date != ""
-                        {
-                            let dateFormatter2 = NSDateFormatter()
-        
-        
-                            dateFormatter2.dateFormat = "MMM dd, yyyy  hh:mm:ss"
-        
-                            //dateFormatter2.timeZone = NSTimeZone()
-        
-                            dateFormatter2.timeZone = NSTimeZone.defaultTimeZone()
-        
-                            let date2 = dateFormatter2.stringFromDate(date!)
-        
-                            if date2 != ""
-                            {
-        
-                                cell.date.text = String(date2)
-        
-                            }
-        
-        
-                        }
-        
-        
-                    }
-        
+            if activityChatArray[indexPath.row].createdAt != ""
+            {
+                
+                
+                let dateAsString1  =  activityChatArray[indexPath.row].createdAt
+                
+                //    //print(dateAsString1)
+                
+                let dateFormatter1 = NSDateFormatter()
+                
+                // dateFormatter1.timeZone = NSTimeZone()
+                
+                dateFormatter1.timeZone = NSTimeZone(name: "UTC")
+                
+                // dateFormatter1.timeZone = NSTimeZone.defaultTimeZone()
+                
+                dateFormatter1.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                
+                let date = dateFormatter1.dateFromString(dateAsString1)
+                
+                // //print(date)
+                
+                
+                if date != nil
+                {
+                    
+                    let dateFormatter2 = NSDateFormatter()
+                    
+                    
+                    dateFormatter2.dateFormat = "MMM dd, yyyy  HH:mm:ss"
+                    
+                    // dateFormatter2.timeZone = NSTimeZone()
+                    
+                    dateFormatter2.timeZone = NSTimeZone.defaultTimeZone()
+                    
+                    let date2 = dateFormatter2.stringFromDate(date!)
+                    
+                    cell.date.text = String(date2)
+                    
+                }
+                
+                
+                
+            } /// if close
+            
                    tableViewCell =  cell
         
         
@@ -557,47 +552,97 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         
         
-                        if activityChatArray[indexPath.row].createdAt != ""
+//                        if activityChatArray[indexPath.row].createdAt != ""
+//                        {
+//                            
+//                            
+//                            let dateAsString1  =  activityChatArray[indexPath.row].createdAt
+//                            
+//                            //print(dateAsString1)
+//                            
+//                            let dateFormatter1 = NSDateFormatter()
+//                            
+//                            dateFormatter1.dateFormat = "yyyy-MM-dd hh:mm:ss"
+//                            
+//                            let date = dateFormatter1.dateFromString(dateAsString1)
+//                            
+//                            //print(date)
+//                            
+//                            
+//                            if date != ""
+//                            {
+//                                let dateFormatter2 = NSDateFormatter()
+//                                
+//                                
+//                                dateFormatter2.dateFormat = "MMM dd, yyyy  hh:mm:ss"
+//                                
+//                                dateFormatter2.timeZone = NSTimeZone()
+//                                
+//                                let date2 = dateFormatter2.stringFromDate(date!)
+//                                
+//                                if date2 != ""
+//                                {
+//                                    
+//                                    cell.date.text = String(date2)
+//                                    
+//                                }
+//                                
+//                                
+//                            }
+//                            
+//                            
+//                        }
+                    
+                    
+                    
+                    if activityChatArray[indexPath.row].createdAt != ""
+                    {
+                        
+                        
+                        let dateAsString1  =  activityChatArray[indexPath.row].createdAt
+                        
+                        //    //print(dateAsString1)
+                        
+                        let dateFormatter1 = NSDateFormatter()
+                        
+                        // dateFormatter1.timeZone = NSTimeZone()
+                        
+                        dateFormatter1.timeZone = NSTimeZone(name: "UTC")
+                        
+                        // dateFormatter1.timeZone = NSTimeZone.defaultTimeZone()
+                        
+                        dateFormatter1.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                        
+                        let date = dateFormatter1.dateFromString(dateAsString1)
+                        
+                        // //print(date)
+                        
+                        
+                        if date != nil
                         {
                             
-                            
-                            let dateAsString1  =  activityChatArray[indexPath.row].createdAt
-                            
-                            //print(dateAsString1)
-                            
-                            let dateFormatter1 = NSDateFormatter()
-                            
-                            dateFormatter1.dateFormat = "yyyy-MM-dd hh:mm:ss"
-                            
-                            let date = dateFormatter1.dateFromString(dateAsString1)
-                            
-                            //print(date)
+                            let dateFormatter2 = NSDateFormatter()
                             
                             
-                            if date != ""
-                            {
-                                let dateFormatter2 = NSDateFormatter()
-                                
-                                
-                                dateFormatter2.dateFormat = "MMM dd, yyyy  hh:mm:ss"
-                                
-                                dateFormatter2.timeZone = NSTimeZone()
-                                
-                                let date2 = dateFormatter2.stringFromDate(date!)
-                                
-                                if date2 != ""
-                                {
-                                    
-                                    cell.date.text = String(date2)
-                                    
-                                }
-                                
-                                
-                            }
+                            dateFormatter2.dateFormat = "MMM dd, yyyy  HH:mm:ss"
                             
+                            // dateFormatter2.timeZone = NSTimeZone()
+                            
+                            dateFormatter2.timeZone = NSTimeZone.defaultTimeZone()
+                            
+                            let date2 = dateFormatter2.stringFromDate(date!)
+                            
+                            cell.date.text = String(date2)
                             
                         }
+                        
+                        
+                        
+                    } /// if close
                     
+                    
+                    
+                  
                       tableViewCell =  cell
                     
                     

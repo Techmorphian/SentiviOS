@@ -73,6 +73,7 @@
 		470CF8A51D25082C0001B3BC /* AddviaGoogleCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CF8A41D25082C0001B3BC /* AddviaGoogleCellTableViewCell.swift */; };
 		470CF8A71D252F540001B3BC /* AddManuallyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CF8A61D252F540001B3BC /* AddManuallyViewController.swift */; };
 		471A686A1D30D4E200DD2138 /* NoInternetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471A68691D30D4E200DD2138 /* NoInternetViewController.swift */; };
+		472528321D82D9D7007A53C9 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472528311D82D9D7007A53C9 /* CircleView.swift */; };
 		4731FC8C1D2A2E2A00E860B0 /* GroupCauseFitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4731FC8B1D2A2E2A00E860B0 /* GroupCauseFitViewController.swift */; };
 		4731FC8E1D2A2E4300E860B0 /* GroupFitCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4731FC8D1D2A2E4300E860B0 /* GroupFitCellTableViewCell.swift */; };
 		4739D4481D3506F80087CDC1 /* NoFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4739D4471D3506F70087CDC1 /* NoFriendViewController.swift */; };
@@ -205,6 +206,7 @@
 		470CF8A41D25082C0001B3BC /* AddviaGoogleCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddviaGoogleCellTableViewCell.swift; sourceTree = "<group>"; };
 		470CF8A61D252F540001B3BC /* AddManuallyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddManuallyViewController.swift; sourceTree = "<group>"; };
 		471A68691D30D4E200DD2138 /* NoInternetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoInternetViewController.swift; sourceTree = "<group>"; };
+		472528311D82D9D7007A53C9 /* CircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		4731FC8B1D2A2E2A00E860B0 /* GroupCauseFitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupCauseFitViewController.swift; sourceTree = "<group>"; };
 		4731FC8D1D2A2E4300E860B0 /* GroupFitCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupFitCellTableViewCell.swift; sourceTree = "<group>"; };
 		4739D4471D3506F70087CDC1 /* NoFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoFriendViewController.swift; sourceTree = "<group>"; };
@@ -369,6 +371,7 @@
 		470CF87C1D24DC370001B3BC /* runnur */ = {
 			isa = PBXGroup;
 			children = (
+				472527FB1D828B1A007A53C9 /* Progress */,
 				470045E21D8040D50011805A /* LeaderBoard */,
 				4785E0701D744A890003ABC0 /* Requests */,
 				47C6B0041D5AF5E300410DAE /* ViewActivity */,
@@ -408,6 +411,15 @@
 				470B1B601D27A5A100E3B5B0 /* runnur-Bridging-Header.h */,
 			);
 			path = runnur;
+			sourceTree = "<group>";
+		};
+		472527FB1D828B1A007A53C9 /* Progress */ = {
+			isa = PBXGroup;
+			children = (
+				47C6B0091D5B2ABA00410DAE /* ProgressViewController.swift */,
+				472528311D82D9D7007A53C9 /* CircleView.swift */,
+			);
+			name = Progress;
 			sourceTree = "<group>";
 		};
 		47323D091D479D6D002B27CF /* challenge */ = {
@@ -604,7 +616,6 @@
 				47C6AFFB1D5AF58800410DAE /* userActivityTableViewCell.swift */,
 				47C6AFFF1D5AF5B300410DAE /* userChatTableViewCell.swift */,
 				47C6B0011D5AF5C300410DAE /* chatTableViewCell.swift */,
-				47C6B0091D5B2ABA00410DAE /* ProgressViewController.swift */,
 			);
 			name = ViewActivity;
 			sourceTree = "<group>";
@@ -895,6 +906,7 @@
 				470728BA1D2BD9BE002B86E1 /* phoneBookModel.swift in Sources */,
 				4748CB8D1D59EE9B0096DB55 /* ActivityViewController.swift in Sources */,
 				47C78CFC1D26A480006DEACF /* SplashScreenViewController.swift in Sources */,
+				472528321D82D9D7007A53C9 /* CircleView.swift in Sources */,
 				47E7EE3E1D6C8C44008DD370 /* CommentsViewController.swift in Sources */,
 				470B1B5E1D278B6200E3B5B0 /* HomeViewController.swift in Sources */,
 				473D0D861D49E89D004DDC07 /* NoResultViewController.swift in Sources */,
