@@ -52,6 +52,7 @@
 		470045E41D8049FB0011805A /* LeaderBoardWinnerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470045E31D8049FB0011805A /* LeaderBoardWinnerTableViewCell.swift */; };
 		470045E61D804A610011805A /* LeaderBoardUsersNotWinnersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470045E51D804A610011805A /* LeaderBoardUsersNotWinnersTableViewCell.swift */; };
 		470261761D40F83D005261ED /* ChallengeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470261751D40F83D005261ED /* ChallengeModel.swift */; };
+		4705F48B1D83D0A600430C88 /* ProgressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4705F48A1D83D0A600430C88 /* ProgressTableViewCell.swift */; };
 		470728BA1D2BD9BE002B86E1 /* phoneBookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470728B91D2BD9BE002B86E1 /* phoneBookModel.swift */; };
 		470B1B5E1D278B6200E3B5B0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470B1B5D1D278B6200E3B5B0 /* HomeViewController.swift */; };
 		470B1B621D27A5A100E3B5B0 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 470B1B611D27A5A100E3B5B0 /* SWRevealViewController.m */; };
@@ -181,6 +182,7 @@
 		470045E31D8049FB0011805A /* LeaderBoardWinnerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderBoardWinnerTableViewCell.swift; sourceTree = "<group>"; };
 		470045E51D804A610011805A /* LeaderBoardUsersNotWinnersTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderBoardUsersNotWinnersTableViewCell.swift; sourceTree = "<group>"; };
 		470261751D40F83D005261ED /* ChallengeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengeModel.swift; sourceTree = "<group>"; };
+		4705F48A1D83D0A600430C88 /* ProgressTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressTableViewCell.swift; sourceTree = "<group>"; };
 		470728B91D2BD9BE002B86E1 /* phoneBookModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = phoneBookModel.swift; sourceTree = "<group>"; };
 		470B1B5D1D278B6200E3B5B0 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		470B1B5F1D27A59600E3B5B0 /* SWRevealViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
@@ -417,6 +419,7 @@
 			isa = PBXGroup;
 			children = (
 				47C6B0091D5B2ABA00410DAE /* ProgressViewController.swift */,
+				4705F48A1D83D0A600430C88 /* ProgressTableViewCell.swift */,
 				472528311D82D9D7007A53C9 /* CircleView.swift */,
 			);
 			name = Progress;
@@ -905,6 +908,7 @@
 				470CF8A31D2508140001B3BC /* AddviaFacebookCellTableViewCell.swift in Sources */,
 				470728BA1D2BD9BE002B86E1 /* phoneBookModel.swift in Sources */,
 				4748CB8D1D59EE9B0096DB55 /* ActivityViewController.swift in Sources */,
+				4705F48B1D83D0A600430C88 /* ProgressTableViewCell.swift in Sources */,
 				47C78CFC1D26A480006DEACF /* SplashScreenViewController.swift in Sources */,
 				472528321D82D9D7007A53C9 /* CircleView.swift in Sources */,
 				47E7EE3E1D6C8C44008DD370 /* CommentsViewController.swift in Sources */,
