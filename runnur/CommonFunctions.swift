@@ -407,34 +407,27 @@ class CommonFunctions : NSObject
                 alertView.lblMsg.text = message
                 
                 alertView.lblMsg.hidden=false
-                
-                
-                
-                
-                
-                
-                
         })
-        
-        
-        
-        
         
     }
     
     
     
     static func removeAlert(){
-        
-        
-        
         alertView.removeFromSuperview()
-        
-        
-        
     }
     
-
+    static func convertStringToJson(stringToConvert:String) -> String
+    {
+        if NSJSONSerialization.isValidJSONObject(stringToConvert){
+            let jsonData = try! NSJSONSerialization.dataWithJSONObject(stringToConvert, options: NSJSONWritingOptions())
+            let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
+           return jsonString
+        }else{
+            return "";
+        }
+   
+    }
     
     
 }

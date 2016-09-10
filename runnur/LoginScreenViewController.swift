@@ -16,7 +16,7 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
     @IBOutlet var loginWithGoogleButton: UIButton!
     
     
-    
+//  facebook Button Action
     @IBAction func loginWithFacebookButtonAction(sender: UIButton)
     {
         
@@ -24,7 +24,7 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
         self.authenticate(self);
  
     }
-    
+// Google Button Action
     @IBAction func loginWithGoogleButtonAction(sender: AnyObject)
     {
         GIDSignIn.sharedInstance().signIn();
@@ -34,9 +34,6 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
         print("didDisconnectWithUser");
     }
     
-//    func signInWillDispatch(signIn: GIDSignIn!, error: NSError!) {
-//        print(error);
-//    }
     
     func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!,
                 withError error: NSError!) {
@@ -44,20 +41,49 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
             print(signIn.hasAuthInKeychain());
           //  let driveScope = "https://www.googleapis.com/auth/userinfo.profile";
             let imageUrl:NSURL = user.profile.imageURLWithDimension(500)
-            print(imageUrl)
-           
-//            user.authentication.refreshTokensWithHandler({ (GIDAuthentication, NSError) in
-//                print(GIDAuthentication.idToken)
-//            })
-           
-             //signIn.clientID = "749302522741-1dik8vb93l9uvb6rpq9p978s36ddugm7.apps.googleusercontent.com"
             
-           // GIDSignIn.sharedInstance().scopes.append(driveScope);
+            print(user.serverAuthCode);
+            
+            print(user.serverAuthCode.stringByRemovingPercentEncoding!)
+            
+          
+            
             let googleId = user.userID
-            print(user.authentication.idToken.utf8);
+            print(user.authentication.idToken);
             print(user.authentication.idToken.propertyList());
             
-            let idToken:String = user.authentication.idToken // Safe to send to the server
+ //             let idToken: String = user.serverAuthCode  -------------- this is auth code which will be sent to server
+            
+//   another Way to send idToken
+   /*
+            
+            let azureGoogleServerAuthToken = user.serverAuthCode
+            
+            let azureGoogleIdToken = user.authentication.idToken
+            
+            let request = NSMutableURLRequest(URL: NSURL(string: "https://runningappjs.azure-mobile.net/.auth/login/google")!)
+            request.HTTPMethod = "POST"
+            let postString = "authorization_code=\(azureGoogleServerAuthToken)&id_token=\(azureGoogleIdToken)"
+            request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, error in
+                guard error == nil && data != nil else {                                                          // check for fundamental networking error
+                    print("error=\(error)")
+                    return
+                }
+                
+                if let httpStatus = response as? NSHTTPURLResponse where httpStatus.statusCode != 200 {           // check for http errors
+                    print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                    print("response = \(response)")
+                }
+                
+                let responseString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+                print("responseString = \(responseString)")
+            }
+            task.resume()
+        
+     */
+
+            let idToken: String = user.authentication.idToken // Safe to send to the server
             let Name: String = user.profile.name
             var myStringArr = Name.componentsSeparatedByString(" ")
             let firstName: String = myStringArr [0]
@@ -71,10 +97,6 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
             {
                 let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
                 let client = delegate!.client!;
-//                let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SWRevealViewController") as! SWRevealViewController
-//                self.presentViewController(nextViewController, animated: true, completion: nil)
-                
-              
                 
                 let payload: [String: String] = ["id_token": idToken]
                 client.loginWithProvider("google", token: payload, completion: { (user, error) in
@@ -89,32 +111,6 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
                          self.call(false, email: email, firstName: firstName, lastName: lastName, id: googleId, token: idToken,imageUrl: imageUrl.absoluteString)
                     }
                 })
-//                client.loginWithProvider("google", controller: self, animated: true) { (user, error) in
-//                    if user != nil{
-//                        print(user)
-//                          print("Google Login Sucess")
-//                        client.invokeAPI("/../.auth/me", body: nil, HTTPMethod: "GET", parameters: [ :], headers: nil, completion: { (result, response, error) in
-//                            
-//                            let userClaims = result![0]?.objectForKey("user_claims") as! NSArray;
-//                            print(userClaims)
-//                            //                         for i in userClaims{
-//                            // print("prinnting i \(i)");
-//                            //                            if i.valueForKey("typ") as! String == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"{
-//                            //                                print(i.valueForKey("val") as! String)
-//                            //                            }
-//                            //                            if i.valueForKey("typ") as! String == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname"{
-//                            //                                print(i.valueForKey("val") as! String)
-//                            //                            }
-//                            //                            if i.valueForKey("typ") as! String == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname"{
-//                            //                                print(i.valueForKey("val") as! String)
-//                            //                            }
-//                            //                        }
-//                        })
-                
-                  //  }
-               // }
-                //Url.navigationDrawer
-              
             }
             
         } else {
@@ -126,6 +122,7 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
     var firstName = String();
     var lastName = String();
     var email = String();
+// -------------------------- To Get User Data --------------------------------
     func returnUserData()
     {
         let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, email, birthday,picture,hometown,first_name,last_name"])
@@ -168,6 +165,7 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
                         NSUserDefaults.standardUserDefaults().setObject( user.userId, forKey: "azureUserId")
                         NSUserDefaults.standardUserDefaults().setObject( user.mobileServiceAuthenticationToken, forKey: "azureAuthenticationToken")
                         Client.currentUser = user;
+                        print("azureUserId = \(NSUserDefaults.standardUserDefaults().stringForKey("azureUserId"))");
                         print("Login successful");
                          self.call(true, email: self.email, firstName: self.firstName, lastName: self.lastName, id: (user?.userId)!, token: self.fbToken,imageUrl: "http://graph.facebook.com/" + (self.fbId) + "/picture?type=large");
                        }
@@ -178,6 +176,7 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
             }
         })
     }
+//    -------------------------------- login with facebook ------------------------
     func authenticate(parent: UIViewController) {
               let loginManager:FBSDKLoginManager = FBSDKLoginManager()
         if (UIApplication.sharedApplication().canOpenURL(NSURL(string: "fbauth2://")!)) ==  false
@@ -220,7 +219,7 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
     
     
     
-    
+//  ------------------------ webservice to call login ----------------------------------
     
     
     func call(isFacebook:Bool,email:String,firstName:String,lastName:String,id:String,token:String,imageUrl:String){
@@ -229,27 +228,15 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
         let dateObj = dateFormatter.stringFromDate(NSDate())
         if isFacebook
         {
-            
             print(id)
-            
-            
             let aString: String =  id
-            
             let newString = aString.stringByReplacingOccurrencesOfString("Facebook:", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
             print(newString)
-            
             let FacebookId =  newString
              NSUserDefaults.standardUserDefaults().setObject(FacebookId, forKey: "facebookId")
             print(FacebookId)
-            
-           
-            
             print(NSUserDefaults.standardUserDefaults().stringForKey("facebookId"))
-
-            postData = "email=\(email)&firstName=\(firstName)&lastName=\(lastName)&facebookId=\(FacebookId)&facebookToken=\(token)&currentDate=\(dateObj)&photoUrl=\(imageUrl)"
-            
-            
-            
+            postData = "email=\(email)&firstName=\(firstName)&lastName=\(lastName)&facebookId=\(FacebookId)&facebookToken=\(token)&currentDate=\(dateObj)&photoUrl=\(imageUrl)"            
         }else
         {
             postData = "email=\(email)&firstName=\(firstName)&lastName=\(lastName)&googleId=\(id)&googleToken=\(token)&currentDate=\(dateObj)&photoUrl=\(imageUrl)"
@@ -339,14 +326,14 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
         })
         
     }
-
+//------------------------------------ lifeCycle methods -----------------------------------
     override func viewDidLoad()
     {
         super.viewDidLoad();
         
         GIDSignIn.sharedInstance().signOut()
         
-        GIDSignIn.sharedInstance().scopes.append("https://www.googleapis.com/auth/plus.login");
+      //  GIDSignIn.sharedInstance().scopes.append("https://www.googleapis.com/auth/plus.me");
         
         GIDSignIn.sharedInstance().clientID = "749302522741-sst6f9goq59ibkdounlk78hfij5t0blf.apps.googleusercontent.com";
         GIDSignIn.sharedInstance().serverClientID = "749302522741-1dik8vb93l9uvb6rpq9p978s36ddugm7.apps.googleusercontent.com"

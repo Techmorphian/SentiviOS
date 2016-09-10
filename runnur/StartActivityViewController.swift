@@ -215,11 +215,48 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                     /***
                      * Remove all dots and all strings including after "@" and then store the name as the blobname
                      */
+// -------------------------------- example of sas -----  se=2016-09-06T14%3A07%3A43Z&sr=b&sp=w&sig=bEyf0MJdG7sggUcxYUalXd%2BRgwI8GONZ%2BUjU1Q%2BR1QM%3D
                     
                     var email =  NSUserDefaults.standardUserDefaults().stringForKey("email");
                     email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
                     let words =  email?.componentsSeparatedByString("@");
                     let contName = words![0]
+                    
+                    let file = "\(contName).txt" //this is the file. we will write to and read from it
+                    
+                    let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
+                    print(paths);
+
+                    
+                    let path = paths.URLByAppendingPathComponent(file)
+                    
+                    
+                    
+                    
+//------------------------ store data in cache/file --------------------------
+                    
+//                    var error: NSError?
+//                    do{
+//                    if let data = try NSJSONSerialization.dataWithJSONObject(newItem, options: NSJSONWritingOptions.PrettyPrinted) {
+//                        if let json = NSString(data: data, encoding: NSUTF8StringEncoding) {
+//                             //writing
+//                            do {
+//                                
+//                                try json.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
+//                            }
+//                            catch {/* error handling here */
+//                                print(error);
+//                                print("error while write");
+//                            }
+//                            
+//
+//                        }
+//                    }
+//                    }catch{
+//                        
+//                    }
+                  
+                    
                     let newItem2 : NSDictionary = ["rundetailcontainerblob": "\(contName)",
                         "RunDetailResource":"\(uuid)",
                         "complete":false
@@ -255,7 +292,18 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                             let blobFromSASCredential = AZSCloudBlockBlob(container: container, name: "\(blogName)", snapshotTime: nil)
                                 print(blobFromSASCredential);
                                 
-                                blobFromSASCredential.uploadFromText("gvhv", completionHandler: { (error) in
+                                
+                              let  blob = container.blockBlobReferenceFromName("blogName");
+                                
+                                blob.uploadFromText("dwededewdeaw", completionHandler: { (error) in
+                                    if error != nil{
+                                        print(error);
+                                        
+                                    }else{
+                                    }
+                                });
+                                
+                                blobFromSASCredential.uploadFromText("{lat:251652,long:2323424}", completionHandler: { (error) in
                                     if error != nil{
                                         print(error);
                                        
@@ -399,16 +447,18 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         duration.text = "\(counter)"
     }
 //-------------------------------change time-----------------------------------
+    var minutes = UInt8();
+    var seconds = UInt8();
     func updateTime() {
         endTime = NSDate();
         currentTime = NSDate.timeIntervalSinceReferenceDate()
         //Find the difference between current time and start time.
         elapsedTime =  currentTime - startTime
         //calculate the minutes in elapsed time.
-        let minutes = UInt8(elapsedTime / 60.0)
+        minutes = UInt8(elapsedTime / 60.0)
         elapsedTime -= (NSTimeInterval(minutes) * 60)
         //calculate the seconds in elapsed time.
-        let seconds = UInt8(elapsedTime)
+        seconds = UInt8(elapsedTime)
         elapsedTime -= NSTimeInterval(seconds)
         //find out the fraction of milliseconds to be displayed.
         let hours = UInt8(elapsedTime / 3600)
@@ -465,7 +515,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         endDate = NSDate();
         // (Double(round(endDate.timeIntervalSinceDate(startDate))) / 1000) / 60) Double(String(format: "%.2f", distanceInMi))!
         self.avgpace = (((round(endDate.timeIntervalSinceDate(startDate))) / 1000) / 60)/(distanceInMi);
-        
+        self.avgpace = paceInMinutes(Double(minutes), seconds:Double(seconds), distance: distanceInMi);
         calculateCaloriesBurned()
         
         
@@ -516,7 +566,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         dis = dis * 0.000621371;
         return dis;
     }
-//-----------------------------update text of all labels----------------------------------
+//-----------------------------update text of all labels---------------------------------- not being used
     func currentstatus(){
         if (elapsedTime <= 0) {
             return;
@@ -875,6 +925,13 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     var trackPolyline = [NSDictionary]();
     var saveTrackPolyline = String();
     
+    
+//--------------------------------------calculate pace in mins ------------------------------------
+    func paceInMinutes (minutes:Double, seconds: Double, distance: Double) -> Double {
+        return (((minutes*60) + seconds) / distance) / 60;
+    }
+    
+    
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         //  updatedLocation(manager);
         
@@ -964,7 +1021,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             self.graphDistance.append(self.dis);
             self.timeLog.append(self.elapsedTime);
             
-            
+            calculateCaloriesBurned();
             calculateDistanceSpeed(lastLocation);
             path.addCoordinate(locations[0].coordinate);
             mapView.clear();
@@ -1237,17 +1294,10 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                 var placeMark: CLPlacemark!
                 placeMark = placemarks?[0]
                 
-                // Address dictionary
-                //                print(placeMark.addressDictionary)
-                
                 // Location name
                 if let locationName = placeMark.addressDictionary?["Name"] as? NSString {
                     self.locationName = locationName as String;
                 }
-                
-                //                // Street address
-                //                if let street = placeMark.addressDictionary!["Thoroughfare"] as? NSString {
-                //                }
                 
                 // City
                 if let city = placeMark.addressDictionary!["City"] as? NSString {
@@ -1257,16 +1307,6 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                         self.locationName = self.locationName+", "+(city as String);
                     }
                 }
-                
-                //                // Zip code
-                //                if let zip = placeMark.addressDictionary!["ZIP"] as? NSString {
-                //                    print(zip)
-                //                }
-                //
-                //                // Country
-                //                if let country = placeMark.addressDictionary!["Country"] as? NSString {
-                //                    print(country)
-                //                }
                 
             })
         }
@@ -1328,7 +1368,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             caloriesburned = caloriesLookUp.Biking(avgpace, weight: weight, elapsedTime: CLong(round(endDate.timeIntervalSinceDate(startDate))), altGain: altGain, distance: Double(distanceInMi));
             
         } else if (performedActivity == ("Walking")) {
-            //  avgpace = 1.00;
+            //  avgpace = 1.00; CLong(round(endDate.timeIntervalSinceDate(startDate)))
             endDate = NSDate();
             caloriesburned = caloriesLookUp.Walking(avgpace, weight: weight, elapsedTime: CLong(round(endDate.timeIntervalSinceDate(startDate))), altGain: altGain, distance: Double(distanceInMi));
             

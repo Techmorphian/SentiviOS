@@ -16,14 +16,8 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     @IBOutlet var ActivityTableView: UITableView!
     
     
-    
-    
-    
-    
-    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
-        
         return 1
         
     }
