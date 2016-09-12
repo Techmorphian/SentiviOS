@@ -14,8 +14,8 @@ import FBSDKShareKit
 import CoreMotion
 
 class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
-
-//------------------------------ Variables------------------------------
+    
+    //------------------------------ Variables------------------------------
     var startTime = NSTimeInterval()
     var counter = 0
     var timer = NSTimer()
@@ -36,13 +36,13 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     var graphPace = [Double]();
     var activityLog = [String]()
     
-      var secondsAlreadyRun = NSTimeInterval();
+    var secondsAlreadyRun = NSTimeInterval();
     var elapsedTime = NSTimeInterval();
     var avgspeed = Double();
     var currentTime = NSTimeInterval();
     var endTime = NSDate();
     
-     var customPopUp = CustomPopUp();
+    var customPopUp = CustomPopUp();
     
     var firstLocation = CLLocation();
     var lastLocation = CLLocation();
@@ -57,7 +57,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     var altitude = CLLocationDistance();
     var Altitudes = [Int]();
     var accuracy = CLLocationAccuracy();
-
+    
     var locationName : String = "UNKNOWN";
     
     var stringStartTime = String();
@@ -65,8 +65,10 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     var planRoute = GMSMutablePath();
     var planFirstPoint = CLLocationCoordinate2D();
     var planSecoundPoint = CLLocationCoordinate2D();
-   
-//------------------------------------------Outlets--------------------------------------------
+    
+    var firstCache : String? = nil;
+    
+    //------------------------------------------Outlets--------------------------------------------
     
     @IBAction func back(sender: AnyObject) {
         self.dismissViewControllerAnimated(false, completion: nil);
@@ -90,7 +92,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     
     
     
-//---------------------------getMyCurrentLocation-----------------------------------------------
+    //---------------------------getMyCurrentLocation-----------------------------------------------
     @IBAction func GetMyLocation(sender: AnyObject) {
         mapView.myLocationEnabled = true
         if let _ = mapView.myLocation?.coordinate{
@@ -99,7 +101,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         }
         
     }
-//----------------------------------stop activity and timer--------------------------------------
+    //----------------------------------stop activity and timer--------------------------------------
     @IBAction func stop(sender: AnyObject) {
         if self.stop.titleLabel?.text == "STOP"{
             if NSUserDefaults.standardUserDefaults().boolForKey("voiceFeedback") == true{
@@ -128,11 +130,11 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     private func saveData()
     {
         
-//---------------------------showPopUp before saving----------------------------
+        //---------------------------showPopUp before saving----------------------------
         CommonFunctions.showPopup(self, title: "ALREADY FINISHED?", msg: "You did not cover enough distance. Are you sure you want to save the activity?", positiveMsg: "Yes, Save", negMsg: "No, Discard", show2Buttons: true, showReverseLayout: false,getClick: {
             // if Reachability.isConnectedToNetwork() == true{
             CommonFunctions.showActivityIndicator(self.view);
-//--------------------------------- Connecting to azure client ------------------------------------
+            //--------------------------------- Connecting to azure client ------------------------------------
             let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
             let client = delegate!.client!;
             
@@ -140,7 +142,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             user.mobileServiceAuthenticationToken = NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken");
             client.currentUser = user
             
-            let table = client.tableWithName("RunObject")
+            let table = client.tableWithName("RunObject");
             if client.currentUser != nil{
                 let date = self.lastLocation.timestamp
                 let dateFormatter = NSDateFormatter()
@@ -148,7 +150,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                 let dateString = dateFormatter.stringFromDate(date)
                 let uuid = NSUUID().UUIDString;
                 
-//--------------------------creating dictionary to send data to azure---------------------------
+                //--------------------------creating dictionary to send data to azure---------------------------
                 
                 let newItem : NSDictionary = ["id": uuid,
                     "date": dateString,
@@ -168,7 +170,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                     // "graphPaceS" : graphPace
                     // "graphSpeedS" : graphSpeed
                 ] ;
-//------------------------Saving whole route data----------------------------------------------
+                //------------------------Saving whole route data----------------------------------------------
                 self.mapData = MapData();
                 self.mapData.distance = self.distance.text!;
                 self.mapData.date = dateString;
@@ -191,71 +193,104 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                 self.mapData.endLong = self.lastLocation.coordinate.longitude;
                 self.mapData.trackPlyline = self.saveTrackPolyline;
                 
-//     TODO:- add more data
-
+                //     TODO:- add more data
+                
                 //, "GPSAcc": Double(accuracy), "EmailS": [""],"graphDistanceS": [Double("1.4")],"graphPaceS": [Double("1.4")],"graphSpeedS": [Double("1.4")],"graphAltitudeS": ["\(altitude)"], "mileMarkerS": [""],"splitSpeedS": ["0"], "splitDistanceS": ["0"], "graphHRS": [""],"splitTimeLog": ["custom-id"], "UriBlob": "my new item", "UUIDBlob": "ui", "activityLog": "my new item"
-// is no internet pass data to azure else save offline
+                // is no internet pass data to azure else save offline
                 if Reachability.isConnectedToNetwork() == true{
-//                    
-//                    table.insert(newItem as [NSObject : AnyObject]) { (result, error) in
-//                        if let err = error {
-//                            CommonFunctions.hideActivityIndicator();
-//                            print("ERROR ", err)
-//                        } else if let item = result {
-//                            CommonFunctions.hideActivityIndicator();
-//                            print("RunObject: ", item["altGainS"])
-////                            let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
-////                            ActivityDetailsViewController;
-////                            activityDetailsViewController.mapData=self.mapData;
-////                            self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
-//                        }
-//                    }
+                    //
+                    //                    table.insert(newItem as [NSObject : AnyObject]) { (result, error) in
+                    //                        if let err = error {
+                    //                            CommonFunctions.hideActivityIndicator();
+                    //                            print("ERROR ", err)
+                    //                        } else if let item = result {
+                    //                            CommonFunctions.hideActivityIndicator();
+                    //                            print("RunObject: ", item["altGainS"])
+                    ////                            let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
+                    ////                            ActivityDetailsViewController;
+                    ////                            activityDetailsViewController.mapData=self.mapData;
+                    ////                            self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
+                    //                        }
+                    //                    }
                     
                     
                     /***
                      * Remove all dots and all strings including after "@" and then store the name as the blobname
                      */
-// -------------------------------- example of sas -----  se=2016-09-06T14%3A07%3A43Z&sr=b&sp=w&sig=bEyf0MJdG7sggUcxYUalXd%2BRgwI8GONZ%2BUjU1Q%2BR1QM%3D
+                    // -------------------------------- example of sas -----  se=2016-09-06T14%3A07%3A43Z&sr=b&sp=w&sig=bEyf0MJdG7sggUcxYUalXd%2BRgwI8GONZ%2BUjU1Q%2BR1QM%3D
                     
                     var email =  NSUserDefaults.standardUserDefaults().stringForKey("email");
                     email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
                     let words =  email?.componentsSeparatedByString("@");
                     let contName = words![0]
-                    
                     let file = "\(contName).txt" //this is the file. we will write to and read from it
-                    
                     let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
                     print(paths);
-
-                    
                     let path = paths.URLByAppendingPathComponent(file)
                     
+                    //------------------------ store data in cache/file --------------------------
+                    
+                    
+                    do{
+                        self.firstCache = try NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding) as String;
+                    }
+                    catch{
+                        
+                    }
+                    if self.firstCache == nil{
+                        if NSJSONSerialization.isValidJSONObject(newItem){
+                            let jsonData = try! NSJSONSerialization.dataWithJSONObject([newItem], options: NSJSONWritingOptions());
+                            let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
+                            do {
+                                
+                                try jsonString.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
+                            }
+                            catch {/* error handling here */
+                                print(error);
+                                print("error while write");
+                            }
+                            
+                        }
+                    }else{
+                        if NSJSONSerialization.isValidJSONObject(newItem){
+                            let jsonData = try! NSJSONSerialization.dataWithJSONObject(newItem, options: NSJSONWritingOptions());
+                            let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
+                            self.firstCache = (self.firstCache?.stringByReplacingOccurrencesOfString("]", withString: ","))!+jsonString+"]";
+                            do {
+                                try self.firstCache!.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
+                            }
+                            catch {/* error handling here */
+                                print(error);
+                                print("error while write");
+                            }
+                        }
+                        
+                        
+                    }
                     
                     
                     
-//------------------------ store data in cache/file --------------------------
+                    //                    var error: NSError?
+                    //                    do{
+                    //                    if let data = try NSJSONSerialization.dataWithJSONObject(newItem, options:NSJSONWritingOptions()) {
+                    //                        if let json = NSString(data: data, encoding: NSUTF8StringEncoding) {
+                    //                             //writing
+                    //                            do {
+                    //
+                    //                                try json.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
+                    //                            }
+                    //                            catch {/* error handling here */
+                    //                                print(error);
+                    //                                print("error while write");
+                    //                            }
+                    //
+                    //
+                    //                        }
+                    //                    }
+                    //                    }catch{
+                    //
+                    //                    }
                     
-//                    var error: NSError?
-//                    do{
-//                    if let data = try NSJSONSerialization.dataWithJSONObject(newItem, options: NSJSONWritingOptions.PrettyPrinted) {
-//                        if let json = NSString(data: data, encoding: NSUTF8StringEncoding) {
-//                             //writing
-//                            do {
-//                                
-//                                try json.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
-//                            }
-//                            catch {/* error handling here */
-//                                print(error);
-//                                print("error while write");
-//                            }
-//                            
-//
-//                        }
-//                    }
-//                    }catch{
-//                        
-//                    }
-                  
                     
                     let newItem2 : NSDictionary = ["rundetailcontainerblob": "\(contName)",
                         "RunDetailResource":"\(uuid)",
@@ -264,7 +299,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                     var runObjectDetailJson = String();
                     let table2 = client.tableWithName("RunObjectBlob")  //Createing table
                     if client.currentUser != nil{
-                    
+                        
                         table2.insert(newItem2 as [NSObject : AnyObject]) { (result, error) in
                             if let err = error {
                                 CommonFunctions.hideActivityIndicator();
@@ -289,11 +324,11 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                                     print("Error in creating blob container object.  Error code = %ld, error domain = %@, error userinfo = %@", err!.code, err!.domain, err!.userInfo);
                                 }
                                 
-                            let blobFromSASCredential = AZSCloudBlockBlob(container: container, name: "\(blogName)", snapshotTime: nil)
+                                let blobFromSASCredential = AZSCloudBlockBlob(container: container, name: "\(blogName)", snapshotTime: nil)
                                 print(blobFromSASCredential);
                                 
                                 
-                              let  blob = container.blockBlobReferenceFromName("blogName");
+                                let  blob = container.blockBlobReferenceFromName("blogName");
                                 
                                 blob.uploadFromText("dwededewdeaw", completionHandler: { (error) in
                                     if error != nil{
@@ -306,7 +341,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                                 blobFromSASCredential.uploadFromText("{lat:251652,long:2323424}", completionHandler: { (error) in
                                     if error != nil{
                                         print(error);
-                                       
+                                        
                                     }else{
                                         let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
                                         ActivityDetailsViewController;
@@ -315,83 +350,83 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                                         print("succesful upload");
                                     }
                                 })
-
-// -----------------------------Another Way to upload to blob-----------------------
+                                
+                                // -----------------------------Another Way to upload to blob-----------------------
                                 /*
                                  var accountCreationError: NSError?
-                                let account = try! AZSCloudStorageAccount(fromConnectionString:"SharedAccessSignature=\(sasQueryString);BlobEndpoint=\(UriForBlob)");
-                                if accountCreationError != nil {
-                                    print("Error in creating account.")
-                                }
-                                // Create a blob service client object.
-                                let blobClient = account.getBlobClient()
-                                // Create a local container object.
-                                
-                                let blobContainer = blobClient.containerReferenceFromName("\(contName)");
-                                
-                                blobContainer.blockBlobReferenceFromName("\(blogName)")
-                                
-                                
-                                blobContainer.createContainerIfNotExistsWithAccessType(AZSContainerPublicAccessType.Container, requestOptions: nil, operationContext: nil, completionHandler: {(error, exists) -> Void in
-                                    if error != nil {
-                                        print(error);
-                                        print("Error in creating container.")
-                                    }
-                                    else {
-                                        do {
-                                            // Create a local blob object
-                                            let blockBlob = blobContainer.blockBlobReferenceFromName("sampleblob")
-                                            // Upload blob to Storage
-                                            
-                                            blockBlob.uploadFromText("This text will be uploaded to Blob Storage.", completionHandler: {(error) -> Void in
-                                                if error != nil {
-                                                    print("Error in creating blob.");
-                                                }
-                                            })
-                                        }
-                                    }
-                                    }
-                                )
+                                 let account = try! AZSCloudStorageAccount(fromConnectionString:"SharedAccessSignature=\(sasQueryString);BlobEndpoint=\(UriForBlob)");
+                                 if accountCreationError != nil {
+                                 print("Error in creating account.")
+                                 }
+                                 // Create a blob service client object.
+                                 let blobClient = account.getBlobClient()
+                                 // Create a local container object.
+                                 
+                                 let blobContainer = blobClient.containerReferenceFromName("\(contName)");
+                                 
+                                 blobContainer.blockBlobReferenceFromName("\(blogName)")
+                                 
+                                 
+                                 blobContainer.createContainerIfNotExistsWithAccessType(AZSContainerPublicAccessType.Container, requestOptions: nil, operationContext: nil, completionHandler: {(error, exists) -> Void in
+                                 if error != nil {
+                                 print(error);
+                                 print("Error in creating container.")
+                                 }
+                                 else {
+                                 do {
+                                 // Create a local blob object
+                                 let blockBlob = blobContainer.blockBlobReferenceFromName("sampleblob")
+                                 // Upload blob to Storage
+                                 
+                                 blockBlob.uploadFromText("This text will be uploaded to Blob Storage.", completionHandler: {(error) -> Void in
+                                 if error != nil {
+                                 print("Error in creating blob.");
+                                 }
+                                 })
+                                 }
+                                 }
+                                 }
+                                 )
                                  */
                                 
                                 
-// ---------------------------------Another Way to upload to blob-----------------------
+                                // ---------------------------------Another Way to upload to blob-----------------------
                                 
-                       /*         let blobFromSASCredential =  AZSCloudBlockBlob(url: UriForBlob, credentials: cred, snapshotTime: nil, error: &error);
+                                /*         let blobFromSASCredential =  AZSCloudBlockBlob(url: UriForBlob, credentials: cred, snapshotTime: nil, error: &error);
+                                 
+                                 if error == nil{
+                                 
+                                 if NSJSONSerialization.isValidJSONObject(newItem){
+                                 let jsonData = try! NSJSONSerialization.dataWithJSONObject(newItem, options: NSJSONWritingOptions())
+                                 let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
+                                 runObjectDetailJson = jsonString;
+                                 }
+                                 
+                                 
+                                 
+                                 
+                                 blobFromSASCredential.uploadFromText("gvhv", completionHandler: { (error) in
+                                 if error != nil{
+                                 print(error);
+                                 }else{
+                                 let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
+                                 ActivityDetailsViewController;
+                                 activityDetailsViewController.mapData=self.mapData;
+                                 self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
+                                 print("succesful upload");
+                                 }
+                                 })
+                                 
+                                 
+                                 }else{
+                                 print(error?.localizedDescription);
+                                 print(error?.localizedFailureReason);
+                                 print(error?.localizedRecoveryOptions);
+                                 print(error?.localizedRecoverySuggestion);
+                                 
+                                 }
+                                 */
                                 
-                                if error == nil{
-                                
-                                if NSJSONSerialization.isValidJSONObject(newItem){
-                                    let jsonData = try! NSJSONSerialization.dataWithJSONObject(newItem, options: NSJSONWritingOptions())
-                                    let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
-                                    runObjectDetailJson = jsonString;
-                                }
-                                    
-                                    
-                                
-                                    
-                                blobFromSASCredential.uploadFromText("gvhv", completionHandler: { (error) in
-                                    if error != nil{
-                                        print(error);
-                                    }else{
-                                        let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
-                                        ActivityDetailsViewController;
-                                        activityDetailsViewController.mapData=self.mapData;
-                                        self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
-                                    print("succesful upload");
-                                    }
-                                })
-                                
-                                
-                                }else{
-                                    print(error?.localizedDescription);
-                                    print(error?.localizedFailureReason);
-                                    print(error?.localizedRecoveryOptions);
-                                    print(error?.localizedRecoverySuggestion);
-
-                                }
-                                */
-
                             }
                         }
                         
@@ -407,7 +442,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             }
         })
         
-    }  ////-------------------end Of SaveData----------------------- 
+    }  ////-------------------end Of SaveData-----------------------
     
     
     
@@ -441,12 +476,12 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             timer.fire()
         }
     }
-//------------------------------------update duration textfield as timer changed----------------------------------------
+    //------------------------------------update duration textfield as timer changed----------------------------------------
     func timerAction() {
         counter += 1
         duration.text = "\(counter)"
     }
-//-------------------------------change time-----------------------------------
+    //-------------------------------change time-----------------------------------
     var minutes = UInt8();
     var seconds = UInt8();
     func updateTime() {
@@ -474,8 +509,8 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         
     }
     
-   
-// -------------------------popup for menu icon ------------------------------
+    
+    // -------------------------popup for menu icon ------------------------------
     @IBAction func menu(sender: AnyObject) {
         customPopUp = NSBundle.mainBundle().loadNibNamed("CustomPopUp",owner:view,options:nil).last as! CustomPopUp
         customPopUp.backgroundColor = UIColor(white: 0, alpha: 0.5)
@@ -483,16 +518,16 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         self.view.addSubview(customPopUp)
         customPopUp.frame = self.view.bounds
     }
-//---------------------------remove popup----------------------------
+    //---------------------------remove popup----------------------------
     func DonePopUp()
     {
         customPopUp.removeFromSuperview();
     }
     
     
-//   MARK:- Map
+    //   MARK:- Map
     
-// --------------------------- calculate spped,pace --------------------------------
+    // --------------------------- calculate spped,pace --------------------------------
     func calculateDistanceSpeed(lastLocation:CLLocation)  {
         let kilometers: CLLocationDistance = firstLocation.distanceFromLocation(lastLocation) / 1000.0
         distanceInMi =  kilometers * 0.62137;
@@ -549,7 +584,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         
         
     }
-
+    
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         gpsImg.image = UIImage(named: "ic_gps_none");
@@ -566,7 +601,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         dis = dis * 0.000621371;
         return dis;
     }
-//-----------------------------update text of all labels---------------------------------- not being used
+    //-----------------------------update text of all labels---------------------------------- not being used
     func currentstatus(){
         if (elapsedTime <= 0) {
             return;
@@ -605,7 +640,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             
         }
     }
-//---------------------------------------update gpsIcon--------------------------------------------
+    //---------------------------------------update gpsIcon--------------------------------------------
     func gpsIcon() {
         if !CLLocationManager.locationServicesEnabled()
         {
@@ -635,7 +670,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         }
         
     }
-//TODO:- Not Being Used
+    //TODO:- Not Being Used
     func updatedLocation(myManager:CLLocationManager)
     {
         self.myManager=myManager
@@ -915,9 +950,9 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     var cur_time = NSTimeInterval();
     var prev_time = NSTimeInterval();
     
-//    var graphSpeed=[Double]();
-//    var graphPace = [Double]();
-//    var graphDistance = [Double]();
+    //    var graphSpeed=[Double]();
+    //    var graphPace = [Double]();
+    //    var graphDistance = [Double]();
     var timeLog = [Double]();
     var thisLatLng = CLLocationCoordinate2D();
     var fromLocation = CLLocation();
@@ -926,7 +961,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     var saveTrackPolyline = String();
     
     
-//--------------------------------------calculate pace in mins ------------------------------------
+    //--------------------------------------calculate pace in mins ------------------------------------
     func paceInMinutes (minutes:Double, seconds: Double, distance: Double) -> Double {
         return (((minutes*60) + seconds) / distance) / 60;
     }
@@ -1001,19 +1036,19 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         
         
         if (self.accuracy < 40) {
-//            var toLong = Double();
-//            var toLat=Double();
+            //            var toLong = Double();
+            //            var toLat=Double();
             //Get latitude and longitude for previous location
-//            var fromLong = Double();
-//            var fromLat = Double();
+            //            var fromLong = Double();
+            //            var fromLat = Double();
             
             self.lastLocation = self.myManager.location!;
             self.trackPolyline.append(["latitude":29.69288,"longitude":95.50932])
             
             if NSJSONSerialization.isValidJSONObject(trackPolyline){
-            let jsonData = try! NSJSONSerialization.dataWithJSONObject(trackPolyline, options: NSJSONWritingOptions())
-            let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
-            saveTrackPolyline = jsonString
+                let jsonData = try! NSJSONSerialization.dataWithJSONObject(trackPolyline, options: NSJSONWritingOptions())
+                let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
+                saveTrackPolyline = jsonString
             }
             
             self.graphPace.append(self.pace);
@@ -1030,92 +1065,92 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             polyline.strokeWidth = 1
             polyline.geodesic = true
             polyline.map = mapView
-//-------------------------------------------Enroid way of location update------------------------------------
-          /*  if (self.maCount <= 3) {
-                
-                
-                //   self.avglastLat.append(self.firstLocation.coordinate.latitude);
-                self.addElevation.append(self.altitude);
-                self.avgthisLong.append(myManager.location!.coordinate.longitude);
-                self.avgthisLat.append(myManager.location!.coordinate.latitude);
-                // self.avglastLong.append(self.firstLocation.coordinate.longitude);
-                
-                
-                //                    avglastLong[maCount] = lastLocation.coordinate.longitude;
-                //                    avglastLat[maCount] = lastLocation.coordinate.latitude;
-                //                    addElevation[maCount] = altitude;
-                //                    avgthisLong[maCount] = long;
-                //                    avgthisLat[maCount] = lat;
-                
-                self.maCount = self.maCount+1;
-            } else {
-                
-                //                    double cur_time = (double) System.nanoTime() / (1.00E9);
-                
-                //            var lastlat:Double = 0;
-                //            var lastlon:Double = 0;
-                var thislat:Double = 0;
-                var thislon:Double = 0;
-                var alt:Double = 0;
-                print(self.maCount);
-                for (var i = 0; i < self.maCount; i += 1) {
-                    print(i)
-                    print(self.avglastLong.count);
-                    // lastlat = lastlat + self.avglastLat[i];
-                    // lastlon = lastlon + self.avglastLong[i];
-                    thislat = thislat + self.avgthisLat[i];
-                    thislon = thislon + self.avgthisLong[i];
-                    alt = alt + self.addElevation[i];
-                }
-                
-                toLong = thislon / Double(self.maCount);
-                toLat = thislat / Double(self.maCount);
-                //            fromLong = lastlon / Double(self.maCount);
-                //            fromLat = lastlat / Double(self.maCount);
-                // let fromLoc = CLLocation(latitude: fromLat, longitude: fromLong);
-                let toLoc = CLLocation(latitude: toLat, longitude: toLong);
-                calSpeed =  locations[0].speed/0.44704;
-                
-//                if (self.calSpeed < 0.5 || (self.graphSpeed.count < 1 && self.calSpeed > 50)) {
-//                    self.pace = 120.0;
-//                    self.calSpeed = 0;
-//                } else {
-//                    self.pace = (60.0 / self.calSpeed);
-//                }
-                
-                
-                //Calculate distance
-                // self.dis = self.dis + self.calculateDistance(fromLong, fromLat: fromLat, toLong: toLong, toLat: toLat);
-                let kilometers: CLLocationDistance = firstLocation.distanceFromLocation(myManager.location!) / 1000.0
-                distanceInMi +=  kilometers * 0.62137;
-                //            print(firstLocation.coordinate.latitude);
-                //            print(firstLocation.coordinate.longitude);
-                //            print(myManager.location!.coordinate.latitude);
-                //            print(myManager.location!.coordinate.longitude);
-                //
-                //            print(kilometers)
-                self.dis = (firstLocation.distanceFromLocation(toLoc) / 1000.0)*0.62137;
-                print((firstLocation.distanceFromLocation(toLoc) / 1000.0)*0.62137)
-                print("printing calculated Distance\(self.dis)");
-                print("printing generated Distance\(distanceInMi)")
-                self.maCount = 0;
-                path.addCoordinate(toLoc.coordinate);
-                self.avgthisLong.removeAll();
-                self.avgthisLat.removeAll();
-               // currentstatus();
-                calculateDistanceSpeed(lastLocation);
-            }  */
+            //-------------------------------------------Enroid way of location update------------------------------------
+            /*  if (self.maCount <= 3) {
+             
+             
+             //   self.avglastLat.append(self.firstLocation.coordinate.latitude);
+             self.addElevation.append(self.altitude);
+             self.avgthisLong.append(myManager.location!.coordinate.longitude);
+             self.avgthisLat.append(myManager.location!.coordinate.latitude);
+             // self.avglastLong.append(self.firstLocation.coordinate.longitude);
+             
+             
+             //                    avglastLong[maCount] = lastLocation.coordinate.longitude;
+             //                    avglastLat[maCount] = lastLocation.coordinate.latitude;
+             //                    addElevation[maCount] = altitude;
+             //                    avgthisLong[maCount] = long;
+             //                    avgthisLat[maCount] = lat;
+             
+             self.maCount = self.maCount+1;
+             } else {
+             
+             //                    double cur_time = (double) System.nanoTime() / (1.00E9);
+             
+             //            var lastlat:Double = 0;
+             //            var lastlon:Double = 0;
+             var thislat:Double = 0;
+             var thislon:Double = 0;
+             var alt:Double = 0;
+             print(self.maCount);
+             for (var i = 0; i < self.maCount; i += 1) {
+             print(i)
+             print(self.avglastLong.count);
+             // lastlat = lastlat + self.avglastLat[i];
+             // lastlon = lastlon + self.avglastLong[i];
+             thislat = thislat + self.avgthisLat[i];
+             thislon = thislon + self.avgthisLong[i];
+             alt = alt + self.addElevation[i];
+             }
+             
+             toLong = thislon / Double(self.maCount);
+             toLat = thislat / Double(self.maCount);
+             //            fromLong = lastlon / Double(self.maCount);
+             //            fromLat = lastlat / Double(self.maCount);
+             // let fromLoc = CLLocation(latitude: fromLat, longitude: fromLong);
+             let toLoc = CLLocation(latitude: toLat, longitude: toLong);
+             calSpeed =  locations[0].speed/0.44704;
+             
+             //                if (self.calSpeed < 0.5 || (self.graphSpeed.count < 1 && self.calSpeed > 50)) {
+             //                    self.pace = 120.0;
+             //                    self.calSpeed = 0;
+             //                } else {
+             //                    self.pace = (60.0 / self.calSpeed);
+             //                }
+             
+             
+             //Calculate distance
+             // self.dis = self.dis + self.calculateDistance(fromLong, fromLat: fromLat, toLong: toLong, toLat: toLat);
+             let kilometers: CLLocationDistance = firstLocation.distanceFromLocation(myManager.location!) / 1000.0
+             distanceInMi +=  kilometers * 0.62137;
+             //            print(firstLocation.coordinate.latitude);
+             //            print(firstLocation.coordinate.longitude);
+             //            print(myManager.location!.coordinate.latitude);
+             //            print(myManager.location!.coordinate.longitude);
+             //
+             //            print(kilometers)
+             self.dis = (firstLocation.distanceFromLocation(toLoc) / 1000.0)*0.62137;
+             print((firstLocation.distanceFromLocation(toLoc) / 1000.0)*0.62137)
+             print("printing calculated Distance\(self.dis)");
+             print("printing generated Distance\(distanceInMi)")
+             self.maCount = 0;
+             path.addCoordinate(toLoc.coordinate);
+             self.avgthisLong.removeAll();
+             self.avgthisLat.removeAll();
+             // currentstatus();
+             calculateDistanceSpeed(lastLocation);
+             }  */
         }
         
         
         
         //        }
         // path.addCoordinate(locations[0].coordinate);
-//        let polyline = GMSPolyline(path: path)
-//        polyline.strokeColor = UIColor.redColor();
-//        polyline.strokeWidth = 1
-//        polyline.geodesic = true
-//        polyline.map = mapView
+        //        let polyline = GMSPolyline(path: path)
+        //        polyline.strokeColor = UIColor.redColor();
+        //        polyline.strokeWidth = 1
+        //        polyline.geodesic = true
+        //        polyline.map = mapView
         
         
         
@@ -1123,7 +1158,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     
     
     
-// TODO:- Not Being Used
+    // TODO:- Not Being Used
     
     //    func locationManager(manager: CLLocationManager,   locations: [CLLocation]) {
     //
@@ -1206,7 +1241,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
      */
     
     //    }
-//----------------------------------- get Weather Data --------------------------------
+    //----------------------------------- get Weather Data --------------------------------
     func getWeatherData(urlString: String) {
         
         let url = NSURL(string: urlString+"&units=imperial&APPID=1c5c0dfb0976b076d720cfd49c0e9b3f");
@@ -1221,7 +1256,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         }
         task.resume()
     }
-//    --------------------------------------------- parse weather Data --------------------------------
+    //    --------------------------------------------- parse weather Data --------------------------------
     func setLabels(weatherData: NSData) {
         
         do
@@ -1281,7 +1316,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         }
         
     }
-//    -----------------------------------------Get start location of user -------------------------------
+    //    -----------------------------------------Get start location of user -------------------------------
     func getAddressFromLatLong(latitude:Double,longitude:Double)
     {
         if Reachability.isConnectedToNetwork() == true{
@@ -1311,7 +1346,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             })
         }
     }
-//----------------------------------gesture functions for top view animation------------------------------------------
+    //----------------------------------gesture functions for top view animation------------------------------------------
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let touch = touches.first;
         startPosition = touch?.locationInView(self.view);
@@ -1346,7 +1381,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         self.view.layoutIfNeeded()
         
     }
-//    MARK:- Calculate Calories
+    //    MARK:- Calculate Calories
     var avgpace = Double();
     var weight = Double();
     //var elapsedTime = CLong();
@@ -1411,7 +1446,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         }
     }
     
-//-----------------------------------------------audio strings-----------------------------------------
+    //-----------------------------------------------audio strings-----------------------------------------
     func audioType(type:Int){
         switch type {
         case 1:
@@ -1475,7 +1510,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     var still = Int();
     var bike = Int();
     
-//    MARK:-  Calculate Activity Performed
+    //    MARK:-  Calculate Activity Performed
     let activityManager = CMMotionActivityManager()
     
     func callMotionActivity()
@@ -1566,7 +1601,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         myManager.stopMonitoringSignificantLocationChanges()
         
     }
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

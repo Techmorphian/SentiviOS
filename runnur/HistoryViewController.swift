@@ -36,8 +36,11 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     func getData()
     {
         CommonFunctions.showActivityIndicator(self.view);
-        
-        let file = "routeData.txt" //this is the file. we will write to and read from it
+        var email =  NSUserDefaults.standardUserDefaults().stringForKey("email");
+        email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
+        let words =  email?.componentsSeparatedByString("@");
+        let contName = words![0]
+        let file = "\(contName).txt" //this is the file. we will write to and read from it
         
         let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
         print(paths);
@@ -59,10 +62,10 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 for item in items {
                     
                     self.routeData = MapData();
-                    
-                    if let distance = item["distanceP"] as? Double{
+                    if let distance = item["distance"] as? Double{
                         self.routeData.distance = String(distance);
                     }
+                    
                     if let elevationLoss = item["elevationLossP"] as? String{
                         self.routeData.elevationLoss = elevationLoss
                     }
@@ -136,7 +139,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         }
         else
         {
-            print();
+     /*       print();
             // requesting route data from route table
             if Reachability.isConnectedToNetwork() == true{
                 let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
@@ -277,24 +280,14 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 
                 // NO Internet
                 self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
-                
                 self.noInternet.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
                 self.noInternet.view.backgroundColor=UIColor.clearColor()
                 self.view.addSubview((self.noInternet.view)!);
-                
-                
                 let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(SummaryViewController.handleTap(_:)))
                 self.noInternet.noInternetLabel.userInteractionEnabled = true
-                
-                
                 self.noInternet.view.addGestureRecognizer(tapRecognizer)
-                
                 self.noInternet.didMoveToParentViewController(self)
-                
-                
-                
-                
-            }
+            }*/
         }
     }
     
@@ -388,28 +381,30 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         self.presentViewController(optionMenu, animated: true, completion: nil)
     }
 // ----------------------------------- this is toolbar for picker view of calender ---------------------
+     let toolBar = UIToolbar()
     func addToolBar()
     {
-        let toolBar = UIToolbar()
-        toolBar.frame = CGRectMake(self.datePickerView.frame.origin.x, self.datePickerView.frame.origin.y+40, self.datePickerView.frame.width, 40)
+       
+        toolBar.frame = CGRectMake(self.datePickerView.frame.origin.x, self.datePickerView.frame.origin.y-40, self.datePickerView.frame.width, 40)
         toolBar.barStyle = UIBarStyle.Default
         toolBar.translucent = true
         toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
         toolBar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: "Start", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker")
+        let doneButton = UIBarButtonItem(title: "Start", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(HistoryViewController.donePicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker")
+        let cancelButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(HistoryViewController.donePicker))
         
         toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
         toolBar.userInteractionEnabled = true
         
-        self.datePickerView.addSubview(toolBar);
+        self.view.addSubview(toolBar);
         
     }
 //--Done action of tool bar
     func donePicker()
     {
+        self.toolBar.removeFromSuperview();
         self.datePickerView.removeFromSuperview();
     }
 //----picker to chnaged value
@@ -481,7 +476,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
 
     }
-// -- not being used --- use for add gradient to the collection view
+// ------ not being used --- use for add gradient to the collection view
     private func addGradientMask() {
         let coverView = GradientView(frame: self.collectionView.bounds)
         let coverLayer = coverView.layer as! CAGradientLayer
@@ -498,9 +493,10 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.tableView.delegate=self;
-        self.tableView.dataSource=self;
-        self.tableView.reloadData();
+        self.getData();
+//        self.tableView.delegate=self;
+//        self.tableView.dataSource=self;
+//        self.tableView.reloadData();
         let collectionViewLayout: CenterCellCollectionViewFlowLayout = CenterCellCollectionViewFlowLayout()
         collectionViewLayout.itemSize = CGSizeMake(180, 120)
         collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -513,6 +509,25 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
 
         // Do any additional setup after loading the view.
+    }
+
+    override func viewDidAppear(animated: Bool) {
+//        do {
+//            var email =  NSUserDefaults.standardUserDefaults().stringForKey("email");
+//            email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
+//            let words =  email?.componentsSeparatedByString("@");
+//            let contName = words![0]
+//            let file = "\(contName).txt";
+//            let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
+//            print(paths);
+//            
+//            let getImagePath = paths.URLByAppendingPathComponent(file)
+//            try NSFileManager.defaultManager().removeItemAtPath(getImagePath.path!)
+//        }
+//        catch let error as NSError {
+//            print("Ooops! Something went wrong: \(error)")
+//        }
+
     }
 
     override func didReceiveMemoryWarning() {
