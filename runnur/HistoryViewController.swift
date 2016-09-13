@@ -23,24 +23,25 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     var mapData = MapData();
     var arrayOfMapData = [MapData]();
+    var weatherData = WeatherData();
     
     var noInternet = NoInternetViewController();
     var routeData = MapData();
     var routeDataArray = [MapData]();
     
-    var activities = ["STREAK","TOTAL ACTIVITIES","TOTAL DISTANCE","STREAK2","TOTAL ACTIVITIES2","TOTAL DISTANCE2","TOTAL ACTIVITIES3","TOTAL DISTANCE3","STREAK3"];
-    var values = ["40","102","35.8","8922","55","10","8922er","5d5","1f0"];
+    var activities = ["STREAK","TOTAL ACTIVITIES","TOTAL DISTANCE","TOTAL DURATION","TOTAL CALORIES"];
+    var values = ["40","102","35.8","8922","55"];
     var isfirstTimeTransform = true;
     
 //  ---------------------------------------- getDataFromHistory -------------------------------------
     func getData()
     {
         CommonFunctions.showActivityIndicator(self.view);
-        var email =  NSUserDefaults.standardUserDefaults().stringForKey("email");
-        email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
-        let words =  email?.componentsSeparatedByString("@");
-        let contName = words![0]
-        let file = "\(contName).txt" //this is the file. we will write to and read from it
+//        var email =  NSUserDefaults.standardUserDefaults().stringForKey("email");
+//        email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
+//        let words =  email?.componentsSeparatedByString("@");
+//        let contName = words![0]
+        let file = "development.txt" //this is the file. we will write to and read from it
         
         let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
         print(paths);
@@ -66,20 +67,29 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         self.routeData.distance = String(distance);
                     }
                     
-                    if let elevationLoss = item["elevationLossP"] as? String{
+                    if let elevationLoss = item["altLossS"] as? String{
                         self.routeData.elevationLoss = elevationLoss
                     }
-                    if let elevationGain = item["elevationGainP"] as? String{
+                    if let elevationGain = item["altGainS"] as? String{
                         self.routeData.elevationGain = elevationGain
                     }
-                    if let startLocation = item["startLocationP"] as? String{
+                    if let startLocation = item["startLocationS"] as? String{
                         self.routeData.location = startLocation
                     }
-                    if let date = item["dateP"] as? String{
+                    if let elapsedTime = item["elapsedTime"] as? String{
+                        self.routeData.duration = elapsedTime
+                    }
+                    if let date = item["date"] as? String{
                         self.routeData.date = date
                     }
                     if let distanceAway = item["distanceAwayP"] as? String{
                         self.routeData.distanceAway = distanceAway
+                    }
+                    if let caloriesBurned = item["caloriesBurnedS"] as? String{
+                        self.routeData.caloriesBurned = caloriesBurned
+                    }
+                    if let performedActivity = item["performedActivity"] as? String{
+                        self.routeData.performedActivity = performedActivity
                     }
                     if let itemID = item["id"] as? String{
                         self.routeData.itemID = itemID
@@ -103,7 +113,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                             
                         }
                     }
-                    if let trackPolylines = item["trackPolylinesP"] as? String{
+                    if let trackPolylines = item["trackPolylinesS"] as? String{
                         print(trackPolylines);
                         
                         let data: NSData = trackPolylines.dataUsingEncoding(NSUTF8StringEncoding)!
@@ -116,6 +126,30 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                                 self.routeData.trackLat.append((json![i].objectForKey("latitude") as? Double)!)
                                 self.routeData.trackLong.append((json![i].objectForKey("longitude") as? Double)!)
                             }
+                        }catch{
+                            
+                        }
+                        
+                    }
+                    
+                    self.weatherData = WeatherData();
+                    if let weatherData = item["weatherData"] as? String{
+                        print(weatherData);
+                        
+                        let data: NSData = weatherData.dataUsingEncoding(NSUTF8StringEncoding)!
+                        do
+                        {
+                            let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSDictionary;
+                            
+                            self.routeData.weatherData.speed = ((json!.objectForKey("speed") as? String)!)
+                            self.routeData.weatherData.cod = ((json!.objectForKey("cod") as? String)!)
+                            self.routeData.weatherData.temp = ((json!.objectForKey("temp") as? String)!)
+                            self.routeData.weatherData.descriptin = ((json!.objectForKey("description") as? String)!)
+                            self.routeData.weatherData.pressure = ((json!.objectForKey("pressure") as? String)!)
+                            self.routeData.weatherData.main = ((json!.objectForKey("main") as? String)!)
+                            self.routeData.weatherData.humidity = ((json!.objectForKey("humidity") as? String)!)
+                            self.routeData.weatherData.deg = ((json!.objectForKey("deg") as? String)!)
+
                         }catch{
                             
                         }
@@ -139,6 +173,12 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         }
         else
         {
+            var email =  NSUserDefaults.standardUserDefaults().stringForKey("email");
+            email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
+            let words =  email?.componentsSeparatedByString("@");
+            let contName = words![0]
+            DownloadFromBlob.downloadFromBlob("development")
+
      /*       print();
             // requesting route data from route table
             if Reachability.isConnectedToNetwork() == true{
@@ -291,6 +331,10 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         }
     }
     
+    
+    
+    
+    
 //---------------------------------------- For noRoute show No saved route images ---------------------------------
     let routeViewButton = UIButton();
     func showNoRoutesView()
@@ -438,23 +482,30 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     var index = 0;
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("HistoryTableViewCell", forIndexPath: indexPath) as! HistoryTableViewCell;
+        let data = self.routeDataArray[indexPath.row]
+       
+        cell.dateAndTime.text =  dateFunction.dateFormatFunc("MMM dd, yyyy hh:mm a", formFormat: "MM/dd/yyyy HH:mm:ss", dateToConvert: data.date!);
+        cell.location.text = data.location;
+        cell.duration.text = data.duration;
+        cell.distance.text = data.distance;
+        cell.avgPace.text = data.avgPace;
         return cell;
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return 2;
-        case 1:
-            return 3;
-        case 2:
-            return 5;
-        default:
-            return 0;
-        }
-        
+//        switch section {
+//        case 0:
+//            return 2;
+//        case 1:
+//            return 3;
+//        case 2:
+//            return 5;
+//        default:
+//            return 0;
+//        }
+        return self.routeDataArray.count;
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 3;
+        return 1;
     }
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
@@ -472,6 +523,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
         ActivityDetailsViewController;
+        
        // activityDetailsViewController.mapData=self.arrayOfMapData[indexPath.row];
         self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
 
@@ -512,6 +564,12 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
 
     override func viewDidAppear(animated: Bool) {
+        
+        
+        
+        
+        
+        
 //        do {
 //            var email =  NSUserDefaults.standardUserDefaults().stringForKey("email");
 //            email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");

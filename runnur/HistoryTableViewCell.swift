@@ -10,6 +10,16 @@ import UIKit
 
 class HistoryTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var dateAndTime: UILabel!
+    @IBOutlet weak var location: UILabel!
+    @IBOutlet weak var duration: UILabel!
+    @IBOutlet weak var distance: UILabel!
+    @IBOutlet weak var avgPace: UILabel!
+    @IBOutlet weak var img: UIImageView!
+    
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

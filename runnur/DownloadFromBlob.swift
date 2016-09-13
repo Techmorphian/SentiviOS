@@ -123,19 +123,124 @@ class DownloadFromBlob{
         })
     }
     
-    func getSASToken()
-    {
+static  var containerNam = String();
+static func downloadFromBlob(containerName:String)
+ {
+    containerNam = containerName;
+    var err: NSError?
+    let container = AZSCloudBlobContainer(url: NSURL(string: "https://runobjectblob.blob.core.windows.net/\(containerName)")!, error: &err)
+    if ((err) != nil) {
+        print("Error in creating blob container object.  Error code = %ld, error domain = %@, error userinfo = %@", err!.code, err!.domain, err!.userInfo);
+    }
+    else{
+        print("successful container");
         
+        let token = AZSContinuationToken();
+        
+        self.listBlobsInContainerHelper(container, continuationToken: token, prefix: "", blobListingDetails: AZSBlobListingDetails.All, maxResults: -1, completionHandler: {(error) -> Void in
+            
+            
+//            if error != nil {
+//                print("Error in creating container.")
+//            }
+        })
     }
     
+   }
+    
+    static var data = String();
+    
+  static  func listBlobsInContainerHelper(container: AZSCloudBlobContainer, continuationToken: AZSContinuationToken, prefix: String, blobListingDetails: AZSBlobListingDetails, maxResults: Int, completionHandler: () -> Void) {
+        
+        
+        
+        container.listBlobsSegmentedWithContinuationToken(continuationToken, prefix: prefix, useFlatBlobListing: true, blobListingDetails: blobListingDetails, maxResults: maxResults, completionHandler: {(error, results) -> Void in
+            if error != nil {
+               // completionHandler(error)
+            }
+            else {
+                for i in 0..<results!.blobs!.count {
+                   // print("\(results!.blobs![i] as! AZSCloudBlockBlob).blobName()")
+                    if let blockBlog = results!.blobs![i] as? AZSCloudBlockBlob
+                    {
+                      blockBlog.downloadToTextWithCompletionHandler({ (error, string) in
+                        if (error != nil) {
+                            print(error);
+                        }else{
+                            print("what getting \(string)");
+                            if data == ""
+                            {
+                                data += "["+string!+"]";
+                                print(data)
+                                writeToFile(data, contName: containerNam)
+                            }else{
+                                let trucated = data.characters.dropLast();
+                                data = String(trucated)+","+string!+"]";
+                                print(data)
+                                writeToFile(data, contName: containerNam)
+                            }
+                        }
+                      })
+                    }
+                   
+                    
+                }
+              //  writeToFile(data, contName: containerNam)
+                if (results!.continuationToken != nil) {
+                     self.listBlobsInContainerHelper(container, continuationToken: (results?.continuationToken)!, prefix: prefix, blobListingDetails: blobListingDetails, maxResults: maxResults, completionHandler: completionHandler)
+                }
+            }
+        })
+    }
+    
+   static var firstCache : String? = nil;
+   static func writeToFile(newItem:String,contName:String)
+    {
+        
+        let file = "\(contName).txt" //this is the file. we will write to and read from it
+        let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
+        print(paths);
+        let path = paths.URLByAppendingPathComponent(file)
+        
+        //------------------------ store data in cache/file --------------------------
+        
+        
+        do{
+            firstCache = try NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding) as String;
+        }
+        catch{
+            
+        }
+        if firstCache == nil{
+                do {
+                    //let item = "["+newItem+"]"
+                    try newItem.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
+                    print("newItem :---\(newItem)")
+                }
+                catch {/* error handling here */
+                    print(error);
+                    print("error while write");
+                }
+        }else{
+           // let trucated = firstCache?.characters.dropLast();
+              //  firstCache = String(trucated!)+", "+newItem+"]";
+                do {
+                    try newItem.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
+                }
+                catch {/* error handling here */
+                    print(error);
+                    print("error while write");
+                }
+            
+        }
+    }
+  
     
     
     
-//    func minutesFromNow(minutes:Int) {
-//    var date = NSDate();
-//    date.setMinutes(date.getMinutes() + minutes);
-//    return date;
-//    };
+    
+    
+
 
     
 }

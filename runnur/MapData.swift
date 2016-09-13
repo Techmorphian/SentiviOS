@@ -40,4 +40,7 @@ class MapData
     var elevationLat = [Double]();
      var elevationLong = [Double]();
     var itemID = String();
+    
+    var gpsAcc = Int();
+    var eplapsedTime = String();
 }

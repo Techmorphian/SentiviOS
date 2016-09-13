@@ -16,20 +16,17 @@ class dateFunction
     {
         
         let df = NSDateFormatter()
-        
-        df.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        //df.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         
         df.dateFormat = formFormat
         let nsdate =  df.dateFromString(dateToConvert)
-        
-        
-        df.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+      //  df.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         
         df.dateFormat = toFormat
         
         let newStartDate = df.stringFromDate(nsdate!)
         
-        print(newStartDate)
+       // print(newStartDate)
         if nsdate != nil{
             return newStartDate;
         }else

@@ -324,32 +324,57 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                                     print("Error in creating blob container object.  Error code = %ld, error domain = %@, error userinfo = %@", err!.code, err!.domain, err!.userInfo);
                                 }
                                 
-                                let blobFromSASCredential = AZSCloudBlockBlob(container: container, name: "\(blogName)", snapshotTime: nil)
-                                print(blobFromSASCredential);
+ 
+                                let opContext = AZSOperationContext();
                                 
                                 
-                                let  blob = container.blockBlobReferenceFromName("blogName");
+                               container.createContainerIfNotExistsWithAccessType(AZSContainerPublicAccessType.Container, requestOptions: nil, operationContext: opContext, completionHandler: { (error, bool) in
+                                if (error != nil){
+                                    print(error)
+                                }else{
+                                    let blockBlog = container.blockBlobReferenceFromName(blogName);
+                                    blockBlog.uploadFromText("sdsadasfdsfdsfgsdgdfdhgsfhdgfhdfghgh hfghgfhghgfh", completionHandler: { (error) in
+                                        if (error != nil){
+                                           print(error)
+                                        }else{
+                                           print("scucess")
+                                        }
+                                    })
+                                }
+                               })
                                 
-                                blob.uploadFromText("dwededewdeaw", completionHandler: { (error) in
-                                    if error != nil{
-                                        print(error);
-                                        
-                                    }else{
-                                    }
-                                });
                                 
-                                blobFromSASCredential.uploadFromText("{lat:251652,long:2323424}", completionHandler: { (error) in
-                                    if error != nil{
-                                        print(error);
-                                        
-                                    }else{
-                                        let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
-                                        ActivityDetailsViewController;
-                                        activityDetailsViewController.mapData=self.mapData;
-                                        self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
-                                        print("succesful upload");
-                                    }
-                                })
+                                
+                                
+// ----------------------------------- way to upload to blob --------------------
+                                
+//                                let blobFromSASCredential = AZSCloudBlockBlob(container: container, name: "\(blogName)", snapshotTime: nil)
+//                                print(blobFromSASCredential);
+//                                
+//                                
+//                              //  let  blob = container.blockBlobReferenceFromName(blogName);
+//                                
+//                                blobFromSASCredential.uploadFromText("dwededewdeaw", completionHandler: { (error) in
+//                                    if error != nil{
+//                                        print(error);
+//                                        
+//                                    }else{
+//                                        print("success")
+//                                    }
+//                                });
+//                                
+//                                blobFromSASCredential.uploadFromText("{lat:251652,long:2323424}", completionHandler: { (error) in
+//                                    if error != nil{
+//                                        print(error);
+//                                        
+//                                    }else{
+//                                        let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
+//                                        ActivityDetailsViewController;
+//                                        activityDetailsViewController.mapData=self.mapData;
+//                                        self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
+//                                        print("succesful upload");
+//                                    }
+//                                })
                                 
                                 // -----------------------------Another Way to upload to blob-----------------------
                                 /*

@@ -4211,6 +4211,14 @@
                                                 <constraint firstItem="jJO-Mr-419" firstAttribute="leading" secondItem="QQM-Ae-mmU" secondAttribute="trailing" constant="1" id="xFl-oh-LsG"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="avgPace" destination="sqQ-y8-fSk" id="HLd-00-IQu"/>
+                                            <outlet property="dateAndTime" destination="e1I-2k-IB8" id="cDT-rk-Jat"/>
+                                            <outlet property="distance" destination="ZvC-9F-bpT" id="kC8-MX-RdW"/>
+                                            <outlet property="duration" destination="85m-S0-1oX" id="7hz-3Z-ozw"/>
+                                            <outlet property="img" destination="6s8-if-Ndd" id="KEe-3k-0w4"/>
+                                            <outlet property="location" destination="Rhg-9P-vir" id="a9y-Kj-jlr"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
