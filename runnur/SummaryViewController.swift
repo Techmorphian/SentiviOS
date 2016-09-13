@@ -774,8 +774,6 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                     {
                         
                         
-                        
-                        
                         if  let elements: AnyObject = json!["response"]
                         {
                             
@@ -1943,6 +1941,9 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
     {
         super.viewDidLoad()
         
+        ViewGroupFitViewController.instance?.overFlowButton.hidden=true;
+
+        
     //// push notification
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SummaryViewController.methodOfReceivedNotification(_:)), name:"showAlert", object: nil)
@@ -1951,8 +1952,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
     
         if(Reachability.isConnectedToNetwork()==true )
         {
-            showActivityIndicatory()
-            
+                       
              self.viewGroupChallengeDetail();
         }
             

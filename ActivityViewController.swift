@@ -1571,13 +1571,15 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                             
                                             /////////////////////
                                             
-                                            let distance = activityData!["distance"] as! String
+                                            //let distance = activityData!["distance"] as! String
                                             
                                             
-                                            if distance != ""
-                                            {
-                                                self.activityModel.distance = distance
-                                            }
+//                                            if distance != ""
+//                                            {
+//                                                self.activityModel.distance = distance
+//                                            }
+                                            
+                                            self.activityModel.distance = "7.7"
 
                                             
                                             /////////////////////
@@ -3817,7 +3819,8 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         super.viewDidLoad();
   
         
-        
+        ViewGroupFitViewController.instance?.overFlowButton.hidden=true;
+
         
         
         //// push notification
@@ -3891,7 +3894,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 
                 self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
                 
-                self.noInternet.view.frame = CGRectMake(0, 65, self.view.frame.size.width, self.view.frame.size.height-65);
+                self.noInternet.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);
                 
                 self.view.addSubview((self.noInternet.view)!);
                 

@@ -10,21 +10,22 @@ import UIKit
 
 class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,NSURLSessionDelegate,NSURLSessionDataDelegate
 {
-
     
- 
+    
+    
     var noInternet = NoInternetViewController()
     
     var noResult = NoResultViewController()
-
+    
     
     @IBOutlet var ProgressTableView: UITableView!
     
-      
     
-   
+    @IBOutlet var frontView: UIView!
+    
+    
     @IBOutlet var cView: UIView!
- 
+    
     
     @IBOutlet var goalValue: UILabel!
     
@@ -37,7 +38,7 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     
     
-   //MARK:- TABLE VIEW METHOD
+    //MARK:- TABLE VIEW METHOD
     
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
@@ -58,8 +59,8 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
     {
-    
-       return 30
+        
+        return 30
         
         
     }
@@ -77,27 +78,28 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
             headerView.textLabel?.textAlignment = .Left
             
             headerView.textLabel?.textColor = UIColor.blackColor()
-            headerView.textLabel!.font = UIFont(name: "System", size: 10)
+            
+            headerView.textLabel!.font =   headerView.textLabel!.font.fontWithSize(14)
             
             headerView.textLabel?.text = "Contributors"
-                
-           
+            
+            
             
         }
         
     }
-
+    
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
-        return 70.0;//Choose your custom row height
+        return 60.0;//Choose your custom row height
     }
     
-
     
-       
     
-
+    
+    
+    
     
     // CELL FOR ROW AT INDEX PATH
     
@@ -106,15 +108,15 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         
         let cell:ProgressTableViewCell = tableView.dequeueReusableCellWithIdentifier("ProgressTableViewCell")as!
-    ProgressTableViewCell
-
+        ProgressTableViewCell
+        
         
         cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.size.width / 2;
         cell.profileImageView.clipsToBounds = true;
         cell.profileImageView.layer.borderWidth = 1
         cell.profileImageView.layer.borderColor = colorCode.GrayColor.CGColor
         
-
+        
         
         if PhotoUrl[indexPath.row] != ""
         {
@@ -128,19 +130,44 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
             cell.profileImageView.image = UIImage(named:"im_default_profile")
             
         }
-
-        
-      cell.userNameLabel.text = FirstName[indexPath.row] + " " + LastName[indexPath.row]
-        
-      cell.contributedAmountLabel.text = "$" + contributedAmount[indexPath.row]
         
         
-    return cell
+        if UserStatus == "1"
+        {
+            
+            cell.contributedAmountLabel.text = "$" + " " + contributedAmount[indexPath.row]
+            
+        }
+            
+        else
+            
+        {
+            cell.contributedAmountLabel.text = ""
+            
+        }
+        
+        
+        if userId[indexPath.row] == NSUserDefaults.standardUserDefaults().stringForKey("userId")
+        {
+            
+            cell.userNameLabel.text = FirstName[indexPath.row] + " " + LastName[indexPath.row] +  " "  + "(You)"
+            
+        }
+        else
+        {
+            cell.userNameLabel.text = FirstName[indexPath.row] + " " + LastName[indexPath.row]
+            
+        }
+        
+        
+        
+        
+        return cell
         
         
         
     }
-
+    
     
     
     
@@ -207,7 +234,7 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         
     }
-
+    
     
     var  userId =  [String]()
     var  FirstName =  [String]()
@@ -221,6 +248,9 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
     var GoalAmount = String()
     
     var RaisedAmount = String()
+    
+    var UserStatus = String()
+    
     
     //MARK:- NSURLSession delegate methods
     
@@ -259,11 +289,15 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     let status = parseJSON["status"] as? String
                     let msg=parseJSON["message"] as? String
                     
+                    //                    let userStatus=parseJSON["userStatus"] as? String
+                    //
+                    //                    UserStatus = userStatus!
                     
                     //MARK: - STATUS = SUCCESS
                     
                     if(status=="Success")
                     {
+                        
                         
                         
                         self.RemoveNoInternet();
@@ -274,6 +308,7 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         
                         self.loadingView.removeFromSuperview();
                         
+                        self.frontView.hidden = true;
                         
                         
                         
@@ -290,7 +325,7 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 if goalAmount != ""
                                 {
                                     
-                                    goalValue.text = "$" + goalAmount
+                                    goalValue.text = "$" + " " + goalAmount
                                 }
                                 
                                 
@@ -306,7 +341,7 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 
                                 let raisedAmount = elementss[i]["raisedAmount"] as! String
                                 
-                                 RaisedAmount = raisedAmount
+                                RaisedAmount = raisedAmount
                                 
                                 let runCount = elementss[i]["runCount"] as! String
                                 
@@ -315,7 +350,7 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 
                                 let distance = elementss[i]["distance"] as! String
                                 let unit = elementss[i]["unit"] as! String
-
+                                
                                 if distance != ""
                                 {
                                     
@@ -324,11 +359,11 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 
                                 
                                 let remainingDays = elementss[i]["remainingDays"] as! String
-
+                                
                                 
                                 if remainingDays != ""
                                 {
-                                daysRemaining.text = remainingDays
+                                    daysRemaining.text = remainingDays
                                     
                                 }
                                 
@@ -339,10 +374,10 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             
                             NSOperationQueue.mainQueue().addOperationWithBlock
                                 {
-                                   
+                                    
                                     
                                     self.addCircleView();
-
+                                    
                                     
                                     self.ProgressTableView.delegate = self;
                                     
@@ -363,142 +398,185 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         if  let elements: AnyObject = json!["response"]
                         {
                             
-                            for i in 0 ..< elements.count
-                            {
-                                
-                                let userId = elements[i]["userId"] as! String
-                                
-                                if userId != ""
-                                {
-                                    
-                                    self.userId.append(userId)
-                                    
-                                }
-                                else
-                                {
-                                    
-                                    self.userId.append("")
-                                    
-                                }
-                                
-                                
-                                
-                                
-                                let isAnonymous = elements[i]["isAnonymous"] as! String
-                                
-                                if isAnonymous != ""
-                                {
-                                    
-                                    self.isAnonymous.append(isAnonymous)
-                                    
-                                }
-                                else
-                                {
-                                    
-                                    self.isAnonymous.append("")
-                                    
-                                }
-                                
-                                
-                                
-                                
-                                let FirstName = elements[i]["FirstName"] as! String
-                                
-                                if FirstName != ""
-                                {
-                                    
-                                    self.FirstName.append(FirstName)
-                                    
-                                }
-                                else
-                                {
-                                    
-                                    self.FirstName.append("")
-                                    
-                                }
-                                
-                                
-                                
-                                let LastName = elements[i]["LastName"] as! String
-                                
-                                if LastName != ""
-                                {
-                                    
-                                    self.LastName.append(LastName)
-                                    
-                                }
-                                else
-                                {
-                                    
-                                    self.LastName.append("")
-                                    
-                                }
-                                
-                                
-                                
-                                
-                                
-                                let PhotoUrl = elements[i]["PhotoUrl"] as! String
-                                
-                                if PhotoUrl != ""
-                                {
-                                    
-                                    self.PhotoUrl.append(PhotoUrl)
-                                    
-                                }
-                                else
-                                {
-                                    
-                                    self.PhotoUrl.append("")
-                                    
-                                }
-                                
-                                
-                                
-                                
-                                let contributedAmount = elements[i]["contributedAmount"] as! String
-                                
-                                if contributedAmount != ""
-                                {
-                                    
-                                    self.contributedAmount.append(contributedAmount)
-                                    
-                                }
-                                    
-                                else
-                                {
-                                    
-                                    self.contributedAmount.append("")
-                                    
-                                }
-                                
-                                
-                                
-                            }
                             
                             
-                            NSOperationQueue.mainQueue().addOperationWithBlock
+                            NSOperationQueue.mainQueue().addOperationWithBlock({
+                                
+                                self.activityIndicator.stopAnimating();
+                                
+                                self.loadingView.removeFromSuperview();
+                                
+                                
+                                
+                                //                                self.RemoveNoInternet();
+                                //
+                                //                                if self.view.subviews.contains(self.noResult.view)
+                                //
+                                //                                {
+                                //
+                                //                                    //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
+                                //
+                                //                                }
+                                //
+                                //                                else
+                                //
+                                //                                {
+                                //
+                                //                                    self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+                                //
+                                //                                    self.noResult.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-180);
+                                //
+                                //                                    self.noResult.noResultTextLabel.text = msg
+                                //                                    self.noResult.noResultImageView.image = UIImage(named: "im_no_results")
+                                //
+                                //                                    self.view.addSubview((self.noResult.view)!);
+                                //
+                                //
+                                //                                    self.noResult.didMoveToParentViewController(self)
+                                //
+                                //                                }
+                                //                            })
+                                
+                                
+                                
+                                
+                                
+                                for i in 0 ..< elements.count
                                 {
                                     
+                                    let userId = elements[i]["userId"] as! String
                                     
-                                    self.ProgressTableView.delegate = self;
+                                    if userId != ""
+                                    {
+                                        
+                                        self.userId.append(userId)
+                                        
+                                    }
+                                    else
+                                    {
+                                        
+                                        self.userId.append("")
+                                        
+                                    }
                                     
-                                    self.ProgressTableView.dataSource = self;
                                     
-                                    self.RemoveNoInternet();
                                     
-                                    self.RemoveNoResult();
-                                    self.ProgressTableView.reloadData();
                                     
-                            }
-                            
-                            
+                                    let isAnonymous = elements[i]["isAnonymous"] as! String
+                                    
+                                    if isAnonymous != ""
+                                    {
+                                        
+                                        self.isAnonymous.append(isAnonymous)
+                                        
+                                    }
+                                    else
+                                    {
+                                        
+                                        self.isAnonymous.append("")
+                                        
+                                    }
+                                    
+                                    
+                                    
+                                    
+                                    let FirstName = elements[i]["FirstName"] as! String
+                                    
+                                    if FirstName != ""
+                                    {
+                                        
+                                        self.FirstName.append(FirstName)
+                                        
+                                    }
+                                    else
+                                    {
+                                        
+                                        self.FirstName.append("")
+                                        
+                                    }
+                                    
+                                    
+                                    
+                                    let LastName = elements[i]["LastName"] as! String
+                                    
+                                    if LastName != ""
+                                    {
+                                        
+                                        self.LastName.append(LastName)
+                                        
+                                    }
+                                    else
+                                    {
+                                        
+                                        self.LastName.append("")
+                                        
+                                    }
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    let PhotoUrl = elements[i]["PhotoUrl"] as! String
+                                    
+                                    if PhotoUrl != ""
+                                    {
+                                        
+                                        self.PhotoUrl.append(PhotoUrl)
+                                        
+                                    }
+                                    else
+                                    {
+                                        
+                                        self.PhotoUrl.append("")
+                                        
+                                    }
+                                    
+                                    
+                                    
+                                    
+                                    let contributedAmount = elements[i]["contributedAmount"] as! String
+                                    
+                                    if contributedAmount != ""
+                                    {
+                                        
+                                        self.contributedAmount.append(contributedAmount)
+                                        
+                                    }
+                                        
+                                    else
+                                    {
+                                        
+                                        self.contributedAmount.append("")
+                                        
+                                    }
+                                    
+                                    
+                                    
+                                }
+                                
+                                
+                                NSOperationQueue.mainQueue().addOperationWithBlock
+                                    {
+                                        
+                                        
+                                        self.ProgressTableView.delegate = self;
+                                        
+                                        self.ProgressTableView.dataSource = self;
+                                        
+                                        self.RemoveNoInternet();
+                                        
+                                        self.RemoveNoResult();
+                                        self.ProgressTableView.reloadData();
+                                        
+                                }
+                                
+                            })
                             
                         } // if response close
                         
                         
                         
-                    }
+                    } // if success close
                         
                         //MARK: - STATUS = ERROR
                         
@@ -552,17 +630,154 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     else if status == "NoResult"
                         
                     {
-                       
                         
                         
+                        self.RemoveNoInternet();
+                        
+                        self.RemoveNoResult();
+                        
+                        self.activityIndicator.stopAnimating();
+                        
+                        self.loadingView.removeFromSuperview();
+                        
+                        self.frontView.hidden = true;
                         
                         
+                        if  let elementss: AnyObject = json!["progress"]
+                        {
+                            
+                            for i in 0 ..< elementss.count
+                            {
+                                
+                                let goalAmount = elementss[i]["goalAmount"] as! String
+                                
+                                GoalAmount = goalAmount
+                                
+                                if goalAmount != ""
+                                {
+                                    
+                                    goalValue.text = "$" + " " + goalAmount
+                                }
+                                
+                                
+                                let amountPerMile = elementss[i]["amountPerMile"] as! String
+                                
+                                
+                                
+                                
+                                
+                                let usereStatus = elementss[i]["usereStatus"] as! String
+                                
+                                
+                                
+                                let raisedAmount = elementss[i]["raisedAmount"] as! String
+                                
+                                RaisedAmount = raisedAmount
+                                
+                                let runCount = elementss[i]["runCount"] as! String
+                                
+                                
+                                let averageSpeed = elementss[i]["averageSpeed"] as! String
+                                
+                                let distance = elementss[i]["distance"] as! String
+                                let unit = elementss[i]["unit"] as! String
+                                
+                                if distance != ""
+                                {
+                                    
+                                    distanceCovered.text = distance + " " + unit
+                                }
+                                
+                                
+                                let remainingDays = elementss[i]["remainingDays"] as! String
+                                
+                                
+                                if remainingDays != ""
+                                {
+                                    daysRemaining.text = remainingDays
+                                    
+                                }
+                                
+                                
+                                
+                            }
+                            
+                            
+                            NSOperationQueue.mainQueue().addOperationWithBlock
+                                {
+                                    
+                                    
+                                    self.addCircleView();
+                                    
+                                    
+                                    self.ProgressTableView.delegate = self;
+                                    
+                                    self.ProgressTableView.dataSource = self;
+                                    
+                                    self.RemoveNoInternet();
+                                    
+                                    self.RemoveNoResult();
+                                    self.ProgressTableView.reloadData();
+                                    
+                            }
+                            
+                            
+                            
+                        } // if response close
                         
                         
-                        
-                        
-                        
-                        
+                        if  let elements: AnyObject = json!["response"]
+                        {
+                            
+                            
+                            
+                            
+                            
+                            NSOperationQueue.mainQueue().addOperationWithBlock({
+                                
+                                self.activityIndicator.stopAnimating();
+                                
+                                self.loadingView.removeFromSuperview();
+                                
+                                
+                                
+                                self.RemoveNoInternet();
+                                
+                                if self.view.subviews.contains(self.noResult.view)
+                                    
+                                {
+                                    
+                                    //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
+                                    
+                                }
+                                    
+                                else
+                                    
+                                {
+                                    
+                                    self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+                                    
+                                    self.noResult.view.frame = CGRectMake(0, 180, self.view.frame.size.width, self.view.frame.size.height-180);
+                                    
+                                    self.noResult.noResultTextLabel.text = msg
+                                    self.noResult.noResultImageView.image = UIImage(named: "im_no_results")
+                                    
+                                    self.view.addSubview((self.noResult.view)!);
+                                    
+                                    
+                                    self.noResult.didMoveToParentViewController(self)
+                                    
+                                }
+                            })
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                        }
                         
                         
                         
@@ -750,37 +965,37 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     
     
-   // MARK:- FUNC ADD CIRCLE VIEW
+    // MARK:- FUNC ADD CIRCLE VIEW
     func addCircleView()
-    
+        
     {
-      
+        
         let circleWidth = CGFloat(100)
         let circleHeight = circleWidth
         
         
-    //////////////////////////////////
+        //////////////////////////////////
         
         let labelY = cView.frame.height/2 - 10
         
         let label = UILabel(frame: CGRectMake(0,labelY, self.cView.frame.width, 15))
         
         label.textAlignment = NSTextAlignment.Center
-        label.text = "$" + RaisedAmount
+        label.text = "$" + " " + RaisedAmount
         
         label.font = label.font.fontWithSize(14)
         
         
         self.cView.addSubview(label)
-       
         
-    
         
-       //////////////////////////////////
+        
+        
+        //////////////////////////////////
         
         let RaisedLabelY = label.frame.origin.y + 10
         
-        let RaisedLabel = UILabel(frame: CGRectMake(0, RaisedLabelY+10, self.cView.frame.width, 15))
+        let RaisedLabel = UILabel(frame: CGRectMake(0, RaisedLabelY+5, self.cView.frame.width, 15))
         
         
         RaisedLabel.textAlignment = NSTextAlignment.Center
@@ -795,12 +1010,12 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
         cView.addSubview(RaisedLabel)
         
         
-
+        
         
         // Create a new CircleView
         let circleView = CircleView(frame: CGRectMake((UIScreen.mainScreen().bounds.width/2)/2-55, 20, circleWidth, circleHeight))
         
-           
+        
         
         cView.addSubview(circleView)
         
@@ -816,7 +1031,7 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         
         
-        let calValue = Float(90) / Float(GoalAmount)!
+        let calValue = Float(RaisedAmount)! / Float(GoalAmount)!
         
         let formatedValue =  String(format: "%.2f",calValue)
         
@@ -828,16 +1043,14 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
         {
             
             cgFloatValue = 1.00
-
+            
             
         }
-        
+            
         else
         {
             
             cgFloatValue = CGFloat(Float(formatedValue)!)
-            
-            
             
         }
         
@@ -848,7 +1061,7 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         
     }
-
+    
     
     
     override func viewDidAppear(animated: Bool)
@@ -861,27 +1074,25 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
     {
         super.viewDidLoad()
         
-     
+        ViewGroupFitViewController.instance?.overFlowButton.hidden=true;
+        
         
         ProgressTableView.tableFooterView = UIView()
-
         
         
-        if Reachability.isConnectedToNetwork() == true
-        {
-                
-                self.progress();
-        }
-        
-        else
+        if(Reachability.isConnectedToNetwork()==true )
         {
             
+            self.progress();
+        }
+            
+        else
+        {
             
             if self.view.subviews.contains(self.noInternet.view)
                 
             {
                 
-                //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
                 
             }
                 
@@ -891,13 +1102,12 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 
                 self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
                 
-                self.noInternet.view.frame = CGRectMake(0, 65, self.view.frame.size.width, self.view.frame.size.height-65);
+                self.noInternet.view.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height-0);
                 
                 self.view.addSubview((self.noInternet.view)!);
                 
                 
                 let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ProgressViewController.handleTap(_:)))
-                
                 self.noInternet.noInternetLabel.userInteractionEnabled = true
                 
                 
@@ -909,16 +1119,17 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
         }
         
-
+        
+        
         
         
         //// push notification
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProgressViewController.methodOfReceivedNotification(_:)), name:"showAlert", object: nil)
         
-
         
-
+        
+        
         // Do any additional setup after loading the view.
     }
     
@@ -974,23 +1185,23 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
     }
     
-
-
+    
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

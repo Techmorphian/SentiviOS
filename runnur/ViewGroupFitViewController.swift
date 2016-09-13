@@ -378,6 +378,8 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
     @IBAction func SummaryButtonAction(sender: UIButton)
     {
         
+        
+        
         sender.tintColor = UIColor.whiteColor();
         
         summaryBottomView.backgroundColor = UIColor.whiteColor()
@@ -455,7 +457,7 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
     @IBAction func activityButtonAction(sender: UIButton)
     {
         
-     
+       
         
        
         ActivityButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
@@ -476,7 +478,9 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         if sender.titleLabel?.text == "Activity"
         {
           
-          
+           
+            
+            
              sender.tintColor = UIColor.whiteColor();
             ActivityButton.titleLabel?.textColor  = UIColor.whiteColor();
 
@@ -556,6 +560,7 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
     {
         
         
+        
         sender.tintColor = UIColor.whiteColor();
         
         
@@ -577,6 +582,8 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         
         if sender.titleLabel?.text == "Activity"
         {
+            
+            
             
             UIView.animateWithDuration(0.7, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 

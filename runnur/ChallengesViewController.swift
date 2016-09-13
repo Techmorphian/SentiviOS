@@ -32,7 +32,7 @@ class ChallengesViewController: UIViewController
     @IBAction func menuButtonAction(sender: AnyObject)
     {
         
-        
+            
         if self.revealViewController() != nil
         {
             self.revealViewController().revealToggle(self);
