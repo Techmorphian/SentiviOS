@@ -92,7 +92,9 @@ class CircleView: UIView
         CGContextSetLineWidth(context, 5.0);
         
         // Set the circle outerline-colour
-        UIColor.whiteColor().set()
+       // UIColor.whiteColor().set()
+        
+        UIColor.grayColor().set()
         
         // Create Circle
         CGContextAddArc(context, (frame.size.width)/2, frame.size.height/2, (frame.size.width - 10)/2, 0.0, CGFloat(M_PI * 2.0), 1)
