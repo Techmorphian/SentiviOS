@@ -254,7 +254,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wu8-ny-gNv" customClass="CircleLabel" customModule="Sentiv" customModuleProvider="target">
-                                                    <rect key="frame" x="122" y="12" width="21" height="21"/>
+                                                    <rect key="frame" x="162" y="12" width="21" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -265,7 +265,7 @@
                                                 <constraint firstItem="rMb-Oz-T6m" firstAttribute="centerY" secondItem="0lf-7U-afN" secondAttribute="centerY" id="3fN-dp-Y6L"/>
                                                 <constraint firstItem="Mc9-QF-yzS" firstAttribute="leading" secondItem="0lf-7U-afN" secondAttribute="leadingMargin" constant="56" id="3vk-qW-gZ9"/>
                                                 <constraint firstItem="Wu8-ny-gNv" firstAttribute="centerY" secondItem="0lf-7U-afN" secondAttribute="centerY" id="695-AX-cUJ"/>
-                                                <constraint firstItem="Wu8-ny-gNv" firstAttribute="leading" secondItem="Mc9-QF-yzS" secondAttribute="trailing" constant="20" id="Ik2-bY-739"/>
+                                                <constraint firstItem="Wu8-ny-gNv" firstAttribute="leading" secondItem="Mc9-QF-yzS" secondAttribute="trailing" constant="60" id="Ik2-bY-739"/>
                                                 <constraint firstItem="rMb-Oz-T6m" firstAttribute="leading" secondItem="0lf-7U-afN" secondAttribute="leading" constant="20" symbolic="YES" id="Vy5-xH-h4F"/>
                                                 <constraint firstItem="Mc9-QF-yzS" firstAttribute="centerY" secondItem="0lf-7U-afN" secondAttribute="centerY" id="uzx-ZM-8go"/>
                                             </constraints>
@@ -4563,7 +4563,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="69"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Q.1. Group Fit" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CRB-AK-FjV">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Q.1. Group Fit" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CRB-AK-FjV">
                                                     <rect key="frame" x="20" y="13" width="530" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -4572,7 +4572,7 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_expand" translatesAutoresizingMaskIntoConstraints="NO" id="zof-zj-Rw1">
                                                     <rect key="frame" x="559" y="14" width="21" height="16"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LAA-PC-Hhh">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LAA-PC-Hhh">
                                                     <rect key="frame" x="52" y="43" width="528" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.29803921568627451" green="0.29803921568627451" blue="0.29803921568627451" alpha="1" colorSpace="calibratedRGB"/>

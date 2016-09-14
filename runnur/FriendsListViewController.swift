@@ -162,6 +162,9 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         
         self.searchTextField.resignFirstResponder();
 
+        
+        RemoveNoFrinedResult();
+        
         self.friendsTableView.reloadData()
         
         
@@ -776,7 +779,9 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         
         showActivityIndicatory();
         
+        friendListArray.removeAll();
         
+
         
         // LoaderFile.showLoader(self.view);
         
@@ -833,6 +838,9 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
         activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
                                                loadingView.frame.size.height / 2);
+        
+        loadingView.userInteractionEnabled = false
+        
         loadingView.addSubview(activityIndicator)
         self.view.addSubview(loadingView)
         activityIndicator.startAnimating()
@@ -878,8 +886,10 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                     if(status=="Success")
                     {
                         
+                        self.searchTextField.text = ""
                         
-                                
+                        self.searchTextField.resignFirstResponder();
+                        
                         
                         if  let elements: AnyObject = json!["response"]
                         {
@@ -940,11 +950,11 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                                 self.RemoveNoFrinedResult()
                                 self.RemoveNoResult();
                                 
-                                
+                            self.friendsTableView.reloadData();
                             self.friendsTableView.delegate = self;
                             
                             self.friendsTableView.dataSource = self;
-                            self.friendsTableView.reloadData();
+                           
                             }
                             
                         }
@@ -1234,9 +1244,54 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         
         
         
-        print(NSUserDefaults.standardUserDefaults().stringForKey("successMsgOfAddManually"))
+        if(Reachability.isConnectedToNetwork()==true )
+        {
+            
+            friendListArray.removeAll();
+            
+            friendList();
+            
+        }
+            
+        else
+        {
+            
+            if self.view.subviews.contains(self.noInternet.view)
+                
+            {
+                
+                //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
+                
+            }
+                
+            else
+                
+            {
+                
+                self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
+                
+                self.noInternet.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
+                
+                self.view.addSubview((self.noInternet.view)!);
+                
+                //  self.DIVC.imageView.image = UIImage(named: "im_no_internet");
+                
+                // self.noInternet.imageView.userInteractionEnabled = true
+                
+                let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(FriendsListViewController.handleTap(_:)))
+                self.noInternet.noInternetLabel.userInteractionEnabled = true
+                
+                
+                self.noInternet.view.addGestureRecognizer(tapRecognizer)
+                
+                self.noInternet.didMoveToParentViewController(self)
+                
+            }
+            
+        }
         
-        print(NSUserDefaults.standardUserDefaults().stringForKey("AddFBFrndsSucessMSG"))
+        
+
         
         
         if NSUserDefaults.standardUserDefaults().stringForKey("successMsgOfAddManually") != nil
@@ -1347,6 +1402,8 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         
     }
     
+    
+    
       
     
      //MARK:- VIEW DIDLOAD
@@ -1373,57 +1430,10 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         NSUserDefaults.standardUserDefaults().setObject("", forKey: "AddFBFrndsSucessMSG")
         
         
-        if(Reachability.isConnectedToNetwork()==true )
-        {
-            
-            
-            
-              friendList();
-            
-        }
-        
-        else
-        {
-            
-            if self.view.subviews.contains(self.noInternet.view)
-                
-            {
-                
-              //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
-                
-            }
-                
-            else
-                
-            {
-                
-                 self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
-                
-                self.noInternet.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
-                
-                self.view.addSubview((self.noInternet.view)!);
-                
-              //  self.DIVC.imageView.image = UIImage(named: "im_no_internet");
-                
-               // self.noInternet.imageView.userInteractionEnabled = true
-                
-                let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(FriendsListViewController.handleTap(_:)))
-                self.noInternet.noInternetLabel.userInteractionEnabled = true
-
-                
-                self.noInternet.view.addGestureRecognizer(tapRecognizer)
-                
-                self.noInternet.didMoveToParentViewController(self)
-                
-            }
-            
-        }
-        
-     
-    
         
         
-        friendsTableView.reloadData();
+      
+      
        
         
         //MARK:-  padding views

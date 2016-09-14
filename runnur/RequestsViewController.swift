@@ -2158,7 +2158,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 
                                 self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
                                 
-                                self.noResult.view.frame = CGRectMake(0, 65, self.view.frame.size.width, self.view.frame.size.height-65-45);
+                                self.noResult.view.frame = CGRectMake(0, 65, self.view.frame.size.width, self.view.frame.size.height-65);
                                 
                                 self.noResult.noResultTextLabel.text = msg
                                 self.noResult.noResultImageView.image = UIImage(named: "im_no_results")
@@ -2249,11 +2249,13 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         self.loadingView.removeFromSuperview();
         
-        self.RemoveNoInternet();
+        self.RemoveNoResult();
         
-        if self.view.subviews.contains(self.noResult.view)
+        if self.view.subviews.contains(self.noInternet.view)
             
         {
+            
+            //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
             
         }
             
@@ -2261,18 +2263,21 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
         {
             
-            self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+            self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
             
-            self.noResult.view.frame = CGRectMake(0,65, self.view.frame.size.width, self.view.frame.size.height-65);
+            self.noInternet.view.frame = CGRectMake(0, 65, self.view.frame.size.width, self.view.frame.size.height-65);
             
-            self.noResult.noResultTextLabel.text = "something went wrong."
+            self.view.addSubview((self.noInternet.view)!);
             
-            self.noResult.noResultImageView.image = UIImage(named: "im_error")
             
-            self.view.addSubview((self.noResult.view)!);
-            self.view.userInteractionEnabled = true
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(CommentsViewController.handleTap(_:)))
             
-            self.noResult.didMoveToParentViewController(self)
+            self.noInternet.noInternetLabel.userInteractionEnabled = true
+            
+            
+            self.noInternet.view.addGestureRecognizer(tapRecognizer)
+            
+            self.noInternet.didMoveToParentViewController(self)
             
         }
         

@@ -223,7 +223,9 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
         
         let cell = tableView.cellForRowAtIndexPath(indexPath) as!  NavigationCellTableViewCell
         
-        cell.contentView.backgroundColor = colorCode.MediumDarkBlueColor
+       // cell.backgroundColor = colorCode.MediumDarkBlueColor
+        
+        //cell.setSelected(true, animated: false)
         
         if indexPath.section == 0
         {
@@ -233,12 +235,21 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             case "Activity":
 
                
+                
+                
                 self.performSegueWithIdentifier("homeView", sender: nil)
                 break;
                 
             case "Challenges":
                 
-
+                
+                print(indexPath.row)
+               
+                if indexPath.row == 1
+                {
+                  cell.backgroundColor = colorCode.MediumDarkBlueColor
+                    
+                }
                 self.performSegueWithIdentifier("Challenges", sender: nil)
                 
                 break;
@@ -252,6 +263,16 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 break;
                 
             case "Friends":
+                
+                
+                print(indexPath.row)
+                
+                if indexPath.row == 3
+                {
+                    cell.backgroundColor = colorCode.MediumDarkBlueColor
+                    
+                }
+
                 
                 self.performSegueWithIdentifier("Friends", sender: nil)
                 
@@ -371,6 +392,10 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 
             case "FAQ":
                 
+                print(indexPath.row)
+                
+
+                
                 self.performSegueWithIdentifier("FAQ", sender: nil)
                 
 
@@ -392,12 +417,12 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath)
     {
         let cell = tableView.cellForRowAtIndexPath(indexPath) as!  NavigationCellTableViewCell
+        
+        
                
         cell.contentView.backgroundColor = UIColor.clearColor();
     }
     
-    
-        
     var sectionOne = ["Activity","Challenges","Requests","Friends","Routes"]
     var sectionOneImages = ["ic_activity_nav","ic_challenges_nav","ic_requests_nav","ic_friends_nav","ic_routes_nav"]
     

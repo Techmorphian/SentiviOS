@@ -356,13 +356,8 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
                 self.facebookModel.toShow = true
                    
                // self.friendListModel.toShow = true
-
-                    
                 
                 print(self.facebookModel.toShow)
-                    
-                    
-                
                     
                 self.facebookArray.append(self.facebookModel);
                     
@@ -378,8 +373,6 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
                    
                 }
                 
-                
-               
                 
                 print("\(friendObjects.count)")
                 

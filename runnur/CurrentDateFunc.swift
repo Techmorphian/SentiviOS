@@ -60,12 +60,12 @@ class CurrentDateFunc
         
         dateFormatter.dateFormat = "yyyy/MM/dd"
         
-        var nsLastDate = dateFormatter.dateFromString(lastDateSent)
+        let nsLastDate = dateFormatter.dateFromString(lastDateSent)
         
         print(nsLastDate)
         
         
-        var nsNewDate = nsLastDate?.dateByAddingTimeInterval(-6*24*60*60)
+        let nsNewDate = nsLastDate?.dateByAddingTimeInterval(-6*24*60*60)
               
         
         return dateFormatter.stringFromDate(nsNewDate!)

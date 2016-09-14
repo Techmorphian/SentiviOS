@@ -26,6 +26,12 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     
     var noInternet = NoInternetViewController()
     
+    
+    var label = UILabel()
+    
+    
+    
+    
     /////// func no internet
     func RemoveNoInternet()
     {
@@ -205,18 +211,94 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         
     }
     
-    
+    // MARK:- SERACH CANCEL BUTTON ACTION
     @IBAction func searchCancelButton(sender: AnyObject)
     {
         
         
+        self.label.hidden = true
+
         self.searchButtonActive = false;
         self.searchTextField.text = ""
         self.searchTextField.resignFirstResponder();
         
-        self.ContactTableView.reloadData()
-
+        self.label.hidden = true;
         
+        if  contactList.count == 0 && PBArray.count == 0
+        {
+            
+            self.label.frame = CGRectMake(0, self.view.frame.size.height/2, self.view.frame.width, 50)
+            
+            self.label.numberOfLines = 2;
+            
+            
+            self.label.textAlignment = NSTextAlignment.Center
+            
+            self.label.text = "Hurray!! You are already friends with all your Phonebook friends who have joined Sentiv"
+            
+            self.label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+            
+            
+            self.label.font = self.label.font.fontWithSize(13)
+            
+            self.view.addSubview(self.label)
+            
+        }
+ 
+        
+        if self.contactList.count == 0
+        {
+            
+            
+            
+            self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+            
+            self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+            self.noResult.noResultTextLabel.text = "No phonebook contacts found."
+            
+            self.view.addSubview((self.noResult.view)!);
+            
+            
+            self.noResult.didMoveToParentViewController(self)
+            
+            
+            
+        }
+        
+        if self.PBModel.Email.count == 0 && self.PBModel.MobNo.count == 0
+            
+        {
+            
+            
+            print(self.PBModel.Email.count)
+            
+            
+            if self.view.subviews.contains(self.noResult.view)
+                
+            {
+                
+                
+            }
+                
+            else
+                
+            {
+                
+                
+                self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+                
+                self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+                self.noResult.noResultTextLabel.text = "No phonebook contacts found."
+                
+                self.view.addSubview((self.noResult.view)!);
+                
+                
+                self.noResult.didMoveToParentViewController(self)
+                
+                
+            }
+        
+        }
         
         
     }
@@ -245,7 +327,8 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         SearchContactNames.removeAll(keepCapacity: false)
         
         SearchContactImages.removeAll(keepCapacity: false)
-
+        
+        self.RemoveNoResult();
         
         self.searchButtonActive = true;
         
@@ -285,49 +368,49 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                 
                 
                 searchPBArray.append(searchPBModel)
-                
-                
-                
-                
-//                SearchContactNames.append(friendsList[i])
-//                
-//                 //////// on i position we get name as well as image position that y we are  appending i position ofcontactImages in to a SearchContactImages
-//                SearchContactImages.append(contactImages[i])
-                
-                
+       
                 
             }
             
         }
         
         
-        if searchPBArray.count == 0
+       if searchPBArray.count == 0
+       {
+        
+        
+            self.label.hidden = false;
+        
+            self.label.frame = CGRectMake(0, self.view.frame.size.height/2, self.view.frame.width, 50)
+        
+            self.label.center = self.view.center
+            
+            self.label.numberOfLines = 0;
+        
+            self.label.textAlignment = NSTextAlignment.Center
+            
+            self.label.text = "Sorry,we could not find any friend(s) with this name"
+            
+            self.label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+            
+            self.label.font = self.label.font.fontWithSize(13)
+        
+            self.label.textColor = colorCode.DarkGrayColor
+        
+            self.view.addSubview(self.label)
+        
+           self.view.bringSubviewToFront(label)
+        
+     
+        
+        }
+        
+        if PBArray.count == 0
         {
-            print(true)
             
-            if self.view.subviews.contains(self.noResult.view)
-                
-            {
-                
-                
-            }
-                
-            else
-                
-            {
-                
-                self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
-                
-                self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
-                
-                self.view.addSubview((self.noResult.view)!);
-                
-                self.noResult.noResultTextLabel.text = "No phonebook contacts found."
-                
-                self.noResult.didMoveToParentViewController(self)
-                
-            }
             
+            print("sgdsghghd")
+        
         }
 
         
@@ -345,11 +428,95 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         if let swRange = textField.text?.rangeFromNSRange(range)
         {
             let textFieldData = (textField.text)!.stringByReplacingCharactersInRange(swRange, withString:string)
+            
+            
             if textFieldData == ""
             {
                 searchButtonActive = false;
                 
                 self.RemoveNoResult();
+                
+                self.label.hidden = true
+         
+                
+                if  contactList.count == 0 && PBArray.count == 0
+                {
+                    
+                    self.label.frame = CGRectMake(0, self.view.frame.size.height/2, self.view.frame.width, 50)
+                    
+                    self.label.numberOfLines = 2;
+                    
+                    
+                    self.label.textAlignment = NSTextAlignment.Center
+                    
+                    self.label.text = "Hurray!! You are already friends with all your Phonebook friends who have joined Sentiv"
+                    
+                    self.label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+                    
+                    
+                    self.label.font = self.label.font.fontWithSize(13)
+                    
+                    self.view.addSubview(self.label)
+                    
+                }
+                
+                
+                if self.contactList.count == 0
+                {
+                    
+                    
+                    
+                    self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+                    
+                    self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+                    self.noResult.noResultTextLabel.text = "No phonebook contacts found."
+                    
+                    self.view.addSubview((self.noResult.view)!);
+                    
+                    
+                    self.noResult.didMoveToParentViewController(self)
+                    
+                    
+                    
+                }
+
+            
+                
+                if self.PBModel.Email.count == 0 && self.PBModel.MobNo.count == 0
+                    
+                {
+                    
+                    
+                    print(self.PBModel.Email.count)
+                    
+                    
+                    if self.view.subviews.contains(self.noResult.view)
+                        
+                    {
+                        
+                        
+                    }
+                        
+                    else
+                        
+                    {
+                        
+                        
+                        self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+                        
+                        self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+                        self.noResult.noResultTextLabel.text = "No phonebook contacts found."
+                        
+                        self.view.addSubview((self.noResult.view)!);
+                        
+                        
+                        self.noResult.didMoveToParentViewController(self)
+                        
+                        
+                    }
+                    
+                }
+                
                 
                 self.ContactTableView.reloadData();
             }
@@ -360,6 +527,13 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             }
             
         }
+        
+        
+        
+        
+        
+        
+        
         
         
         return true
@@ -408,9 +582,6 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             return PBArray.count
             
         }
-
-        
-
         
     }
     
@@ -450,6 +621,34 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                 
             }
         }
+        
+        
+        print(contactList)
+        
+        print(contactList.count)
+        
+        if  contactList.count == 0 && PBArray.count == 0
+        {
+            
+            self.label.frame = CGRectMake(0, self.view.frame.size.height/2, self.view.frame.width, 50)
+            
+            self.label.numberOfLines = 2;
+            
+            
+            self.label.textAlignment = NSTextAlignment.Center
+            
+            self.label.text = "Hurray!! You are already friends with all your Phonebook friends who have joined Sentiv"
+            
+            self.label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+            
+            
+            self.label.font = self.label.font.fontWithSize(13)
+            
+            self.view.addSubview(self.label)
+            
+        }
+        
+        
         
         
         
@@ -1233,6 +1432,8 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     }
 
     
+    var contactList = NSArray()
+    
     func getAddressBookNames()
     {
         
@@ -1380,11 +1581,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         
         let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
         
-//        dispatch_async(backgroundQueue,
-//                       
-//            {
         
-            
             
         var errorRef: Unmanaged<CFError>?
             
@@ -1419,15 +1616,21 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
    
                                 self.addressBook = self.extractABAddressBookRef(ABAddressBookCreateWithOptions(nil, &errorRef))
                     
-                                let contactList: NSArray = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(self.addressBook, nil, ABPersonSortOrdering(kABPersonSortByFirstName)).takeRetainedValue() as [ABRecordRef]
                     
-                                print("records in the array \(contactList.count)")
+//                    let contactList:NSArray = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(self.addressBook, nil, ABPersonSortOrdering(kABPersonSortByFirstName)).takeRetainedValue() as [ABRecordRef]
                     
-                                print("contactList \(contactList)")
+                                self.contactList = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(self.addressBook, nil, ABPersonSortOrdering(kABPersonSortByFirstName)).takeRetainedValue() as [ABRecordRef]
                     
-                                for record in contactList
+                                print("records in the array \(self.contactList.count)")
+                    
+                                print("contactList \(self.contactList)")
+                    
+                                for record in self.contactList
                     
                                 {
+                                    
+                                    
+                                    self.label.hidden = true
                     
                                     self.RemoveNoInternet();
                     
@@ -1454,8 +1657,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                     
                                                 print(self.allEmails)
                     
-                                    
-                    
+                                                
                                                 if self.allEmails.count > 0
                                                 {
                     
@@ -1613,6 +1815,34 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                                     {
                                         
                                         
+                                        print(self.PBModel.Email.count)
+                                        
+                                        
+                                        if self.view.subviews.contains(self.noResult.view)
+                                            
+                                        {
+                                            
+                                            
+                                        }
+                                            
+                                        else
+                                            
+                                        {
+
+                                        
+                                        self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+                                        
+                                        self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+                                        self.noResult.noResultTextLabel.text = "No phonebook contacts found."
+                                        
+                                        self.view.addSubview((self.noResult.view)!);
+                                        
+                                        
+                                        self.noResult.didMoveToParentViewController(self)
+
+                                        
+                                        }
+                                        
                                         
                                     }
                                         
@@ -1627,8 +1857,13 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                                     
                                     
                                 }  /// for loop close
-                            
-                            if contactList.count == 0
+                    
+                    
+                    
+                    print(self.contactList.count)
+                    
+                    
+                            if self.contactList.count == 0
                             {
                     
                     
