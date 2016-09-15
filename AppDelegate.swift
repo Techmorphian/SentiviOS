@@ -101,6 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         print(aps)
         
         var NotificationMessage = String()
+        
         NotificationMessage = aps!["alert"] as! String
         
         var badgeCount = Int()

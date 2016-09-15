@@ -1567,6 +1567,10 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
     {
         super.viewDidLoad()
         
+        
+        completedTableView.separatorColor = UIColor.clearColor()
+     
+        
           NSUserDefaults.standardUserDefaults().setBool(false, forKey: "FromCreateCauseAndGroupFitScreen")
         
         completedTableView.tableFooterView = UIView()

@@ -276,6 +276,66 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         
         self.RemoveNoFrinedResult();
         
+        if facebookArray.count == 0
+        {
+            
+            
+            
+            if self.view.subviews.contains(self.noFriendResult.view)
+                
+            {
+                
+                
+                
+            }
+                
+            else
+                
+            {
+                
+                self.noFriendResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoFriendViewController") as! NoFriendViewController
+                
+                self.noFriendResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+                
+                self.view.addSubview((self.noFriendResult.view)!);
+                
+                self.noFriendResult.didMoveToParentViewController(self)
+                
+            }
+            
+            
+            
+        }
+        
+        
+        //// if my fb array count is not zero and facebook filter is zero then add msg hurray.......
+        
+        print(facebookArray.count)
+        
+        if facebookArray.count != 0 && FBFriendsFilterArray.count == 0
+        {
+            
+            
+            self.label.frame = CGRectMake(0, self.view.frame.size.height/2-100, self.view.frame.width, 50)
+            
+            self.label.center = view.center
+            
+            self.label.textAlignment = NSTextAlignment.Center
+            
+            self.label.text = "Hurray!! You are already friends with all your facebook friends who have joined Sentiv"
+            
+            self.label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+            self.label.numberOfLines = 2;
+            
+            label.font = label.font.fontWithSize(13)
+            
+            self.view.addSubview(self.label)
+            
+            
+        }
+        
+        
+
         
         self.FacebookTableView.reloadData();
         
@@ -383,7 +443,10 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         
     }
     
+   
     
+    
+    // MARK:- TEXT FIELD SHOULD CHANGE CHARACTERS IN RANGE
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
     {
@@ -398,9 +461,64 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
                 
                self.label.hidden = true
                 
+                if facebookArray.count == 0
+                {
+                    
+                    
+                    
+                    if self.view.subviews.contains(self.noFriendResult.view)
+                        
+                    {
+                        
+                        
+                        
+                    }
+                        
+                    else
+                        
+                    {
+                        
+                        self.noFriendResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoFriendViewController") as! NoFriendViewController
+                        
+                        self.noFriendResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+                        
+                        self.view.addSubview((self.noFriendResult.view)!);
+                        
+                        self.noFriendResult.didMoveToParentViewController(self)
+                        
+                    }
+                    
+                }
                 
                 
-                self.FacebookTableView.reloadData();
+                //// if my fb array count is not zero and facebook filter is zero then add msg hurray.......
+                
+                print(facebookArray.count)
+                
+                if facebookArray.count != 0 && FBFriendsFilterArray.count == 0
+                {
+                    
+                    
+                    self.label.frame = CGRectMake(0, self.view.frame.size.height/2-100, self.view.frame.width, 50)
+                    
+                    self.label.center = view.center
+                    
+                    self.label.textAlignment = NSTextAlignment.Center
+                    
+                    self.label.text = "Hurray!! You are already friends with all your facebook friends who have joined Sentiv"
+                    
+                    self.label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+                    self.label.numberOfLines = 2;
+                    
+                    label.font = label.font.fontWithSize(13)
+                    
+                    self.view.addSubview(self.label)
+                    
+                    
+                }
+                
+           self.FacebookTableView.reloadData();
+                
             }
             else
             {

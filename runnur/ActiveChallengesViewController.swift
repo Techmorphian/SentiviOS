@@ -966,6 +966,10 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
         activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
                                                loadingView.frame.size.height / 2);
+        
+        
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        
         loadingView.addSubview(activityIndicator)
         self.view.addSubview(loadingView)
         activityIndicator.startAnimating()
@@ -1062,6 +1066,9 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                 
                 let json = try NSJSONSerialization.JSONObjectWithData(self.mutableData, options: .MutableContainers) as? NSDictionary
                 
+                
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                
                 if  let parseJSON = json{
                     
                     let status = parseJSON["status"] as? String
@@ -1070,6 +1077,8 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                     {
                         
                         
+                        
+                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
                         
                         
                         if  let elements: AnyObject = json!["response"]
@@ -1661,6 +1670,8 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        activeTableView.separatorColor = UIColor.clearColor()
         
           NSUserDefaults.standardUserDefaults().setBool(false, forKey: "FromCreateCauseAndGroupFitScreen")
         

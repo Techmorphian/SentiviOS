@@ -820,9 +820,6 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
     }
    
     
-    
-    
-    
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     let loadingView: UIView = UIView()
     func showActivityIndicatory()
@@ -838,6 +835,8 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
         activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
                                                loadingView.frame.size.height / 2);
+        
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
         loadingView.userInteractionEnabled = false
         
@@ -864,7 +863,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         
         let dataString = String(data: self.mutableData, encoding: NSUTF8StringEncoding)
         
-        
+        UIApplication.sharedApplication().endIgnoringInteractionEvents()
         
         print(dataString!)
         
@@ -885,6 +884,10 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                     let msg=parseJSON["message"] as? String
                     if(status=="Success")
                     {
+                        
+                        
+                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+
                         
                         self.searchTextField.text = ""
                         
@@ -925,7 +928,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                                 let friendEmailId = elements[i]["friendEmailId"] as! String
                                 
                                 self.friendListModel.Email.append(friendEmailId)
-
+ 
 
                                 
                                 self.friendListModel.friendId  = elements[i]["friendId"] as! String

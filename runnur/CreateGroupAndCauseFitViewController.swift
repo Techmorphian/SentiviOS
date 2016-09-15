@@ -333,6 +333,26 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                 }
                 
                 
+                if secondWinner > FirstWinner || thirdWinner > FirstWinner || thirdWinner > secondWinner
+                {
+                    
+                    let alert = UIAlertController(title: "", message: "Winner 1 should be allocated highest amount,followed by winner 2 and winner 3" , preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    let alertAction = UIAlertAction(title: "dismiss", style: UIAlertActionStyle.Default, handler: nil)
+                    
+                    alert.addAction(alertAction)
+                    
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    
+                    return
+
+                    
+                    
+                }
+                
+                
+                
                 
                 if  FirstWinner + secondWinner + thirdWinner != 100
                 {
@@ -779,11 +799,8 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         
         pickerDate2 = sender.date
         
-        
         print(pickerDate2)
-        
-        
-        
+          
         
     }
 

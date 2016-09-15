@@ -216,7 +216,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     {
         
         
-        self.label.hidden = true
+        self.label.hidden =  true
 
         self.searchButtonActive = false;
         self.searchTextField.text = ""
@@ -299,6 +299,10 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             }
         
         }
+        
+        
+        
+        ContactTableView.reloadData();
         
         
     }
@@ -682,8 +686,20 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                 
             {
 
-            cell.friendsNameLabel.text = searchPBArray[indexPath.row].firstName + " " + searchPBArray[indexPath.row].lastName;
-            
+                if searchPBArray[indexPath.row].firstName + searchPBArray[indexPath.row].lastName != ""
+                {
+                   
+                    cell.friendsNameLabel.text = searchPBArray[indexPath.row].firstName + " " + searchPBArray[indexPath.row].lastName;
+
+
+                }
+                else
+                {
+                    cell.friendsNameLabel.text = searchPBArray[indexPath.row].Email[0]
+                }
+                
+                
+                
             
             if searchPBArray[indexPath.row].contImages != nil
             {
@@ -729,11 +745,19 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             
             {
                 
-                print(PBArray[indexPath.row].firstName)
+            if PBArray[indexPath.row].firstName + PBArray[indexPath.row].lastName != ""
+            {
             
 
             cell.friendsNameLabel.text = PBArray[indexPath.row].firstName + " " + PBArray[indexPath.row].lastName
-           
+            
+            }
+            else
+            {
+                
+                cell.friendsNameLabel.text  = PBArray[indexPath.row].Email[0]
+                
+            }
                 
             
             if PBArray[indexPath.row].contImages != nil
@@ -773,9 +797,6 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         
 
         }
-        
-        
-     
         
         
         

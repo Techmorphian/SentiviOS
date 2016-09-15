@@ -89,9 +89,9 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
     }
     
     
-    
-    
     //MARK:- TABLE VIEW FUNC
+    
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
         return 1
@@ -102,7 +102,9 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
         return AddVia.count
         
     }
+    
     //MARK:- CELL FOR ROW INDEX PATH
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cell: AddFriendsCellTableViewCell = tableView.dequeueReusableCellWithIdentifier("AddFriendsCellTableViewCell")as!
@@ -416,7 +418,7 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
             
             self.performSegueWithIdentifier("AddviaPhonebook", sender: nil)
             
-
+           return
         }
         
         if AddVia[indexPath.row] == "Add via facebook"
@@ -551,13 +553,17 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
                 
       } // else close
             
+            
+            
+            return
+            
         }
         if AddVia[indexPath.row] == "Add via Google"
         {
             
               self.performSegueWithIdentifier("AddviaGoogle", sender: nil)
             
-            
+            return
         }
         if AddVia[indexPath.row] == "Add Manually"
         {
@@ -565,7 +571,7 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
             
             self.performSegueWithIdentifier("AddManually", sender: nil)
             
-            
+            return
         }
 
         

@@ -98,17 +98,21 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
      
         if indexPath.section == 0
         {
-            cell.namesLabel.text = sectionOne[indexPath.row]
-            cell.naviImageViews.image = UIImage(named: sectionOneImages[indexPath.row])
             
             
             if indexPath.row == 0   /// activity
             {
-            
+                cell.namesLabel.text = sectionOne[indexPath.row]
+                cell.naviImageViews.image = UIImage(named: sectionOneImages[indexPath.row])
+
                  cell.countLabel.hidden = true;
             }
             if indexPath.row == 1 /// challenge
             {
+                
+                cell.namesLabel.text = sectionOne[indexPath.row]
+                cell.naviImageViews.image = UIImage(named: sectionOneImages[indexPath.row])
+
                  cell.countLabel.hidden = true;
             }
             
@@ -116,7 +120,9 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             if indexPath.row == 2 /// requests
             {
                 
-                
+                cell.namesLabel.text = sectionOne[indexPath.row]
+                cell.naviImageViews.image = UIImage(named: sectionOneImages[indexPath.row])
+
                 cell.countLabel.hidden = false;
                 
                 
@@ -147,12 +153,19 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             
             if indexPath.row == 3 // friends
             {
+                cell.namesLabel.text = sectionOne[indexPath.row]
+                cell.naviImageViews.image = UIImage(named: sectionOneImages[indexPath.row])
+
                 cell.countLabel.hidden = true;
             }
             
             
             if indexPath.row == 4 // routes
             {
+                
+                cell.namesLabel.text = sectionOne[indexPath.row]
+                cell.naviImageViews.image = UIImage(named: sectionOneImages[indexPath.row])
+
                 cell.countLabel.hidden = true;
             }
 
@@ -161,25 +174,38 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
         }
         if indexPath.section == 1
         {
-            cell.namesLabel.text = sectionTwo[indexPath.row]
-            cell.naviImageViews.image = UIImage(named: sectionTwoImages[indexPath.row])
             
             if indexPath.row == 0 /// history
             {
+                cell.namesLabel.text = sectionTwo[indexPath.row]
+                cell.naviImageViews.image = UIImage(named: sectionTwoImages[indexPath.row])
+
                  cell.countLabel.hidden = true;
             }
             
             if indexPath.row == 1  // statistics
             {
+                
+                cell.namesLabel.text = sectionTwo[indexPath.row]
+                cell.naviImageViews.image = UIImage(named: sectionTwoImages[indexPath.row])
+
                 cell.countLabel.hidden = true;
             }
             if indexPath.row == 2 // heart rate
             {
+                
+                cell.namesLabel.text = sectionTwo[indexPath.row]
+                cell.naviImageViews.image = UIImage(named: sectionTwoImages[indexPath.row])
+
                 cell.countLabel.hidden = true;
             }
             
             if indexPath.row == 3 /// winnings
             {
+                
+                cell.namesLabel.text = sectionTwo[indexPath.row]
+                cell.naviImageViews.image = UIImage(named: sectionTwoImages[indexPath.row])
+
                
                 cell.countLabel.hidden = false;
               
@@ -206,9 +232,44 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             cell.countLabel.hidden = true;
 
             
-            cell.namesLabel.text = sectionThree[indexPath.row]
-            cell.naviImageViews.image = UIImage(named: sectionThreeImages[indexPath.row])
+            
+            if indexPath.row == 0 // setting
+            {
+                cell.namesLabel.text = sectionThree[indexPath.row]
+                cell.naviImageViews.image = UIImage(named: sectionThreeImages[indexPath.row])
 
+            
+            }
+            
+            
+            if indexPath.row == 1 //log out
+            {
+                cell.namesLabel.text = sectionThree[indexPath.row]
+                cell.naviImageViews.image = UIImage(named: sectionThreeImages[indexPath.row])
+ 
+                
+            }
+            
+            if indexPath.row == 2 // feedback
+            {
+                cell.namesLabel.text = sectionThree[indexPath.row]
+                cell.naviImageViews.image = UIImage(named: sectionThreeImages[indexPath.row])
+
+                
+            }
+            
+            if indexPath.row == 3 // faq
+            {
+              
+                cell.namesLabel.text = sectionThree[indexPath.row]
+                cell.naviImageViews.image = UIImage(named: sectionThreeImages[indexPath.row])
+
+                
+            }
+
+
+            
+           
         }
         
         return cell
@@ -395,10 +456,12 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 print(indexPath.row)
                 
 
-                
+                if indexPath.row == 3
+                {
                 self.performSegueWithIdentifier("FAQ", sender: nil)
                 
-
+                }
+                
                 break;
                 
                 
