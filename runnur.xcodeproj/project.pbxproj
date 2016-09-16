@@ -48,6 +48,8 @@
 		446624101D6B3B8900B65BAA /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4466240F1D6B3B8900B65BAA /* AlertView.swift */; };
 		446681B91D5AF64D00BFF4B6 /* CaloriesCounterLookUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446681B81D5AF64C00BFF4B6 /* CaloriesCounterLookUp.swift */; };
 		446681BB1D5B47B800BFF4B6 /* MapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446681BA1D5B47B800BFF4B6 /* MapData.swift */; };
+		446AE6E31D8C0CE800E2B6B5 /* SelectActivityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 446AE6E21D8C0CE800E2B6B5 /* SelectActivityView.xib */; };
+		446AE6E51D8C345800E2B6B5 /* AddActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446AE6E41D8C345800E2B6B5 /* AddActivityViewController.swift */; };
 		447473C51D51F8CB0021C561 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447473C41D51F8CB0021C561 /* MapKit.framework */; };
 		447B235B1D4B863700D79823 /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447B235A1D4B863700D79823 /* WindowsAzureMobileServices.framework */; };
 		447F1E1B1D7EB11A00B903B1 /* AZSClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447F1E1A1D7EB11A00B903B1 /* AZSClient.framework */; };
@@ -178,6 +180,8 @@
 		4466240F1D6B3B8900B65BAA /* AlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		446681B81D5AF64C00BFF4B6 /* CaloriesCounterLookUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaloriesCounterLookUp.swift; sourceTree = "<group>"; };
 		446681BA1D5B47B800BFF4B6 /* MapData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapData.swift; sourceTree = "<group>"; };
+		446AE6E21D8C0CE800E2B6B5 /* SelectActivityView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectActivityView.xib; sourceTree = "<group>"; };
+		446AE6E41D8C345800E2B6B5 /* AddActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddActivityViewController.swift; sourceTree = "<group>"; };
 		447473C41D51F8CB0021C561 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		447B235A1D4B863700D79823 /* WindowsAzureMobileServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WindowsAzureMobileServices.framework; sourceTree = "<group>"; };
 		447F1E1A1D7EB11A00B903B1 /* AZSClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AZSClient.framework; sourceTree = "<group>"; };
@@ -583,6 +587,8 @@
 				444CE0F71D6C5A3F0044FBD9 /* SlideHistoryCollectionViewCell.swift */,
 				444CE0F81D6C5A3F0044FBD9 /* CenterCellCollectionViewFlowLayout.swift */,
 				473D0D971D49E984004DDC07 /* HistoryViewController.swift */,
+				446AE6E21D8C0CE800E2B6B5 /* SelectActivityView.xib */,
+				446AE6E41D8C345800E2B6B5 /* AddActivityViewController.swift */,
 			);
 			name = History;
 			sourceTree = "<group>";
@@ -768,6 +774,7 @@
 				4466240E1D6B3B7D00B65BAA /* AlertView.xib in Resources */,
 				4485841F1D4A14A20027F141 /* GoogleService-Info.plist in Resources */,
 				444C5E3B1D50C76A00A4DB3D /* GoogleMaps.bundle in Resources */,
+				446AE6E31D8C0CE800E2B6B5 /* SelectActivityView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -946,6 +953,7 @@
 				47CF1FC11D4CC5620083B1A7 /* challengeFilterXIB.swift in Sources */,
 				47FED2501D2E84D9006CAE8A /* ChallengesViewController.swift in Sources */,
 				44D6FFD71D67233E00B3F9D8 /* HelpViewController.swift in Sources */,
+				446AE6E51D8C345800E2B6B5 /* AddActivityViewController.swift in Sources */,
 				444CE0FA1D6C5A400044FBD9 /* SlideHistoryCollectionViewCell.swift in Sources */,
 				4454847C1D685C9B00482980 /* RouteTableViewCell.swift in Sources */,
 				470CF89F1D25079C0001B3BC /* AddViaGoogleViewController.swift in Sources */,

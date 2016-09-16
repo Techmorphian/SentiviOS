@@ -1287,7 +1287,6 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         do
         {
             
-            
             let json = try NSJSONSerialization.JSONObjectWithData(weatherData, options: .MutableContainers) as? NSDictionary
             if  let parseJSON = json{
                 print(parseJSON)

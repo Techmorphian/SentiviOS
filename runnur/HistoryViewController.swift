@@ -19,7 +19,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         {
             self.revealViewController().revealToggle(self);
         }
-            
+        
     }
     var mapData = MapData();
     var arrayOfMapData = [MapData]();
@@ -28,21 +28,39 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     var noInternet = NoInternetViewController();
     var routeData = MapData();
     var routeDataArray = [MapData]();
+    var sectionItem = [[MapData]]();
+    var sectionHeader = [String]();
+    
+    var isfirstTimeTransform = true;
+    var totalCal : String = "0";
+    var totalDis : String = "0";
+    var totalDur : String = "0";
+    var counter : String = "0";
+    var streak : String = "--";
+    
+    var totalNumberOfActivities = Int();
     
     var activities = ["STREAK","TOTAL ACTIVITIES","TOTAL DISTANCE","TOTAL DURATION","TOTAL CALORIES"];
-    var values = ["40","102","35.8","8922","55"];
-    var isfirstTimeTransform = true;
+    var values = [String]();
     
-//  ---------------------------------------- getDataFromHistory -------------------------------------
+    var streakCount = Int();
+    var checkTodayActivity = false;
+    
+    //  ---------------------------------------- getDataFromHistory -------------------------------------
+    
+    @IBOutlet weak var tableTopHeader: UILabel!
+    
+
     func getData()
     {
         CommonFunctions.showActivityIndicator(self.view);
-//        var email =  NSUserDefaults.standardUserDefaults().stringForKey("email");
-//        email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
-//        let words =  email?.componentsSeparatedByString("@");
-//        let contName = words![0]
+        //        var email =  NSUserDefaults.standardUserDefaults().stringForKey("email");
+        //        email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
+        //        let words =  email?.componentsSeparatedByString("@");
+        //        let contName = words![0]
+         self.resetData();
         let file = "development.txt" //this is the file. we will write to and read from it
-        
+          self.tableView.hidden=false;
         let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
         print(paths);
         
@@ -55,16 +73,23 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
             do {
                 let path = NSURL(fileURLWithPath: paths.absoluteString).URLByAppendingPathComponent(file);
                 let text2 = try NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding)
-                print(text2);
+                //print(text2);
                 let data = text2.dataUsingEncoding(NSUTF8StringEncoding)
                 let jsonData = try! NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as! NSArray
                 
                 let items = jsonData;
+                print(jsonData);
                 for item in items {
-                    
+                    self.totalNumberOfActivities = self.totalNumberOfActivities + 1;
+                    if items.count == self.totalNumberOfActivities
+                    {
+                        self.lastItem = true;
+                    }
+
                     self.routeData = MapData();
                     if let distance = item["distance"] as? Double{
                         self.routeData.distance = String(distance);
+                        self.totalDis = String(Int(distance)+Int(self.totalDis)!);
                     }
                     
                     if let elevationLoss = item["altLossS"] as? String{
@@ -78,15 +103,45 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     }
                     if let elapsedTime = item["elapsedTime"] as? String{
                         self.routeData.duration = elapsedTime
+                        //  self.totalDur = String(Int(elapsedTime)!+Int(self.totalDur)!);
                     }
                     if let date = item["date"] as? String{
-                        self.routeData.date = date
+                        self.routeData.date = date;
+                        
+                        let formatedDate = CommonFunctions.dateFromFixedFormatString(self.routeData.date!);
+                        let currentDate = NSDate()
+                        var dateComparisionResult:NSComparisonResult = currentDate.compare(formatedDate);
+                        if dateComparisionResult == NSComparisonResult.OrderedSame
+                        {
+                            if !self.checkTodayActivity
+                            {
+                                self.streakCount = self.streakCount + 1;
+                                self.checkTodayActivity = true;
+                            }
+                            // Current date and end date are same.
+                        }
+                        
+                        
+                        var dateComparisionResult2:NSComparisonResult = previousDate.compare(formatedDate);
+                        if dateComparisionResult2 == NSComparisonResult.OrderedSame
+                        {
+                            if !self.checkTodayActivity
+                            {
+                                self.streakCount = self.streakCount + 1;
+                                  previousDate = yesterDay(previousDate);
+                            }
+                            // Current date and end date are same.
+                        }
+
+                        
+                        
                     }
                     if let distanceAway = item["distanceAwayP"] as? String{
                         self.routeData.distanceAway = distanceAway
                     }
                     if let caloriesBurned = item["caloriesBurnedS"] as? String{
                         self.routeData.caloriesBurned = caloriesBurned
+                      //  self.totalCal = String(Int(caloriesBurned)!+Int(self.totalCal)!);
                     }
                     if let performedActivity = item["performedActivity"] as? String{
                         self.routeData.performedActivity = performedActivity
@@ -97,7 +152,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     
                     if let elevationCoordinatesP = item["elevationCoordinatesP"] as? String{
                         // self.routeData.distanceAway = distanceAway
-                        print(elevationCoordinatesP);
+                        // print(elevationCoordinatesP);
                         
                         let data: NSData = elevationCoordinatesP.dataUsingEncoding(NSUTF8StringEncoding)!
                         do
@@ -114,7 +169,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         }
                     }
                     if let trackPolylines = item["trackPolylinesS"] as? String{
-                        print(trackPolylines);
+                        // print(trackPolylines);
                         
                         let data: NSData = trackPolylines.dataUsingEncoding(NSUTF8StringEncoding)!
                         do
@@ -134,7 +189,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     
                     self.weatherData = WeatherData();
                     if let weatherData = item["weatherData"] as? String{
-                        print(weatherData);
+                        // print(weatherData);
                         
                         let data: NSData = weatherData.dataUsingEncoding(NSUTF8StringEncoding)!
                         do
@@ -149,20 +204,62 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                             self.routeData.weatherData.main = ((json!.objectForKey("main") as? String)!)
                             self.routeData.weatherData.humidity = ((json!.objectForKey("humidity") as? String)!)
                             self.routeData.weatherData.deg = ((json!.objectForKey("deg") as? String)!)
-
+                            
                         }catch{
                             
                         }
                         
                     }
                     
-                    self.routeDataArray.append(self.routeData);
+//                    self.routeDataArray.append(self.routeData);
+//                    self.counter=String(self.routeDataArray.count);
+                    
+                    
+// ------------------------ code to calculate week and add into perticular week ----------------------------
+                    let weekCount = "Week " + CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!));
+                    
+                    if weekCount == self.priviousWeekCount
+                    {
+                        self.routeDataArray.append(self.routeData);
+                        if self.lastItem{
+                            self.sectionItem.append(self.routeDataArray);
+                        }
+                    }
+                    else{
+                        
+                        self.sectionHeader.append(weekCount);
+                        if self.priviousWeekCount != ""
+                        {
+                            print(self.routeDataArray.count)
+                            self.sectionItem.append(self.routeDataArray);
+                        }
+                        self.routeDataArray.removeAll();
+                        self.routeDataArray.append(self.routeData);
+                        self.priviousWeekCount = weekCount;
+                    }
+                    
+  
                     // print("Todo Item: ", item)
                 }
                 
+                
+            self.counter=String(self.totalNumberOfActivities);
+
+            
+                streak = String(streakCount);
+                values.append(streak);
+                values.append(counter);
+                values.append(totalDis);
+                values.append(totalDur);
+                values.append(totalCal);
+                self.tableView.hidden=false;
                 self.tableView.delegate=self;
                 self.tableView.dataSource=self;
                 self.tableView.reloadData();
+                self.collectionView.delegate=self;
+                self.collectionView.dataSource=self;
+                self.collectionView.reloadData();
+                
                 CommonFunctions.hideActivityIndicator();
                 
                 
@@ -178,168 +275,348 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
             let words =  email?.componentsSeparatedByString("@");
             let contName = words![0]
             DownloadFromBlob.downloadFromBlob("development")
-
-     /*       print();
-            // requesting route data from route table
-            if Reachability.isConnectedToNetwork() == true{
-                let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
-                let client = delegate!.client!;
+            
+            
+            
+        }
+    }
+    var position = Int();
+    var priviousWeekCount = String();
+    var lastItem = false;
+    var previousDate = NSDate();
+    //    -------------- filter -------------------------
+    
+    func yesterDay(todayDate:NSDate) -> NSDate {
+        
+        let today = todayDate;
+        
+        let daysToAdd:Int = -1
+        
+        // Set up date components
+        let dateComponents: NSDateComponents = NSDateComponents()
+        dateComponents.day = daysToAdd
+        
+        // Create a calendar
+        let gregorianCalendar: NSCalendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
+        let yesterDayDate: NSDate = gregorianCalendar.dateByAddingComponents(dateComponents, toDate: today, options:NSCalendarOptions(rawValue: 0))!
+        
+        return yesterDayDate
+    }
+    
+    func resetData()
+    {
+        self.sectionItem.removeAll();
+        self.routeDataArray.removeAll();
+        self.priviousWeekCount = ""
+        self.sectionHeader.removeAll()
+        self.totalNumberOfActivities = 0;
+    
+        mainView.removeFromSuperview();
+   
+        previousDate = yesterDay(NSDate());
+    }
+    
+    func filterData()
+    {
+        CommonFunctions.showActivityIndicator(self.view);
+        // requesting route data from route table
+        var email =  NSUserDefaults.standardUserDefaults().stringForKey("email");
+        email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
+        let words =  email?.componentsSeparatedByString("@");
+        let contName = words![0]
+        let file = "\(contName).txt"; //this is the file. we will write to and read from it
+        
+        let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
+        print(paths);
+        
+        let getFilePath = paths.URLByAppendingPathComponent(file);
+        
+        if Reachability.isConnectedToNetwork() == true{
+            self.resetData();
+            let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
+            let client = delegate!.client!;
+            
+            let user: MSUser = MSUser(userId: NSUserDefaults.standardUserDefaults().stringForKey("azureUserId"));
+            user.mobileServiceAuthenticationToken = NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken");
+            client.currentUser = user
+            
+            let table = client.tableWithName("RunObject");
+            
+            if client.currentUser != nil{
                 
-                let user: MSUser = MSUser(userId: NSUserDefaults.standardUserDefaults().stringForKey("azureUserId"));
-                user.mobileServiceAuthenticationToken = NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken");
-                client.currentUser = user
-                
-                let table = client.tableWithName("RouteObject");
-                
-                if client.currentUser != nil{
+                let query = table.query();
+                switch position {
+                case 0:
                     
-                    let query = table.query();
-                    
-                    print("runnurId \(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)")
-                    // query.parameters = ["runnurId": "\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)"];
+// query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!);
                     query.fetchLimit=100;
-                    
-                    query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
                     query.orderByDescending("__createdAt");
                     
+                    break;
+                case 1:
                     
-                    query.readWithCompletion({ (result, error) in
-                        if let err = error {
+                    query.predicate = NSPredicate(format: "performedActivity == [c] %@", "Running");
+//                    query.predicate = NSPredicate(format: "runnurId == [c] %@ AND performedActivity == [c] %@", argumentArray: [NSUserDefaults.standardUserDefaults().stringForKey("userId")!,"Running"]);
+                    query.fetchLimit=100;
+                    query.orderByDescending("__createdAt");
+                    
+                    break;
+                    
+                case 2:
+                    
+                    query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
+                    query.predicate = NSPredicate(format: "performedActivity == [c] %@", "Biking")
+                    query.fetchLimit=100;
+                    query.orderByDescending("__createdAt");
+                    
+                    break;
+                    
+                case 3:
+                    query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
+                    query.predicate = NSPredicate(format: "performedActivity == [c] %@", "Driving")
+                    query.fetchLimit=100;
+                    query.orderByDescending("__createdAt");
+                    
+                    break;
+                    
+                case 4:
+                    query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
+                    query.fetchLimit=100;
+                    query.orderByDescending("__createdAt");
+                    
+                    break;
+                default:
+                    break;
+                }
+                query.readWithCompletion({ (result, error) in
+                    if let err = error {
+                        self.showNoRoutesView();
+                        print("ERROR ", err)
+                    } else if let items = result?.items {
+                        print(result);
+                        print(result?.items)
+                        if items.count == 0
+                        {
+                            self.collectionView.hidden=true;
+                            self.tableView.hidden=true;
                             self.showNoRoutesView();
-                            print("ERROR ", err)
-                        } else if let items = result?.items {
-                            print(result);
-                            print(result?.items)
-                            if items.count == 0
-                            {
-                                self.showNoRoutesView();
-                            }else{
+                        }else{
+                            self.tableView.hidden=false;
+                            self.collectionView.hidden=false;
+                            var text = "";
+                            if NSJSONSerialization.isValidJSONObject(items){
+                                let jsonData = try! NSJSONSerialization.dataWithJSONObject(items, options: NSJSONWritingOptions())
+                                let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
+                                text = jsonString;
+                            } //just a text
+                            
+                            let path = paths.URLByAppendingPathComponent(file)
+                            
+                            //writing
+                            do {
                                 
-                                var text = "";
-                                if NSJSONSerialization.isValidJSONObject(items){
-                                    let jsonData = try! NSJSONSerialization.dataWithJSONObject(items, options: NSJSONWritingOptions())
-                                    let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
-                                    text = jsonString;
-                                } //just a text
-                                
-                                let path = paths.URLByAppendingPathComponent(file)
-                                
-                                //writing
-                                do {
-                                    
-                                    try text.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
-                                }
-                                catch {/* error handling here */
-                                    print(error);
-                                    print("error while write");
-                                }
-                                
-                                //reading
-                                do {
-                                    let text2 = try NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding)
-                                    print(text2);
-                                }
-                                catch {/* error handling here */}
-                                //  }
+                                try text.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
                             }
-                            for item in items {
-                                
-                                self.routeData = MapData();
-                                if let distance = item["distanceP"] as? String{
-                                    self.routeData.distance = distance
-                                }
-                                if let elevationLoss = item["elevationLossP"] as? String{
-                                    self.routeData.elevationLoss = elevationLoss
-                                }
-                                if let elevationGain = item["elevationGainP"] as? String{
-                                    self.routeData.elevationGain = elevationGain
-                                }
-                                if let startLocation = item["startLocationP"] as? String{
-                                    self.routeData.location = startLocation
-                                }
-                                if let date = item["dateP"] as? String{
-                                    self.routeData.date = date
-                                }
-                                if let distanceAway = item["distanceAwayP"] as? String{
-                                    self.routeData.distanceAway = distanceAway
-                                }
-                                if let itemID = item["id"] as? String{
-                                    self.routeData.itemID = itemID
-                                }
-                                if let elevationCoordinatesP = item["elevationCoordinatesP"] as? String{
-                                    // self.routeData.distanceAway = distanceAway
-                                    print(elevationCoordinatesP);
-                                    
-                                    let data: NSData = elevationCoordinatesP.dataUsingEncoding(NSUTF8StringEncoding)!
-                                    do
-                                    {
-                                        let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
-                                        
-                                        for i in 0 ..< json!.count
-                                        {
-                                            self.routeData.elevationLat.append((json![i].objectForKey("latitude") as? Double)!)
-                                            self.routeData.elevationLong.append((json![i].objectForKey("longitude") as? Double)!)
-                                        }
-                                    }catch{
-                                        //                                19.2171975,72.8241082
-                                    }
-                                }
-                                if let trackPolylines = item["trackPolylinesP"] as? String{
-                                    print(trackPolylines);
-                                    
-                                    let data: NSData = trackPolylines.dataUsingEncoding(NSUTF8StringEncoding)!
-                                    do
-                                    {
-                                        let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
-                                        
-                                        //                            trackPolylines.stringByReplacingOccurrencesOfString("[{}", withString: "")
-                                        //                         trackPolylines.componentsSeparatedByString(",")
-                                        for i in 0 ..< json!.count
-                                        {
-                                            self.routeData.trackLat.append((json![i].objectForKey("latitude") as? Double)!)
-                                            self.routeData.trackLong.append((json![i].objectForKey("longitude") as? Double)!)
-                                        }
-                                    }catch{
-                                        
-                                    }
-                                    
-                                }
-                                
-                                self.routeDataArray.append(self.routeData);
-                                // print("Todo Item: ", item)
+                            catch {/* error handling here */
+                                print(error);
+                                print("error while write");
                             }
                             
-                            self.tableView.delegate=self;
-                            self.tableView.dataSource=self;
-                            self.tableView.reloadData();
-                            CommonFunctions.hideActivityIndicator();
+                            //reading
+                            do {
+                                let text2 = try NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding)
+                                print(text2);
+                            }
+                            catch {/* error handling here */}
+                            //  }
                         }
-                    })
-                }
-            }else{
-                
-                // NO Internet
-                self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
-                self.noInternet.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
-                self.noInternet.view.backgroundColor=UIColor.clearColor()
-                self.view.addSubview((self.noInternet.view)!);
-                let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(SummaryViewController.handleTap(_:)))
-                self.noInternet.noInternetLabel.userInteractionEnabled = true
-                self.noInternet.view.addGestureRecognizer(tapRecognizer)
-                self.noInternet.didMoveToParentViewController(self)
-            }*/
+                        for item in items {
+                            self.totalNumberOfActivities = self.totalNumberOfActivities + 1;
+                            if items.count == self.totalNumberOfActivities
+                            {
+                                self.lastItem = true;
+                            }
+                            self.routeData = MapData();
+                            if let distance = item["distance"] as? Double{
+                                self.routeData.distance = String(distance);
+                                self.totalDis = String(Int(distance)+Int(self.totalDis)!);
+                            }
+                            
+                            if let elevationLoss = item["altLossS"] as? String{
+                                self.routeData.elevationLoss = elevationLoss
+                            }
+                            if let elevationGain = item["altGainS"] as? String{
+                                self.routeData.elevationGain = elevationGain
+                            }
+                            if let startLocation = item["startLocationS"] as? String{
+                                self.routeData.location = startLocation
+                            }
+                            if let elapsedTime = item["elapsedTime"] as? String{
+                                self.routeData.duration = elapsedTime
+                                //  self.totalDur = String(Int(elapsedTime)!+Int(self.totalDur)!);
+                            }
+                            if let date = item["date"] as? String{
+                                self.routeData.date = date
+                                let formatedDate = CommonFunctions.dateFromFixedFormatString(self.routeData.date!);
+                                let currentDate = NSDate()
+                                var dateComparisionResult:NSComparisonResult = currentDate.compare(formatedDate);
+                                if dateComparisionResult == NSComparisonResult.OrderedSame
+                                {
+                                    if !self.checkTodayActivity
+                                    {
+                                        self.streakCount = self.streakCount + 1;
+                                        self.checkTodayActivity = true;
+                                    }
+                                    // Current date and end date are same.
+                                }
+                                
+                                
+                                var dateComparisionResult2:NSComparisonResult = self.previousDate.compare(formatedDate);
+                                if dateComparisionResult2 == NSComparisonResult.OrderedSame
+                                {
+                                    if !self.checkTodayActivity
+                                    {
+                                        self.streakCount = self.streakCount + 1;
+                                        self.previousDate = self.yesterDay(self.previousDate);
+                                    }
+                                    // Current date and end date are same.
+                                }
+
+                            }
+                            if let distanceAway = item["distanceAwayP"] as? String{
+                                self.routeData.distanceAway = distanceAway
+                            }
+                            if let caloriesBurned = item["caloriesBurnedS"] as? String{
+                                self.routeData.caloriesBurned = caloriesBurned
+                                //  self.totalCal = String(Int(caloriesBurned)!+Int(self.totalCal)!);
+                            }
+                            if let performedActivity = item["performedActivity"] as? String{
+                                self.routeData.performedActivity = performedActivity
+                            }
+                            if let itemID = item["id"] as? String{
+                                self.routeData.itemID = itemID
+                            }
+                            
+                            if let elevationCoordinatesP = item["elevationCoordinatesP"] as? String{
+                                // self.routeData.distanceAway = distanceAway
+                                // print(elevationCoordinatesP);
+                                
+                                let data: NSData = elevationCoordinatesP.dataUsingEncoding(NSUTF8StringEncoding)!
+                                do
+                                {
+                                    let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
+                                    
+                                    for i in 0 ..< json!.count
+                                    {
+                                        self.routeData.elevationLat.append((json![i].objectForKey("latitude") as? Double)!)
+                                        self.routeData.elevationLong.append((json![i].objectForKey("longitude") as? Double)!)
+                                    }
+                                }catch{
+                                    
+                                }
+                            }
+                            if let trackPolylines = item["trackPolylinesS"] as? String{
+                                // print(trackPolylines);
+                                
+                                let data: NSData = trackPolylines.dataUsingEncoding(NSUTF8StringEncoding)!
+                                do
+                                {
+                                    let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
+                                    
+                                    for i in 0 ..< json!.count
+                                    {
+                                        self.routeData.trackLat.append((json![i].objectForKey("latitude") as? Double)!)
+                                        self.routeData.trackLong.append((json![i].objectForKey("longitude") as? Double)!)
+                                    }
+                                }catch{
+                                    
+                                }
+                                
+                            }
+                            
+                            self.weatherData = WeatherData();
+                            if let weatherData = item["weatherData"] as? String{
+                                // print(weatherData);
+                                
+                                let data: NSData = weatherData.dataUsingEncoding(NSUTF8StringEncoding)!
+                                do
+                                {
+                                    let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSDictionary;
+                                    
+                                    self.routeData.weatherData.speed = ((json!.objectForKey("speed") as? String)!)
+                                    self.routeData.weatherData.cod = ((json!.objectForKey("cod") as? String)!)
+                                    self.routeData.weatherData.temp = ((json!.objectForKey("temp") as? String)!)
+                                    self.routeData.weatherData.descriptin = ((json!.objectForKey("description") as? String)!)
+                                    self.routeData.weatherData.pressure = ((json!.objectForKey("pressure") as? String)!)
+                                    self.routeData.weatherData.main = ((json!.objectForKey("main") as? String)!)
+                                    self.routeData.weatherData.humidity = ((json!.objectForKey("humidity") as? String)!)
+                                    self.routeData.weatherData.deg = ((json!.objectForKey("deg") as? String)!)
+                                    
+                                }catch{
+                                    
+                                }
+                                
+                            }
+                            // ------------------------ code to calculate week and add into perticular week ----------------------------
+                            let weekCount = "Week " + CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!));
+                            
+                            if weekCount == self.priviousWeekCount
+                            {
+                                self.routeDataArray.append(self.routeData);
+                                if self.lastItem{
+                                    self.sectionItem.append(self.routeDataArray);
+                                }
+                            }
+                            else{
+                                
+                                self.sectionHeader.append(weekCount);
+                                if self.priviousWeekCount != ""
+                                {
+                                    print(self.routeDataArray.count)
+                                    self.sectionItem.append(self.routeDataArray);
+                                }
+                                self.routeDataArray.removeAll();
+                                self.routeDataArray.append(self.routeData);
+                                self.priviousWeekCount = weekCount;
+                            }
+                        }
+                        self.counter=String(self.totalNumberOfActivities);
+                        self.streak=String(self.streakCount);
+                        self.values.append(self.streak);
+                        self.values.append(self.counter);
+                        self.values.append(self.totalDis);
+                        self.values.append(self.totalDur);
+                        self.values.append(self.totalCal);
+                        
+                        self.tableView.delegate=self;
+                        self.tableView.dataSource=self;
+                        self.tableView.reloadData();
+                        self.collectionView.delegate=self;
+                        self.collectionView.dataSource=self;
+                        self.collectionView.reloadData();
+                        CommonFunctions.hideActivityIndicator();
+                    }
+                })
+            }
+        }else{
+            
+            // NO Internet
+            self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
+            self.noInternet.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
+            self.noInternet.view.backgroundColor=UIColor.clearColor()
+            self.view.addSubview((self.noInternet.view)!);
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(SummaryViewController.handleTap(_:)))
+            self.noInternet.noInternetLabel.userInteractionEnabled = true
+            self.noInternet.view.addGestureRecognizer(tapRecognizer)
+            self.noInternet.didMoveToParentViewController(self)
         }
     }
     
-    
-    
-    
-    
-//---------------------------------------- For noRoute show No saved route images ---------------------------------
+    //---------------------------------------- For noRoute show No saved route images ---------------------------------
     let routeViewButton = UIButton();
+    let mainView = UIView();
     func showNoRoutesView()
     {
-        let mainView = UIView();
         mainView.frame = CGRectMake(20, 110, self.view.frame.width-40, 220)
         mainView.backgroundColor=UIColor.whiteColor();
         let label = UILabel(frame: CGRect(x:20, y: 20, width: mainView.frame.width-40, height: 17));
@@ -353,22 +630,66 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         routeViewButton.frame = CGRectMake(0, imageView.frame.origin.y+imageView.frame.height+4, mainView.frame.width, 30);
         routeViewButton.setTitleColor(UIColor.blueColor(), forState: .Normal)
         routeViewButton.setTitle("CREATE NEW ROUTE", forState: .Normal);
-        routeViewButton.addTarget(self, action: #selector(RouteViewController.createRouteClicked), forControlEvents: UIControlEvents.TouchUpInside);
+        routeViewButton.addTarget(self, action: #selector(HistoryViewController.createRouteClicked), forControlEvents: UIControlEvents.TouchUpInside);
         routeViewButton.titleLabel?.font = UIFont.systemFontOfSize(14)
         mainView.addSubview(label);
         mainView.addSubview(imageView);
         mainView.addSubview(routeViewButton);
         self.view.addSubview(mainView);
     }
-
-//----------------------------------- refresh button action -----------------------------
+    func createRouteClicked(){
+        let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("CreateRouteViewController") as! CreateRouteViewController
+        self.presentViewController(nextViewController, animated: false, completion: nil)
+    }
+    
+    //----------------------------------- refresh button action -----------------------------
     @IBAction func refresh(sender: UIButton) {
-        self.tableView.reloadData();
+        position=0;
+        self.filterData();
+        
+        // self.tableView.reloadData();
     }
-//----------------------------------- sort button action --------------------------------
+    //----------------------------------- sort button action --------------------------------
     @IBAction func sort(sender: UIButton) {
+        let optionMenu = UIAlertController(title: nil, message: "Choose an Option", preferredStyle: .ActionSheet)
+        optionMenu.view.tintColor = colorCode.BlueColor;
+        let weekAction = UIAlertAction(title: "Running", style: .Default, handler:
+            {
+                (alert: UIAlertAction!) -> Void in
+                self.position = 1;
+                self.filterData();
+                
+        })
+        
+        let monthAction = UIAlertAction(title: "Biking", style: .Default, handler:
+            {
+                (alert: UIAlertAction!) -> Void in
+                self.position = 2;
+                self.filterData();
+                
+        })
+        
+        let yearAction = UIAlertAction(title: "Show All", style: .Default, handler:
+            {
+                (alert: UIAlertAction!) -> Void in
+                self.position = 1;
+                self.filterData();
+                
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler:
+            {
+                (alert: UIAlertAction!) -> Void in
+                
+        })
+        optionMenu.addAction(weekAction);
+        optionMenu.addAction(monthAction);
+        optionMenu.addAction(yearAction);
+       
+        optionMenu.addAction(cancelAction);
+        
+        self.presentViewController(optionMenu, animated: true, completion: nil)
     }
-//------------------------------------- calender button action using picker view --------------------------------------
+    //------------------------------------- calender button action using picker view --------------------------------------
     var datePickerView = UIDatePicker();
     @IBAction func calender(sender: UIButton) {
         let optionMenu = UIAlertController(title: nil, message: "Choose an Option", preferredStyle: .ActionSheet)
@@ -376,19 +697,19 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let weekAction = UIAlertAction(title: "This Week", style: .Default, handler:
             {
                 (alert: UIAlertAction!) -> Void in
-               
+                
         })
         
         let monthAction = UIAlertAction(title: "This Month", style: .Default, handler:
             {
                 (alert: UIAlertAction!) -> Void in
-               
+                
         })
         
         let yearAction = UIAlertAction(title: "This Year", style: .Default, handler:
             {
                 (alert: UIAlertAction!) -> Void in
-               
+                
         })
         let dateAction = UIAlertAction(title: "Till Date", style: .Default, handler:
             {
@@ -405,7 +726,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 self.datePickerView.datePickerMode = UIDatePickerMode.Date
                 
                 self.view.addSubview(self.datePickerView)
-               // sender.inputView = datePickerView
+                // sender.inputView = datePickerView
                 self.addToolBar()
                 self.datePickerView.addTarget(self, action: #selector(HistoryViewController.datePickerValueChanged), forControlEvents: UIControlEvents.ValueChanged)
                 
@@ -421,14 +742,14 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         optionMenu.addAction(dateAction);
         optionMenu.addAction(customeRangeAction);
         optionMenu.addAction(cancelAction);
-
+        
         self.presentViewController(optionMenu, animated: true, completion: nil)
     }
-// ----------------------------------- this is toolbar for picker view of calender ---------------------
-     let toolBar = UIToolbar()
+    // ----------------------------------- this is toolbar for picker view of calender ---------------------
+    let toolBar = UIToolbar()
     func addToolBar()
     {
-       
+        
         toolBar.frame = CGRectMake(self.datePickerView.frame.origin.x, self.datePickerView.frame.origin.y-40, self.datePickerView.frame.width, 40)
         toolBar.barStyle = UIBarStyle.Default
         toolBar.translucent = true
@@ -445,13 +766,13 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         self.view.addSubview(toolBar);
         
     }
-//--Done action of tool bar
+    //--Done action of tool bar
     func donePicker()
     {
         self.toolBar.removeFromSuperview();
         self.datePickerView.removeFromSuperview();
     }
-//----picker to chnaged value
+    //----picker to chnaged value
     func datePickerValueChanged(sender:UIDatePicker) {
         
         let dateFormatter = NSDateFormatter()
@@ -463,72 +784,61 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         print(dateFormatter.stringFromDate(sender.date));
         
     }
-//-----CollectionView delegate Methods-- upperSlideView----
+    //-----CollectionView delegate Methods-- upperSlideView----
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("slideCollectionViewCell", forIndexPath: indexPath) as! SlideHistoryCollectionViewCell;
         cell.name.text=activities[indexPath.row];
         cell.value.text=values[indexPath.row];
-
+        
         index = indexPath.row
         return cell;
     }
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return values.count
+        return activities.count
     }
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         return CGSize(width: self.view.frame.width/2, height: 123);
     }
-//--------tableView delegate Methods ------- list----
+    //--------tableView delegate Methods ------- list ----------
     var index = 0;
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("HistoryTableViewCell", forIndexPath: indexPath) as! HistoryTableViewCell;
-        let data = self.routeDataArray[indexPath.row]
-       
-        cell.dateAndTime.text =  dateFunction.dateFormatFunc("MMM dd, yyyy hh:mm a", formFormat: "MM/dd/yyyy HH:mm:ss", dateToConvert: data.date!);
+        let data = self.sectionItem[indexPath.section][indexPath.row]
+        // MM/dd/yyyy HH:mm:ss ---- blob date formatter
+        cell.dateAndTime.text =  dateFunction.dateFormatFunc("MMM dd, yyyy hh:mm a", formFormat: "yyyy-MM-dd", dateToConvert: data.date!);
         cell.location.text = data.location;
-        cell.duration.text = data.duration;
+        cell.duration.text = data.duration;//String(format: "%0.02f", data.duration!)
         cell.distance.text = data.distance;
         cell.avgPace.text = data.avgPace;
+        if data.performedActivity == "Running"
+        {
+            cell.img.image = UIImage(named: "ic_runing_history.png");
+        }else if data.performedActivity == "Biking"{
+            cell.img.image = UIImage(named: "ic_biking_history.png");
+        }
         return cell;
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        switch section {
-//        case 0:
-//            return 2;
-//        case 1:
-//            return 3;
-//        case 2:
-//            return 5;
-//        default:
-//            return 0;
-//        }
-        return self.routeDataArray.count;
+        print("printing \(self.sectionItem[section].count)");
+        return self.sectionItem[section].count;
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1;
+        return sectionHeader.count;
     }
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0:
-            return "Week 28";
-        case 1:
-            return "Week 15";
-        case 2:
-            return "Week 4";
-        default:
-            return nil;
-        }
+        return sectionHeader[section];
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
         ActivityDetailsViewController;
-        
-       // activityDetailsViewController.mapData=self.arrayOfMapData[indexPath.row];
+         activityDetailsViewController.mapData=self.sectionItem[indexPath.section][indexPath.row];
         self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
-
+        
     }
-// ------ not being used --- use for add gradient to the collection view
+    
+    
+    // ------ not being used --- use for add gradient to the collection view
     private func addGradientMask() {
         let coverView = GradientView(frame: self.collectionView.bounds)
         let coverLayer = coverView.layer as! CAGradientLayer
@@ -541,59 +851,81 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     func scrollViewDidScroll(scrollView: UIScrollView) {
         self.collectionView.maskView?.frame = self.collectionView.bounds
     }
-//------------------------------- life cylcle methods -----------------------------
+    
+    
+  var actionButton: ActionButton!
+    
+    //------------------------------- life cylcle methods -----------------------------
     override func viewDidLoad()
     {
         super.viewDidLoad()
         self.getData();
-//        self.tableView.delegate=self;
-//        self.tableView.dataSource=self;
-//        self.tableView.reloadData();
+      //  self.tableView.hidden=true;
+        tableView.estimatedRowHeight = 138;
+        tableView.rowHeight = UITableViewAutomaticDimension;
+        
+//        position=1;
+//        self.filterData();
         let collectionViewLayout: CenterCellCollectionViewFlowLayout = CenterCellCollectionViewFlowLayout()
         collectionViewLayout.itemSize = CGSizeMake(180, 120)
         collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         collectionViewLayout.minimumInteritemSpacing = 0
         collectionViewLayout.minimumLineSpacing = 5
         collectionViewLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
-        self.collectionView.delegate=self;
-        self.collectionView.dataSource=self;
-        self.collectionView.reloadData();
-    
+        self.tableView.tableFooterView = UIView();
+        
+        
+        let mapImage = UIImage(named: "ic_fab_map")!
+        let satelliteImage = UIImage(named: "ic_fab_sattelite")!
+        let terrainImage = UIImage(named: "ic_fab_terrain")!
+        
+        
+        let map = ActionButtonItem(title: "Start New Activity", image: mapImage)
+        
+        map.action = { item in
+            self.actionButton.toggleMenu();
+          
+            //coding
+        }
+        
+        let Satellite = ActionButtonItem(title: "Add New Activity", image: satelliteImage)
+        Satellite.action = { item in
+            self.actionButton.toggleMenu();
+                       //coding
+        }
+        
+        let Terrain = ActionButtonItem(title: "Create New Route", image: terrainImage)
+        Terrain.action = { item in
+            self.actionButton.toggleMenu();
+                       //coding
+        }
+        // let vs:Int = Int(self.view.frame.height - self.getMyLocation.frame.maxY);
+        actionButton = ActionButton(attachedToView: self.view, items: [map, Satellite,Terrain], v: 25, h: 25)
+        // actionButton = ActionButton(attachedToView: self.view, items: [map, Satellite,Terrain])
+        
+        actionButton.action = { button in button.toggleMenu() }
+        actionButton.setImage(UIImage(named: "ic_fab_map_format"), forState: .Normal);
+        
+        //  let orgColor = UIColor(red: 255/255, green: 102/255, blue: 102/255, alpha: 1)
+        actionButton.backgroundColor = colorCode.BlueColor;
 
+        
+        
+        
+        
         // Do any additional setup after loading the view.
     }
-
+    
     override func viewDidAppear(animated: Bool) {
         
-        
-        
-        
-        
-        
-//        do {
-//            var email =  NSUserDefaults.standardUserDefaults().stringForKey("email");
-//            email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
-//            let words =  email?.componentsSeparatedByString("@");
-//            let contName = words![0]
-//            let file = "\(contName).txt";
-//            let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
-//            print(paths);
-//            
-//            let getImagePath = paths.URLByAppendingPathComponent(file)
-//            try NSFileManager.defaultManager().removeItemAtPath(getImagePath.path!)
-//        }
-//        catch let error as NSError {
-//            print("Ooops! Something went wrong: \(error)")
-//        }
-
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     //MARK:- preferredStatusBarStyle
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle
@@ -601,7 +933,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         return UIStatusBarStyle.LightContent;
     }
     
-
+    
 }
 class GradientView: UIView {
     override class func layerClass() -> AnyClass {

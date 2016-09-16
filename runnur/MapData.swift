@@ -43,4 +43,6 @@ class MapData
     
     var gpsAcc = Int();
     var eplapsedTime = String();
+    
+    
 }

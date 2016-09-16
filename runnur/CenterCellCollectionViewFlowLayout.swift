@@ -47,18 +47,12 @@ class CenterCellCollectionViewFlowLayout: UICollectionViewFlowLayout {
                         candidateAttributes = attributes;
                         continue;
                     }
-              
-                    
                 }
-
                 return CGPoint(x: round(candidateAttributes!.center.x - halfWidth), y: proposedContentOffset.y)
-                
             }
-            
         }
-        
         // Fallback
         return super.targetContentOffsetForProposedContentOffset(proposedContentOffset)
     }
-
+    
 }

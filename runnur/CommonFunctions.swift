@@ -22,7 +22,7 @@ class CommonFunctions : NSObject
     static var loadingLable = UILabel()
     static  var loadingView = UIView()
     static var activityIndicator = UIActivityIndicatorView()
-   // static var alertView = AlertView()
+    // static var alertView = AlertView()
     static var isAlertViewShown = false
     
     typealias GetClick = () -> ()
@@ -48,7 +48,7 @@ class CommonFunctions : NSObject
         }
         
     }
-
+    
     static func addKeyboardNotification(scrollView:UIScrollView, view:UIView, activeField:UITextField?, activeTextView:UITextView?,actualContentInset:UIEdgeInsets)
     {
         self.scrollView=scrollView;
@@ -132,7 +132,7 @@ class CommonFunctions : NSObject
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardDidHideNotification, object: nil)
         
     }
-  
+    
     static func addInputAccessoryForTextFields(textFields: [UITextField], dismissable: Bool = true, previousNextable: Bool = false,showDone : Bool = true) {
         
         for (index, textField) in textFields.enumerate() {
@@ -142,11 +142,11 @@ class CommonFunctions : NSObject
             
             var items = [UIBarButtonItem]()
             if previousNextable {
-//                let prevBut = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 140))
-//                prevBut.setTitle("previous", forState: .Normal)
+                //                let prevBut = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 140))
+                //                prevBut.setTitle("previous", forState: .Normal)
                 let previousButton = UIBarButtonItem(title: "Previous", style: .Plain, target: nil, action: nil)
-                    //let previousButton = UIBarButtonItem(customView: prevBut)
-           //  previousButton.tintColor = colorCode.themeTintColor()
+                //let previousButton = UIBarButtonItem(customView: prevBut)
+                //  previousButton.tintColor = colorCode.themeTintColor()
                 //previousButton.width = 30
                 if textField == textFields.first {
                     previousButton.enabled = false
@@ -159,8 +159,8 @@ class CommonFunctions : NSObject
                 
                 
                 let nextButton = UIBarButtonItem(title: "Next", style: .Plain, target: nil, action: nil)
-               // nextButton.width = 30
-         //  nextButton.tintColor = colorCode.themeTintColor()
+                // nextButton.width = 30
+                //  nextButton.tintColor = colorCode.themeTintColor()
                 if textField == textFields.last {
                     nextButton.enabled = false
                 } else {
@@ -178,8 +178,8 @@ class CommonFunctions : NSObject
                 let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: nil, action: nil)
                 doneButton.target = textFields[index]
                 doneButton.action = #selector(UITextField.resignFirstResponder)
-              //  let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: view, action: #selector(UIView.endEditing))
-                             // doneButton.tintColor = colorCode.themeTintColor()
+                //  let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: view, action: #selector(UIView.endEditing))
+                // doneButton.tintColor = colorCode.themeTintColor()
                 items.appendContentsOf([spacer, doneButton])
             }else{
                 
@@ -230,7 +230,7 @@ class CommonFunctions : NSObject
             doneButton.tintColor = UIColor.whiteColor()
             items.appendContentsOf([spacer, doneButton])
             
-         //   toolbar.barTintColor = colorCode.themeTintColor()
+            //   toolbar.barTintColor = colorCode.themeTintColor()
             toolbar.setItems(items, animated: false)
             textField.inputAccessoryView = toolbar
         }
@@ -270,30 +270,30 @@ class CommonFunctions : NSObject
     
     static func hideActivityIndicator()
     {
-                       
+        
         loadingView.removeFromSuperview()
         
     }
     
-   
+    
     static func showPopup(view : UIViewController,title:String = "",msg:String,positiveMsg : String = "OK",negMsg : String = "Cancel",show2Buttons : Bool = false,showReverseLayout : Bool = false,getClick : GetClick){
         let popup = UIAlertController(title: "", message: msg, preferredStyle: .Alert)
-         if show2Buttons {
-             if showReverseLayout{
+        if show2Buttons {
+            if showReverseLayout{
                 popup.addAction(UIAlertAction(title: negMsg, style: .Default, handler: {
-                     finised in
+                    finised in
                     getClick()
                 }))
             }else{
                 popup.addAction(UIAlertAction(title: negMsg, style: .Default, handler: nil))
             }
         }
-         if showReverseLayout {
+        if showReverseLayout {
             popup.addAction(UIAlertAction(title: positiveMsg, style: .Default, handler: nil))
             
         }else{
             popup.addAction(UIAlertAction(title: positiveMsg, style: .Default, handler: {
-                 finished in
+                finished in
                 getClick()
             }))
             
@@ -302,29 +302,29 @@ class CommonFunctions : NSObject
         
     }
     
-
     
-//    static func showPopup(view : UIViewController,title:String = "", msg:String,positiveMsg : String = "OK",negMsg : String = "Cancel",show2Buttons : Bool = false,getClick : GetClick){
-//        
-//        let popup = UIAlertController(title: title, message: msg, preferredStyle: .Alert)
-//        
-//        if show2Buttons {
-//            
-//            popup.addAction(UIAlertAction(title: negMsg, style: .Default, handler: nil))
-//            
-//        }
-//
-//        popup.addAction(UIAlertAction(title: positiveMsg, style: .Default, handler: {
-//        
-//        finished in
-//            
-//            getClick()
-//        
-//        }))
-//        
-//        
-//        view.presentViewController(popup, animated: true, completion: nil)
-//    }
+    
+    //    static func showPopup(view : UIViewController,title:String = "", msg:String,positiveMsg : String = "OK",negMsg : String = "Cancel",show2Buttons : Bool = false,getClick : GetClick){
+    //
+    //        let popup = UIAlertController(title: title, message: msg, preferredStyle: .Alert)
+    //
+    //        if show2Buttons {
+    //
+    //            popup.addAction(UIAlertAction(title: negMsg, style: .Default, handler: nil))
+    //
+    //        }
+    //
+    //        popup.addAction(UIAlertAction(title: positiveMsg, style: .Default, handler: {
+    //
+    //        finished in
+    //
+    //            getClick()
+    //
+    //        }))
+    //
+    //
+    //        view.presentViewController(popup, animated: true, completion: nil)
+    //    }
     
     static func  getLabelHeight(tabelView:UITableView,label:UILabel,text:String,fontSize:CGFloat) -> CGFloat {
         
@@ -335,10 +335,10 @@ class CommonFunctions : NSObject
         //labelHeight.preferredMaxLayoutWidth = (self.view.frame.width-20);
         labelHeight.lineBreakMode = NSLineBreakMode.ByWordWrapping
         labelHeight.sizeToFit()
-        return labelHeight.frame.height         
+        return labelHeight.frame.height
     }
     
-   static var alertView = AlertView();
+    static var alertView = AlertView();
     
     static func showAlert(view: UIView,message : String , showRetry : Bool, getClick  : GetClick){
         
@@ -350,7 +350,7 @@ class CommonFunctions : NSObject
         
         alertView = NSBundle.mainBundle().loadNibNamed("AlertView", owner: view, options: nil).last as! AlertView
         
-       // alertView.backgroundColor = colorCode.GrayColor;
+        // alertView.backgroundColor = colorCode.GrayColor;
         
         alertView.frame = CGRectMake(0, 63, view.frame.width, 0)
         
@@ -411,7 +411,25 @@ class CommonFunctions : NSObject
         
     }
     
+    static func dateFromFixedFormatString(dateStr: String) -> NSDate {
+        let df = NSDateFormatter()
+        df.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        df.dateFormat = "yyyy-MM-dd"
+        if df.dateFromString(dateStr) == nil{
+            return NSDate();
+        }else{
+        
+         return df.dateFromString(dateStr)!
+        }
+       
+    }
     
+    static func getWeek(today:NSDate) -> String {
+        let myCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierISO8601)!;
+        let myComponents = myCalendar.components(.WeekOfYear, fromDate: today);
+        let weekNumber = myComponents.weekOfYear;
+        return String(weekNumber);
+    }
     
     static func removeAlert(){
         alertView.removeFromSuperview()
@@ -422,11 +440,11 @@ class CommonFunctions : NSObject
         if NSJSONSerialization.isValidJSONObject(stringToConvert){
             let jsonData = try! NSJSONSerialization.dataWithJSONObject(stringToConvert, options: NSJSONWritingOptions())
             let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
-           return jsonString
+            return jsonString
         }else{
             return "";
         }
-   
+        
     }
     
     
