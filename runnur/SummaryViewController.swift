@@ -466,18 +466,11 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
     {
         
         
-        
         let labelHeight = UILabel(frame: CGRectMake(0, 0, Width, CGFloat.max));
-        
-        
         
         labelHeight.text = text;
         
-        
-        
         labelHeight.numberOfLines = 0
-        
-        
         
         labelHeight.font = UIFont.systemFontOfSize(fontSize)
         

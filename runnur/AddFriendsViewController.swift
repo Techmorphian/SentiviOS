@@ -413,17 +413,19 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
-        if AddVia[indexPath.row] == "Add via Phonebook"
+        
+        
+        
+        switch AddVia[indexPath.row]
+        
         {
-            
+        case "Add via Phonebook":
+           
             self.performSegueWithIdentifier("AddviaPhonebook", sender: nil)
             
-           return
-        }
-        
-        if AddVia[indexPath.row] == "Add via facebook"
-        {
+            break;
             
+        case "Add via facebook":
             
             //// facebook value (directly go on facebok friends screen)
             
@@ -441,66 +443,78 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
                 
                 
             }
-            
+                
                 ////// facebook value is not thr (not login by fb) nd askng 4 permission
             else
                 
             {
-            
-            if Reachability.isConnectedToNetwork() == true
                 
-            {
-                
-                let login:FBSDKLoginManager = FBSDKLoginManager()
-                
-                if (UIApplication.sharedApplication().canOpenURL(NSURL(string: "fbauth2://")!)) ==  false
+                if Reachability.isConnectedToNetwork() == true
                     
                 {
                     
-                    login.loginBehavior = FBSDKLoginBehavior.Web
+                    let login:FBSDKLoginManager = FBSDKLoginManager()
                     
-                }
-                
-                let facebookReadPermissions = ["public_profile", "email", "user_friends"]
-                
-                login.logInWithReadPermissions(facebookReadPermissions, fromViewController: self, handler: { (result, error) -> Void in
-                    
-                    
-                    
-                    if (error == nil){
+                    if (UIApplication.sharedApplication().canOpenURL(NSURL(string: "fbauth2://")!)) ==  false
                         
-                        let fbloginresult : FBSDKLoginManagerLoginResult = result
+                    {
                         
-                        if(fbloginresult.grantedPermissions != nil)
-                            
-                        {
-                          
+                        login.loginBehavior = FBSDKLoginBehavior.Web
                         
+                    }
+                    
+                    let facebookReadPermissions = ["public_profile", "email", "user_friends"]
+                    
+                    login.logInWithReadPermissions(facebookReadPermissions, fromViewController: self, handler: { (result, error) -> Void in
+                        
+                        
+                        
+                        if (error == nil){
                             
-                        if(Reachability.isConnectedToNetwork()==true )
-                        {
+                            let fbloginresult : FBSDKLoginManagerLoginResult = result
                             
-                            self.showActivityIndicatory()
-                            
-                        self.getFBUserData()
-                            
-                         self.getAllFriends()
+                            if(fbloginresult.grantedPermissions != nil)
                                 
+                            {
+                                
+                                
+                                
+                                if(Reachability.isConnectedToNetwork()==true )
+                                {
+                                    
+                                    self.showActivityIndicatory()
+                                    
+                                    self.getFBUserData()
+                                    
+                                    self.getAllFriends()
+                                    
+                                }
+                                
+                                
+                                
+                            }
+                                
+                            else if (result.isCancelled == true)
+                                
+                            {
+                                
+                                login.logOut()
+                                
+                            }
+                                
+                                
+                                
+                            else
+                                
+                            {
+                                
+                                login.logOut()
+                                
+                                
+                                
+                            }
+                            
                         }
-                            
-                            
-                            
-                        }
-                            
-                        else if (result.isCancelled == true)
-                            
-                        {
-                            
-                            login.logOut()
-                            
-                        }
-                            
-                            
                             
                         else
                             
@@ -508,72 +522,226 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
                             
                             login.logOut()
                             
-                            
-                            
                         }
                         
-                    }
-                        
-                    else
-                        
-                    {
-                        
-                        login.logOut()  
-                        
-                    }
+                    })
                     
-                })
-                
-            }
-                
-            else
-                
-            {
-                
-                let alert = UIAlertController(title: "", message:"There seems to be a problem with your network. Please check and try again." , preferredStyle: UIAlertControllerStyle.Alert)
-                
-                let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
-                
-                alert.addAction(alertAction)
-                
-                let alertAction2 = UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler: {
+                }
                     
-                    Void in
+                else
                     
-                   // self.loginButtonClicked();
+                {
                     
-                })
+                    let alert = UIAlertController(title: "", message:"There seems to be a problem with your network. Please check and try again." , preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
+                    
+                    alert.addAction(alertAction)
+                    
+                    let alertAction2 = UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler: {
+                        
+                        Void in
+                        
+                        // self.loginButtonClicked();
+                        
+                    })
+                    
+                    alert.addAction(alertAction2)
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    
+                }
                 
-                alert.addAction(alertAction2)
                 
-                self.presentViewController(alert, animated: true, completion: nil)
-                
-            }
-            
-                
-      } // else close
+            } // else close
             
             
-            
-            return
-            
-        }
-        if AddVia[indexPath.row] == "Add via Google"
-        {
-            
-              self.performSegueWithIdentifier("AddviaGoogle", sender: nil)
-            
-            return
-        }
-        if AddVia[indexPath.row] == "Add Manually"
-        {
+            break;
             
             
-            self.performSegueWithIdentifier("AddManually", sender: nil)
+        case "Add via Google":
             
-            return
-        }
+          self.performSegueWithIdentifier("AddviaGoogle", sender: nil)
+            
+            break;
+            
+            
+            
+        case "Add Manually":
+            
+          self.performSegueWithIdentifier("AddManually", sender: nil)
+          
+          break;
+            
+            
 
+        default:
+            break;
+        }
+        
+        
+        
+//        
+//        if AddVia[indexPath.row] == "Add via Phonebook"
+//        {
+//            
+//            self.performSegueWithIdentifier("AddviaPhonebook", sender: nil)
+//            
+//          
+//        }
+//        
+//        if AddVia[indexPath.row] == "Add via facebook"
+//        {
+//            
+//            
+//            //// facebook value (directly go on facebok friends screen)
+//            
+//            if NSUserDefaults.standardUserDefaults().stringForKey("facebookId") != ""
+//            {
+//                
+//                if Reachability.isConnectedToNetwork() == true
+//                    
+//                {
+//                    
+//                    
+//                    self.getAllFriends();
+//                    
+//                }
+//                
+//                
+//            }
+//            
+//                ////// facebook value is not thr (not login by fb) nd askng 4 permission
+//            else
+//                
+//            {
+//            
+//            if Reachability.isConnectedToNetwork() == true
+//                
+//            {
+//                
+//                let login:FBSDKLoginManager = FBSDKLoginManager()
+//                
+//                if (UIApplication.sharedApplication().canOpenURL(NSURL(string: "fbauth2://")!)) ==  false
+//                    
+//                {
+//                    
+//                    login.loginBehavior = FBSDKLoginBehavior.Web
+//                    
+//                }
+//                
+//                let facebookReadPermissions = ["public_profile", "email", "user_friends"]
+//                
+//                login.logInWithReadPermissions(facebookReadPermissions, fromViewController: self, handler: { (result, error) -> Void in
+//                    
+//                    
+//                    
+//                    if (error == nil){
+//                        
+//                        let fbloginresult : FBSDKLoginManagerLoginResult = result
+//                        
+//                        if(fbloginresult.grantedPermissions != nil)
+//                            
+//                        {
+//                          
+//                        
+//                            
+//                        if(Reachability.isConnectedToNetwork()==true )
+//                        {
+//                            
+//                            self.showActivityIndicatory()
+//                            
+//                        self.getFBUserData()
+//                            
+//                         self.getAllFriends()
+//                                
+//                        }
+//                            
+//                            
+//                            
+//                        }
+//                            
+//                        else if (result.isCancelled == true)
+//                            
+//                        {
+//                            
+//                            login.logOut()
+//                            
+//                        }
+//                            
+//                            
+//                            
+//                        else
+//                            
+//                        {
+//                            
+//                            login.logOut()
+//                            
+//                            
+//                            
+//                        }
+//                        
+//                    }
+//                        
+//                    else
+//                        
+//                    {
+//                        
+//                        login.logOut()  
+//                        
+//                    }
+//                    
+//                })
+//                
+//            }
+//                
+//            else
+//                
+//            {
+//                
+//                let alert = UIAlertController(title: "", message:"There seems to be a problem with your network. Please check and try again." , preferredStyle: UIAlertControllerStyle.Alert)
+//                
+//                let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
+//                
+//                alert.addAction(alertAction)
+//                
+//                let alertAction2 = UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler: {
+//                    
+//                    Void in
+//                    
+//                   // self.loginButtonClicked();
+//                    
+//                })
+//                
+//                alert.addAction(alertAction2)
+//                
+//                self.presentViewController(alert, animated: true, completion: nil)
+//                
+//            }
+//            
+//                
+//      } // else close
+//            
+//            
+//        }  // if close
+//        
+//        
+//        if AddVia[indexPath.row] == "Add via Google"
+//        {
+//            
+//              self.performSegueWithIdentifier("AddviaGoogle", sender: nil)
+//            
+//            
+//        }
+//        if AddVia[indexPath.row] == "Add Manually"
+//        {
+//            
+//            
+//            self.performSegueWithIdentifier("AddManually", sender: nil)
+//            
+//           
+//        }
+//
         
     }
     

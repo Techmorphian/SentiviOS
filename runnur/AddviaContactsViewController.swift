@@ -265,40 +265,6 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             
         }
         
-        if self.PBModel.Email.count == 0 && self.PBModel.MobNo.count == 0
-            
-        {
-            
-            
-            print(self.PBModel.Email.count)
-            
-            
-            if self.view.subviews.contains(self.noResult.view)
-                
-            {
-                
-                
-            }
-                
-            else
-                
-            {
-                
-                
-                self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
-                
-                self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
-                self.noResult.noResultTextLabel.text = "No phonebook contacts found."
-                
-                self.view.addSubview((self.noResult.view)!);
-                
-                
-                self.noResult.didMoveToParentViewController(self)
-                
-                
-            }
-        
-        }
         
         
         
@@ -479,48 +445,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                     
                     
                     self.noResult.didMoveToParentViewController(self)
-                    
-                    
-                    
-                }
-
-            
-                
-                if self.PBModel.Email.count == 0 && self.PBModel.MobNo.count == 0
-                    
-                {
-                    
-                    
-                    print(self.PBModel.Email.count)
-                    
-                    
-                    if self.view.subviews.contains(self.noResult.view)
-                        
-                    {
-                        
-                        
-                    }
-                        
-                    else
-                        
-                    {
-                        
-                        
-                        self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
-                        
-                        self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
-                        self.noResult.noResultTextLabel.text = "No phonebook contacts found."
-                        
-                        self.view.addSubview((self.noResult.view)!);
-                        
-                        
-                        self.noResult.didMoveToParentViewController(self)
-                        
-                        
-                    }
-                    
-                }
-                
+                                }
                 
                 self.ContactTableView.reloadData();
             }
@@ -1831,38 +1756,10 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                                         
                                     }
                                     
-                                    if self.PBModel.Email.count == 0 && self.PBModel.MobNo.count == 0
+                                    if self.PBModel.Email.count == 0 
                                         
                                     {
                                         
-                                        
-                                        print(self.PBModel.Email.count)
-                                        
-                                        
-                                        if self.view.subviews.contains(self.noResult.view)
-                                            
-                                        {
-                                            
-                                            
-                                        }
-                                            
-                                        else
-                                            
-                                        {
-
-                                        
-                                        self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
-                                        
-                                        self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
-                                        self.noResult.noResultTextLabel.text = "No phonebook contacts found."
-                                        
-                                        self.view.addSubview((self.noResult.view)!);
-                                        
-                                        
-                                        self.noResult.didMoveToParentViewController(self)
-
-                                        
-                                        }
                                         
                                         
                                     }
@@ -1870,8 +1767,9 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                                     else
                                         
                                     {
-                                        
+                                    
                                         self.PBArray.append(self.PBModel);
+                                        
                                         
                                     }
                                     
@@ -1886,22 +1784,70 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                     
                             if self.contactList.count == 0
                             {
-                    
-                    
-                    
-                                self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
-                    
-                                self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
-                                self.noResult.noResultTextLabel.text = "No phonebook contacts found."
-                    
-                                self.view.addSubview((self.noResult.view)!);
                                 
-                                
-                                self.noResult.didMoveToParentViewController(self)
+                                if self.view.subviews.contains(self.noResult.view)
+                                    
+                                {
+                                    
+                                    
+                                }
+                                    
+                                else
+                                    
+                                {
+                                    
+                                    
+                                    self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+                                    
+                                    self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+                                    self.noResult.noResultTextLabel.text = "No phonebook contacts found."
+                                    
+                                    self.view.addSubview((self.noResult.view)!);
+                                    
+                                    
+                                    self.noResult.didMoveToParentViewController(self)
+                                    
+                                    
+                                }
                                 
                             
                                 
                             }
+                    
+                    
+                    if self.PBArray.count == 0
+                    {
+                        
+                        if self.view.subviews.contains(self.noResult.view)
+                            
+                        {
+                            
+                            
+                        }
+                            
+                        else
+                            
+                        {
+                            
+                            
+                            self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+                            
+                            self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+                            self.noResult.noResultTextLabel.text = "No phonebook contacts found."
+                            
+                            self.view.addSubview((self.noResult.view)!);
+                            
+                            
+                            self.noResult.didMoveToParentViewController(self)
+                            
+                            
+                        }
+                        
+                        
+                        
+                    }
+                    
+
                     
                    
                        self.filterValues();

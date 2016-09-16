@@ -344,14 +344,13 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
     
     func dateComparison(startDate: String,endDate : String) -> Int
     {
-        
-        
+                
         let nscurrentDate = NSDate()
         
-        
-        
+        print(nscurrentDate)
         
         let dateFormatter = NSDateFormatter()
+        
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
         let currentDate = dateFormatter.stringFromDate(nscurrentDate)
@@ -359,15 +358,30 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         print(currentDate)
         
         
-        let nsStartDate = dateFormatter.dateFromString(startDate)
+        
+        ///////
+        
+        let dateFormatter2 = NSDateFormatter()
+        
+        dateFormatter2.dateFormat = "yyyy-MM-dd"
+        
+        dateFormatter2.timeZone = NSTimeZone(name: "GMT")
+        
+        let nsStartDate = dateFormatter2.dateFromString(startDate)
         
         print(nsStartDate)
         
-        let nsEndDate = dateFormatter.dateFromString(endDate)
+        let nsEndDatee = dateFormatter2.dateFromString(endDate)
+        
+        print(nsEndDatee)
+        
+        
+        let nsEndDate = nsEndDatee?.dateByAddingTimeInterval(86399)
         
         print(nsEndDate)
         
         
+        ///// nscurrent date is equal to end date challenge over
         if nscurrentDate.compare(nsEndDate!) == .OrderedDescending
         {
             
@@ -377,7 +391,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         else
         {
             
-            
+            // start date less than equal to current date and end  date less than equal to current date
             
             if nsStartDate?.compare(nscurrentDate) == .OrderedAscending && nsEndDate?.compare(nscurrentDate) == .OrderedDescending
             {
@@ -385,6 +399,8 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                 return challengeOnGoing
                 
             }
+                // start date  equal to current date and end  date equal to current date
+                
             else if nsStartDate?.compare(nscurrentDate) == .OrderedSame || nsEndDate?.compare(nscurrentDate) == .OrderedSame
                 
             {
@@ -400,11 +416,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                 
             }
             
-            
-            
         }
-        
-        
         
         return challengeOver
         

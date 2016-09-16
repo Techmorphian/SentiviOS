@@ -24,6 +24,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
   /////////////////////////////////////////////////////////////////////
     
     
+    @IBOutlet var inviteButtonBottomViewHeightConst: NSLayoutConstraint!
     
     var inviteEmailModel = inviteFriendsModel()
     
@@ -34,6 +35,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
     var searchEmailArray = [inviteFriendsModel]()
     
     
+    var tempEmailStroed = [String]()
     
     var noInternet = NoInternetViewController()
     
@@ -625,13 +627,15 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
        ////////////////////////////
         
         
-        print(indexPath.section)
-        
+         //   In section 0 Email contacts
         if indexPath.section == 0
         {
+          //  if serach button active 2
+            
             
             if (searchButtonActive2 == true)
             {
+                 /// i have used here searchEmailArray
 
                 cell.friendsNameLabel.text = searchEmailArray[indexPath.row].InviteEmails
                 cell.contactImage.image = UIImage(named:"im_default_profile")
@@ -640,6 +644,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             }
             else
             {
+                /// i have used here inviteEmailArray
                 
              cell.friendsNameLabel.text = inviteEmailArray[indexPath.row].InviteEmails
            
@@ -648,20 +653,28 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
           cell.selectedUnselectedImageView.image = UIImage(named: "im_status_invited")
                 
                 
-            }
+          }
 
-        
+         
         }
         
+        
+        
         /////// MARK:- IF SECTION = 1
+        
+        ////////section 1 is friends on runnur
+
         
         if indexPath.section == 1
         {
 
+            
+          /// when searchButtonActive == true
         if (searchButtonActive == true)
         {
-           
             
+            
+           // i have used here searchInviteFrndsArray
             
             cell.friendsNameLabel.text = searchInviteFrndsArray[indexPath.row].friendFirstName + " " + searchInviteFrndsArray[indexPath.row].friendLastName
             
@@ -757,6 +770,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             
         }
         
+            //// when search button is false
         else
         {
         
@@ -798,7 +812,11 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                 cell.selectedUnselectedImageView.image = UIImage(named: "ic_uncheck")
                 
         }
+            
+            
         print(inviteFrndsArray[indexPath.row].isInvited)
+            
+            
             
         switch inviteFrndsArray[indexPath.row].isInvited
         
@@ -864,12 +882,78 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         let cell = tableView.cellForRowAtIndexPath(indexPath) as!  InviteFriendsTableViewCell
         
         
+//        
+//        if (searchButtonActive == true)
+//        {
+//            cell.setSelected(true, animated: false);
+//            
+//            searchInviteFrndsArray[indexPath.row].isSelected=true;
+//            
+//            inviteFrndsArray[searchInviteFrndsArray[indexPath.row].indexPathRow].isSelected=true;
+//            
+//            cell.selectedUnselectedImageView.image = UIImage(named: "ic_checked")
+//            
+//            selectedFriendsIds.append(searchInviteFrndsArray[indexPath.row].friendId)
+//            selectedFriendsFristName.append(searchInviteFrndsArray[indexPath.row].friendFirstName)
+//            
+//            selectedFriendsLastName.append(searchInviteFrndsArray[indexPath.row].friendLastName)
+//            
+//            selectedFriendsPhotoUrl.append(searchInviteFrndsArray[indexPath.row].friendPhotoUrl)
+//           
+//            
+//            selectedIndex.append(String(searchInviteFrndsArray[indexPath.row].indexPathRow))
+//            
+//            
+//        }
+//        else
+//        
+//        {
+//            
+//            ///// append values
+//            
+//            selectedFriendsIds.append(inviteFrndsArray[indexPath.row].friendId)
+//            
+//            selectedFriendsFristName.append(inviteFrndsArray[indexPath.row].friendFirstName)
+//            
+//             selectedFriendsLastName.append(inviteFrndsArray[indexPath.row].friendLastName)
+//            
+//            selectedFriendsEmail.append(inviteFrndsArray[indexPath.row].friendEmailId)
+//            
+//            selectedFriendsPhotoUrl.append(inviteFrndsArray[indexPath.row].friendPhotoUrl)
+//            
+//            selectedFriendsStatus.append(inviteFrndsArray[indexPath.row].friendStatus)
+//            
+//            selectedIndex.append(String(indexPath.row))
+//            
+//            cell.setSelected(true, animated: false);
+//            
+//            inviteFrndsArray[indexPath.row].isSelected=true;
+//            
+//            cell.selectedUnselectedImageView.image = UIImage(named: "ic_checked")
+//            
+//            print(selectedIndex)
+//            
+//            
+//        }
+//        
+        
+        if indexPath.section == 0
+        {
+            
+            if inviteEmailArray[indexPath.row].InviteEmails != ""
+            {
+                cell.selectedUnselectedImageView.image = UIImage(named: "im_status_invited")
+                
+            }
+            
+            
+        }
+
+        else
+        {
         
         if (searchButtonActive == true)
         {
-            
-            
-            
             cell.setSelected(true, animated: false);
             
             searchInviteFrndsArray[indexPath.row].isSelected=true;
@@ -878,37 +962,31 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             
             cell.selectedUnselectedImageView.image = UIImage(named: "ic_checked")
             
-            
             selectedFriendsIds.append(searchInviteFrndsArray[indexPath.row].friendId)
-
-            
             selectedFriendsFristName.append(searchInviteFrndsArray[indexPath.row].friendFirstName)
             
             selectedFriendsLastName.append(searchInviteFrndsArray[indexPath.row].friendLastName)
             
             selectedFriendsPhotoUrl.append(searchInviteFrndsArray[indexPath.row].friendPhotoUrl)
-           
+            
             
             selectedIndex.append(String(searchInviteFrndsArray[indexPath.row].indexPathRow))
-
-            
             
             
         }
-        
         else
-        
+            
         {
             
-            
-            
             ///// append values
+            
+            
             
             selectedFriendsIds.append(inviteFrndsArray[indexPath.row].friendId)
             
             selectedFriendsFristName.append(inviteFrndsArray[indexPath.row].friendFirstName)
             
-             selectedFriendsLastName.append(inviteFrndsArray[indexPath.row].friendLastName)
+            selectedFriendsLastName.append(inviteFrndsArray[indexPath.row].friendLastName)
             
             selectedFriendsEmail.append(inviteFrndsArray[indexPath.row].friendEmailId)
             
@@ -926,12 +1004,11 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             
             print(selectedIndex)
             
- 
-            
             
         }
         
-        
+        }
+
 
     
     }
@@ -946,6 +1023,23 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         cell.selectedUnselectedImageView.image = UIImage(named: "ic_uncheck")
 
     
+        
+        
+        if indexPath.section == 0
+        {
+            
+            if inviteEmailArray[indexPath.row].InviteEmails != ""
+            {
+                cell.selectedUnselectedImageView.image = UIImage(named: "im_status_invited")
+                
+            }
+            
+            
+        }
+        
+        else
+            
+        {
     
         if searchButtonActive == true
             
@@ -1004,7 +1098,20 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             
             inviteFrndsArray[indexPath.row].isSelected=false;
             
-            cell.selectedUnselectedImageView.image = UIImage(named: "ic_uncheck")
+//            if cell.selectedUnselectedImageView.image == UIImage(named: "im_status_invited")
+//            {
+//                cell.selectedUnselectedImageView.image = UIImage(named: "im_status_invited")
+//            }
+////            else
+////            {
+////                
+////                cell.selectedUnselectedImageView.image = UIImage(named: "ic_uncheck")
+////                
+////                
+////            }
+////
+            
+           cell.selectedUnselectedImageView.image = UIImage(named: "ic_uncheck")
             
             
             for i in selectedFriendsFristName
@@ -1047,6 +1154,8 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             
         } /// //else close
         
+        
+     }
 
         
         
@@ -1360,6 +1469,14 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
 
                                 {
                                     
+                                    self.inviteButton.hidden = false;
+                                    
+                                    self.inviteButtonBottomViewHeightConst.constant = 50
+                                    
+                                    self.inviteButtonView.hidden = false;
+
+                                    
+                                    
                                         if let friendList  = elements[0]["friendList"]
                                         {
                                             
@@ -1408,6 +1525,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                                                     }
                                                     
                                                     let friendStatus = friendList![i]["friendStatus"] as! String
+                                                   
                                                     if friendStatus != ""
                                                     {
                                                         self.inviteFrndsModel.friendStatus = friendStatus
@@ -1423,6 +1541,35 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                                                     
                                                 }
                                                 
+                                              
+                                                var Count = Int()
+                                                
+                                                for i in self.inviteFrndsArray
+                                                {
+                                                    if i.friendStatus == "1"
+                                                    
+                                                    {
+                                                        
+                                                        Count = Int(Count+1)
+                                                        
+                                                        print(Count)
+                                                        
+                                                    }
+                                                  
+                                                    
+                                                }
+                                                
+                                                if self.inviteFrndsArray.count == Count
+                                                {
+                                                    
+                                                    self.inviteButton.hidden = true;
+                                                    
+                                                    self.inviteButtonBottomViewHeightConst.constant = 0
+                                                    
+                                                    self.inviteButtonView.hidden = true
+                                                    
+                                                }
+
                                                 
                                                 NSOperationQueue.mainQueue().addOperationWithBlock
                                                     {

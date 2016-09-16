@@ -944,6 +944,10 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
         activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
                                                loadingView.frame.size.height / 2);
+        
+        
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+
         loadingView.addSubview(activityIndicator)
         self.view.addSubview(loadingView)
         activityIndicator.startAnimating()
@@ -1045,6 +1049,10 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                 
                 let json = try NSJSONSerialization.JSONObjectWithData(self.mutableData, options: .MutableContainers) as? NSDictionary
                 
+                
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+
+                
                 if  let parseJSON = json{
                     
                     let status = parseJSON["status"] as? String
@@ -1052,7 +1060,8 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                     if(status=="Success")
                     {
                         
-                        
+                       
+                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
                         
                         if  let elements: AnyObject = json!["response"]
                         {

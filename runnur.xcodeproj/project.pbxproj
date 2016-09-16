@@ -1087,7 +1087,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.SentivApp;
 				PRODUCT_NAME = Sentiv;
-				PROVISIONING_PROFILE = "bd46aa77-3e21-4e54-92ef-c5b8c2eaf59f";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "runnur/runnur-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1111,7 +1111,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.SentivApp;
 				PRODUCT_NAME = Sentiv;
-				PROVISIONING_PROFILE = "bd46aa77-3e21-4e54-92ef-c5b8c2eaf59f";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "runnur/runnur-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
