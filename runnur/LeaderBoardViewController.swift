@@ -131,7 +131,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                 cell.FirstWinnerTotalActivityLabel.text =  "Total Activity" + " " + WinnerAndUsersArray[indexPath.row].array[0].runCount
                 
                 
-                cell.FirstWinnerDistance.text = WinnerAndUsersArray[indexPath.row].array[0].value
+                cell.FirstWinnerDistance.text = WinnerAndUsersArray[indexPath.row].array[0].value  +  " " + WinnerAndUsersArray[indexPath.row].array[0].unit
                 
                 
                 break;
@@ -170,7 +170,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                 cell.FirstWinnerTotalActivityLabel.text = "Total Activity" + " " + WinnerAndUsersArray[indexPath.row].array[0].runCount
                 
                 
-                cell.FirstWinnerDistance.text = WinnerAndUsersArray[indexPath.row].array[0].value
+                cell.FirstWinnerDistance.text = WinnerAndUsersArray[indexPath.row].array[0].value +  " " + WinnerAndUsersArray[indexPath.row].array[0].unit
                 
                 
                 
@@ -204,7 +204,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                 
                 
                 cell.SecWinnerDistance.text = WinnerAndUsersArray[indexPath.row].array[1].value
-                
+                 + " " + WinnerAndUsersArray[indexPath.row].array[1].unit
                 
                 break;
                 
@@ -236,7 +236,8 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                 cell.FirstWinnerTotalActivityLabel.text = "Total Activity" + " " + WinnerAndUsersArray[indexPath.row].array[0].runCount
                 
                 
-                cell.FirstWinnerDistance.text = WinnerAndUsersArray[indexPath.row].array[0].value
+                cell.FirstWinnerDistance.text = WinnerAndUsersArray[indexPath.row].array[0].value + " " + WinnerAndUsersArray[indexPath.row].array[0].unit
+
                 
                 
                 
@@ -267,7 +268,8 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                 cell.secWinnerTotalActivityLabel.text =  "Total Activity" + " " + WinnerAndUsersArray[indexPath.row].array[1].runCount
                 
                 
-                cell.SecWinnerDistance.text = WinnerAndUsersArray[indexPath.row].array[1].value
+                cell.SecWinnerDistance.text = WinnerAndUsersArray[indexPath.row].array[1].value + " " +
+                WinnerAndUsersArray[indexPath.row].array[1].unit
                 
                 
                 
@@ -299,6 +301,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                 
                 
                 cell.ThirdWinnerDistance.text = WinnerAndUsersArray[indexPath.row].array[2].value
+                + " " + WinnerAndUsersArray[indexPath.row].array[2].unit
                 
                 break;
                 
@@ -348,7 +351,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
             cell.runCount.text =  WinnerAndUsersArray[indexPath.row].runCount
             
             
-            cell.distance.text = WinnerAndUsersArray[indexPath.row].value
+            cell.distance.text = WinnerAndUsersArray[indexPath.row].value + " " + WinnerAndUsersArray[indexPath.row].unit
             
             cell.rank.text = "#" + " " + String(WinnerAndUsersArray[indexPath.row].Rank)
             

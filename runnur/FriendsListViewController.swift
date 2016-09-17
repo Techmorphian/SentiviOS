@@ -28,6 +28,8 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
     
     var noFriendResult = NoFriendViewController()
     
+    var label = UILabel()
+    
     
     
     /////// func no internet
@@ -223,29 +225,30 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         if searchfriendListArray.count == 0
         {
             print(true)
-       
-            if self.view.subviews.contains(self.noFriendResult.view)
-                
-            {
-                
-                
-            }
-                
-            else
-                
-            {
-                
-                self.noFriendResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoFriendViewController") as! NoFriendViewController
-                
-                self.noFriendResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
-                
-                self.view.addSubview((self.noFriendResult.view)!);
-                
-                
-                
-                self.noFriendResult.didMoveToParentViewController(self)
-                
-            }
+            
+            
+            
+            self.label.hidden = false;
+            
+            self.label.frame = CGRectMake(0, self.view.frame.size.height/2, self.view.frame.width, 50)
+            
+            self.label.center = self.view.center
+            
+            self.label.numberOfLines = 0;
+            
+            self.label.textAlignment = NSTextAlignment.Center
+            
+            self.label.text = "Sorry,we could not find any friend(s) with this name"
+            
+            self.label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+            
+            self.label.font = self.label.font.fontWithSize(13)
+            
+            self.label.textColor = colorCode.DarkGrayColor
+            
+            self.view.addSubview(self.label)
+            
+            self.view.bringSubviewToFront(label)
             
         }
         
@@ -266,6 +269,10 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
             if textFieldData == ""
             {
                 searchButtonActive = false;
+                
+               
+                self.label.hidden = true;
+
                 
                 RemoveNoFrinedResult();
                 

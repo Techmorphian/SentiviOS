@@ -113,51 +113,47 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
             if createdTt[indexPath.row] != ""
             {
                 
-              cell.date.text = createdTt[indexPath.row]
+             // cell.date.text = createdTt[indexPath.row]
+               
                 
-//                
-//                let dateAsString1  =  createdTt[indexPath.row]
-//                print(dateAsString1)
-//                
-//                let dateFormatter1 = NSDateFormatter()
-//                
-//                // dateFormatter1.timeZone = NSTimeZone()
-//                
-//                dateFormatter1.timeZone = NSTimeZone(name: "GMT")
-//                
-//                // dateFormatter1.timeZone = NSTimeZone.defaultTimeZone()
-//                
-//                dateFormatter1.dateFormat = "yyyy-MM-dd hh:mm:ss"
-//                
-//                let date = dateFormatter1.dateFromString(dateAsString1)
-//                
-//                print(date)
-//                
-//                
-//                if date != ""
-//                {
-//                    let dateFormatter2 = NSDateFormatter()
-//                    
-//                    
-//                    dateFormatter2.dateFormat = "MMM dd, yyyy  hh:mm:ss"
-//                    
-//                    // dateFormatter2.timeZone = NSTimeZone()
-//                    
-//                    dateFormatter2.timeZone = NSTimeZone.defaultTimeZone()
-//                    
-//                    let date2 = dateFormatter2.stringFromDate(date!)
-//                    
-//                    if date2 != ""
-//                    {
-//                        
-//                        cell.date.text = String(date2)
-//                        
-//                    }
-//                    
-//                    
-//                }
-//
-//                
+                let dateAsString1  =  createdTt[indexPath.row]
+                
+                
+                //    //print(dateAsString1)
+                
+                let dateFormatter1 = NSDateFormatter()
+                
+                // dateFormatter1.timeZone = NSTimeZone()
+                
+                dateFormatter1.timeZone = NSTimeZone(name: "UTC")
+                
+                // dateFormatter1.timeZone = NSTimeZone.defaultTimeZone()
+                
+                dateFormatter1.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                
+                let date = dateFormatter1.dateFromString(dateAsString1)
+                
+                // //print(date)
+                
+                
+                if date != nil
+                {
+                    
+                    let dateFormatter2 = NSDateFormatter()
+                    
+                    
+                    dateFormatter2.dateFormat = "MMM dd, yyyy  HH:mm:ss"
+                    
+                    // dateFormatter2.timeZone = NSTimeZone()
+                    
+                    dateFormatter2.timeZone = NSTimeZone.defaultTimeZone()
+                    
+                    let date2 = dateFormatter2.stringFromDate(date!)
+                    
+                    cell.date.text = String(date2)
+                    
+                }
+
             }
             
             
@@ -203,54 +199,47 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
             if createdTt[indexPath.row] != ""
             {
                 
-                cell.date.text = createdTt[indexPath.row]
+                //cell.date.text = createdTt[indexPath.row]
                 
+              //  2016-08-23 09:25:57
                 
-                
-                //
-                //                let dateAsString1  =  createdTt[indexPath.row]
-                //                print(dateAsString1)
-                //
-                //                let dateFormatter1 = NSDateFormatter()
-                //
-                //                // dateFormatter1.timeZone = NSTimeZone()
-                //
-                //                dateFormatter1.timeZone = NSTimeZone(name: "GMT")
-                //
-                //                // dateFormatter1.timeZone = NSTimeZone.defaultTimeZone()
-                //
-                //                dateFormatter1.dateFormat = "yyyy-MM-dd hh:mm:ss"
-                //
-                //                let date = dateFormatter1.dateFromString(dateAsString1)
-                //
-                //                print(date)
-                //
-                //
-                //                if date != ""
-                //                {
-                //                    let dateFormatter2 = NSDateFormatter()
-                //
-                //
-                //                    dateFormatter2.dateFormat = "MMM dd, yyyy  hh:mm:ss"
-                //
-                //                    // dateFormatter2.timeZone = NSTimeZone()
-                //
-                //                    dateFormatter2.timeZone = NSTimeZone.defaultTimeZone()
-                //                    
-                //                    let date2 = dateFormatter2.stringFromDate(date!)
-                //                    
-                //                    if date2 != ""
-                //                    {
-                //                        
-                //                        cell.date.text = String(date2)
-                //                        
-                //                    }
-                //                    
-                //                    
-                //                }
-                //
-                //                
+                let dateAsString1  =  createdTt[indexPath.row]
 
+                
+                //    //print(dateAsString1)
+                
+                let dateFormatter1 = NSDateFormatter()
+                
+                // dateFormatter1.timeZone = NSTimeZone()
+                
+                dateFormatter1.timeZone = NSTimeZone(name: "UTC")
+                
+                // dateFormatter1.timeZone = NSTimeZone.defaultTimeZone()
+                
+                dateFormatter1.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                
+                let date = dateFormatter1.dateFromString(dateAsString1)
+                
+                // //print(date)
+                
+                
+                if date != nil
+                {
+                    
+                    let dateFormatter2 = NSDateFormatter()
+                    
+                    
+                    dateFormatter2.dateFormat = "MMM dd, yyyy  HH:mm:ss"
+                    
+                    // dateFormatter2.timeZone = NSTimeZone()
+                    
+                    dateFormatter2.timeZone = NSTimeZone.defaultTimeZone()
+                    
+                    let date2 = dateFormatter2.stringFromDate(date!)
+                    
+                    cell.date.text = String(date2)
+                    
+                }
                 
             }
             

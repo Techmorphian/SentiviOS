@@ -121,8 +121,21 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
         if PhotoUrl[indexPath.row] != ""
         {
             
-            cell.profileImageView.kf_setImageWithURL(NSURL(string: PhotoUrl[indexPath.row])!, placeholderImage: UIImage(named:"im_default_profile"))
             
+            cell.profileImageView.kf_setImageWithURL(NSURL(string: PhotoUrl[indexPath.row])!, placeholderImage: UIImage(named:"im_default_profile"))
+
+            
+            if isAnonymous[indexPath.row] == "1"
+            {
+                cell.profileImageView.image = UIImage(named:"im_default_profile")
+            }
+            else
+            {
+            
+            cell.profileImageView.kf_setImageWithURL(NSURL(string: PhotoUrl[indexPath.row])!, placeholderImage: UIImage(named:"im_default_profile"))
+                
+            }
+
         }
             
         else

@@ -861,6 +861,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                 {
                                     
                                 parameterImageView.image  = UIImage(named: "ic_distance_active")
+                                      typeOfParameterLabel.text = "Distance"
                                     
                                     
                                 }
@@ -868,12 +869,15 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                 {
                                     
                                      parameterImageView.image  = UIImage(named: "ic_time_active")
+                                     typeOfParameterLabel.text = "Time"
                                     
                                 }
                                 if parameters == "3"
                                 {
                                     
                                       parameterImageView.image  = UIImage(named: "ic_calorie_active")
+                                    
+                                      typeOfParameterLabel.text = "Calorie"
                                     
                                 }
 

@@ -1561,11 +1561,12 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
         self.loadingView.removeFromSuperview();
         
-        self.RemoveNoInternet();
+        self.RemoveNoResult();
         
-        if self.view.subviews.contains(self.noResult.view)
+        if self.view.subviews.contains(self.noInternet.view)
             
         {
+            
             
         }
             
@@ -1573,18 +1574,17 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
             
         {
             
-            self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+            self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
             
-            self.noResult.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);
+            self.noInternet.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);
             
-            self.noResult.noResultTextLabel.text = "something went wrong."
+            self.view.addSubview((self.noInternet.view)!);
             
-            self.noResult.noResultImageView.image = UIImage(named: "im_error")
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ActiveChallengesViewController.handleTap(_:)))
+            self.noInternet.noInternetLabel.userInteractionEnabled = true
+            self.noInternet.view.addGestureRecognizer(tapRecognizer)
             
-            self.view.addSubview((self.noResult.view)!);
-            self.view.userInteractionEnabled = true
-            
-            self.noResult.didMoveToParentViewController(self)
+            self.noInternet.didMoveToParentViewController(self)
             
         }
         

@@ -40,9 +40,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                 }
                 
             }
-            
-            
-            
+    
         }
         
     }
@@ -780,7 +778,39 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                 //////////////////////////////////////
                                 let amountPerMile = elements[i]["amountPerMile"] as! String
                                 
-                                betAmountPerMileLabel.text = amountPerMile
+                                   if amountPerMile == "1.0"
+                                   {
+                                     betAmountPerMileLabel.text = "$"+amountPerMile
+                                    
+                                   }
+                                if amountPerMile == "1.5"
+                                  {
+                                         betAmountPerMileLabel.text = "$"+amountPerMile
+                                        
+                                   }
+                                
+                                if amountPerMile == "2.0"
+                                {
+                                     betAmountPerMileLabel.text = "$"+amountPerMile
+                                    
+                                }
+                                
+                              else
+                                {
+                                    
+                                    let string = amountPerMile
+                                  
+                                    let temp = Float(string)
+                                    
+                                    let multiplied = 100 * temp!
+                                    
+                                    betAmountPerMileLabel.text!  = String(multiplied) + "cents"
+                                    
+                                    
+                                }
+
+                                
+                                
                                 
                                 
                                 let betAmount = elements[i]["betAmount"] as! String
@@ -851,8 +881,34 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                 _ = elements[i]["usersCount"] as! String
                                 
                                 
+                               let isAnonymous = elements[i]["isAnonymous"] as! String
                                 
+                                if isAnonymous == "1"
+                                {
+                                    
+                                    
+                                        anonymousCheckUncheckButton.setImage(UIImage(named: "ic_checked"), forState: UIControlState
+                                            .Normal)
+                                    
+                                }
+                                else
+                                {
+                                    
+                                    
+                                    anonymousCheckUncheckButton.setImage(UIImage(named: "ic_uncheck"), forState: UIControlState
+                                        .Normal)
+
+                                }
                                 
+                        
+                                
+                                let maxAmount = elements[i]["maxAmount"] as! String
+
+                                if maxAmount != ""
+                                {
+                                    
+                                    maxAmountContributionTxtField.text = maxAmount
+                                }
                                 
                                 
                                 let description = elements[i]["description"] as! String
@@ -981,6 +1037,12 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                     
                                     anonymousView.userInteractionEnabled = true
                                     
+                                    anonymousView.hidden = false
+                                    
+                                    anonymousViewHeight.constant = 60
+                                    
+
+                                    
                                     maxAmountView.backgroundColor = colorCode.LightGrayColor
                                     
                                     anonymousView.backgroundColor = colorCode.LightGrayColor
@@ -1050,6 +1112,11 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                     
                                     anonymousView.userInteractionEnabled = false
                                     
+                                    anonymousView.hidden = false
+                                    
+                                    anonymousViewHeight.constant = 60
+
+                                    
                                     let dateCheck =  dateComparison(startDate, endDate: endDate)
                                     
                                     if dateCheck == challengeNotStarted
@@ -1113,6 +1180,10 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                     maxAmountView.userInteractionEnabled = false
                                     
                                     anonymousView.userInteractionEnabled = false
+                                    anonymousView.hidden = false
+                                    
+                                    anonymousViewHeight.constant = 60
+                                    
 
                                     
                                     bottomButtomViewHeight.constant = 0

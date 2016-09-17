@@ -1828,7 +1828,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                         for i in self.activityChatArray
                                         {
                                             
-                                            print(i.createdAt)
+                                           // print(i.createdAt)
                                         }
                                     }
                                     else
@@ -1852,7 +1852,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                         for i in self.activityChatArray
                                         {
                                             
-                                            print(i.createdAt)
+                                           // print(i.createdAt)
                                           }
                                         
                                         
