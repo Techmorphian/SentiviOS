@@ -38,9 +38,6 @@ class AddActivityViewController: UIViewController {
     }
     
     
-    
-    
-    
     @IBAction func back(sender: AnyObject) {
         
         self.dismissViewControllerAnimated(false, completion: nil)

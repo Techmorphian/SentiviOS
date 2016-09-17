@@ -135,9 +135,11 @@ static func downloadFromBlob(containerName:String)
     else{
         print("successful container");
         
-        let token = AZSContinuationToken();
-        
-        self.listBlobsInContainerHelper(container, continuationToken: token, prefix: "", blobListingDetails: AZSBlobListingDetails.All, maxResults: -1, completionHandler: {(error) -> Void in
+       // let token = AZSContinuationToken();
+      let loc =  AZSStorageLocation(rawValue: 1)
+      let token = AZSContinuationToken(fromString: NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken")!, withLocation: loc!)
+        //let token = NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken");
+        self.listBlobsInContainerHelper(container, continuationToken: token, prefix: "", blobListingDetails: AZSBlobListingDetails.Copy, maxResults: -1, completionHandler: {(error) -> Void in
             
             
 //            if error != nil {

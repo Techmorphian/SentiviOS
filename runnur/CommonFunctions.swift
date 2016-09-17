@@ -430,6 +430,18 @@ class CommonFunctions : NSObject
         let weekNumber = myComponents.weekOfYear;
         return String(weekNumber);
     }
+    static func getYear(today:NSDate) -> String {
+        let myCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierISO8601)!;
+        let myComponents = myCalendar.components(.WeekOfYear, fromDate: today);
+        let weekNumber = myComponents.year;
+        return String(weekNumber);
+    }
+    static func getMonth(today:NSDate) -> String {
+        let myCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierISO8601)!;
+        let myComponents = myCalendar.components(.WeekOfYear, fromDate: today);
+        let weekNumber = myComponents.month;
+        return String(weekNumber);
+    }
     
     static func removeAlert(){
         alertView.removeFromSuperview()
