@@ -123,28 +123,28 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 cell.namesLabel.text = sectionOne[indexPath.row]
                 cell.naviImageViews.image = UIImage(named: sectionOneImages[indexPath.row])
 
+                cell.countLabel.hidden = true;
+                
+               
+                if NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter") != "0" && NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter") != ""
+                {
+                    
+                    
                 cell.countLabel.hidden = false;
-                
-                
-                if NSUserDefaults.standardUserDefaults().stringForKey("badgeCount") != nil
-                {
-                cell.countLabel.text = NSUserDefaults.standardUserDefaults().stringForKey("badgeCount")
                     
-                    print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCount"))
-             
-                }
-                
-                else
-                
-                {
-                    
-                   cell.countLabel.text = "0"
-                    
-                }
                 cell.countLabel.layer.cornerRadius = cell.countLabel.frame.size.height/2;
                 cell.countLabel.backgroundColor = colorCode.RedColor
-               
+                    
                 cell.countLabel.clipsToBounds = true
+
+
+                cell.countLabel.text = NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter")
+                    
+                print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter"))
+                    
+                
+                }
+                
                 
                 
 
@@ -294,11 +294,12 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             
          switch(sectionOne[indexPath.row])
             {
-            case "Activity":
+            
+              case "Activity":
 
                 if indexPath.row == 0
                 {
-                    cell.backgroundColor = colorCode.MediumDarkBlueColor
+                    //cell.backgroundColor = colorCode.MediumDarkBlueColor
                     
                 }
                 
@@ -313,7 +314,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                
                 if indexPath.row == 1
                 {
-                  cell.backgroundColor = colorCode.MediumDarkBlueColor
+                  //cell.backgroundColor = colorCode.MediumDarkBlueColor
                     
                 }
                 self.performSegueWithIdentifier("Challenges", sender: nil)
@@ -325,7 +326,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 
                 if indexPath.row == 2
                 {
-                    cell.backgroundColor = colorCode.MediumDarkBlueColor
+                  //  cell.backgroundColor = colorCode.MediumDarkBlueColor
                     
                 }
               
@@ -341,7 +342,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 
                 if indexPath.row == 3
                 {
-                    cell.backgroundColor = colorCode.MediumDarkBlueColor
+                    //cell.backgroundColor = colorCode.MediumDarkBlueColor
                     
                 }
 
@@ -357,7 +358,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 
                 if indexPath.row == 4
                 {
-                    cell.backgroundColor = colorCode.MediumDarkBlueColor
+                    //cell.backgroundColor = colorCode.MediumDarkBlueColor
                     
                 }
                 
@@ -381,7 +382,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 
                 if indexPath.row == 0
                 {
-                    cell.backgroundColor = colorCode.MediumDarkBlueColor
+                    //cell.backgroundColor = colorCode.MediumDarkBlueColor
                     
                 }
                 
@@ -393,7 +394,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 
                 if indexPath.row == 1
                 {
-                    cell.backgroundColor = colorCode.MediumDarkBlueColor
+                    //cell.backgroundColor = colorCode.MediumDarkBlueColor
                     
                 }
                 self.performSegueWithIdentifier("Statistics", sender: nil)
@@ -405,7 +406,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 
                 if indexPath.row == 2
                 {
-                    cell.backgroundColor = colorCode.MediumDarkBlueColor
+                   // cell.backgroundColor = colorCode.MediumDarkBlueColor
                     
                 }
                 
@@ -491,7 +492,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                               
                 if indexPath.row == 3
                 {
-                     cell.backgroundColor = colorCode.MediumDarkBlueColor
+                     //cell.backgroundColor = colorCode.MediumDarkBlueColor
                 self.performSegueWithIdentifier("FAQ", sender: nil)
                 
                 }
@@ -637,6 +638,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
     
  
     
+    
     var sectionOne = ["Activity","Challenges","Requests","Friends","Routes"]
     var sectionOneImages = ["ic_activity_nav","ic_challenges_nav","ic_requests_nav","ic_friends_nav","ic_routes_nav"]
     
@@ -645,13 +647,21 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
     
     var sectionThree = ["Settings","Logout","Feedback","FAQ"]
     var sectionThreeImages = ["ic_settings_nav","ic_logout","ic_feedback_nav","ic_faq_nav"]
+    
+    
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        self.naviTableView.delegate = self
+        self.naviTableView.dataSource = self;
+        self.naviTableView.reloadData()
+
+    }
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        self.naviTableView.delegate = self
-        self.naviTableView.dataSource = self;
-        self.naviTableView.reloadData()
         
         
         

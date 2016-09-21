@@ -57,11 +57,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate
                 
             {
                 
-//                var badgeNum = NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter")
-//                
-//                NSUserDefaults.standardUserDefaults().setObject( 0 , forKey: "badgeCounter")
-//                
-//                UIApplication.sharedApplication().applicationIconBadgeNumber =  0
+                var badgeNum = NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter")
+                
+                NSUserDefaults.standardUserDefaults().setObject( 0 , forKey: "badgeCounter")
+                
+                UIApplication.sharedApplication().applicationIconBadgeNumber =  0
                 
                 self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
                 
@@ -92,28 +92,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject])
     {
         
+//        
+//        
+//        let data = userInfo as NSDictionary
+//        
+//        let aps = data.objectForKey("aps")
+//        
+//        print(aps)
+//        
+//        var NotificationMessage = String()
+//        
+//        NotificationMessage = aps!["alert"] as! String
+//        
+//        var badgeCount = Int()
+//        
+//        badgeCount = aps!["badge"] as! Int
+//        
+//        print(badgeCount)
+//        
+//        NSUserDefaults.standardUserDefaults().setObject(badgeCount, forKey: "badgeCount")
+//        
+//        print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCount"))
+//
         
+        //// new
         
-        let data = userInfo as NSDictionary
+        var badgeNum = NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter")
         
-        let aps = data.objectForKey("aps")
+        NSUserDefaults.standardUserDefaults().setObject( ++badgeNum , forKey: "badgeCounter")
         
-        print(aps)
-        
-        var NotificationMessage = String()
-        
-        NotificationMessage = aps!["alert"] as! String
-        
-        var badgeCount = Int()
-        
-        badgeCount = aps!["badge"] as! Int
-        
-        print(badgeCount)
-        
-        NSUserDefaults.standardUserDefaults().setObject(badgeCount, forKey: "badgeCount")
-        
-        print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCount"))
+        print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter"))
 
+        
+        UIApplication.sharedApplication().applicationIconBadgeNumber =  NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter")
         
          NSNotificationCenter.defaultCenter().postNotificationName("showAlert", object: nil, userInfo: userInfo)
         
@@ -151,29 +162,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         if application.applicationState == UIApplicationState.Active
             
         {
+//            
+//            print(userInfo)
+//            
+//            let data = userInfo as NSDictionary
+//            
+//            let aps = data.objectForKey("aps")
+//            
+//            print(aps)
+//            
+//            var NotificationMessage = String()
+//            NotificationMessage = aps!["alert"] as! String
+//            
+//            var badgeCount = Int()
+//            
+//            badgeCount = aps!["badge"] as! Int
+//            
+//            print(badgeCount)
+//            
+//            NSUserDefaults.standardUserDefaults().setObject(badgeCount, forKey: "badgeCount")
+//            
+//            print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCount"))
             
-            print(userInfo)
+        /// new
             
-            let data = userInfo as NSDictionary
+            var badgeNum = NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter")
             
-            let aps = data.objectForKey("aps")
+            NSUserDefaults.standardUserDefaults().setObject( ++badgeNum , forKey: "badgeCounter")
             
-            print(aps)
-            
-            var NotificationMessage = String()
-            NotificationMessage = aps!["alert"] as! String
-            
-            var badgeCount = Int()
-            
-            badgeCount = aps!["badge"] as! Int
-            
-            print(badgeCount)
-            
-            NSUserDefaults.standardUserDefaults().setObject(badgeCount, forKey: "badgeCount")
-            
-            print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCount"))
-            
+            print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter"))
 
+            
+            UIApplication.sharedApplication().applicationIconBadgeNumber =  NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter")
 
   
         NSNotificationCenter.defaultCenter().postNotificationName("showAlert", object: nil, userInfo: userInfo)
@@ -185,36 +205,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         else
         {
             
-            print(userInfo)
+//            print(userInfo)
+//            
+//            let data = userInfo as NSDictionary
+//            
+//            let aps = data.objectForKey("aps")
+//            
+//            print(aps)
+//            
+//            var NotificationMessage = String()
+//            NotificationMessage = aps!["alert"] as! String
+//            
+//            var badgeCount = Int()
+//            
+//            badgeCount = aps!["badge"] as! Int
+//            
+//            print(badgeCount)
+//            
+//            NSUserDefaults.standardUserDefaults().setObject(badgeCount, forKey: "badgeCount")
+//            
+//            print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCount"))
             
-            let data = userInfo as NSDictionary
             
-            let aps = data.objectForKey("aps")
             
-            print(aps)
+            var badgeNum = NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter")
             
-            var NotificationMessage = String()
-            NotificationMessage = aps!["alert"] as! String
+            NSUserDefaults.standardUserDefaults().setObject( ++badgeNum , forKey: "badgeCounter")
             
-            var badgeCount = Int()
+            print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter"))
+
             
-            badgeCount = aps!["badge"] as! Int
-            
-            print(badgeCount)
-            
-            NSUserDefaults.standardUserDefaults().setObject(badgeCount, forKey: "badgeCount")
-            
-            print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCount"))
-            
+            UIApplication.sharedApplication().applicationIconBadgeNumber =  NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter")
+          
             NSNotificationCenter.defaultCenter().postNotificationName("showAlert", object: nil, userInfo: userInfo)
-            
 
-
-//            var badgeNum = NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter")
-//            
-//            NSUserDefaults.standardUserDefaults().setObject( ++badgeNum , forKey: "badgeCounter")
-//            
-//            UIApplication.sharedApplication().applicationIconBadgeNumber =  NSUserDefaults.standardUserDefaults().integerForKey("badgeCounter")
             
             
         }
@@ -300,13 +324,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         
         FBSDKAppEvents.activateApp();
         
-        NSUserDefaults.standardUserDefaults().setObject(UIApplication.sharedApplication().applicationIconBadgeNumber, forKey: "badgeCount")
+       // NSUserDefaults.standardUserDefaults().setObject(UIApplication.sharedApplication().applicationIconBadgeNumber, forKey: "badgeCount")
         
         
-        print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCount"))
+        print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter"))
 
         
-        NSNotificationCenter.defaultCenter().postNotificationName("UIApplicationDidBecomeActiveNotification", object: nil)
+    NSNotificationCenter.defaultCenter().postNotificationName("UIApplicationDidBecomeActiveNotification", object: nil)
 
         
         

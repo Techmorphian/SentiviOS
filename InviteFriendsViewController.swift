@@ -42,7 +42,21 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
     var noResult =  NoResultViewController();
     
     var noFriendResult = NoFriendViewController();
+    
+    var label = UILabel()
+
     var erroMSG = String()
+    
+    
+    @IBOutlet var searchIcon: UIImageView!
+    
+    
+    @IBOutlet var searchTxtFldHeightConstraint: NSLayoutConstraint!
+    
+    
+    
+    @IBOutlet var upperViewHeightConstraint: NSLayoutConstraint!
+    
     
     
     var EmailIds = [String]()
@@ -160,6 +174,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
     @IBOutlet var searchCancelButton: UIButton!
     
     
+   //MARK:- SEARCH CANCEL BUTTON ACTION
     
     @IBAction func searchCancelButtonAction(sender: AnyObject)
         {
@@ -169,6 +184,9 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             self.searchButtonActive = false;
             self.searchTextField.text = ""
             self.searchTextField.resignFirstResponder();
+            
+            self.label.hidden = true;
+
             
             self.InviteFriendsTableView.reloadData()
      
@@ -380,28 +398,56 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         {
             print(true)
             
-            if self.view.subviews.contains(self.noFriendResult.view)
-                
-            {
-                
-                
-            }
-                
-            else
-                
-            {
-                
-                self.noFriendResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoFriendViewController") as! NoFriendViewController
-                
-                self.noFriendResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
-                
-                self.view.addSubview((self.noFriendResult.view)!);
-                
-                
-                
-                self.noFriendResult.didMoveToParentViewController(self)
-                
-            }
+            
+            
+            
+            self.label.hidden = false;
+            
+            self.label.frame = CGRectMake(0, self.view.frame.size.height/2, self.view.frame.width, 50)
+            
+            self.label.center = self.view.center
+            
+            self.label.numberOfLines = 0;
+            
+            self.label.textAlignment = NSTextAlignment.Center
+            
+            self.label.text = "Sorry,we could not find any friend(s) with this name"
+            
+            self.label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+            
+            self.label.font = self.label.font.fontWithSize(13)
+            
+            self.label.textColor = colorCode.DarkGrayColor
+            
+            self.view.addSubview(self.label)
+            
+            self.view.bringSubviewToFront(label)
+
+            
+//            if self.view.subviews.contains(self.noFriendResult.view)
+//                
+//            {
+//                
+//                
+//            }
+//                
+//            else
+//                
+//            {
+//                
+//                self.noFriendResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoFriendViewController") as! NoFriendViewController
+//                
+//                self.noFriendResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+//                
+//                self.view.addSubview((self.noFriendResult.view)!);
+//                
+//                
+//                
+//                self.noFriendResult.didMoveToParentViewController(self)
+//                
+//            }
+            
+            
             
         }
 
@@ -422,7 +468,8 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                 searchButtonActive = false;
                  searchButtonActive2 = false;
                 
-                self.RemoveNoFrinedResult();
+                self.label.hidden = true;
+               
                 
                 self.InviteFriendsTableView.reloadData();
             }
@@ -1178,6 +1225,9 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         
         // LoaderFile.showLoader(self.view);
         
+        
+        CommonFunctions.showActivityIndicator(view)
+        
         let myurl = NSURL(string: Url.getChallengeFriendlist)
         
         
@@ -1284,27 +1334,27 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
     }
     
     
-    
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    let loadingView: UIView = UIView()
-    func showActivityIndicatory()
-    {
-        loadingView.frame = CGRectMake(0, 0, 60, 50)
-        loadingView.center = view.center
-        
-        loadingView.backgroundColor = UIColor.grayColor()
-        loadingView.alpha = 0.6
-        loadingView.clipsToBounds = true
-        loadingView.layer.cornerRadius = 10
-        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
-        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
-                                               loadingView.frame.size.height / 2);
-        loadingView.addSubview(activityIndicator)
-        self.view.addSubview(loadingView)
-        activityIndicator.startAnimating()
-    }
-    
+//    
+//    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+//    let loadingView: UIView = UIView()
+//    func showActivityIndicatory()
+//    {
+//        loadingView.frame = CGRectMake(0, 0, 60, 50)
+//        loadingView.center = view.center
+//        
+//        loadingView.backgroundColor = UIColor.grayColor()
+//        loadingView.alpha = 0.6
+//        loadingView.clipsToBounds = true
+//        loadingView.layer.cornerRadius = 10
+//        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+//        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+//                                               loadingView.frame.size.height / 2);
+//        loadingView.addSubview(activityIndicator)
+//        self.view.addSubview(loadingView)
+//        activityIndicator.startAnimating()
+//    }
+//    
     
 
     
@@ -1349,14 +1399,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                         NSOperationQueue.mainQueue().addOperationWithBlock
                             {
                                 
-                                
-                                
-                                
-                                
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
-                               
+                                CommonFunctions.hideActivityIndicator();
                                 
                                 let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
                                 let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
@@ -1388,10 +1431,9 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                                 
                                 
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
-                                
+                          CommonFunctions.hideActivityIndicator();
+                            
+                            
                                 let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
                                 let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
                                 
@@ -1417,9 +1459,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                 
                 
                 
-                self.activityIndicator.stopAnimating();
-                
-                self.loadingView.removeFromSuperview();
+              CommonFunctions.hideActivityIndicator();
                 
                 let alert = UIAlertController(title: "", message:"something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
                 
@@ -1462,8 +1502,22 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                     {
                         
                         
+                        
+                        
                         NSOperationQueue.mainQueue().addOperationWithBlock
                             {
+                                
+                                
+                                self.searchTextField.hidden = false
+                                
+                                self.searchCancelButton.hidden = false
+                                
+                                
+                                self.searchIcon.hidden = false
+                                
+                                self.upperViewHeightConstraint.constant = 100
+                                
+
                                 
                                 if  let elements: AnyObject = json!["response"]
 
@@ -1574,11 +1628,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                                                 NSOperationQueue.mainQueue().addOperationWithBlock
                                                     {
                                                         
-                                                        self.activityIndicator.stopAnimating();
-                                                        
-                                                        self.loadingView.removeFromSuperview();
-
-                                                        
+                                                       CommonFunctions.hideActivityIndicator();
                                                         
                                                         self.RemoveNoInternet();
                                                         
@@ -1624,9 +1674,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                         
                                 NSOperationQueue.mainQueue().addOperationWithBlock({
                                         
-                                        self.activityIndicator.stopAnimating();
-                                        
-                                        self.loadingView.removeFromSuperview();
+                                        CommonFunctions.hideActivityIndicator();
                                         
                                         
                                         self.RemoveNoInternet();
@@ -1678,19 +1726,23 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                                 
                                 
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
-                                
-                                
-                                
+                               CommonFunctions.hideActivityIndicator();
                                 ///// removeing image views
                                 
                                 
                                 self.RemoveNoInternet();
                                 self.RemoveNoResult();
+                            
+                                self.searchTextField.hidden = true
                                 
-                                
+                                self.searchCancelButton.hidden = true
+                          
+                            
+                                 self.searchIcon.hidden = true
+                            
+                                 self.upperViewHeightConstraint.constant = 65
+
+                            
                                 if self.view.subviews.contains(self.noFriendResult.view)
                                     
                                 {
@@ -1707,8 +1759,11 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                                     
                                     self.noFriendResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
                                     
+                                     self.noFriendResult.msgLabel.text = msg
+                                    
                                     self.view.addSubview((self.noFriendResult.view)!);
-                                  
+                               
+                                                                  
                                     
                                     self.noFriendResult.didMoveToParentViewController(self)
                                     
@@ -1731,10 +1786,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                 
                 
                 
-                self.activityIndicator.stopAnimating();
-                
-                self.loadingView.removeFromSuperview();
-                
+             CommonFunctions.hideActivityIndicator();
                
                 
                 self.RemoveNoInternet();
@@ -1832,19 +1884,11 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
     {
         
         
-        self.activityIndicator.stopAnimating();
-        
-        self.loadingView.removeFromSuperview();
-        
-        
-        self.RemoveNoInternet();
+        CommonFunctions.hideActivityIndicator();
         
         self.RemoveNoFrinedResult();
         
-
-        
-        
-        if self.view.subviews.contains(self.noResult.view)
+        if self.view.subviews.contains(self.noInternet.view)
             
         {
             
@@ -1855,27 +1899,24 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             
         {
             
-            self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+            self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
             
-            self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+            self.noInternet.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);
             
+            self.view.addSubview((self.noInternet.view)!);
             
-            self.noResult.noResultTextLabel.text = "something went wrong."
-            
-            self.noResult.noResultImageView.image = UIImage(named: "im_error")
-            
+            UIApplication.sharedApplication().endIgnoringInteractionEvents()
             
             
-            self.view.addSubview((self.noResult.view)!);
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ActiveChallengesViewController.handleTap(_:)))
             
             
-            self.view.userInteractionEnabled = true
+            self.noInternet.noInternetLabel.userInteractionEnabled = true
+            self.noInternet.view.addGestureRecognizer(tapRecognizer)
             
-            self.noResult.didMoveToParentViewController(self)
+            self.noInternet.didMoveToParentViewController(self)
             
         }
-        
-        
 
         
         
@@ -1938,7 +1979,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         
         if(Reachability.isConnectedToNetwork()==true )
         {
-            showActivityIndicatory()
+           
             self.getChallengeFriendlist();
 
             

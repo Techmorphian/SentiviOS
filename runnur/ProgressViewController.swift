@@ -35,6 +35,7 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
     @IBOutlet var daysRemaining: UILabel!
     
     
+    @IBOutlet var upperView: UIView!
     
     
     
@@ -323,7 +324,8 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         
                         self.frontView.hidden = true;
                         
-                        
+                        self.upperView.hidden = false;
+
                         
                         if  let elementss: AnyObject = json!["progress"]
                         {
@@ -343,14 +345,8 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 
                                 
                                 let amountPerMile = elementss[i]["amountPerMile"] as! String
-                                
-                                
-                                
-                                
-                                
+                                                                
                                 let usereStatus = elementss[i]["usereStatus"] as! String
-                                
-                                
                                 
                                 let raisedAmount = elementss[i]["raisedAmount"] as! String
                                 
@@ -608,6 +604,7 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             
                             self.RemoveNoInternet();
                             
+                            self.upperView.hidden = true;
                             
                             if self.view.subviews.contains(self.noResult.view)
                                 
@@ -1079,8 +1076,10 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     override func viewDidAppear(animated: Bool)
     {
+       
         
     }
+    
     
     
     override func viewDidLoad()

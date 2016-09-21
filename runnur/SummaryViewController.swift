@@ -621,7 +621,10 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
     {
         
-        self.showActivityIndicatory()
+             
+       showActivityIndicatory()
+        
+        
         // LoaderFile.showLoader(self.view);
         
         let myurl = NSURL(string: Url.viewGroupChallengeDetail)
@@ -660,25 +663,100 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
 
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     let loadingView: UIView = UIView()
+    
+    
+//    func showActivityIndicatory()
+//    {
+//        loadingView.frame = CGRectMake(0, 0, 60, 50)
+//        loadingView.center = view.center
+//        
+//        loadingView.backgroundColor = UIColor.grayColor()
+//        loadingView.alpha = 0.6
+//        loadingView.clipsToBounds = true
+//        loadingView.layer.cornerRadius = 10
+//        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+//        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+//                                               loadingView.frame.size.height / 2);
+//        loadingView.addSubview(activityIndicator)
+//        self.view.addSubview(loadingView)
+//        activityIndicator.startAnimating()
+//    }
+//   
+    
+    
+    
     func showActivityIndicatory()
     {
-        loadingView.frame = CGRectMake(0, 0, 60, 50)
-        loadingView.center = view.center
+      ////  old
         
-        loadingView.backgroundColor = UIColor.grayColor()
-        loadingView.alpha = 0.6
-        loadingView.clipsToBounds = true
+        
+//        loadingView.frame = CGRectMake(0, 0, 60, 50)
+//        loadingView.center = view.center
+//        
+//        loadingView.backgroundColor = UIColor.grayColor()
+//        loadingView.alpha = 0.6
+//        loadingView.clipsToBounds = true
+//        loadingView.layer.cornerRadius = 10
+//        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+//        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+//                                               loadingView.frame.size.height / 2);
+//        
+//        
+//        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+//        
+//        loadingView.addSubview(activityIndicator)
+//        self.view.addSubview(loadingView)
+//        activityIndicator.startAnimating()
+        
+        
+        
+        
+        loadingView.frame = CGRectMake(self.view.frame.width/2-30,self.view.frame.height/2 - 100,60,150)
+        
         loadingView.layer.cornerRadius = 10
-        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+        loadingView.alpha = 0.6
+        
+        
+        loadingView.clipsToBounds = true
+        
+        
+        // activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+        
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        
         activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
                                                loadingView.frame.size.height / 2);
+        
+          activityIndicator.color = UIColor.blueColor()
+        
         loadingView.addSubview(activityIndicator)
+        
+        
         self.view.addSubview(loadingView)
         activityIndicator.startAnimating()
+        
+        
     }
     
-            
+    
+    
+    func hideActivityIndicator()
+    {
+        
+        loadingView.removeFromSuperview();
+        
+//        self.activityIndicator.stopAnimating();
+//       
+//        self.loadingView.removeFromSuperview();
+
+        
+    }
+    
+    
+    
+
     
     
      var  winner = [String]()
@@ -767,6 +845,9 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                     {
                         
                         
+                        hideActivityIndicator();
+                        
+                        
                         if  let elements: AnyObject = json!["response"]
                         {
                             
@@ -778,9 +859,11 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                 
                                 
                                 
-                                self.activityIndicator.stopAnimating();
+//                                self.activityIndicator.stopAnimating();
+//                                
+//                                self.loadingView.removeFromSuperview();
                                 
-                                self.loadingView.removeFromSuperview();
+                                hideActivityIndicator();
                                 
                                 FrontView.hidden = true;
                                 
@@ -1623,9 +1706,12 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                 
                                 
                                 
-                                self.activityIndicator.stopAnimating();
+//                                self.activityIndicator.stopAnimating();
+//                                
+//                                self.loadingView.removeFromSuperview();
                                 
-                                self.loadingView.removeFromSuperview();
+                                
+                                self.hideActivityIndicator();
 
                                 
                                 let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
@@ -1652,9 +1738,13 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                         
                         NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
+//                                self.activityIndicator.stopAnimating();
+//                                
+//                                self.loadingView.removeFromSuperview();
+                            
+                            
+                            
+                            self.hideActivityIndicator();
 
                                 //  LoaderFile.hideLoader(self.view)
                                 
@@ -1682,11 +1772,8 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                 
                 
                  print(error)
-                
-                self.activityIndicator.stopAnimating();
-                
-                self.loadingView.removeFromSuperview();
-
+               
+                    self.hideActivityIndicator();
                 
                 let alert = UIAlertController(title: "", message:"something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
                 
@@ -1734,10 +1821,9 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                 
                                 
                                 
-                                self.activityIndicator.stopAnimating();
+                                  self.hideActivityIndicator();
                                 
-                                self.loadingView.removeFromSuperview();
-
+                                
                                 NSUserDefaults.standardUserDefaults().setObject(msg, forKey: "successMsgOfDecline")
                                 
                                 self.dismissViewControllerAnimated(false, completion: nil)
@@ -1758,10 +1844,9 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                         
                         NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
-
+                                self.hideActivityIndicator();
+                            
+                            
                                 //  LoaderFile.hideLoader(self.view)
                                 
                                 let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
@@ -1786,11 +1871,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                 
             {
                 
-                
-                self.activityIndicator.stopAnimating();
-                
-                self.loadingView.removeFromSuperview();
-  
+                self.hideActivityIndicator();
                 
                 let alert = UIAlertController(title: "", message:"something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
                 
@@ -1843,10 +1924,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
         print(error)
         
-        self.activityIndicator.stopAnimating();
-        
-        self.loadingView.removeFromSuperview();
-       
+          self.hideActivityIndicator();
         
         self.RemoveNoResult();
         

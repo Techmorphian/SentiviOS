@@ -678,9 +678,9 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
          
             
             
-            cell.potAmount.text = participatingArray[indexPath.row].betAmount
-            
-            
+            cell.potAmount.text = participatingArray[indexPath.row].potAmount
+                
+                        
             
             if participatingArray[indexPath.row].startDate != "" &&   participatingArray[indexPath.row].endDate != ""
             {

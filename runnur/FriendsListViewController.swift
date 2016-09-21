@@ -20,6 +20,16 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
     @IBOutlet var searchTextField: UITextField!
     
     
+    @IBOutlet var searchIcon: UIImageView!
+    
+    
+    @IBOutlet var icCancelImageView: UIImageView!
+    
+    @IBOutlet var upperViewHeightConstraint: NSLayoutConstraint!
+    
+    
+    
+    
     @IBOutlet var addButton: UIButton!
     
     var noInternet = NoInternetViewController()
@@ -29,6 +39,9 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
     var noFriendResult = NoFriendViewController()
     
     var label = UILabel()
+    
+  
+    
     
     
     
@@ -113,12 +126,8 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                 
             }
             
-            
-            
         }
-        
-        
-        
+          
     }
 
     
@@ -132,6 +141,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
     @IBAction func backButtonAction(sender: AnyObject)
     {
         
+        searchTextField.resignFirstResponder();
         
         if self.revealViewController() != nil
         {
@@ -163,6 +173,9 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         self.searchTextField.text = ""
         
         self.searchTextField.resignFirstResponder();
+        
+        self.label.hidden = true;
+
 
         
         RemoveNoFrinedResult();
@@ -252,6 +265,13 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
             
         }
         
+        else
+        {
+             self.label.hidden = true
+            
+            
+        }
+        
         
         self.friendsTableView.reloadData();
         
@@ -272,7 +292,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                 
                
                 self.label.hidden = true;
-
+                
                 
                 RemoveNoFrinedResult();
                 
@@ -414,6 +434,23 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                 cell.contactImage.image = UIImage(named:"im_default_profile")
                 
             }
+            
+            if friendListArray[indexPath.row].isAccepted == "0"
+            {
+              cell.invitedTagImageView.hidden = false
+                
+                cell.cancleButton.hidden = true
+                
+            }
+            
+            else
+            {
+                cell.invitedTagImageView.hidden = true
+                cell.cancleButton.hidden = false
+
+                
+            }
+            
            
             self.friendListArray[indexPath.row].indexPathRow = indexPath.row
             
@@ -461,7 +498,8 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         
             
             
-            self.showActivityIndicatory()
+           CommonFunctions.showActivityIndicator(self.view)
+            
             
             if(Reachability.isConnectedToNetwork()==true )
             {
@@ -498,11 +536,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                         {
                             
                             
-                              self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
-                                
-                                self.loadingView.removeFromSuperview();
+                            CommonFunctions.hideActivityIndicator();
                             
                             let alert = UIAlertController(title: "", message:" You are currently offline" , preferredStyle: UIAlertControllerStyle.Alert)
                             let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
@@ -540,9 +574,8 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                                     NSOperationQueue.mainQueue().addOperationWithBlock ({
                                                 
                                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
+                                        CommonFunctions.hideActivityIndicator();
+
                                 
                                 
                                          
@@ -637,12 +670,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                                         NSOperationQueue.mainQueue().addOperationWithBlock
                                             {
                                                 
-                                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
-                                
-                                self.loadingView.removeFromSuperview();
-                                                
+                                                CommonFunctions.hideActivityIndicator();
                                                 
                                                 
                                                 let alert = UIAlertController(title: "", message:msg , preferredStyle: UIAlertControllerStyle.Alert)
@@ -661,11 +689,9 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                                         NSOperationQueue.mainQueue().addOperationWithBlock
                                             {
                                                 
-                                               self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
-                                
-                                self.loadingView.removeFromSuperview();
+                                                CommonFunctions.hideActivityIndicator();
+                                                
+                                                
                                                 
                                                 let alert = UIAlertController(title: "", message:msg , preferredStyle: UIAlertControllerStyle.Alert)
                                                 
@@ -681,12 +707,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                             catch
                             {
                                 
-                                  self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
-                                
-                                self.loadingView.removeFromSuperview();
-                                
+                                CommonFunctions.hideActivityIndicator();
                                 
                                 
                                 let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg , preferredStyle: UIAlertControllerStyle.Alert)
@@ -706,11 +727,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                         else
                         {
                             
-                             self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
-                                
-                                self.loadingView.removeFromSuperview();
+                            CommonFunctions.hideActivityIndicator();
                             
                             let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg , preferredStyle: UIAlertControllerStyle.Alert)
                             let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
@@ -734,11 +751,9 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
             else
             {
                 
-                   self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
-                                
-                                self.loadingView.removeFromSuperview();
+                CommonFunctions.hideActivityIndicator();
+                
+                
                 
                 let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg , preferredStyle: UIAlertControllerStyle.Alert)
                 let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
@@ -784,11 +799,12 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         
     {
         
-        showActivityIndicatory();
+        
+        CommonFunctions.showActivityIndicator(view)
+        
         
         friendListArray.removeAll();
         
-
         
         // LoaderFile.showLoader(self.view);
         
@@ -827,32 +843,32 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
     }
    
     
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    let loadingView: UIView = UIView()
-    func showActivityIndicatory()
-    {
-        loadingView.frame = CGRectMake(0, 0, 60, 50)
-        loadingView.center = view.center
-        
-        loadingView.backgroundColor = UIColor.grayColor()
-        loadingView.alpha = 0.6
-        loadingView.clipsToBounds = true
-        loadingView.layer.cornerRadius = 10
-        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
-        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
-                                               loadingView.frame.size.height / 2);
-        
-        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-        
-        loadingView.userInteractionEnabled = false
-        
-        loadingView.addSubview(activityIndicator)
-        self.view.addSubview(loadingView)
-        activityIndicator.startAnimating()
-    }
-    
-    
+//    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+//    let loadingView: UIView = UIView()
+//    func showActivityIndicatory()
+//    {
+//        loadingView.frame = CGRectMake(0, 0, 60, 50)
+//        loadingView.center = view.center
+//        
+//        loadingView.backgroundColor = UIColor.grayColor()
+//        loadingView.alpha = 0.6
+//        loadingView.clipsToBounds = true
+//        loadingView.layer.cornerRadius = 10
+//        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+//        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+//                                               loadingView.frame.size.height / 2);
+//        
+//        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+//        
+//        loadingView.userInteractionEnabled = false
+//        
+//        loadingView.addSubview(activityIndicator)
+//        self.view.addSubview(loadingView)
+//        activityIndicator.startAnimating()
+//    }
+//    
+//    
 
     
     
@@ -893,6 +909,30 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                     {
                         
                         
+                        
+                        self.searchButtonActive = false;
+                        self.searchTextField.text = ""
+                        
+                        self.searchTextField.resignFirstResponder();
+                        
+                        self.label.hidden = true;
+                        
+                        
+                        
+                        RemoveNoFrinedResult();
+                        
+                        self.friendsTableView.reloadData()
+                        
+                        self.searchTextField.hidden = false
+                        self.searchIcon.hidden = false
+                        
+                        self.icCancelImageView.hidden = false
+                        
+                        self.upperViewHeightConstraint.constant = 100
+                        
+                        self.label.hidden = true
+
+                        
                         UIApplication.sharedApplication().endIgnoringInteractionEvents()
 
                         
@@ -910,9 +950,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                             {
                                 
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
+                                CommonFunctions.hideActivityIndicator();
                              
                                 
                                 
@@ -943,6 +981,11 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                                 self.friendListModel.friendGoogleId  = elements[i]["friendGoogleId"] as! String
                                 
                                 self.friendListModel.friendFbId  = elements[i]["friendFbId"] as! String
+                                
+                                
+                                self.friendListModel.isAccepted  = elements[i]["isAccepted"] as! String
+                                
+                                
                                 
                                 
                                  self.friendListArray.append(self.friendListModel)
@@ -979,10 +1022,8 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                         
                         NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
-                                
+                            CommonFunctions.hideActivityIndicator();
+                            
                               
                                 self.RemoveNoInternet();
                                 self.RemoveNoFrinedResult();
@@ -1028,14 +1069,21 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                         
                         NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
-                              self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
+                            CommonFunctions.hideActivityIndicator();
+
                                 
                                 
                                  self.RemoveNoInternet();
                                 self.RemoveNoResult();
-                                
+                            
+                            
+                                  self.searchTextField.hidden = true
+                                 self.searchIcon.hidden = true
+                            
+                                 self.icCancelImageView.hidden = true
+                            
+                            self.upperViewHeightConstraint.constant = 65
+                            
                                 if self.view.subviews.contains(self.noFriendResult.view)
                                     
                                 {
@@ -1072,10 +1120,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                 
             {
                 
-                
-                self.activityIndicator.stopAnimating();
-                
-                self.loadingView.removeFromSuperview();
+                CommonFunctions.hideActivityIndicator();
                 
                 
                 self.RemoveNoInternet();
@@ -1148,9 +1193,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         
         
         
-     self.activityIndicator.stopAnimating();
-                                
-    self.loadingView.removeFromSuperview();
+        CommonFunctions.hideActivityIndicator();
         
         
         self.RemoveNoInternet();
@@ -1440,11 +1483,6 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         NSUserDefaults.standardUserDefaults().setObject("", forKey: "AddFBFrndsSucessMSG")
         
         
-        
-        
-      
-      
-       
         
         //MARK:-  padding views
         

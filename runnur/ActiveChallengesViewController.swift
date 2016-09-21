@@ -612,7 +612,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
               
                 
                 
-                cell.potAmount.text = participatingArray[indexPath.row].betAmount
+                cell.potAmount.text = participatingArray[indexPath.row].potAmount
                 
                 
                 
@@ -912,8 +912,10 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
        // showActivityIndicatory()
         
-        showActivityIndicatory();
+        //showActivityIndicatory();
         
+       // CommonFunctions.showActivityIndicator(view);
+        showActivityIndicator();
         
         let myurl = NSURL(string: Url.viewActiveChallenges)
         
@@ -975,65 +977,95 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         activityIndicator.startAnimating()
     }
     
-//  var loadingLable = UILabel()
-//   var loadingView = UIView()
-//    
-//     // func showActivityIndicator(view:UIView,height:CGFloat=0)
-//    func showActivityIndicator()
-//    
+    
+    
+    func hideActivityIndicator()
+    {
+        
+        loadingView.removeFromSuperview();
+        
+    }
+    
+    
+
+
+    
+//
+//    static func hideActivityIndicator()
 //    {
 //        
-//        print(view.frame.height)
-//        print(view.frame.width)
-//        
-//        
-//         /// x-30 is a width of loadingView/2 mns 60/2
-//        ////// y-100 mns height of parent view(upper view only)
-//        
-//        loadingView.frame = CGRectMake(self.view.frame.width/2-30,self.view.frame.height/2 - 100,60,150)
-//        
-//        loadingView.layer.cornerRadius = 10
-//        loadingView.alpha = 0.6
-//        
-//        
-//        loadingView.clipsToBounds = true
-//        
-//        
-//       // activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
-//        
-//      activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-//        
-//       activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
-//                          loadingView.frame.size.height / 2);
-//        
-//        
-//        
-//      //  loadingLable=UILabel(frame: CGRectMake(self.loadingView.frame.width/2-50,self.loadingView.frame.height/2+20, 100,50))
-//        
-////        loadingLable=UILabel(frame: CGRectMake(5,100, self.loadingView.frame.width,80))
-////        
-////        loadingLable.text = "Please wait a moment. This may take a while"
-////        
-////        loadingLable.textColor=UIColor.redColor()
-////        
-////        loadingLable.font = loadingLable.font.fontWithSize(10)
-////        loadingLable.lineBreakMode =  .ByWordWrapping
-////        loadingLable.numberOfLines=0
-////        
-////         loadingLable.textAlignment = .Center
-////        
-////        loadingView.addSubview(loadingLable)
-//
-//        loadingView.addSubview(activityIndicator)
-//       
-//        
-//        self.view.addSubview(loadingView)
-//        activityIndicator.startAnimating()
-//    
+//        loadingView.removeFromSuperview()
 //        
 //    }
+//    
 //
 //    
+    
+    
+    
+    
+  var loadingLable = UILabel()
+  // var loadingView = UIView()
+    
+     // func showActivityIndicator(view:UIView,height:CGFloat=0)
+    
+    func showActivityIndicator()
+    
+    {
+        
+        print(view.frame.height)
+        print(view.frame.width)
+        
+        
+         /// x-30 is a width of loadingView/2 mns 60/2
+        ////// y-100 mns height of parent view(upper view only)
+        
+        loadingView.frame = CGRectMake(self.view.frame.width/2-30,self.view.frame.height/2 - 100,60,150)
+        
+        loadingView.layer.cornerRadius = 10
+        loadingView.alpha = 0.6
+        
+        
+        loadingView.clipsToBounds = true
+        
+        
+       // activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+        
+      activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        
+       activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+                          loadingView.frame.size.height / 2);
+     
+        
+        activityIndicator.color = UIColor.blueColor()
+        
+        
+      //  loadingLable=UILabel(frame: CGRectMake(self.loadingView.frame.width/2-50,self.loadingView.frame.height/2+20, 100,50))
+        
+//        loadingLable=UILabel(frame: CGRectMake(5,100, self.loadingView.frame.width,80))
+//        
+//        loadingLable.text = "Please wait a moment. This may take a while"
+//        
+//        loadingLable.textColor=UIColor.redColor()
+//        
+//        loadingLable.font = loadingLable.font.fontWithSize(10)
+//        loadingLable.lineBreakMode =  .ByWordWrapping
+//        loadingLable.numberOfLines=0
+//        
+//         loadingLable.textAlignment = .Center
+//        
+//        loadingView.addSubview(loadingLable)
+
+        loadingView.addSubview(activityIndicator)
+       
+        
+        self.view.addSubview(loadingView)
+        activityIndicator.startAnimating()
+    
+        
+    }
+
+    
     
     
     
@@ -1076,6 +1108,8 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                     if(status=="Success")
                     {
                         
+                        
+                     hideActivityIndicator();
                         
                         
                         UIApplication.sharedApplication().endIgnoringInteractionEvents()
@@ -1386,7 +1420,8 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                                 self.activityIndicator.stopAnimating();
                                 
                                 self.loadingView.removeFromSuperview();
-                                
+                            
+                               UIApplication.sharedApplication().endIgnoringInteractionEvents()
                                 
                                 self.RemoveNoInternet();
                                 
@@ -1430,7 +1465,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                                 
                                 self.loadingView.removeFromSuperview();
                                 
-                                
+                                UIApplication.sharedApplication().endIgnoringInteractionEvents()
                                 
                                 self.RemoveNoInternet();
                                 
@@ -1561,6 +1596,9 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
         self.loadingView.removeFromSuperview();
         
+        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+
+        
         self.RemoveNoResult();
         
         if self.view.subviews.contains(self.noInternet.view)
@@ -1580,7 +1618,11 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
             
             self.view.addSubview((self.noInternet.view)!);
             
+           
+            
             let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ActiveChallengesViewController.handleTap(_:)))
+            
+            
             self.noInternet.noInternetLabel.userInteractionEnabled = true
             self.noInternet.view.addGestureRecognizer(tapRecognizer)
             
@@ -1602,6 +1644,9 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
            
             self.participatingArray.removeAll();
             self.contributingArray.removeAll();
+            
+            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+
             viewActiveChallenges();
             
         }
@@ -1626,6 +1671,9 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                 self.noInternet.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);
                 
                 self.view.addSubview((self.noInternet.view)!);
+                
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+
                 
                 let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ActiveChallengesViewController.handleTap(_:)))
                 self.noInternet.noInternetLabel.userInteractionEnabled = true

@@ -48,7 +48,8 @@ class phoneBookModel
     
      internal var friendFbId = String()
     
-    
+    internal var  isAccepted = String()
+
     ///// phone conatct list
     
     internal var selectedEmail = String()

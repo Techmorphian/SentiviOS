@@ -388,7 +388,10 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         
                     cell.distance.text = activityChatArray[indexPath.row].distance
+            
+            
                     cell.duration.text = activityChatArray[indexPath.row].elapsedTime
+            
                     cell.calories.text = activityChatArray[indexPath.row].caloriesBurnedS
         
                     cell.like.text = activityChatArray[indexPath.row].likes + " " + "Likes"
@@ -1100,10 +1103,8 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath)
     {
         
-        let check = indexPath.row
-        
-      
-        
+       let check = indexPath.row
+                
         if (check <= 5 && shouldCallPagging)
         {
             
@@ -1143,7 +1144,55 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func scrollViewDidScroll(scrollView: UIScrollView)
     {
         
+        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+            //reach bottom
+            return
+        }
         
+        if (scrollView.contentOffset.y < 0){
+            //reach top
+        }
+        
+        if (scrollView.contentOffset.y >= 0 && scrollView.contentOffset.y < (scrollView.contentSize.height - scrollView.frame.size.height))
+        {
+            
+            
+            
+//            let check = indexPath.row
+//            
+//            if (check <= 5 && shouldCallPagging)
+//            {
+//                
+//                //// making it false so that it can call at ones
+//                
+//                shouldCallPagging = false
+//                
+//                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isMyPaggingCalled")
+//                
+//                
+//                self.activityIndicator.stopAnimating();
+//                
+//                self.loadingView.removeFromSuperview();
+//                
+//                lastDateSent = CurrentDateFunc.getSubtractedDate(lastDateSent)
+//                
+//                // showActivityIndi()
+//                
+//                SShowActivityIndicatory()
+//                self.activityInfo();
+//                
+//            }
+//                
+//            else
+//                
+//            {
+//                
+//                
+//            }
+//            
+//            return
+            //not top and not bottom
+        }
  
         
     }
@@ -1233,7 +1282,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
        
     
         
-        //print(postString)
+        print(postString)
         
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -1296,7 +1345,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&message=\(message)";
         
         
-        //print(postString)
+        print(postString)
         
         
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
@@ -1367,7 +1416,10 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     {
         
         let dataString = String(data: self.mutableData, encoding: NSUTF8StringEncoding)
-        //print(dataString);
+       
+        
+        
+        print(dataString);
         
          // MARK:-  IF DATA TASK = ACTIVITY INFO WEB SERVICE
         
@@ -1459,7 +1511,6 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 self.activityModel=ViewActivityModel()
                                 
                                 
-                              
                                 
                                 if let element = elements[i]["objectType"]
                                 {
@@ -1744,7 +1795,9 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                             /////////////////////
                                             
                                             let FirstName = activityData!["FirstName"] as! String
-                                            
+                                          
+                                           // let FirstName = "Kareena"
+
                                             
                                             if FirstName != ""
                                             {
@@ -1753,9 +1806,9 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                             
                                             /////////////////////
                                             
-                                            let LastName = activityData!["LastName"] as! String
+                                           let LastName = activityData!["LastName"] as! String
                                             
-                                            
+                                            //let LastName = "Kapoor"
                                             if LastName != ""
                                             {
                                                 self.activityModel.LastName = LastName
@@ -1763,9 +1816,10 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                             
                                             /////////////////////
                                             
-                                            let PhotoUrl = activityData!["PhotoUrl"] as! String
+                                          let PhotoUrl = activityData!["PhotoUrl"] as! String
                                             
-                                            
+                                            //let PhotoUrl = ""
+
                                             if PhotoUrl != ""
                                             {
                                                 self.activityModel.PhotoUrl = PhotoUrl
@@ -1814,8 +1868,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                     }
                                     
                                 }
-                           
-                            }
+                         }
                             
                             
                             NSOperationQueue.mainQueue().addOperationWithBlock
@@ -1823,8 +1876,12 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                     if NSUserDefaults.standardUserDefaults().boolForKey("isMyPaggingCalled") == true
                                         
                                     {
-                                         self.ActivityTableView.reloadData();
+                                        self.ActivityTableView.beginUpdates()
+                                        self.ActivityTableView.insertRowsAtIndexPaths(indexPath, withRowAnimation: UITableViewRowAnimation.Bottom)
+                                         self.ActivityTableView.endUpdates();
                                         
+                                        self.ActivityTableView.reloadRowsAtIndexPaths(indexPath, withRowAnimation: UITableViewRowAnimation.None)
+                                        //self.ActivityTableView.reloadData()
                                         for i in self.activityChatArray
                                         {
                                             
@@ -1837,35 +1894,29 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                         
                                         
                                         self.RemoveNoInternet();
-                                        
                                         self.RemoveNoResult();
-                              self.activityChatArray = self.activityChatArray.reverse();
+                                        
+                                        self.activityChatArray = self.activityChatArray.reverse();
                                         
                                         
-                                    self.ActivityTableView.delegate = self;
+                                        self.ActivityTableView.delegate = self;
                                         
-                                    self.ActivityTableView.dataSource = self;
-
-                                    self.ActivityTableView.reloadData();
+                                        self.ActivityTableView.dataSource = self;
                                         
-                                        
-                                        for i in self.activityChatArray
-                                        {
-                                            
-                                           // print(i.createdAt)
-                                          }
+                                        self.ActivityTableView.reloadData();
                                         
                                         
                                         
-                                    
-                                    
+                                        
                                         /////// scroll to bottom
-                                  
-                                    self.ActivityTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.ActivityTableView.numberOfRowsInSection(0) - 1, inSection: 0), atScrollPosition: .None, animated: false)
-                                  
+                                        
+                                        self.ActivityTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.ActivityTableView.numberOfRowsInSection(0) - 1, inSection: 0), atScrollPosition: .None, animated: false)
+                                        
                                     
                                     
                                     }
+                               
+                                    
                                     
                                     
                             }
@@ -1957,6 +2008,10 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         }
                         else
                         {
+                            
+                            
+                            
+                            
                             
                             
 //                            NSOperationQueue.mainQueue().addOperationWithBlock({
@@ -3647,6 +3702,8 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
    // MARK: RECEIVED NOTIFICATION FOR COMMETS
     //// receiving row count and row index path  through notification from comments screen  and upading the values
+   
+    
     func ReceivedNotification(notification: NSNotification)
     {
 
@@ -3657,6 +3714,8 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             let rowindex = extractInfo["indexOfRow"] as! Int
             
             let rowCount = extractInfo["rowCount"]
+            
+            print(rowCount)
             
              self.activityChatArray[rowindex].comments = String(rowCount!)
           

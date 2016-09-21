@@ -296,7 +296,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         if sender.titleLabel?.text == "Accept"
         {
             
-            if maxAmountContributionTxtField.text == ""
+            if maxAmountContributionTxtField.text == "" || maxAmountContributionTxtField.text == "0"
             {
                 
                 
@@ -629,23 +629,72 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
     
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     let loadingView: UIView = UIView()
+    
     func showActivityIndicatory()
     {
-        loadingView.frame = CGRectMake(0, 0, 60, 50)
-        loadingView.center = view.center
+       
+//        
+//        loadingView.frame = CGRectMake(0, 0, 60, 50)
+//        loadingView.center = view.center
+//        
+//        loadingView.backgroundColor = UIColor.grayColor()
+//        loadingView.alpha = 0.6
+//        loadingView.clipsToBounds = true
+//        loadingView.layer.cornerRadius = 10
+//        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+//        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+//                                               loadingView.frame.size.height / 2);
+//        loadingView.addSubview(activityIndicator)
+//        self.view.addSubview(loadingView)
+//        activityIndicator.startAnimating()
         
-        loadingView.backgroundColor = UIColor.grayColor()
-        loadingView.alpha = 0.6
-        loadingView.clipsToBounds = true
+        
+        loadingView.frame = CGRectMake(self.view.frame.width/2-30,self.view.frame.height/2 - 100,60,150)
+        
         loadingView.layer.cornerRadius = 10
-        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+        loadingView.alpha = 0.6
+        
+        
+        loadingView.clipsToBounds = true
+        
+        
+        // activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+        
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        
         activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
                                                loadingView.frame.size.height / 2);
+        
+        activityIndicator.color = UIColor.blueColor()
+        
         loadingView.addSubview(activityIndicator)
+        
+        
         self.view.addSubview(loadingView)
         activityIndicator.startAnimating()
+        
+        
+        
+        
     }
+    
+    
+    
+    func hideActivityIndicator()
+    {
+        
+        loadingView.removeFromSuperview();
+        
+        //        self.activityIndicator.stopAnimating();
+        //
+        //        self.loadingView.removeFromSuperview();
+        
+        
+    }
+
+    
+    
     
 
     
@@ -741,13 +790,11 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                 
                                 
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
+                                hideActivityIndicator();
                                 
                            
                                 
-                                frontView.hidden = true;
+                                //frontView.hidden = true;
                                 
                                 
                                 _ = elements[i]["challengeId"] as! String
@@ -817,7 +864,8 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
 
                                 goalAmountLabel.text = betAmount
                                 
-                                
+                                print(betAmount)
+                                print(goalAmountLabel.text)
                                 
                                 
                                 let causesName = elements[i]["causesName"] as! String
@@ -904,10 +952,15 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                 
                                 let maxAmount = elements[i]["maxAmount"] as! String
 
-                                if maxAmount != ""
+                                if maxAmount != "0"
                                 {
                                     
                                     maxAmountContributionTxtField.text = maxAmount
+                                }
+                                else
+                                {
+                                    maxAmountContributionTxtField.text =  "0"
+                                    
                                 }
                                 
                                 
@@ -957,14 +1010,19 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                     buttonOne.hidden = true
                                     buttonTwo.hidden = true
                                     
-                                    maxAmountView.hidden = true
+                                   // maxAmountView.hidden = true
+                                   
+                                    //anonymousView.hidden = true
                                     
-                                    anonymousView.hidden = true
-                                    
-                                    maxAmountViewHeight.constant = 0
+                                  //  maxAmountViewHeight.constant = 0
                                     
                                     
-                                    anonymousViewHeight.constant = 0
+                                  //  anonymousViewHeight.constant = 0
+                                    
+                                    
+                                    anonymousCheckUncheckButton.userInteractionEnabled = false
+                                    
+                                    maxAmountContributionTxtField.userInteractionEnabled = false
 
                                     
                                     let dateCheck =  dateComparison(startDate, endDate: endDate)
@@ -973,7 +1031,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                     {
                                         
                                         
-                                        bottomFrontView.hidden = true
+                                       // bottomFrontView.hidden = true
                                         
                                         buttonOne.hidden = false
                                         
@@ -989,7 +1047,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                     if dateCheck == challengeOnGoing
                                     {
                                         
-                                        bottomFrontView.hidden = true
+                                      //  bottomFrontView.hidden = true
                                         
                                         bottomButtomViewHeight.constant = 50
                                         
@@ -1039,13 +1097,13 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                     
                                     anonymousView.hidden = false
                                     
-                                    anonymousViewHeight.constant = 60
+                                    anonymousViewHeight.constant = 40
                                     
 
                                     
-                                    maxAmountView.backgroundColor = colorCode.LightGrayColor
-                                    
-                                    anonymousView.backgroundColor = colorCode.LightGrayColor
+//                                    maxAmountView.backgroundColor = colorCode.LightGrayColor
+//                                    
+//                                    anonymousView.backgroundColor = colorCode.LightGrayColor
                                     
                                     let dateCheck =  dateComparison(startDate, endDate: endDate)
                                     
@@ -1064,7 +1122,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                     {
                                         
                                         
-                                          bottomFrontView.hidden = true
+                                         // bottomFrontView.hidden = true
                                         buttonOne.hidden = false
                                         
                                         buttonOne.setTitle("Decline", forState: .Normal)
@@ -1114,7 +1172,11 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                     
                                     anonymousView.hidden = false
                                     
-                                    anonymousViewHeight.constant = 60
+                                    anonymousViewHeight.constant = 40
+                                    
+                                    maxAmountView.backgroundColor = colorCode.LightGrayColor
+                                    
+                                    anonymousView.backgroundColor = colorCode.LightGrayColor
 
                                     
                                     let dateCheck =  dateComparison(startDate, endDate: endDate)
@@ -1134,7 +1196,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                         buttonOne.hidden = true
                                         buttonTwo.hidden = true
                                         
-                                          bottomFrontView.hidden = true
+                                         // bottomFrontView.hidden = true
                                         
                                     ///he cant start activity bcz he is contributing
                                         
@@ -1182,7 +1244,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                     anonymousView.userInteractionEnabled = false
                                     anonymousView.hidden = false
                                     
-                                    anonymousViewHeight.constant = 60
+                                    anonymousViewHeight.constant = 40
                                     
 
                                     
@@ -1205,7 +1267,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                         buttonOne.hidden = false
                                         buttonTwo.hidden = true
                                         
-                                          bottomFrontView.hidden = true
+                                          //bottomFrontView.hidden = true
                                         
                                         buttonOne.setTitle("Declined", forState: .Normal)
                                         
@@ -1231,27 +1293,14 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                         
                                     }
                                     
-
-                                    
                                 }
-                                
-                                
-                                
-                                
-                                
-                                
                                 
                             }// for loop
                             
                             NSOperationQueue.mainQueue().addOperationWithBlock
                                 {
-                                    
-                                    
-                                    
                                     self.RemoveNoInternet();
                                     self.RemoveNoResult();
-                                    
-                                    
                                     
                             }
                             
@@ -1383,10 +1432,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                 
                                 
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
-                                
+                              self.hideActivityIndicator()
                                 
                                 let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
                                 let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
@@ -1418,9 +1464,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                         
                         NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
+                             self.hideActivityIndicator()
                                 
                                 //  LoaderFile.hideLoader(self.view)
                                 
@@ -1447,10 +1491,8 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
             {
                 
                 
-                
-                self.activityIndicator.stopAnimating();
-                
-                self.loadingView.removeFromSuperview();
+                self.hideActivityIndicator()
+
                 
                 
                 let alert = UIAlertController(title: "", message:"something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
@@ -1498,9 +1540,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                 
                                 
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
+                              self.hideActivityIndicator()
                                 
                                 NSUserDefaults.standardUserDefaults().setObject(msg, forKey: "successMsgOfDecline")
                                 
@@ -1554,9 +1594,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
             {
                 
                 
-                self.activityIndicator.stopAnimating();
-                
-                self.loadingView.removeFromSuperview();
+                self.hideActivityIndicator()
                 
                 
                 let alert = UIAlertController(title: "", message:"something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
@@ -1612,16 +1650,14 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         
         print(error)
         
-        self.activityIndicator.stopAnimating();
-        
-        self.loadingView.removeFromSuperview();
-        
+        self.hideActivityIndicator()
+
         
         
-        self.RemoveNoInternet();
         
+        self.RemoveNoResult();
         
-        if self.view.subviews.contains(self.noResult.view)
+        if self.view.subviews.contains(self.noInternet.view)
             
         {
             
@@ -1632,22 +1668,23 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
             
         {
             
-            self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+            self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
             
-            self.noResult.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
+            self.noInternet.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);
             
-            self.noResult.noResultTextLabel.text = "something went wrong."
-            
-            self.noResult.noResultImageView.image = UIImage(named: "im_error")
-            
-            self.view.addSubview((self.noResult.view)!);
+            self.view.addSubview((self.noInternet.view)!);
             
             
-            self.noResult.didMoveToParentViewController(self)
+            
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ActiveChallengesViewController.handleTap(_:)))
+            
+            
+            self.noInternet.noInternetLabel.userInteractionEnabled = true
+            self.noInternet.view.addGestureRecognizer(tapRecognizer)
+            
+            self.noInternet.didMoveToParentViewController(self)
             
         }
-        
-        
         
         
     }
@@ -1881,11 +1918,24 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         maxAmountContributionTxtField.delegate = self;
         //MARK:-  placeholder in text fileds
         
+        
         let placeholder1 = NSAttributedString(string: "0", attributes: [NSForegroundColorAttributeName:UIColor(red: 139/255, green: 139/255, blue: 139/255, alpha: 1)])
         maxAmountContributionTxtField.attributedPlaceholder = placeholder1
+        
+//        let placeholder2 = NSAttributedString(string: "0%", attributes: [NSForegroundColorAttributeName:UIColor(red: 139/255, green: 139/255, blue: 139/255, alpha: 1)])
+//        FirstWinnerTextField.attributedPlaceholder = placeholder2
 
         
         anonymous = "0"
+
+        
+        //MARK:-  padding views
+        
+        ///////// padding views in text fileds
+        
+        let paddingView1 = UIView(frame: CGRectMake(0, 0, 20, self.maxAmountContributionTxtField.frame.height))
+        maxAmountContributionTxtField.leftView = paddingView1
+        maxAmountContributionTxtField.leftViewMode = UITextFieldViewMode.Always
 
         
         

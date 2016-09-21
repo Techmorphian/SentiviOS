@@ -585,7 +585,8 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         if  requestType[index] == "1"
         {
-        self.showActivityIndicator()
+    
+            CommonFunctions.showActivityIndicator(view)
         
         if(Reachability.isConnectedToNetwork()==true )
         {
@@ -620,11 +621,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     dispatch_sync(dispatch_get_main_queue())
                     {
                         
-                        
-                        self.activityIndicator.stopAnimating();
-                        
-                        self.loadingView.removeFromSuperview();
-                        
+                        CommonFunctions.hideActivityIndicator();
                         
                         let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg , preferredStyle: UIAlertControllerStyle.Alert)
                         let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
@@ -662,10 +659,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                     
                                     NSOperationQueue.mainQueue().addOperationWithBlock({
                                         
-                                        self.activityIndicator.stopAnimating();
-                                        
-                                        self.loadingView.removeFromSuperview();
-                                        
+                                        CommonFunctions.hideActivityIndicator();
                                         
                                         self.requestId.removeAll()
                                         self.requestType.removeAll()
@@ -694,9 +688,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                     NSOperationQueue.mainQueue().addOperationWithBlock
                                         {
                                             
-                                            self.activityIndicator.stopAnimating();
-                                            
-                                            self.loadingView.removeFromSuperview();
+                                              CommonFunctions.hideActivityIndicator();
                                             
                                             let alert = UIAlertController(title: msg , message:
                                                 "", preferredStyle: UIAlertControllerStyle.Alert)
@@ -718,9 +710,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         catch
                         {
                             
-                            self.activityIndicator.stopAnimating();
-                            
-                            self.loadingView.removeFromSuperview();
+                            CommonFunctions.hideActivityIndicator();
                             
                             
                             let alert = UIAlertController(title: "something went wrong.", message:
@@ -738,10 +728,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     else
                     {
                         
-                        self.activityIndicator.stopAnimating();
-                        
-                        self.loadingView.removeFromSuperview();
-                        
+                        CommonFunctions.hideActivityIndicator();
                         
                         let alert = UIAlertController(title: "", message: "something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
                         let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
@@ -765,10 +752,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
         else
         {
             
-            self.activityIndicator.stopAnimating();
-            
-            self.loadingView.removeFromSuperview();
-            
+             CommonFunctions.hideActivityIndicator();
             
             
             let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg , preferredStyle: UIAlertControllerStyle.Alert)
@@ -807,8 +791,9 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     
                     // MARK:- REMOVE USER WITHOUT MONEY BACK
                     
+                  
                     
-                    self.showActivityIndicator()
+                   CommonFunctions.showActivityIndicator(self.view)
                     
                     if(Reachability.isConnectedToNetwork()==true )
                     {
@@ -843,9 +828,9 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 {
                                     
                                     
-                                    self.activityIndicator.stopAnimating();
-                                    
-                                    self.loadingView.removeFromSuperview();
+                                     CommonFunctions.hideActivityIndicator();
+ CommonFunctions.hideActivityIndicator();
+
                                     
                                     
                                     let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg , preferredStyle: UIAlertControllerStyle.Alert)
@@ -884,10 +869,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                                 
                                                 NSOperationQueue.mainQueue().addOperationWithBlock({
                                                     
-                                                    self.activityIndicator.stopAnimating();
-                                                    
-                                                    self.loadingView.removeFromSuperview();
-                                                    
+                                                    CommonFunctions.hideActivityIndicator();
                                                     
                                                     
                                                     
@@ -918,9 +900,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                                 NSOperationQueue.mainQueue().addOperationWithBlock
                                                     {
                                                         
-                                                        self.activityIndicator.stopAnimating();
-                                                        
-                                                        self.loadingView.removeFromSuperview();
+                                                   CommonFunctions.hideActivityIndicator();
                                                         
                                                         let alert = UIAlertController(title: msg , message:
                                                             "", preferredStyle: UIAlertControllerStyle.Alert)
@@ -942,10 +922,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                     catch
                                     {
                                         
-                                        self.activityIndicator.stopAnimating();
-                                        
-                                        self.loadingView.removeFromSuperview();
-                                        
+                                      CommonFunctions.hideActivityIndicator();
                                         
                                         let alert = UIAlertController(title: "something went wrong.", message:
                                             "", preferredStyle: UIAlertControllerStyle.Alert)
@@ -962,10 +939,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 else
                                 {
                                     
-                                    self.activityIndicator.stopAnimating();
-                                    
-                                    self.loadingView.removeFromSuperview();
-                                    
+                                   CommonFunctions.hideActivityIndicator();
                                     
                                     let alert = UIAlertController(title: "", message: "something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
                                     let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
@@ -989,10 +963,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     else
                     {
                         
-                        self.activityIndicator.stopAnimating();
-                        
-                        self.loadingView.removeFromSuperview();
-                        
+                         CommonFunctions.hideActivityIndicator();
                         
                         
                         let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg , preferredStyle: UIAlertControllerStyle.Alert)
@@ -1020,7 +991,8 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     // MARK:- REMOVE USER WITH MONEY BACK
                     
                     
-                    self.showActivityIndicator()
+                 CommonFunctions.showActivityIndicator(self.view)
+                    
                     
                     if(Reachability.isConnectedToNetwork()==true )
                     {
@@ -1055,9 +1027,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 {
                                     
                                     
-                                    self.activityIndicator.stopAnimating();
-                                    
-                                    self.loadingView.removeFromSuperview();
+                                    CommonFunctions.hideActivityIndicator();
                                     
                                     
                                     let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg , preferredStyle: UIAlertControllerStyle.Alert)
@@ -1096,10 +1066,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                                 
                                                 NSOperationQueue.mainQueue().addOperationWithBlock({
                                                     
-                                                    self.activityIndicator.stopAnimating();
-                                                    
-                                                    self.loadingView.removeFromSuperview();
-                                                    
+                                                   CommonFunctions.hideActivityIndicator();
                                                     
                                                     self.requestId.removeAll()
                                                     self.requestType.removeAll()
@@ -1128,10 +1095,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                                 NSOperationQueue.mainQueue().addOperationWithBlock
                                                     {
                                                         
-                                                        self.activityIndicator.stopAnimating();
-                                                        
-                                                        self.loadingView.removeFromSuperview();
-                                                        
+                                                      CommonFunctions.hideActivityIndicator();
                                                         let alert = UIAlertController(title: msg , message:
                                                             "", preferredStyle: UIAlertControllerStyle.Alert)
                                                         
@@ -1152,9 +1116,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                     catch
                                     {
                                         
-                                        self.activityIndicator.stopAnimating();
-                                        
-                                        self.loadingView.removeFromSuperview();
+                                         CommonFunctions.hideActivityIndicator();
                                         
                                         
                                         let alert = UIAlertController(title: "something went wrong.", message:
@@ -1172,9 +1134,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 else
                                 {
                                     
-                                    self.activityIndicator.stopAnimating();
-                                    
-                                    self.loadingView.removeFromSuperview();
+                                     CommonFunctions.hideActivityIndicator();
                                     
                                     
                                     let alert = UIAlertController(title: "", message: "something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
@@ -1199,11 +1159,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     else
                     {
                         
-                        self.activityIndicator.stopAnimating();
-                        
-                        self.loadingView.removeFromSuperview();
-                        
-                        
+                         CommonFunctions.hideActivityIndicator();
                         
                         let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg , preferredStyle: UIAlertControllerStyle.Alert)
                         let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
@@ -1251,7 +1207,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
         if  requestType[index] == "1"
         {
             
-        self.showActivityIndicator()
+        CommonFunctions.showActivityIndicator(self.view)
         
         if(Reachability.isConnectedToNetwork()==true )
         {
@@ -1286,9 +1242,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     {
                         
                         
-                        self.activityIndicator.stopAnimating();
-                        
-                        self.loadingView.removeFromSuperview();
+                          CommonFunctions.hideActivityIndicator();
                         
                         
                         let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg , preferredStyle: UIAlertControllerStyle.Alert)
@@ -1328,9 +1282,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                     
                                     NSOperationQueue.mainQueue().addOperationWithBlock({
                                         
-                                        self.activityIndicator.stopAnimating();
-                                        
-                                        self.loadingView.removeFromSuperview();
+                                          CommonFunctions.hideActivityIndicator();
                                       
                                         
                                         self.requestId.removeAll()
@@ -1358,9 +1310,9 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                     NSOperationQueue.mainQueue().addOperationWithBlock
                                         {
                                             
-                                            self.activityIndicator.stopAnimating();
+                                           CommonFunctions.hideActivityIndicator();
                                             
-                                            self.loadingView.removeFromSuperview();
+                                            
                                             
                                             let alert = UIAlertController(title: msg , message:
                                                 "", preferredStyle: UIAlertControllerStyle.Alert)
@@ -1382,9 +1334,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         catch
                         {
                             
-                            self.activityIndicator.stopAnimating();
-                            
-                            self.loadingView.removeFromSuperview();
+                            CommonFunctions.hideActivityIndicator();
                             
                             
                             let alert = UIAlertController(title: "something went wrong.", message:
@@ -1402,10 +1352,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     else
                     {
                         
-                        self.activityIndicator.stopAnimating();
-                        
-                        self.loadingView.removeFromSuperview();
-                        
+                         CommonFunctions.hideActivityIndicator();
                         
                         let alert = UIAlertController(title: "", message: "something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
                         let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
@@ -1429,11 +1376,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
         else
         {
             
-            self.activityIndicator.stopAnimating();
-            
-            self.loadingView.removeFromSuperview();
-            
-            
+              CommonFunctions.hideActivityIndicator();
             
             let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg , preferredStyle: UIAlertControllerStyle.Alert)
             let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
@@ -1465,7 +1408,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
                 
                 
-                self.showActivityIndicator()
+                CommonFunctions.showActivityIndicator(self.view)
                 
                 if(Reachability.isConnectedToNetwork()==true )
                 {
@@ -1500,10 +1443,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             {
                                 
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
-                                
+                              CommonFunctions.hideActivityIndicator();
                                 
                                 let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg , preferredStyle: UIAlertControllerStyle.Alert)
                                 let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
@@ -1542,9 +1482,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                             
                                             NSOperationQueue.mainQueue().addOperationWithBlock({
                                                 
-                                                self.activityIndicator.stopAnimating();
-                                                
-                                                self.loadingView.removeFromSuperview();
+                                                 CommonFunctions.hideActivityIndicator();
                                                 
                                                 
                                                 self.requestId.removeAll()
@@ -1572,10 +1510,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                             NSOperationQueue.mainQueue().addOperationWithBlock
                                                 {
                                                     
-                                                    self.activityIndicator.stopAnimating();
-                                                    
-                                                    self.loadingView.removeFromSuperview();
-                                                    
+                                                       CommonFunctions.hideActivityIndicator();
                                                     let alert = UIAlertController(title: msg , message:
                                                         "", preferredStyle: UIAlertControllerStyle.Alert)
                                                     
@@ -1596,9 +1531,9 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 catch
                                 {
                                     
-                                    self.activityIndicator.stopAnimating();
-                                    
-                                    self.loadingView.removeFromSuperview();
+                                     CommonFunctions.hideActivityIndicator();
+
+
                                     
                                     
                                     let alert = UIAlertController(title: "something went wrong.", message:
@@ -1616,9 +1551,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             else
                             {
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
+                                CommonFunctions.hideActivityIndicator();
                                 
                                 
                                 let alert = UIAlertController(title: "", message: "something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
@@ -1643,9 +1576,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 else
                 {
                     
-                    self.activityIndicator.stopAnimating();
-                    
-                    self.loadingView.removeFromSuperview();
+                    CommonFunctions.hideActivityIndicator();
                     
                     
                     
@@ -1675,28 +1606,40 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
   // FUNC ACTIVITY INDICATOR
     
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    let loadingView: UIView = UIView()
-    func showActivityIndicator()
-    {
-        loadingView.frame = CGRectMake(0, 0, 60, 50)
-        loadingView.center = view.center
-        
-        loadingView.backgroundColor = UIColor.grayColor()
-        loadingView.alpha = 0.6
-        loadingView.clipsToBounds = true
-        loadingView.layer.cornerRadius = 10
-        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
-        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
-                                               loadingView.frame.size.height / 2);
-        loadingView.addSubview(activityIndicator)
-        self.view.addSubview(loadingView)
-        activityIndicator.startAnimating()
-    }
+//    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+//    let loadingView: UIView = UIView()
+//    func showActivityIndicator()
+//    {
+//        loadingView.frame = CGRectMake(0, 0, 60, 50)
+//        loadingView.center = view.center
+//        
+//        loadingView.backgroundColor = UIColor.grayColor()
+//        loadingView.alpha = 0.6
+//        loadingView.clipsToBounds = true
+//        loadingView.layer.cornerRadius = 10
+//        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+//        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+//                                               loadingView.frame.size.height / 2);
+//        loadingView.addSubview(activityIndicator)
+//        self.view.addSubview(loadingView)
+//        activityIndicator.startAnimating()
+//    }
     
 
+//    func hideActivityIndicator()
+//    {
+//        
+//        loadingView.removeFromSuperview();
+//        
+//        //        self.activityIndicator.stopAnimating();
+//        //
+//        //        self.loadingView.removeFromSuperview();
+//        
+//        
+//    }
     
+
 
     
     // MARK:- VIEW REQUEST   WEB SERVICE
@@ -1705,9 +1648,8 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
     {
         
-        showActivityIndicator();
         
-        
+        CommonFunctions.showActivityIndicator(view)
         
         self.requestId.removeAll()
         self.requestType.removeAll()
@@ -1815,15 +1757,13 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     {
                         
                         
-                        
+                        UIApplication.sharedApplication().applicationIconBadgeNumber =  0
                         
                         self.RemoveNoInternet();
                         
                         self.RemoveNoResult();
                         
-                        self.activityIndicator.stopAnimating();
-                        
-                        self.loadingView.removeFromSuperview();
+                         CommonFunctions.hideActivityIndicator();
                         
                         
                         if  let elements: AnyObject = json!["response"]
@@ -2080,9 +2020,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         NSOperationQueue.mainQueue().addOperationWithBlock({
                             
                             
-                            self.activityIndicator.stopAnimating();
-                            
-                            self.loadingView.removeFromSuperview();
+                            CommonFunctions.hideActivityIndicator();
                             
                             
                             self.RemoveNoInternet();
@@ -2125,11 +2063,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         
                         NSOperationQueue.mainQueue().addOperationWithBlock({
                             
-                            self.activityIndicator.stopAnimating();
-                            
-                            self.loadingView.removeFromSuperview();
-                            
-                            
+                              CommonFunctions.hideActivityIndicator();
                             
                             self.RemoveNoInternet();
                             
@@ -2234,9 +2168,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         print(error)
         
-        self.activityIndicator.stopAnimating();
-        
-        self.loadingView.removeFromSuperview();
+          CommonFunctions.hideActivityIndicator();
         
         self.RemoveNoResult();
         
@@ -2400,6 +2332,15 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     override func viewDidAppear(animated: Bool)
     {
+        
+        NSUserDefaults.standardUserDefaults().setObject(0, forKey: "badgeCounter")
+        
+        
+        NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "badgeCounter")
+        
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "badgeCounter")
+
+        
         if Reachability.isConnectedToNetwork() == true
         {
             
@@ -2446,6 +2387,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -2454,8 +2396,12 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
          self.RequestsTableView.separatorColor = UIColor.clearColor()
         
-         NSUserDefaults.standardUserDefaults().setObject(0, forKey: "badgeCount")
+         NSUserDefaults.standardUserDefaults().setObject(0, forKey: "badgeCounter")
         
+    
+          NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "badgeCounter")
+
+            NSUserDefaults.standardUserDefaults().setObject("", forKey: "badgeCounter")
         
         //// push notification
         

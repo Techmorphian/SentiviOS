@@ -251,6 +251,10 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
         });
         
     }
+    
+    
+    
+    
     func call(isFacebook:Bool,email:String,firstName:String,lastName:String,id:String,token:String,imageUrl:String){
         var postData = String();
         let dateFormatter = NSDateFormatter()

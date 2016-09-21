@@ -41,9 +41,34 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     @IBOutlet var setParaViewThreeHeight: NSLayoutConstraint!
     
     
+    
+    
+    @IBOutlet var maxAmountContributionTxtField: UITextField!
+    
+    
+    
+    @IBOutlet var anonymousCheckUncheckButton: UIButton!
+    
+    
+    
+    
+    @IBOutlet var anonymousView: UIView!
+    
+    
+    
+    @IBOutlet var maxAmountView: UIView!
+    
+    
+    @IBOutlet var maxAmountViewHeight: NSLayoutConstraint!
+    
+    
+    @IBOutlet var anonymousViewHeight: NSLayoutConstraint!
+    
+    
     ////////////
     
-   
+    var noInternet = NoInternetViewController()
+
     
     
     
@@ -163,6 +188,38 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     var secondWinner =  Int()
     
     var thirdWinner =  Int()
+    
+    
+    
+   var anonymous = String()
+    
+    @IBAction func checkUnCheckButtonAction(sender: AnyObject)
+    {
+        
+        if anonymousCheckUncheckButton.currentImage == (UIImage(named: "ic_uncheck"))
+        {
+            
+            anonymousCheckUncheckButton.setImage(UIImage(named: "ic_checked"), forState: UIControlState
+                .Normal)
+            
+            anonymous = "1"
+            
+        }
+            
+        else
+        {
+            anonymousCheckUncheckButton.setImage(UIImage(named: "ic_uncheck"), forState: UIControlState
+                .Normal)
+            
+            anonymous = "0"
+        }
+
+        
+        
+    }
+    
+    
+    
     
 // MARK:- CREATE BUTTON ACTION
     @IBAction func createButtonAction(sender: AnyObject)
@@ -308,6 +365,30 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                     
                 }
                 
+                
+                if myContributionsId == "1"
+                {
+                
+                if maxAmountContributionTxtField.text == "" || maxAmountContributionTxtField.text == "0"
+                {
+                    
+                    
+                    let alert = UIAlertController(title: "", message: "Max.amount must be greater than zero." , preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    let OkAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
+                    
+                    
+                    alert.addAction(OkAction)
+                    
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    return
+                    
+                    
+                    
+                }
+
+                }
                 
                 self.createCauseFit()
                 
@@ -1186,9 +1267,8 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     
     @IBOutlet var TickUntickButton: UIButton!
     
-    
-    
-    
+   //  MARK:-  INCLUDE MY CONTRIBUTION BUTTON ACTION
+ 
     @IBAction func tickUntickButtonAction(sender: AnyObject)
     {
         
@@ -1199,6 +1279,22 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                     .Normal)
         
              myContributionsId = "0"
+            
+            maxAmountViewHeight.constant = 0
+            
+            maxAmountView.hidden = true
+            
+            anonymousViewHeight.constant = 0
+            anonymousView.hidden = true
+            
+            selectCauseViewHeightConstraint.constant = 326 - 80
+            
+           maxAmountContributionTxtField.text = "0"
+            
+           anonymous = "0"
+            
+    
+            
                 
         }
         
@@ -1208,6 +1304,20 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                      .Normal)
             
              myContributionsId = "1"
+            
+            maxAmountViewHeight.constant = 40
+            
+            anonymousViewHeight.constant = 40
+            
+            maxAmountView.hidden = false
+            
+            anonymousView.hidden = false
+            
+            
+            selectCauseViewHeightConstraint.constant = 326
+            
+             anonymous = "1"
+            
         }
         
         
@@ -1236,6 +1346,8 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         FirstWinnerTextField.resignFirstResponder();
         secondWinnerTextField.resignFirstResponder();
         thirdWinnerTextField.resignFirstResponder();
+        
+        maxAmountContributionTxtField.resignFirstResponder();
         
     }
     
@@ -1377,6 +1489,13 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
             textField.inputAccessoryView = inputToolbarThirdWinner
             
         }
+        if textField == self.maxAmountContributionTxtField
+        {
+            
+            textField.inputAccessoryView = maxAmountTxtFldToolBar
+            
+        }
+
         
         return true
     }
@@ -1652,6 +1771,31 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     
     
     
+    
+    
+    
+    
+    lazy var maxAmountTxtFldToolBar: UIToolbar =
+        {
+            var toolbar = UIToolbar()
+            toolbar.barStyle = .Default
+            toolbar.translucent = true
+            toolbar.sizeToFit()
+            
+            var doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.inputToolbarDonePressed))
+            
+            var flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+            
+            var fixedSpaceButton = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
+            
+            
+            toolbar.setItems([fixedSpaceButton, fixedSpaceButton, flexibleSpaceButton, doneButton], animated: false)
+            toolbar.userInteractionEnabled = true
+            
+            return toolbar
+    }()
+
+    
     lazy var inputToolbarFirstWinnerTxt: UIToolbar =
         {
             var toolbar = UIToolbar()
@@ -1734,6 +1878,8 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
             
             return toolbar
     }()
+    
+    
     
 /////////////////////////////////////////////////////////////////////////////////////////
     
@@ -2075,8 +2221,8 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                 "causes"  : CauseTypeId,
                 "startDate" : startDate!,
                 "endDate" : endDate!,
-                
-                
+                "maxAmount" : maxAmountContributionTxtField.text!,
+                "anonymous" : anonymous,
                 ]
             let boundary = generateBoundaryString()
             request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
@@ -2098,7 +2244,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         else
         {
         
-        let postString = "userId=\(userId!)&challengeName=\(nameOfChallenge.text!)&description=\(descriptionText)&amountPerMile=\(amountPerMile)&betAmount=\(betAmount!)&activityType=\(activityTypeId)&causes=\(CauseTypeId)&startDate=\(startDate!)&endDate=\(endDate!)&myContributions=\(myContributionsId)";
+        let postString = "userId=\(userId!)&challengeName=\(nameOfChallenge.text!)&description=\(descriptionText)&amountPerMile=\(amountPerMile)&betAmount=\(betAmount!)&activityType=\(activityTypeId)&causes=\(CauseTypeId)&startDate=\(startDate!)&endDate=\(endDate!)&myContributions=\(myContributionsId)&maxAmount=\(maxAmountContributionTxtField.text!)&anonymous=\(anonymous)";
         
         print(postString)
         
@@ -2450,30 +2596,74 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?)
     {
         
-        // LoaderFile.hideLoader(self.view)
+        self.activityIndicator.stopAnimating();
         
-        let alert = UIAlertController(title: "", message:"something went wrong try again later." , preferredStyle: UIAlertControllerStyle.Alert)
+        self.loadingView.removeFromSuperview();
         
-        let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
-        
-        alert.addAction(alertAction)
-        
-        let alertAction2 = UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler: {
+        if self.view.subviews.contains(self.noInternet.view)
             
-            Void in
+        {
             
-        })
-        
-        alert.addAction(alertAction2)
-        
-        
-        
-        self.presentViewController(alert, animated: true, completion: nil)
-        
-        
+            
+        }
+            
+        else
+            
+        {
+            
+            self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
+            
+            self.noInternet.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);
+            
+            self.view.addSubview((self.noInternet.view)!);
+            
+            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+            
+            
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ActiveChallengesViewController.handleTap(_:)))
+            
+            
+            self.noInternet.noInternetLabel.userInteractionEnabled = true
+            self.noInternet.view.addGestureRecognizer(tapRecognizer)
+            
+            self.noInternet.didMoveToParentViewController(self)
+            
+        }
         
     }
     
+    
+    
+    //MARK:-  NO INTERNET / NO RESULT FUNC
+    func RemoveNoInternet()
+    {
+        
+        if self.view.subviews.contains(self.noInternet.view)
+            
+        {
+            
+            for i in self.view.subviews
+                
+            {
+                
+                if i == self.noInternet.view
+                    
+                {
+                    
+                    i.removeFromSuperview();
+                    
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+        
+    }
+    
+  
     
     override func viewDidAppear(animated: Bool)
     {
@@ -2507,6 +2697,8 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         thirdWinnerTextField.delegate = self
         setBetAmountTextField.delegate = self
         setBetAmountperMileTxtFld.delegate = self
+        
+        maxAmountContributionTxtField.delegate = self
         
         setGoalTextField.delegate = self;
         
@@ -2685,13 +2877,12 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         myContributionsId = "1"
         
         CauseTypeId = "4"
+        
+        anonymous = "0"
 
         ///default values
         
-        
-        
-        
-        
+                
         
         //MARK:-  padding views
         
@@ -2700,7 +2891,14 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         
         
         
+        //MARK:-  padding views
         
+        ///////// padding views in text fileds
+        
+        let paddingView2 = UIView(frame: CGRectMake(0, 0, 20, self.maxAmountContributionTxtField.frame.height))
+        maxAmountContributionTxtField.leftView = paddingView2
+        maxAmountContributionTxtField.leftViewMode = UITextFieldViewMode.Always
+
         
         ///////// padding views in text fileds
         

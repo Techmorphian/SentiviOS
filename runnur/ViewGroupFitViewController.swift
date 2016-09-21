@@ -402,7 +402,7 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
             
             
         
-        UIView.animateWithDuration(0.7, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+        UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
             {
              
                 self.ActivityView.view.frame.origin.x = +self.view.frame.size.width;
@@ -425,7 +425,7 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         {
             
             
-            UIView.animateWithDuration(0.7, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+            UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
                 {
                     
                     self.ProgressView.view.frame.origin.x = +self.view.frame.size.width;
@@ -485,7 +485,7 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
             ActivityButton.titleLabel?.textColor  = UIColor.whiteColor();
 
             
-            UIView.animateWithDuration(0.7, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 
                 
                 
@@ -517,7 +517,7 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         {
         
         
-            UIView.animateWithDuration(0.7, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 
                 
                 
@@ -585,7 +585,7 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
             
             
             
-            UIView.animateWithDuration(0.7, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 
                 
                 
@@ -612,7 +612,7 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         
             
             
-        UIView.animateWithDuration(0.7, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+        UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
             
             
             
@@ -653,7 +653,7 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         if NSUserDefaults.standardUserDefaults().stringForKey("TypeIdParticipating") == "1"
         {
         
-        UIView.animateWithDuration(0.7, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+        UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
             
             self.summaryView.view.hidden = false
             
@@ -720,7 +720,7 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         {
             
             
-            UIView.animateWithDuration(0.7, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+            UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
                 
                 {
                 
@@ -780,9 +780,7 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
                     
             })
 
-            
-            
-            
+                 
             
         }
         
@@ -802,7 +800,7 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         {
 
             
-        UIView.animateWithDuration(0.7, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+        UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
             {
           
                 
@@ -870,7 +868,7 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         {
             
             
-            UIView.animateWithDuration(0.7, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
+            UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations:
                 {
                     
                     
@@ -966,18 +964,12 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
        
    /////////////////////////////////////////////////////
         
-       
         
         
-        
-        challengeNameLabel.text = NSUserDefaults.standardUserDefaults().stringForKey("challengeName")
-        
-     
-        
-        
-        
+            challengeNameLabel.text = NSUserDefaults.standardUserDefaults().stringForKey("challengeName")
         
             summaryButton.titleLabel?.textColor  = UIColor.whiteColor();
+        
             summaryBottomView.backgroundColor = UIColor.whiteColor();
             
             
@@ -1121,33 +1113,85 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         
         {
             
-            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "PresentActivityScreen")
+             NSUserDefaults.standardUserDefaults().setBool(false, forKey: "PresentActivityScreen")
 
             
              print(NSUserDefaults.standardUserDefaults().stringForKey("TypeIdParticipating"))
             
             
-            
-            LeaderboardButton.titleLabel?.textColor  = UIColor.whiteColor();
-            LeaderboardBottomView.backgroundColor = UIColor.whiteColor();
-            
-            
-            ActivityButton.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
-            
-            
-            activityBottomView.backgroundColor = colorCode.DarkBlueColor
-            
-            
-            summaryButton.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
-            
-            summaryBottomView.backgroundColor = colorCode.DarkBlueColor
+            if NSUserDefaults.standardUserDefaults().stringForKey("TypeIdParticipating") == "1"
+            {
+                    
+                self.ActivityView.view.frame.origin.x = 0;
+                
+                
+                //self.CauseFirSummary.view.frame.origin.x = -self.view.frame.size.width;
+                
+                self.summaryView.view.frame.origin.x = -self.view.frame.size.width;
+                
+                
+                self.LederBoardView.view.frame.origin.x = -self.view.frame.size.width;
+                
+                
+                LeaderboardButton.titleLabel?.textColor  = UIColor.whiteColor();
+                LeaderboardBottomView.backgroundColor = UIColor.whiteColor();
+                
+                
+                ActivityButton.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+                
+                
+                activityBottomView.backgroundColor = colorCode.DarkBlueColor
+                
+                
+                summaryButton.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+                
+                summaryBottomView.backgroundColor = colorCode.DarkBlueColor
 
+                
+          
+                    
+            }
             
-            self.CauseFirSummary.view.frame.origin.x = -self.view.frame.size.width;
+            else
+            {
+                    
+                self.ActivityView.view.frame.origin.x = 0;
+                
+                
+                self.CauseFirSummary.view.frame.origin.x = -self.view.frame.size.width;
+                
+                self.ProgressView.view.frame.origin.x = -self.view.frame.size.width;
+ 
+                
+                    
+            }
             
-            self.ProgressView.view.frame.origin.x = -self.view.frame.size.width;
+//            LeaderboardButton.titleLabel?.textColor  = UIColor.whiteColor();
+//            LeaderboardBottomView.backgroundColor = UIColor.whiteColor();
+//            
+//            
+//            ActivityButton.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+//            
+//            
+//            activityBottomView.backgroundColor = colorCode.DarkBlueColor
+//            
+//            
+//            summaryButton.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+//            
+//            summaryBottomView.backgroundColor = colorCode.DarkBlueColor
             
-            self.ActivityView.view.frame.origin.x = 0;
+
+//            self.ActivityView.view.frame.origin.x = 0;
+//            
+//            
+//            //self.CauseFirSummary.view.frame.origin.x = -self.view.frame.size.width;
+//            
+//            self.summaryView.view.frame.origin.x = -self.view.frame.size.width;
+//           
+//            
+//            self.ProgressView.view.frame.origin.x = -self.view.frame.size.width;
+          
+           
             
             
         }

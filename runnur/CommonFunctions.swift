@@ -237,7 +237,8 @@ class CommonFunctions : NSObject
         }
     }
     
-    static func showActivityIndicator(view:UIView){
+    static func showActivityIndicator(view:UIView)
+    {
         
         loadingView.frame = CGRectMake(0, 0, view.frame.width/2, view.frame.height/2)
         
@@ -247,18 +248,25 @@ class CommonFunctions : NSObject
         loadingView.alpha = 0.7
         loadingView.hidden=false
         loadingView.clipsToBounds=true
-        activityIndicator.color = UIColor.grayColor()
+        activityIndicator.color = UIColor.blueColor()
         
         
         activityIndicator.center=CGPointMake(loadingView.frame.width/2, loadingView.frame.height/2)
         activityIndicator.hidesWhenStopped=true
-        loadingLable=UILabel(frame: CGRectMake(0, 60, loadingView.bounds.width, loadingView.bounds.height))
-        loadingLable.text="Please wait..."
-        loadingLable.textColor=UIColor.grayColor()
-        loadingLable.font = loadingLable.font.fontWithSize(10)
-        loadingLable.lineBreakMode =  .ByWordWrapping
-        loadingLable.numberOfLines=0
-        loadingLable.textAlignment = .Center
+        
+//        loadingLable=UILabel(frame: CGRectMake(0, 60, loadingView.bounds.width, loadingView.bounds.height))
+//        loadingLable.text="Please wait..."
+//        
+//        loadingLable.textColor=UIColor.grayColor()
+//        
+//        loadingLable.font = loadingLable.font.fontWithSize(10)
+//        
+//        loadingLable.lineBreakMode =  .ByWordWrapping
+//        
+//        loadingLable.numberOfLines=0
+//        
+//        loadingLable.textAlignment = .Center
+        
         activityIndicator.startAnimating()
         loadingView.addSubview(activityIndicator)
         loadingView.addSubview(loadingLable)

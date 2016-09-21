@@ -283,6 +283,7 @@ class InviteFriendsViaEmailViewController: UIViewController,UITextFieldDelegate,
         
         var cliendIds = [String]()
         var count = 0;
+        
         for i in EmailIds
         {
             

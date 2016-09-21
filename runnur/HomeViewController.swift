@@ -160,15 +160,15 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         var NotificationMessage = String()
         NotificationMessage = aps!["alert"] as! String
         
-        var badgeCount = Int()
-        
-        badgeCount = aps!["badge"] as! Int
-        
-        print(badgeCount)
-        
-        NSUserDefaults.standardUserDefaults().setObject(badgeCount, forKey: "badgeCount")
-        
-        print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCount"))
+//        var badgeCount = Int()
+//        
+//        badgeCount = aps!["badge"] as! Int
+//        
+//        print(badgeCount)
+//        
+//      NSUserDefaults.standardUserDefaults().setObject(badgeCount, forKey: "badgeCount")
+//        
+//       print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCount"))
         
         
         let custom = data.objectForKey("custom")
@@ -229,7 +229,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     func applicationDidBecomeActive(notification: NSNotification)
     {
         
-          print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCount"))       
+          print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter"))       
         
     }
 
@@ -247,7 +247,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         
         //self.call();
         
-         print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCount"))
+         print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter"))
         
         ////// push notification
         

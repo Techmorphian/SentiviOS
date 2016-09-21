@@ -173,7 +173,44 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
             if activityChatArray[indexPath.row].createdAt != ""
             {
                 
-                cell.date.text =  activityChatArray[indexPath.row].createdAt
+                let dateAsString1  =  activityChatArray[indexPath.row].createdAt
+                
+                //    //print(dateAsString1)
+                
+                let dateFormatter1 = NSDateFormatter()
+                
+                // dateFormatter1.timeZone = NSTimeZone()
+                
+                dateFormatter1.timeZone = NSTimeZone(name: "UTC")
+                
+                // dateFormatter1.timeZone = NSTimeZone.defaultTimeZone()
+                
+                dateFormatter1.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                
+                let date = dateFormatter1.dateFromString(dateAsString1)
+                
+                // //print(date)
+                
+                
+                if date != nil
+                {
+                    
+                    let dateFormatter2 = NSDateFormatter()
+                    
+                    
+                    dateFormatter2.dateFormat = "MMM dd, yyyy  HH:mm:ss"
+                    
+                    // dateFormatter2.timeZone = NSTimeZone()
+                    
+                    dateFormatter2.timeZone = NSTimeZone.defaultTimeZone()
+                    
+                    let date2 = dateFormatter2.stringFromDate(date!)
+                    
+                    cell.date.text = String(date2)
+                    
+                }
+                
+
                 
                 
             }
@@ -221,24 +258,42 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
             if activityChatArray[indexPath.row].createdAt != ""
             {
                 
-                // 2016-08-19 13:22:39.2160000 +00:00
+                let dateAsString1  =  activityChatArray[indexPath.row].createdAt
+                
+                //    //print(dateAsString1)
+                
+                let dateFormatter1 = NSDateFormatter()
+                
+                // dateFormatter1.timeZone = NSTimeZone()
+                
+                dateFormatter1.timeZone = NSTimeZone(name: "UTC")
+                
+                // dateFormatter1.timeZone = NSTimeZone.defaultTimeZone()
+                
+                dateFormatter1.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                
+                let date = dateFormatter1.dateFromString(dateAsString1)
+                
+                // //print(date)
                 
                 
-                //
-                //                    let date = activityChatArray[indexPath.row].createdAt
-                //
-                //                    let dateFormatter = NSDateFormatter()
-                //
-                //                    dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
-                //
-                
-                //                     let date = dateFunction.dateWithTimeFormatFunc("MMMM dd, yyyy kk:mm:ss", fromFormat: "yyyy-MM-dd hh:mm:ss.ms +HH:mm", dateToConvert: chatObjectTypeArray[indexPath.row].createdAt)
-                //
-                //                        print(date)
-                //
-                //
-                cell.date.text =  activityChatArray[indexPath.row].createdAt
-                
+                if date != nil
+                {
+                    
+                    let dateFormatter2 = NSDateFormatter()
+                    
+                    
+                    dateFormatter2.dateFormat = "MMM dd, yyyy  HH:mm:ss"
+                    
+                    // dateFormatter2.timeZone = NSTimeZone()
+                    
+                    dateFormatter2.timeZone = NSTimeZone.defaultTimeZone()
+                    
+                    let date2 = dateFormatter2.stringFromDate(date!)
+                    
+                    cell.date.text = String(date2)
+                    
+                }
                 
             }
             
@@ -255,7 +310,7 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     
 //    //   MARK:- HEIGHT FOR ROW INDEX PATH
-//    
+//
 //    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
 //    {
 //        ///// row height for activity and chat cell
@@ -302,23 +357,8 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
         activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
                                                loadingView.frame.size.height / 2);
         
-        
-        
-        //  loadingLable=UILabel(frame: CGRectMake(self.loadingView.frame.width/2-50,self.loadingView.frame.height/2+20, 100,50))
-        
-        //        loadingLable=UILabel(frame: CGRectMake(5,100, self.loadingView.frame.width,80))
-        //
-        //        loadingLable.text = "Please wait a moment. This may take a while"
-        //
-        //        loadingLable.textColor=UIColor.redColor()
-        //
-        //        loadingLable.font = loadingLable.font.fontWithSize(10)
-        //        loadingLable.lineBreakMode =  .ByWordWrapping
-        //        loadingLable.numberOfLines=0
-        //
-        //         loadingLable.textAlignment = .Center
-        //
-        //        loadingView.addSubview(loadingLable)
+    
+        activityIndicator.color = UIColor.blueColor()
         
         loadingView.addSubview(activityIndicator)
         
@@ -504,7 +544,7 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 self.activityModel=ViewActivityModel()
                              
                                 
-                                //shouldCallPagging
+                               
                                 
                                 self.activityModel.isFromUserActivity = false
                                             
@@ -858,9 +898,9 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         
                         
      
-                        activityChatArray.insert(activityModel, atIndex: activityChatArray.count)
+                      activityChatArray.insert(activityModel, atIndex: activityChatArray.count)
                         
-                    
+                   // activityChatArray.insert(activityModel, atIndex: 0)
                        
                         
                         NSOperationQueue.mainQueue().addOperationWithBlock
@@ -892,17 +932,14 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 self.messageTextView.resignFirstResponder();
                                 
                                 
-                                self.commentsTableView.delegate=self;
-                                self.commentsTableView.dataSource=self;
-                                
-                                
-                                
                                 self.commentsTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.commentsTableView.numberOfRowsInSection(0), inSection: 0)], withRowAnimation: UITableViewRowAnimation.None)
                                 
                                 
                                 self.commentsTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.commentsTableView.numberOfRowsInSection(0)-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.None, animated: true);
                                 
                                 
+                                self.commentsTableView.delegate=self;
+                                self.commentsTableView.dataSource=self;
                                 
                                 
                                 

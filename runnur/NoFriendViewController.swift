@@ -12,6 +12,7 @@ class NoFriendViewController: UIViewController
 {
 
     
+    @IBOutlet var msgLabel: UILabel!
     
     
     override func viewDidLoad()

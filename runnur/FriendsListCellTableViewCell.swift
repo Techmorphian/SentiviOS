@@ -28,6 +28,11 @@ class FriendsListCellTableViewCell: UITableViewCell
     
     @IBOutlet var cancleButton: UIButton!
     
+    
+    
+    @IBOutlet var invitedTagImageView: UIImageView!
+    
+    
     var cancelButtonTag = Int()
     
     @IBAction func cancelButtonAction(sender: AnyObject)

@@ -24,6 +24,8 @@ class inviteFriendsModel
  internal var friendPhotoUrl = String()
 
  internal var friendStatus = String()
+    
+    
  internal var isSelected = Bool();
     
     internal var  isInvited = Int()
