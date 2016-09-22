@@ -37,11 +37,8 @@ class DownloadFromBlob{
             let blobContainer = blobClient.containerReferenceFromName("newcontainer")
             
             self.listBlobsInContainerHelper(blobContainer, continuationToken: nil, prefix: nil, blobListingDetails: AZSBlobListingDetails.All, maxResults: -1, completionHandler: {(error) -> Void in
-
                 
             })
-            
-            
             
         }catch{
             print("error")
@@ -139,26 +136,27 @@ static func downloadFromBlob(containerName:String)
       let loc =  AZSStorageLocation(rawValue: 1)
       let token = AZSContinuationToken(fromString: NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken")!, withLocation: loc!)
         //let token = NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken");
-        self.listBlobsInContainerHelper(container, continuationToken: token, prefix: "", blobListingDetails: AZSBlobListingDetails.Copy, maxResults: -1, completionHandler: {(error) -> Void in
+        
+        self.listBlobsInContainerHelper(container, continuationToken: nil, prefix: nil, blobListingDetails: AZSBlobListingDetails.All, maxResults: -1, completionHandler: {
             
-            
-//            if error != nil {
-//                print("Error in creating container.")
-//            }
         })
+        
+//        self.listBlobsInContainerHelper(container, continuationToken: token, prefix: "", blobListingDetails: AZSBlobListingDetails.Copy, maxResults: -1, completionHandler: {(error) -> Void in
+//          
+//        })
     }
     
    }
     
     static var data = String();
     
-  static  func listBlobsInContainerHelper(container: AZSCloudBlobContainer, continuationToken: AZSContinuationToken, prefix: String, blobListingDetails: AZSBlobListingDetails, maxResults: Int, completionHandler: () -> Void) {
+  static  func listBlobsInContainerHelper(container: AZSCloudBlobContainer, continuationToken: AZSContinuationToken?, prefix: String?, blobListingDetails: AZSBlobListingDetails, maxResults: Int, completionHandler: () -> Void) {
         
         
         
         container.listBlobsSegmentedWithContinuationToken(continuationToken, prefix: prefix, useFlatBlobListing: true, blobListingDetails: blobListingDetails, maxResults: maxResults, completionHandler: {(error, results) -> Void in
             if error != nil {
-               // completionHandler(error)
+                print(error);
             }
             else {
                 for i in 0..<results!.blobs!.count {

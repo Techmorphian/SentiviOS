@@ -15,6 +15,8 @@ class ActivityDetailsViewController: UIViewController,TutorialPageViewController
     @IBOutlet weak var location: UILabel!
     var mapData = MapData();
     var childView = TabsViewController();
+    var fromHistory = false;
+    
     
     @IBOutlet weak var summaryBtn: UIButton!
     @IBOutlet weak var summaryBottomView: UILabel!
@@ -29,7 +31,11 @@ class ActivityDetailsViewController: UIViewController,TutorialPageViewController
     var contentURLImage = String();
     
     @IBAction func back(sender: AnyObject) {
+        if fromHistory {
+        self.dismissViewControllerAnimated(false, completion: nil);
+        }else{
         self.presentingViewController?.presentingViewController!.dismissViewControllerAnimated(false, completion: nil);
+        }
     }
     
     @IBAction func share(sender: AnyObject) {

@@ -59,13 +59,13 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     func getData()
     {
         CommonFunctions.showActivityIndicator(self.view);
-                var email =  NSUserDefaults.standardUserDefaults().stringForKey("email");
-                email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
-                let words =  email?.componentsSeparatedByString("@");
-                let contName = words![0]
-         self.resetData();
+        var email =  NSUserDefaults.standardUserDefaults().stringForKey("email");
+        email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
+        let words =  email?.componentsSeparatedByString("@");
+        let contName = words![0]
+        self.resetData();
         let file = "\(contName).txt" //this is the file. we will write to and read from it
-          self.tableView.hidden=false;
+        self.tableView.hidden=false;
         let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
         print(paths);
         
@@ -74,11 +74,16 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let checkValidation = NSFileManager.defaultManager();
         if (checkValidation.fileExistsAtPath(getFilePath.path!))
         {
+            var text2 = NSString()
             print("FILE AVAILABLE");
             do {
                 let path = NSURL(fileURLWithPath: paths.absoluteString).URLByAppendingPathComponent(file);
-                let text2 = try NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding)
-                //print(text2);
+                text2 = try NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding)
+            }catch{
+                print("error");
+            }
+            //print(text2);
+            do{
                 let data = text2.dataUsingEncoding(NSUTF8StringEncoding)
                 let jsonData = try! NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as! NSArray
                 
@@ -90,7 +95,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     {
                         self.lastItem = true;
                     }
-
+                    
                     self.routeData = MapData();
                     if let distance = item["distance"] as? Double{
                         self.routeData.distance = String(distance);
@@ -133,11 +138,11 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                             if !self.checkTodayActivity
                             {
                                 self.streakCount = self.streakCount + 1;
-                                  previousDate = yesterDay(previousDate);
+                                previousDate = yesterDay(previousDate);
                             }
                             // Current date and end date are same.
                         }
-
+                        
                         
                         
                     }
@@ -146,7 +151,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     }
                     if let caloriesBurned = item["caloriesBurnedS"] as? String{
                         self.routeData.caloriesBurned = caloriesBurned
-                      //  self.totalCal = String(Int(caloriesBurned)!+Int(self.totalCal)!);
+                        //  self.totalCal = String(Int(caloriesBurned)!+Int(self.totalCal)!);
                     }
                     if let performedActivity = item["performedActivity"] as? String{
                         self.routeData.performedActivity = performedActivity
@@ -194,8 +199,8 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     
                     self.weatherData = WeatherData();
                     if let weatherData = item["weatherData"] as? String{
-                        // print(weatherData);
-                        
+                        print(weatherData);
+                        _ = weatherData.componentsSeparatedByString("=")
                         let data: NSData = weatherData.dataUsingEncoding(NSUTF8StringEncoding)!
                         do
                         {
@@ -211,16 +216,16 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                             self.routeData.weatherData.deg = ((json!.objectForKey("deg") as? String)!)
                             
                         }catch{
-                            
+                            print("error");
                         }
                         
                     }
                     
-//                    self.routeDataArray.append(self.routeData);
-//                    self.counter=String(self.routeDataArray.count);
+                    //                    self.routeDataArray.append(self.routeData);
+                    //                    self.counter=String(self.routeDataArray.count);
                     
                     
-// ------------------------ code to calculate week and add into perticular week ----------------------------
+                    // ------------------------ code to calculate week and add into perticular week ----------------------------
                     let weekCount = "Week " + CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!));
                     
                     if weekCount == self.priviousWeekCount
@@ -243,14 +248,14 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         self.priviousWeekCount = weekCount;
                     }
                     
-  
+                    
                     // print("Todo Item: ", item)
                 }
                 
                 
-            self.counter=String(self.totalNumberOfActivities);
-
-            
+                self.counter=String(self.totalNumberOfActivities);
+                
+                
                 streak = String(streakCount);
                 values.append(streak);
                 values.append(counter);
@@ -270,6 +275,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 
             }
             catch {/* error handling here */
+                print("error");
             }
             
         }
@@ -350,10 +356,11 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
             if client.currentUser != nil{
                 
                 let query = table.query();
+//                TODO:- uncomment predicates (runnerId missing)
                 switch position {
                 case 0:
                     
-                    query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!);
+                   // query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!);
                     query.fetchLimit=100;
                     query.orderByDescending("__createdAt");
                     
@@ -361,7 +368,8 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 case 1:
                     
                   //  query.predicate = NSPredicate(format: "performedActivity == [c] %@", "Running");
-                    query.predicate = NSPredicate(format: "runnurId == [c] %@ AND performedActivity == [c] %@", argumentArray: [NSUserDefaults.standardUserDefaults().stringForKey("userId")!,"Running"]);
+                  //  query.predicate = NSPredicate(format: "runnurId == [c] %@ AND performedActivity == [c] %@", argumentArray: [NSUserDefaults.standardUserDefaults().stringForKey("userId")!,"Running"]);
+                    query.predicate = NSPredicate(format: "performedActivity == [c] %@", "Running")
                     query.fetchLimit=100;
                     query.orderByDescending("__createdAt");
                     
@@ -369,7 +377,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     
                 case 2:
                     
-                    query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
+                  //  query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
                     query.predicate = NSPredicate(format: "performedActivity == [c] %@", "Biking")
                     query.fetchLimit=100;
                     query.orderByDescending("__createdAt");
@@ -377,7 +385,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     break;
                     
                 case 3:
-                    query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
+                   // query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
                     query.predicate = NSPredicate(format: "performedActivity == [c] %@", "Driving")
                     query.fetchLimit=100;
                     query.orderByDescending("__createdAt");
@@ -385,7 +393,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     break;
                     
                 case 4:
-                    query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
+                    //query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
                     query.fetchLimit=100;
                     query.orderByDescending("__createdAt");
                     
@@ -915,6 +923,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
         ActivityDetailsViewController;
+        activityDetailsViewController.fromHistory = true;
          activityDetailsViewController.mapData=self.sectionItem[indexPath.section][indexPath.row];
         self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
         

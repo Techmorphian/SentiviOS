@@ -53,7 +53,6 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("CreateRouteViewController") as! CreateRouteViewController
         self.presentViewController(nextViewController, animated: false, completion: nil)
         
-        
     }
     func call(){
         print("os=\(UIDevice.currentDevice().systemVersion)&make=iphone&model=\(UIDevice.currentDevice().modelName)&userId=\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)")

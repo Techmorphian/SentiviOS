@@ -323,46 +323,46 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                                 if ((err) != nil) {
                                     print("Error in creating blob container object.  Error code = %ld, error domain = %@, error userinfo = %@", err!.code, err!.domain, err!.userInfo);
                                 }
-                                
- 
-                                let opContext = AZSOperationContext();
-                                
-                                
-                               container.createContainerIfNotExistsWithAccessType(AZSContainerPublicAccessType.Container, requestOptions: nil, operationContext: opContext, completionHandler: { (error, bool) in
-                                if (error != nil){
-                                    print(error)
-                                }else{
-                                    let blockBlog = container.blockBlobReferenceFromName(blogName);
-                                    blockBlog.uploadFromText("sdsadasfdsfdsfgsdgdfdhgsfhdgfhdfghgh hfghgfhghgfh", completionHandler: { (error) in
-                                        if (error != nil){
-                                           print(error)
-                                        }else{
-                                           print("scucess")
-                                        }
-                                    })
-                                }
-                               })
+//
+// 
+//                                let opContext = AZSOperationContext();
+//                                
+//                                
+//                               container.createContainerIfNotExistsWithAccessType(AZSContainerPublicAccessType.Container, requestOptions: nil, operationContext: opContext, completionHandler: { (error, bool) in
+//                                if (error != nil){
+//                                    print(error)
+//                                }else{
+//                                    let blockBlog = container.blockBlobReferenceFromName(blogName);
+//                                    blockBlog.uploadFromText("sdsadasfdsfdsfgsdgdfdhgsfhdgfhdfghgh hfghgfhghgfh", completionHandler: { (error) in
+//                                        if (error != nil){
+//                                           print(error)
+//                                        }else{
+//                                           print("scucess")
+//                                        }
+//                                    })
+//                                }
+//                               })
                                 
                                 
                                 
                                 
 // ----------------------------------- way to upload to blob --------------------
                                 
-//                                let blobFromSASCredential = AZSCloudBlockBlob(container: container, name: "\(blogName)", snapshotTime: nil)
-//                                print(blobFromSASCredential);
-//                                
-//                                
-//                              //  let  blob = container.blockBlobReferenceFromName(blogName);
-//                                
-//                                blobFromSASCredential.uploadFromText("dwededewdeaw", completionHandler: { (error) in
-//                                    if error != nil{
-//                                        print(error);
-//                                        
-//                                    }else{
-//                                        print("success")
-//                                    }
-//                                });
-//                                
+                                let blobFromSASCredential = AZSCloudBlockBlob(container: container, name: "\(blogName)", snapshotTime: nil)
+                                print(blobFromSASCredential);
+                                
+                                
+                              //  let  blob = container.blockBlobReferenceFromName(blogName);
+                                
+                                blobFromSASCredential.uploadFromText("dwededewdeaw", completionHandler: { (error) in
+                                    if error != nil{
+                                        print(error);
+                                        
+                                    }else{
+                                        print("success")
+                                    }
+                                });
+                                
 //                                blobFromSASCredential.uploadFromText("{lat:251652,long:2323424}", completionHandler: { (error) in
 //                                    if error != nil{
 //                                        print(error);
@@ -376,7 +376,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
 //                                    }
 //                                })
                                 
-                                // -----------------------------Another Way to upload to blob-----------------------
+// -----------------------------Another Way to upload to blob-----------------------
                                 /*
                                  var accountCreationError: NSError?
                                  let account = try! AZSCloudStorageAccount(fromConnectionString:"SharedAccessSignature=\(sasQueryString);BlobEndpoint=\(UriForBlob)");
@@ -415,7 +415,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                                  */
                                 
                                 
-                                // ---------------------------------Another Way to upload to blob-----------------------
+// ---------------------------------Another Way to upload to blob-----------------------
                                 
                                 /*         let blobFromSASCredential =  AZSCloudBlockBlob(url: UriForBlob, credentials: cred, snapshotTime: nil, error: &error);
                                  

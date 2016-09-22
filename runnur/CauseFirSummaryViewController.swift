@@ -364,38 +364,27 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         
         if nscurrentDate.compare(nsEndDate!) == .OrderedDescending
         {
-            
             print("over")
-            
         }
         else
         {
-            
-            
-            
             if nsStartDate?.compare(nscurrentDate) == .OrderedAscending && nsEndDate?.compare(nscurrentDate) == .OrderedDescending
             {
                 print("could be going")
                 return challengeOnGoing
-                
             }
             else if nsStartDate?.compare(nscurrentDate) == .OrderedSame || nsEndDate?.compare(nscurrentDate) == .OrderedSame
                 
             {
                 print("could be going")
                 return challengeOnGoing
-                
             }
             else
             {
                 print("not started")
-                
                 return challengeNotStarted
                 
             }
-            
-            
-            
         }
         
         

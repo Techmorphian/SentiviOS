@@ -55,8 +55,8 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
  //             let idToken: String = user.serverAuthCode  -------------- this is auth code which will be sent to server
             
 //   another Way to send idToken
-   /*
-            
+   
+ /*
             let azureGoogleServerAuthToken = user.serverAuthCode
             
             let azureGoogleIdToken = user.authentication.idToken
@@ -81,7 +81,7 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
             }
             task.resume()
         
-     */
+  */
 
             let idToken: String = user.authentication.idToken // Safe to send to the server
             let Name: String = user.profile.name
@@ -137,7 +137,7 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
             {
                 self.fbToken = FBSDKAccessToken.currentAccessToken().tokenString
                 print("fetched user: \(result)")
-                              if result.valueForKey("first_name") != nil
+                if result.valueForKey("first_name") != nil
                 {
                     self.firstName = (result.valueForKey("first_name") as? String)!
                 }
@@ -167,6 +167,8 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
                         Client.currentUser = user;
                         print("azureUserId = \(NSUserDefaults.standardUserDefaults().stringForKey("azureUserId"))");
                         print("Login successful");
+                        print(self.firstName);
+                        print(self.lastName);
                          self.call(true, email: self.email, firstName: self.firstName, lastName: self.lastName, id: (user?.userId)!, token: self.fbToken,imageUrl: "http://graph.facebook.com/" + (self.fbId) + "/picture?type=large");
                        }
                 })

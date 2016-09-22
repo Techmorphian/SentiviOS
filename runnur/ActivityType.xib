@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view alpha="0.29999999999999999" contentMode="scaleToFill" id="iN0-l3-epB" customClass="ActivityType" customModule="Sentiv" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="np8-PS-Rm8">
+                    <rect key="frame" x="25" y="135" width="550" height="331"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Activity Type!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m5j-XO-B6u">
+                            <rect key="frame" x="197" y="8" width="156" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_biking_history" translatesAutoresizingMaskIntoConstraints="NO" id="Gk6-88-Hap">
+                            <rect key="frame" x="18" y="35" width="38" height="34"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="38" id="Lnm-Po-Fuk"/>
+                                <constraint firstAttribute="height" constant="34" id="Zdn-Z2-kHB"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Biking" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EjH-3x-Fir">
+                            <rect key="frame" x="72" y="41" width="47" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M0E-1a-aGg">
+                            <rect key="frame" x="0.0" y="77" width="550" height="1"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="jtw-9c-lgh"/>
+                            </constraints>
+                        </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FN8-FG-aPl">
+                            <rect key="frame" x="0.0" y="35" width="550" height="42"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="42" id="uWh-JG-BYz"/>
+                            </constraints>
+                            <connections>
+                                <action selector="biking:" destination="iN0-l3-epB" eventType="touchUpInside" id="hwW-GX-znd"/>
+                            </connections>
+                        </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_golfing_add_activity_selected" translatesAutoresizingMaskIntoConstraints="NO" id="Wkm-a4-fce">
+                            <rect key="frame" x="18" y="86" width="17" height="32"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="34" id="3Mq-tc-G6n"/>
+                                <constraint firstAttribute="width" constant="38" id="mfN-pX-Ppy"/>
+                            </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="3Mq-tc-G6n"/>
+                                    <exclude reference="mfN-pX-Ppy"/>
+                                </mask>
+                            </variation>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Golfing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e6A-jb-bXf">
+                            <rect key="frame" x="73" y="81" width="55" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wxd-TG-jND">
+                            <rect key="frame" x="0.0" y="126" width="550" height="1"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="c7t-Zw-bDt"/>
+                            </constraints>
+                        </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ytU-O6-g5L">
+                            <rect key="frame" x="0.0" y="82" width="550" height="42"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="42" id="7pf-s3-eDa"/>
+                            </constraints>
+                            <connections>
+                                <action selector="golfing:" destination="iN0-l3-epB" eventType="touchUpInside" id="yx8-wx-KV9"/>
+                            </connections>
+                        </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_hiking_history" translatesAutoresizingMaskIntoConstraints="NO" id="0Lv-o3-7GT">
+                            <rect key="frame" x="18" y="135" width="38" height="34"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="38" id="MmU-tj-bGA"/>
+                                <constraint firstAttribute="height" constant="34" id="lHv-wQ-HVe"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hiking" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cqN-pk-n5Z">
+                            <rect key="frame" x="72" y="141" width="49" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vXH-hj-BFZ">
+                            <rect key="frame" x="0.0" y="177" width="550" height="1"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="m3q-4y-9RG"/>
+                            </constraints>
+                        </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jnn-nT-LF2">
+                            <rect key="frame" x="0.0" y="132" width="550" height="42"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="42" id="jNb-xq-Z1d"/>
+                            </constraints>
+                            <connections>
+                                <action selector="hiking:" destination="iN0-l3-epB" eventType="touchUpInside" id="Y3w-HN-vJ9"/>
+                            </connections>
+                        </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_kayaking_add_activity_selected" translatesAutoresizingMaskIntoConstraints="NO" id="vAi-aF-nJE">
+                            <rect key="frame" x="18" y="186" width="38" height="34"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="38" id="Xoi-1Z-EnX"/>
+                                <constraint firstAttribute="height" constant="34" id="sVS-EJ-dsO"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="kayaking" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qDX-b6-QCs">
+                            <rect key="frame" x="72" y="192" width="67" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AKc-gF-nN3">
+                            <rect key="frame" x="0.0" y="228" width="550" height="1"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="Hc5-r5-QLk"/>
+                            </constraints>
+                        </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cZj-8B-Huu">
+                            <rect key="frame" x="0.0" y="182" width="550" height="42"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="42" id="mYb-0J-AJP"/>
+                            </constraints>
+                            <connections>
+                                <action selector="kayking:" destination="iN0-l3-epB" eventType="touchUpInside" id="mx5-p8-xJy"/>
+                            </connections>
+                        </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_mountain_biking_add_activity" translatesAutoresizingMaskIntoConstraints="NO" id="6PZ-Qm-pAx">
+                            <rect key="frame" x="18" y="237" width="38" height="34"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="34" id="MM1-jR-14v"/>
+                                <constraint firstAttribute="width" constant="38" id="jjW-wR-QHr"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mountain Biking" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B18-s6-sOt">
+                            <rect key="frame" x="72" y="243" width="123" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2xf-h0-bqr">
+                            <rect key="frame" x="0.0" y="279" width="550" height="1"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="ub5-bk-rAd"/>
+                            </constraints>
+                        </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vFF-dZ-UAH">
+                            <rect key="frame" x="0.0" y="233" width="550" height="42"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="42" id="Co9-rc-1tv"/>
+                            </constraints>
+                            <connections>
+                                <action selector="moutainBiking:" destination="iN0-l3-epB" eventType="touchUpInside" id="39t-Np-DUi"/>
+                            </connections>
+                        </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_running_add_activity_selected" translatesAutoresizingMaskIntoConstraints="NO" id="b2o-My-rVS">
+                            <rect key="frame" x="18" y="288" width="38" height="34"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="38" id="gJ3-ty-foB"/>
+                                <constraint firstAttribute="height" constant="34" id="lT8-wh-dfU"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Running" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H2T-pw-3pr">
+                            <rect key="frame" x="72" y="294" width="63" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YWt-0u-iN7">
+                            <rect key="frame" x="0.0" y="330" width="550" height="1"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="0Nh-LK-I4U"/>
+                            </constraints>
+                        </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s5u-Fq-a9V">
+                            <rect key="frame" x="0.0" y="283" width="550" height="42"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="42" id="lnC-iY-Cte"/>
+                            </constraints>
+                            <connections>
+                                <action selector="running:" destination="iN0-l3-epB" eventType="touchUpInside" id="PsO-Bx-HA3"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="M0E-1a-aGg" firstAttribute="leading" secondItem="np8-PS-Rm8" secondAttribute="leading" id="2Ch-Ue-cBc"/>
+                        <constraint firstItem="6PZ-Qm-pAx" firstAttribute="leading" secondItem="np8-PS-Rm8" secondAttribute="leading" constant="18" id="2iQ-hi-zGk"/>
+                        <constraint firstItem="AKc-gF-nN3" firstAttribute="leading" secondItem="np8-PS-Rm8" secondAttribute="leading" id="3IT-T9-gg9"/>
+                        <constraint firstItem="ytU-O6-g5L" firstAttribute="top" secondItem="FN8-FG-aPl" secondAttribute="bottom" constant="5" id="3iM-kY-oV2"/>
+                        <constraint firstAttribute="trailing" secondItem="ytU-O6-g5L" secondAttribute="trailing" id="3s0-Zt-cFL"/>
+                        <constraint firstItem="0Lv-o3-7GT" firstAttribute="top" secondItem="wxd-TG-jND" secondAttribute="bottom" constant="8" id="6hc-H7-GdU"/>
+                        <constraint firstItem="e6A-jb-bXf" firstAttribute="centerY" secondItem="Wkm-a4-fce" secondAttribute="centerY" id="6ik-di-i7C"/>
+                        <constraint firstItem="B18-s6-sOt" firstAttribute="centerY" secondItem="6PZ-Qm-pAx" secondAttribute="centerY" id="8An-Wh-5Uz"/>
+                        <constraint firstItem="EjH-3x-Fir" firstAttribute="leading" secondItem="Gk6-88-Hap" secondAttribute="trailing" constant="16" id="8a0-Um-QcZ"/>
+                        <constraint firstItem="vFF-dZ-UAH" firstAttribute="leading" secondItem="np8-PS-Rm8" secondAttribute="leading" id="ASs-hm-Uoa"/>
+                        <constraint firstAttribute="trailing" secondItem="vFF-dZ-UAH" secondAttribute="trailing" id="E3a-Lz-s8w"/>
+                        <constraint firstItem="vAi-aF-nJE" firstAttribute="leading" secondItem="np8-PS-Rm8" secondAttribute="leading" constant="18" id="EDZ-aZ-uOu"/>
+                        <constraint firstAttribute="trailing" secondItem="M0E-1a-aGg" secondAttribute="trailing" id="EgO-bv-bos"/>
+                        <constraint firstItem="Gk6-88-Hap" firstAttribute="top" secondItem="np8-PS-Rm8" secondAttribute="top" constant="35" id="EuI-MU-jFa"/>
+                        <constraint firstAttribute="height" constant="331" id="FJN-tq-fdK"/>
+                        <constraint firstItem="2xf-h0-bqr" firstAttribute="top" secondItem="6PZ-Qm-pAx" secondAttribute="bottom" constant="8" id="Fg4-Vt-GGH"/>
+                        <constraint firstItem="YWt-0u-iN7" firstAttribute="top" secondItem="s5u-Fq-a9V" secondAttribute="bottom" constant="5" id="GFv-nv-w35"/>
+                        <constraint firstItem="YWt-0u-iN7" firstAttribute="top" secondItem="b2o-My-rVS" secondAttribute="bottom" constant="8" id="HAe-BI-Ppm"/>
+                        <constraint firstItem="vAi-aF-nJE" firstAttribute="top" secondItem="vXH-hj-BFZ" secondAttribute="bottom" constant="8" id="J4z-39-rO1"/>
+                        <constraint firstItem="cZj-8B-Huu" firstAttribute="top" secondItem="vXH-hj-BFZ" secondAttribute="bottom" constant="4" id="KRQ-Ec-rBJ"/>
+                        <constraint firstItem="m5j-XO-B6u" firstAttribute="top" secondItem="np8-PS-Rm8" secondAttribute="top" constant="8" id="LKZ-c2-oWn"/>
+                        <constraint firstItem="Gk6-88-Hap" firstAttribute="leading" secondItem="np8-PS-Rm8" secondAttribute="leading" constant="18" id="LeD-Hv-tWt"/>
+                        <constraint firstAttribute="trailing" secondItem="vXH-hj-BFZ" secondAttribute="trailing" id="MQd-gG-Z70"/>
+                        <constraint firstItem="H2T-pw-3pr" firstAttribute="centerY" secondItem="b2o-My-rVS" secondAttribute="centerY" id="Mz1-yh-iS1"/>
+                        <constraint firstItem="2xf-h0-bqr" firstAttribute="top" secondItem="vFF-dZ-UAH" secondAttribute="bottom" constant="4" id="Nv0-5g-reY"/>
+                        <constraint firstItem="FN8-FG-aPl" firstAttribute="leading" secondItem="np8-PS-Rm8" secondAttribute="leading" id="ODf-K8-tsc"/>
+                        <constraint firstItem="qDX-b6-QCs" firstAttribute="leading" secondItem="vAi-aF-nJE" secondAttribute="trailing" constant="16" id="P9U-xl-2x3"/>
+                        <constraint firstItem="cZj-8B-Huu" firstAttribute="leading" secondItem="np8-PS-Rm8" secondAttribute="leading" id="PEH-21-qqt"/>
+                        <constraint firstAttribute="trailing" secondItem="cZj-8B-Huu" secondAttribute="trailing" id="RAv-uQ-WPa"/>
+                        <constraint firstItem="2xf-h0-bqr" firstAttribute="leading" secondItem="np8-PS-Rm8" secondAttribute="leading" id="SBa-5p-Y1E"/>
+                        <constraint firstItem="YWt-0u-iN7" firstAttribute="leading" secondItem="np8-PS-Rm8" secondAttribute="leading" id="SEk-D3-lD6"/>
+                        <constraint firstItem="wxd-TG-jND" firstAttribute="leading" secondItem="np8-PS-Rm8" secondAttribute="leading" id="SKh-l1-8US"/>
+                        <constraint firstItem="Wkm-a4-fce" firstAttribute="leading" secondItem="np8-PS-Rm8" secondAttribute="leading" constant="18" id="SgO-jp-eqr"/>
+                        <constraint firstItem="s5u-Fq-a9V" firstAttribute="leading" secondItem="np8-PS-Rm8" secondAttribute="leading" id="URf-eI-1nY"/>
+                        <constraint firstAttribute="trailing" secondItem="FN8-FG-aPl" secondAttribute="trailing" id="V9B-Md-qFp"/>
+                        <constraint firstAttribute="trailing" secondItem="2xf-h0-bqr" secondAttribute="trailing" id="XdS-v0-kth"/>
+                        <constraint firstItem="M0E-1a-aGg" firstAttribute="top" secondItem="Gk6-88-Hap" secondAttribute="bottom" constant="8" id="XhR-gy-miR"/>
+                        <constraint firstItem="vXH-hj-BFZ" firstAttribute="top" secondItem="0Lv-o3-7GT" secondAttribute="bottom" constant="8" id="YyY-jn-9te"/>
+                        <constraint firstItem="6PZ-Qm-pAx" firstAttribute="top" secondItem="AKc-gF-nN3" secondAttribute="bottom" constant="8" id="ZKn-cd-YET"/>
+                        <constraint firstItem="0Lv-o3-7GT" firstAttribute="leading" secondItem="np8-PS-Rm8" secondAttribute="leading" constant="18" id="aQT-BZ-xCQ"/>
+                        <constraint firstAttribute="trailing" secondItem="s5u-Fq-a9V" secondAttribute="trailing" id="aTk-4t-YeA"/>
+                        <constraint firstAttribute="trailing" secondItem="AKc-gF-nN3" secondAttribute="trailing" id="bEc-IR-vEy"/>
+                        <constraint firstItem="H2T-pw-3pr" firstAttribute="leading" secondItem="b2o-My-rVS" secondAttribute="trailing" constant="16" id="bXr-Yb-JK9"/>
+                        <constraint firstItem="wxd-TG-jND" firstAttribute="top" secondItem="Wkm-a4-fce" secondAttribute="bottom" constant="8" id="c87-Pt-5qR"/>
+                        <constraint firstItem="jnn-nT-LF2" firstAttribute="top" secondItem="wxd-TG-jND" secondAttribute="bottom" constant="5" id="d5A-vf-vKG"/>
+                        <constraint firstAttribute="trailing" secondItem="jnn-nT-LF2" secondAttribute="trailing" id="dFt-Dw-dVL"/>
+                        <constraint firstItem="s5u-Fq-a9V" firstAttribute="top" secondItem="2xf-h0-bqr" secondAttribute="bottom" constant="3" id="f1d-iK-QZb"/>
+                        <constraint firstItem="qDX-b6-QCs" firstAttribute="centerY" secondItem="vAi-aF-nJE" secondAttribute="centerY" id="fMq-pg-a8a"/>
+                        <constraint firstItem="cqN-pk-n5Z" firstAttribute="leading" secondItem="0Lv-o3-7GT" secondAttribute="trailing" constant="16" id="fOt-on-gMd"/>
+                        <constraint firstAttribute="trailing" secondItem="YWt-0u-iN7" secondAttribute="trailing" id="fqe-9G-ccv"/>
+                        <constraint firstItem="ytU-O6-g5L" firstAttribute="leading" secondItem="np8-PS-Rm8" secondAttribute="leading" id="iVr-Z0-dmH"/>
+                        <constraint firstItem="M0E-1a-aGg" firstAttribute="top" secondItem="FN8-FG-aPl" secondAttribute="bottom" id="jZo-Z0-v8y"/>
+                        <constraint firstItem="AKc-gF-nN3" firstAttribute="top" secondItem="vAi-aF-nJE" secondAttribute="bottom" constant="8" id="jrW-rl-2zU"/>
+                        <constraint firstItem="B18-s6-sOt" firstAttribute="leading" secondItem="6PZ-Qm-pAx" secondAttribute="trailing" constant="16" id="o8p-0j-FgP"/>
+                        <constraint firstItem="Wkm-a4-fce" firstAttribute="top" secondItem="M0E-1a-aGg" secondAttribute="bottom" constant="8" id="p8m-9q-5jf"/>
+                        <constraint firstItem="EjH-3x-Fir" firstAttribute="centerY" secondItem="Gk6-88-Hap" secondAttribute="centerY" id="rcM-CG-IUR"/>
+                        <constraint firstItem="jnn-nT-LF2" firstAttribute="leading" secondItem="np8-PS-Rm8" secondAttribute="leading" id="sV8-PG-LdV"/>
+                        <constraint firstItem="b2o-My-rVS" firstAttribute="top" secondItem="2xf-h0-bqr" secondAttribute="bottom" constant="8" id="tNg-Cg-zpb"/>
+                        <constraint firstAttribute="bottom" secondItem="YWt-0u-iN7" secondAttribute="bottom" id="tb4-4h-7mL"/>
+                        <constraint firstItem="vFF-dZ-UAH" firstAttribute="top" secondItem="AKc-gF-nN3" secondAttribute="bottom" constant="4" id="tmx-Lm-KlW"/>
+                        <constraint firstItem="vXH-hj-BFZ" firstAttribute="leading" secondItem="np8-PS-Rm8" secondAttribute="leading" id="txZ-3w-MMY"/>
+                        <constraint firstItem="cqN-pk-n5Z" firstAttribute="centerY" secondItem="0Lv-o3-7GT" secondAttribute="centerY" id="wKS-OU-1Ib"/>
+                        <constraint firstAttribute="trailing" secondItem="wxd-TG-jND" secondAttribute="trailing" id="yYj-gw-Jzo"/>
+                        <constraint firstItem="b2o-My-rVS" firstAttribute="leading" secondItem="np8-PS-Rm8" secondAttribute="leading" constant="18" id="yZL-Jc-7ax"/>
+                        <constraint firstItem="AKc-gF-nN3" firstAttribute="top" secondItem="cZj-8B-Huu" secondAttribute="bottom" constant="4" id="ygg-oG-0XN"/>
+                        <constraint firstItem="m5j-XO-B6u" firstAttribute="centerX" secondItem="np8-PS-Rm8" secondAttribute="centerX" id="ygs-K2-awR"/>
+                        <constraint firstItem="e6A-jb-bXf" firstAttribute="leading" secondItem="Wkm-a4-fce" secondAttribute="trailing" constant="38" id="yiw-Fb-cGx"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="np8-PS-Rm8" secondAttribute="trailing" constant="25" id="I21-Wj-DCn"/>
+                <constraint firstItem="np8-PS-Rm8" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="MPG-t9-saz"/>
+                <constraint firstItem="np8-PS-Rm8" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="rQo-1h-IYh"/>
+                <constraint firstItem="np8-PS-Rm8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="25" id="upv-S2-QBH"/>
+            </constraints>
+        </view>
+    </objects>
+    <resources>
+        <image name="ic_biking_history" width="44" height="44"/>
+        <image name="ic_golfing_add_activity_selected" width="17" height="32"/>
+        <image name="ic_hiking_history" width="31" height="44"/>
+        <image name="ic_kayaking_add_activity_selected" width="32" height="26"/>
+        <image name="ic_mountain_biking_add_activity" width="21" height="24"/>
+        <image name="ic_running_add_activity_selected" width="29" height="32"/>
+    </resources>
+</document>

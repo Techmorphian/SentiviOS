@@ -76,8 +76,7 @@ class CommonFunctions : NSObject
     //
     
     static func animateKeyboardUp(notification:NSNotification){
-        
-        
+
         let userInfo = notification.userInfo!
         
         let keyboardSize = (userInfo [UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue().size;
@@ -93,26 +92,18 @@ class CommonFunctions : NSObject
         aRect.size.height -= keyboardSize!.height
         
         if let _ = activeField
-            
         {
-            
             if (!CGRectContainsPoint(aRect, activeField!.frame.origin))
-                
             {
-                
                 scrollView.scrollRectToVisible(activeField!.frame, animated: true)
-                
             }
             
         }else{
             
             if let _ = activeTextView
             {
-                
-                // view.convertRect(aRect, fromView: activeTextView!)
                 scrollView.scrollRectToVisible(activeTextView!.frame, animated: true)
             }
-            
             
         }
         
