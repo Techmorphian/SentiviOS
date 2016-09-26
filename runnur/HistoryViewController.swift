@@ -55,7 +55,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     @IBOutlet weak var tableTopHeader: UILabel!
     
-
+    
     func getData()
     {
         CommonFunctions.showActivityIndicator(self.view);
@@ -274,7 +274,8 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 
                 
             }
-            catch {/* error handling here */
+            catch {
+                /* error handling here */
                 print("error");
             }
             
@@ -286,8 +287,6 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
             let words =  email?.componentsSeparatedByString("@");
             let contName = words![0]
             DownloadFromBlob.downloadFromBlob(contName)
-            
-            
             
         }
     }
@@ -321,9 +320,9 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         self.priviousWeekCount = ""
         self.sectionHeader.removeAll()
         self.totalNumberOfActivities = 0;
-    
+        
         mainView.removeFromSuperview();
-   
+        
         previousDate = yesterDay(NSDate());
     }
     
@@ -356,19 +355,19 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
             if client.currentUser != nil{
                 
                 let query = table.query();
-//                TODO:- uncomment predicates (runnerId missing)
+                //                TODO:- uncomment predicates (runnerId missing)
                 switch position {
                 case 0:
                     
-                   // query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!);
+                    // query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!);
                     query.fetchLimit=100;
                     query.orderByDescending("__createdAt");
                     
                     break;
                 case 1:
                     
-                  //  query.predicate = NSPredicate(format: "performedActivity == [c] %@", "Running");
-                  //  query.predicate = NSPredicate(format: "runnurId == [c] %@ AND performedActivity == [c] %@", argumentArray: [NSUserDefaults.standardUserDefaults().stringForKey("userId")!,"Running"]);
+                    //  query.predicate = NSPredicate(format: "performedActivity == [c] %@", "Running");
+                    //  query.predicate = NSPredicate(format: "runnurId == [c] %@ AND performedActivity == [c] %@", argumentArray: [NSUserDefaults.standardUserDefaults().stringForKey("userId")!,"Running"]);
                     query.predicate = NSPredicate(format: "performedActivity == [c] %@", "Running")
                     query.fetchLimit=100;
                     query.orderByDescending("__createdAt");
@@ -377,7 +376,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     
                 case 2:
                     
-                  //  query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
+                    //  query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
                     query.predicate = NSPredicate(format: "performedActivity == [c] %@", "Biking")
                     query.fetchLimit=100;
                     query.orderByDescending("__createdAt");
@@ -385,7 +384,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     break;
                     
                 case 3:
-                   // query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
+                    // query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
                     query.predicate = NSPredicate(format: "performedActivity == [c] %@", "Driving")
                     query.fetchLimit=100;
                     query.orderByDescending("__createdAt");
@@ -573,7 +572,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                                     //  self.totalDur = String(Int(elapsedTime)!+Int(self.totalDur)!);
                                     //  self.totalCal = String(Int(caloriesBurned)!+Int(self.totalCal)!);
                                 }
-  
+                                
                                 
                             }else if self.filterDate == 3
                             {
@@ -587,22 +586,22 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                                     //  self.totalDur = String(Int(elapsedTime)!+Int(self.totalDur)!);
                                     //  self.totalCal = String(Int(caloriesBurned)!+Int(self.totalCal)!);
                                 }
-  
+                                
                             }else if self.filterDate == 4
                             {
                                 
-                              if  CommonFunctions.dateFromFixedFormatString(self.routeData.date!).isBetweeen(date: self.startDate, andDate: self.endDate)
-                              {
-                                self.calculateStreak();
-                                self.addToTableList();
-                                // --------------- calculate total Distance ---------------
-                                self.totalDis = String(Int(self.routeData.distance!)!+Int(self.totalDis)!);
-                                //  self.totalDur = String(Int(elapsedTime)!+Int(self.totalDur)!);
-                                //  self.totalCal = String(Int(caloriesBurned)!+Int(self.totalCal)!);
+                                if  CommonFunctions.dateFromFixedFormatString(self.routeData.date!).isBetweeen(date: self.startDate, andDate: self.endDate)
+                                {
+                                    self.calculateStreak();
+                                    self.addToTableList();
+                                    // --------------- calculate total Distance ---------------
+                                    self.totalDis = String(Int(self.routeData.distance!)!+Int(self.totalDis)!);
+                                    //  self.totalDur = String(Int(elapsedTime)!+Int(self.totalDur)!);
+                                    //  self.totalCal = String(Int(caloriesBurned)!+Int(self.totalCal)!);
                                 }
                                 
                             }
-
+                            
                         }
                         self.counter=String(self.totalNumberOfActivities);
                         self.streak=String(self.streakCount);
@@ -639,7 +638,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     func calculateStreak()
     {
-    
+        
         
         let formatedDate = CommonFunctions.dateFromFixedFormatString(self.routeData.date!);
         let currentDate = NSDate()
@@ -766,7 +765,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         optionMenu.addAction(weekAction);
         optionMenu.addAction(monthAction);
         optionMenu.addAction(yearAction);
-       
+        
         optionMenu.addAction(cancelAction);
         
         self.presentViewController(optionMenu, animated: true, completion: nil)
@@ -809,8 +808,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
             {
                 (alert: UIAlertAction!) -> Void in
                 self.datePickerView = UIDatePicker()
-                
-                self.datePickerView.frame = CGRectMake(0, self.view.frame.height - 220, self.view.frame.width, 220);
+                self.datePickerView.frame = CGRectMake(0, (self.view.frame.maxY-200), self.view.bounds.width, 200);
                 self.datePickerView.backgroundColor = UIColor.whiteColor();
                 self.datePickerView.datePickerMode = UIDatePickerMode.Date
                 
@@ -844,35 +842,62 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         toolBar.translucent = true
         toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
         toolBar.sizeToFit()
-        
         let doneButton = UIBarButtonItem(title: "Start", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(HistoryViewController.donePicker))
+        doneButton.tintColor = UIColor.blackColor();
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         let cancelButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(HistoryViewController.donePicker))
         
-        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+        toolBar.setItems([doneButton,spaceButton,cancelButton], animated: false)
         toolBar.userInteractionEnabled = true
         
         self.view.addSubview(toolBar);
         
     }
     //--Done action of tool bar
+    var firstDone = false;
     func donePicker()
     {
         self.toolBar.removeFromSuperview();
-       // self.datePickerView.removeFromSuperview();
-        self.datePickerView = UIDatePicker();
-        self.datePickerView.datePickerMode = UIDatePickerMode.Date;
+        self.datePickerView.removeFromSuperview();
+        
+        if !firstDone
+        {
+            firstDone = true;
+            let doneButton = UIBarButtonItem(title: "End", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(HistoryViewController.donePicker))
+            doneButton.tintColor = UIColor.blackColor();
+            let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+            let cancelButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(HistoryViewController.donePicker))
+            
+            toolBar.setItems([doneButton,spaceButton,cancelButton], animated: false)
+            self.datePickerView = UIDatePicker()
+            self.datePickerView.frame = CGRectMake(0, (self.view.frame.maxY-200), self.view.bounds.width, 200);
+            self.datePickerView.backgroundColor = UIColor.whiteColor();
+            self.datePickerView.datePickerMode = UIDatePickerMode.Date
+            self.view.addSubview(self.datePickerView)
+            self.addToolBar()
+            self.datePickerView.addTarget(self, action: #selector(HistoryViewController.datePickerValueChanged), forControlEvents: UIControlEvents.ValueChanged)
+            
+        }else{
+            firstDone = false;
+            
+        }
+        
     }
     //----picker to chnaged value
     func datePickerValueChanged(sender:UIDatePicker) {
         
         let dateFormatter = NSDateFormatter()
         
-        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
+        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
         
         dateFormatter.timeStyle = NSDateFormatterStyle.NoStyle
         
         print(dateFormatter.stringFromDate(sender.date));
+        if firstDone{
+            self.startDate = sender.date;
+        }else{
+            self.endDate = sender.date;
+        }
         
     }
     //-----CollectionView delegate Methods-- upperSlideView----
@@ -924,7 +949,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
         ActivityDetailsViewController;
         activityDetailsViewController.fromHistory = true;
-         activityDetailsViewController.mapData=self.sectionItem[indexPath.section][indexPath.row];
+        activityDetailsViewController.mapData=self.sectionItem[indexPath.section][indexPath.row];
         self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
         
     }
@@ -945,19 +970,19 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     
-  var actionButton: ActionButton!
+    var actionButton: ActionButton!
     
     //------------------------------- life cylcle methods -----------------------------
     override func viewDidLoad()
     {
         super.viewDidLoad()
         self.getData();
-       // self.tableView.hidden=true;
+        // self.tableView.hidden=true;
         tableView.estimatedRowHeight = 138;
         tableView.rowHeight = UITableViewAutomaticDimension;
         
-//        position=1;
-//        self.filterData();
+        //        position=1;
+        //        self.filterData();
         let collectionViewLayout: CenterCellCollectionViewFlowLayout = CenterCellCollectionViewFlowLayout()
         collectionViewLayout.itemSize = CGSizeMake(180, 120)
         collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -967,16 +992,16 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         self.tableView.tableFooterView = UIView();
         
         
-        let mapImage = UIImage(named: "ic_fab_map")!
-        let satelliteImage = UIImage(named: "ic_fab_sattelite")!
-        let terrainImage = UIImage(named: "ic_fab_terrain")!
+        let mapImage = UIImage(named: "ic_fab_new_route")!
+        let satelliteImage = UIImage(named: "ic_fab_add")!
+        let terrainImage = UIImage(named: "ic_fab_new_activity")!
         
         
         let map = ActionButtonItem(title: "Start New Activity", image: mapImage)
         
         map.action = { item in
             self.actionButton.toggleMenu();
-          
+            
             //coding
         }
         
@@ -988,25 +1013,25 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
             self.presentViewController(nextViewController, animated: false, completion: nil);
             
             
-                       //coding
+            //coding
         }
         
         let Terrain = ActionButtonItem(title: "Create New Route", image: terrainImage)
         Terrain.action = { item in
             self.actionButton.toggleMenu();
-                       //coding
+            //coding
         }
         // let vs:Int = Int(self.view.frame.height - self.getMyLocation.frame.maxY);
         actionButton = ActionButton(attachedToView: self.view, items: [map, Satellite,Terrain], v: 25, h: 25)
         // actionButton = ActionButton(attachedToView: self.view, items: [map, Satellite,Terrain])
         
         actionButton.action = { button in button.toggleMenu() }
-       // actionButton.setImage(UIImage(named: "ic_fab_map_format"), forState: .Normal);
+        // actionButton.setImage(UIImage(named: "ic_fab_map_format"), forState: .Normal);
         actionButton.setTitle("+", forState: UIControlState.Normal);
         
         //  let orgColor = UIColor(red: 255/255, green: 102/255, blue: 102/255, alpha: 1)
         actionButton.backgroundColor = colorCode.BlueColor;
-
+        
         
         
         

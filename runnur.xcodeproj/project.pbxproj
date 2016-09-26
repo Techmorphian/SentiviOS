@@ -41,6 +41,11 @@
 		4457FFE21D59C19A0097C598 /* ActivityDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4457FFE11D59C19A0097C598 /* ActivityDetailsViewController.swift */; };
 		4457FFE41D59C2030097C598 /* SummaryActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4457FFE31D59C2030097C598 /* SummaryActivityViewController.swift */; };
 		4457FFE61D5A0E730097C598 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4457FFE51D5A0E730097C598 /* WeatherData.swift */; };
+		445A03691D9931100015B3EE /* SettingActivityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445A03681D9931100015B3EE /* SettingActivityTableViewCell.swift */; };
+		445A036B1D9931330015B3EE /* SettingVoiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445A036A1D9931330015B3EE /* SettingVoiceTableViewCell.swift */; };
+		445A036D1D9931590015B3EE /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445A036C1D9931590015B3EE /* SettingViewController.swift */; };
+		445A036F1D994E270015B3EE /* DistanceFeedbackInterval.xib in Resources */ = {isa = PBXBuildFile; fileRef = 445A036E1D994E270015B3EE /* DistanceFeedbackInterval.xib */; };
+		445A03711D9950090015B3EE /* DistanceFeedbackInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445A03701D9950090015B3EE /* DistanceFeedbackInterval.swift */; };
 		446103DB1D77F22C0084E20A /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 446103DA1D77F22C0084E20A /* libxml2.2.tbd */; };
 		446103DE1D77FB4B0084E20A /* DownloadFromBlob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446103DD1D77FB4B0084E20A /* DownloadFromBlob.swift */; };
 		4466240C1D6B1BE600B65BAA /* ViewRouteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4466240B1D6B1BE600B65BAA /* ViewRouteController.swift */; };
@@ -176,6 +181,11 @@
 		4457FFE11D59C19A0097C598 /* ActivityDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityDetailsViewController.swift; sourceTree = "<group>"; };
 		4457FFE31D59C2030097C598 /* SummaryActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryActivityViewController.swift; sourceTree = "<group>"; };
 		4457FFE51D5A0E730097C598 /* WeatherData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
+		445A03681D9931100015B3EE /* SettingActivityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingActivityTableViewCell.swift; sourceTree = "<group>"; };
+		445A036A1D9931330015B3EE /* SettingVoiceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingVoiceTableViewCell.swift; sourceTree = "<group>"; };
+		445A036C1D9931590015B3EE /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		445A036E1D994E270015B3EE /* DistanceFeedbackInterval.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DistanceFeedbackInterval.xib; sourceTree = "<group>"; };
+		445A03701D9950090015B3EE /* DistanceFeedbackInterval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DistanceFeedbackInterval.swift; sourceTree = "<group>"; };
 		446103DA1D77F22C0084E20A /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
 		446103DD1D77FB4B0084E20A /* DownloadFromBlob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadFromBlob.swift; sourceTree = "<group>"; };
 		4466240B1D6B1BE600B65BAA /* ViewRouteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewRouteController.swift; sourceTree = "<group>"; };
@@ -350,6 +360,18 @@
 			name = Activities;
 			sourceTree = "<group>";
 		};
+		445A03671D9930CF0015B3EE /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				445A03681D9931100015B3EE /* SettingActivityTableViewCell.swift */,
+				445A036A1D9931330015B3EE /* SettingVoiceTableViewCell.swift */,
+				445A036C1D9931590015B3EE /* SettingViewController.swift */,
+				445A036E1D994E270015B3EE /* DistanceFeedbackInterval.xib */,
+				445A03701D9950090015B3EE /* DistanceFeedbackInterval.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		446103DC1D77FB180084E20A /* BlobFiles */ = {
 			isa = PBXGroup;
 			children = (
@@ -424,6 +446,7 @@
 				477811671D4879D3003B01A4 /* Statistics */,
 				477811641D487901003B01A4 /* FAQ */,
 				477811651D4879A8003B01A4 /* History */,
+				445A03671D9930CF0015B3EE /* Settings */,
 				477811621D48788A003B01A4 /* AddViaContacts */,
 				477811611D487871003B01A4 /* AddViaFacebook */,
 				477811601D48785F003B01A4 /* AddViaGoogle */,
@@ -781,6 +804,7 @@
 				470CF8881D24DC370001B3BC /* Assets.xcassets in Resources */,
 				470CF8831D24DC370001B3BC /* Main.storyboard in Resources */,
 				440D64E41D522580004AE539 /* CustomPopUp.xib in Resources */,
+				445A036F1D994E270015B3EE /* DistanceFeedbackInterval.xib in Resources */,
 				4466240E1D6B3B7D00B65BAA /* AlertView.xib in Resources */,
 				4485841F1D4A14A20027F141 /* GoogleService-Info.plist in Resources */,
 				444C5E3B1D50C76A00A4DB3D /* GoogleMaps.bundle in Resources */,
@@ -950,8 +974,11 @@
 				47F97BE31D33CF5C0034B767 /* errorViewController.swift in Sources */,
 				4457FFE61D5A0E730097C598 /* WeatherData.swift in Sources */,
 				470CF8A31D2508140001B3BC /* AddviaFacebookCellTableViewCell.swift in Sources */,
+				445A036D1D9931590015B3EE /* SettingViewController.swift in Sources */,
 				444CE0FB1D6C5A400044FBD9 /* CenterCellCollectionViewFlowLayout.swift in Sources */,
 				470728BA1D2BD9BE002B86E1 /* phoneBookModel.swift in Sources */,
+				445A03711D9950090015B3EE /* DistanceFeedbackInterval.swift in Sources */,
+				445A036B1D9931330015B3EE /* SettingVoiceTableViewCell.swift in Sources */,
 				4748CB8D1D59EE9B0096DB55 /* ActivityViewController.swift in Sources */,
 				47C78CFC1D26A480006DEACF /* SplashScreenViewController.swift in Sources */,
 				470B1B5E1D278B6200E3B5B0 /* HomeViewController.swift in Sources */,
@@ -990,6 +1017,7 @@
 				471A686A1D30D4E200DD2138 /* NoInternetViewController.swift in Sources */,
 				470CF8A51D25082C0001B3BC /* AddviaGoogleCellTableViewCell.swift in Sources */,
 				470CF8A71D252F540001B3BC /* AddManuallyViewController.swift in Sources */,
+				445A03691D9931100015B3EE /* SettingActivityTableViewCell.swift in Sources */,
 				47C6B0001D5AF5B300410DAE /* userChatTableViewCell.swift in Sources */,
 				47C6AFFA1D5AF12700410DAE /* LeaderBoardViewController.swift in Sources */,
 				473D0D801D49E84C004DDC07 /* alertMsg.swift in Sources */,

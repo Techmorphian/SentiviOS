@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view alpha="0.29999999999999999" contentMode="scaleToFill" id="iN0-l3-epB" customClass="ActivityType" customModule="Sentiv" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ActivityType" customModule="Sentiv" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -273,7 +273,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="np8-PS-Rm8" secondAttribute="trailing" constant="25" id="I21-Wj-DCn"/>
                 <constraint firstItem="np8-PS-Rm8" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="MPG-t9-saz"/>

@@ -29,92 +29,134 @@ class AddActivityViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var save: UIButton!
     
     var customActivity = ActivityType();
-    @IBAction func activityType(sender: UITextField) {
-        
+    @IBAction func activityType(sender: UIButton) {
         customActivity = NSBundle.mainBundle().loadNibNamed("ActivityType",owner:view,options:nil).last as! ActivityType
         customActivity.backgroundColor = UIColor(white: 0, alpha: 0.5)
-        self.view.addSubview(customActivity)
+        self.view.addSubview(customActivity);
         customActivity.frame = self.view.bounds
     }
+    
+    
 //    PickerView coding:-
-     var selectedDate = NSDate();
+    var selectedDate = NSDate();
     var selectedTime = NSDate();
+//    var textField = UITextField();
+//    func configurationTextField(textField: UITextField!)
+//    {
+//        
+//        if textField != nil {
+//            
+//            self.textField = textField!        //Save reference to the UITextField
+//            self.textField.text = durationhr.text!
+//        }
+//    }
+//    func configurationTextField2(textField: UITextField!)
+//    {
+//        
+//        if textField != nil {
+//            
+//            self.textField = textField!        //Save reference to the UITextField
+//            self.textField.text = durationmm.text!
+//        }
+//    }
+//    func configurationTextField3(textField: UITextField!)
+//    {
+//        
+//        if textField != nil {
+//            
+//            self.textField = textField!        //Save reference to the UITextField
+//            self.textField.text = caloriesBurned.text!
+//        }
+//    }
+
     @IBAction func distanceHh(sender: UITextField) {
-        let datePickerView:UIDatePicker = UIDatePicker()
-        datePickerView.datePickerMode = UIDatePickerMode.Date
-        sender.inputView = datePickerView;
-        datePickerView.minimumDate=NSDate();
-        datePickerView.alpha=0.7;
-        datePickerView.backgroundColor = UIColor.whiteColor();
-        let orgcColor = UIColor(red: 255/255, green: 102/255, blue: 102/255, alpha: 1)
-        datePickerView.setValue(orgcColor, forKey: "textColor");
         
-        //        let currentDate = NSDate()
-        //        datePickerView.maximumDate = currentDate;
-        datePickerView.addTarget(self, action: #selector(AddActivityViewController.datePickerValueChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
-        let toolBar = UIToolbar()
-        toolBar.barStyle = UIBarStyle.Default
-        toolBar.translucent = true
-        toolBar.tintColor = UIColor.blackColor()
-        toolBar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(AddActivityViewController.donePicker))
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        toolBar.setItems([flexSpace, doneButton], animated: false)
-        toolBar.userInteractionEnabled = true
-        sender.inputAccessoryView = toolBar
-        datePickerView.setDate(selectedDate, animated: true)
+//        let alert = UIAlertController(title: "", message: "ENTER HOURS", preferredStyle: UIAlertControllerStyle.Alert)
+//        
+//        alert.addTextFieldWithConfigurationHandler(configurationTextField)
+//        
+//        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
+//        alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.Default, handler:{ (UIAlertAction)in
+//            self.durationhr.text = self.textField.text;
+//            print(self.textField.text)
+//        }))
+//        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     @IBAction func distanceMm(sender: UITextField) {
-        let datePickerView:UIDatePicker = UIDatePicker()
-        datePickerView.datePickerMode = UIDatePickerMode.Time
-        // datePickerView.minimumDate=NSDate();
         
-        datePickerView.locale = NSLocale(localeIdentifier: "en_US");
-        sender.inputView = datePickerView;
-        datePickerView.alpha=0.7;
-        datePickerView.backgroundColor = UIColor.whiteColor();
-        let orgcColor = UIColor(red: 255/255, green: 102/255, blue: 102/255, alpha: 1)
-        datePickerView.setValue(orgcColor, forKey: "textColor");
+//        let alert = UIAlertController(title: "", message: "ENTER MINUTES", preferredStyle: UIAlertControllerStyle.Alert)
+//        
+//        alert.addTextFieldWithConfigurationHandler(configurationTextField2)
+//        
+//        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
+//        alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.Default, handler:{ (UIAlertAction)in
+//            self.durationmm.text = self.textField.text;
+//            print(self.textField.text)
+//        }))
+//        self.presentViewController(alert, animated: true, completion: nil)
+
         
-        datePickerView.addTarget(self, action: #selector(AddActivityViewController.datePickerValueChanged2(_:)), forControlEvents: UIControlEvents.ValueChanged)
-        let toolBar = UIToolbar()
-        toolBar.barStyle = UIBarStyle.Default
-        toolBar.translucent = true
-        toolBar.tintColor = UIColor.blackColor()
-        toolBar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(AddActivityViewController.donePicker))
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        toolBar.setItems([flexSpace, doneButton], animated: false)
-        toolBar.userInteractionEnabled = true
-        sender.inputAccessoryView = toolBar
-        datePickerView.setDate(selectedTime, animated: true)
+        
+        
+    }
+    
+    
+    @IBAction func caloriesBurned(sender: UITextField) {
+//        let alert = UIAlertController(title: "", message: "ENTER CALORIES", preferredStyle: UIAlertControllerStyle.Alert)
+//        
+//        alert.addTextFieldWithConfigurationHandler(configurationTextField2)
+//        
+//        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
+//        alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.Default, handler:{ (UIAlertAction)in
+//            self.caloriesBurned.text = self.textField.text;
+//            print(self.textField.text)
+//        }))
+//        self.presentViewController(alert, animated: true, completion: nil)
 
     }
+    
+    @IBAction func startTime(sender: UITextField) {
+        
+                let datePickerView:UIDatePicker = UIDatePicker()
+                datePickerView.datePickerMode = UIDatePickerMode.DateAndTime
+                // datePickerView.minimumDate=NSDate();
+        
+                datePickerView.locale = NSLocale(localeIdentifier: "en_US");
+                sender.inputView = datePickerView;
+                datePickerView.alpha=0.7;
+                datePickerView.backgroundColor = UIColor.whiteColor();
+                let orgcColor = UIColor(red: 255/255, green: 102/255, blue: 102/255, alpha: 1)
+                datePickerView.setValue(orgcColor, forKey: "textColor");
+        
+                datePickerView.addTarget(self, action: #selector(AddActivityViewController.datePickerValueChanged2(_:)), forControlEvents: UIControlEvents.ValueChanged)
+                let toolBar = UIToolbar()
+                toolBar.barStyle = UIBarStyle.Default
+                toolBar.translucent = true
+                toolBar.tintColor = UIColor.blackColor()
+                toolBar.sizeToFit()
+        
+                let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(AddActivityViewController.donePicker))
+                let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+                toolBar.setItems([flexSpace, doneButton], animated: false)
+                toolBar.userInteractionEnabled = true
+                sender.inputAccessoryView = toolBar
+                datePickerView.setDate(selectedTime, animated: true)
+        
+    }
+    
     func donePicker()
     {
         self.view.endEditing(true);
     }
-    func datePickerValueChanged(sender:UIDatePicker) {
-        
-        let dateFormatter = NSDateFormatter()
-        
-        
-        dateFormatter.dateFormat = "dd/MM/yyyy";
-        let dateString = dateFormatter.stringFromDate(sender.date)
-        durationhr.text = dateString;
-        selectedDate=sender.date;
-        //        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
-        //        date.text = dateFormatter.stringFromDate(sender.date)
-    }
-    func datePickerValueChanged2(sender:UIDatePicker) {
+     func datePickerValueChanged2(sender:UIDatePicker) {
         
         let dateFormatter = NSDateFormatter()
         //  dateFormatter.locale = NSLocale(localeIdentifier: "en_US");
-        dateFormatter.dateFormat = "hh:mm a";
-        durationmm.text = dateFormatter.stringFromDate(sender.date)
+        dateFormatter.dateFormat = "dd/MM/yyyy hh:mm a";
+        startTime.text = dateFormatter.stringFromDate(sender.date)
         selectedTime=sender.date
     }
     func animateViewMoving (up:Bool, moveValue :CGFloat){
@@ -127,20 +169,38 @@ class AddActivityViewController: UIViewController,UITextFieldDelegate {
         UIView.commitAnimations()
     }
     func textFieldDidBeginEditing(textField: UITextField) {
-        if textField == durationmm || textField == durationhr || textField == caloriesBurned || textField == startTime
+        if textField == durationmm || textField == durationhr
         {
-           animateViewMoving(true, moveValue: 100)
+            animateViewMoving(true, moveValue: 100)
+        }
+        if textField == caloriesBurned || textField == startTime{
+            animateViewMoving(true, moveValue: 130)
+        }
+        if textField == distance{
+            animateViewMoving(true, moveValue: 80)
+
         }
     }
     func textFieldDidEndEditing(textField: UITextField) {
-        if textField == durationmm || textField == durationhr || textField == caloriesBurned || textField == startTime
+        if textField == durationmm || textField == durationhr
         {
             animateViewMoving(false, moveValue: 100)
+        }
+        if textField == caloriesBurned || textField == startTime{
+             animateViewMoving(false, moveValue: 130)
+        }
+        if textField == distance{
+            animateViewMoving(false, moveValue: 80)
+            
         }
     }
     
     @IBAction func save(sender: AnyObject) {
-           }
+        
+        
+        
+        
+      }
     
     
     
@@ -150,6 +210,14 @@ class AddActivityViewController: UIViewController,UITextFieldDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityTitle.delegate=self;
+        activityType.delegate=self;
+        distance.delegate=self;
+        durationhr.delegate=self;
+        durationmm.delegate=self;
+        caloriesBurned.delegate=self;
+        startTime.delegate=self;
+        
         CommonFunctions.addInputAccessoryForTextFields([activityTitle,activityType,distance,durationhr,durationmm,caloriesBurned,startTime], dismissable: true, previousNextable: true, showDone: false)
         // Do any additional setup after loading the view.
     }

@@ -188,7 +188,6 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         //  let orgColor = UIColor(red: 255/255, green: 102/255, blue: 102/255, alpha: 1)
         actionButton.backgroundColor = colorCode.BlueColor;
         
-        
         //startActivity.layer.shadowOffset = CGSizeMake(2, 2)
         //        startActivity.layer.shadowColor=UIColor.whiteColor().CGColor;
         //        planRoute.layer.shadowColor=UIColor.whiteColor().CGColor;

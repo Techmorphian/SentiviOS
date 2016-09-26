@@ -28,9 +28,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
-        
       return 3
-        
     }
     
     
@@ -46,12 +44,10 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
         }
         else
         {
-              return sectionThree.count
+            return sectionThree.count
         }
 
     }
-    
-    
     
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
@@ -62,9 +58,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
         }
         else
         {
-
-        return   1
-            
+            return   1
         }
     }
 
@@ -72,30 +66,24 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
     
     func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)
     {
-      
-            if let headerView = view as? UITableViewHeaderFooterView
-            {
-                
-                
-                headerView.backgroundView?.backgroundColor = UIColor.whiteColor()
-               
-                
-                
-                headerView.textLabel?.textAlignment = .Center
-                
-                headerView.textLabel?.textColor = UIColor.whiteColor()
-                
-                
-            }
+        
+        if let headerView = view as? UITableViewHeaderFooterView
+        {
+            headerView.backgroundView?.backgroundColor = UIColor.whiteColor()
             
+            headerView.textLabel?.textAlignment = .Center
+            
+            headerView.textLabel?.textColor = UIColor.whiteColor()
+            
+        }
+        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        let cell:NavigationCellTableViewCell = tableView.dequeueReusableCellWithIdentifier("NavigationCellTableViewCell")as!
-        NavigationCellTableViewCell
         
-     
+        let cell:NavigationCellTableViewCell = tableView.dequeueReusableCellWithIdentifier("NavigationCellTableViewCell", forIndexPath: indexPath)     as!
+       NavigationCellTableViewCell
         if indexPath.section == 0
         {
             cell.namesLabel.text = sectionOne[indexPath.row]
@@ -111,21 +99,15 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                  cell.countLabel.hidden = true;
             }
             
-            
             if indexPath.row == 2
             {
-//                cell.countLabel.hidden = false;
-//               cell.countLabel.layer.cornerRadius = cell.countLabel.frame.size.width / 2;
-//                cell.countLabel.backgroundColor = UIColor.redColor()
-//              
-//                cell.countLabel.layer.borderWidth = 1
-//               cell.countLabel.clipsToBounds = true
-//                
-                
-                
+                //               cell.countLabel.hidden = false;
+                //               cell.countLabel.layer.cornerRadius = cell.countLabel.frame.size.width / 2;
+                //               cell.countLabel.backgroundColor = UIColor.redColor()
+                //               cell.countLabel.layer.borderWidth = 1
+                //               cell.countLabel.clipsToBounds = true
 
             }
-            
             
             if indexPath.row == 3
             {
@@ -158,80 +140,68 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                
                 cell.countLabel.hidden = false;
                 if NSUserDefaults.standardUserDefaults().objectForKey("winningCount") != nil{
-                cell.countLabel.text = "$" + " " + NSUserDefaults.standardUserDefaults().stringForKey("winningCount")!
+                    cell.countLabel.text = "$" + " " + NSUserDefaults.standardUserDefaults().stringForKey("winningCount")!
                 }
                 
-              
-               cell.countLabel.layer.cornerRadius = cell.countLabel.frame.size.height/2;
-               cell.countLabel.backgroundColor = colorCode.RedColor
-            // cell.countLabel.layer.masksToBounds = true
-              cell.countLabel.clipsToBounds = true
-                
+                cell.countLabel.layer.cornerRadius = cell.countLabel.frame.size.height/2;
+                cell.countLabel.backgroundColor = colorCode.RedColor
+                // cell.countLabel.layer.masksToBounds = true
+                cell.countLabel.clipsToBounds = true
                 
             }
-
-
 
         }
         if indexPath.section == 2
         {
             
             cell.countLabel.hidden = true;
-
-            
             cell.namesLabel.text = sectionThree[indexPath.row]
             cell.naviImageViews.image = UIImage(named: sectionThreeImages[indexPath.row])
 
+        }
+        if cell.selected == true{
+             cell.contentView.backgroundColor = colorCode.MediumDarkBlueColor
+        }else{
+            cell.contentView.backgroundColor = UIColor.clearColor();
         }
         
         return cell
     }
     
-    
+    var selectedSection = Int();
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
-        
     {
-        
         
         let cell = tableView.cellForRowAtIndexPath(indexPath) as!  NavigationCellTableViewCell
         
-        cell.contentView.backgroundColor = colorCode.MediumDarkBlueColor
-        
+        cell.contentView.backgroundColor = colorCode.MediumDarkBlueColor;
+        cell.selected = true;
+        cell.setSelected(true, animated: false);
+        selectedSection = indexPath.section;
         if indexPath.section == 0
         {
             
          switch(sectionOne[indexPath.row])
             {
             case "Activity":
-
-               
                 self.performSegueWithIdentifier("homeView", sender: nil)
                 break;
                 
             case "Challenges":
-                
-
                 self.performSegueWithIdentifier("Challenges", sender: nil)
                 
                 break;
                 
                 
             case "Requests":
-              
-                
-                
-                
                 break;
                 
             case "Friends":
-                
                 self.performSegueWithIdentifier("Friends", sender: nil)
                 
                 break;
-                
-                
-                
+            
             case "Routes":
                 self.performSegueWithIdentifier("routeView", sender: self)
                 
@@ -266,7 +236,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 
                 
             case "Heart Rate":
-                   self.performSegueWithIdentifier("HeartRate ", sender: nil)
+                   self.performSegueWithIdentifier("HeartRate", sender: nil)
                 
                 break;
                 
@@ -274,10 +244,6 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             
                 
                 break;
-                
-                
-                
-                
             default:
                 break;
             } // switch close
@@ -292,9 +258,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             switch(sectionThree[indexPath.row])
             {
             case "Settings":
-                
-                
-                //                self.performSegueWithIdentifier("home", sender: nil)
+                self.performSegueWithIdentifier("Setting", sender: nil)
                 break;
                 
             case "Logout":
@@ -323,20 +287,13 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
 //                    }
                     UIView.transitionWithView(appDelegate.window!, duration: 0.5, options:UIViewAnimationOptions.TransitionFlipFromLeft , animations: { () -> Void in
                         appDelegate.window!.rootViewController = mainVC
-                        
-                        
                         },completion: { (Bool) -> Void in
-                            
                     })
-               
-
                 
                 break;
    
             case "Feedback":
-                
-                
-                //                self.performSegueWithIdentifier("shortList", sender: nil)
+//                self.performSegueWithIdentifier("shortList", sender: nil)
                 
                 break;
                 
@@ -364,9 +321,18 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
     
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath)
     {
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as!  NavigationCellTableViewCell
-               
-        cell.contentView.backgroundColor = UIColor.clearColor();
+//        if selectedSection == indexPath.section{
+//       
+//        }else{
+            let cell = tableView.cellForRowAtIndexPath(indexPath) as?  NavigationCellTableViewCell
+        
+        if cell != nil{
+            cell!.selected = false;
+            cell!.setSelected(false, animated: false);
+            cell!.contentView.backgroundColor = UIColor.clearColor();
+        }
+        
+//        }
     }
         
     var sectionOne = ["Activity","Challenges","Requests","Friends","Routes"]
@@ -377,6 +343,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
     
     var sectionThree = ["Settings","Logout","Feedback","FAQ"]
     var sectionThreeImages = ["ic_settings_nav","ic_logout","ic_feedback_nav","ic_faq_nav"]
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -407,11 +374,9 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
         navigationProfilePic.layer.borderWidth = 1
         navigationProfilePic.layer.borderColor = UIColor.grayColor().CGColor
          bgTopImageView.userInteractionEnabled = true
+        
         let tap = UITapGestureRecognizer(target: self, action: #selector(NavigationViewController.handleTap(_:)));
-        
         bgTopImageView.addGestureRecognizer(tap)
-        
-        
         
                // self.naviTableView.backgroundColor = colorCode.MediumDarkBlueColor
         // Do any additional setup after loading the view.

@@ -416,6 +416,21 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
     }
 
     
+    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        let cell = self.addFriendsTableView.cellForRowAtIndexPath(indexPath) as! AddFriendsCellTableViewCell
+        if cell.selected{
+            self.addFriendsTableView.deselectRowAtIndexPath(indexPath, animated: false);
+            self.tableView(self.addFriendsTableView, didDeselectRowAtIndexPath: indexPath);
+           
+            return nil
+        }
+        return indexPath;
+    }
+    
+    
+    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        
+    }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         if AddVia[indexPath.row] == "Add via Phonebook"
