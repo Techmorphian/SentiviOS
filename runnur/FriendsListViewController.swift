@@ -798,6 +798,11 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
     func friendList()
         
     {
+      
+        
+        self.RemoveNoInternet();
+        self.RemoveNoFrinedResult()
+        self.RemoveNoResult();
         
         
         CommonFunctions.showActivityIndicator(view)
@@ -886,7 +891,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         
         let dataString = String(data: self.mutableData, encoding: NSUTF8StringEncoding)
         
-        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+       
         
         print(dataString!)
         
@@ -933,7 +938,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                         self.label.hidden = true
 
                         
-                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                     
 
                         
                         self.searchTextField.text = ""
@@ -948,6 +953,8 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                             
                             for i in 0 ..< elements.count
                             {
+                                
+                                
                                 
                                 
                                 CommonFunctions.hideActivityIndicator();
@@ -1122,6 +1129,8 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                 
                 CommonFunctions.hideActivityIndicator();
                 
+                print(error)
+                
                 
                 self.RemoveNoInternet();
                 self.RemoveNoFrinedResult();
@@ -1196,13 +1205,14 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         CommonFunctions.hideActivityIndicator();
         
         
-        self.RemoveNoInternet();
+        //self.RemoveNoInternet();
         self.RemoveNoFrinedResult();
         
-        if self.view.subviews.contains(self.noResult.view)
+        if self.view.subviews.contains(self.noInternet.view)
             
         {
             
+            //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
             
         }
             
@@ -1210,23 +1220,23 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
             
         {
             
-            self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+            self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
             
-            self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+            self.noInternet.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+            
+            self.view.addSubview((self.noInternet.view)!);
+            
+            //  self.DIVC.imageView.image = UIImage(named: "im_no_internet");
+            
+            // self.noInternet.imageView.userInteractionEnabled = true
+            
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(FriendsListViewController.handleTap(_:)))
+            self.noInternet.noInternetLabel.userInteractionEnabled = true
             
             
-            self.noResult.noResultTextLabel.text = "something went wrong."
+            self.noInternet.view.addGestureRecognizer(tapRecognizer)
             
-            self.noResult.noResultImageView.image = UIImage(named: "im_error")
-            
-            
-            
-            self.view.addSubview((self.noResult.view)!);
-            
-            
-            self.view.userInteractionEnabled = true
-            
-            self.noResult.didMoveToParentViewController(self)
+            self.noInternet.didMoveToParentViewController(self)
             
         }
         
@@ -1237,7 +1247,24 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
     }
     
     
+    //MARK:- NO INTERNET TAP GESTURE
     
+    func handleTap(sender: UITapGestureRecognizer)
+    {
+        
+        if(Reachability.isConnectedToNetwork()==true )
+        {
+            
+            friendList();
+            
+        }
+        
+        
+        
+    }
+    
+    
+
 
     
     //////
@@ -1257,23 +1284,6 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
 
     
     
-    //MARK:- NO INTERNET TAP GESTURE
-    
-    func handleTap(sender: UITapGestureRecognizer)
-    {
-        
-        if(Reachability.isConnectedToNetwork()==true )
-        {
-            
-            friendList();
-            
-        }
-        
-        
-        
-    }
-    
- 
     
     
     

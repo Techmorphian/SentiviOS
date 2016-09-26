@@ -968,20 +968,18 @@ class AddViaGoogleViewController: UIViewController,UITableViewDataSource,UITable
     {
         
         
-        self.activityIndicator.stopAnimating();
         
-        self.loadingView.removeFromSuperview();
+        CommonFunctions.hideActivityIndicator();
         
-        self.RemoveNoInternet();
         
+        //self.RemoveNoInternet();
         self.RemoveNoFrinedResult();
         
-
-        
-        if self.view.subviews.contains(self.noResult.view)
+        if self.view.subviews.contains(self.noInternet.view)
             
         {
             
+            //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
             
         }
             
@@ -989,23 +987,23 @@ class AddViaGoogleViewController: UIViewController,UITableViewDataSource,UITable
             
         {
             
-            self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+            self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
             
-            self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+            self.noInternet.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+            
+            self.view.addSubview((self.noInternet.view)!);
+            
+            //  self.DIVC.imageView.image = UIImage(named: "im_no_internet");
+            
+            // self.noInternet.imageView.userInteractionEnabled = true
+            
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddViaGoogleViewController.handleTap(_:)))
+            self.noInternet.noInternetLabel.userInteractionEnabled = true
             
             
-            self.noResult.noResultTextLabel.text = "something went wrong."
+            self.noInternet.view.addGestureRecognizer(tapRecognizer)
             
-            self.noResult.noResultImageView.image = UIImage(named: "im_error")
-            
-            
-            
-            self.view.addSubview((self.noResult.view)!);
-            
-            
-            self.view.userInteractionEnabled = true
-            
-            self.noResult.didMoveToParentViewController(self)
+            self.noInternet.didMoveToParentViewController(self)
             
         }
         
@@ -1016,28 +1014,26 @@ class AddViaGoogleViewController: UIViewController,UITableViewDataSource,UITable
     
     
 
+    //MARK:- NO INTERNET TAP GESTURE
+    
+    func handleTap(sender: UITapGestureRecognizer)
+    {
+        
+        if(Reachability.isConnectedToNetwork()==true )
+        {
+            
+            self.addGoogleFriends();
+            
+        }
+        
+        
+        
+    }
     
     
+
     
-    
-    
-    
-   
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+     
     
     
  //   MARK:- ANIMATION
@@ -1079,11 +1075,68 @@ class AddViaGoogleViewController: UIViewController,UITableViewDataSource,UITable
 
     
     var photoUrl = ["download (3)","download (2)","images (4)","download (5)","download (7)","download (9)"]
+   
+    
+    
+    
+    
+    
+    //MARK:- METHOD OR RECEIVED PUSH NOTIFICATION
+    
+    func methodOfReceivedNotification(notification: NSNotification)
+    {
+        
+        //// push notification alert and parsing
+        
+        
+        let data = notification.userInfo as! NSDictionary
+        
+        let aps = data.objectForKey("aps")
+        
+        print(aps)
+        
+        var NotificationMessage = String()
+        NotificationMessage = aps!["alert"] as! String
+        
+        
+        
+        let alert = UIAlertController(title: "", message: NotificationMessage , preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let viewAction = UIAlertAction(title: "View", style: UIAlertActionStyle.Default, handler: {
+            
+            void in
+            
+            
+            let cat = self.storyboard?.instantiateViewControllerWithIdentifier("RequestsViewController") as! RequestsViewController;
+            
+            
+            self.revealViewController().pushFrontViewController(cat, animated: false)
+            
+        })
+        
+        let DismissAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil)
+        
+        
+        alert.addAction(viewAction)
+        
+        alert.addAction(DismissAction)
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+    }
+    
+    
+    
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
 
+        
+        
+        ////// push notification
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddViaGoogleViewController.methodOfReceivedNotification(_:)), name:"showAlert", object: nil)
         
           self.GoogleTableView.delegate = self;
         

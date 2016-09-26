@@ -881,15 +881,25 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
         {
             
+            
             self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
             
-            self.noInternet.view.frame = CGRectMake(0,65, self.view.frame.size.width, self.view.frame.size.height-65);
-            
+            self.noInternet.view.frame = CGRectMake(0, 65, self.view.frame.size.width, self.view.frame.size.height-65);
             
             self.view.addSubview((self.noInternet.view)!);
-            self.view.userInteractionEnabled = true
+            
+            //  self.DIVC.imageView.image = UIImage(named: "im_no_internet");
+            
+            // self.noInternet.imageView.userInteractionEnabled = true
+            
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ProgressViewController.handleTap(_:)))
+            self.noInternet.noInternetLabel.userInteractionEnabled = true
+            
+            
+            self.noInternet.view.addGestureRecognizer(tapRecognizer)
             
             self.noInternet.didMoveToParentViewController(self)
+
             
         }
         

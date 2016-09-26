@@ -955,27 +955,27 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     let loadingView: UIView = UIView()
-    func showActivityIndicatory()
-    {
-        loadingView.frame = CGRectMake(0, 0, 60, 50)
-        loadingView.center = view.center
-        
-        loadingView.backgroundColor = UIColor.grayColor()
-        loadingView.alpha = 0.6
-        loadingView.clipsToBounds = true
-        loadingView.layer.cornerRadius = 10
-        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
-        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
-                                               loadingView.frame.size.height / 2);
-        
-        
-        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-        
-        loadingView.addSubview(activityIndicator)
-        self.view.addSubview(loadingView)
-        activityIndicator.startAnimating()
-    }
+//    func showActivityIndicatory()
+//    {
+//        loadingView.frame = CGRectMake(0, 0, 60, 50)
+//        loadingView.center = view.center
+//        
+//        loadingView.backgroundColor = UIColor.grayColor()
+//        loadingView.alpha = 0.6
+//        loadingView.clipsToBounds = true
+//        loadingView.layer.cornerRadius = 10
+//        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+//        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+//                                               loadingView.frame.size.height / 2);
+//        
+//        
+//        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+//        
+//        loadingView.addSubview(activityIndicator)
+//        self.view.addSubview(loadingView)
+//        activityIndicator.startAnimating()
+//    }
     
     
     
@@ -987,34 +987,12 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     
-
-
-    
-//
-//    static func hideActivityIndicator()
-//    {
-//        
-//        loadingView.removeFromSuperview()
-//        
-//    }
-//    
-//
-//    
-    
-    
-    
     
   var loadingLable = UILabel()
-  // var loadingView = UIView()
-    
-     // func showActivityIndicator(view:UIView,height:CGFloat=0)
     
     func showActivityIndicator()
     
     {
-        
-        print(view.frame.height)
-        print(view.frame.width)
         
         
          /// x-30 is a width of loadingView/2 mns 60/2
@@ -1037,7 +1015,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                           loadingView.frame.size.height / 2);
      
         
-        activityIndicator.color = UIColor.blueColor()
+        activityIndicator.color = UIColor.darkGrayColor()
         
         
       //  loadingLable=UILabel(frame: CGRectMake(self.loadingView.frame.width/2-50,self.loadingView.frame.height/2+20, 100,50))
@@ -1098,8 +1076,9 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                 
                 let json = try NSJSONSerialization.JSONObjectWithData(self.mutableData, options: .MutableContainers) as? NSDictionary
                 
-                
-                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                hideActivityIndicator();
+
+             
                 
                 if  let parseJSON = json{
                     
@@ -1112,7 +1091,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                      hideActivityIndicator();
                         
                         
-                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                     
                         
                         
                         if  let elements: AnyObject = json!["response"]
@@ -1421,7 +1400,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                                 
                                 self.loadingView.removeFromSuperview();
                             
-                               UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                            
                                 
                                 self.RemoveNoInternet();
                                 
@@ -1465,7 +1444,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                                 
                                 self.loadingView.removeFromSuperview();
                                 
-                                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                            
                                 
                                 self.RemoveNoInternet();
                                 
@@ -1483,8 +1462,10 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                                     
                                     self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
                                     
-                                self.noResult.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);                                    self.noResult.noResultTextLabel.text = msg
-                                     self.noResult.noResultImageView.image = UIImage(named: "im_no_results")
+                                    self.noResult.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);                                    self.noResult.noResultTextLabel.text = msg
+                                    
+                                    
+                                     self.noResult.noResultImageView.image = UIImage(named: "im_no_challenges")
                             
                                     self.view.addSubview((self.noResult.view)!);
                                     
@@ -1596,7 +1577,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
         self.loadingView.removeFromSuperview();
         
-        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+       
 
         
         self.RemoveNoResult();
@@ -1645,8 +1626,8 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
             self.participatingArray.removeAll();
             self.contributingArray.removeAll();
             
-            UIApplication.sharedApplication().endIgnoringInteractionEvents()
-
+            self.activeTableView.reloadData();
+           
             viewActiveChallenges();
             
         }

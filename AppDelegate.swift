@@ -113,7 +113,55 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 //        NSUserDefaults.standardUserDefaults().setObject(badgeCount, forKey: "badgeCount")
 //        
 //        print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCount"))
-//
+        
+        
+        
+        
+//        let data = userInfo as! NSDictionary
+//        
+//        let aps = data.objectForKey("aps")
+//        
+//        print(aps)
+//        
+//        let NotificationMessage = aps!["alert"] as! String
+//        
+//        print(NotificationMessage)
+//        
+//        var topController = UIApplication.sharedApplication().keyWindow!.rootViewController
+//        
+//        
+//        while (topController!.presentedViewController != nil)
+//        {
+//            
+//            topController = topController!.presentedViewController
+//            
+//        }
+//        
+//        let alert = UIAlertController(title: "", message: NotificationMessage , preferredStyle: UIAlertControllerStyle.Alert)
+//        
+//        let viewAction = UIAlertAction(title: "View", style: UIAlertActionStyle.Default, handler: {
+//            
+//            void in
+//            
+//            let cat = topController!.storyboard?.instantiateViewControllerWithIdentifier("RequestsViewController") as! RequestsViewController;
+//            
+//            
+//            topController!.revealViewController().pushFrontViewController(cat, animated: false)
+//            
+//        })
+//        
+//        let DismissAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil)
+//        
+//        
+//        alert.addAction(viewAction)
+//        
+//        alert.addAction(DismissAction)
+//        
+//        topController!.presentViewController(alert, animated: true, completion: nil)
+
+        
+        
+
         
         //// new
         

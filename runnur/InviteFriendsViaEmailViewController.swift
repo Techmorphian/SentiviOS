@@ -480,7 +480,7 @@ class InviteFriendsViaEmailViewController: UIViewController,UITextFieldDelegate,
         
         // LoaderFile.hideLoader(self.view)
         
-        let alert = UIAlertController(title: "", message:"something went wrong try again later." , preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg , preferredStyle: UIAlertControllerStyle.Alert)
         
         let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
         
@@ -488,7 +488,7 @@ class InviteFriendsViaEmailViewController: UIViewController,UITextFieldDelegate,
         
         let alertAction2 = UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler: {
             
-            Void in
+            Void in self.inviteFriendsEmail();
             
         })
         

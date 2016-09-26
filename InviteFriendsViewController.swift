@@ -186,7 +186,8 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             self.searchTextField.resignFirstResponder();
             
             self.label.hidden = true;
-
+            
+             self.inviteButton.hidden = false
             
             self.InviteFriendsTableView.reloadData()
      
@@ -422,6 +423,8 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             self.view.addSubview(self.label)
             
             self.view.bringSubviewToFront(label)
+            
+            self.inviteButton.hidden = true
 
             
 //            if self.view.subviews.contains(self.noFriendResult.view)
@@ -448,6 +451,19 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
 //            }
             
             
+            
+        }
+        
+        
+        else
+        
+        {
+            
+            self.inviteButton.hidden = false
+            
+            
+            self.label.hidden = true;
+
             
         }
 
@@ -783,7 +799,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             }
 
             
-            
+            //// /if isInvited or frined status is 1 then show = im_status_invited and if its is status 2 and 4 means accepted and removal request then show = im_accepted
             
             switch searchInviteFrndsArray[indexPath.row].isInvited
                 
@@ -796,7 +812,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             case 2:
                 
                 
-                cell.selectedUnselectedImageView.image = UIImage(named: "im_status_invited")
+                cell.selectedUnselectedImageView.image = UIImage(named: "im_accepted")
               
                 
                 break;
@@ -805,7 +821,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             case 4:
                 
                 
-                cell.selectedUnselectedImageView.image = UIImage(named: "im_status_invited")
+                cell.selectedUnselectedImageView.image = UIImage(named: "im_accepted")
                 break;
           
             default:
@@ -863,7 +879,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             
         print(inviteFrndsArray[indexPath.row].isInvited)
             
-            
+    //// /if isInvited or frined status is 1 then show = im_status_invited and if its is status 2 and 4 means accepted and removal request then show = im_accepted
             
         switch inviteFrndsArray[indexPath.row].isInvited
         
@@ -875,13 +891,13 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             break;
         case 2:
             
-              cell.selectedUnselectedImageView.image = UIImage(named: "im_status_invited")
+              cell.selectedUnselectedImageView.image = UIImage(named: "im_accepted")
              break;
             
             
         case 4:
             
-            cell.selectedUnselectedImageView.image = UIImage(named: "im_status_invited")
+            cell.selectedUnselectedImageView.image = UIImage(named: "im_accepted")
             break;
             
        
@@ -1274,7 +1290,10 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         
     {
         
-        // LoaderFile.showLoader(self.view);
+       
+        
+        CommonFunctions.showActivityIndicator(view);
+        
         
         let myurl = NSURL(string: Url.inviteFriends)
         
@@ -1503,7 +1522,9 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                         
                         
                         
+                        CommonFunctions.hideActivityIndicator();
                         
+
                         NSOperationQueue.mainQueue().addOperationWithBlock
                             {
                                 
@@ -1612,6 +1633,10 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                                                   
                                                     
                                                 }
+                                                
+                                                
+                                                print(self.inviteFrndsArray.count)
+                                                print(Count)
                                                 
                                                 if self.inviteFrndsArray.count == Count
                                                 {
@@ -1901,14 +1926,14 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             
             self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
             
-            self.noInternet.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);
+            self.noInternet.view.frame = CGRectMake(0, 65, self.view.frame.size.width, self.view.frame.size.height-65);
             
             self.view.addSubview((self.noInternet.view)!);
             
-            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+
             
             
-            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ActiveChallengesViewController.handleTap(_:)))
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(InviteFriendsViewController.handleTap(_:)))
             
             
             self.noInternet.noInternetLabel.userInteractionEnabled = true
@@ -1939,7 +1964,49 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
     override func viewDidAppear(animated: Bool)
     {
         
-      print(EmailIds)
+        if(Reachability.isConnectedToNetwork()==true )
+        {
+            self.InviteFriendsTableView.reloadData()
+            
+            self.getChallengeFriendlist();
+            
+            
+        }
+            
+        else
+        {
+            
+            if self.view.subviews.contains(self.noInternet.view)
+                
+            {
+                
+                //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
+                
+            }
+                
+            else
+                
+            {
+                
+                self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
+                
+                self.noInternet.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
+                
+                self.view.addSubview((self.noInternet.view)!);
+                
+                
+                let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(InviteFriendsViewController.handleTap(_:)))
+                self.noInternet.noInternetLabel.userInteractionEnabled = true
+                
+                
+                self.noInternet.view.addGestureRecognizer(tapRecognizer)
+                
+                self.noInternet.didMoveToParentViewController(self)
+                
+            }
+            
+        }
+
         
         for i in 0 ..< EmailIds.count
          {
@@ -1977,47 +2044,6 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         EmailContacts = [];
         
         
-        if(Reachability.isConnectedToNetwork()==true )
-        {
-           
-            self.getChallengeFriendlist();
-
-            
-        }
-            
-        else
-        {
-            
-            if self.view.subviews.contains(self.noInternet.view)
-                
-            {
-                
-                //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
-                
-            }
-                
-            else
-                
-            {
-                
-                self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
-                
-                self.noInternet.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
-                
-                self.view.addSubview((self.noInternet.view)!);
-                
-                
-                let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(InviteFriendsViewController.handleTap(_:)))
-                self.noInternet.noInternetLabel.userInteractionEnabled = true
-                
-                
-                self.noInternet.view.addGestureRecognizer(tapRecognizer)
-                
-                self.noInternet.didMoveToParentViewController(self)
-                
-            }
-            
-        }
         
 
         

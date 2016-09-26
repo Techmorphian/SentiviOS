@@ -178,7 +178,59 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     @IBAction func backButtonAction(sender: AnyObject)
     {
         
-       self.dismissViewControllerAnimated(false, completion: nil)
+        
+        
+        
+        if NSUserDefaults.standardUserDefaults().boolForKey("GroupFitScreen") == true
+            
+        {
+            
+            
+            let alert = UIAlertController(title: "", message:"Are you sure you want to cancel creating GroupFit?" , preferredStyle: UIAlertControllerStyle.Alert)
+            
+            let No = UIAlertAction(title: "NO", style: UIAlertActionStyle.Default, handler: nil)
+            
+            let Yes = UIAlertAction(title: "YES", style: UIAlertActionStyle.Default, handler: {
+                
+                void in
+                self.dismissViewControllerAnimated(false, completion: nil)
+                
+            })
+            
+            alert.addAction(No)
+            
+            alert.addAction(Yes)
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+
+          
+            
+        }
+
+        if NSUserDefaults.standardUserDefaults().boolForKey("GroupFitScreen") == false
+                
+        {
+                
+            
+            let alert = UIAlertController(title: "", message:"Are you sure you want to cancel creating CauseFit?" , preferredStyle: UIAlertControllerStyle.Alert)
+            
+            let No = UIAlertAction(title: "NO", style: UIAlertActionStyle.Default, handler: nil)
+            
+            let Yes = UIAlertAction(title: "YES", style: UIAlertActionStyle.Default, handler: {
+                
+                void in
+                  self.dismissViewControllerAnimated(false, completion: nil)
+                
+            })
+            
+            alert.addAction(No)
+            
+            alert.addAction(Yes)
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+        
+        }
         
         
     }
@@ -758,7 +810,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     @IBOutlet var setBetAmountTextField: UITextField!
   
     
-  var setBetAmountValue = ["","10 cents","20 cents","30 cents","40 cents","50 cents","60 cents","70 cents","80 cents","90 cents","$ 1","$ 1.5","$ 2"]
+  var setBetAmountValue = ["10 cents","20 cents","30 cents","40 cents","50 cents","60 cents","70 cents","80 cents","90 cents","$ 1","$ 1.5","$ 2"]
     
     
 //MARK:- PICKER VIEW SET BET AMOUNT
@@ -779,7 +831,9 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         return setBetAmountValue[row]
     }
     
+   
     var AmountPerMile = String()
+    
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
         
@@ -1189,6 +1243,10 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         
         setBetAmountperMilePickerView.backgroundColor = UIColor.whiteColor();
         
+         sender.text = "10 cents"
+        
+        
+      // self.setBetAmountperMileTxtFld.text = "10 cents"
         
         let toolBar = UIToolbar()
         toolBar.barStyle = UIBarStyle.Default
@@ -1202,7 +1260,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         
         
-        let setBetAmount = UIBarButtonItem(title: "Set Bet Amount $/per mile", style: .Plain, target: self, action: nil)
+        let setBetAmount = UIBarButtonItem(title: "Amount($) per mile", style: .Plain, target: self, action: nil)
         
       
         
@@ -2027,27 +2085,27 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
 /// MARK:- WEB SERVICE GROUP FIT
     
     
-    
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    let loadingView: UIView = UIView()
-    func showActivityIndicatory()
-    {
-        loadingView.frame = CGRectMake(0, 0, 60, 50)
-        loadingView.center = view.center
-        
-        loadingView.backgroundColor = UIColor.grayColor()
-        loadingView.alpha = 0.6
-        loadingView.clipsToBounds = true
-        loadingView.layer.cornerRadius = 10
-        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
-        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
-                                               loadingView.frame.size.height / 2);
-        loadingView.addSubview(activityIndicator)
-        self.view.addSubview(loadingView)
-        activityIndicator.startAnimating()
-    }
-    
+//    
+//    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+//    let loadingView: UIView = UIView()
+//    func showActivityIndicatory()
+//    {
+//        loadingView.frame = CGRectMake(0, 0, 60, 50)
+//        loadingView.center = view.center
+//        
+//        loadingView.backgroundColor = UIColor.grayColor()
+//        loadingView.alpha = 0.6
+//        loadingView.clipsToBounds = true
+//        loadingView.layer.cornerRadius = 10
+//        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+//        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+//                                               loadingView.frame.size.height / 2);
+//        loadingView.addSubview(activityIndicator)
+//        self.view.addSubview(loadingView)
+//        activityIndicator.startAnimating()
+//    }
+//    
 
     
     
@@ -2060,7 +2118,10 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         
     {
         
-        self.showActivityIndicatory()
+       
+        
+        CommonFunctions.showActivityIndicator(view)
+        
         // LoaderFile.showLoader(self.view);
         
         let myurl = NSURL(string: Url.createGroupFit)
@@ -2169,7 +2230,11 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         
     {
         
-        self.showActivityIndicatory()
+      
+        
+        
+        CommonFunctions.showActivityIndicator(view)
+        
         // LoaderFile.showLoader(self.view);
         
         let myurl = NSURL(string: Url.createCauseFit)
@@ -2264,7 +2329,6 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         
     }
     
-
     
     //MARK:- NSURLSession delegate methods
     
@@ -2325,9 +2389,8 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                                         let challengeId = elements[i]["challengeId"] as! String
 
                                     
-                                    self.activityIndicator.stopAnimating();
-                                    
-                                    self.loadingView.removeFromSuperview();
+                                  
+                                        CommonFunctions.hideActivityIndicator();
 
                                     
                                 let viewChallenge = self.storyboard?.instantiateViewControllerWithIdentifier("ViewGroupFitViewController") as! ViewGroupFitViewController
@@ -2372,9 +2435,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                                 
                                 //  LoaderFile.hideLoader(self.view)
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
+                                 CommonFunctions.hideActivityIndicator();
 
                                 
                                 let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
@@ -2467,9 +2528,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                                         let challengeId = elements[i]["challengeId"] as! String
                                         
                                         
-                                        self.activityIndicator.stopAnimating();
-                                        
-                                        self.loadingView.removeFromSuperview();
+                                       CommonFunctions.hideActivityIndicator();
                                         
                                         
                                         let viewChallenge = self.storyboard?.instantiateViewControllerWithIdentifier("ViewGroupFitViewController") as! ViewGroupFitViewController
@@ -2511,9 +2570,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                                 
                                 //  LoaderFile.hideLoader(self.view)
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
+                                 CommonFunctions.hideActivityIndicator();
                                 
                                 
                                 let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
@@ -2596,10 +2653,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?)
     {
         
-        self.activityIndicator.stopAnimating();
-        
-        self.loadingView.removeFromSuperview();
-        
+        CommonFunctions.hideActivityIndicator();        
         if self.view.subviews.contains(self.noInternet.view)
             
         {
@@ -2613,14 +2667,13 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
             
             self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
             
-            self.noInternet.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);
+            self.noInternet.view.frame = CGRectMake(0, 65, self.view.frame.size.width, self.view.frame.size.height-65);
             
             self.view.addSubview((self.noInternet.view)!);
             
-            UIApplication.sharedApplication().endIgnoringInteractionEvents()
             
             
-            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ActiveChallengesViewController.handleTap(_:)))
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(CreateGroupAndCauseFitViewController.handleTap(_:)))
             
             
             self.noInternet.noInternetLabel.userInteractionEnabled = true
@@ -2632,6 +2685,41 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         
     }
     
+    
+    
+    
+    //MARK:- NO INTERNET TAP GESTURE
+    
+    func handleTap(sender: UITapGestureRecognizer)
+    {
+        
+        if(Reachability.isConnectedToNetwork()==true )
+        {
+            
+            
+            if NSUserDefaults.standardUserDefaults().boolForKey("GroupFitScreen") == true
+                
+            {
+
+            createGroupFit();
+                
+            }
+            
+            if NSUserDefaults.standardUserDefaults().boolForKey("GroupFitScreen") == false
+                
+            {
+                
+             createCauseFit();
+             
+                
+            }
+            
+        }
+        
+        
+        
+    }
+
     
     
     //MARK:-  NO INTERNET / NO RESULT FUNC
@@ -2723,7 +2811,8 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         
        // setBetAmountTextField.inputView = pickerView
         
-       
+          AmountPerMile = "10 cents"
+
         
         
         if NSUserDefaults.standardUserDefaults().boolForKey("GroupFitScreen") == true

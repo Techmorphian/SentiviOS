@@ -892,8 +892,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
         
     {
         
-        self.showActivityIndicatory();
-        
+        showActivityIndicator();
         
         let myurl = NSURL(string: Url.viewCompletedChallenges)
         
@@ -931,94 +930,61 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
     
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     let loadingView: UIView = UIView()
-    func showActivityIndicatory()
-    {
-        loadingView.frame = CGRectMake(0, 0, 60, 50)
-        loadingView.center = view.center
+    
+    var loadingLable = UILabel()
+    // var loadingView = UIView()
+    
+    // func showActivityIndicator(view:UIView,height:CGFloat=0)
+    
+    func showActivityIndicator()
         
-        loadingView.backgroundColor = UIColor.grayColor()
-        loadingView.alpha = 0.6
-        loadingView.clipsToBounds = true
+    {
+        
+        
+        /// x-30 is a width of loadingView/2 mns 60/2
+        ////// y-100 mns height of parent view(upper view only)
+        
+        loadingView.frame = CGRectMake(self.view.frame.width/2-30,self.view.frame.height/2 - 100,60,150)
+        
         loadingView.layer.cornerRadius = 10
-        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+        loadingView.alpha = 0.6
+        
+        
+        loadingView.clipsToBounds = true
+        
+        
+        // activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+        
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        
         activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
                                                loadingView.frame.size.height / 2);
         
         
-        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-
+        activityIndicator.color = UIColor.darkGrayColor()
+        
+        
         loadingView.addSubview(activityIndicator)
+        
+        
         self.view.addSubview(loadingView)
         activityIndicator.startAnimating()
+        
+        
+    }
+    
+    
+    func hideActivityIndicator()
+    {
+        
+        loadingView.removeFromSuperview();
+        
     }
     
 
-    
-    
-//    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-//    
-//    var loadingLable = UILabel()
-//    var loadingView = UIView()
-//    
-//    // func showActivityIndicator(view:UIView,height:CGFloat=0)
-//    func showActivityIndicator()
-//        
-//    {
-//        
-//        print(view.frame.height)
-//        print(view.frame.width)
-//        
-//        
-//        
-//        loadingView.frame = CGRectMake(self.view.frame.width/2-30,self.view.frame.height/2 - 100,60,150)
-//        
-//        loadingView.layer.cornerRadius = 10
-//        loadingView.alpha = 0.6
-//        
-//        
-//        loadingView.clipsToBounds = true
-//        
-//        
-//        // activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
-//        
-//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-//        
-//        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
-//                                               loadingView.frame.size.height / 2);
-//        
-//        
-//        
-//        //  loadingLable=UILabel(frame: CGRectMake(self.loadingView.frame.width/2-50,self.loadingView.frame.height/2+20, 100,50))
-//        
-////        loadingLable=UILabel(frame: CGRectMake(5,100, self.loadingView.frame.width,80))
-////        
-////        loadingLable.text = "Please wait a moment. This may take a while"
-////        
-////        loadingLable.textColor=UIColor.redColor()
-////        
-////        loadingLable.font = loadingLable.font.fontWithSize(10)
-////        loadingLable.lineBreakMode =  .ByWordWrapping
-////        loadingLable.numberOfLines=0
-////        
-////        loadingLable.textAlignment = .Center
-////        
-////        loadingView.addSubview(loadingLable)
-//        
-//        loadingView.addSubview(activityIndicator)
-//        
-//       // loadingView.addSubview(loadingLable)
-//        
-//        self.view.addSubview(loadingView)
-//        activityIndicator.startAnimating()
-//        
-//        //Please wait a moment. This may take a while
-//        
-//    }
-//    
-//    
-//    
 
+    
+ 
     
     //MARK:- NSURLSession delegate methods
     
@@ -1050,7 +1016,8 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                 let json = try NSJSONSerialization.JSONObjectWithData(self.mutableData, options: .MutableContainers) as? NSDictionary
                 
                 
-                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                hideActivityIndicator();
+
 
                 
                 if  let parseJSON = json{
@@ -1061,7 +1028,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                     {
                         
                        
-                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                      
                         
                         if  let elements: AnyObject = json!["response"]
                         {
@@ -1075,11 +1042,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                                 
                                 
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
-                                
-                                
+                                self.hideActivityIndicator();
                                 
                                 
                                 
@@ -1360,10 +1323,8 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                         NSOperationQueue.mainQueue().addOperationWithBlock ({
                                 
                             
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
-                                
+                            self.hideActivityIndicator();
+                           
                                 self.RemoveNoInternet();
                                 
                                 
@@ -1402,10 +1363,8 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                         
                         NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
-                                
+                            self.hideActivityIndicator();
+                            
                                 
                                 self.RemoveNoInternet();
                                 
@@ -1424,7 +1383,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                                     self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
                                     
                                     self.noResult.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-0);                                    self.noResult.noResultTextLabel.text = msg
-                                    self.noResult.noResultImageView.image = UIImage(named: "im_no_results")
+                                    self.noResult.noResultImageView.image = UIImage(named: "im_no_challenges")
                                     
                                     self.view.addSubview((self.noResult.view)!);
                                     
@@ -1530,9 +1489,8 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
         
         print(error)
         
-        self.activityIndicator.stopAnimating();
-        
-        self.loadingView.removeFromSuperview();
+        self.hideActivityIndicator();
+
         self.RemoveNoInternet();
         
         
@@ -1594,8 +1552,9 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
         
         if(Reachability.isConnectedToNetwork()==true )
         {
-            showActivityIndicatory();
-            
+        
+            showActivityIndicator();
+
             self.viewCompletedChallenges();
 
             

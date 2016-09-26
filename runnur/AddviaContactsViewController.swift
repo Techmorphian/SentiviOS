@@ -374,6 +374,12 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
      
         
         }
+        else
+        {
+         self.label.hidden = true;
+        
+        }
+        
         
         if PBArray.count == 0
         {
@@ -1301,23 +1307,68 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?)
     {
         
+        
+        
         CommonFunctions.hideActivityIndicator();
-      
         
-        let alert = UIAlertController(title: "", message:"something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
         
-        let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
+        self.RemoveNoResult();
         
-        alert.addAction(alertAction)
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        if self.view.subviews.contains(self.noInternet.view)
+            
+        {
+            
+            //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
+            
+        }
+            
+        else
+            
+        {
+            
+            self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
+            
+            self.noInternet.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+            
+            self.view.addSubview((self.noInternet.view)!);
+            
+            //  self.DIVC.imageView.image = UIImage(named: "im_no_internet");
+            
+            // self.noInternet.imageView.userInteractionEnabled = true
+            
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddviaContactsViewController.handleTap(_:)))
+            self.noInternet.noInternetLabel.userInteractionEnabled = true
+            
+            
+            self.noInternet.view.addGestureRecognizer(tapRecognizer)
+            
+            self.noInternet.didMoveToParentViewController(self)
+            
+        }
+        
+        
+    }
+    
+    
+    //MARK:- NO INTERNET TAP GESTURE
+    
+    func handleTap(sender: UITapGestureRecognizer)
+    {
+        
+        if(Reachability.isConnectedToNetwork()==true )
+        {
+            
+           self.addFriends()
+            
+        }
         
         
         
     }
     
     
-    
+
     
     
     
@@ -1477,7 +1528,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                     self.view.addSubview((self.noInternet.view)!);
                    
                     
-                    let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddviaContactsViewController.handleTap(_:)))
+                    let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddviaContactsViewController.handleTap2(_:)))
                    
                     self.noInternet.noInternetLabel.userInteractionEnabled = true
                     
@@ -1495,7 +1546,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     
     //MARK:- NO INTERNET TAP GESTURE
     
-    func handleTap(sender: UITapGestureRecognizer)
+    func handleTap2(sender: UITapGestureRecognizer)
     {
         
         if(Reachability.isConnectedToNetwork()==true )
@@ -1987,11 +2038,63 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             
         }
         
-        
-
-        
-       
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //MARK:- METHOD OR RECEIVED PUSH NOTIFICATION
+    
+    func methodOfReceivedNotification(notification: NSNotification)
+    {
+        
+        //// push notification alert and parsing
+        
+        
+        let data = notification.userInfo as! NSDictionary
+        
+        let aps = data.objectForKey("aps")
+        
+        print(aps)
+        
+        var NotificationMessage = String()
+        NotificationMessage = aps!["alert"] as! String
+        
+        
+        
+        let alert = UIAlertController(title: "", message: NotificationMessage , preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let viewAction = UIAlertAction(title: "View", style: UIAlertActionStyle.Default, handler: {
+            
+            void in
+            
+            
+            let cat = self.storyboard?.instantiateViewControllerWithIdentifier("RequestsViewController") as! RequestsViewController;
+            
+            
+            self.revealViewController().pushFrontViewController(cat, animated: false)
+            
+        })
+        
+        let DismissAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil)
+        
+        
+        alert.addAction(viewAction)
+        
+        alert.addAction(DismissAction)
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+    }
+    
+
+    
     
     override func viewDidLoad()
     {
@@ -2002,7 +2105,9 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
        
           //  processContactNames();
             
-            
+        ////// push notification
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddviaContactsViewController.methodOfReceivedNotification(_:)), name:"showAlert", object: nil)
     
        doneButton.layer.cornerRadius = 2
         doneButton.clipsToBounds = true;

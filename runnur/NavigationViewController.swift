@@ -92,9 +92,12 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        let cell:NavigationCellTableViewCell = tableView.dequeueReusableCellWithIdentifier("NavigationCellTableViewCell")as!
+       
+        let cell:NavigationCellTableViewCell = tableView.dequeueReusableCellWithIdentifier("NavigationCellTableViewCell", forIndexPath: indexPath)     as!
         NavigationCellTableViewCell
+      
         
+        cell.countLabel.hidden = true;
         
         if indexPath.section == 0
         {
@@ -126,7 +129,9 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 cell.countLabel.hidden = true;
                 
                
-                if NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter") != "0" && NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter") != ""
+                print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter"))
+                
+                if NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter") != ""
                 {
                     
                     
@@ -266,10 +271,12 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
 
                 
             }
-
-
             
-           
+        }
+        if cell.selected == true{
+            cell.contentView.backgroundColor = colorCode.MediumDarkBlueColor
+        }else{
+            cell.contentView.backgroundColor = UIColor.clearColor();
         }
         
         return cell
@@ -284,11 +291,15 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
         
         
         let cell = tableView.cellForRowAtIndexPath(indexPath) as!  NavigationCellTableViewCell
+      
         
-       // cell.backgroundColor = colorCode.MediumDarkBlueColor
+        cell.contentView.backgroundColor = colorCode.MediumDarkBlueColor;
+       
+        cell.selected = true;
         
-        //cell.setSelected(true, animated: false)
+        cell.setSelected(true, animated: false);
         
+               
         if indexPath.section == 0
         {
             
@@ -512,15 +523,21 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
 
     }
   
-    
-//    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath?
-//    {
-//        
-//        
-//        
-//        <#code#>
-//    }
-//    
+    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath)
+    {
+      
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as?  NavigationCellTableViewCell
+        
+        if cell != nil
+        {
+            cell!.selected = false;
+            cell!.setSelected(false, animated: false);
+            cell!.contentView.backgroundColor = UIColor.clearColor();
+        }
+        
+        
+    }
+
     
 //    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath)
 //    {

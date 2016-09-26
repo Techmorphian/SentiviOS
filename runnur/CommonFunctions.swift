@@ -248,7 +248,7 @@ class CommonFunctions : NSObject
         loadingView.alpha = 0.7
         loadingView.hidden=false
         loadingView.clipsToBounds=true
-        activityIndicator.color = UIColor.blueColor()
+        activityIndicator.color = UIColor.darkGrayColor()
         
         
         activityIndicator.center=CGPointMake(loadingView.frame.width/2, loadingView.frame.height/2)

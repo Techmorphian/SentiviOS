@@ -508,7 +508,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                         
                         
-                        ViewGroupFitViewController.instance?.overFlowButton.hidden=true;
+                        //ViewGroupFitViewController.instance?.overFlowButton.hidden=true;
 
                         
                         self.RemoveNoInternet();
@@ -1300,18 +1300,17 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
     func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?)
     {
         
+        CommonFunctions.hideActivityIndicator();
         
-        print(error)
         
-        self.activityIndicator.stopAnimating();
+        //self.RemoveNoInternet();
+        self.RemoveNoResult();
         
-        self.loadingView.removeFromSuperview();
-        
-        self.RemoveNoInternet();
-        
-        if self.view.subviews.contains(self.noResult.view)
+        if self.view.subviews.contains(self.noInternet.view)
             
         {
+            
+            //  self.noInternet.imageView.image = UIImage(named: "im_no_internet");
             
         }
             
@@ -1319,18 +1318,22 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
             
         {
             
-            self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
+            self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
             
-            self.noResult.view.frame = CGRectMake(0,65, self.view.frame.size.width, self.view.frame.size.height-65);
+            self.noInternet.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
             
-            self.noResult.noResultTextLabel.text = "something went wrong."
+            self.view.addSubview((self.noInternet.view)!);
             
-            self.noResult.noResultImageView.image = UIImage(named: "im_error")
+            //  self.DIVC.imageView.image = UIImage(named: "im_no_internet");
             
-            self.view.addSubview((self.noResult.view)!);
-            self.view.userInteractionEnabled = true
+            // self.noInternet.imageView.userInteractionEnabled = true
             
-            self.noResult.didMoveToParentViewController(self)
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(LeaderBoardViewController.handleTap(_:)))
+            
+            self.noInternet.noInternetLabel.userInteractionEnabled = true
+            self.noInternet.view.addGestureRecognizer(tapRecognizer)
+            
+            self.noInternet.didMoveToParentViewController(self)
             
         }
         
@@ -1481,7 +1484,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
         
         
         
-        ViewGroupFitViewController.instance?.overFlowButton.hidden=true;
+       // ViewGroupFitViewController.instance?.overFlowButton.hidden=true;
 
         
         leaderBoardTableView.tableFooterView = UIView()

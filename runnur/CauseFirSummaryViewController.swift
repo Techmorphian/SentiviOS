@@ -666,7 +666,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
                                                loadingView.frame.size.height / 2);
         
-        activityIndicator.color = UIColor.blueColor()
+        activityIndicator.color = UIColor.darkGrayColor()
         
         loadingView.addSubview(activityIndicator)
         
@@ -794,7 +794,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                 
                            
                                 
-                                //frontView.hidden = true;
+                                frontView.hidden = true;
                                 
                                 
                                 _ = elements[i]["challengeId"] as! String
@@ -827,18 +827,18 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                 
                                    if amountPerMile == "1.0"
                                    {
-                                     betAmountPerMileLabel.text = "$"+amountPerMile
+                                     betAmountPerMileLabel.text = "$" + " " + amountPerMile
                                     
                                    }
                                 if amountPerMile == "1.5"
                                   {
-                                         betAmountPerMileLabel.text = "$"+amountPerMile
+                                         betAmountPerMileLabel.text = "$" + " " + amountPerMile
                                         
                                    }
                                 
                                 if amountPerMile == "2.0"
                                 {
-                                     betAmountPerMileLabel.text = "$"+amountPerMile
+                                     betAmountPerMileLabel.text = "$" + " " + amountPerMile
                                     
                                 }
                                 
@@ -851,7 +851,11 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                     
                                     let multiplied = 100 * temp!
                                     
-                                    betAmountPerMileLabel.text!  = String(multiplied) + "cents"
+                                    let stringValue = String(multiplied)
+                                    
+                                    let partsArr = stringValue.componentsSeparatedByString(".")
+                                    
+                                    betAmountPerMileLabel.text!  = String(partsArr[0]) + " " + "cents"
                                     
                                     
                                 }
@@ -862,12 +866,9 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                 
                                 let betAmount = elements[i]["betAmount"] as! String
 
-                                goalAmountLabel.text = betAmount
+                                goalAmountLabel.text =  "$" + " " + betAmount
                                 
-                                print(betAmount)
-                                print(goalAmountLabel.text)
-                                
-                                
+                                                             
                                 let causesName = elements[i]["causesName"] as! String
                                 
                                 charityLabel.text = causesName
@@ -1009,15 +1010,6 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                     
                                     buttonOne.hidden = true
                                     buttonTwo.hidden = true
-                                    
-                                   // maxAmountView.hidden = true
-                                   
-                                    //anonymousView.hidden = true
-                                    
-                                  //  maxAmountViewHeight.constant = 0
-                                    
-                                    
-                                  //  anonymousViewHeight.constant = 0
                                     
                                     
                                     anonymousCheckUncheckButton.userInteractionEnabled = false
@@ -1221,8 +1213,6 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                         ViewGroupFitViewController.instance?.overFlowButton.hidden=true ;
                                         
                                     }
-                                    
-                                    
                                     
                                     
                                     
@@ -1651,9 +1641,6 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         print(error)
         
         self.hideActivityIndicator()
-
-        
-        
         
         self.RemoveNoResult();
         
@@ -1676,7 +1663,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
             
             
             
-            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ActiveChallengesViewController.handleTap(_:)))
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(CauseFirSummaryViewController.handleTap(_:)))
             
             
             self.noInternet.noInternetLabel.userInteractionEnabled = true

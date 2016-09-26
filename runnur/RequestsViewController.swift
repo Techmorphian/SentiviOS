@@ -458,54 +458,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
         case "14":
             
-            
-            
-//            let alert = UIAlertController(title: "", message:"Are You Sure?" , preferredStyle: UIAlertControllerStyle.Alert)
-//            
-//            let NoAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default, handler: nil)
-//            
-//          
-//            let YesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: {action  in
-//            
-//            
-//            
-//                let alert = UIAlertController(title: "", message:"Do you want refund?" , preferredStyle: UIAlertControllerStyle.Alert)
-//                
-//                let NoAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default, handler: {
-//                
-//                action in
-//                
-//                    /// without money back wb
-//                
-//                
-//                })
-//                
-//                
-//                let YesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: {action  in
-//                
-//                    /// with money back wb
-//
-//                
-//                })
-//                
-////                
-//                alert.addAction(NoAction)
-//                alert.addAction(YesAction)
-//                
-//                self.presentViewController(alert, animated: true, completion: nil)
-//            
-//            
-//            })
-//
-//            
-//            
-//            alert.addAction(NoAction)
-//            alert.addAction(YesAction)
-//            
-//            self.presentViewController(alert, animated: true, completion: nil)
-//            return
-
-                   
+    
             
             let cat = self.storyboard?.instantiateViewControllerWithIdentifier("ViewGroupFitViewController") as! ViewGroupFitViewController;
             
@@ -520,8 +473,9 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
             NSUserDefaults.standardUserDefaults().setObject(challengeType[indexPath.row], forKey: "TypeIdParticipating")
             
             
+            self.presentViewController(cat, animated: false, completion: nil)
             
-           // self.presentViewController(cat, animated: false, completion: nil)
+            
         case "15":
             
             let cat = self.storyboard?.instantiateViewControllerWithIdentifier("ViewGroupFitViewController") as! ViewGroupFitViewController;
@@ -2191,7 +2145,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
             self.view.addSubview((self.noInternet.view)!);
             
             
-            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(CommentsViewController.handleTap(_:)))
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(RequestsViewController.handleTap(_:)))
             
             self.noInternet.noInternetLabel.userInteractionEnabled = true
             
@@ -2312,7 +2266,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             void in
             
-            self.RequestsTableView.reloadData();
+            self.viewRequest();
             
         })
         

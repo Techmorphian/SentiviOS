@@ -729,7 +729,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
                                                loadingView.frame.size.height / 2);
         
-          activityIndicator.color = UIColor.blueColor()
+        activityIndicator.color = UIColor.darkGrayColor()
         
         loadingView.addSubview(activityIndicator)
         
@@ -783,6 +783,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
         
         
+        
         print(dataString!)
         
         if dataTask.currentRequest?.URL! == NSURL(string: Url.viewGroupChallengeDetail)
@@ -795,6 +796,9 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
             {
                 
                 let json = try NSJSONSerialization.JSONObjectWithData(self.mutableData, options: .MutableContainers) as? NSDictionary
+                
+                hideActivityIndicator();
+
                 
                 if  let parseJSON = json{
                     
@@ -843,6 +847,8 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                     
                     if(status=="Success")
                     {
+                        
+                        FrontView.hidden = true
                         
                         
                         hideActivityIndicator();
@@ -1189,6 +1195,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                     if dateCheck == challengeOnGoing
                                     {
                                         
+                                       ViewGroupFitViewController.instance?.overFlowButton.hidden=false;
                                         
                                         bottomFrontView.hidden = true
 
@@ -1202,8 +1209,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                         
                                         bottomSmallViewCenterX.constant = self.view.frame.width/2 - 10
                                         
-                                        
-                                        ViewGroupFitViewController.instance?.overFlowButton.hidden=false;
+                                      
                                         
                                         bottomButtomViewHeight.constant = 50
 

@@ -351,7 +351,7 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         
         // LoaderFile.hideLoader(self.view)
         
-        let alert = UIAlertController(title: "", message:"something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg , preferredStyle: UIAlertControllerStyle.Alert)
         
         let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
         
@@ -359,12 +359,11 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         
         let alertAction2 = UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler: {
             
-            Void in
+            Void in  self.exitChallenge();
             
         })
         
         alert.addAction(alertAction2)
-        
         
         
         self.presentViewController(alert, animated: true, completion: nil)
@@ -379,8 +378,15 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
     {
         
         
+        overFlowButton.hidden = false;
+
         
         sender.tintColor = UIColor.whiteColor();
+        
+        summaryButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        
+        summaryButton.titleLabel?.textColor  = UIColor.whiteColor();
+
         
         summaryBottomView.backgroundColor = UIColor.whiteColor()
         
@@ -458,7 +464,7 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
     {
         
        
-        
+        overFlowButton.hidden = true;
        
         ActivityButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
 
@@ -561,6 +567,9 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         
         
         
+        overFlowButton.hidden = true;
+
+        
         sender.tintColor = UIColor.whiteColor();
         
         
@@ -660,6 +669,12 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
             
             if  self.LederBoardView.view.frame.origin.x == 0
             {
+               
+                
+                self.overFlowButton.hidden = true;
+
+                
+                
                  self.ActivityView.view.frame.origin.x = 0
                 
                 self.summaryView.view.frame.origin.x = -self.view.frame.size.width;
@@ -680,6 +695,10 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
             }
             else
             {
+                
+               self.overFlowButton.hidden = false;
+
+                
                 self.ActivityView.view.frame.origin.x = +self.view.frame.size.width;
                 
                 self.summaryView.view.frame.origin.x = 0
@@ -731,6 +750,12 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
                 
                 if  self.ActivityView.view.frame.origin.x == 0
                 {
+                    
+                    
+                      self.overFlowButton.hidden = true;
+                 
+
+                    
                     self.ProgressView.view.frame.origin.x = 0
                     
                     self.CauseFirSummary.view.frame.origin.x = -self.view.frame.size.width;
@@ -751,10 +776,12 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
                 }
                 else
                 {
+                    
+                    self.overFlowButton.hidden = false;
+                    
                     self.ProgressView.view.frame.origin.x = +self.view.frame.size.width;
                     
                     self.CauseFirSummary.view.frame.origin.x = 0
-                    
                     
                     
                     
@@ -807,6 +834,9 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
                 
                 if  self.ActivityView.view.frame.origin.x == 0
                 {
+                      self.overFlowButton.hidden = true;
+                    
+                    
                     self.LederBoardView.view.frame.origin.x = 0;
                     
                     self.summaryView.view.frame.origin.x = -self.view.frame.size.width;
@@ -827,6 +857,9 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
                 
                 else
                 {
+                    
+                    
+                      self.overFlowButton.hidden = true;
                     
                     self.summaryView.view.frame.origin.x = -self.view.frame.size.width;
                     self.LederBoardView.view.frame.origin.x = +self.view.frame.size.width;
@@ -875,6 +908,10 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
                     
                     if  self.ProgressView.view.frame.origin.x == 0
                     {
+                        
+                        
+                          self.overFlowButton.hidden = true;
+                        
                         self.ActivityView.view.frame.origin.x = 0;
                         self.CauseFirSummary.view.frame.origin.x = -self.view.frame.size.width;
                         self.ProgressView.view.frame.origin.x = -self.view.frame.size.width;
@@ -896,6 +933,10 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
                         
                     else
                     {
+                        
+                        
+                          self.overFlowButton.hidden = true;
+                        
                         
                         self.CauseFirSummary.view.frame.origin.x = -self.view.frame.size.width;
                         self.ActivityView.view.frame.origin.x = +self.view.frame.size.width;
@@ -998,6 +1039,8 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
        // self.summaryView.ParentView=self;
         
         ViewGroupFitViewController.instance = self;
+            
+            
         
        self.view.addSubview(summaryView.view);
             
@@ -1125,22 +1168,22 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
                 self.ActivityView.view.frame.origin.x = 0;
                 
                 
-                //self.CauseFirSummary.view.frame.origin.x = -self.view.frame.size.width;
-                
                 self.summaryView.view.frame.origin.x = -self.view.frame.size.width;
                 
                 
-                self.LederBoardView.view.frame.origin.x = -self.view.frame.size.width;
+                self.LederBoardView.view.frame.origin.x = +self.view.frame.size.width;
                 
                 
-                LeaderboardButton.titleLabel?.textColor  = UIColor.whiteColor();
-                LeaderboardBottomView.backgroundColor = UIColor.whiteColor();
                 
+                LeaderboardButton.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+                LeaderboardBottomView.backgroundColor = colorCode.DarkBlueColor
+
                 
-                ActivityButton.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+             
+                 ActivityButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
                 
-                
-                activityBottomView.backgroundColor = colorCode.DarkBlueColor
+                activityBottomView.backgroundColor = UIColor.whiteColor();
+
                 
                 
                 summaryButton.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
@@ -1154,6 +1197,25 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
             
             else
             {
+                
+                
+                
+                
+                ActivityButton.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+                activityBottomView.backgroundColor = colorCode.DarkBlueColor
+                
+                
+                
+                LeaderboardButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+                
+                LeaderboardBottomView.backgroundColor = UIColor.whiteColor();
+                
+                
+                
+                summaryButton.setTitleColor(colorCode.DarkBlueColor, forState: UIControlState.Normal)
+                
+                summaryBottomView.backgroundColor = colorCode.DarkBlueColor
+
                     
                 self.ActivityView.view.frame.origin.x = 0;
                 
