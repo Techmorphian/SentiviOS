@@ -16,6 +16,7 @@ class userChatTableViewCell: UITableViewCell
     @IBOutlet var profileImageView: UIImageView!
     
     
+    
     @IBOutlet var userName: UILabel!
     
     

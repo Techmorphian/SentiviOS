@@ -632,7 +632,8 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             NSOperationQueue.mainQueue().addOperationWithBlock
                                 {
                                     
-                                    self.activityChatArray = self.activityChatArray.reverse();
+                                  //  self.activityChatArray = self.activityChatArray.reverse();
+                                    
                                     self.commentsTableView.delegate = self;
                                     
                                     self.commentsTableView.dataSource = self;
@@ -990,8 +991,7 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 
                 self.loadingView.removeFromSuperview();
                 
-                print(error)
-                
+                               
                 let alert = UIAlertController(title: "", message:"something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
                 
                 let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)

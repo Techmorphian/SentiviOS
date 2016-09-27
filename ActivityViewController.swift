@@ -155,6 +155,9 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         var tableViewCell = UITableViewCell()
         
+      // tableViewCell.transform = CGAffineTransformInvert(tableViewCell.transform)
+    
+        
         if activityChatArray[indexPath.row].isFromUserChat == true
         {
             
@@ -167,6 +170,9 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             let cell:userChatTableViewCell = tableView.dequeueReusableCellWithIdentifier("userChatTableViewCell")as!
                       userChatTableViewCell
+            
+            
+            
 
             
             cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.size.width / 2;
@@ -633,7 +639,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     
                     
                   
-                      tableViewCell =  cell
+                tableViewCell =  cell
                     
                     
         }
@@ -661,69 +667,48 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
 
 
     
+    //    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    //    {
+    //        return 130.0;//Choose your custom row height
+    //    }
+    //
+    
+    
+    //    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    //
+    //    {
+    //
+    //        if activityChatArray[indexPath.row].isFromUserChat == true ||  activityChatArray[indexPath.row].isFromChat
+    //        {
+    //
+    //            return 78.0;
+    //
+    //        }
+    //        else
+    //        {
+    //            return 176.0;
+    //
+    //        }
+    //
+    //        
+    //        
+    //    }
+    //    
+    
+    
     
     //MARK:- PAGGING
     
-//  
-//    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath)
-//    {
-//        
-//       let check = indexPath.row
-//                
-//        if (check <= 5 && shouldCallPagging)
-//        {
-//            
-//            //// making it false so that it can call at ones 
-//            
-//            shouldCallPagging = false
-//            
-//            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isMyPaggingCalled")
-//            
-//            
-//            self.activityIndicator.stopAnimating();
-//            
-//            self.loadingView.removeFromSuperview();
-//            
-//            lastDateSent = CurrentDateFunc.getSubtractedDate(lastDateSent)
-//            
-//            // showActivityIndi()
-//            
-//            SShowActivityIndicatory()
-//            self.activityInfo();
-//            
-//        }
-//            
-//        else
-//            
-//        {
-//            
-//            
-//        }
-//        
-//        
-//
-//    }
-//    
-//    
-    
-    
-    
-    var startIndex = Int()
-    
-    func scrollViewDidScroll(scrollView: UIScrollView)
+  
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath)
     {
         
-        
-        let rowIndex = (75 * activityChatArray.count) / 100
-        
-        startIndex = activityChatArray.count - rowIndex
-        
-        print(startIndex)
-        
-        if (isRowVisible(startIndex) && shouldCallPagging)
+       let check = indexPath.row
+                
+        if (check <= 5 && shouldCallPagging)
         {
             
-            //// making it false so that it can call at ones
+            //// making it false so that it can call at ones 
             
             shouldCallPagging = false
             
@@ -751,45 +736,74 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
         
         
+
     }
     
+
     
-//    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    
+    
+    var startIndex = Int()
+    var beforeContentSize = CGSize();
+    var afterContentOffset = CGPoint();
+    var afterContentSize = CGSize();
+    
+//    func scrollViewDidScroll(scrollView: UIScrollView)
 //    {
-//        return 130.0;//Choose your custom row height
-//    }
-//    
-    
-    
-//    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
-//    
-//    {
-//        
-//        if activityChatArray[indexPath.row].isFromUserChat == true ||  activityChatArray[indexPath.row].isFromChat
-//        {
-//            
-//            return 78.0;
-//            
-//        }
-//        else
-//        {
-//            return 176.0;
-//            
-//        }
+//        print("contentOffset = \(scrollView.contentOffset.y)")
 //
+////        if scrollView.contentOffset.y <= 0.0
+////        {
 //        
+//        let rowIndex = (75 * activityChatArray.count) / 100
 //        
+//        startIndex = activityChatArray.count - rowIndex
+//        
+//     let check = activityChatArray.count
+//      
+//        
+//        if (isRowVisible(startIndex) && shouldCallPagging)
+//        {
+//            
+//           // ActivityTableView.scrollEnabled = false
+//            
+//            
+//            //// making it false so that it can call at ones
+//            
+//            shouldCallPagging = false
+//            
+//            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isMyPaggingCalled")
+//            
+//            
+//            self.activityIndicator.stopAnimating();
+//            
+//            self.loadingView.removeFromSuperview();
+//            
+//            lastDateSent = CurrentDateFunc.getSubtractedDate(lastDateSent)
+//            
+//            // showActivityIndi()
+//            
+//            SShowActivityIndicatory()
+//            self.activityInfo();
+//            
+//        }
+//            
+//        else
+//            
+//        {
+//            
+//            
+//        }
+//        
+////        }
 //    }
-//    
     
+
 
     func isRowVisible(rowIndex:Int) -> Bool
         
     {
         
-        self.activityIndicator.stopAnimating();
-        
-        self.loadingView.removeFromSuperview();
         
         var returnData = true
         
@@ -847,10 +861,6 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
     {
     
-        // showActivityIndicator();
-        
-        
-        CommonFunctions.showActivityIndicator(view)
         
         let myurl = NSURL(string: Url.activityInfo)
         
@@ -991,7 +1001,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     
     
-
+    var lastElemtCount = Int();
     
     
     //MARK:- NSURLSession delegate methods
@@ -1025,6 +1035,11 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 self.ActivityTableView.tableHeaderView = nil
                 
                 let json = try NSJSONSerialization.JSONObjectWithData(self.mutableData, options: .MutableContainers) as? NSDictionary
+                
+                
+                //self.ActivityTableView.transform =  CGAffineTransformMakeScale(1,-1);
+                
+                  //self.ActivityTableView.transform = CGAffineTransformInvert(self.view.transform);
                 
                 if  let parseJSON = json
                 {
@@ -1085,24 +1100,26 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
 
                     if(status=="Success")
                     {
+                        self.lastElemtCount = activityChatArray.count
+                        
+                        RemoveNoInternet();
                         
                         
-                    CommonFunctions.hideActivityIndicator();
+                       shouldShowNOInternet = false
                         
+                        
+                       shouldShowSomethingWent == false
+                    
                         
                      var indexPath : [NSIndexPath] = [NSIndexPath]()
                         
-                        self.activityIndicator.stopAnimating();
-                        
-                        self.loadingView.removeFromSuperview();
-
                         
                         if  let elements: AnyObject = json!["response"]
                         {
                             
                             self.ActivityTableView.tableHeaderView = nil
                             
-                         
+                            var heightForNewRows = Int();
                             
                             for i in 0 ..< elements.count
                             {
@@ -1112,12 +1129,12 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 
                                 
                                 
-                               // indexPath.append(NSIndexPath(forRow: lastRowIndex , inSection: 0))
+                                //indexPath.append(NSIndexPath(forRow: lastRowIndex , inSection: 0))
                                 
                                 
                                indexPath.append(NSIndexPath(forRow: i , inSection: 0))
                                 
-                                
+                               
                                 self.activityModel=ViewActivityModel()
                                 
                                 
@@ -1333,9 +1350,9 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                                 
                                             {
                                                ////// when paggging is true add data at bottom
-                                              activityChatArray.insert(activityModel, atIndex: 0)
+                                             activityChatArray.insert(activityModel, atIndex: 0)
                                                 
-                                               ///  activityChatArray.append(activityModel)
+                                              // activityChatArray.append(activityModel)
                                             
                                             }
                                             else
@@ -1472,6 +1489,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                             if NSUserDefaults.standardUserDefaults().boolForKey("isMyPaggingCalled") == true
                                                 
                                             {
+                                                
                                                 activityChatArray.insert(activityModel, atIndex: 0)
                                                 
                                                 // activityChatArray.append(activityModel)
@@ -1527,54 +1545,60 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
 //                                        
 //                                }
 //
+//                                if NSUserDefaults.standardUserDefaults().boolForKey("isMyPaggingCalled") == true
+//                                    
+//                                {
+//                                    
+// 
+//                                    self.beforeContentSize = self.ActivityTableView.contentSize;
+//                                    self.ActivityTableView.beginUpdates()
+//                                    self.ActivityTableView.insertRowsAtIndexPaths(indexPath, withRowAnimation: UITableViewRowAnimation.None)
+//                                    
+//                                    self.ActivityTableView.endUpdates();
+//                                    
+//                                    self.afterContentSize = self.ActivityTableView.contentSize;
+//                                    self.afterContentOffset = self.ActivityTableView.contentOffset;
+//                                    self.ActivityTableView.contentOffset = CGPoint(x: self.afterContentOffset.x, y: self.afterContentOffset.y + self.afterContentSize.height - self.beforeContentSize.height)
+////                                    var index = indexes?.last?.row
+////                                    
+////                                    let ad = elements.count + index!;
+////                                    
+////                                    self.ActivityTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: ad, inSection: 0), atScrollPosition: .None, animated: false)
+////                                    
+//                                }
                                 
                          } // for close
-                           
-                           if  activityChatArray.count < 10
-                             {
+                            
+                            if  activityChatArray.count < 15
+                            {
                                 
                                 lastDateSent = CurrentDateFunc.getSubtractedDate(lastDateSent)
-                                
                                 activityInfo()
                                 return
                                 
-                             }
-                            
+                            }
+//
                             
                             NSOperationQueue.mainQueue().addOperationWithBlock
                                 {
                                     if NSUserDefaults.standardUserDefaults().boolForKey("isMyPaggingCalled") == true
                                         
                                     {
-//                                        
-                                        self.ActivityTableView.beginUpdates()
-                                        
-                                          // self.ActivityTableView.layoutIfNeeded();
-                                        
-                                          var indexes = self.ActivityTableView.indexPathsForVisibleRows
-                                        
-                                        
-                                        
+                                         var indexes = self.ActivityTableView.indexPathsForVisibleRows
+                                         self.beforeContentSize = self.ActivityTableView.contentSize;
+                                         self.ActivityTableView.beginUpdates()
                                         self.ActivityTableView.insertRowsAtIndexPaths(indexPath, withRowAnimation: UITableViewRowAnimation.None)
-                                     
+                                                                                
+                                        self.ActivityTableView.endUpdates();
                                         
-                                         self.ActivityTableView.endUpdates();
-                                    
-//                                       self.ActivityTableView.reloadRowsAtIndexPaths(indexPath, withRowAnimation: UITableViewRowAnimation.Bottom)
+                                        self.afterContentSize = self.ActivityTableView.contentSize;
+                                        self.afterContentOffset = self.ActivityTableView.contentOffset;
+                                        self.ActivityTableView.contentOffset = CGPoint(x: self.afterContentOffset.x, y: self.afterContentOffset.y + self.afterContentSize.height - self.beforeContentSize.height)
+                                        var index = indexes?.last?.row
                                         
-//                                        
+                                        let ad = elements.count + index!;
                                         
-                                        
-
-                                        
-                                    self.ActivityTableView.scrollToRowAtIndexPath((indexes?.first)!, atScrollPosition: .None, animated: false)
-                                        
-                                        
-                                       // self.ActivityTableView.reloadRowsAtIndexPaths(indexPath, withRowAnimation: UITableViewRowAnimation.Bottom)
-                                        
-                                     //self.ActivityTableView.reloadData()
-                                        
-                                    
+                                        self.ActivityTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: ad, inSection: 0), atScrollPosition: .None, animated: false)
                                     
                                     }
                                     else
@@ -1585,12 +1609,14 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                         self.RemoveNoInternet();
                                         self.RemoveNoResult();
                                         
-                                        self.activityChatArray = self.activityChatArray.reverse();
+                                      self.activityChatArray = self.activityChatArray.reverse();
+                                        
                                         
                                         
                                         self.ActivityTableView.delegate = self;
                                         
                                         self.ActivityTableView.dataSource = self;
+                                        
                                         
                                         self.ActivityTableView.reloadData();
                                         
@@ -1598,9 +1624,13 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                         
                                         
                                         /////// scroll to bottom
+                                        
                                        self.ActivityTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.ActivityTableView.numberOfRowsInSection(0) - 1, inSection: 0), atScrollPosition: .None, animated: false)
                                         
-//                                          self.ActivityTableView.scrollToRowAtIndexPath(NSIndexPath(forRow:(),inSection: 0), atScrollPosition: .Top, animated: true)
+//                                          self.ActivityTableView.scrollToRowAtIndexPath(NSIndexPath(startIndex,inSection: 0), atScrollPosition: .Top, animated: true)
+                                        
+                                        
+                                        
                                     
                                     
                                     }
@@ -1682,7 +1712,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         CommonFunctions.hideActivityIndicator();
 
                         
-                        
+                        RemoveNoInternet();
                        
                         if NSUserDefaults.standardUserDefaults().boolForKey("isMyPaggingCalled") == true
                         {
@@ -1784,6 +1814,8 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 
                 self.RemoveNoInternet();
                 
+                if shouldShowSomethingWent == true
+                {
                 
                 if self.view.subviews.contains(self.noResult.view)
                     
@@ -1807,6 +1839,9 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     self.view.userInteractionEnabled = true
                     
                     self.noResult.didMoveToParentViewController(self)
+                    
+                }
+                    
                     
                 }
                 
@@ -3158,6 +3193,11 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         self.RemoveNoResult();
         
+        
+       if  shouldShowNOInternet == true
+            
+       {
+        
         if self.view.subviews.contains(self.noInternet.view)
             
         {
@@ -3189,7 +3229,13 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
         
     }
+        
+    }
     
+    
+    var shouldShowNOInternet = true
+    
+     var shouldShowSomethingWent = true
     
     
     //MARK:-  NO INTERNET / NO RESULT FUNC
@@ -3598,12 +3644,21 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     
+    
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        self.ActivityTableView.estimatedRowHeight = 80;
+        self.ActivityTableView.rowHeight = UITableViewAutomaticDimension;
+
+    }
+    
    //MARK: VIEW DIDLOAD
     
     override func viewDidLoad()
     {
         super.viewDidLoad();
-  
+  beforeContentSize = self.ActivityTableView.contentSize;
         
        // ViewGroupFitViewController.instance?.overFlowButton.hidden=true;
 
