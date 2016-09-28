@@ -16,9 +16,8 @@ class DistanceFeedbackInterval: UIView {
         self.removeFromSuperview();
     }
     override func awakeFromNib() {
-        self.mView.layer.cornerRadius = 2.0;
+        self.mView.layer.cornerRadius = 5.0;
         self.mView.clipsToBounds=true;
-        
     }
     
     

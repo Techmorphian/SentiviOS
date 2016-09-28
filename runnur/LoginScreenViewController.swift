@@ -99,7 +99,10 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
                 let client = delegate!.client!;
                 
                 let payload: [String: String] = ["id_token": idToken]
-                client.loginWithProvider("google", token: payload, completion: { (user, error) in
+                
+                 self.call(false, email: email, firstName: firstName, lastName: lastName, id: googleId, token: idToken,imageUrl: imageUrl.absoluteString)
+                
+    /*            client.loginWithProvider("google", token: payload, completion: { (user, error) in
                 
                     if error != nil{
                         print(error)
@@ -110,7 +113,7 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
                         print("Google Login Sucess")
                          self.call(false, email: email, firstName: firstName, lastName: lastName, id: googleId, token: idToken,imageUrl: imageUrl.absoluteString)
                     }
-                })
+                })*/
             }
             
         } else {

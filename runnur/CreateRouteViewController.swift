@@ -8,36 +8,136 @@
 
 import UIKit
 import GoogleMaps
+import GooglePlaces
 
-class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocationManagerDelegate {
-     @IBAction func back(sender: AnyObject) {
+
+class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocationManagerDelegate, UISearchDisplayDelegate,UISearchBarDelegate,LocateOnTheMap {
+    
+    
+    @IBAction func back(sender: AnyObject) {
         self.dismissViewControllerAnimated(false, completion: nil)
     }
     @IBAction func help(sender: UIButton) {
         let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("HelpViewController") as! HelpViewController
-        self.presentViewController(nextViewController, animated: false, completion: nil)
+        self.presentViewController(nextViewController, animated: true, completion: nil)
     }
     @IBOutlet weak var getMyLocation: UIButton!
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var arrow: UIImageView!
-   
+    
+    @IBOutlet weak var routeDistance: UILabel!
+    @IBOutlet weak var elevationGain: UILabel!
+    @IBOutlet weak var elevationLoss: UILabel!
+    
+    
     @IBOutlet weak var customViewHeight: NSLayoutConstraint!
-
+    
     var mapData = MapData();
     var customViewHeight2: NSLayoutConstraint!
+    
+//    MARK:-  Google Search
+    var searchResultController : SearchResultsController!;
+    var resultArray = [String]();
+    
+    func locateWithLongitude(lon: Double, andLattitude lat: Double, adnTitle title: String) {
+        dispatch_async(dispatch_get_main_queue()) {
+            let camera = GMSCameraPosition.cameraWithLatitude(lat, longitude: lon, zoom: 16.0)
+            self.mapView.camera = camera
+            if self.tapCounter == 0
+            {
+                if let _ = self.mapView.myLocation?.coordinate{
+                    self.mapView.camera = GMSCameraPosition.cameraWithTarget((self.mapView.myLocation?.coordinate)!, zoom: 16.0)
+                    let london = GMSMarker(position: CLLocationCoordinate2D(latitude:(self.mapView.myLocation?.coordinate.latitude)!, longitude: (self.mapView.myLocation?.coordinate.longitude)!))
+                    london.icon = UIImage(named: "ic_map_marker_green")
+                    london.map = self.mapView
+                    self.tapCounter += 1;
+                    self.lastMarker.append(london);
+                    self.getAddressFromLatLong((self.mapView.myLocation?.coordinate.latitude)!, longitude: (self.mapView.myLocation?.coordinate.longitude)!)
+                    
+                    let l = GMSMarker(position: CLLocationCoordinate2D(latitude:lat, longitude: lon))
+                    l.icon = UIImage(named: "ic_map_marker_red")
+                    l.map = self.mapView
+                    self.tapCounter += 1;
+                    self.lastMarker.append(l);
+                    let loc = CLLocation(latitude:lat, longitude: lon);
+                    self.mapData.elevationLoss  =
+                        String(loc.altitude);
+                    self.mapData.elevationGain = String(loc.altitude);
+                    //self.getAddressFromLatLong(lat, longitude: lon)
 
+                }
+               
+            }else{
+                let london = GMSMarker(position: CLLocationCoordinate2D(latitude:lat, longitude: lon))
+                london.icon = UIImage(named: "ic_map_marker_red")
+                london.map = self.mapView
+                self.tapCounter += 1;
+                self.lastMarker.append(london);
+            }
+            self.passToGetDirections()
+
+//            let camera = GMSCameraPosition.cameraWithLatitude(lat, longitude: lon, zoom: 16.0)
+//            self.mapView.camera = camera
+//            let london = GMSMarker(position: CLLocationCoordinate2D(latitude:lat, longitude: lon))
+//            london.icon = UIImage(named: "ic_map_marker_green")
+//            london.map = self.mapView
+//            self.tapCounter += 1;
+//            self.lastMarker.append(london);
+        }
+        
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+
+        GooglePlaces.placeAutocomplete(forInput: searchText) { (response, error) in
+            self.resultArray.removeAll();
+            if response == nil{
+                return
+            }
+            let json = response?.toJSON()
+            if  let elements: AnyObject = json!["predictions"]
+            {
+                for i in 0 ..< elements.count
+                {
+                    self.resultArray.append(elements[i]["description"] as! String)
+                }
+                self.searchResultController.reloadDataWithArray(self.resultArray, searchTerm: searchText)
+            }
+        }
+        
+    }
+    
+    @IBOutlet weak var searchButton: UIButton!
+    @IBAction func searchButtonAction(sender: UIButton) {
+        let searchController = UISearchController(searchResultsController: self.searchResultController);
+        searchController.searchBar.delegate = self;
+        self.presentViewController(searchController, animated: true, completion: nil);
+    }
+    override func viewDidAppear(animated: Bool) {
+        searchResultController = SearchResultsController()
+        searchResultController.delegate = self
+    }
+
+    
+    
+// MARK:- My Location
     @IBAction func getMyLocation(sender: AnyObject) {
+        mapView.myLocationEnabled = true
+        if let _ = mapView.myLocation?.coordinate{
+            self.mapView.camera = GMSCameraPosition.cameraWithTarget((mapView.myLocation?.coordinate)!, zoom: 16.0)
+        }
+        
     }
     @IBOutlet weak var mapView: GMSMapView!
     
     var myManager:CLLocationManager!
-
+    
     var actionButton: ActionButton!
-     var first = false;
+    var first = false;
     var startPosition: CGPoint?
     var originalHeight: CGFloat = 0
     
-
+    
     
     var tapCounter = Int();
     let path = GMSMutablePath()
@@ -54,9 +154,21 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
     var backgroudRunning = Bool()
     var distance = Double();
     
+//    MARK:- update Distance,elevationLoss,elevationGain
+    func updateLabels()
+    {
+        self.routeDistance.text = mapData.distance!;
+        self.elevationGain.text = mapData.elevationGain!;
+        self.elevationLoss.text = mapData.elevationLoss!;
+        
+//        self.routeDistance.text = String(format: "%.2f", mapData.distance!);
+//        self.elevationGain.text = String(format: "%.2f", mapData.elevationGain!);
+//        self.elevationLoss.text = String(format: "%.2f", mapData.elevationLoss!);
+    }
+
     
     
-//  MARK:- all Button Actions AutoRoute
+    //  MARK:- All Button Actions AutoRoute
     var textField = UITextField();
     func configurationTextField(textField: UITextField!)
     {
@@ -67,7 +179,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             self.textField.text = ""
         }
     }
-
+    
     @IBAction func autoRoute(sender: AnyObject) {
         let alert = UIAlertController(title: "", message: "ENTER YOUR TITLE", preferredStyle: UIAlertControllerStyle.Alert)
         
@@ -76,15 +188,15 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
         alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.Default, handler:{ (UIAlertAction)in
             if  self.textField.text != nil || self.textField.text != "" {
-            let enteredDistance = self.textField.text!;
-            self.autoRouteDistance = Double(enteredDistance)!
+                let enteredDistance = self.textField.text!;
+                self.autoRouteDistance = Double(enteredDistance)!
                 self.mapData.distance = enteredDistance;
                 self.autoRouteCreation()
             }
             print(self.textField.text)
         }))
         self.presentViewController(alert, animated: true, completion: nil)
-
+        
     }
     func autoRouteCreation()  {
         
@@ -104,7 +216,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         london.map = mapView
         tapCounter += 1;
         lastMarker.append(london);
-
+        
         //radius of earth in miles
         let rEarth = 6371.01 / 1.60934;
         //threshold for floating point equality
@@ -113,7 +225,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         var rLat = Double(lat) * M_PI / 180
         var rLon = Double(Long) * M_PI / 180
         
-       let routeDistance = Distance * (1 - 0.25);
+        let routeDistance = Distance * (1 - 0.25);
         
         let incrementDistance = routeDistance / 4;
         let dSubBearing=Int();
@@ -150,9 +262,9 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             tapCounter += 1;
             lastMarker.append(london);
             
-           
+            
             if(i==0) {
-               fA = firstAngle + 90;
+                fA = firstAngle + 90;
             } else if(i == 1){
                 fA = firstAngle + thirdAngle;
             }
@@ -163,7 +275,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             //clearElevationInfo();
             if(i==2) {
                 //markerPoints.add(markerPoints.get(0));
-              passToGetDirections();
+                passToGetDirections();
             }
         }
     }
@@ -212,13 +324,11 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                                         let polyLinePoints = (steps[i].objectForKey("polyline") as! NSDictionary).objectForKey("points") as! String
                                         print(polyLinePoints);
                                         print("polyline Point");
-                                        print(decodePolyline(polyLinePoints))
+                                       // print(decodePolyline(polyLinePoints))
                                         let polyLinePath =  GMSPath(fromEncodedPath: polyLinePoints);
                                         print(polyLinePath);
                                         
-                                       // polyLineWithEncodedString(polyLinePoints);
-                                    
-                                        
+                                        // polyLineWithEncodedString(polyLinePoints);
                                         
                                         polyline = GMSPolyline(path: polyLinePath)
                                         polyline.strokeColor = UIColor.redColor();
@@ -229,6 +339,8 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                                     print();
                                 }
                             }
+                            
+                            self.updateLabels();
                         }
                     }
                 }
@@ -242,7 +354,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             }
         }
     }
-    
+ /*
     func polyLineWithEncodedString(encodedString: String) {
         let bytes = (encodedString as NSString).UTF8String
         let length = encodedString.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
@@ -295,7 +407,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                 let temp = coords
                 coords.dealloc(count)
                 coords = UnsafeMutablePointer<CLLocationCoordinate2D>.alloc(newCount)
-
+                
                 for index in 0..<count {
                     coords[index] = temp[index]
                 }
@@ -306,55 +418,55 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         }
     }
     
-    
+   */
     
     func getDirectionsUrl(origin:GMSMarker,  dest:GMSMarker) -> String {
-    
-    // Origin of route
-       
-    let str_origin = "origin=" + String(origin.position.latitude) + ","
-    + String(origin.position.longitude);
-    
-    // Destination of route
-    let str_dest = "destination=" + String(dest.position.latitude) + "," + String(dest.position.longitude);
-    
-    // Sensor enabled
-    let sensor = "sensor=false";
-    
-    
-    // add Waypoints
+        
+        // Origin of route
+        
+        let str_origin = "origin=" + String(origin.position.latitude) + ","
+            + String(origin.position.longitude);
+        
+        // Destination of route
+        let str_dest = "destination=" + String(dest.position.latitude) + "," + String(dest.position.longitude);
+        
+        // Sensor enabled
+        let sensor = "sensor=false";
+        
+        
+        // add Waypoints
         var waypoints = "waypoints=";
         let point = lastMarker[lastMarker.count - 1];
         waypoints += String(point.position.latitude) + "," + String(point.position.longitude);
-//        let point2 = lastMarker[lastMarker.count - 1];
-//        waypoints += "," + String(point2.position.latitude) + "," + String(point2.position.longitude);
-//    
-
-    
-//    for (var i = 0; i < lastMarker.count - 1; i++) {
-//        let point = lastMarker[i];
-////    if (i == 0) {
-////    waypoints += String(point.position.latitude) + "," + String(point.position.longitude);
-////    } else {
-////    waypoints += "," + String(point.position.latitude) + "," + String(point.position.longitude);
-////    }
-////    }
-//        print()
-    
-    // Building the parameters to the web service
-    let parameters = str_origin + "&" + str_dest + "&" + sensor + "&"
-    + waypoints;
-    
-    // Output format
-    let output = "json";
-    
-    // Building the url to the web service
-    let url = "https://maps.googleapis.com/maps/api/directions/"
-    + output + "?" + parameters + "&mode=walking&key=AIzaSyAlNHDmYN0jVM3T6rgvlik0UNEY9ocCmMI";
-    
-    
-    
-    return url;
+        //        let point2 = lastMarker[lastMarker.count - 1];
+        //        waypoints += "," + String(point2.position.latitude) + "," + String(point2.position.longitude);
+        //
+        
+        
+        //    for (var i = 0; i < lastMarker.count - 1; i++) {
+        //        let point = lastMarker[i];
+        ////    if (i == 0) {
+        ////    waypoints += String(point.position.latitude) + "," + String(point.position.longitude);
+        ////    } else {
+        ////    waypoints += "," + String(point.position.latitude) + "," + String(point.position.longitude);
+        ////    }
+        ////    }
+        //        print()
+        
+        // Building the parameters to the web service
+        let parameters = str_origin + "&" + str_dest + "&" + sensor + "&"
+            + waypoints;
+        
+        // Output format
+        let output = "json";
+        
+        // Building the url to the web service
+        let url = "https://maps.googleapis.com/maps/api/directions/"
+            + output + "?" + parameters + "&mode=walking&key=AIzaSyAlNHDmYN0jVM3T6rgvlik0UNEY9ocCmMI";
+        
+        
+        
+        return url;
     }
     @IBAction func start(sender: UIButton) {
         if lastMarker.count == 0
@@ -362,14 +474,14 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             CommonFunctions.showPopup(self, msg: "not enough distance to go ahead?", getClick: {
                 
             })
-          
+            
         }else{
-        let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("StartActivityViewController") as! StartActivityViewController
-        nextViewController.fromPlanRoute = true;
-        nextViewController.planRoute = path;
-        nextViewController.planFirstPoint = lastMarker[0].position;
-        nextViewController.planSecoundPoint = lastMarker[lastMarker.count-1].position;
-        self.presentViewController(nextViewController, animated: false, completion: nil)
+            let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("StartActivityViewController") as! StartActivityViewController
+            nextViewController.fromPlanRoute = true;
+            nextViewController.planRoute = path;
+            nextViewController.planFirstPoint = lastMarker[0].position;
+            nextViewController.planSecoundPoint = lastMarker[lastMarker.count-1].position;
+            self.presentViewController(nextViewController, animated: false, completion: nil)
         }
     }
     @IBAction func clear(sender: UIButton) {
@@ -383,13 +495,13 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
     @IBAction func undo(sender: UIButton) {
         if tapCounter != 0
         {
-        tapCounter -= 1;
-        lastMarker[lastMarker.count-1].map=nil;
-        lastMarker.removeLast();
-        polyline.map = nil
-        
-        path.removeLastCoordinate()
-        
+            tapCounter -= 1;
+            lastMarker[lastMarker.count-1].map=nil;
+            lastMarker.removeLast();
+            polyline.map = nil
+            
+            path.removeLastCoordinate()
+            
             mapView.clear();
             polyline.path = path;
             // self.polyline = GMSPolyline(path:path)
@@ -400,41 +512,41 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             polyline.strokeWidth = 1
             polyline.geodesic = true
             polyline.map = mapView;
-
+            
         }
         
     }
     @IBAction func save(sender: UIButton) {
         var msg = String();
-        if lastMarker.count > 0 {
+        if lastMarker.count < 0 {
             
             CommonFunctions.showPopup(self, msg: "No Route Found", getClick: {
                 
             })
             
-        
+            
         }else{
             if distance < 0.1{
-            msg = "You did not cover enough distance. Are you sure you want to save the activity?";
+                msg = "You did not cover enough distance. Are you sure you want to save the activity?";
             }else{
-            msg = "Are you sure you want to save the activity?";
+                msg = "Are you sure you want to save the activity?";
             }
-       
-        
-//        let data = self.polyline.path?.encodedPath().dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
-//        
-////var properString = data!.stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-// print(data)
-//         let jsonString = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
-//        print(jsonString)
-//        
-//        if NSJSONSerialization.isValidJSONObject(data!){
-//            let jsonData = try! NSJSONSerialization.dataWithJSONObject(data!, options: NSJSONWritingOptions())
-//            let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
-//            print(jsonString);
-//        }
-        
-   
+            
+            
+            //        let data = self.polyline.path?.encodedPath().dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
+            //
+            ////var properString = data!.stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+            // print(data)
+            //         let jsonString = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+            //        print(jsonString)
+            //
+            //        if NSJSONSerialization.isValidJSONObject(data!){
+            //            let jsonData = try! NSJSONSerialization.dataWithJSONObject(data!, options: NSJSONWritingOptions())
+            //            let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
+            //            print(jsonString);
+            //        }
+            
+            
             CommonFunctions.showPopup(self, title: "ALREADY FINISHED?", msg:msg , positiveMsg: "Yes, Save", negMsg: "No, Discard", show2Buttons: true, showReverseLayout: false,getClick: {
                 // if Reachability.isConnectedToNetwork() == true{
                 CommonFunctions.showActivityIndicator(self.view);
@@ -447,7 +559,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                 client.currentUser = user
                 
                 var cor = [CLLocationCoordinate2D]();
-               let c = Int((self.polyline.path?.count())!)
+                let c = Int((self.polyline.path?.count())!)
                 
                 //self.polyline.path?.encodedPath()
                 
@@ -456,14 +568,14 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                     
                     cor.append((self.polyline.path?.coordinateAtIndex(UInt(i)))!);
                 }
-              
+                
                 var trackPolyline = [NSDictionary]();
                 for i in cor{
-                trackPolyline.append(["latitude":Double(i.latitude),"longitude":Double(i.longitude)])
+                    trackPolyline.append(["latitude":Double(i.latitude),"longitude":Double(i.longitude)])
                 }
                 var saveTrackPolyline = String();
                 
-            
+                
                 if NSJSONSerialization.isValidJSONObject(trackPolyline){
                     let jsonData = try! NSJSONSerialization.dataWithJSONObject(trackPolyline, options: NSJSONWritingOptions())
                     let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
@@ -477,19 +589,19 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                     let dateString = dateFormatter.stringFromDate(date)
                     
                     let newItem : NSDictionary =
-                       // ["id": NSUserDefaults.standardUserDefaults().stringForKey("userId")!,
-                      [  "dateP": dateString,
-                        "distanceP": Double(self.autoRouteDistance),
-                        "elevationGainP": Double(self.mapData.elevationGain!)!,
-                        "elevationLossP": Double(self.mapData.elevationLoss!)!,
-                        "runnurId": "\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)",
-                        "trackPolylinesP": saveTrackPolyline,
-                        // "time": "nil",
-                       // "mileMarkersP": self.lastMarker,
-                        "elevationCoordinatesP": "",
-                        "startLocationP": self.locationName];
-//                        "distanceMarkerP": String(self.altGain),
-//                        "elevationValuesP": String(self.altLoss)] ;
+                        // ["id": NSUserDefaults.standardUserDefaults().stringForKey("userId")!,
+                        [  "dateP": dateString,
+                            "distanceP": Double(self.autoRouteDistance),
+                            "elevationGainP": Double(self.mapData.elevationGain!)!,
+                            "elevationLossP": Double(self.mapData.elevationLoss!)!,
+                            "runnurId": "\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)",
+                            "trackPolylinesP": saveTrackPolyline,
+                            // "time": "nil",
+                            // "mileMarkersP": self.lastMarker,
+                            "elevationCoordinatesP": "",
+                            "startLocationP": self.locationName];
+                    //                        "distanceMarkerP": String(self.altGain),
+                    //                        "elevationValuesP": String(self.altLoss)] ;
                     
                     if Reachability.isConnectedToNetwork() == true{
                         table.insert(newItem as [NSObject : AnyObject]) { (result, error) in
@@ -518,8 +630,8 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                     
                 }
             })
-    }
- 
+        }
+        
     }
     var locationName = String();
     func getAddressFromLatLong(latitude:Double,longitude:Double)
@@ -568,7 +680,8 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             })
         }
     }
-//    MARK:- DecodePolyline
+    /*
+    //    MARK:- DecodePolyline
     internal func decodePolyline(encodedPolyline: String, precision: Double = 1e5) -> [CLLocationCoordinate2D]? {
         
         let data = encodedPolyline.dataUsingEncoding(NSUTF8StringEncoding)!
@@ -603,7 +716,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         
         guard position < length else {
             throw er!
-        
+            
         }
         
         let bitMask = Int8(0x1F)
@@ -634,9 +747,9 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         
         return Double(coordinate) / precision
     }
-
+  */
     
-// MARK:- Move Top View
+    // MARK:- Move Top View
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let touch = touches.first;
         startPosition = touch?.locationInView(self.view);
@@ -660,23 +773,23 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             //            UIView.animateWithDuration(2.0, animations: {
             //                self.arrow.transform = CGAffineTransformMakeRotation((180.0 * CGFloat(M_PI)) / 180.0)
             //            })
-         //   arrow.image = UIImage(named: "ic_up_down");
+            //   arrow.image = UIImage(named: "ic_up_down");
             UIView.animateWithDuration(2.0, animations: {
                 self.arrow.transform = CGAffineTransformMakeRotation((180.0 * CGFloat(M_PI)) / 180.0)
             })
-
+            
             
         }else{
             UIView.animateWithDuration(2.0, animations: {
                 self.arrow.transform = CGAffineTransformMakeRotation((180.0 * CGFloat(M_PI)) / 180.0)
             })
-
-                  //      arrow.image = UIImage(named: "ic_up_arrow");
+            
+            //      arrow.image = UIImage(named: "ic_up_arrow");
         }
         self.view.layoutIfNeeded()
         
     }
-//MARK:- location Methods GoogleMaps
+    //MARK:- location Methods GoogleMaps
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
         
@@ -688,7 +801,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             
             //  19.069761, 72.829857
         }
-
+        
     }
     func mapView(mapView: GMSMapView, didTapAtCoordinate coordinate: CLLocationCoordinate2D) {
         print("You tapped at \(coordinate.latitude), \(coordinate.longitude)");
@@ -707,21 +820,21 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             tapCounter += 1;
             lastMarker.append(london);
         }
-       passToGetDirections()
-//        arrayOfCLLocationCoordinate2D.append(coordinate);
-//         path.addCoordinate(coordinate);
-//        polyline = GMSPolyline(path: path)
-//        polyline.strokeColor = UIColor.redColor();
-//        polyline.strokeWidth = 1
-//        polyline.geodesic = true
-//        polyline.map = mapView
-
+        passToGetDirections()
+        //        arrayOfCLLocationCoordinate2D.append(coordinate);
+        //         path.addCoordinate(coordinate);
+        //        polyline = GMSPolyline(path: path)
+        //        polyline.strokeColor = UIColor.redColor();
+        //        polyline.strokeWidth = 1
+        //        polyline.geodesic = true
+        //        polyline.map = mapView
+        
     }
-
-//    MARK:- Life Cycle
+    
+    //    MARK:- Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-       customViewHeight2 = customViewHeight;
+        customViewHeight2 = customViewHeight;
         
         self.myManager = CLLocationManager();
         self.myManager.delegate = self;
@@ -734,7 +847,9 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         
         //  self.topConstraint.constant = -87;
         
-      
+        
+        searchButton.layer.cornerRadius = self.searchButton.frame.height/2;
+        searchButton.layer.shadowOpacity=0.4;
         
         getMyLocation.layer.cornerRadius = self.getMyLocation.frame.height/2;
         getMyLocation.layer.shadowOpacity=0.4;
@@ -766,16 +881,11 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             self.mapView.mapType = kGMSTypeTerrain;
             //coding
         }
-        // let vs:Int = Int(self.view.frame.height - self.getMyLocation.frame.maxY);
-        actionButton = ActionButton(attachedToView: self.view, items: [map, Satellite,Terrain], v: 140, h: 15)
-        // actionButton = ActionButton(attachedToView: self.view, items: [map, Satellite,Terrain])
-        
+        actionButton = ActionButton(attachedToView: self.view, items: [map, Satellite,Terrain], v: 130, h: 18)
         actionButton.action = { button in button.toggleMenu() }
         actionButton.setImage(UIImage(named: "ic_fab_map_format"), forState: .Normal);
-        
-        //  let orgColor = UIColor(red: 255/255, green: 102/255, blue: 102/255, alpha: 1)
         actionButton.backgroundColor = colorCode.BlueColor;
-       
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -788,8 +898,9 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
     {
         return UIStatusBarStyle.LightContent;
     }
-
+    
 }
+/*
 extension Int {
     
     /** Shift bits to the left. All bits are shifted (including sign bit) */
@@ -815,8 +926,8 @@ extension Int {
         
         
         return self
-}
-
+    }
+    
 }
 infix operator &<<= {
 associativity none
@@ -847,4 +958,5 @@ infix operator &>>= {
 associativity none
 precedence 160
 }
+*/
 

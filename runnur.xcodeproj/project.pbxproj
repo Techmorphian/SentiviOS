@@ -56,6 +56,10 @@
 		446AE6E31D8C0CE800E2B6B5 /* SelectActivityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 446AE6E21D8C0CE800E2B6B5 /* SelectActivityView.xib */; };
 		446AE6E51D8C345800E2B6B5 /* AddActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446AE6E41D8C345800E2B6B5 /* AddActivityViewController.swift */; };
 		447473C51D51F8CB0021C561 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447473C41D51F8CB0021C561 /* MapKit.framework */; };
+		447A9EEF1D9A818B008B0BC9 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 470CF88C1D24DC370001B3BC /* Info.plist */; };
+		447A9EF01D9A83F4008B0BC9 /* challengeFilterXIB.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47CF1FBC1D4CC3130083B1A7 /* challengeFilterXIB.xib */; };
+		447A9EF21D9A848C008B0BC9 /* MeasuringUnits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447A9EF11D9A848C008B0BC9 /* MeasuringUnits.swift */; };
+		447A9EF41D9A84BE008B0BC9 /* MeasuringUnits.xib in Resources */ = {isa = PBXBuildFile; fileRef = 447A9EF31D9A84BE008B0BC9 /* MeasuringUnits.xib */; };
 		447B235B1D4B863700D79823 /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447B235A1D4B863700D79823 /* WindowsAzureMobileServices.framework */; };
 		447F1E1B1D7EB11A00B903B1 /* AZSClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447F1E1A1D7EB11A00B903B1 /* AZSClient.framework */; };
 		448584181D4A0AB40027F141 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 448584161D4A0AB40027F141 /* Bolts.framework */; };
@@ -71,6 +75,7 @@
 		44C7967E1D5EF70D000118C5 /* SWRevealViewController.m in Resources */ = {isa = PBXBuildFile; fileRef = 470B1B611D27A5A100E3B5B0 /* SWRevealViewController.m */; };
 		44D6FFD41D67151200B3F9D8 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 44D6FFD31D67151200B3F9D8 /* .gitignore */; };
 		44D6FFD71D67233E00B3F9D8 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D6FFD61D67233E00B3F9D8 /* HelpViewController.swift */; };
+		44E103351D9BA151003308CF /* SearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E103341D9BA151003308CF /* SearchResultsController.swift */; };
 		44E7EABD1D93F9D1009DE983 /* StatisticsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E7EABC1D93F9D1009DE983 /* StatisticsTableViewCell.swift */; };
 		44E7EABF1D940285009DE983 /* ActivityType.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44E7EABE1D940285009DE983 /* ActivityType.xib */; };
 		44E7EAC11D940B37009DE983 /* CommonFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E7EAC01D940B37009DE983 /* CommonFunctions.swift */; };
@@ -196,6 +201,8 @@
 		446AE6E21D8C0CE800E2B6B5 /* SelectActivityView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectActivityView.xib; sourceTree = "<group>"; };
 		446AE6E41D8C345800E2B6B5 /* AddActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddActivityViewController.swift; sourceTree = "<group>"; };
 		447473C41D51F8CB0021C561 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		447A9EF11D9A848C008B0BC9 /* MeasuringUnits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasuringUnits.swift; sourceTree = "<group>"; };
+		447A9EF31D9A84BE008B0BC9 /* MeasuringUnits.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeasuringUnits.xib; sourceTree = "<group>"; };
 		447B235A1D4B863700D79823 /* WindowsAzureMobileServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WindowsAzureMobileServices.framework; sourceTree = "<group>"; };
 		447F1E1A1D7EB11A00B903B1 /* AZSClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AZSClient.framework; sourceTree = "<group>"; };
 		448584161D4A0AB40027F141 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -212,6 +219,7 @@
 		44C7967C1D5EF65D000118C5 /* Project-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Project-Prefix.pch"; sourceTree = "<group>"; };
 		44D6FFD31D67151200B3F9D8 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		44D6FFD61D67233E00B3F9D8 /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
+		44E103341D9BA151003308CF /* SearchResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsController.swift; sourceTree = "<group>"; };
 		44E7EABC1D93F9D1009DE983 /* StatisticsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsTableViewCell.swift; sourceTree = "<group>"; };
 		44E7EABE1D940285009DE983 /* ActivityType.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityType.xib; sourceTree = "<group>"; };
 		44E7EAC01D940B37009DE983 /* CommonFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFunctions.swift; sourceTree = "<group>"; };
@@ -341,6 +349,7 @@
 				4454847B1D685C9B00482980 /* RouteTableViewCell.swift */,
 				4466240B1D6B1BE600B65BAA /* ViewRouteController.swift */,
 				44F74E941D7A8DAD00D43DB3 /* GoogleMapsElevation.swift */,
+				44E103341D9BA151003308CF /* SearchResultsController.swift */,
 			);
 			name = "Plan Route";
 			sourceTree = "<group>";
@@ -368,6 +377,8 @@
 				445A036C1D9931590015B3EE /* SettingViewController.swift */,
 				445A036E1D994E270015B3EE /* DistanceFeedbackInterval.xib */,
 				445A03701D9950090015B3EE /* DistanceFeedbackInterval.swift */,
+				447A9EF11D9A848C008B0BC9 /* MeasuringUnits.swift */,
+				447A9EF31D9A84BE008B0BC9 /* MeasuringUnits.xib */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -797,11 +808,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				44E7EABF1D940285009DE983 /* ActivityType.xib in Resources */,
+				447A9EF41D9A84BE008B0BC9 /* MeasuringUnits.xib in Resources */,
 				44D6FFD41D67151200B3F9D8 /* .gitignore in Resources */,
 				44C7967E1D5EF70D000118C5 /* SWRevealViewController.m in Resources */,
 				44C7967D1D5EF706000118C5 /* SWRevealViewController.h in Resources */,
 				470CF88B1D24DC370001B3BC /* LaunchScreen.storyboard in Resources */,
+				447A9EF01D9A83F4008B0BC9 /* challengeFilterXIB.xib in Resources */,
 				470CF8881D24DC370001B3BC /* Assets.xcassets in Resources */,
+				447A9EEF1D9A818B008B0BC9 /* Info.plist in Resources */,
 				470CF8831D24DC370001B3BC /* Main.storyboard in Resources */,
 				440D64E41D522580004AE539 /* CustomPopUp.xib in Resources */,
 				445A036F1D994E270015B3EE /* DistanceFeedbackInterval.xib in Resources */,
@@ -947,7 +961,9 @@
 				4457FFE41D59C2030097C598 /* SummaryActivityViewController.swift in Sources */,
 				448584211D4A3BE40027F141 /* TourContentViewController.swift in Sources */,
 				473D0D771D49E770004DDC07 /* HeartHistroryViewController.swift in Sources */,
+				44E103351D9BA151003308CF /* SearchResultsController.swift in Sources */,
 				473D0D881D49E8C6004DDC07 /* ActiveChallengesViewController.swift in Sources */,
+				447A9EF21D9A848C008B0BC9 /* MeasuringUnits.swift in Sources */,
 				44E7EAC31D9412CF009DE983 /* ActivityType.swift in Sources */,
 				473D0D901D49E927004DDC07 /* LoginScreenViewController.swift in Sources */,
 				473D0D841D49E87E004DDC07 /* animation1.swift in Sources */,

@@ -708,6 +708,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         
         //update GPS Icon
         gpsIcon();
+        
         if first == false
             //        if (r < 1 && mapView != nil)
         {
@@ -775,8 +776,6 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
          * to 1 thus enabling to map route. q variable is used to start and stop
          * tracking when start, pause or stop are pressed.
          */
-        
-        
         
         
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), {
@@ -1177,7 +1176,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         //        polyline.geodesic = true
         //        polyline.map = mapView
         
-        
+        self.voiceCoachPerDistanceInterval();
         
     }
     
@@ -1471,6 +1470,295 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     }
     
     //-----------------------------------------------audio strings-----------------------------------------
+//MARK:-   audio
+    var distanceIntervalCounter = Double();
+    var intervalTypeDis = Int();
+    var intervalPace = Double();
+    var intervalSpeed = Double();
+    var intervalPrevTime = Double();
+    var distanceIntervalTimer = Int();
+    var intervalCurTime = Double();
+    var splitIntervalPausedTime = Double();
+    
+    
+    func voiceCoachPerDistanceInterval() {
+        intervalTypeDis = 1
+        var temp = Double();
+        if (measuringUnits == 1) {
+            temp = distanceInMi;
+        } else {
+            temp = distanceInMi * 1.60934;
+        }
+        var roundDis = Int(temp + 0.2);
+        var absolute = (abs((round(temp * 10.0) / 10.0) - Double(roundDis))) * 100;
+        absolute = round(absolute);
+        var isDivisibleby50 = absolute % 50 == 0;
+        if (isDivisibleby50 && temp > 0.2 && distanceIntervalCounter != absolute) {
+            switch (intervalTypeDis) {
+            case 1:
+                if (temp < 0.6) {
+                    firstSplitValue();
+                } else {
+                    calculateIntervalPaceAndSpeed(0.5);
+                }
+                speakText(4);
+                distanceIntervalCounter = absolute;
+                break;
+            case 2:
+                distanceIntervalTimer++;
+                if (distanceIntervalTimer == 2) {
+                    if (temp < 1.1) {
+                        firstSplitValue();
+                    } else {
+                        calculateIntervalPaceAndSpeed(1.0);
+                    }
+                    speakText(4);
+                    distanceIntervalTimer = 0;
+                }
+                distanceIntervalCounter = absolute;
+                break;
+            case 3:
+                distanceIntervalTimer++;
+                if (distanceIntervalTimer == 4) {
+                    if (temp < 2.1) {
+                        firstSplitValue();
+                    } else {
+                        calculateIntervalPaceAndSpeed(2.0);
+                    }
+                    speakText(4);
+                    distanceIntervalTimer = 0;
+                }
+                distanceIntervalCounter = absolute;
+                break;
+            case 4:
+                distanceIntervalTimer++;
+                if (distanceIntervalTimer == 6) {
+                    if (temp < 3.1) {
+                        firstSplitValue();
+                    } else {
+                        calculateIntervalPaceAndSpeed(3.0);
+                    }
+                    speakText(4);
+                    distanceIntervalTimer = 0;
+                }
+                distanceIntervalCounter = absolute;
+                break;
+            case 5:
+                distanceIntervalTimer++;
+                if (distanceIntervalTimer == 8) {
+                    if (temp < 4.1) {
+                        firstSplitValue();
+                    } else {
+                        calculateIntervalPaceAndSpeed(4.0);
+                    }
+                    speakText(4);
+                    distanceIntervalTimer = 0;
+                }
+                distanceIntervalCounter = absolute;
+                break;
+            case 6:
+                distanceIntervalTimer++;
+                if (distanceIntervalTimer == 10) {
+                    if (temp < 5.1) {
+                        firstSplitValue();
+                    } else {
+                        calculateIntervalPaceAndSpeed(5.0);
+                    }
+                    speakText(4);
+                    distanceIntervalTimer = 0;
+                }
+                distanceIntervalCounter = absolute;
+                break;
+            case 7:
+                distanceIntervalTimer++;
+                if (distanceIntervalTimer == 16) {
+                    if (temp < 8.1) {
+                        firstSplitValue();
+                    } else {
+                        calculateIntervalPaceAndSpeed(8.0);
+                    }
+                    speakText(4);
+                    distanceIntervalTimer = 0;
+                }
+                distanceIntervalCounter = absolute;
+                break;
+            case 8:
+                distanceIntervalTimer++;
+                if (distanceIntervalTimer == 20) {
+                    if (temp < 10.1) {
+                        firstSplitValue();
+                    } else {
+                        calculateIntervalPaceAndSpeed(10.0);
+                    }
+                    speakText(4);
+                    distanceIntervalTimer = 0;
+                }
+                distanceIntervalCounter = absolute;
+                break;
+            default:
+                break;
+            }
+    }
+    }
+    
+    func firstSplitValue() {
+    intervalPace = avgpace;
+    intervalSpeed = 60.0 / intervalPace;
+    intervalPrevTime = CFAbsoluteTimeGetCurrent() / 1.00E9;
+    }
+    
+    /*
+     This method is to calculate interval pace and speed
+     */
+    func calculateIntervalPaceAndSpeed(scaling:Double) {
+    intervalCurTime = CFAbsoluteTimeGetCurrent() / 1.00E9;
+    var diffTime = intervalCurTime - intervalPrevTime - splitIntervalPausedTime;
+    if (measuringUnits == 1) {
+    intervalSpeed = (2.23694) * ((scaling * 1609.34) / (diffTime));
+    } else {
+    intervalSpeed = (3.6) * ((scaling * 1000) / (diffTime));
+    }
+    intervalPace = (60.0 / intervalSpeed);
+    intervalPrevTime = intervalCurTime;
+    splitIntervalPausedTime = 0;
+    }
+    
+    
+    
+    
+    
+    func speakText(type:Int)
+    {
+        if NSUserDefaults.standardUserDefaults().boolForKey("voiceFeedback") == true{
+            
+        
+            
+            if NSUserDefaults.standardUserDefaults().boolForKey("sayDistance") == true{
+                
+                if NSUserDefaults.standardUserDefaults().stringForKey("intervalTypeDis") == "0.5"
+                {
+                    if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "1"
+                    {
+                        let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+                        let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Distance.\(distanceInMi), miles");
+                        mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+                        mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+  
+                    }else if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "2"
+                    {
+                        let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+                        let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Distance.\(distanceInMi), kilometers");
+                        mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+                        mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+                    }
+                }else{
+                    if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "1"
+                    {
+                        let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+                        let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Distance.\(distanceInMi), miles");
+                        mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+                        mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+                    }else if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "2"
+                    {
+                        let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+                        let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Distance.\(distanceInMi), kilometers");
+                        mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+                        mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+                    }
+                }
+                
+            }
+            if NSUserDefaults.standardUserDefaults().boolForKey("sayDuration") == true{
+                let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+                let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Distance\(duration)");
+                mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+                mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+                
+            }
+            
+            if NSUserDefaults.standardUserDefaults().boolForKey("sayAveragePace") == true{
+               
+                
+                if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "1"
+                {
+                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Average pace. .\(avgPace.text!), minute, per, mile,");
+                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+                }else if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "2"
+                {
+                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Average pace.\(avgPace.text!), , minute, per, kilometer,");
+                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+                }
+                
+            }
+            
+            if NSUserDefaults.standardUserDefaults().boolForKey("sayAverageSpeed") == true{
+                if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "1"
+                {
+                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Average speed.  .\(avgSpeed.text!), minute, per, mile,");
+                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+                }else if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "2"
+                {
+                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Average speed. \(avgSpeed.text!), , minute, per, kilometer,");
+                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+                }
+            }
+            
+            if NSUserDefaults.standardUserDefaults().boolForKey("saySplitPace") == true{
+                if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "1"
+                {
+                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Split, Pace.   .\(avgSpeed.text!), minute, per, mile,");
+                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+                }else if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "2"
+                {
+                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Split, Pace.  \(avgSpeed.text!), , minute, per, kilometer,");
+                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+                }
+
+            }
+            
+            if NSUserDefaults.standardUserDefaults().boolForKey("saySplitSpeed") == true{
+                if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "1"
+                {
+                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Split, Speed.  .\(avgSpeed.text!), miles, per, hour,");
+                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+                }else if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "2"
+                {
+                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Split, Speed.  \(avgSpeed.text!), , kilometers, per, hour,");
+                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+                }
+
+            }
+            
+            if NSUserDefaults.standardUserDefaults().boolForKey("sayCalories") == true{
+                let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+                let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Calouries, burned. \(caloriesburned)");
+                mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+                mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+            }
+           
+            
+        }
+        
+    }
+    
+    
+    
     func audioType(type:Int){
         switch type {
         case 1:

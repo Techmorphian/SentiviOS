@@ -73,7 +73,12 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                         self.routeData.elevationGain = elevationGain
                     }
                     if let startLocation = item["startLocationP"] as? String{
-                        self.routeData.location = startLocation
+                        if  startLocation == ""
+                        {
+                            self.routeData.location = "UNKNOWN";
+                        }else{
+                            self.routeData.location = startLocation
+                        }
                     }
                     if let date = item["dateP"] as? String{
                         self.routeData.date = date
@@ -215,7 +220,13 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                                     self.routeData.elevationGain = elevationGain
                                 }
                                 if let startLocation = item["startLocationP"] as? String{
-                                    self.routeData.location = startLocation
+                                    if  startLocation == ""
+                                    {
+                                        self.routeData.location = "UNKNOWN";
+                                    }else{
+                                        self.routeData.location = startLocation
+                                    }
+                                    
                                 }
                                 if let date = item["dateP"] as? String{
                                     self.routeData.date = date

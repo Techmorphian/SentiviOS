@@ -12,7 +12,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rr6-gO-jQ3">
-                    <rect key="frame" x="40" y="116" width="520" height="367"/>
+                    <rect key="frame" x="40" y="140" width="520" height="320"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance Feedback Interval" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cev-Rc-DPy">
                             <rect key="frame" x="15" y="13" width="207" height="21"/>
@@ -20,84 +20,110 @@
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8zv-Ht-Y16" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
-                            <rect key="frame" x="15" y="50" width="30" height="30"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8zv-Ht-Y16" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
+                            <rect key="frame" x="15" y="50" width="21" height="22"/>
+                            <state key="normal" image="ic_checked">
+                                <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </state>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MvV-Kh-IaU">
-                            <rect key="frame" x="65" y="54" width="24" height="21"/>
+                            <rect key="frame" x="56" y="51" width="24" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nkd-aq-8kf" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
-                            <rect key="frame" x="15" y="88" width="30" height="30"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nkd-aq-8kf" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
+                            <rect key="frame" x="15" y="80" width="21" height="22"/>
+                            <state key="normal" image="ic_checked">
+                                <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </state>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="exx-B9-Geh">
-                            <rect key="frame" x="65" y="92" width="8" height="21"/>
+                            <rect key="frame" x="56" y="80" width="8" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lyr-Sp-qQd" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
-                            <rect key="frame" x="15" y="126" width="30" height="30"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lyr-Sp-qQd" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
+                            <rect key="frame" x="15" y="110" width="21" height="22"/>
+                            <state key="normal" image="ic_checked">
+                                <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </state>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RPH-ek-qCk">
-                            <rect key="frame" x="65" y="130" width="10" height="21"/>
+                            <rect key="frame" x="56" y="110" width="10" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gxq-iQ-7B2" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
-                            <rect key="frame" x="15" y="164" width="30" height="30"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gxq-iQ-7B2" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
+                            <rect key="frame" x="15" y="140" width="21" height="22"/>
+                            <state key="normal" image="ic_checked">
+                                <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </state>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QRB-op-GBA">
-                            <rect key="frame" x="65" y="168" width="11" height="21"/>
+                            <rect key="frame" x="56" y="140" width="11" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="00q-Ux-Eh5" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
-                            <rect key="frame" x="15" y="202" width="30" height="30"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="00q-Ux-Eh5" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
+                            <rect key="frame" x="15" y="170" width="21" height="22"/>
+                            <state key="normal" image="ic_checked">
+                                <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </state>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FFm-ji-hGe">
-                            <rect key="frame" x="65" y="206" width="11" height="21"/>
+                            <rect key="frame" x="56" y="170" width="11" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ELa-Do-RBF" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
-                            <rect key="frame" x="15" y="240" width="30" height="30"/>
-                        </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ok1-Qg-eD0">
-                            <rect key="frame" x="65" y="244" width="11" height="21"/>
+                            <rect key="frame" x="56" y="200" width="11" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ya-Bj-Ze8" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
-                            <rect key="frame" x="15" y="278" width="30" height="30"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ya-Bj-Ze8" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
+                            <rect key="frame" x="15" y="230" width="21" height="22"/>
+                            <state key="normal" image="ic_checked">
+                                <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </state>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bh9-sz-gys">
-                            <rect key="frame" x="65" y="282" width="11" height="21"/>
+                            <rect key="frame" x="56" y="230" width="11" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2QE-N8-43w" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
-                            <rect key="frame" x="15" y="316" width="30" height="30"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2QE-N8-43w" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
+                            <rect key="frame" x="15" y="260" width="21" height="22"/>
+                            <state key="normal" image="ic_checked">
+                                <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </state>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="54v-6A-Fm4">
-                            <rect key="frame" x="65" y="320" width="18" height="21"/>
+                            <rect key="frame" x="56" y="260" width="18" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kaU-Yy-OzL">
-                            <rect key="frame" x="464" y="329" width="48" height="30"/>
-                            <state key="normal" title="Cancel"/>
+                            <rect key="frame" x="452" y="281" width="48" height="30"/>
+                            <state key="normal" title="Cancel">
+                                <color key="titleColor" red="0.0" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
                             <connections>
                                 <action selector="cancel:" destination="iN0-l3-epB" eventType="touchUpInside" id="Jx6-cf-ZDg"/>
                             </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ELa-Do-RBF" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
+                            <rect key="frame" x="15" y="200" width="21" height="22"/>
+                            <state key="normal" image="ic_checked">
+                                <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </state>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -105,11 +131,14 @@
                         <constraint firstItem="FFm-ji-hGe" firstAttribute="centerY" secondItem="00q-Ux-Eh5" secondAttribute="centerY" id="2jM-Me-vFi"/>
                         <constraint firstItem="Gxq-iQ-7B2" firstAttribute="leading" secondItem="Rr6-gO-jQ3" secondAttribute="leading" constant="15" id="2ty-Lw-RvS"/>
                         <constraint firstItem="Cev-Rc-DPy" firstAttribute="leading" secondItem="Rr6-gO-jQ3" secondAttribute="leading" constant="15" id="2y9-CZ-W2T"/>
+                        <constraint firstAttribute="bottom" secondItem="kaU-Yy-OzL" secondAttribute="bottom" constant="6" id="4HR-TW-nMN"/>
                         <constraint firstItem="00q-Ux-Eh5" firstAttribute="top" secondItem="Gxq-iQ-7B2" secondAttribute="bottom" constant="8" id="4hO-rH-pcM"/>
                         <constraint firstItem="8zv-Ht-Y16" firstAttribute="top" secondItem="Cev-Rc-DPy" secondAttribute="bottom" constant="16" id="6vn-VL-KGG"/>
+                        <constraint firstItem="kaU-Yy-OzL" firstAttribute="leading" secondItem="Rr6-gO-jQ3" secondAttribute="leading" constant="15" id="7GZ-ec-1U4"/>
                         <constraint firstItem="lyr-Sp-qQd" firstAttribute="top" secondItem="nkd-aq-8kf" secondAttribute="bottom" constant="8" id="CAU-yr-OYd"/>
                         <constraint firstItem="nkd-aq-8kf" firstAttribute="leading" secondItem="Rr6-gO-jQ3" secondAttribute="leading" constant="15" id="DTY-Zu-1Rm"/>
                         <constraint firstItem="2QE-N8-43w" firstAttribute="top" secondItem="2ya-Bj-Ze8" secondAttribute="bottom" constant="8" id="Dz9-Ax-Ede"/>
+                        <constraint firstItem="kaU-Yy-OzL" firstAttribute="top" secondItem="54v-6A-Fm4" secondAttribute="bottom" id="En1-DT-wRD"/>
                         <constraint firstItem="54v-6A-Fm4" firstAttribute="leading" secondItem="2QE-N8-43w" secondAttribute="trailing" constant="20" id="GFk-uV-Oyc"/>
                         <constraint firstItem="2QE-N8-43w" firstAttribute="leading" secondItem="Rr6-gO-jQ3" secondAttribute="leading" constant="15" id="GZw-fM-fED"/>
                         <constraint firstItem="8zv-Ht-Y16" firstAttribute="leading" secondItem="Rr6-gO-jQ3" secondAttribute="leading" constant="15" id="GnK-uF-fds"/>
@@ -118,13 +147,14 @@
                         <constraint firstItem="nkd-aq-8kf" firstAttribute="top" secondItem="8zv-Ht-Y16" secondAttribute="bottom" constant="8" id="O57-Oc-U8Y"/>
                         <constraint firstItem="RPH-ek-qCk" firstAttribute="leading" secondItem="lyr-Sp-qQd" secondAttribute="trailing" constant="20" id="Py5-HQ-e1r"/>
                         <constraint firstItem="Gxq-iQ-7B2" firstAttribute="top" secondItem="lyr-Sp-qQd" secondAttribute="bottom" constant="8" id="TlR-Gz-Agx"/>
-                        <constraint firstAttribute="height" constant="367" id="U6F-EA-ekF"/>
+                        <constraint firstAttribute="height" constant="320" id="U6F-EA-ekF"/>
                         <constraint firstItem="MvV-Kh-IaU" firstAttribute="centerY" secondItem="8zv-Ht-Y16" secondAttribute="centerY" id="V1b-Vi-vje"/>
+                        <constraint firstAttribute="trailing" secondItem="kaU-Yy-OzL" secondAttribute="trailing" constant="20" id="Xsv-y9-oKM"/>
                         <constraint firstItem="QRB-op-GBA" firstAttribute="centerY" secondItem="Gxq-iQ-7B2" secondAttribute="centerY" id="YVa-XS-Gln"/>
+                        <constraint firstAttribute="bottom" secondItem="kaU-Yy-OzL" secondAttribute="bottom" id="hcP-pA-2bl"/>
                         <constraint firstItem="ELa-Do-RBF" firstAttribute="top" secondItem="00q-Ux-Eh5" secondAttribute="bottom" constant="8" id="hkZ-Ys-FdQ"/>
                         <constraint firstItem="Ok1-Qg-eD0" firstAttribute="centerY" secondItem="ELa-Do-RBF" secondAttribute="centerY" id="ich-69-dQc"/>
                         <constraint firstItem="QRB-op-GBA" firstAttribute="leading" secondItem="Gxq-iQ-7B2" secondAttribute="trailing" constant="20" id="jkr-sS-uYl"/>
-                        <constraint firstAttribute="bottom" secondItem="kaU-Yy-OzL" secondAttribute="bottom" constant="8" id="ksX-d4-3CY"/>
                         <constraint firstItem="Cev-Rc-DPy" firstAttribute="top" secondItem="Rr6-gO-jQ3" secondAttribute="top" constant="13" id="lgF-tJ-mP0"/>
                         <constraint firstItem="FFm-ji-hGe" firstAttribute="leading" secondItem="00q-Ux-Eh5" secondAttribute="trailing" constant="20" id="nUP-cH-y1o"/>
                         <constraint firstItem="00q-Ux-Eh5" firstAttribute="leading" secondItem="Rr6-gO-jQ3" secondAttribute="leading" constant="15" id="ngW-sc-XR8"/>
@@ -135,11 +165,17 @@
                         <constraint firstItem="bh9-sz-gys" firstAttribute="centerY" secondItem="2ya-Bj-Ze8" secondAttribute="centerY" id="qmS-mT-Udq"/>
                         <constraint firstItem="exx-B9-Geh" firstAttribute="centerY" secondItem="nkd-aq-8kf" secondAttribute="centerY" id="sEo-BD-0Nw"/>
                         <constraint firstItem="MvV-Kh-IaU" firstAttribute="leading" secondItem="8zv-Ht-Y16" secondAttribute="trailing" constant="20" id="uzk-XK-bYJ"/>
-                        <constraint firstAttribute="trailing" secondItem="kaU-Yy-OzL" secondAttribute="trailing" constant="8" id="vIt-sH-8Ed"/>
                         <constraint firstItem="Ok1-Qg-eD0" firstAttribute="leading" secondItem="ELa-Do-RBF" secondAttribute="trailing" constant="20" id="xes-tB-Atz"/>
                         <constraint firstItem="lyr-Sp-qQd" firstAttribute="leading" secondItem="Rr6-gO-jQ3" secondAttribute="leading" constant="15" id="y2O-mv-JUr"/>
                         <constraint firstItem="bh9-sz-gys" firstAttribute="leading" secondItem="2ya-Bj-Ze8" secondAttribute="trailing" constant="20" id="zro-HL-7Ah"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="4HR-TW-nMN"/>
+                            <exclude reference="7GZ-ec-1U4"/>
+                            <exclude reference="hcP-pA-2bl"/>
+                        </mask>
+                    </variation>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -152,6 +188,10 @@
             <connections>
                 <outlet property="mView" destination="Rr6-gO-jQ3" id="2cw-4b-If0"/>
             </connections>
+            <point key="canvasLocation" x="345" y="496"/>
         </view>
     </objects>
+    <resources>
+        <image name="ic_checked" width="21" height="21"/>
+    </resources>
 </document>

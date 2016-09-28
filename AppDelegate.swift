@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import FBSDKCoreKit
 import GoogleMaps
+import GooglePlaces
 
 
 @UIApplicationMain
@@ -22,6 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     {
         // Override point for customization after application launch.
+//        added target for infoplist and addtocal
+    //    GMSPlacesClient.provideAPIKey("AIzaSyBWIi7VAXpFbu1dqX3cXuhu9bB30gUb6u0");
+        
+        GooglePlaces.provideAPIKey("AIzaSyA6bx00Vn8Js2RuMTz636uJHyJ-8VVqrFA");
         
         GMSServices.provideAPIKey("AIzaSyBWIi7VAXpFbu1dqX3cXuhu9bB30gUb6u0")
         self.client = MSClient(

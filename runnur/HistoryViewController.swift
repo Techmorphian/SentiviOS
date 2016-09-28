@@ -89,6 +89,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 
                 let items = jsonData;
                 print(jsonData);
+            
                 for item in items {
                     self.totalNumberOfActivities = self.totalNumberOfActivities + 1;
                     if items.count == self.totalNumberOfActivities
@@ -120,7 +121,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         
                         let formatedDate = CommonFunctions.dateFromFixedFormatString(self.routeData.date!);
                         let currentDate = NSDate()
-                        var dateComparisionResult:NSComparisonResult = currentDate.compare(formatedDate);
+                        let dateComparisionResult:NSComparisonResult = currentDate.compare(formatedDate);
                         if dateComparisionResult == NSComparisonResult.OrderedSame
                         {
                             if !self.checkTodayActivity
@@ -132,7 +133,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         }
                         
                         
-                        var dateComparisionResult2:NSComparisonResult = previousDate.compare(formatedDate);
+                        let dateComparisionResult2:NSComparisonResult = previousDate.compare(formatedDate);
                         if dateComparisionResult2 == NSComparisonResult.OrderedSame
                         {
                             if !self.checkTodayActivity
@@ -220,7 +221,6 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         }
                         
                     }
-                    
                     //                    self.routeDataArray.append(self.routeData);
                     //                    self.counter=String(self.routeDataArray.count);
                     
@@ -339,7 +339,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
         print(paths);
         
-        let getFilePath = paths.URLByAppendingPathComponent(file);
+        _ = paths.URLByAppendingPathComponent(file);
         
         if Reachability.isConnectedToNetwork() == true{
             self.resetData();
@@ -359,7 +359,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 switch position {
                 case 0:
                     
-                    // query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!);
+                    query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!);
                     query.fetchLimit=100;
                     query.orderByDescending("__createdAt");
                     
@@ -367,8 +367,8 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 case 1:
                     
                     //  query.predicate = NSPredicate(format: "performedActivity == [c] %@", "Running");
-                    //  query.predicate = NSPredicate(format: "runnurId == [c] %@ AND performedActivity == [c] %@", argumentArray: [NSUserDefaults.standardUserDefaults().stringForKey("userId")!,"Running"]);
-                    query.predicate = NSPredicate(format: "performedActivity == [c] %@", "Running")
+                    query.predicate = NSPredicate(format: "runnurId == [c] %@ AND performedActivity == [c] %@", argumentArray: [NSUserDefaults.standardUserDefaults().stringForKey("userId")!,"Running"]);
+                    //query.predicate = NSPredicate(format: "performedActivity == [c] %@", "Running")
                     query.fetchLimit=100;
                     query.orderByDescending("__createdAt");
                     
@@ -377,7 +377,9 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 case 2:
                     
                     //  query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
-                    query.predicate = NSPredicate(format: "performedActivity == [c] %@", "Biking")
+                   // query.predicate = NSPredicate(format: "performedActivity == [c] %@", "Biking")
+                    query.predicate = NSPredicate(format: "runnurId == [c] %@ AND performedActivity == [c] %@", argumentArray: [NSUserDefaults.standardUserDefaults().stringForKey("userId")!,"Biking"]);
+
                     query.fetchLimit=100;
                     query.orderByDescending("__createdAt");
                     
@@ -385,7 +387,9 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     
                 case 3:
                     // query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
-                    query.predicate = NSPredicate(format: "performedActivity == [c] %@", "Driving")
+                    //query.predicate = NSPredicate(format: "performedActivity == [c] %@", "Driving")
+                    query.predicate = NSPredicate(format: "runnurId == [c] %@ AND performedActivity == [c] %@", argumentArray: [NSUserDefaults.standardUserDefaults().stringForKey("userId")!,"Driving"]);
+
                     query.fetchLimit=100;
                     query.orderByDescending("__createdAt");
                     
@@ -642,7 +646,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         
         let formatedDate = CommonFunctions.dateFromFixedFormatString(self.routeData.date!);
         let currentDate = NSDate()
-        var dateComparisionResult:NSComparisonResult = currentDate.compare(formatedDate);
+        let dateComparisionResult:NSComparisonResult = currentDate.compare(formatedDate);
         if dateComparisionResult == NSComparisonResult.OrderedSame
         {
             if !self.checkTodayActivity
@@ -654,7 +658,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         }
         
         
-        var dateComparisionResult2:NSComparisonResult = self.previousDate.compare(formatedDate);
+        let dateComparisionResult2:NSComparisonResult = self.previousDate.compare(formatedDate);
         if dateComparisionResult2 == NSComparisonResult.OrderedSame
         {
             if !self.checkTodayActivity
@@ -977,7 +981,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     {
         super.viewDidLoad()
         self.getData();
-        // self.tableView.hidden=true;
+      //  self.tableView.hidden=true;
         tableView.estimatedRowHeight = 138;
         tableView.rowHeight = UITableViewAutomaticDimension;
         
@@ -1026,8 +1030,8 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         // actionButton = ActionButton(attachedToView: self.view, items: [map, Satellite,Terrain])
         
         actionButton.action = { button in button.toggleMenu() }
-        // actionButton.setImage(UIImage(named: "ic_fab_map_format"), forState: .Normal);
-        actionButton.setTitle("+", forState: UIControlState.Normal);
+         actionButton.setImage(UIImage(named: "ic_fab_add_red"), forState: .Normal);
+       // actionButton.setTitle("+", forState: UIControlState.Normal);
         
         //  let orgColor = UIColor(red: 255/255, green: 102/255, blue: 102/255, alpha: 1)
         actionButton.backgroundColor = colorCode.BlueColor;

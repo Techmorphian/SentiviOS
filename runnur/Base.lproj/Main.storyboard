@@ -1561,10 +1561,10 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tsm-6R-HSO" customClass="BarChartView" customModule="Charts">
-                                <rect key="frame" x="0.0" y="140" width="600" height="75"/>
+                                <rect key="frame" x="0.0" y="140" width="600" height="0.0"/>
                                 <color key="backgroundColor" red="0.19215686269999999" green="0.54901960780000003" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="75" id="dhH-Rc-g0R"/>
+                                    <constraint firstAttribute="height" id="dhH-Rc-g0R"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="75" id="dzI-P7-F35"/>
                                 </constraints>
                                 <variation key="default">
@@ -1574,7 +1574,7 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AmF-JP-era">
-                                <rect key="frame" x="0.0" y="215" width="600" height="20"/>
+                                <rect key="frame" x="0.0" y="140" width="600" height="20"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_up_down" translatesAutoresizingMaskIntoConstraints="NO" id="ewu-CY-bSF">
                                         <rect key="frame" x="293" y="6" width="14" height="8"/>
@@ -1773,6 +1773,18 @@
                                     <constraint firstAttribute="bottom" secondItem="reF-Lo-tZW" secondAttribute="bottom" id="yhw-4e-4hV"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R8K-MK-qhf">
+                                <rect key="frame" x="530" y="170" width="50" height="50"/>
+                                <color key="backgroundColor" red="1" green="0.36078431370000003" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="uKa-Xq-6T7"/>
+                                    <constraint firstAttribute="width" constant="50" id="yRS-fc-QGK"/>
+                                </constraints>
+                                <state key="normal" image="ic_fab_search"/>
+                                <connections>
+                                    <action selector="searchButtonAction:" destination="qlI-4J-PnI" eventType="touchUpInside" id="fmW-Bd-eOU"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GWl-O8-Qrk">
                                 <rect key="frame" x="530" y="480" width="50" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1786,10 +1798,6 @@
                                     <action selector="getMyLocation:" destination="qlI-4J-PnI" eventType="touchUpInside" id="ybW-bP-JwH"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9JU-DA-fKV">
-                                <rect key="frame" x="559" y="250" width="19" height="19"/>
-                                <state key="normal" image="place_picker_search_icon.png"/>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1798,7 +1806,7 @@
                             <constraint firstItem="CsY-aH-7CI" firstAttribute="top" secondItem="GWl-O8-Qrk" secondAttribute="bottom" constant="10" id="27C-TN-FS5"/>
                             <constraint firstItem="FDi-hi-MsU" firstAttribute="top" secondItem="WEw-Ov-Pr2" secondAttribute="bottom" id="44j-rU-gTy"/>
                             <constraint firstItem="tsm-6R-HSO" firstAttribute="top" secondItem="vJP-47-sRl" secondAttribute="bottom" id="5IJ-7y-xXX"/>
-                            <constraint firstItem="9JU-DA-fKV" firstAttribute="top" secondItem="AmF-JP-era" secondAttribute="bottom" constant="15" id="89c-pM-np5"/>
+                            <constraint firstAttribute="trailing" secondItem="R8K-MK-qhf" secondAttribute="trailing" constant="20" symbolic="YES" id="7vf-QA-PXO"/>
                             <constraint firstItem="vJP-47-sRl" firstAttribute="trailing" secondItem="M1h-SZ-bFq" secondAttribute="trailing" id="93L-Wn-a65"/>
                             <constraint firstItem="TF9-Ef-eMA" firstAttribute="top" secondItem="tvI-CH-605" secondAttribute="top" id="B3O-PC-RHA"/>
                             <constraint firstItem="CsY-aH-7CI" firstAttribute="top" secondItem="M1h-SZ-bFq" secondAttribute="bottom" id="BRr-QD-pYD"/>
@@ -1806,9 +1814,9 @@
                             <constraint firstItem="TF9-Ef-eMA" firstAttribute="leading" secondItem="tvI-CH-605" secondAttribute="leading" id="F4b-mM-cQQ"/>
                             <constraint firstItem="AmF-JP-era" firstAttribute="trailing" secondItem="tsm-6R-HSO" secondAttribute="trailing" id="Gyd-8Z-dHm"/>
                             <constraint firstItem="tsm-6R-HSO" firstAttribute="trailing" secondItem="vJP-47-sRl" secondAttribute="trailing" id="NgL-LA-NAg"/>
+                            <constraint firstItem="R8K-MK-qhf" firstAttribute="top" secondItem="AmF-JP-era" secondAttribute="bottom" constant="10" id="OCL-o2-SJ6"/>
                             <constraint firstItem="CsY-aH-7CI" firstAttribute="top" secondItem="WEw-Ov-Pr2" secondAttribute="bottom" constant="201" id="PtD-2E-UBS"/>
                             <constraint firstItem="vJP-47-sRl" firstAttribute="leading" secondItem="M1h-SZ-bFq" secondAttribute="leading" id="Qop-Ik-PXC"/>
-                            <constraint firstAttribute="trailing" secondItem="9JU-DA-fKV" secondAttribute="trailing" constant="22" id="RMa-1W-txH"/>
                             <constraint firstItem="M1h-SZ-bFq" firstAttribute="top" secondItem="TF9-Ef-eMA" secondAttribute="bottom" id="Wfs-qg-aRH"/>
                             <constraint firstItem="M1h-SZ-bFq" firstAttribute="top" secondItem="TF9-Ef-eMA" secondAttribute="bottom" id="Xvq-td-2bl"/>
                             <constraint firstItem="WEw-Ov-Pr2" firstAttribute="leading" secondItem="tvI-CH-605" secondAttribute="leadingMargin" constant="215" id="YKd-CR-CvK"/>
@@ -1843,8 +1851,12 @@
                     <connections>
                         <outlet property="arrow" destination="ewu-CY-bSF" id="239-AG-lhP"/>
                         <outlet property="customViewHeight" destination="dhH-Rc-g0R" id="LKD-fh-OKL"/>
+                        <outlet property="elevationGain" destination="Ua8-CM-zeP" id="oyG-bX-DTi"/>
+                        <outlet property="elevationLoss" destination="0KU-9v-hP9" id="zxe-PD-slu"/>
                         <outlet property="getMyLocation" destination="GWl-O8-Qrk" id="wrQ-5n-cTX"/>
                         <outlet property="mapView" destination="M1h-SZ-bFq" id="Xje-pc-0Vw"/>
+                        <outlet property="routeDistance" destination="VPi-cD-bgs" id="Afk-Gn-ndd"/>
+                        <outlet property="searchButton" destination="R8K-MK-qhf" id="bxH-Z4-Bch"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KRI-ss-Enj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3680,10 +3692,10 @@
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="Xf5-hf-wwQ"/>
-                                        <exclude reference="tv7-cD-Zk3"/>
-                                        <exclude reference="dbv-7L-xwU"/>
                                         <exclude reference="XQB-HL-DQg"/>
+                                        <exclude reference="Xf5-hf-wwQ"/>
+                                        <exclude reference="dbv-7L-xwU"/>
+                                        <exclude reference="tv7-cD-Zk3"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -3711,6 +3723,9 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="ic_uncheck-1" translatesAutoresizingMaskIntoConstraints="NO" id="6sU-eT-gur">
+                                                    <rect key="frame" x="564" y="44" width="21" height="21"/>
+                                                </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C0p-We-xo0">
                                                     <rect key="frame" x="0.0" y="35" width="600" height="39"/>
                                                     <connections>
@@ -3724,9 +3739,6 @@
                                                         <constraint firstAttribute="height" constant="1" id="Ufq-jr-itx"/>
                                                     </constraints>
                                                 </view>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="ic_checked" translatesAutoresizingMaskIntoConstraints="NO" id="6sU-eT-gur">
-                                                    <rect key="frame" x="564" y="44" width="21" height="21"/>
-                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Measuring Units" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3eY-qX-gIM">
                                                     <rect key="frame" x="8" y="96" width="125" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -3842,6 +3854,7 @@
                                             <outlet property="autoPauseImg" destination="6sU-eT-gur" id="dAS-d8-6UN"/>
                                             <outlet property="distanceFeedback" destination="VhK-P3-O4g" id="r6n-Ba-WQc"/>
                                             <outlet property="measuringUnits" destination="dS4-ur-cGm" id="WCU-9s-BGe"/>
+                                            <outlet property="voiceFeedbackSwitch" destination="MaW-Of-8o2" id="DCY-Vr-97W"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SettingVoiceTableViewCell" rowHeight="64" id="jdH-iA-K4V" customClass="SettingVoiceTableViewCell" customModule="Sentiv" customModuleProvider="target">
@@ -3857,7 +3870,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="ic_checked" translatesAutoresizingMaskIntoConstraints="NO" id="3cj-KT-JKe">
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="ic_uncheck-1" translatesAutoresizingMaskIntoConstraints="NO" id="3cj-KT-JKe">
                                                     <rect key="frame" x="564" y="21" width="21" height="21"/>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2fk-3u-0uz">
@@ -11033,6 +11046,7 @@
         <image name="ic_elevation_loss" width="38" height="38"/>
         <image name="ic_exit_challenge" width="19" height="16"/>
         <image name="ic_expand" width="21" height="16"/>
+        <image name="ic_fab_search" width="25" height="25"/>
         <image name="ic_general_faq" width="28" height="28"/>
         <image name="ic_gps_low_range" width="41" height="41"/>
         <image name="ic_help" width="28" height="28"/>
@@ -11059,6 +11073,7 @@
         <image name="ic_time" width="27" height="27"/>
         <image name="ic_time_inactive" width="27" height="27"/>
         <image name="ic_uncheck" width="21" height="21"/>
+        <image name="ic_uncheck-1" width="21" height="21"/>
         <image name="ic_undo" width="25" height="25"/>
         <image name="ic_up_down" width="14" height="8"/>
         <image name="ic_weather" width="25" height="20"/>
