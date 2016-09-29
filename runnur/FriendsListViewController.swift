@@ -202,7 +202,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         {
             //////// on i position we get name as well as image position that y we are  appending i position ofcontactImages in to a SearchContactImages
             
-            friendsName = friendListArray[i].firstName + friendListArray[i].lastName
+            friendsName = friendListArray[i].firstName + " " + friendListArray[i].lastName
             
             if let _ =  friendsName.lowercaseString.rangeOfString(searchController.lowercaseString, options: .RegularExpressionSearch)
                 
@@ -243,7 +243,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
             
             self.label.hidden = false;
             
-            self.label.frame = CGRectMake(0, self.view.frame.size.height/2, self.view.frame.width, 50)
+            self.label.frame = CGRectMake(20, self.view.frame.size.height/2, self.view.frame.width-20, 50)
             
             self.label.center = self.view.center
             
@@ -255,9 +255,10 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
             
             self.label.lineBreakMode = NSLineBreakMode.ByWordWrapping
             
-            self.label.font = self.label.font.fontWithSize(13)
+            self.label.font = self.label.font.fontWithSize(15)
             
             self.label.textColor = colorCode.DarkGrayColor
+              
             
             self.view.addSubview(self.label)
             
@@ -317,6 +318,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
     {
         
         
+        self.searchTextField.text = ""
         
         let ourPropety = self.storyboard?.instantiateViewControllerWithIdentifier("AddFriendsViewController") as! AddFriendsViewController;
         
@@ -804,6 +806,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         self.RemoveNoFrinedResult()
         self.RemoveNoResult();
         
+        self.label.hidden = true
         
         CommonFunctions.showActivityIndicator(view)
         
@@ -1081,7 +1084,8 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                                 
                                 
                                  self.RemoveNoInternet();
-                                self.RemoveNoResult();
+                            
+                                 self.RemoveNoResult();
                             
                             
                                   self.searchTextField.hidden = true
@@ -1089,7 +1093,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                             
                                  self.icCancelImageView.hidden = true
                             
-                            self.upperViewHeightConstraint.constant = 65
+                                 self.upperViewHeightConstraint.constant = 65
                             
                                 if self.view.subviews.contains(self.noFriendResult.view)
                                     
@@ -1105,6 +1109,9 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                                     self.noFriendResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoFriendViewController") as! NoFriendViewController
                                     
                                     self.noFriendResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+                                    
+                                    
+                                    self.noFriendResult.msgLabel.text = msg
                                     
                                     self.view.addSubview((self.noFriendResult.view)!);
                                     
@@ -1288,18 +1295,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
     
     
     
-    
-//
-//    var FirstName = ["Kareena","Deepika","hrithik","ranbir","farhan","alia"]
-//      var LastName = ["Kapoor","padukon","roshan","kapoor","akhtar","bhatt"]
-//    
-//    
-//    var photoUrl = ["download (3)","download (2)","images (4)","download (5)","download (7)","download (9)"]
-//    
-//    
-    
-    
-    
+        
     
     
     override func viewDidAppear(animated: Bool)
@@ -1312,6 +1308,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
             
             friendListArray.removeAll();
             
+            friendsTableView.reloadData();
             friendList();
             
         }
@@ -1475,6 +1472,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         super.viewDidLoad()
         
         
+                
         //// push notification
         
           NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FriendsListViewController.methodOfReceivedNotification(_:)), name:"showAlert", object: nil)

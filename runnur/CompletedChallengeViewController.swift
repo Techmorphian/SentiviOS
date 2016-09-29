@@ -892,6 +892,9 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
         
     {
         
+        
+        RemoveNoInternet();
+        RemoveNoResult();
         showActivityIndicator();
         
         let myurl = NSURL(string: Url.viewCompletedChallenges)
@@ -1531,32 +1534,19 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
 
     
     
-    
-    
-    
-    override func viewDidLoad()
+    override func viewDidAppear(animated: Bool)
     {
-        super.viewDidLoad()
-        
-        
-        completedTableView.separatorColor = UIColor.clearColor()
-     
-        
-          NSUserDefaults.standardUserDefaults().setBool(false, forKey: "FromCreateCauseAndGroupFitScreen")
-        
-        completedTableView.tableFooterView = UIView()
-      
-        //// addObserver
-        NSNotificationCenter.defaultCenter().addObserver(self,selector: #selector(CompletedChallengeViewController.FilterButtonActive(_:)),name: "filterClicked",object: nil)
-        
         
         if(Reachability.isConnectedToNetwork()==true )
         {
-        
-            showActivityIndicator();
-
+            
+            self.participatingArray.removeAll();
+            self.contributingArray.removeAll();
+            
+            self.completedTableView.reloadData();
+            
             self.viewCompletedChallenges();
-
+            
             
         }
             
@@ -1596,6 +1586,25 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
             }
             
         }
+
+    }
+    
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        
+        
+        completedTableView.separatorColor = UIColor.clearColor()
+     
+        
+          NSUserDefaults.standardUserDefaults().setBool(false, forKey: "FromCreateCauseAndGroupFitScreen")
+        
+        completedTableView.tableFooterView = UIView()
+      
+        //// addObserver
+        NSNotificationCenter.defaultCenter().addObserver(self,selector: #selector(CompletedChallengeViewController.FilterButtonActive(_:)),name: "filterClicked",object: nil)
+        
         
 
         

@@ -195,7 +195,7 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
                 }
                 else
                 {
-                    self.email = "avetkar@yahoo.com"
+                   // self.email = "avetkar@yahoo.com"
                 }
                 let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
                 let Client = delegate!.client!;
@@ -262,7 +262,6 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
         if isFacebook
         {
             
-            print(id)
             
             
             let aString: String =  id
@@ -274,7 +273,9 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
              NSUserDefaults.standardUserDefaults().setObject(FacebookId, forKey: "facebookId")
             print(FacebookId)
             
-           
+            NSUserDefaults.standardUserDefaults().setObject(token, forKey: "facebookToken")
+            
+            print(NSUserDefaults.standardUserDefaults().stringForKey("facebookToken"))
             
             print(NSUserDefaults.standardUserDefaults().stringForKey("facebookId"))
 

@@ -1108,7 +1108,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                        shouldShowNOInternet = false
                         
                         
-                       shouldShowSomethingWent == false
+                       shouldShowSomethingWent = false
                     
                         
                      var indexPath : [NSIndexPath] = [NSIndexPath]()
@@ -1435,7 +1435,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                             
                                             let FirstName = activityData!["FirstName"] as! String
                                           
-                                           // let FirstName = "Kareena"
+                                         
 
                                             
                                             if FirstName != ""
@@ -1447,7 +1447,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                             
                                            let LastName = activityData!["LastName"] as! String
                                             
-                                            //let LastName = "Kapoor"
+                                           
                                             if LastName != ""
                                             {
                                                 self.activityModel.LastName = LastName
@@ -1584,7 +1584,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                     if NSUserDefaults.standardUserDefaults().boolForKey("isMyPaggingCalled") == true
                                         
                                     {
-                                         var indexes = self.ActivityTableView.indexPathsForVisibleRows
+                                         let indexes = self.ActivityTableView.indexPathsForVisibleRows
                                          self.beforeContentSize = self.ActivityTableView.contentSize;
                                          self.ActivityTableView.beginUpdates()
                                         self.ActivityTableView.insertRowsAtIndexPaths(indexPath, withRowAnimation: UITableViewRowAnimation.None)
@@ -1594,7 +1594,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                         self.afterContentSize = self.ActivityTableView.contentSize;
                                         self.afterContentOffset = self.ActivityTableView.contentOffset;
                                         self.ActivityTableView.contentOffset = CGPoint(x: self.afterContentOffset.x, y: self.afterContentOffset.y + self.afterContentSize.height - self.beforeContentSize.height)
-                                        var index = indexes?.last?.row
+                                        let index = indexes?.last?.row
                                         
                                         let ad = elements.count + index!;
                                         

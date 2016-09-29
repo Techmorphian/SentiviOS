@@ -14,6 +14,12 @@ class NoFriendViewController: UIViewController
     
     @IBOutlet var msgLabel: UILabel!
     
+    @IBOutlet var letsGetGoingLabel: UILabel!
+    
+    
+    @IBOutlet var letsGetGoingHeight: NSLayoutConstraint!
+    
+    
     
     override func viewDidLoad()
     {

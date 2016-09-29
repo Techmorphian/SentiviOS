@@ -306,6 +306,7 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
             {
                 
                 
+                print(error)
                 
                 let alert = UIAlertController(title: "", message:"something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
                 
@@ -319,7 +320,7 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
                 
 
                 
-                print(error)
+              
                 
             }
             

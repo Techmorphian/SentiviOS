@@ -915,6 +915,10 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         //showActivityIndicatory();
         
        // CommonFunctions.showActivityIndicator(view);
+        
+        
+        RemoveNoInternet();
+        RemoveNoResult();
         showActivityIndicator();
         
         let myurl = NSURL(string: Url.viewActiveChallenges)

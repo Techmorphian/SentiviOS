@@ -122,6 +122,17 @@ class AddViaGoogleViewController: UIViewController,UITableViewDataSource,UITable
     
 
     @IBOutlet var searchCancelButton: UIButton!
+    
+    
+    @IBOutlet var searchIcon: UIImageView!
+    
+    @IBOutlet var icCancelImageView: UIImageView!
+    
+    @IBOutlet var upperViewHeightConstraint: NSLayoutConstraint!
+
+    
+    
+    
     var googleModel = phoneBookModel()
     
     var googleArray = [phoneBookModel]()
@@ -256,7 +267,7 @@ class AddViaGoogleViewController: UIViewController,UITableViewDataSource,UITable
         {
             //////// on i position we get name as well as image position that y we are  appending i position ofcontactImages in to a SearchContactImages
             
-            friendsName = googleArray[i].firstName + googleArray[i].lastName
+            friendsName = googleArray[i].firstName + " " + googleArray[i].lastName
 
             
             if let _ = friendsName.lowercaseString.rangeOfString(searchController.lowercaseString, options: .RegularExpressionSearch)
@@ -296,7 +307,7 @@ class AddViaGoogleViewController: UIViewController,UITableViewDataSource,UITable
             
             self.label.hidden = false;
             
-            self.label.frame = CGRectMake(0, self.view.frame.size.height/2, self.view.frame.width, 50)
+            self.label.frame = CGRectMake(20, self.view.frame.size.height/2, self.view.frame.width-20, 50)
             
             self.label.center = self.view.center
             
@@ -308,7 +319,7 @@ class AddViaGoogleViewController: UIViewController,UITableViewDataSource,UITable
             
             self.label.lineBreakMode = NSLineBreakMode.ByWordWrapping
             
-            self.label.font = self.label.font.fontWithSize(13)
+            self.label.font = self.label.font.fontWithSize(15)
             
             self.label.textColor = colorCode.DarkGrayColor
             
@@ -1182,6 +1193,13 @@ class AddViaGoogleViewController: UIViewController,UITableViewDataSource,UITable
         let paddingView1 = UIView(frame: CGRectMake(0, 0, 20, self.searchTextField.frame.height))
         searchTextField.leftView = paddingView1
         searchTextField.leftViewMode = UITextFieldViewMode.Always
+        
+        
+        let paddingView2 = UIView(frame: CGRectMake(self.searchTextField.frame.width-10, 0, 20, self.searchTextField.frame.height))
+        
+        searchTextField.rightView = paddingView2
+        searchTextField.rightViewMode = UITextFieldViewMode.Always
+
         
         
         //MARK:-  placeholder in text fileds

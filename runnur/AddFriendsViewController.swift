@@ -133,6 +133,7 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
             
     
             NSUserDefaults.standardUserDefaults().setObject(FBSDKAccessToken.currentAccessToken().tokenString, forKey: "facebookToken")
+            
             NSUserDefaults.standardUserDefaults().setObject(FBSDKAccessToken.currentAccessToken().userID, forKey: "facebookID")
             
              print(NSUserDefaults.standardUserDefaults().stringForKey("facebookID"))
@@ -140,21 +141,18 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
             
             print(NSUserDefaults.standardUserDefaults().stringForKey("facebookToken"))
             
-          //  ["fields": "id, first_name, last_name, middle_name, name, email, picture"]
             
-            
-           
             
             FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"]).startWithCompletionHandler({ (connection, result, error) -> Void in
                 if (error == nil)
                 {
                     print(result)
                     
-                    
                     self.activityIndicator.stopAnimating();
                     
                     self.loadingView.removeFromSuperview();
                     
+                    //// WB Service UpdateFacebookToken
                     self.UpdateFacebookToken();
                     
                  
@@ -189,7 +187,13 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
             
             let params = ["fields": "id, first_name, last_name, middle_name, name, email, picture"]
             
-            let graphRequest: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me/friends", parameters: params)
+//            let graphRequest: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me/friends", parameters: params)
+          
+            print(NSUserDefaults.standardUserDefaults().stringForKey("facebookToken"))
+            
+               let graphRequest: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me/friends", parameters: params, tokenString: NSUserDefaults.standardUserDefaults().stringForKey("facebookToken"), version: "", HTTPMethod: "GET")
+            
+            print(graphRequest)
             
             graphRequest.startWithCompletionHandler({ (connection, result, error: NSError!) -> Void in
                 

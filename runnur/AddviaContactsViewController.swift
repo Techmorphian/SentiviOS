@@ -108,6 +108,22 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     @IBOutlet var searchCancelButton: UIButton!
     
     
+    
+    
+    
+    @IBOutlet var searchIcon: UIImageView!
+        
+    @IBOutlet var icCancelImageView: UIImageView!
+    
+    @IBOutlet var upperViewHeightConstraint: NSLayoutConstraint!
+
+    
+    
+    
+    
+    
+    
+    
      //var selectedIndex = [String]()
     
     var selectedContact = [String]()
@@ -126,14 +142,14 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     var searchPBArray = [phoneBookModel]()
 
     
-    //// to get filter PhonebookContacts
+//    //// to get filter PhonebookContacts
+//    
+//    var PBFilterModel = phoneBookModel()
+//    
+//    var PBFilterArray = [phoneBookModel]()
+//
     
-    var PBFilterModel = phoneBookModel()
-    
-    var PBFilterArray = [phoneBookModel]()
-
-    
-    
+  // genelia@lll.com
     
     @IBAction func backButtonAction(sender: AnyObject)
     {
@@ -249,6 +265,13 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         if self.contactList.count == 0
         {
             
+            self.searchTextField.hidden = true
+            self.searchIcon.hidden = true
+            
+            self.icCancelImageView.hidden = true
+            
+            self.upperViewHeightConstraint.constant = 65
+
             
             
             self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
@@ -308,7 +331,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         {
             //////// on i position we get name as well as image position that y we are  appending i position ofcontactImages in to a SearchContactImages
             
-             friendsName = PBArray[i].firstName + PBArray[i].lastName
+             friendsName = PBArray[i].firstName + " " + PBArray[i].lastName
             
             if let _ =  friendsName.lowercaseString.rangeOfString(searchController.lowercaseString, options: .RegularExpressionSearch)
             
@@ -334,10 +357,12 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                 
                  searchPBModel.toShow = PBArray[i].toShow;
                 
-                print(PBArray[i].firstName)
+             
                 
                 
                 searchPBArray.append(searchPBModel)
+                
+             
        
                 
             }
@@ -349,9 +374,10 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
        {
         
         
+        
             self.label.hidden = false;
         
-            self.label.frame = CGRectMake(0, self.view.frame.size.height/2, self.view.frame.width, 50)
+            self.label.frame = CGRectMake(20, self.view.frame.size.height/2, self.view.frame.width-20, 50)
         
             self.label.center = self.view.center
             
@@ -363,7 +389,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             
             self.label.lineBreakMode = NSLineBreakMode.ByWordWrapping
             
-            self.label.font = self.label.font.fontWithSize(13)
+            self.label.font = self.label.font.fontWithSize(15)
         
             self.label.textColor = colorCode.DarkGrayColor
         
@@ -376,6 +402,15 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         }
         else
         {
+            
+            
+            self.searchTextField.hidden = false
+            self.searchIcon.hidden = false
+            
+            self.icCancelImageView.hidden = false
+            
+            self.upperViewHeightConstraint.constant = 100
+            
          self.label.hidden = true;
         
         }
@@ -385,7 +420,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         {
             
             
-            print("sgdsghghd")
+           // print("sgdsghghd")
         
         }
 
@@ -399,12 +434,15 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
     {
-        print(range)
+        
+        
+       
         
         if let swRange = textField.text?.rangeFromNSRange(range)
         {
             let textFieldData = (textField.text)!.stringByReplacingCharactersInRange(swRange, withString:string)
             
+          
             
             if textFieldData == ""
             {
@@ -417,6 +455,15 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                 
                 if  contactList.count == 0 && PBArray.count == 0
                 {
+                    
+                    
+                    self.searchTextField.hidden = true
+                    self.searchIcon.hidden = true
+                    
+                    self.icCancelImageView.hidden = true
+                    
+                    self.upperViewHeightConstraint.constant = 65
+
                     
                     self.label.frame = CGRectMake(0, self.view.frame.size.height/2, self.view.frame.width, 50)
                     
@@ -441,6 +488,13 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                 {
                     
                     
+                    self.searchTextField.hidden = true
+                    self.searchIcon.hidden = true
+                    
+                    self.icCancelImageView.hidden = true
+                    
+                    self.upperViewHeightConstraint.constant = 65
+
                     
                     self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
                     
@@ -457,8 +511,15 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             }
             else
             {
-                print(textFieldData)
-                updateSearchResultsForSearchController(textFieldData)
+                
+                self.searchTextField.hidden = false
+                self.searchIcon.hidden = false
+                
+                self.icCancelImageView.hidden = false
+                
+                self.upperViewHeightConstraint.constant = 100
+                
+                 updateSearchResultsForSearchController(textFieldData)
             }
             
         }
@@ -514,7 +575,14 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         else
         {
             
+//            PBArray[indexPath.row].toShow == true
+//            {
+//                    
+//            }
+           
             return PBArray.count
+                
+         
             
         }
         
@@ -528,13 +596,15 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     
     {
        
+      
+       
         
-        print(PBArray.count)
+        
         for i in 0 ..< PBArray.count
         {
             
-            print(PBArray[i].Email)
-            print(PBArray.count)
+            //print(PBArray[i].Email)
+           
             for j in PBArray[i].Email
             {
                 
@@ -542,9 +612,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                 for k in friendListArray
                 {
                    
-                    print(k.Email)
-                    
-                  
+                    //print(k.Email)
                     
                     
                     if k.Email[0] == j
@@ -552,7 +620,11 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                     {
                         PBArray[i].toShow = false
                   
-                       
+//                        print(PBArray.count)
+//                        print(PBArray[i])
+//                        
+//                        print(PBArray[i].firstName)
+//                        print(PBArray[i].Email)
                         
                         break;
                     }
@@ -562,10 +634,6 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             }
         }
         
-        
-        print(contactList)
-        
-        print(contactList.count)
         
         if  contactList.count == 0 && PBArray.count == 0
         {
@@ -779,13 +847,6 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             
             selectedIndex.append(String(searchPBArray[indexPath.row].indexPathRow))
             
-            print(selectedFristName)
-            
-            print(selectedLastName)
-            print(selectedEmail)
-            print(selectedMobNo)
-            
-            print(selectedIndex)
             
 
             /// mark:- action sheet
@@ -815,12 +876,12 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                         
                         self.selectedEmail.append(title)
                         
-                        print(self.selectedEmail)
+                      
                         
                         
                         cell.selectedUnselectedImageView.image = UIImage(named: "ic_checked")
                         
-                        print(title)
+                       
                         
                     }
                     actionSheetController.addAction(myAction)
@@ -912,12 +973,12 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                                 
                                self.selectedEmail.append(title)
                                 
-                                   print(self.selectedEmail)
+                                
                                 
                                 
                                 cell.selectedUnselectedImageView.image = UIImage(named: "ic_checked")
 
-                                print(title)
+                               
                                 
                             }
                             actionSheetController.addAction(myAction)
@@ -1054,12 +1115,12 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                 
             }
 
-             for i in selectedIndex
+            for i in selectedIndex
             {
                 if Int(i) == indexPath.row
                 {
                     
-                    print(selectedIndex)
+                   // print(selectedIndex)
                     
                     let index = selectedIndex.indexOf(i)
                     selectedIndex.removeAtIndex(index!)
@@ -1090,6 +1151,9 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     func addFriends()
         
     {
+        
+        
+        
         
         
       
@@ -1124,7 +1188,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         }
         
         let  friendFbIds  = cliendIds.joinWithSeparator("&")
-        print(friendFbIds);
+        //print(friendFbIds);
         
         
         let postString = "userId=\(userId!)&\(friendFbIds)";
@@ -1186,7 +1250,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         
         
         
-        print(dataString!)
+        //print(dataString!)
         
         
         if dataTask.currentRequest?.URL! == NSURL(string: Url.addFriends)
@@ -1590,7 +1654,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             {
                
                    
-                               CommonFunctions.hideActivityIndicator();
+                CommonFunctions.hideActivityIndicator();
    
                 
                 
@@ -1615,9 +1679,9 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                     
                                 self.contactList = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(self.addressBook, nil, ABPersonSortOrdering(kABPersonSortByFirstName)).takeRetainedValue() as [ABRecordRef]
                     
-                                print("records in the array \(self.contactList.count)")
-                    
-                                print("contactList \(self.contactList)")
+//                                print("records in the array \(self.contactList.count)")
+//                    
+//                                print("contactList \(self.contactList)")
                     
                                 for record in self.contactList
                     
@@ -1629,9 +1693,17 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                                     self.RemoveNoInternet();
                     
                                     self.RemoveNoResult();
+                                    
+                                    
+                                    self.searchTextField.hidden = false
+                                    self.searchIcon.hidden = false
+                                    
+                                    self.icCancelImageView.hidden = false
+                                    
+                                    self.upperViewHeightConstraint.constant = 100
                     
                                     self.PBModel=phoneBookModel()
-                    
+                                
                     
                     
                                     if let v = ABRecordCopyValue(record,kABPersonEmailProperty)
@@ -1649,8 +1721,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                     
                                                 self.allEmails = ABMultiValueCopyArrayOfAllValues(emails).takeRetainedValue() as NSArray
                     
-                                                print(self.allEmails)
-                    
+                                               // print(self.allEmails)
                                                 
                                                 if self.allEmails.count > 0
                                                 {
@@ -1765,7 +1836,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                                                     var image: UIImage?
                                                     
                                                     
-                                                    print(ABPersonHasImageData(record))
+                                                    //print(ABPersonHasImageData(record))
                                                     if ABPersonHasImageData(record)
                                                     {
                                                         
@@ -1827,7 +1898,6 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                     
                     
                     
-                    print(self.contactList.count)
                     
                     
                             if self.contactList.count == 0
@@ -1844,6 +1914,14 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                                     
                                 {
                                     
+                                    
+                                    self.searchTextField.hidden = true
+                                    self.searchIcon.hidden = true
+                                    
+                                    self.icCancelImageView.hidden = true
+                                    
+                                    self.upperViewHeightConstraint.constant = 65
+
                                     
                                     self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
                                     
@@ -1878,6 +1956,15 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                         {
                             
                             
+                            
+                            self.searchTextField.hidden = true
+                            self.searchIcon.hidden = true
+                            
+                            self.icCancelImageView.hidden = true
+                            
+                            self.upperViewHeightConstraint.constant = 65
+
+                            
                             self.noResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoResultViewController") as! NoResultViewController
                             
                             self.noResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
@@ -1895,21 +1982,12 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                         
                     }
                     
-
-                    
-                   
-                       self.filterValues();
-                    
-                    
+                    self.filterValues();
                     
                     self.ContactTableView.delegate = self;
                     self.ContactTableView.dataSource = self;
                     
                     self.ContactTableView.reloadData();
-                    
-
-                            
-
                     
                     
                 }
@@ -1917,9 +1995,6 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             
         }
         
-        
-            
-
         
     }
     
@@ -2061,7 +2136,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         
         let aps = data.objectForKey("aps")
         
-        print(aps)
+        
         
         var NotificationMessage = String()
         NotificationMessage = aps!["alert"] as! String
@@ -2101,10 +2176,6 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         super.viewDidLoad()
         
         
-       
-       
-          //  processContactNames();
-            
         ////// push notification
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddviaContactsViewController.methodOfReceivedNotification(_:)), name:"showAlert", object: nil)
@@ -2125,8 +2196,16 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         ///////// padding views in text fileds
         
         let paddingView1 = UIView(frame: CGRectMake(0, 0, 20, self.searchTextField.frame.height))
+        
         searchTextField.leftView = paddingView1
         searchTextField.leftViewMode = UITextFieldViewMode.Always
+        
+        
+        let paddingView2 = UIView(frame: CGRectMake(self.searchTextField.frame.width-10, 0, 20, self.searchTextField.frame.height))
+        
+        searchTextField.rightView = paddingView2
+        searchTextField.rightViewMode = UITextFieldViewMode.Always
+
         
         
         //MARK:-  placeholder in text fileds
@@ -2135,10 +2214,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         searchTextField.attributedPlaceholder = placeholder1
         
        
-        
-        
-        print(friendListArray)
-        print(friendListModel)
+      
         
     }
 

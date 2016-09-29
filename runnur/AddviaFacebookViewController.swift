@@ -123,6 +123,17 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
     @IBOutlet var searchCancelButton: UIButton!
     
     
+    @IBOutlet var searchIcon: UIImageView!
+    
+    
+    @IBOutlet var icCancelImageView: UIImageView!
+    
+    @IBOutlet var upperViewHeightConstraint: NSLayoutConstraint!
+
+    
+    
+    
+    
     /////////////////// to filter values from both screens
     var friendListModel = phoneBookModel()
     
@@ -269,7 +280,15 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         
         
         self.label.hidden = true
-
+        
+        self.searchTextField.hidden = false
+        self.searchIcon.hidden = false
+        
+        self.icCancelImageView.hidden = false
+        
+        self.upperViewHeightConstraint.constant = 100
+        
+        
         
         self.searchButtonActive = false;
          self.searchTextField.text = ""
@@ -294,10 +313,23 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
                 
             {
                 
+                
+                self.searchTextField.hidden = true
+                self.searchIcon.hidden = true
+                
+                self.icCancelImageView.hidden = true
+                
+                self.upperViewHeightConstraint.constant = 65
+
+                
+                
                 self.noFriendResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoFriendViewController") as! NoFriendViewController
                 
                 self.noFriendResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
                 
+                 self.noFriendResult.letsGetGoingHeight.constant = 0
+                self.noFriendResult.letsGetGoingLabel.hidden = true
+                self.noFriendResult.msgLabel.text = "No friends here. You can invite them via other options."
                 self.view.addSubview((self.noFriendResult.view)!);
                 
                 self.noFriendResult.didMoveToParentViewController(self)
@@ -315,7 +347,13 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         
         if facebookArray.count != 0 && FBFriendsFilterArray.count == 0
         {
+           
+            self.searchTextField.hidden = true
+            self.searchIcon.hidden = true
             
+            self.icCancelImageView.hidden = true
+            
+            self.upperViewHeightConstraint.constant = 65
             
             self.label.frame = CGRectMake(0, self.view.frame.size.height/2-100, self.view.frame.width, 50)
             
@@ -373,7 +411,7 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         for i in 0..<FBFriendsFilterArray.count
         {
             //////// on i position we get name as well as image position that y we are  appending i position ofcontactImages in to a SearchContactImages
-            friendsName = FBFriendsFilterArray[i].firstName + FBFriendsFilterArray[i].lastName
+            friendsName = FBFriendsFilterArray[i].firstName + " " + FBFriendsFilterArray[i].lastName
 
             
             if let _ = friendsName.lowercaseString.rangeOfString(searchController.lowercaseString, options: .RegularExpressionSearch)
@@ -412,7 +450,7 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
             
             self.label.hidden = false;
             
-            self.label.frame = CGRectMake(0, self.view.frame.size.height/2, self.view.frame.width, 50)
+            self.label.frame = CGRectMake(20, self.view.frame.size.height/2, self.view.frame.width-20, 50)
             
             self.label.center = self.view.center
             
@@ -424,7 +462,7 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
             
             self.label.lineBreakMode = NSLineBreakMode.ByWordWrapping
             
-            self.label.font = self.label.font.fontWithSize(13)
+            self.label.font = self.label.font.fontWithSize(15)
             
             self.label.textColor = colorCode.DarkGrayColor
             
@@ -434,7 +472,20 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
             
             
         }
-        
+        else
+        {
+            
+            self.searchTextField.hidden = false
+            self.searchIcon.hidden = false
+            
+            self.icCancelImageView.hidden = false
+            
+            self.upperViewHeightConstraint.constant = 100
+            
+            self.label.hidden = true;
+
+            
+        }
 
         
         self.FacebookTableView.reloadData();
@@ -479,9 +530,22 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
                         
                     {
                         
+                        
+                        self.searchTextField.hidden = true
+                        self.searchIcon.hidden = true
+                        
+                        self.icCancelImageView.hidden = true
+                        
+                        self.upperViewHeightConstraint.constant = 65
+
+                        
                         self.noFriendResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoFriendViewController") as! NoFriendViewController
                         
                         self.noFriendResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+                        
+                        self.noFriendResult.letsGetGoingHeight.constant = 0
+                        self.noFriendResult.letsGetGoingLabel.hidden = true
+                        self.noFriendResult.msgLabel.text = "No friends here. You can invite them via other options."
                         
                         self.view.addSubview((self.noFriendResult.view)!);
                         
@@ -499,6 +563,14 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
                 if facebookArray.count != 0 && FBFriendsFilterArray.count == 0
                 {
                     
+                    
+                     self.label.hidden = false
+                    self.searchTextField.hidden = true
+                    self.searchIcon.hidden = true
+                    
+                    self.icCancelImageView.hidden = true
+                    
+                    self.upperViewHeightConstraint.constant = 65
                     
                     self.label.frame = CGRectMake(0, self.view.frame.size.height/2-100, self.view.frame.width, 50)
                     
@@ -524,6 +596,16 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
             else
             {
                 print(textFieldData)
+                
+                
+                self.searchTextField.hidden = false
+                self.searchIcon.hidden = false
+                
+                self.icCancelImageView.hidden = false
+                
+                self.upperViewHeightConstraint.constant = 100
+                
+
                 updateSearchResultsForSearchController(textFieldData)
             }
             
@@ -554,7 +636,8 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
             RemoveNoFrinedResult();
             
             
-            
+             self.doneButton.hidden = false
+
             self.label.hidden = true;
             
         }
@@ -646,9 +729,23 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
                 
             {
                 
+                
+                
+                self.searchTextField.hidden = true
+                self.searchIcon.hidden = true
+                
+                self.icCancelImageView.hidden = true
+                
+                self.upperViewHeightConstraint.constant = 65
+
+                
                 self.noFriendResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoFriendViewController") as! NoFriendViewController
                 
                 self.noFriendResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+                
+                self.noFriendResult.letsGetGoingHeight.constant = 0
+                self.noFriendResult.letsGetGoingLabel.hidden = true
+                self.noFriendResult.msgLabel.text = "No friends here. You can invite them via other options."
                 
                 self.view.addSubview((self.noFriendResult.view)!);
                 
@@ -668,8 +765,18 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         if facebookArray.count != 0 && FBFriendsFilterArray.count == 0
         {
             
+            self.label.hidden = false
             
-            self.label.frame = CGRectMake(0, self.view.frame.size.height/2-100, self.view.frame.width, 50)
+            self.doneButton.hidden = true
+            
+            self.searchTextField.hidden = true
+            self.searchIcon.hidden = true
+            
+            self.icCancelImageView.hidden = true
+            
+            self.upperViewHeightConstraint.constant = 65
+            
+            self.label.frame = CGRectMake(20, self.view.frame.size.height/2-100, self.view.frame.width-20, 50)
           
             self.label.center = view.center
             
@@ -678,9 +785,9 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
             self.label.text = "Hurray!! You are already friends with all your facebook friends who have joined Sentiv"
             
             self.label.lineBreakMode = NSLineBreakMode.ByWordWrapping
-            self.label.numberOfLines = 2;
+            self.label.numberOfLines = 0;
             
-            label.font = label.font.fontWithSize(13)
+            label.font = label.font.fontWithSize(15)
             
             self.view.addSubview(self.label)
             
@@ -1383,17 +1490,6 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         
     }
     
-
-    
-    
-    
-    var FirstName = ["Kareena","Deepika","hrithik","ranbir","farhan","alia"]
-    var LastName = ["Kapoor","padukon","roshan","kapoor","akhtar","bhatt"]
-    
-
-    
-    var photoUrl = ["download (3)","download (2)","images (4)","download (5)","download (7)","download (9)"]
-    
     
     
     
@@ -1491,6 +1587,12 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         searchTextField.leftView = paddingView1
         searchTextField.leftViewMode = UITextFieldViewMode.Always
         
+        
+        let paddingView2 = UIView(frame: CGRectMake(self.searchTextField.frame.width-10, 0, 20, self.searchTextField.frame.height))
+        
+        searchTextField.rightView = paddingView2
+        searchTextField.rightViewMode = UITextFieldViewMode.Always
+
         
         //MARK:-  placeholder in text fileds
         
