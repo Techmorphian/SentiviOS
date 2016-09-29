@@ -18,7 +18,49 @@ class MeasuringUnits: UIView {
     override func awakeFromNib() {
         self.subView.layer.cornerRadius = 5.0;
         self.subView.clipsToBounds=true;
+        
+        if NSUserDefaults.standardUserDefaults().objectForKey("MeasuringUnits") != nil{
+            if NSUserDefaults.standardUserDefaults().stringForKey("MeasuringUnits") == "1"
+            {
+               imperial.setImage(UIImage(named: "ic_checked-1"), forState: .Normal)
+            }else{
+                 metric.setImage(UIImage(named: "ic_checked-1"), forState: .Normal)
+            }
+            
+            
+        }
+        
+        
     }
+    @IBOutlet weak var imperial: UIButton!
+    @IBOutlet weak var metric: UIButton!
+    
+    @IBAction func imperial(sender: UIButton) {
+        NSUserDefaults.standardUserDefaults().setObject("1", forKey: "MeasuringUnits")
+        if imperial.currentImage == UIImage(named: "ic_uncheck-1")
+        {
+            imperial.setImage(UIImage(named: "ic_checked-1"), forState: .Normal)
+            metric.setImage(UIImage(named: "ic_uncheck-1"), forState: .Normal)
+        }else{
+            imperial.setImage(UIImage(named: "ic_uncheck-1"), forState: .Normal)
+           // metric.setImage(UIImage(named: "ic_checked-1"), forState: .Normal)
+        }
+    }
+    
+    @IBAction func metric(sender: UIButton) {
+         NSUserDefaults.standardUserDefaults().setObject("2", forKey: "MeasuringUnits")
+        if metric.currentImage == UIImage(named: "ic_uncheck-1")
+        {
+            metric.setImage(UIImage(named: "ic_checked-1"), forState: .Normal)
+            imperial.setImage(UIImage(named: "ic_uncheck-1"), forState: .Normal)
+        }else{
+            metric.setImage(UIImage(named: "ic_uncheck-1"), forState: .Normal)
+            //imperial.setImage(UIImage(named: "ic_checked-1"), forState: .Normal)
+        }
+
+    }
+    
+    
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

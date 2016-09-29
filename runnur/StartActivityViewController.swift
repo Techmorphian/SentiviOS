@@ -1631,8 +1631,6 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     {
         if NSUserDefaults.standardUserDefaults().boolForKey("voiceFeedback") == true{
             
-        
-            
             if NSUserDefaults.standardUserDefaults().boolForKey("sayDistance") == true{
                 
                 if NSUserDefaults.standardUserDefaults().stringForKey("intervalTypeDis") == "0.5"

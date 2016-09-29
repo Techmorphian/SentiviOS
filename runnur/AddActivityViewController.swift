@@ -37,6 +37,7 @@ class AddActivityViewController: UIViewController,UITextFieldDelegate {
     }
     
     
+    
 //    PickerView coding:-
     var selectedDate = NSDate();
     var selectedTime = NSDate();
@@ -196,9 +197,70 @@ class AddActivityViewController: UIViewController,UITextFieldDelegate {
     }
     
     @IBAction func save(sender: AnyObject) {
+       
         
+        // if Reachability.isConnectedToNetwork() == true{
+        CommonFunctions.showActivityIndicator(self.view);
+        //--------------------------------- Connecting to azure client ------------------------------------
+        let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
+        let client = delegate!.client!;
         
+        let user: MSUser = MSUser(userId: NSUserDefaults.standardUserDefaults().stringForKey("azureUserId")!);
+        user.mobileServiceAuthenticationToken = NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken");
+        client.currentUser = user;
         
+        let table = client.tableWithName("RunObject");
+        if client.currentUser != nil{
+           print(client.currentUser.userId)
+            let uuid = NSUUID().UUIDString;
+            
+            //--------------------------creating dictionary to send data to azure---------------------------
+            
+            let newItem : NSDictionary = ["id": uuid,
+                                          "distance": Double(self.distance.text!)!,
+                                          "startLocationS":self.activityTitle.text!,
+                                          "performedActivity": "Running",
+                                          "caloriesBurnedS": self.caloriesBurned.text!,
+                                          "date": self.startTime.text!,
+                                          "elapsedTime": "1230"
+                                         // "EmailS" : "gaurav@techmorphosis.com"
+               // "userId" : NSUserDefaults.standardUserDefaults().stringForKey("userId")!
+                
+            ] ;
+            
+            
+//            let query = table.query();
+//            query.parameters = ["runnurId":NSUserDefaults.standardUserDefaults().stringForKey("userId")!]
+            
+            
+            table.insert(newItem as [NSObject : AnyObject], parameters: ["runnurId":NSUserDefaults.standardUserDefaults().stringForKey("userId")!], completion: { (result, error) in
+                if let err = error {
+                    CommonFunctions.hideActivityIndicator();
+                    print("ERROR ", err)
+                } else if let item = result {
+                    CommonFunctions.hideActivityIndicator();
+                    print("RunObject: ", item["startLocationS"])
+                    self.dismissViewControllerAnimated(false, completion: nil)
+                }
+
+            })
+            
+//            
+//            table.insert(newItem as [NSObject : AnyObject]) { (result, error) in
+//                if let err = error {
+//                    CommonFunctions.hideActivityIndicator();
+//                    print("ERROR ", err)
+//                } else if let item = result {
+//                    CommonFunctions.hideActivityIndicator();
+//                    print("RunObject: ", item["startLocationS"])
+//                    self.dismissViewControllerAnimated(false, completion: nil)
+//                }
+//            }
+
+            
+        }
+
+    
         
       }
     

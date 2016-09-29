@@ -138,6 +138,7 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
             }
             else
             {
+                
                 self.fbToken = FBSDKAccessToken.currentAccessToken().tokenString
                 print("fetched user: \(result)")
                 if result.valueForKey("first_name") != nil
@@ -158,23 +159,25 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
                 {
                     self.email = "avetkar@yahoo.com"
                 }
-                let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
-                let Client = delegate!.client!;
+                self.call(true, email: self.email, firstName: self.firstName, lastName: self.lastName, id: self.fbId, token: self.fbToken,imageUrl: "http://graph.facebook.com/" + (self.fbId) + "/picture?type=large");
 
-                let payload: [String: String] = ["access_token": self.fbToken]
-                Client.loginWithProvider("facebook", token: payload, completion: { (user, error) in
-                    if user != nil{
-                       
-                        NSUserDefaults.standardUserDefaults().setObject( user.userId, forKey: "azureUserId")
-                        NSUserDefaults.standardUserDefaults().setObject( user.mobileServiceAuthenticationToken, forKey: "azureAuthenticationToken")
-                        Client.currentUser = user;
-                        print("azureUserId = \(NSUserDefaults.standardUserDefaults().stringForKey("azureUserId"))");
-                        print("Login successful");
-                        print(self.firstName);
-                        print(self.lastName);
-                         self.call(true, email: self.email, firstName: self.firstName, lastName: self.lastName, id: (user?.userId)!, token: self.fbToken,imageUrl: "http://graph.facebook.com/" + (self.fbId) + "/picture?type=large");
-                       }
-                })
+//                let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
+//                let Client = delegate!.client!;
+//
+//                let payload: [String: String] = ["access_token": self.fbToken]
+//                Client.loginWithProvider("facebook", token: payload, completion: { (user, error) in
+//                    if user != nil{
+//                       
+//                        NSUserDefaults.standardUserDefaults().setObject( user.userId, forKey: "azureUserId")
+//                        NSUserDefaults.standardUserDefaults().setObject( user.mobileServiceAuthenticationToken, forKey: "azureAuthenticationToken")
+//                        Client.currentUser = user;
+//                        print("azureUserId = \(NSUserDefaults.standardUserDefaults().stringForKey("azureUserId"))");
+//                        print("Login successful");
+//                        print(self.firstName);
+//                        print(self.lastName);
+//                         self.call(true, email: self.email, firstName: self.firstName, lastName: self.lastName, id: (user?.userId)!, token: self.fbToken,imageUrl: "http://graph.facebook.com/" + (self.fbId) + "/picture?type=large");
+//                       }
+//                })
                
 
                 //                self.toGetProfilePic()
@@ -293,11 +296,30 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
                             NSUserDefaults.standardUserDefaults().setInteger(1, forKey: "loginThroughValue")
                             }else{
                              NSUserDefaults.standardUserDefaults().setInteger(2, forKey: "loginThroughValue")
+                                let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
+                                let Client = delegate!.client!;
+                                
+                                let payload: [String: String] = ["access_token": self.fbToken]
+                                Client.loginWithProvider("facebook", token: payload, completion: { (user, error) in
+                                    if user != nil{
+                                        
+                                        NSUserDefaults.standardUserDefaults().setObject( user.userId, forKey: "azureUserId")
+                                        NSUserDefaults.standardUserDefaults().setObject( user.mobileServiceAuthenticationToken, forKey: "azureAuthenticationToken")
+                                        Client.currentUser = user;
+                                        print("azureUserId = \(NSUserDefaults.standardUserDefaults().stringForKey("azureUserId"))");
+                                        print("Login successful");
+                                        print(self.firstName);
+                                        print(self.lastName);
+                                        let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SWRevealViewController") as! SWRevealViewController
+                                        
+                                        self.presentViewController(nextViewController, animated: false, completion: nil)
+//                                        self.call(true, email: self.email, firstName: self.firstName, lastName: self.lastName, id: (user?.userId)!, token: self.fbToken,imageUrl: "http://graph.facebook.com/" + (self.fbId) + "/picture?type=large");
+                                    }
+                                })
+                                
                             }
                             
-                            let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SWRevealViewController") as! SWRevealViewController
-                            
-                            self.presentViewController(nextViewController, animated: false, completion: nil)
+
                         })
                     }
                         

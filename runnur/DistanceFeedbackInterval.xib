@@ -20,11 +20,14 @@
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8zv-Ht-Y16" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8zv-Ht-Y16">
                             <rect key="frame" x="15" y="50" width="21" height="22"/>
-                            <state key="normal" image="ic_checked">
+                            <state key="normal" image="ic_uncheck-1">
                                 <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="type1:" destination="iN0-l3-epB" eventType="touchUpInside" id="4te-ps-o0E"/>
+                            </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MvV-Kh-IaU">
                             <rect key="frame" x="56" y="51" width="24" height="21"/>
@@ -32,11 +35,14 @@
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nkd-aq-8kf" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nkd-aq-8kf">
                             <rect key="frame" x="15" y="80" width="21" height="22"/>
-                            <state key="normal" image="ic_checked">
+                            <state key="normal" image="ic_uncheck-1">
                                 <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="type2:" destination="iN0-l3-epB" eventType="touchUpInside" id="SIP-Iw-IaH"/>
+                            </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="exx-B9-Geh">
                             <rect key="frame" x="56" y="80" width="8" height="21"/>
@@ -44,11 +50,14 @@
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lyr-Sp-qQd" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lyr-Sp-qQd">
                             <rect key="frame" x="15" y="110" width="21" height="22"/>
-                            <state key="normal" image="ic_checked">
+                            <state key="normal" image="ic_uncheck-1">
                                 <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="type3:" destination="iN0-l3-epB" eventType="touchUpInside" id="QXz-97-RVO"/>
+                            </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RPH-ek-qCk">
                             <rect key="frame" x="56" y="110" width="10" height="21"/>
@@ -56,11 +65,14 @@
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gxq-iQ-7B2" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gxq-iQ-7B2">
                             <rect key="frame" x="15" y="140" width="21" height="22"/>
-                            <state key="normal" image="ic_checked">
+                            <state key="normal" image="ic_uncheck-1">
                                 <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="type4:" destination="iN0-l3-epB" eventType="touchUpInside" id="cz7-Lc-7Kh"/>
+                            </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QRB-op-GBA">
                             <rect key="frame" x="56" y="140" width="11" height="21"/>
@@ -68,11 +80,14 @@
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="00q-Ux-Eh5" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="00q-Ux-Eh5">
                             <rect key="frame" x="15" y="170" width="21" height="22"/>
-                            <state key="normal" image="ic_checked">
+                            <state key="normal" image="ic_uncheck-1">
                                 <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="type5:" destination="iN0-l3-epB" eventType="touchUpInside" id="9Fh-fC-liK"/>
+                            </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FFm-ji-hGe">
                             <rect key="frame" x="56" y="170" width="11" height="21"/>
@@ -86,11 +101,14 @@
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ya-Bj-Ze8" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ya-Bj-Ze8">
                             <rect key="frame" x="15" y="230" width="21" height="22"/>
-                            <state key="normal" image="ic_checked">
+                            <state key="normal" image="ic_uncheck-1">
                                 <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="type7:" destination="iN0-l3-epB" eventType="touchUpInside" id="ieG-fQ-ZeU"/>
+                            </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bh9-sz-gys">
                             <rect key="frame" x="56" y="230" width="11" height="21"/>
@@ -98,11 +116,14 @@
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2QE-N8-43w" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2QE-N8-43w">
                             <rect key="frame" x="15" y="260" width="21" height="22"/>
-                            <state key="normal" image="ic_checked">
+                            <state key="normal" image="ic_uncheck-1">
                                 <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="type8:" destination="iN0-l3-epB" eventType="touchUpInside" id="4NK-3O-2U0"/>
+                            </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="54v-6A-Fm4">
                             <rect key="frame" x="56" y="260" width="18" height="21"/>
@@ -119,11 +140,14 @@
                                 <action selector="cancel:" destination="iN0-l3-epB" eventType="touchUpInside" id="Jx6-cf-ZDg"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ELa-Do-RBF" customClass="CheckBox" customModule="Sentiv" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ELa-Do-RBF">
                             <rect key="frame" x="15" y="200" width="21" height="22"/>
-                            <state key="normal" image="ic_checked">
+                            <state key="normal" image="ic_uncheck-1">
                                 <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="type6:" destination="iN0-l3-epB" eventType="touchUpInside" id="f4B-xn-M34"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -187,11 +211,19 @@
             </constraints>
             <connections>
                 <outlet property="mView" destination="Rr6-gO-jQ3" id="2cw-4b-If0"/>
+                <outlet property="type1" destination="8zv-Ht-Y16" id="aNC-cL-egk"/>
+                <outlet property="type2" destination="nkd-aq-8kf" id="I9L-ce-zpg"/>
+                <outlet property="type3" destination="lyr-Sp-qQd" id="0gb-OK-omV"/>
+                <outlet property="type4" destination="Gxq-iQ-7B2" id="8MC-Ff-70q"/>
+                <outlet property="type5" destination="00q-Ux-Eh5" id="ZxA-9d-IIZ"/>
+                <outlet property="type6" destination="ELa-Do-RBF" id="2Eq-qO-HoX"/>
+                <outlet property="type7" destination="2ya-Bj-Ze8" id="zSN-0f-mNf"/>
+                <outlet property="type8" destination="2QE-N8-43w" id="ZGS-8x-nyo"/>
             </connections>
             <point key="canvasLocation" x="345" y="496"/>
         </view>
     </objects>
     <resources>
-        <image name="ic_checked" width="21" height="21"/>
+        <image name="ic_uncheck-1" width="21" height="21"/>
     </resources>
 </document>

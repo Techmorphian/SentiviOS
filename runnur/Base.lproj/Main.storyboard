@@ -1861,7 +1861,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KRI-ss-Enj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2457" y="-309"/>
+            <point key="canvasLocation" x="2482.5" y="-913.5"/>
         </scene>
         <!--Activity Details View Controller-->
         <scene sceneID="Lnq-al-dVd">
@@ -2839,7 +2839,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nbi-Pa-OJg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3180" y="270"/>
+            <point key="canvasLocation" x="3161" y="263"/>
         </scene>
         <!--Graphs View Controller-->
         <scene sceneID="aOG-Cj-dlf">
@@ -10859,6 +10859,9 @@
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                             <color key="textColor" red="0.19215686269999999" green="0.54901960780000003" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
+                                                            <variation key="heightClass=compact-widthClass=compact" misplaced="YES">
+                                                                <rect key="frame" x="28" y="5" width="24" height="18"/>
+                                                            </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ELEV.LOSS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZqS-W6-kpe">
                                                             <rect key="frame" x="0.0" y="28" width="145" height="10"/>

@@ -120,8 +120,9 @@ class DownloadFromBlob{
         })
     }
     
+static var downloaded = false;
 static  var containerNam = String();
-static func downloadFromBlob(containerName:String)
+static func downloadFromBlob(containerName:String) -> Bool
  {
     containerNam = containerName;
     var err: NSError?
@@ -145,7 +146,7 @@ static func downloadFromBlob(containerName:String)
 //          
 //        })
     }
-    
+    return downloaded;
    }
     
     static var data = String();
@@ -185,6 +186,7 @@ static func downloadFromBlob(containerName:String)
                    
                     
                 }
+                downloaded = true
               //  writeToFile(data, contName: containerNam)
                 if (results!.continuationToken != nil) {
                      self.listBlobsInContainerHelper(container, continuationToken: (results?.continuationToken)!, prefix: prefix, blobListingDetails: blobListingDetails, maxResults: maxResults, completionHandler: completionHandler)
