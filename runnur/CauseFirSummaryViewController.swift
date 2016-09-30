@@ -13,6 +13,10 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
 
     
     
+    
+    @IBOutlet var anonymousLabel: UILabel!
+    
+    
     @IBOutlet var ScrollView: UIScrollView!
     
     var noInternet = NoInternetViewController()
@@ -809,18 +813,21 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                 
                                 let photoUrl = elements[i]["photoUrl"] as! String
                                 
-                                 if photoUrl == ""
-                                 {
-                                    ChallengeImageView.image = UIImage(named: "im_default_challenge_image")
-                                    
-                                 }
-                                else
-                                 {
-                                    
-                               ChallengeImageView.kf_setImageWithURL(NSURL(string:photoUrl)!, placeholderImage: UIImage(named:"im_default_challenge_image"))
-                                    
-                                 }
+//                                 if photoUrl == ""
+//                                 {
+//                                    ChallengeImageView.image = UIImage(named: "im_default_challenge_image")
+//                                    
+//                                 }
+//                                else
+//                                 {
+//                                    
+//                               ChallengeImageView.kf_setImageWithURL(NSURL(string:photoUrl)!, placeholderImage: UIImage(named:"im_default_challenge_image"))
+//                                    
+//                                 }
                                
+                                
+                                ChallengeImageView.kf_setImageWithURL(NSURL(string:NSUserDefaults.standardUserDefaults().stringForKey("challengeImageView")!)!, placeholderImage: UIImage(named:"im_default_challenge_image"))
+                                
                                 
                                 //////////////////////////////////////
                                 let amountPerMile = elements[i]["amountPerMile"] as! String
@@ -1017,6 +1024,12 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                     maxAmountContributionTxtField.userInteractionEnabled = false
 
                                     
+                                    
+                                    anonymousLabel.textColor = colorCode.DarkGrayColor
+                                    anonymousLabel.alpha = 0.6
+                                    anonymousCheckUncheckButton.alpha = 0.6
+                                    
+                                    
                                     let dateCheck =  dateComparison(startDate, endDate: endDate)
                                     
                                     if dateCheck == challengeNotStarted
@@ -1166,10 +1179,14 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                     
                                     anonymousViewHeight.constant = 40
                                     
-                                    maxAmountView.backgroundColor = colorCode.LightGrayColor
+//                                    maxAmountView.backgroundColor = colorCode.LightGrayColor
+//                                    
+//                                    anonymousView.backgroundColor = colorCode.LightGrayColor
                                     
-                                    anonymousView.backgroundColor = colorCode.LightGrayColor
-
+                                     anonymousLabel.textColor = colorCode.DarkGrayColor
+                                     anonymousLabel.alpha = 0.6
+                                    
+                                     anonymousCheckUncheckButton.alpha = 0.6
                                     
                                     let dateCheck =  dateComparison(startDate, endDate: endDate)
                                     

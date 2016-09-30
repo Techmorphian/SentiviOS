@@ -2185,7 +2185,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
             
             
             ////// image data with compression
-            let imageData  = UIImageJPEGRepresentation(self.addImage.image!, 0.50)
+            let imageData  = UIImageJPEGRepresentation(self.addImage.image!, 0.30)
             if imageData==nil
             {
                 return;
@@ -2296,7 +2296,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
             
             
             ////// image data with compression
-            let imageData  = UIImageJPEGRepresentation(self.addImage.image!, 0.50)
+            let imageData  = UIImageJPEGRepresentation(self.addImage.image!, 0.30)
             if imageData==nil
             {
                 return;

@@ -1453,6 +1453,8 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     
     var allEmails = NSArray()
     
+   var nonDulicatedEmails = [String]()
+    
     func stringPropertyValue(record: ABRecord, id:ABPropertyID) -> String?
     {
         
@@ -1493,6 +1495,8 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
 
     
     var contactList = NSArray()
+    
+//     var contactList = [String]()
     
     func getAddressBookNames()
     {
@@ -1624,7 +1628,25 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         
     }
 
-  
+    
+    func removeDuplicates(array: [String]) -> [String]
+    {
+        var encountered = Set<String>()
+        var result: [String] = []
+        for value in array {
+            if encountered.contains(value)
+            {
+                // Do not add a duplicate element.
+            }
+            else {
+                // Add value to the set.
+                encountered.insert(value)
+                // ... Append the value.
+                result.append(value)
+            }
+        }
+        return result
+    }
     
     var conatctImage = NSData()
     
@@ -1681,7 +1703,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                     
 //                                print("records in the array \(self.contactList.count)")
 //                    
-//                                print("contactList \(self.contactList)")
+                             //  print("contactList \(self.contactList)")
                     
                                 for record in self.contactList
                     
@@ -1711,28 +1733,102 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                                     {
                     
                                         if let emails:ABMultiValueRef = v.takeRetainedValue()
-                    
-                    
-                    
+                                            
                                         {
+                                            
+                                           
                     
                                             if ABMultiValueGetCount(emails) > 0
                                             {
                     
+                                               
                                                 self.allEmails = ABMultiValueCopyArrayOfAllValues(emails).takeRetainedValue() as NSArray
-                    
-                                               // print(self.allEmails)
+                                                
+                                                
                                                 
                                                 if self.allEmails.count > 0
                                                 {
-                    
-                                                    for emails in self.allEmails
+                                                    
+                                                /// allEmails may contains duplicated mails so we used Set(self.allEmails) to remove duplicate values
+                                                    
+                                                    
+                                                    for email in self.allEmails
                                                     {
-                    
-                                                        self.PBModel.Email.append(emails as! String);
+                                                        if self.PBArray.count == 0
+                                                        {
+                                                            self.PBModel.Email.append(email as! String);
+                                                            
+                                                        }
+                                                        
+                                                        for i in 0 ..< self.PBArray.count
+                                                        {
+                                                            
+                                                            for j in self.PBArray[i].Email
+                                                                
+                                                            {
+                                                                for k in self.allEmails
+                                                                {
+                                                                    
+                                                                    if j == k as! String
+                                                                    {
+                                                                        print(j)
+                                                                       break
+                                                                        
+                                                                    }
+                                                                        
+                                                                    else
+                                                                    {
+                                                                        self.PBModel.Email.append(k as! String);
+                                                                        
+                                                                    }
+                                                                    
+                                                                    
+                                                                }
+                                                                
+                                                            }
+                                                            
+                                                            
+                                                        }
+                                                        
+                                                        
+ 
+                                                        
+//                                                        for i in 0 ..< self.PBArray.count
+//                                                        {
+//
+//                                                            for j in self.PBArray[i].Email
+//
+//                                                            {
+//                                                                for k in self.allEmails
+//                                                                {
+//                                                                    
+//                                                                    if j == k
+//                                                                    {
+//                                                                        print(j)
+//                                                                        
+//                                                                        
+//                                                                    }
+//                                                                        
+//                                                                    else
+//                                                                    {
+//                                                                        self.PBModel.Email.append(k);
+//                                                                        
+//                                                                    }
+//                                                                    
+//                                                                    
+//                                                                }
+//                                                                
+//                                                            }
+//                                                            
+//                                                           
+//                                                        }
+//                                                            
+//                                                        
+
+                                                    // self.PBModel.Email.append(email as! String);
                     
                                                         
-                                                        print(self.PBModel.Email)
+                                                       // print(self.PBModel.Email)
                     
                                                     }
                     
@@ -1879,26 +1975,22 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                                         
                                     {
                                         
-                                        
-                                        
+                                                                       
                                     }
                                         
                                     else
                                         
                                     {
                                     
-                                        self.PBArray.append(self.PBModel);
                                         
+                                        
+                                      self.PBArray.append(self.PBModel);
+
+                                    
                                         
                                     }
                                     
-                                    
-                                    
                                 }  /// for loop close
-                    
-                    
-                    
-                    
                     
                             if self.contactList.count == 0
                             {

@@ -891,18 +891,24 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                 let photoUrl = elements[i]["photoUrl"] as! String
                                 
                                                                 
-                                if photoUrl == ""
-                                {
-                                    ChallengeImageView.image = UIImage(named: "im_default_challenge_image")
-                                    
-                                }
-                                else
-                                {
-                                    
-                                    ChallengeImageView.kf_setImageWithURL(NSURL(string:photoUrl)!, placeholderImage: UIImage(named:"im_default_challenge_image"))
-                                    
-                                }
+//                                if photoUrl == ""
+//                                {
+//                                    ChallengeImageView.image = UIImage(named: "im_default_challenge_image")
+//                                    
+//                                }
+//                                else
+//                                {
+//                                    
+//                                    ChallengeImageView.kf_setImageWithURL(NSURL(string:photoUrl)!, placeholderImage: UIImage(named:"im_default_challenge_image"))
+//                                    
+//                                }
                                 
+                                
+              ChallengeImageView.kf_setImageWithURL(NSURL(string:NSUserDefaults.standardUserDefaults().stringForKey("challengeImageView")!)!, placeholderImage: UIImage(named:"im_default_challenge_image"))
+                                
+//                                ChallengeImageView.image = UIImage(named:NSUserDefaults.standardUserDefaults().stringForKey("challengeImageView")!)
+                                
+                                //  NSUserDefaults.standardUserDefaults().setObject(challengeImageView, forKey: "challengeImageView")
 
                                 
                                 let startDate = elements[i]["startDate"] as! String

@@ -7575,6 +7575,7 @@
                         <outlet property="ScrollView" destination="BcY-un-3d5" id="3Ll-wI-iPI"/>
                         <outlet property="activityTypeImageView" destination="2Lg-ET-v1q" id="nX3-c6-Nhm"/>
                         <outlet property="anonymousCheckUncheckButton" destination="1ao-OP-keB" id="Ake-24-NT4"/>
+                        <outlet property="anonymousLabel" destination="zQZ-xD-7zm" id="tDR-RS-wna"/>
                         <outlet property="anonymousView" destination="Q4o-yK-N4P" id="j9Z-Xe-LAN"/>
                         <outlet property="anonymousViewHeight" destination="jqG-QC-1oK" id="TPc-Ii-oBr"/>
                         <outlet property="betAmountPerMileLabel" destination="dEx-8y-TZW" id="wLu-s0-vIM"/>

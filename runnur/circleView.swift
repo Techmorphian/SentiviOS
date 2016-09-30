@@ -86,7 +86,7 @@ class CircleView: UIView
     override func drawRect(rect: CGRect)
     {
         // Get the Graphics Context
-        var context = UIGraphicsGetCurrentContext();
+        let context = UIGraphicsGetCurrentContext();
         
         // Set the circle outerline-width
         CGContextSetLineWidth(context, 5.0);

@@ -858,6 +858,11 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
              let challengeName = participatingArray[indexPath.row].challengeName
              NSUserDefaults.standardUserDefaults().setObject(challengeName, forKey: "challengeName")
             
+          
+            let challengeImageView = participatingArray[indexPath.row].photoUrl
+            NSUserDefaults.standardUserDefaults().setObject(challengeImageView, forKey: "challengeImageView")
+            
+            print(NSUserDefaults.standardUserDefaults().stringForKey("challengeImageView"))
             
              let TypeIdParticipating = participatingArray[indexPath.row].typeId
             
@@ -887,6 +892,8 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
             let challengeName = contributingArray[indexPath.row].challengeName
             NSUserDefaults.standardUserDefaults().setObject(challengeName, forKey: "challengeName")
             
+            let challengeImageView = contributingArray[indexPath.row].photoUrl
+            NSUserDefaults.standardUserDefaults().setObject(challengeImageView, forKey: "challengeImageView")
             
             let TypeIdParticipating = contributingArray[indexPath.row].typeId
             
@@ -1712,6 +1719,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
         NSUserDefaults.standardUserDefaults().setObject("", forKey: "TypeIdContributing")
         
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "challengeImageView")
         
         NSUserDefaults.standardUserDefaults().setObject("", forKey: "successMsgOfDecline")
         
