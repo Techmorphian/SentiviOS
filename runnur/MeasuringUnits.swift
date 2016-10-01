@@ -27,7 +27,6 @@ class MeasuringUnits: UIView {
                  metric.setImage(UIImage(named: "ic_checked-1"), forState: .Normal)
             }
             
-            
         }
         
         
@@ -36,9 +35,10 @@ class MeasuringUnits: UIView {
     @IBOutlet weak var metric: UIButton!
     
     @IBAction func imperial(sender: UIButton) {
-        NSUserDefaults.standardUserDefaults().setObject("1", forKey: "MeasuringUnits")
+        
         if imperial.currentImage == UIImage(named: "ic_uncheck-1")
         {
+            NSUserDefaults.standardUserDefaults().setObject("1", forKey: "MeasuringUnits")
             imperial.setImage(UIImage(named: "ic_checked-1"), forState: .Normal)
             metric.setImage(UIImage(named: "ic_uncheck-1"), forState: .Normal)
         }else{
@@ -48,9 +48,10 @@ class MeasuringUnits: UIView {
     }
     
     @IBAction func metric(sender: UIButton) {
-         NSUserDefaults.standardUserDefaults().setObject("2", forKey: "MeasuringUnits")
+        
         if metric.currentImage == UIImage(named: "ic_uncheck-1")
         {
+             NSUserDefaults.standardUserDefaults().setObject("2", forKey: "MeasuringUnits")
             metric.setImage(UIImage(named: "ic_checked-1"), forState: .Normal)
             imperial.setImage(UIImage(named: "ic_uncheck-1"), forState: .Normal)
         }else{

@@ -43,13 +43,13 @@ class CustomPopUp: UIView {
         
         if NSUserDefaults.standardUserDefaults().objectForKey("autoPause") != nil{
             if NSUserDefaults.standardUserDefaults().boolForKey("autoPause") == true{
-                //autoPause.isChecked = true;
-                autoPause.sendActionsForControlEvents(.TouchUpInside);
+                autoPause.isChecked = true;
+                //autoPause.sendActionsForControlEvents(.TouchUpInside);
                 autoPause.setImage(UIImage(named: "ic_checked"), forState: .Normal)
                 
              }else{
-                autoPause.sendActionsForControlEvents(.TouchUpInside);
-                 //autoPause.isChecked = false;
+                //autoPause.sendActionsForControlEvents(.TouchUpInside);
+                // autoPause.isChecked = false;
                 autoPause.setImage(UIImage(named: "ic_uncheck"), forState: .Normal)
             }
         }else{

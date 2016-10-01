@@ -3047,7 +3047,7 @@
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="afs-Am-moZ">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="afs-Am-moZ" customClass="BarChartView" customModule="Charts">
                                                             <rect key="frame" x="8" y="51" width="528" height="213"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </view>
@@ -3073,6 +3073,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
+                                            <outlet property="barChartView" destination="afs-Am-moZ" id="jYj-hi-KMH"/>
                                             <outlet property="name" destination="FsH-KX-MKg" id="Y5R-Ox-GXq"/>
                                         </connections>
                                     </tableViewCell>

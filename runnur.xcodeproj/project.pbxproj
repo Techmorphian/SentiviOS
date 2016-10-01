@@ -1172,7 +1172,7 @@
 					"$(PROJECT_DIR)/runnur",
 				);
 				INFOPLIST_FILE = runnur/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.SentivApp;
 				PRODUCT_NAME = Sentiv;
@@ -1196,7 +1196,7 @@
 					"$(PROJECT_DIR)/runnur",
 				);
 				INFOPLIST_FILE = runnur/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.techmorphosis.SentivApp;
 				PRODUCT_NAME = Sentiv;

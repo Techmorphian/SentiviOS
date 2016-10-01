@@ -15,60 +15,100 @@ class SummaryActivityViewController: UIViewController {
     var mapData : MapData!
         {
         didSet{
-           if mapData.distance == ""
+
+            if mapData.distance == ""
            {
             mapData.distance = "0.00mi"
            }else{
+            if ((mapData.distance?.containsString("mi")) == true)
+            {
+               mapData.distance = mapData.distance!
+            }else{
             mapData.distance = mapData.distance! + "mi";
+                }
             }
             if mapData.avgPace == ""
             {
                 mapData.avgPace = "0.00 min/mi"
             }else{
+                if ((mapData.avgPace?.containsString("mi")) == true)
+                {
+                    mapData.avgPace = mapData.avgPace!
+                }else{
                 mapData.avgPace = mapData.avgPace! + " min/mi";
+                }
             }
 
             if mapData.caloriesBurned == ""
             {
                 mapData.caloriesBurned = "0 KCal"
             }else{
-                
+                if ((mapData.caloriesBurned?.containsString("KCal")) == true)
+                {
+                    mapData.caloriesBurned = String(format: "%.2f", mapData.caloriesBurned!)
+                }else{
                 mapData.caloriesBurned = String(format: "%.2f", mapData.caloriesBurned!) + " KCal";
+                }
             }
 
             if mapData.avgSpeed == ""
             {
                 mapData.avgSpeed = "0.00 mph"
             }else{
+                if ((mapData.avgSpeed?.containsString("mph")) == true)
+                {
+                    mapData.avgSpeed = mapData.avgSpeed!
+                }else{
                 mapData.avgSpeed = mapData.avgSpeed! + " mph";
+                }
             }
 
             if mapData.maxSpeed == ""
             {
                 mapData.maxSpeed = "0.0 mph"
             }else{
+                if ((mapData.maxSpeed?.containsString("mph")) == true)
+                {
+                    mapData.maxSpeed = mapData.maxSpeed!
+                }else{
                 mapData.maxSpeed = mapData.maxSpeed! + " mph";
+                }
             }
             
             if mapData.elevationGain == ""
             {
                 mapData.elevationGain = "0 ft"
             }else{
+                if ((mapData.elevationGain?.containsString("ft")) == true)
+                {
+                    mapData.elevationGain = mapData.elevationGain!
+                }else{
                 mapData.elevationGain = mapData.elevationGain! + " ft";
+                }
             }
 
             if mapData.elevationLoss == ""
             {
                 mapData.elevationLoss = "0 ft"
             }else{
+                if ((mapData.elevationLoss?.containsString("ft")) == true)
+                {
+                    mapData.elevationLoss = mapData.elevationLoss!
+                }else{
                 mapData.elevationLoss = mapData.elevationLoss! + " ft";
+                }
             }
 
             if mapData.maxElevation == ""
             {
                 mapData.maxElevation = "0 ft"
             }else{
+                if ((mapData.maxElevation?.containsString("ft")) == true)
+                {
+                    mapData.maxElevation = mapData.maxElevation!
+                }else{
                 mapData.maxElevation = mapData.maxElevation! + " ft";
+                }
             }
 
         }

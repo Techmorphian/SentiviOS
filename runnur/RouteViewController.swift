@@ -161,15 +161,16 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                     let query = table.query();
                     
                     print("runnurId \(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)")
-                    // query.parameters = ["runnurId": "\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)"];
+                     query.parameters = ["runnurId": "\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)"];
                     query.fetchLimit=100;
                     
-                    query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
+                    //query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
                     query.orderByDescending("__createdAt");
                     
                     
                     query.readWithCompletion({ (result, error) in
                         if let err = error {
+                            CommonFunctions.hideActivityIndicator()
                             self.showNoRoutesView();
                             print("ERROR ", err)
                         } else if let items = result?.items {

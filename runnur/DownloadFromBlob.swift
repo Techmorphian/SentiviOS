@@ -187,6 +187,7 @@ static func downloadFromBlob(containerName:String) -> Bool
                     
                 }
                 downloaded = true
+                print("all data downloaded ");
               //  writeToFile(data, contName: containerNam)
                 if (results!.continuationToken != nil) {
                      self.listBlobsInContainerHelper(container, continuationToken: (results?.continuationToken)!, prefix: prefix, blobListingDetails: blobListingDetails, maxResults: maxResults, completionHandler: completionHandler)

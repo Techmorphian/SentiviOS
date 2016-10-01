@@ -402,18 +402,48 @@ class CommonFunctions : NSObject
         
     }
     
-    static func dateFromFixedFormatString(dateStr: String) -> NSDate {
-        let df = NSDateFormatter()
-        df.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        df.dateFormat = "yyyy-MM-dd"
-        if df.dateFromString(dateStr) == nil{
-            return NSDate();
-        }else{
-        
-         return df.dateFromString(dateStr)!
+    
+   static func dateFromFixedFormatString(dateStr: String) -> NSDate
+    {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss";
+        let stringFromDate = dateStr
+        var dateString = String();
+        var datE = NSDate();
+         if let parsedDateTimeString = dateFormatter.dateFromString(stringFromDate) {
+            dateFormatter.dateFormat = "yyyy-MM-dd";
+            dateString = dateFormatter.stringFromDate(parsedDateTimeString)
+             datE = dateFormatter.dateFromString(dateString)!
+            return datE;
+         }else{
+           return NSDate();
         }
-       
+        
+//        if dateFormatter.dateFromString(parsedDateTimeString) == nil{
+//            return NSDate();
+//        }else{
+//            
+//            return dateString!
+//        }
+
     }
+    
+//    static func dateFromFixedFormatString(dateStr: String) -> NSDate {
+//        let df = NSDateFormatter()
+//        df.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+//        df.dateFormat = "yyyy-MM-dd";
+//       
+//        let dateInFormat = "dd/MM/yyyy HH:mm:ss";
+//        
+//        
+//        if df.dateFromString(dateStr) == nil{
+//            return NSDate();
+//        }else{
+//        
+//         return df.dateFromString(dateStr)!
+//        }
+//       
+//    }
     
     static func getWeek(today:NSDate) -> String {
         let myCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierISO8601)!;

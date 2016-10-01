@@ -17,28 +17,194 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
     var sectionItem = [[MapData]]();
     
     var weatherData = WeatherData();
+    var priviousWeekCount = String();
+    var sectionHeader = [String]();
+    var totalNumberOfActivities = Int();
+    var lastItem = Bool();
+    var weekCount = [Double]();
+    var calories = [Double]()
     
+    var distance = [Double]()
+    
+     var countt = Double();
+    var previousWeeks = [String]();
     
     @IBOutlet weak var tableView: UITableView!
     
     
     @IBAction func menuButtonAction(sender: AnyObject)
     {
-        
         if self.revealViewController() != nil
         {
-            
             self.revealViewController().revealToggle(self);
         }
 
     }
+// Pa
+    
+    struct weekNameAndCount {
+        var weekName : String!
+        var weekCount :String!
+    }
+    
+    var caculateWeek = [weekNameAndCount]()
+    var dataPoints = [Double]()
+    var dataPoints1 = [String]()
+    var dataPoints2 = [String]()
+    
+    var totalDistanceValue : String = "---";
+    var avgSpeedValue : String = "---";
+    var maxElevationValue : String = "---";
+    var heartRateValue : String = "---";
+    
+    var avgSpeedGraphValues : [Double] = [];
+    var maxElevationGraphValues : [Double] = [];
+    var heartRateGraphValues : [Double] = [];
+    
+     var ce = Double()
+    var isSet = false;
+    
+    func setChart(totalWeekCount: [Double],barChartView : BarChartView) {
+        //   barChartView.noDataText = "You need to provide data for the chart."
+        
+        if !isSet {
+            isSet = true;
+        if totalWeekCount.count != 0
+        {
+            var dataEntries: [BarChartDataEntry] = []
+            var c = Double()
+            for i in 0..<totalWeekCount.count {
+                //               for j in weekWiseActivites[i]
+                //               {
+                let dataEntry = BarChartDataEntry(value:totalWeekCount[i], xIndex: i)
+                dataEntries.append(dataEntry);
+                dataPoints.append(c);
+                //                }
+                c = c+1;
+            }
+            let lineChartDataSet = BarChartDataSet(yVals: dataEntries, label: "Total Activities")
+            let lineChartData = BarChartData(xVals: dataPoints, dataSet: lineChartDataSet)
+            lineChartDataSet.colors = [colorCode.BlueColor]
+            
+            
+            barChartView.data = lineChartData
+            
+            barChartView.leftAxis.labelTextColor = colorCode.BlueColor;
+            barChartView.xAxis.labelTextColor = colorCode.BlueColor;
+            barChartView.rightAxis.labelTextColor = UIColor.clearColor();
+            
+            //            let ll = ChartLimitLine(limit: 10.5, label: "Avg Speed")
+            //            barChartView.rightAxis.addLimitLine(ll)
+        }
+        barChartView.noDataText = "No Chart Data Available"
+
+        }
+    
+    }
+    var c = Double();
+  var isDistanceSet = false;
+
+    func setDistanceChart(valuesForSpeed: [Double],barChartView:BarChartView) {
+        //   barChartView.noDataText = "You need to provide data for the chart."
+        if !isDistanceSet {
+            isDistanceSet = true;
+        if valuesForSpeed.count != 0
+        {
+            var dataEntries: [BarChartDataEntry] = []
+            var c = Double()
+            for i in 0..<valuesForSpeed.count {
+                let dataEntry = BarChartDataEntry(value:valuesForSpeed[i], xIndex: i)
+                dataEntries.append(dataEntry);
+                dataPoints.append(c);
+                c = c+1;
+            }
+            let lineChartDataSet = BarChartDataSet(yVals: dataEntries, label: "Total Distance (mi)")
+            let lineChartData = BarChartData(xVals: dataPoints, dataSet: lineChartDataSet)
+            lineChartDataSet.colors = [colorCode.RedColor]
+            
+            
+            barChartView.data = lineChartData
+            
+            barChartView.leftAxis.labelTextColor = colorCode.RedColor;
+            barChartView.xAxis.labelTextColor = colorCode.RedColor;
+            barChartView.rightAxis.labelTextColor = UIColor.clearColor();
+            
+            //            let ll = ChartLimitLine(limit: 10.5, label: "Avg Speed")
+            //            barChartView.rightAxis.addLimitLine(ll)
+        }
+        barChartView.noDataText = "No Chart Data Available"
+        
+    }
+    }
+    var cy = Double();
+    var isCalSet = false;
+    
+    func setCalChart(valuesForSpeed: [Double],barChartView:BarChartView) {
+        //   barChartView.noDataText = "You need to provide data for the chart."
+        if !isCalSet {
+            isCalSet = true;
+            if valuesForSpeed.count != 0
+            {
+                var dataEntries: [BarChartDataEntry] = []
+                var c = Double()
+                for i in 0..<valuesForSpeed.count {
+                    let dataEntry = BarChartDataEntry(value:valuesForSpeed[i], xIndex: i)
+                    dataEntries.append(dataEntry);
+                    dataPoints.append(cy);
+                    cy = cy+1;
+                }
+                let lineChartDataSet = BarChartDataSet(yVals: dataEntries, label: "Total Distance (mi)")
+                let lineChartData = BarChartData(xVals: dataPoints, dataSet: lineChartDataSet)
+                lineChartDataSet.colors = [UIColor.yellowColor()]
+                
+                
+                barChartView.data = lineChartData
+                
+                barChartView.leftAxis.labelTextColor = UIColor.yellowColor();
+                barChartView.xAxis.labelTextColor = UIColor.yellowColor();
+                barChartView.rightAxis.labelTextColor = UIColor.clearColor();
+                
+                //            let ll = ChartLimitLine(limit: 10.5, label: "Avg Speed")
+                //            barChartView.rightAxis.addLimitLine(ll)
+            }
+            barChartView.noDataText = "No Chart Data Available"
+            
+        }
+    }
+    
+
 //MARK:- tableViewDelegate
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return routeDataArray.count;
+        return 3;
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("StatisticsTableViewCell", forIndexPath: indexPath) as! StatisticsTableViewCell;
+        
+        if indexPath.row == 0
+        {
+            cell.name.text = "Weekly Activities";
+           
+            
+            for i in sectionItem{
+                self.weekCount.append(Double(i.count))
+            }
+             self.setChart(self.weekCount, barChartView: cell.barChartView);
+//            cell.totalWeekCount = self.weekCount;  /// ex:-  [1,3,6]
+//            cell.totalActivites = totalNumberOfActivities;
+
+        }else if indexPath.row == 1{
+         cell.name.text = "Weekly Distance Traveled"
+            self.setDistanceChart(distance, barChartView: cell.barChartView);
+        }else if indexPath.row == 2{
+          cell.name.text = "Weekly Calories Burned"
+            self.setCalChart(calories, barChartView: cell.barChartView);
+
+        }else if indexPath.row == 3{
+          cell.name.text = "Distance and Speed Performance"
+
+        }
+        
         return cell;
     }
     
@@ -52,8 +218,8 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
         email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
         let words =  email?.componentsSeparatedByString("@");
         let contName = words![0]
-      if DownloadFromBlob.downloadFromBlob(contName)
-      {
+//      if DownloadFromBlob.downloadFromBlob(contName)
+//      {
         let file = "\(contName).txt" //this is the file. we will write to and read from it
         self.tableView.hidden=false;
         let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
@@ -81,25 +247,19 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
                 print(jsonData);
                 
                 for item in items {
-//                    self.totalNumberOfActivities = self.totalNumberOfActivities + 1;
-//                    if items.count == self.totalNumberOfActivities
-//                    {
-//                        self.lastItem = true;
-//                    }
+                    self.totalNumberOfActivities = self.totalNumberOfActivities + 1;
+                    if items.count == self.totalNumberOfActivities
+                    {
+                        self.lastItem = true;
+                    }
                     
                     self.routeData = MapData();
                     if let distance = item["distance"] as? Double{
+                        self.distance.append(distance)
                         self.routeData.distance = String(distance);
                        // self.totalDis = String(Int(distance)+Int(self.totalDis)!);
                     }
-                    
-                    if let elevationLoss = item["altLossS"] as? String{
-                        self.routeData.elevationLoss = elevationLoss
-                    }
-                    if let elevationGain = item["altGainS"] as? String{
-                        self.routeData.elevationGain = elevationGain
-                    }
-                    if let startLocation = item["startLocationS"] as? String{
+                     if let startLocation = item["startLocationS"] as? String{
                         self.routeData.location = startLocation
                     }
                     if let elapsedTime = item["elapsedTime"] as? String{
@@ -109,39 +269,14 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
                     if let date = item["date"] as? String{
                         self.routeData.date = date;
                         
-//                        let formatedDate = CommonFunctions.dateFromFixedFormatString(self.routeData.date!);
-//                        let currentDate = NSDate()
-//                        let dateComparisionResult:NSComparisonResult = currentDate.compare(formatedDate);
-//                        if dateComparisionResult == NSComparisonResult.OrderedSame
-//                        {
-//                            if !self.checkTodayActivity
-//                            {
-//                                self.streakCount = self.streakCount + 1;
-//                                self.checkTodayActivity = true;
-//                            }
-//                            // Current date and end date are same.
-//                        }
-//                        
-//                        
-//                        let dateComparisionResult2:NSComparisonResult = previousDate.compare(formatedDate);
-//                        if dateComparisionResult2 == NSComparisonResult.OrderedSame
-//                        {
-//                            if !self.checkTodayActivity
-//                            {
-//                                self.streakCount = self.streakCount + 1;
-//                                previousDate = yesterDay(previousDate);
-//                            }
-//                            // Current date and end date are same.
-//                        }
-//                        
-                        
-                        
                     }
                     if let distanceAway = item["distanceAwayP"] as? String{
                         self.routeData.distanceAway = distanceAway
                     }
                     if let caloriesBurned = item["caloriesBurnedS"] as? String{
                         self.routeData.caloriesBurned = caloriesBurned
+                        
+                        calories.append(Double(caloriesBurned)!);
                         //  self.totalCal = String(Int(caloriesBurned)!+Int(self.totalCal)!);
                     }
                     if let performedActivity = item["performedActivity"] as? String{
@@ -151,115 +286,44 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
                         self.routeData.itemID = itemID
                     }
                     
-                    if let elevationCoordinatesP = item["elevationCoordinatesP"] as? String{
-                        // self.routeData.distanceAway = distanceAway
-                        // print(elevationCoordinatesP);
-                        
-                        let data: NSData = elevationCoordinatesP.dataUsingEncoding(NSUTF8StringEncoding)!
-                        do
-                        {
-                            let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
-                            
-                            for i in 0 ..< json!.count
-                            {
-                                self.routeData.elevationLat.append((json![i].objectForKey("latitude") as? Double)!)
-                                self.routeData.elevationLong.append((json![i].objectForKey("longitude") as? Double)!)
-                            }
-                        }catch{
-                            
+                   
+                    
+                    // ------------------------ code to calculate week and add into perticular week ----------------------------
+                    let weekCount = "Week " + CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!));
+                   
+                    
+                    if self.previousWeeks.contains(weekCount)
+                    {
+                        self.routeDataArray.append(self.routeData);
+                        if self.lastItem{
+                            self.sectionItem.append(self.routeDataArray);
                         }
                     }
-                    if let trackPolylines = item["trackPolylinesS"] as? String{
-                        // print(trackPolylines);
+                    else{
                         
-                        let data: NSData = trackPolylines.dataUsingEncoding(NSUTF8StringEncoding)!
-                        do
+                        self.sectionHeader.append(weekCount);
+                        if self.previousWeeks.count > 0
                         {
-                            let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
-                            
-                            for i in 0 ..< json!.count
-                            {
-                                self.routeData.trackLat.append((json![i].objectForKey("latitude") as? Double)!)
-                                self.routeData.trackLong.append((json![i].objectForKey("longitude") as? Double)!)
-                            }
-                        }catch{
-                            
+                            print(self.routeDataArray.count)
+                            self.sectionItem.append(self.routeDataArray);
                         }
+                        if self.lastItem{
+                            self.sectionItem.append(self.routeDataArray);
+                        }
+                        self.previousWeeks.append(weekCount);
+                        self.routeDataArray.removeAll();
+                        self.routeDataArray.append(self.routeData);
                         
                     }
-                    
-                    self.weatherData = WeatherData();
-                    if let weatherData = item["weatherData"] as? String{
-                        print(weatherData);
-                        _ = weatherData.componentsSeparatedByString("=")
-                        let data: NSData = weatherData.dataUsingEncoding(NSUTF8StringEncoding)!
-                        do
-                        {
-                            let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSDictionary;
-                            
-                            self.routeData.weatherData.speed = ((json!.objectForKey("speed") as? String)!)
-                            self.routeData.weatherData.cod = ((json!.objectForKey("cod") as? String)!)
-                            self.routeData.weatherData.temp = ((json!.objectForKey("temp") as? String)!)
-                            self.routeData.weatherData.descriptin = ((json!.objectForKey("description") as? String)!)
-                            self.routeData.weatherData.pressure = ((json!.objectForKey("pressure") as? String)!)
-                            self.routeData.weatherData.main = ((json!.objectForKey("main") as? String)!)
-                            self.routeData.weatherData.humidity = ((json!.objectForKey("humidity") as? String)!)
-                            self.routeData.weatherData.deg = ((json!.objectForKey("deg") as? String)!)
-                            
-                        }catch{
-                            print("error");
-                        }
-                        
-                    }
-                    //                    self.routeDataArray.append(self.routeData);
-                    //                    self.counter=String(self.routeDataArray.count);
-                    self.routeDataArray.append(self.routeData);
-                    
-//                    // ------------------------ code to calculate week and add into perticular week ----------------------------
-//                    let weekCount = "Week " + CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!));
-//                    
-//                    if weekCount == self.priviousWeekCount
-//                    {
-//                        self.routeDataArray.append(self.routeData);
-//                        if self.lastItem{
-//                            self.sectionItem.append(self.routeDataArray);
-//                        }
-//                    }
-//                    else{
-//                        
-//                        self.sectionHeader.append(weekCount);
-//                        if self.priviousWeekCount != ""
-//                        {
-//                            print(self.routeDataArray.count)
-//                            self.sectionItem.append(self.routeDataArray);
-//                        }
-//                        self.routeDataArray.removeAll();
-//                        self.routeDataArray.append(self.routeData);
-//                        self.priviousWeekCount = weekCount;
-//                    }
-//                    
-                    
-                    // print("Todo Item: ", item)
+                
+                  //  self.priviousWeekCount = weekCount;
                 }
                 
                 
-//                self.counter=String(self.totalNumberOfActivities);
-//                
-//                
-//                streak = String(streakCount);
-//                values.append(streak);
-//                values.append(counter);
-//                values.append(totalDis);
-//                values.append(totalDur);
-//                values.append(totalCal);
-                self.tableView.hidden=false;
+               // self.tableView.hidden=false;
                 self.tableView.delegate=self;
                 self.tableView.dataSource=self;
                 self.tableView.reloadData();
-//                self.collectionView.delegate=self;
-//                self.collectionView.dataSource=self;
-//                self.collectionView.reloadData();
-                
                 CommonFunctions.hideActivityIndicator();
                 
                 
@@ -279,7 +343,7 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
             DownloadFromBlob.downloadFromBlob(contName)
             
         }
-        }
+       // }
 
     }
     
@@ -287,15 +351,11 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
     override func viewDidLoad()
     {
         super.viewDidLoad();
-        
-        self.tableView.delegate = self;
-        self.tableView.dataSource = self;
-        self.tableView.reloadData();
-        
-    // let view =  LineChartView(frame: cView.frame);
-        
-        
-        // Do any additional setup after loading the view.
+        self.callData();
+//        self.tableView.delegate = self;
+//        self.tableView.dataSource = self;
+//        self.tableView.reloadData();
+
     }
 
     override func didReceiveMemoryWarning() {
