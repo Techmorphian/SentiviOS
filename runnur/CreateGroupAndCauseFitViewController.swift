@@ -197,9 +197,10 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                 
             })
             
+            alert.addAction(Yes)
+
             alert.addAction(No)
             
-            alert.addAction(Yes)
             
             self.presentViewController(alert, animated: true, completion: nil)
 
@@ -223,10 +224,10 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                 
             })
             
-            alert.addAction(No)
-            
             alert.addAction(Yes)
-            
+
+            alert.addAction(No)
+                    
             self.presentViewController(alert, animated: true, completion: nil)
             
         
@@ -978,7 +979,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         let CancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.cancelStartDate))
         
-        toolBar.setItems([doneButton,flexSpace, CancelButton], animated: false)
+        toolBar.setItems([CancelButton,flexSpace, doneButton], animated: false)
         toolBar.userInteractionEnabled = true
         sender.inputAccessoryView = toolBar
         
@@ -1077,7 +1078,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         let CancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateGroupAndCauseFitViewController.cancelEndDate))
         
-        toolBar.setItems([doneButton,flexSpace, CancelButton], animated: false)
+        toolBar.setItems([CancelButton,flexSpace, doneButton], animated: false)
         toolBar.userInteractionEnabled = true
         sender.inputAccessoryView = toolBar
         

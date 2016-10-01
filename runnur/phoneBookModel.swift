@@ -7,8 +7,11 @@
 //
 
 import Foundation
-class phoneBookModel
+class phoneBookModel : Equatable
 {
+    
+    
+    
     internal var indexPathRow = Int()
     
     internal var firstName = String()
@@ -55,5 +58,14 @@ class phoneBookModel
     internal var selectedEmail = String()
     
     
+    
 }
+
+func ==(lhs: phoneBookModel, rhs: phoneBookModel) -> Bool
+{
+    
+    return (lhs.firstName == rhs.firstName && lhs.lastName == rhs.lastName && lhs.Email == rhs.Email)
+    
+}
+
 

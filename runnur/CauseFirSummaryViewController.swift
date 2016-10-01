@@ -750,8 +750,6 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                         challengeMSGLabel.text = msg
                         
                         challenegeOverImagView.image = UIImage(named: "")
-                        
-                        
                         challengeViewHeightConstarint.constant = 50
                         
                         
@@ -772,10 +770,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                         
                     }
                     
-                    
-                    
-                    
-                    
+                                
                     
                     if(status=="Success")
                     {

@@ -378,8 +378,21 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
     {
         
         
-        overFlowButton.hidden = false;
+      //  overFlowButton.hidden = false;
 
+        
+       print(summaryView.userStatus)
+        
+        
+        if summaryView.userStatus == "2"
+        {
+            overFlowButton.hidden = false;
+            
+        }
+        else
+        {
+            overFlowButton.hidden = true;
+        }
         
         sender.tintColor = UIColor.whiteColor();
         
@@ -664,8 +677,17 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         
         UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
             
-            self.summaryView.view.hidden = false
+           // self.summaryView.view.hidden = false
             
+            if self.summaryView.userStatus == "2"
+            {
+                self.overFlowButton.hidden = false;
+                
+            }
+            else
+            {
+                self.overFlowButton.hidden = true;
+            }
             
             if  self.LederBoardView.view.frame.origin.x == 0
             {
@@ -696,8 +718,17 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
             else
             {
                 
-               self.overFlowButton.hidden = false;
-
+             
+                
+                if self.summaryView.userStatus == "2"
+                {
+                    self.overFlowButton.hidden = false;
+                    
+                }
+                else
+                {
+                    self.overFlowButton.hidden = true;
+                }
                 
                 self.ActivityView.view.frame.origin.x = +self.view.frame.size.width;
                 
@@ -743,11 +774,9 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
                 
                 {
                 
-                self.CauseFirSummary.view.hidden = false
+                self.CauseFirSummary.view.hidden = true
                 
-                
-                
-                
+                    
                 if  self.ActivityView.view.frame.origin.x == 0
                 {
                     
@@ -777,7 +806,9 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
                 else
                 {
                     
-                    self.overFlowButton.hidden = false;
+                  //  self.overFlowButton.hidden = false;
+                    
+                    self.CauseFirSummary.view.hidden = true
                     
                     self.ProgressView.view.frame.origin.x = +self.view.frame.size.width;
                     
@@ -1041,7 +1072,6 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         ViewGroupFitViewController.instance = self;
             
             
-        
        self.view.addSubview(summaryView.view);
             
         self.addChildViewController(summaryView);

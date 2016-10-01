@@ -611,6 +611,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
     
     
     
+    var userStatus = String()
     
     
     ///////////////////////////////////////////////////// web service part
@@ -864,11 +865,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                             {
                                 
                                 
-                                
-//                                self.activityIndicator.stopAnimating();
-//                                
-//                                self.loadingView.removeFromSuperview();
-                                
+
                                 hideActivityIndicator();
                                 
                                 FrontView.hidden = true;
@@ -1001,15 +998,15 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                 if description != ""
                                 {
                                 
-                                descriptionView.hidden = false;
-                              descriptionSmallView.hidden = false;
+                                 descriptionView.hidden = false;
+                                 descriptionSmallView.hidden = false;
 
                                 descriptionText.text = description
                                 
                                     
-                                    dispatch_async(dispatch_get_main_queue(),
+                                dispatch_async(dispatch_get_main_queue(),
                                                    
-                                    {
+                                {
                                         
                                         self.descriptionViewHeightConstarint.constant = (self.getLabelHeight(self.descriptionText, text: self.descriptionText.text!, fontSize: 13, Width: self.view.frame.width - 20 )+45)
                                         
@@ -1020,7 +1017,9 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                 
                                 else
                                 {
+                                   
                                     descriptionView.hidden = true;
+                                   
                                     descriptionSmallView.hidden = true;
                                 
                                   descriptionViewHeightConstarint.constant = 0
@@ -1030,7 +1029,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                
                                 /// MARK: USER STATUS
                                 
-                                let userStatus = elements[i]["userStatus"] as! String
+                                 userStatus = elements[i]["userStatus"] as! String
                                 
                                 bottomButtomViewHeight.constant = 0
                                 

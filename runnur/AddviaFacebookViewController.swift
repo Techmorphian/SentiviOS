@@ -25,6 +25,7 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
     
     
     
+    @IBOutlet var frontView: UIView!
     
     /////// func no internet
     func RemoveNoInternet()
@@ -278,7 +279,8 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
     @IBAction func searchCancelButtonAction(sender: AnyObject)
     {
         
-        
+        self.doneButton.hidden = false
+
         self.label.hidden = true
         
         self.searchTextField.hidden = false
@@ -450,6 +452,11 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
             
             self.label.hidden = false;
             
+            
+            ////  while searching if thr is no result hide add/done button
+            self.doneButton.hidden = true
+
+            
             self.label.frame = CGRectMake(20, self.view.frame.size.height/2, self.view.frame.width-20, 50)
             
             self.label.center = self.view.center
@@ -475,6 +482,9 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         else
         {
             
+            
+            self.doneButton.hidden = false
+
             self.searchTextField.hidden = false
             self.searchIcon.hidden = false
             
@@ -625,6 +635,8 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
         
     {
         
+        
+        self.frontView.hidden = true
         
         //removeFriendsCount = 0
         

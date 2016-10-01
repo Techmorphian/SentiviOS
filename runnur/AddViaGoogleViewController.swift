@@ -26,6 +26,7 @@ class AddViaGoogleViewController: UIViewController,UITableViewDataSource,UITable
     
     var label = UILabel()
 
+    @IBOutlet var frontView: UIView!
 
     /////// func no internet
     func RemoveNoInternet()
@@ -1144,6 +1145,7 @@ class AddViaGoogleViewController: UIViewController,UITableViewDataSource,UITable
         super.viewDidLoad()
 
         
+        self.frontView.hidden = true
         
         ////// push notification
         
