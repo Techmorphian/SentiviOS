@@ -71,6 +71,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
     
     @IBOutlet var winnerView: UIView!
     
+//    @IBOutlet var winnerView2Height: NSLayoutConstraint!
     
     @IBOutlet var winnerViewHeight: NSLayoutConstraint!
     
@@ -82,7 +83,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
     
     @IBOutlet var challenegMSGSmallView: UIView!
     
-    @IBOutlet var challenegeOverImagView: UIImageView!
+    
     
     
     @IBOutlet var challengeOverLabel: UILabel!
@@ -768,6 +769,9 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
      var lastName = [String]()
      var  photoUrl = [String]()
     
+    
+    var WinnerArray = [String]()
+    
     //MARK:- NSURLSession delegate methods
     
     func URLSessionDidFinishEventsForBackgroundURLSession(session: NSURLSession)
@@ -815,10 +819,10 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                         challengeMSGView.hidden = false
                         challenegMSGSmallView.hidden = false
                          challengeOverLabel.hidden = false
-                        challenegeOverImagView.hidden = false
+                     
                         challengeOverLabel.text = msg
                         
-                        challenegeOverImagView.image = UIImage(named: "ic_challenge_over")
+                       // challenegeOverImagView.image = UIImage(named: "ic_challenge_over")
                         
                         
                         challengeViewHeightConstarint.constant = 50
@@ -832,9 +836,10 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                         challenegMSGSmallView.hidden = true
                         
                         challengeOverLabel.hidden = true
-                        challenegeOverImagView.hidden = true
                         
-                        challenegeOverImagView.hidden = true
+                       // challenegeOverImagView.hidden = true
+                        
+                       // challenegeOverImagView.hidden = true
                         
                         challengeViewHeightConstarint.constant = 0
 
@@ -887,7 +892,44 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                 
                                 let photoUrl = elements[i]["photoUrl"] as! String
                                 
-                                                                
+                                
+                                                               
+                                
+                                NSUserDefaults.standardUserDefaults().setObject("", forKey: "CauseChallengeImageView")
+
+                                
+                                print(NSUserDefaults.standardUserDefaults().stringForKey("GroupChallengeImageView"))
+                                
+                                if NSUserDefaults.standardUserDefaults().stringForKey("GroupChallengeImageView") == ""
+                                {
+                                    
+                                    
+                                    
+                                    if photoUrl == ""
+                                    {
+                                        ChallengeImageView.image = UIImage(named: "im_default_challenge_image")
+                                        
+                                    }
+                                    else
+                                    {
+                                        
+                                        ChallengeImageView.kf_setImageWithURL(NSURL(string:photoUrl)!, placeholderImage: UIImage(named:"im_default_challenge_image"))
+                                        
+                                    }
+                                    
+                                    
+                                }
+                                
+                                else
+                                
+                                {
+                                    
+                                      ChallengeImageView.kf_setImageWithURL(NSURL(string:NSUserDefaults.standardUserDefaults().stringForKey("GroupChallengeImageView")!)!, placeholderImage: UIImage(named:"im_default_challenge_image"))
+                                    
+                                    
+                                }
+                                
+                                
 //                                if photoUrl == ""
 //                                {
 //                                    ChallengeImageView.image = UIImage(named: "im_default_challenge_image")
@@ -899,9 +941,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
 //                                    ChallengeImageView.kf_setImageWithURL(NSURL(string:photoUrl)!, placeholderImage: UIImage(named:"im_default_challenge_image"))
 //                                    
 //                                }
-                                
-                                
-              ChallengeImageView.kf_setImageWithURL(NSURL(string:NSUserDefaults.standardUserDefaults().stringForKey("challengeImageView")!)!, placeholderImage: UIImage(named:"im_default_challenge_image"))
+                 
                                 
 //                                ChallengeImageView.image = UIImage(named:NSUserDefaults.standardUserDefaults().stringForKey("challengeImageView")!)
                                 
@@ -1351,95 +1391,96 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                     
                                 }
                                 
-
+                            // WINNER Part
                                                               
                                 for i in elements[i].objectForKey("winners") as! NSArray
                                 {
                                     
-                                    print(i.valueForKey("rank"))
+//                                    if (i.valueForKey("rank") != nil)
+//                                    {
+//                                    
+//                                    WinnerArray.append(i as! String)
+//                                        
+//                                    }
+                                    
+                                    
+                                    
+                                   // WinnerArray.append(i.valueForKey("rank") as! String)
+                                    
+                                    if (i.valueForKey("firstName")as! String    != "")
+                                    {
+
+                                     WinnerArray.append(i.valueForKey("firstName") as! String)
+                                    
+                                    }
+//                                    
+//                                    if i.valueForKey("firstName") as? String == ""
+//                                    {
+//                                        
+//                                        frstWinnerImagevIew.hidden = true
+//                                        
+//                                        secondWinnerImageView.hidden = true
+//                                        
+//                                        thirdWinnerImageView.hidden = true
+//                                        
+//                                        
+//                                        nameOf1stWinner.hidden = true
+//                                        nameOf2ndWinner.hidden = true
+//                                        nameOf3rdWinner.hidden = true
+//
+//                                        winnerDividerYConstarint.constant = -20
+//                                        winnerDivider2YConstraint.constant = -20
+//                                        
+//                                        winnerDividerView1Height.constant = 100
+//                                        winnerDividerView2Height.constant = 100
+//                                        
+//                                        winnerViewHeight.constant = 240 - 82
+//                                        winnerMainViewHeightConstraint.constant = 270 - 82
+//
+//                                        
+//                                    }
+//                                    else
+//                                        
+//                                    {
+//                                        
+//                                        winnerViewHeight.constant = 240
+//                                        winnerMainViewHeightConstraint.constant = 270
+//                                        
+//                                        
+//                                        frstWinnerImagevIew.hidden = false
+//                                        secondWinnerImageView.hidden = false
+//                                        thirdWinnerImageView.hidden = false
+//                                        nameOf1stWinner.hidden = false
+//                                        nameOf2ndWinner.hidden = false
+//                                        nameOf3rdWinner.hidden = false
+//                                        winnerDividerYConstarint.constant = 0
+//                                        winnerDivider2YConstraint.constant = 0
+//                                        
+//                                        winnerDividerView1Height.constant = 150
+//                                        winnerDividerView2Height.constant = 150
+//                                        
+//                                        
+//                                    }
+//                                    
                                     
                                     if i.valueForKey("rank") as! String == "1"
                                     {
-                                        
-                                        
-                                       if i.valueForKey("winner") as? String != ""
-                                       {
-                                          FirstWinnerLabel.text = (i.valueForKey("winner") as? String)! + "%"
-                                        
-                                        
-                                        
-                                        
-                                        frstWinnerImagevIew.hidden = true
-                                        
-                                        secondWinnerImageView.hidden = true
-                                        
-                                        thirdWinnerImageView.hidden = true
-                                        
-                                        nameOf1stWinner.hidden = true
-                                        nameOf2ndWinner.hidden = true
-                                        nameOf3rdWinner.hidden = true
-
-                                         winnerDividerYConstarint.constant = -20
-                                        winnerDivider2YConstraint.constant = -20
-                                        
-                                        winnerDividerView1Height.constant = 100
-                                        winnerDividerView2Height.constant = 100
-                                        
-                                        winnerViewHeight.constant = 240 - 75
-                                    
-                                        
-                                      //  winnerMainViewHeightConstraint.constant = 270 - 75
-                                                                         
-                                        
-                                    }
-                                       
-                                    else
-                                       {
-                                        
-                                        winnerViewHeight.constant = 240
-                                        
-                                       // winnerMainViewHeightConstraint.constant = 270
-                                                                                
-                                        frstWinnerImagevIew.hidden = false
-                                        secondWinnerImageView.hidden = false
-                                        thirdWinnerImageView.hidden = false
-                                        nameOf1stWinner.hidden = false
-                                        nameOf2ndWinner.hidden = false
-                                        nameOf3rdWinner.hidden = false
-                                        
-                                        
-                                        winnerDividerYConstarint.constant = 0
-                                        winnerDivider2YConstraint.constant = 0
-                                        
-                                        
-                                        winnerDividerView1Height.constant = 150
-                                        winnerDividerView2Height.constant = 150
-
+                                        FirstWinnerLabel.text = (i.valueForKey("winner") as? String)! + "%"
                                         
                                         let fristName = i.valueForKey("firstName") as? String
                                         let lastName = i.valueForKey("lastName") as? String
                                         
-                                        nameOf1stWinner.text = fristName! + lastName!
+                                        nameOf1stWinner.text = fristName! + " " + lastName!
                                         
                                         let photoUrl = i.valueForKey("photoUrl") as? String
-                                        
-                                        
-                                        
-                                        
-                                        
-                                        
                                         
                                         frstWinnerImagevIew.clipsToBounds = true;
                                         frstWinnerImagevIew.layer.borderWidth = 1
                                         frstWinnerImagevIew.layer.borderColor = colorCode.GrayColor.CGColor
-
+                                        
                                         frstWinnerImagevIew.kf_setImageWithURL(NSURL(string: photoUrl!)!, placeholderImage: UIImage(named:"im_default_profile"))
                                         
                                         frstWinnerImagevIew.layer.cornerRadius = frstWinnerImagevIew.frame.size.width / 2;
-                                        
-                                        
-                                        
-                                        }
                                         
                                         
                                     }
@@ -1448,49 +1489,12 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                     {
                                         
                                         
-                                        
-                                        if i.valueForKey("winner") as? String != ""
-                                        {
-
                                         SecondWinnerLabel.text = (i.valueForKey("winner") as? String)! + "%"
-                                            
-                                            
-                                            winnerDividerYConstarint.constant = -20
-                                            winnerDivider2YConstraint.constant = -20
-                                            winnerDividerView1Height.constant = 100
-                                            winnerDividerView2Height.constant = 100
-                                            
-                                          winnerViewHeight.constant = 240 - 75
-                                       
-                                        }
-                                        
-                                        else
-                                        {
-                                        
-                                            //winnerMainViewHeightConstraint.constant = 270
-
-                                           winnerViewHeight.constant = 240
-                                            
-                                         
-                                            
-                                            frstWinnerImagevIew.hidden = false
-                                            secondWinnerImageView.hidden = false
-                                            thirdWinnerImageView.hidden = false
-                                            nameOf1stWinner.hidden = false
-                                            nameOf2ndWinner.hidden = false
-                                            nameOf3rdWinner.hidden = false
-                                            
-                                            
-                                            winnerDividerYConstarint.constant = 0
-                                            winnerDivider2YConstraint.constant = 0
-                                            winnerDividerView1Height.constant = 150
-                                            winnerDividerView2Height.constant = 150
-
                                         
                                         let fristName = i.valueForKey("firstName") as? String
                                         let lastName = i.valueForKey("lastName") as? String
                                         
-                                        nameOf2ndWinner.text = fristName! + lastName!
+                                        nameOf2ndWinner.text = fristName! + " " + lastName!
                                         
                                         let photoUrl = i.valueForKey("photoUrl") as? String
                                         
@@ -1500,63 +1504,22 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                         secondWinnerImageView.clipsToBounds = true;
                                         secondWinnerImageView.layer.borderWidth = 1
                                         secondWinnerImageView.layer.borderColor = colorCode.GrayColor.CGColor
-                                            
-                                            
-                                            
-                                        }
                                         
                                     }
-
                                     if i.valueForKey("rank") as! String == "3"
                                     {
                                         
                                         
-                                        if i.valueForKey("winner") as? String != ""
-                                        {
-                                            
-                                            winnerDividerYConstarint.constant = -20
-                                            winnerDivider2YConstraint.constant = -20
-                                            winnerDividerView1Height.constant = 100
-                                            winnerDividerView2Height.constant = 100
-                                            
-                                           winnerViewHeight.constant = 240 - 75
-                                          
-
-                                        
                                         thirdWinnerLabel.text = (i.valueForKey("winner") as? String)! + "%"
-                                            
-                                        }
-                                        else
-                                        {
-                                        
-                                            
-                                           winnerViewHeight.constant = 240
-                                           // winnerMainViewHeightConstraint.constant = 270
-
-                                            
-                                            frstWinnerImagevIew.hidden = false
-                                            secondWinnerImageView.hidden = false
-                                            thirdWinnerImageView.hidden = false
-                                            nameOf1stWinner.hidden = false
-                                            nameOf2ndWinner.hidden = false
-                                            nameOf3rdWinner.hidden = false
-                                            
-                                            
-                                            winnerDividerYConstarint.constant = 0
-                                            winnerDivider2YConstraint.constant = 0
-                                            winnerDividerView1Height.constant = 150
-                                            winnerDividerView2Height.constant = 150
-
-                                            
-                                        let fristName = i.valueForKey("firstName") as? String
+                                       let  fristName = i.valueForKey("firstName") as? String
                                         let lastName = i.valueForKey("lastName") as? String
                                         
-                                        nameOf3rdWinner.text = fristName! + lastName!
+                                        nameOf3rdWinner.text = fristName! + " " + lastName!
                                         
                                         let photoUrl = i.valueForKey("photoUrl") as? String
                                         
                                         thirdWinnerImageView.kf_setImageWithURL(NSURL(string: photoUrl!)!, placeholderImage: UIImage(named:"im_default_profile"))
-
+                                        
                                         print(thirdWinnerLabel.text)
                                         
                                         
@@ -1564,11 +1527,292 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                         thirdWinnerImageView.clipsToBounds = true;
                                         thirdWinnerImageView.layer.borderWidth = 1
                                         thirdWinnerImageView.layer.borderColor = colorCode.GrayColor.CGColor
-                                        }
+                                        
                                         
                                     }
+                                    
+                                    
+                                    //////////////////
+                                    
+                                    
+                                    
+                                    
+//                                    if i.valueForKey("rank") as! String == "1"
+//                                    {
+//                                        
+//                                        print(i.valueForKey("winner"))
+//                                        
+//                                       if i.valueForKey("firstName") as? String == ""
+//                                       {
+//                                          FirstWinnerLabel.text = (i.valueForKey("winner") as? String)! + "%"
+//                                        
+//                                        
+//                                        frstWinnerImagevIew.hidden = true
+//                                        
+//                                        secondWinnerImageView.hidden = true
+//                                        
+//                                        thirdWinnerImageView.hidden = true
+//                                        
+//                                        nameOf1stWinner.hidden = true
+//                                        nameOf2ndWinner.hidden = true
+//                                        nameOf3rdWinner.hidden = true
+//
+//                                       winnerDividerYConstarint.constant = -20
+//                                        winnerDivider2YConstraint.constant = -20
+//                                        
+//                                        winnerDividerView1Height.constant = 100
+//                                        winnerDividerView2Height.constant = 100
+//                                        
+//                                    winnerViewHeight.constant = 240 - 82
+//                                  winnerMainViewHeightConstraint.constant = 270 - 82
+//                                                                         
+//                                        
+//                                    }
+//                                       
+//                                    else
+//                                       {
+//                                        
+//                                        winnerViewHeight.constant = 240
+//                                        winnerMainViewHeightConstraint.constant = 270
+//                                        
+//                                       // winnerMainViewHeightConstraint.constant = 270
+//                                                                                
+//                                        frstWinnerImagevIew.hidden = false
+//                                        secondWinnerImageView.hidden = false
+//                                        thirdWinnerImageView.hidden = false
+//                                        nameOf1stWinner.hidden = false
+//                                        nameOf2ndWinner.hidden = false
+//                                        nameOf3rdWinner.hidden = false
+//                                        
+//                                        
+//                                        winnerDividerYConstarint.constant = 0
+//                                        winnerDivider2YConstraint.constant = 0
+//                                        
+//                                        
+//                                        winnerDividerView1Height.constant = 150
+//                                        winnerDividerView2Height.constant = 150
+//
+//                                        
+//                                        let fristName = i.valueForKey("firstName") as? String
+//                                        let lastName = i.valueForKey("lastName") as? String
+//                                        
+//                                        nameOf1stWinner.text = fristName! + lastName!
+//                                        
+//                                        let photoUrl = i.valueForKey("photoUrl") as? String
+//                                        
+//                                        
+//                                        
+//                                        
+//                                        
+//                                        
+//                                        
+//                                        frstWinnerImagevIew.clipsToBounds = true;
+//                                        frstWinnerImagevIew.layer.borderWidth = 1
+//                                        frstWinnerImagevIew.layer.borderColor = colorCode.GrayColor.CGColor
+//
+//                                        frstWinnerImagevIew.kf_setImageWithURL(NSURL(string: photoUrl!)!, placeholderImage: UIImage(named:"im_default_profile"))
+//                                        
+//                                        frstWinnerImagevIew.layer.cornerRadius = frstWinnerImagevIew.frame.size.width / 2;
+//                                        
+//                                        
+//                                        
+//                                        }
+//                                        
+//                                        
+//                                    }
+//                                    
+//                                    if i.valueForKey("rank") as! String == "2"
+//                                    {
+//                                        
+//                                        
+//                                        
+//                                        if i.valueForKey("firstName") as? String == ""
+//                                        {
+//
+//                                        SecondWinnerLabel.text = (i.valueForKey("winner") as? String)! + "%"
+//                                            
+//                                            
+//                                            winnerDividerYConstarint.constant = -20
+//                                            winnerDivider2YConstraint.constant = -20
+//                                            
+//                                            winnerDividerView1Height.constant = 100
+//                                            winnerDividerView2Height.constant = 100
+//                                            
+//                                          winnerViewHeight.constant = 240 - 82
+//                                            
+//                                      winnerMainViewHeightConstraint.constant = 270 - 82
+//                                       
+//                                        }
+//                                        
+//                                        else
+//                                        {
+//                                        
+//                                        winnerMainViewHeightConstraint.constant = 270
+//
+//                                           winnerViewHeight.constant = 240
+//                                            
+//                                         
+//                                            
+//                                            frstWinnerImagevIew.hidden = false
+//                                            secondWinnerImageView.hidden = false
+//                                            thirdWinnerImageView.hidden = false
+//                                            nameOf1stWinner.hidden = false
+//                                            nameOf2ndWinner.hidden = false
+//                                            nameOf3rdWinner.hidden = false
+//                                            
+//                                            
+//                                            winnerDividerYConstarint.constant = 0
+//                                            winnerDivider2YConstraint.constant = 0
+//                                            winnerDividerView1Height.constant = 150
+//                                            winnerDividerView2Height.constant = 150
+//
+//                                        
+//                                        let fristName = i.valueForKey("firstName") as? String
+//                                        let lastName = i.valueForKey("lastName") as? String
+//                                        
+//                                        nameOf2ndWinner.text = fristName! + lastName!
+//                                        
+//                                        let photoUrl = i.valueForKey("photoUrl") as? String
+//                                        
+//                                        secondWinnerImageView.kf_setImageWithURL(NSURL(string: photoUrl!)!, placeholderImage: UIImage(named:"im_default_profile"))
+//                                        
+//                                        secondWinnerImageView.layer.cornerRadius = secondWinnerImageView.frame.size.width / 2;
+//                                        secondWinnerImageView.clipsToBounds = true;
+//                                        secondWinnerImageView.layer.borderWidth = 1
+//                                        secondWinnerImageView.layer.borderColor = colorCode.GrayColor.CGColor
+//                                            
+//                                            
+//                                            
+//                                        }
+//                                        
+//                                    }
+//
+//                                    if i.valueForKey("rank") as! String == "3"
+//                                    {
+//                                        
+//                                        
+//                                        if i.valueForKey("firstName") as? String == ""
+//                                        {
+//                                            
+//                                            
+//                                            
+//                                            
+//                                            winnerDividerYConstarint.constant = -20
+//                                            winnerDivider2YConstraint.constant = -20
+//                                            winnerDividerView1Height.constant = 100
+//                                            winnerDividerView2Height.constant = 100
+//                                            
+//                                          winnerViewHeight.constant = 240 - 82
+//                                          
+//                                       winnerMainViewHeightConstraint.constant = 270 - 82
+//                                        
+//                                        thirdWinnerLabel.text = (i.valueForKey("winner") as? String)! + "%"
+//                                            
+//                                        }
+//                                        else
+//                                        {
+//                                        
+//                                            
+//                                           winnerViewHeight.constant = 240
+//                                      winnerMainViewHeightConstraint.constant = 270
+//                                            
+//                                            frstWinnerImagevIew.hidden = false
+//                                            secondWinnerImageView.hidden = false
+//                                            thirdWinnerImageView.hidden = false
+//                                            nameOf1stWinner.hidden = false
+//                                            nameOf2ndWinner.hidden = false
+//                                            nameOf3rdWinner.hidden = false
+//                                            
+//                                            
+//                                            winnerDividerYConstarint.constant = 0
+//                                            winnerDivider2YConstraint.constant = 0
+//                                            winnerDividerView1Height.constant = 150
+//                                            winnerDividerView2Height.constant = 150
+//
+//                                            
+//                                        let fristName = i.valueForKey("firstName") as? String
+//                                        let lastName = i.valueForKey("lastName") as? String
+//                                        
+//                                        nameOf3rdWinner.text = fristName! + lastName!
+//                                        
+//                                        let photoUrl = i.valueForKey("photoUrl") as? String
+//                                        
+//                                        thirdWinnerImageView.kf_setImageWithURL(NSURL(string: photoUrl!)!, placeholderImage: UIImage(named:"im_default_profile"))
+//
+//                                        print(thirdWinnerLabel.text)
+//                                        
+//                                        
+//                                        thirdWinnerImageView.layer.cornerRadius = thirdWinnerImageView.frame.size.width / 2;
+//                                        thirdWinnerImageView.clipsToBounds = true;
+//                                        thirdWinnerImageView.layer.borderWidth = 1
+//                                        thirdWinnerImageView.layer.borderColor = colorCode.GrayColor.CGColor
+//                                        }
+//                                        
+//                                    }
 
-                                }
+                                } /// for close
+                                
+                                
+                                
+                                
+                                
+                                
+                               if WinnerArray.count == 0
+                               {
+                                
+                                print(WinnerArray.count)
+                                
+                                
+                                
+                                frstWinnerImagevIew.hidden = true
+                                
+                                secondWinnerImageView.hidden = true
+                                
+                                thirdWinnerImageView.hidden = true
+                                
+                                
+                                nameOf1stWinner.hidden = true
+                                nameOf2ndWinner.hidden = true
+                                nameOf3rdWinner.hidden = true
+                                
+                                winnerDividerYConstarint.constant = -20
+                                winnerDivider2YConstraint.constant = -20
+                                
+                                winnerDividerView1Height.constant = 100
+                                winnerDividerView2Height.constant = 100
+                                
+                                winnerViewHeight.constant = 240 - 82
+                                winnerMainViewHeightConstraint.constant = 270 - 82
+                                
+                                
+                               }
+                               else
+                                
+                               {
+                                
+                                
+                                winnerViewHeight.constant = 240
+                                winnerMainViewHeightConstraint.constant = 270
+                                
+                                
+                                frstWinnerImagevIew.hidden = false
+                                secondWinnerImageView.hidden = false
+                                thirdWinnerImageView.hidden = false
+                                nameOf1stWinner.hidden = false
+                                nameOf2ndWinner.hidden = false
+                                nameOf3rdWinner.hidden = false
+                                winnerDividerYConstarint.constant = 0
+                                winnerDivider2YConstraint.constant = 0
+                                
+                                winnerDividerView1Height.constant = 150
+                                winnerDividerView2Height.constant = 150
+                                
+
+                                print(WinnerArray.count)
+ 
+                                
+                            }
+                                
                                 
                                 
                                 
@@ -2083,7 +2327,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         challenegMSGSmallView.hidden = true
         
         challengeOverLabel.hidden = true
-        challenegeOverImagView.hidden = true
+        
         
         buttonOne.layer.cornerRadius = 2
         buttonOne.clipsToBounds = true

@@ -808,6 +808,37 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                 
                                 let photoUrl = elements[i]["photoUrl"] as! String
                                 
+                                
+                                NSUserDefaults.standardUserDefaults().setObject("", forKey: "GroupChallengeImageView")
+                                
+                            print( NSUserDefaults.standardUserDefaults().stringForKey("CauseChallengeImageView"))
+                                
+                                if NSUserDefaults.standardUserDefaults().stringForKey("CauseChallengeImageView") == ""
+                                {
+                                    
+                                    
+                                    
+                                    if photoUrl == ""
+                                    {
+                                        ChallengeImageView.image = UIImage(named: "im_default_challenge_image")
+                                        
+                                    }
+                                    else
+                                    {
+                                        
+                                        ChallengeImageView.kf_setImageWithURL(NSURL(string:photoUrl)!, placeholderImage: UIImage(named:"im_default_challenge_image"))
+                                        
+                                    }
+                                    
+                                    
+                                    
+                                }
+                                else
+                                {
+                                    ChallengeImageView.kf_setImageWithURL(NSURL(string:NSUserDefaults.standardUserDefaults().stringForKey("CauseChallengeImageView")!)!, placeholderImage: UIImage(named:"im_default_challenge_image"))
+                                    
+                                }
+                                
 //                                 if photoUrl == ""
 //                                 {
 //                                    ChallengeImageView.image = UIImage(named: "im_default_challenge_image")
@@ -821,7 +852,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
 //                                 }
                                
                                 
-                                ChallengeImageView.kf_setImageWithURL(NSURL(string:NSUserDefaults.standardUserDefaults().stringForKey("challengeImageView")!)!, placeholderImage: UIImage(named:"im_default_challenge_image"))
+                              
                                 
                                 
                                 //////////////////////////////////////

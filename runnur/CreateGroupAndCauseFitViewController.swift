@@ -1270,7 +1270,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         
                 
         
-        toolBar.setItems([doneButton,flexSpace,setBetAmount,flexSpace,CancelButton], animated: false)
+        toolBar.setItems([CancelButton,flexSpace,setBetAmount,flexSpace,doneButton], animated: false)
         
         setBetAmount.enabled = false
         toolBar.userInteractionEnabled = true

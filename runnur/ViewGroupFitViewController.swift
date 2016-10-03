@@ -1058,6 +1058,8 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         //// adding subvies in viewload 
         
        /// whem type id == 1 -> group fit else cause fit views are added
+      
+        print(NSUserDefaults.standardUserDefaults().stringForKey("TypeIdParticipating"))
         
         if NSUserDefaults.standardUserDefaults().stringForKey("TypeIdParticipating") == "1"
         {

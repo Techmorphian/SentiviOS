@@ -10,6 +10,8 @@ import UIKit
 import GoogleMaps
 import MapKit
 import CoreBluetooth
+import Crashlytics
+
 
 class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentralManagerDelegate*/
 {
@@ -236,7 +238,10 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     
     
     
-    
+    @IBAction func crashButtonTapped(sender: AnyObject) {
+        Crashlytics.sharedInstance().crash()
+    }
+
     
     var lat = String();
     var long = String();
@@ -246,6 +251,13 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         super.viewDidLoad();
         
         //self.call();
+        
+        let button = UIButton(type: UIButtonType.RoundedRect)
+        button.frame = CGRectMake(20, 50, 100, 30)
+        button.setTitle("Crash", forState: UIControlState.Normal)
+        button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        view.addSubview(button)
+
         
          print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter"))
         

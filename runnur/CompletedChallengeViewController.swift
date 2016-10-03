@@ -263,7 +263,11 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
             
             let challengeName = participatingArray[indexPath.row].challengeName
             NSUserDefaults.standardUserDefaults().setObject(challengeName, forKey: "challengeName")
+           
+            let challengeImageView = participatingArray[indexPath.row].photoUrl
             
+            NSUserDefaults.standardUserDefaults().setObject(challengeImageView, forKey: "GroupChallengeImageView")
+
             
             let TypeIdParticipating = participatingArray[indexPath.row].typeId
             
@@ -288,6 +292,8 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
             NSUserDefaults.standardUserDefaults().setObject(challengeId, forKey: "challengeId")
             
             
+                       let challengeImageView = contributingArray[indexPath.row].photoUrl
+            NSUserDefaults.standardUserDefaults().setObject(challengeImageView, forKey: "CauseChallengeImageView")
             
             let challengeName = contributingArray[indexPath.row].challengeName
             NSUserDefaults.standardUserDefaults().setObject(challengeName, forKey: "challengeName")
