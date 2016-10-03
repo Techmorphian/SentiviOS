@@ -135,16 +135,13 @@ static func downloadFromBlob(containerName:String) -> Bool
         
        // let token = AZSContinuationToken();
       let loc =  AZSStorageLocation(rawValue: 1)
-      let token = AZSContinuationToken(fromString: NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken")!, withLocation: loc!)
+    //  let token = AZSContinuationToken(fromString: NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken")!, withLocation: loc!)
         //let token = NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken");
         
         self.listBlobsInContainerHelper(container, continuationToken: nil, prefix: nil, blobListingDetails: AZSBlobListingDetails.All, maxResults: -1, completionHandler: {
             
         })
         
-//        self.listBlobsInContainerHelper(container, continuationToken: token, prefix: "", blobListingDetails: AZSBlobListingDetails.Copy, maxResults: -1, completionHandler: {(error) -> Void in
-//          
-//        })
     }
     return downloaded;
    }
@@ -158,6 +155,18 @@ static func downloadFromBlob(containerName:String) -> Bool
         container.listBlobsSegmentedWithContinuationToken(continuationToken, prefix: prefix, useFlatBlobListing: true, blobListingDetails: blobListingDetails, maxResults: maxResults, completionHandler: {(error, results) -> Void in
             if error != nil {
                 print(error);
+                var topController = UIApplication.sharedApplication().keyWindow!.rootViewController
+                while (topController!.presentedViewController != nil) {
+                    topController = topController!.presentedViewController
+                }
+             dispatch_async(dispatch_get_main_queue(), {
+                CommonFunctions.hideActivityIndicator();
+                CommonFunctions.showPopup(topController!, msg: (error?.localizedDescription)!, getClick: {
+                    
+                })
+
+             })
+                
             }
             else {
                 for i in 0..<results!.blobs!.count {
@@ -169,17 +178,7 @@ static func downloadFromBlob(containerName:String) -> Bool
                             print(error);
                         }else{
                             print("what getting \(string)");
-                            if data == ""
-                            {
-                                data += "["+string!+"]";
-                                print(data)
-                                writeToFile(data, contName: containerNam)
-                            }else{
-                                let trucated = data.characters.dropLast();
-                                data = String(trucated)+","+string!+"]";
-                                print(data)
-                                writeToFile(data, contName: containerNam)
-                            }
+                                writeToFile(string!, contName: containerNam,fileName: (results!.blobs![i] as! AZSCloudBlockBlob).blobName )
                         }
                       })
                     }
@@ -196,14 +195,58 @@ static func downloadFromBlob(containerName:String) -> Bool
         })
     }
     
-   static var firstCache : String? = nil;
-   static func writeToFile(newItem:String,contName:String)
+    static var firstCache : String? = nil;
+       static var isDirectoryCreated = false;
+    static func writeToFile(newItem:String,contName:String,fileName:String)
     {
         
-        let file = "\(contName).txt" //this is the file. we will write to and read from it
+        
+        //let file = "\(contName).txt" //this is the file. we will write to and read from it
         let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
         print(paths);
-        let path = paths.URLByAppendingPathComponent(file)
+        // let path = paths.URLByAppendingPathComponent("archuuuuufolder")
+         var path = String()
+
+          path = "\(NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)/\(contName)"
+        if !isDirectoryCreated {
+            isDirectoryCreated = true
+          
+            let fileManager = NSFileManager.defaultManager()
+            do
+            {
+                try fileManager.createDirectoryAtPath(path, withIntermediateDirectories: true, attributes: nil)
+            }
+            catch let _ as NSError
+            {
+                print("Error while creating a folder.")
+            }
+//             print(path);
+            
+            let paths = NSURL(fileURLWithPath: path);
+            let path = paths.URLByAppendingPathComponent("\(fileName).txt")
+            do {
+                try newItem.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
+            }
+            catch {/* error handling here */
+                print(error);
+                print("error while write");
+            }
+            
+        }else{
+//            print(path);
+            let paths = NSURL(fileURLWithPath: path);
+            let path = paths.URLByAppendingPathComponent("\(fileName).txt")
+            do {
+                try newItem.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
+            }
+            catch {/* error handling here */
+                print(error);
+                print("error while write");
+            }
+        }
+
+       
+     /* let path = paths.URLByAppendingPathComponent(file)
         
         //------------------------ store data in cache/file --------------------------
         
@@ -236,14 +279,10 @@ static func downloadFromBlob(containerName:String) -> Bool
                 }
             
         }
+        */
     }
   
     
-    
-    
-    
-    
-
-
-    
 }
+
+

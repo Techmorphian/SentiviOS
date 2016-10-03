@@ -236,6 +236,7 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
                 let path = NSURL(fileURLWithPath: paths.absoluteString).URLByAppendingPathComponent(file);
                 text2 = try NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding)
             }catch{
+                self.showDefaultGraphs();
                 print("error");
             }
             //print(text2);
@@ -245,7 +246,11 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
                 
                 let items = jsonData;
                 print(jsonData);
-                
+                if items.count == 0
+                {
+                    self.showDefaultGraphs();
+                    return;
+                }
                 for item in items {
                     self.totalNumberOfActivities = self.totalNumberOfActivities + 1;
                     if items.count == self.totalNumberOfActivities
@@ -348,13 +353,46 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
     }
     
     
+    
+    func showDefaultGraphs()
+    {
+        self.tableView.delegate=self;
+        self.tableView.dataSource=self;
+        self.tableView.reloadData();
+ 
+    }
+    
+    //   For noRoute show No saved route images
+    let routeViewButton = UIButton();
+    func showNoRoutesView()
+    {
+        let mainView = UIView();
+        mainView.frame = CGRectMake(20, 110, self.view.frame.width-40, 220)
+        mainView.backgroundColor=UIColor.whiteColor();
+        let label = UILabel(frame: CGRect(x:20, y: 20, width: mainView.frame.width-40, height: 17));
+        label.font = UIFont.systemFontOfSize(15)
+        label.text = "No Saved Routes";
+        //label.textColor=UIColor.whiteColor();
+        label.textAlignment = .Center;
+        
+        let imageView = UIImageView(frame: CGRectMake(0, 55, mainView.frame.width, 210-80));
+        imageView.image = UIImage(named: "im_no_routes");
+        routeViewButton.frame = CGRectMake(0, imageView.frame.origin.y+imageView.frame.height+4, mainView.frame.width, 30);
+        routeViewButton.setTitleColor(UIColor.blueColor(), forState: .Normal)
+        routeViewButton.setTitle("CREATE NEW ROUTE", forState: .Normal);
+      //  routeViewButton.addTarget(self, action: #selector(RouteViewController.createRouteClicked), forControlEvents: UIControlEvents.TouchUpInside);
+        routeViewButton.titleLabel?.font = UIFont.systemFontOfSize(14)
+        mainView.addSubview(label);
+        mainView.addSubview(imageView);
+        mainView.addSubview(routeViewButton);
+        self.view.addSubview(mainView);
+    }
+  
+
     override func viewDidLoad()
     {
         super.viewDidLoad();
         self.callData();
-//        self.tableView.delegate = self;
-//        self.tableView.dataSource = self;
-//        self.tableView.reloadData();
 
     }
 
@@ -362,16 +400,12 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    //MARK:- preferredStatusBarStyle
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func preferredStatusBarStyle() -> UIStatusBarStyle
+    {
+        return UIStatusBarStyle.LightContent;
     }
-    */
+ 
 
 }

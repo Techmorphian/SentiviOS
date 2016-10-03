@@ -42,6 +42,8 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     var counter : String = "0";
     var streak : String = "--";
     
+    var previousWeeks = [String]();
+    
     var totalNumberOfActivities = Int();
     
     var activities = ["STREAK","TOTAL ACTIVITIES","TOTAL DISTANCE","TOTAL DURATION","TOTAL CALORIES"];
@@ -58,18 +60,13 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     var hrs = Int();
     var mm = Int();
     var sec = Int();
-    
+   var weekNumber = [String]()
     
     //  ---------------------------------------- getDataFromHistory -------------------------------------
     
     @IBOutlet weak var tableTopHeader: UILabel!
     
-    
-    func saveAllData()
-    {
         
-    }
-    
     
     func getData()
     {
@@ -95,6 +92,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 let path = NSURL(fileURLWithPath: paths.absoluteString).URLByAppendingPathComponent(file);
                 text2 = try NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding)
             }catch{
+                  self.showNoRoutesView();
                 print("error");
             }
             //print(text2);
@@ -105,8 +103,23 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 let items = jsonData;
                 print(jsonData);
             
-                for item in items {
-                    self.tableView.hidden=false;
+                if items.count == 0
+                {
+                    self.showNoRoutesView();
+                    return;
+                }
+                dispatch_async(dispatch_get_main_queue(), {
+                     self.tableView.hidden=false;
+                })
+                
+              let itemss = items.sortedArrayUsingDescriptors([ NSSortDescriptor(key: "date", ascending: false)])
+                
+                
+                
+                for item in itemss {
+                   
+            
+                    
                     self.totalNumberOfActivities = self.totalNumberOfActivities + 1;
                     if items.count == self.totalNumberOfActivities
                     {
@@ -246,7 +259,8 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     let weekCount = "Week " + CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!));
                     print(self.routeData.date!)
                     print("\(weekCount)+\(CommonFunctions.dateFromFixedFormatString(self.routeData.date!))");
-                    if weekCount == self.priviousWeekCount
+                   // weekCount == self.priviousWeekCount
+                    if self.previousWeeks.contains(weekCount)
                     {
                         self.routeDataArray.append(self.routeData);
                         if self.lastItem{
@@ -254,7 +268,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         }
                     }
                     else{
-                        
+                       // weekNumber.append(CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!)));
                         self.sectionHeader.append(weekCount);
                         if self.priviousWeekCount != ""
                         {
@@ -264,7 +278,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         if self.lastItem{
                             self.sectionItem.append(self.routeDataArray);
                         }
-
+                        self.previousWeeks.append(weekCount);
                         self.routeDataArray.removeAll();
                         self.routeDataArray.append(self.routeData);
                        self.priviousWeekCount = weekCount;
@@ -284,6 +298,9 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 values.append(totalDis);
                 values.append(totalDur);
                 values.append(totalCal);
+                
+
+                
                 self.tableView.hidden=false;
                 self.tableView.delegate=self;
                 self.tableView.dataSource=self;
@@ -308,7 +325,9 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
             email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
             let words =  email?.componentsSeparatedByString("@");
             let contName = words![0]
-            DownloadFromBlob.downloadFromBlob(contName)
+            if  DownloadFromBlob.downloadFromBlob(contName) == true{
+                self.getData();
+            }
             
         }
     }
@@ -1234,7 +1253,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         return cell;
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("printing \(self.sectionItem[section].count)");
+      //  print("printing \(self.sectionItem[section].count)");
         return self.sectionItem[section].count;
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -1280,7 +1299,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     {
         super.viewDidLoad()
        self.getData();
-      //  self.tableView.hidden=true;
+        self.tableView.hidden=true;
         tableView.estimatedRowHeight = 138;
         tableView.rowHeight = UITableViewAutomaticDimension;
         

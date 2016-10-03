@@ -20,7 +20,7 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
     @IBAction func loginWithFacebookButtonAction(sender: UIButton)
     {
         
-        CommonFunctions.showActivityIndicator(self.view);
+       //
         self.authenticate(self);
  
     }
@@ -46,8 +46,6 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
             
             print(user.serverAuthCode.stringByRemovingPercentEncoding!)
             
-          
-            
             let googleId = user.userID
             print(user.authentication.idToken);
             print(user.authentication.idToken.propertyList());
@@ -56,14 +54,14 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
             
 //   another Way to send idToken
    
- /*
+/*
             let azureGoogleServerAuthToken = user.serverAuthCode
             
             let azureGoogleIdToken = user.authentication.idToken
             
             let request = NSMutableURLRequest(URL: NSURL(string: "https://runningappjs.azure-mobile.net/.auth/login/google")!)
             request.HTTPMethod = "POST"
-            let postString = "authorization_code=\(azureGoogleServerAuthToken)&id_token=\(azureGoogleIdToken)"
+            let postString = "id_token=\(azureGoogleIdToken)" //authorization_code=\(azureGoogleServerAuthToken)&
             request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
             let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, error in
                 guard error == nil && data != nil else {                                                          // check for fundamental networking error
@@ -81,8 +79,9 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
             }
             task.resume()
         
-  */
+*/
 
+            
             let idToken: String = user.authentication.idToken // Safe to send to the server
             let Name: String = user.profile.name
             var myStringArr = Name.componentsSeparatedByString(" ")
@@ -100,20 +99,26 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
                 
                 let payload: [String: String] = ["id_token": idToken]
                 
-                 self.call(false, email: email, firstName: firstName, lastName: lastName, id: googleId, token: idToken,imageUrl: imageUrl.absoluteString)
+                print(googleId);
                 
-    /*            client.loginWithProvider("google", token: payload, completion: { (user, error) in
+                NSUserDefaults.standardUserDefaults().setObject( "Google:\(googleId)", forKey: "azureUserId")
+                NSUserDefaults.standardUserDefaults().setObject( idToken, forKey: "azureAuthenticationToken")
                 
-                    if error != nil{
-                        print(error)
-                    }
-                    if user != nil{
-                        print(user)
-                        
-                        print("Google Login Sucess")
-                         self.call(false, email: email, firstName: firstName, lastName: lastName, id: googleId, token: idToken,imageUrl: imageUrl.absoluteString)
-                    }
-                })*/
+//                client.loginWithProvider("google", token: payload, completion: { (user, error) in
+//                    
+//                    if error != nil{
+//                        print(error)
+//                    }
+//                    if user != nil{
+//                        print(user)
+//                        
+//                        print("Google Login Sucess")
+//                        self.call(false, email: email, firstName: firstName, lastName: lastName, id: googleId, token: idToken,imageUrl: imageUrl.absoluteString)
+//                    }
+//                })
+                
+                self.call(false, email: email, firstName: firstName, lastName: lastName, id: googleId, token: idToken,imageUrl: imageUrl.absoluteString)
+                
             }
             
         } else {
@@ -128,6 +133,7 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
 // -------------------------- To Get User Data --------------------------------
     func returnUserData()
     {
+         CommonFunctions.showActivityIndicator(self.view);
         let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, email, birthday,picture,hometown,first_name,last_name"])
         graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
             
@@ -172,6 +178,13 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
                 Client.loginWithProvider("facebook", token: payload, completion: { (user, error) in
                     if user != nil{
                        
+                        print("facebookToken : \(self.fbToken)");
+                        print("azureFacebookToken : \(user.mobileServiceAuthenticationToken)")
+                        
+                        print(user.userId);
+                        
+                        
+                        
                         NSUserDefaults.standardUserDefaults().setObject( user.userId, forKey: "azureUserId")
                         NSUserDefaults.standardUserDefaults().setObject( user.mobileServiceAuthenticationToken, forKey: "azureAuthenticationToken")
                         Client.currentUser = user;
@@ -207,18 +220,18 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
                 }
                 else if (result.isCancelled == true)
                 {
-                    loginManager.logOut()
+                    loginManager.logOut();
                 }
                     
                 else
                 {
-                    loginManager.logOut()
+                    loginManager.logOut();
                     
                 }
             }
             else
             {
-                loginManager.logOut()
+                loginManager.logOut();
             }
         });
         
@@ -348,6 +361,8 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
         GIDSignIn.sharedInstance().signOut()
         
       //  GIDSignIn.sharedInstance().scopes.append("https://www.googleapis.com/auth/plus.me");
+        
+        
         
         GIDSignIn.sharedInstance().clientID = "749302522741-sst6f9goq59ibkdounlk78hfij5t0blf.apps.googleusercontent.com";
         GIDSignIn.sharedInstance().serverClientID = "749302522741-1dik8vb93l9uvb6rpq9p978s36ddugm7.apps.googleusercontent.com"

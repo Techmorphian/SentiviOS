@@ -406,7 +406,7 @@ class CommonFunctions : NSObject
    static func dateFromFixedFormatString(dateStr: String) -> NSDate
     {
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss";
+        dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss";
         let stringFromDate = dateStr
         var dateString = String();
         var datE = NSDate();
@@ -445,8 +445,31 @@ class CommonFunctions : NSObject
 //       
 //    }
     
+    static func checkIfDirectoryAvailable(dircName:String) -> Bool
+    {
+        let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
+        print(paths);
+        
+        let getFilePath = paths.URLByAppendingPathComponent(dircName)
+        
+        let checkValidation = NSFileManager.defaultManager();
+        if (checkValidation.fileExistsAtPath(getFilePath.path!))
+        {
+            return true
+            
+        }else{
+            return false
+        }
+    }
+    
+    
+    
+    
     static func getWeek(today:NSDate) -> String {
+        print("dateToCalculateWeek=\(today)")
         let myCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierISO8601)!;
+       // myCalendar.components(.WeekOfYear, fromDate: <#T##NSDate#>)  NSCalendar(calendarIdentifier: NSCalendarIdentifierISO8601)!;
+        
         let myComponents = myCalendar.components(.WeekOfYear, fromDate: today);
         let weekNumber = myComponents.weekOfYear;
         return String(weekNumber);
