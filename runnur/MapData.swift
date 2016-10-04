@@ -44,5 +44,9 @@ class MapData
     var gpsAcc = Int();
     var eplapsedTime = String();
     
+    var weekNum = String();
+    
+    var weekIntNum = Int();
+    
     
 }

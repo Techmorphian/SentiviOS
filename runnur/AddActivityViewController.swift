@@ -36,14 +36,19 @@ class AddActivityViewController: UIViewController,UITextFieldDelegate {
         
         self.view.addSubview(customActivity);
         customActivity.frame = self.view.bounds
-       
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AddActivityViewController.methodOfReceivedNotification(_:)), name:"selectedActivityNotification", object: nil)
     }
     
-    
+    func methodOfReceivedNotification(notification:NSNotification)  {
+         let dict = notification.object as! NSDictionary
+        self.activityType.text = dict.objectForKey("selectedActivity") as? String
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "selectedActivityNotification", object: nil)
+    }
     
 //    PickerView coding:-
     var selectedDate = NSDate();
     var selectedTime = NSDate();
+    var elapseTime = String();
 //    var textField = UITextField();
 //    func configurationTextField(textField: UITextField!)
 //    {
@@ -159,7 +164,7 @@ class AddActivityViewController: UIViewController,UITextFieldDelegate {
         
         let dateFormatter = NSDateFormatter()
         //  dateFormatter.locale = NSLocale(localeIdentifier: "en_US");
-        dateFormatter.dateFormat = "dd/MM/yyyy hh:mm a";
+        dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss";
         startTime.text = dateFormatter.stringFromDate(sender.date)
         selectedTime=sender.date
     }
@@ -224,7 +229,7 @@ class AddActivityViewController: UIViewController,UITextFieldDelegate {
                                           "performedActivity": "Running",
                                           "caloriesBurnedS": self.caloriesBurned.text!,
                                           "date": self.startTime.text!,
-                                          "elapsedTime": "1230"
+                                          "elapsedTime": "11:00:00"
                 // "EmailS" : "gaurav@techmorphosis.com"
                 // "userId" : NSUserDefaults.standardUserDefaults().stringForKey("userId")!
                 
@@ -245,7 +250,27 @@ class AddActivityViewController: UIViewController,UITextFieldDelegate {
         }
         
     }
-    
+//    MARK:- calculate calories
+    var caloriesburned = String();
+//    func calculateCaloriesBurned() {
+//        let caloriesLookUp = CaloriesCounterLookUp()
+//        var weight = NSUserDefaults.standardUserDefaults().doubleForKey("weight");
+//        if (self.activityType.text! == ("Biking")) {  // calculate calories burned if biking
+//        
+//            caloriesburned = caloriesLookUp.Biking(0, weight: weight, elapsedTime: CLong(elapseTime)!, altGain: 0, distance: (Double(self.distance.text!)!));
+//            
+//        } else if (self.activityType.text! == ("Walking")) {
+//            //  avgpace = 1.00; CLong(round(endDate.timeIntervalSinceDate(startDate)))
+//            caloriesburned = caloriesLookUp.Walking(0, weight: weight, elapsedTime: CLong(elapseTime)!, altGain: 0, distance: Double(self.distance.text!)!);
+//            
+//            
+//        } else if (self.activityType.text! == ("Running")) { //calculate calories burned for running
+//            
+//            //avgpace = 1.00;
+//
+//            //caloriesburned = caloriesLookUp.Running(0, weight: weight, elapsedTime: CLong(round(endDate.timeIntervalSinceDate(startDate))));
+//        }
+//    }
     
     
     @IBAction func back(sender: AnyObject) {

@@ -62,6 +62,9 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     var sec = Int();
    var weekNumber = [String]()
     
+    var selectedActivity = String();
+    var selectedDateFormate : String = "Till Date";
+    
     //  ---------------------------------------- getDataFromHistory -------------------------------------
     
     @IBOutlet weak var tableTopHeader: UILabel!
@@ -77,48 +80,339 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let contName = words![0]
         self.resetData();
         let file = "\(contName).txt" //this is the file. we will write to and read from it
-        self.tableView.hidden=false;
-        let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
-        print(paths);
+       // self.tableView.hidden=false;
+//        let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
+//        print(paths);
+//        
+//        let getFilePath = paths.URLByAppendingPathComponent(file)
+//        
+//        let checkValidation = NSFileManager.defaultManager();
+//        if (checkValidation.fileExistsAtPath(getFilePath.path!))
         
-        let getFilePath = paths.URLByAppendingPathComponent(file)
+        let dat = CommonFunctions.checkIfDirectoryAvailable(contName)
         
-        let checkValidation = NSFileManager.defaultManager();
-        if (checkValidation.fileExistsAtPath(getFilePath.path!))
+        if dat.0
         {
-            var text2 = NSString()
-            print("FILE AVAILABLE");
+ 
+//        let fileManager:NSFileManager = NSFileManager.defaultManager()
+        var fileList = CommonFunctions.listFilesFromDocumentsFolder(contName)
+            print(fileList);
+        let count = fileList.count
+//        var isDir:Bool = true;
+        
+        for i:Int in 0 ..< count
+        {
+            if fileList[i] != ".DS_Store"{
+             var text2 = NSString()
             do {
-                let path = NSURL(fileURLWithPath: paths.absoluteString).URLByAppendingPathComponent(file);
+                let path = dat.1.URLByAppendingPathComponent(fileList[i])
                 text2 = try NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding)
             }catch{
-                  self.showNoRoutesView();
                 print("error");
             }
-            //print(text2);
+            do{
+                let data = text2.dataUsingEncoding(NSUTF8StringEncoding)
+                print(data);
+                if data != nil || data?.length < 0
+                {
+                let jsonData = try! NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as! NSDictionary
+                    print(jsonData);
+                    
+                    self.totalNumberOfActivities = self.totalNumberOfActivities + 1;
+                    
+                    self.routeData = MapData();
+                    if let distance = jsonData.objectForKey("distance") as? Double{
+                        self.routeData.distance = String(distance);
+                        if self.totalDis == "0.00"
+                        {
+                            self.totalDis = "0";
+                        }
+                        if String(Int(distance)+Int(self.totalDis)!) != nil
+                        {
+                        self.totalDis = String(Int(distance)+Int(self.totalDis)!);
+                        }
+                        
+                    }
+                    
+                    if let elevationLoss = jsonData.objectForKey("altLossS") as? String{
+                        self.routeData.elevationLoss = elevationLoss
+                    }
+                    if let elevationGain = jsonData.objectForKey("altGainS") as? String{
+                        self.routeData.elevationGain = elevationGain
+                    }
+                    if let startLocation = jsonData.objectForKey("startLocationS") as? String{
+                        self.routeData.location = startLocation
+                    }
+                    if let elapsedTime = jsonData.objectForKey("elapsedTime") as? String{
+                        self.routeData.duration = elapsedTime
+                        //self.totalDur = String(Int(elapsedTime)!+Int(self.totalDur)!);
+                    }
+                    if let date = jsonData.objectForKey("date") as? String{
+                        self.routeData.date = date;
+                        
+                        let formatedDate = CommonFunctions.dateFromFixedFormatString(self.routeData.date!);
+                        let currentDate = NSDate()
+                        let dateComparisionResult:NSComparisonResult = currentDate.compare(formatedDate);
+                        if dateComparisionResult == NSComparisonResult.OrderedSame
+                        {
+                            if !self.checkTodayActivity
+                            {
+                                self.streakCount = self.streakCount + 1;
+                                self.checkTodayActivity = true;
+                            }
+                            // Current date and end date are same.
+                        }
+                        
+                        
+                        let dateComparisionResult2:NSComparisonResult = previousDate.compare(formatedDate);
+                        if dateComparisionResult2 == NSComparisonResult.OrderedSame
+                        {
+                            if !self.checkTodayActivity
+                            {
+                                self.streakCount = self.streakCount + 1;
+                                previousDate = yesterDay(previousDate);
+                            }
+                            // Current date and end date are same.
+                        }
+                        
+                        
+                        
+                    }
+                    if let distanceAway = jsonData.objectForKey("distanceAwayP") as? String{
+                        self.routeData.distanceAway = distanceAway
+                    }
+                    if let caloriesBurned = jsonData.objectForKey("caloriesBurnedS") as? String{
+                        self.routeData.caloriesBurned = caloriesBurned
+                        if self.routeData.caloriesBurned != ""
+                        {
+                            self.totalCal = String(Int(caloriesBurned)!+Int(self.totalCal)!);
+                        }
+                    }
+                    if let performedActivity = jsonData.objectForKey("performedActivity") as? String{
+                        self.routeData.performedActivity = performedActivity
+                    }
+                    if let itemID = jsonData.objectForKey("id") as? String{
+                        self.routeData.itemID = itemID
+                    }
+                    
+                    if let elevationCoordinatesP = jsonData.objectForKey("elevationCoordinatesP") as? String{
+                        
+                        let data: NSData = elevationCoordinatesP.dataUsingEncoding(NSUTF8StringEncoding)!
+                        do
+                        {
+                            let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
+                            
+                            for i in 0 ..< json!.count
+                            {
+                                self.routeData.elevationLat.append((json![i].objectForKey("latitude") as? Double)!)
+                                self.routeData.elevationLong.append((json![i].objectForKey("longitude") as? Double)!)
+                            }
+                        }catch{
+                            
+                        }
+                    }
+                    if let trackPolylines = jsonData.objectForKey("trackPolylinesS") as? String{
+                        // print(trackPolylines);
+                        
+                        let data: NSData = trackPolylines.dataUsingEncoding(NSUTF8StringEncoding)!
+                        do
+                        {
+                            let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
+                            
+                            for i in 0 ..< json!.count
+                            {
+                                self.routeData.trackLat.append((json![i].objectForKey("latitude") as? Double)!)
+                                self.routeData.trackLong.append((json![i].objectForKey("longitude") as? Double)!)
+                            }
+                        }catch{
+                            
+                        }
+                        
+                    }
+                    
+                    self.weatherData = WeatherData();
+                    if let weatherData = jsonData.objectForKey("weatherData") as? String{
+                        print(weatherData);
+                        _ = weatherData.componentsSeparatedByString("=")
+                        let data: NSData = weatherData.dataUsingEncoding(NSUTF8StringEncoding)!
+                        do
+                        {
+                            let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSDictionary;
+                            
+                            self.routeData.weatherData.speed = ((json!.objectForKey("speed") as? String)!)
+                            self.routeData.weatherData.cod = ((json!.objectForKey("cod") as? String)!)
+                            self.routeData.weatherData.temp = ((json!.objectForKey("temp") as? String)!)
+                            self.routeData.weatherData.descriptin = ((json!.objectForKey("description") as? String)!)
+                            self.routeData.weatherData.pressure = ((json!.objectForKey("pressure") as? String)!)
+                            self.routeData.weatherData.main = ((json!.objectForKey("main") as? String)!)
+                            self.routeData.weatherData.humidity = ((json!.objectForKey("humidity") as? String)!)
+                            self.routeData.weatherData.deg = ((json!.objectForKey("deg") as? String)!)
+                            
+                        }catch{
+                            print("error");
+                        }
+                        
+                    }
+                    
+                    // ------------------------ code to calculate week and add into perticular week ----------------------------
+                    let weekCount = "Week " + CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!));
+                    print(self.routeData.date!)
+                    self.routeData.weekNum = weekCount
+                    self.routeData.weekIntNum = Int(CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!)))!
+                    self.routeDataArray.append(self.routeData);
+                    print("\(weekCount)+\(CommonFunctions.dateFromFixedFormatString(self.routeData.date!))");
+                    
+                    // print("Todo Item: ", item)
+                }
+                
+
+                }
+            catch{
+                }
+            
+            }
+            
+        }// blob list
+            var tempArray = [MapData]();
+            
+            self.routeDataArray.sortInPlace({ (m1, m2) -> Bool in
+                m1.weekIntNum < m2.weekIntNum
+            })
+            
+            for (data,i) in routeDataArray.enumerate(){
+                print(i.weekIntNum);
+                let weekCount = i.weekNum
+                
+                if self.previousWeeks.contains(weekCount)
+                {
+                    tempArray.append(i);
+                    if data == self.routeDataArray.count-1
+                    {
+                        self.sectionItem.append(tempArray);
+                        break;
+                    }
+                    if i.weekIntNum != self.routeDataArray[data+1].weekIntNum
+                    {
+                       self.sectionItem.append(tempArray);
+                    }
+                    
+                }else{
+                    self.sectionHeader.append(weekCount);
+                   self.previousWeeks.append(weekCount);
+                }
+                
+                
+//                if self.previousWeeks.contains(weekCount)
+//                {
+//                    tempArray.append(i);
+//                    
+//                }
+//                else{
+//                    // weekNumber.append(CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!)));
+//                    self.sectionHeader.append(weekCount);
+//                    if self.priviousWeekCount != ""
+//                    {
+//                        //print(self.routeDataArray.count)
+//                        self.sectionItem.append(tempArray);
+//                    }
+//                    if self.lastItem{
+//                        self.sectionItem.append(tempArray);
+//                    }
+//                    self.previousWeeks.append(weekCount);
+//                    tempArray.removeAll();
+//                    tempArray.append(i);
+//                    self.priviousWeekCount = weekCount;
+//                }
+   
+            }
+  
+            
+            
+            print(self.sectionItem.count);
+            print(self.sectionHeader.count);
+            
+            self.counter=String(self.totalNumberOfActivities);
+            
+            
+            streak = String(streakCount);
+            values.append(streak);
+            values.append(counter);
+            values.append(totalDis);
+            values.append(totalDur);
+            values.append(totalCal);
+            
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.tableTopHeader.text = "All Activities - Till Date";
+                self.tableView.hidden=false;
+                self.tableView.delegate=self;
+                self.tableView.dataSource=self;
+                self.tableView.reloadData();
+                self.collectionView.delegate=self;
+                self.collectionView.dataSource=self;
+                self.collectionView.reloadData();
+                
+                CommonFunctions.hideActivityIndicator();
+
+            })
+
+   
+        }
+        
+        else
+        {
+            var email =  NSUserDefaults.standardUserDefaults().stringForKey("email");
+            email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
+            let words =  email?.componentsSeparatedByString("@");
+            let contName = words![0]
+            if  DownloadFromBlob.downloadFromBlob(contName) == true{
+                self.getData();
+            }
+            
+        }
+
+        
+   
+/*        if dat.0
+        {
+         
+            var text2 = NSString()
+            print("FILE AVAILABLE");
+         
+         for i:Int in 0 ..< count
+         {
+         if fileList[i] != ".DS_Store"{
+         var text2 = NSString()
+         do {
+         let path = dat.1.URLByAppendingPathComponent(fileList[i])
+         text2 = try NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding)
+         }catch{
+         print("error");
+         }
+
             do{
                 let data = text2.dataUsingEncoding(NSUTF8StringEncoding)
                 let jsonData = try! NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as! NSArray
                 
                 let items = jsonData;
                 print(jsonData);
-            
+                
                 if items.count == 0
                 {
                     self.showNoRoutesView();
                     return;
                 }
                 dispatch_async(dispatch_get_main_queue(), {
-                     self.tableView.hidden=false;
+                    self.tableView.hidden=false;
                 })
                 
-              let itemss = items.sortedArrayUsingDescriptors([ NSSortDescriptor(key: "date", ascending: false)])
+                let itemss = items.sortedArrayUsingDescriptors([ NSSortDescriptor(key: "date", ascending: false)])
                 
                 
                 
                 for item in itemss {
-                   
-            
+                    
+                    
                     
                     self.totalNumberOfActivities = self.totalNumberOfActivities + 1;
                     if items.count == self.totalNumberOfActivities
@@ -183,7 +477,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         self.routeData.caloriesBurned = caloriesBurned
                         if self.routeData.caloriesBurned != ""
                         {
-                          self.totalCal = String(Int(caloriesBurned)!+Int(self.totalCal)!);
+                            self.totalCal = String(Int(caloriesBurned)!+Int(self.totalCal)!);
                         }
                     }
                     if let performedActivity = item["performedActivity"] as? String{
@@ -259,7 +553,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     let weekCount = "Week " + CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!));
                     print(self.routeData.date!)
                     print("\(weekCount)+\(CommonFunctions.dateFromFixedFormatString(self.routeData.date!))");
-                   // weekCount == self.priviousWeekCount
+                    // weekCount == self.priviousWeekCount
                     if self.previousWeeks.contains(weekCount)
                     {
                         self.routeDataArray.append(self.routeData);
@@ -268,7 +562,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         }
                     }
                     else{
-                       // weekNumber.append(CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!)));
+                        // weekNumber.append(CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!)));
                         self.sectionHeader.append(weekCount);
                         if self.priviousWeekCount != ""
                         {
@@ -281,7 +575,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         self.previousWeeks.append(weekCount);
                         self.routeDataArray.removeAll();
                         self.routeDataArray.append(self.routeData);
-                       self.priviousWeekCount = weekCount;
+                        self.priviousWeekCount = weekCount;
                     }
                     
                     
@@ -299,7 +593,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 values.append(totalDur);
                 values.append(totalCal);
                 
-
+                
                 
                 self.tableView.hidden=false;
                 self.tableView.delegate=self;
@@ -317,7 +611,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 /* error handling here */
                 print("error");
             }
-            
+            }
         }
         else
         {
@@ -330,6 +624,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
             }
             
         }
+        */
     }
     var position = Int();
     var priviousWeekCount = String();
@@ -356,10 +651,14 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     func resetData()
     {
+        self.counter = "0";
         self.sectionItem.removeAll();
         self.routeDataArray.removeAll();
         self.priviousWeekCount = ""
         self.sectionHeader.removeAll()
+        self.previousWeeks.removeAll();
+      //  self.activities.removeAll();
+        self.values.removeAll();
         self.totalNumberOfActivities = 0;
         self.lastItem=false;
         mainView.removeFromSuperview();
@@ -384,6 +683,8 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         
         if Reachability.isConnectedToNetwork() == true{
             self.resetData();
+            self.tableView.reloadData();
+            
             let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
             let client = delegate!.client!;
             
@@ -505,16 +806,14 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                             //  }
                         }
                         
-                        
-                        
-                        
                         for item in items {
+                         
                             self.totalNumberOfActivities = self.totalNumberOfActivities + 1;
                             if items.count == self.totalNumberOfActivities
                             {
                                 self.lastItem = true;
                             }
-                            
+
                             self.routeData = MapData();
                             if let distance = item["distance"] as? Double{
                                 self.routeData.distance = String(distance);
@@ -672,12 +971,14 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                             }
                             //                    self.routeDataArray.append(self.routeData);
                             //                    self.counter=String(self.routeDataArray.count);
-                            
-                            
+                            if self.filterDate == 4{
+                            if  CommonFunctions.dateFromFixedFormatString(self.routeData.date!).isBetweeen(date: self.startDate, andDate: self.endDate)
+                            {
+                            self.counter = String(1+Int(self.counter)!)
                             // ------------------------ code to calculate week and add into perticular week ----------------------------
                             let weekCount = "Week " + CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!));
-                            
-                            if weekCount == self.priviousWeekCount
+                           // weekCount == self.priviousWeekCount
+                            if self.previousWeeks.contains(weekCount)
                             {
                                 self.routeDataArray.append(self.routeData);
                                 if self.lastItem{
@@ -685,6 +986,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                                 }
                             }
                             else{
+                                self.previousWeeks.append(weekCount);
                                 self.sectionHeader.append(weekCount);
                                 if self.priviousWeekCount != ""
                                 {
@@ -704,7 +1006,52 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
 
                             }
                             self.priviousWeekCount = weekCount;
-                            
+                            }else{
+                                
+                                if self.routeDataArray.count != 0 && self.lastItem
+                                {
+                                  self.sectionItem.append(self.routeDataArray);
+                                }
+                                }
+                            }else{
+//                                self.totalNumberOfActivities = self.totalNumberOfActivities + 1;
+//                                if items.count == self.totalNumberOfActivities
+//                                {
+//                                    self.lastItem = true;
+//                                }
+                                // ------------------------ code to calculate week and add into perticular week ----------------------------
+                                let weekCount = "Week " + CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!));
+                                // weekCount == self.priviousWeekCount
+                                if self.previousWeeks.contains(weekCount)
+                                {
+                                    self.routeDataArray.append(self.routeData);
+                                    if self.lastItem{
+                                        self.sectionItem.append(self.routeDataArray);
+                                    }
+                                }
+                                else{
+                                    self.previousWeeks.append(weekCount);
+                                    self.sectionHeader.append(weekCount);
+                                    if self.priviousWeekCount != ""
+                                    {
+                                        print(self.routeDataArray.count)
+                                        self.sectionItem.append(self.routeDataArray);
+                                    }
+                                    
+                                    self.routeDataArray.removeAll();
+                                    self.routeDataArray.append(self.routeData);
+                                    if self.lastItem{
+                                        self.sectionItem.append(self.routeDataArray);
+                                    }
+                                    
+                                    print(weekCount);
+                                    print(self.sectionHeader.count);
+                                    print(self.sectionItem.count)
+                                    
+                                }
+                                self.priviousWeekCount = weekCount;
+  
+                            }
                             // print("Todo Item: ", item)
                         }
                         
@@ -905,7 +1252,17 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                           }
                             
                         } */
-                         self.totalDur = String(self.hrs) + ":" + String(self.mm) + ":" + String(self.sec);
+                        
+                        if self.sectionItem.count == 0
+                        {
+                            self.resetData();
+                            self.tableView.hidden = true;
+                            self.collectionView.hidden=true;
+                            self.showNoRoutesView();
+                             CommonFunctions.hideActivityIndicator();
+                        }else{
+                        
+                        self.totalDur = String(self.hrs) + ":" + String(self.mm) + ":" + String(self.sec);
                         if self.totalDur == "" || self.totalDur == "0"{
                             self.totalDur = "00:00:00"
                         }else{
@@ -914,9 +1271,14 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                             self.totalDur = String(self.hrs) + ":" + String(self.mm) + ":" + String(self.sec);
                         }
                         if self.totalDis == "" || self.totalDis == "0"{
-                            self.totalDis = "0.00"
+                            self.totalDis = "0.0"
                         }
+                        if self.filterDate != 4
+                        {
                         self.counter=String(self.totalNumberOfActivities);
+                        }else{
+                            
+                        }
                         self.streak=String(self.streakCount);
                         self.values.append(self.streak);
                         self.values.append(self.counter);
@@ -933,7 +1295,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                             self.collectionView.reloadData();
                             CommonFunctions.hideActivityIndicator();
                         })
-
+                        }
                     }
                     
                 })
@@ -1043,9 +1405,16 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     //----------------------------------- refresh button action -----------------------------
     @IBAction func refresh(sender: UIButton) {
-        position=0;
-        self.filterData();
-        
+//        position=0;
+//        self.filterData();
+//        self.tableView.beginUpdates();
+//        self.previousWeeks.removeAll();
+//        self.sectionItem.removeAll();
+//        self.routeDataArray.removeAll();
+//        self.tableView.endUpdates();
+//        self.tableView.reloadData();
+//        self.collectionView.reloadData();
+        self.getData();
         // self.tableView.reloadData();
     }
     //----------------------------------- sort button action --------------------------------
@@ -1055,6 +1424,8 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let weekAction = UIAlertAction(title: "Running", style: .Default, handler:
             {
                 (alert: UIAlertAction!) -> Void in
+                self.selectedActivity = "Running";
+                 self.tableTopHeader.text = "\(self.selectedActivity) Activities - \(self.selectedDateFormate)";
                 self.position = 1;
                 self.filterData();
                 
@@ -1063,6 +1434,8 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let monthAction = UIAlertAction(title: "Biking", style: .Default, handler:
             {
                 (alert: UIAlertAction!) -> Void in
+                self.selectedActivity = "Biking";
+                self.tableTopHeader.text = "\(self.selectedActivity) Activities - \(self.selectedDateFormate)";
                 self.position = 2;
                 self.filterData();
                 
@@ -1071,8 +1444,11 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let yearAction = UIAlertAction(title: "Show All", style: .Default, handler:
             {
                 (alert: UIAlertAction!) -> Void in
-                self.position = 1;
-                self.filterData();
+                self.selectedActivity = "All";
+                self.tableTopHeader.text = "\(self.selectedActivity) Activities - \(self.selectedDateFormate)";
+                 self.getData();
+//                self.position = 1;
+//                self.filterData();
                 
         })
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler:
@@ -1096,6 +1472,8 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let weekAction = UIAlertAction(title: "This Week", style: .Default, handler:
             {
                 (alert: UIAlertAction!) -> Void in
+                self.selectedDateFormate = "This Week";
+                self.tableTopHeader.text = "\(self.selectedActivity) Activities - \(self.selectedDateFormate)";
                 self.filterDate = 1;
                 self.filterData();
         })
@@ -1103,6 +1481,9 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let monthAction = UIAlertAction(title: "This Month", style: .Default, handler:
             {
                 (alert: UIAlertAction!) -> Void in
+                self.selectedDateFormate = "This Month";
+                self.tableTopHeader.text = "\(self.selectedActivity) Activities - \(self.selectedDateFormate)";
+
                 self.filterDate = 2;
                 self.filterData();
         })
@@ -1110,6 +1491,9 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let yearAction = UIAlertAction(title: "This Year", style: .Default, handler:
             {
                 (alert: UIAlertAction!) -> Void in
+                self.selectedDateFormate = "This Year";
+                self.tableTopHeader.text = "\(self.selectedActivity) Activities - \(self.selectedDateFormate)";
+
                 self.filterDate = 3;
                 self.filterData();
                 
@@ -1118,13 +1502,19 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
             {
                 (alert: UIAlertAction!) -> Void in
                 //self.filterDate = 4;
-                self.filterDate = 0;
-                self.filterData()
-                
+//                self.filterDate = 0;
+//                self.filterData()
+                self.selectedDateFormate = "Till Date";
+                self.tableTopHeader.text = "\(self.selectedActivity) Activities - \(self.selectedDateFormate)";
+
+                self.getData();
         })
         let customeRangeAction = UIAlertAction(title: "Custom Date Range", style: .Default, handler:
             {
                 (alert: UIAlertAction!) -> Void in
+                self.selectedDateFormate = "Custom Date Range";
+                self.tableTopHeader.text = "\(self.selectedActivity) Activities - \(self.selectedDateFormate)";
+
                 self.datePickerView = UIDatePicker()
                 self.datePickerView.frame = CGRectMake(0, (self.view.frame.maxY-200), self.view.bounds.width, 200);
                 self.datePickerView.backgroundColor = UIColor.whiteColor();
@@ -1175,7 +1565,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     var firstDone = false;
     func donePicker()
     {
-        self.toolBar.removeFromSuperview();
+       self.toolBar.removeFromSuperview();
         self.datePickerView.removeFromSuperview();
         
         if !firstDone
@@ -1197,7 +1587,8 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
             
         }else{
             firstDone = false;
-            
+            filterDate = 4;
+            filterData();
         }
         
     }
@@ -1301,6 +1692,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
        self.getData();
         self.tableView.hidden=true;
         tableView.estimatedRowHeight = 138;
+        tableView.tableFooterView = UIView();
         tableView.rowHeight = UITableViewAutomaticDimension;
         
 //                position=1;

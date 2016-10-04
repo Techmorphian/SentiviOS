@@ -4720,7 +4720,7 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All Activities - Till Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4yV-8l-WTF">
-                                            <rect key="frame" x="15" y="15" width="177" height="21"/>
+                                            <rect key="frame" x="15" y="15" width="529" height="21"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -4728,6 +4728,7 @@
                                     </subviews>
                                     <color key="backgroundColor" red="0.96903410280000002" green="0.96903410280000002" blue="0.96903410280000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="4yV-8l-WTF" secondAttribute="trailing" constant="16" id="JqS-6x-ExB"/>
                                         <constraint firstItem="4yV-8l-WTF" firstAttribute="top" secondItem="7QU-sD-tPq" secondAttribute="top" constant="15" id="Ziv-e3-OcN"/>
                                         <constraint firstItem="4yV-8l-WTF" firstAttribute="leading" secondItem="7QU-sD-tPq" secondAttribute="leading" constant="15" id="aRZ-LP-nU4"/>
                                     </constraints>
@@ -4744,13 +4745,13 @@
                                                     <rect key="frame" x="13" y="47" width="53" height="44"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jul 07, 2016 12:48 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e1I-2k-IB8">
-                                                    <rect key="frame" x="73" y="13" width="155" height="18"/>
+                                                    <rect key="frame" x="73" y="13" width="474" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Holy Cross Rd, Mumbai" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rhg-9P-vir">
-                                                    <rect key="frame" x="73" y="39" width="164" height="18"/>
+                                                    <rect key="frame" x="73" y="39" width="474" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                     <color key="textColor" red="0.087392510849999994" green="0.4464005103" blue="0.64090119950000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -4839,6 +4840,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="9nL-aU-i7X" firstAttribute="centerY" secondItem="QQM-Ae-mmU" secondAttribute="centerY" id="4AW-5K-AUy"/>
+                                                <constraint firstAttribute="trailing" secondItem="Rhg-9P-vir" secondAttribute="trailing" constant="13" id="51c-IF-qFh"/>
                                                 <constraint firstItem="e1I-2k-IB8" firstAttribute="leading" secondItem="F7f-f7-AiD" secondAttribute="leadingMargin" constant="65" id="5fE-OO-daP"/>
                                                 <constraint firstItem="6s8-if-Ndd" firstAttribute="leading" secondItem="F7f-f7-AiD" secondAttribute="leadingMargin" constant="5" id="76k-X9-cHD"/>
                                                 <constraint firstAttribute="bottom" secondItem="QQM-Ae-mmU" secondAttribute="bottom" constant="19" id="78s-Eg-slC"/>
@@ -4850,6 +4852,7 @@
                                                 <constraint firstItem="6s8-if-Ndd" firstAttribute="centerY" secondItem="F7f-f7-AiD" secondAttribute="centerY" id="Lua-yP-8Oh"/>
                                                 <constraint firstItem="e1I-2k-IB8" firstAttribute="top" secondItem="F7f-f7-AiD" secondAttribute="topMargin" constant="5" id="RaR-ZH-yKH"/>
                                                 <constraint firstItem="9nL-aU-i7X" firstAttribute="leading" secondItem="Rhg-9P-vir" secondAttribute="leading" id="erQ-QP-KE8"/>
+                                                <constraint firstAttribute="trailing" secondItem="e1I-2k-IB8" secondAttribute="trailing" constant="13" id="khf-6m-tba"/>
                                                 <constraint firstItem="QQM-Ae-mmU" firstAttribute="centerY" secondItem="jJO-Mr-419" secondAttribute="centerY" id="saK-1r-NnW"/>
                                                 <constraint firstItem="QQM-Ae-mmU" firstAttribute="width" secondItem="jJO-Mr-419" secondAttribute="width" id="uer-9q-4iV"/>
                                                 <constraint firstItem="QQM-Ae-mmU" firstAttribute="leading" secondItem="9nL-aU-i7X" secondAttribute="trailing" constant="1" id="ug2-of-8Z6"/>

@@ -445,7 +445,29 @@ class CommonFunctions : NSObject
 //       
 //    }
     
-    static func checkIfDirectoryAvailable(dircName:String) -> Bool
+    
+    
+    static func listFilesFromDocumentsFolder(dirName:String) -> [String]
+    {
+        let dirs = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true) as? [String]
+        
+         ///let getFilePath = dirs.URLByAppendingPathComponent(dirName)
+        
+        if dirs != nil {
+            let dir = "\(dirs![0])/\(dirName)";
+            var fileList  = [String]();
+            do{
+                fileList = try NSFileManager.defaultManager().contentsOfDirectoryAtPath(dir);
+            }catch{}
+            return fileList
+        }else{
+            let fileList = [""]
+            return fileList
+        }
+    }
+    
+    
+    static func checkIfDirectoryAvailable(dircName:String) -> (Bool,NSURL)
     {
         let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
         print(paths);
@@ -455,10 +477,10 @@ class CommonFunctions : NSObject
         let checkValidation = NSFileManager.defaultManager();
         if (checkValidation.fileExistsAtPath(getFilePath.path!))
         {
-            return true
-            
+            return (true,getFilePath)
+    
         }else{
-            return false
+            return (false,getFilePath)
         }
     }
     
@@ -468,7 +490,6 @@ class CommonFunctions : NSObject
     static func getWeek(today:NSDate) -> String {
         print("dateToCalculateWeek=\(today)")
         let myCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierISO8601)!;
-       // myCalendar.components(.WeekOfYear, fromDate: <#T##NSDate#>)  NSCalendar(calendarIdentifier: NSCalendarIdentifierISO8601)!;
         
         let myComponents = myCalendar.components(.WeekOfYear, fromDate: today);
         let weekNumber = myComponents.weekOfYear;

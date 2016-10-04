@@ -12,32 +12,32 @@ class ActivityType: UIView {
     var selectedActivity = String();
     
     @IBAction func biking(sender: UIButton) {
-        self.selectedActivity = "biking";
+        self.selectedActivity = "Biking";
         self.removeView();
     }
     
     @IBAction func golfing(sender: UIButton) {
-        self.selectedActivity = "golfing";
+        self.selectedActivity = "Golfing";
         self.removeView();
     }
     
     @IBAction func hiking(sender: UIButton) {
-        self.selectedActivity = "hiking";
+        self.selectedActivity = "Hiking";
         self.removeView();
     }
     
     @IBAction func kayking(sender: UIButton) {
-        self.selectedActivity = "kayking";
+        self.selectedActivity = "Kayking";
         self.removeView();
     }
     
     @IBAction func moutainBiking(sender: UIButton) {
-        self.selectedActivity = "montain biking";
+        self.selectedActivity = "Montain Biking";
         self.removeView();
     }
     
     @IBAction func running(sender: UIButton) {
-        self.selectedActivity = "running";
+        self.selectedActivity = "Running";
         self.removeView()
     }
     
@@ -47,6 +47,7 @@ class ActivityType: UIView {
             self.removeFromSuperview()
             }, completion: nil)
         print(selectedActivity);
+    NSNotificationCenter.defaultCenter().postNotificationName("selectedActivityNotification", object: ["selectedActivity":selectedActivity])
         return selectedActivity;
     }
     
