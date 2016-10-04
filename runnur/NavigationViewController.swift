@@ -126,15 +126,21 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 cell.namesLabel.text = sectionOne[indexPath.row]
                 cell.naviImageViews.image = UIImage(named: sectionOneImages[indexPath.row])
 
-                cell.countLabel.hidden = true;
-                
+               
+                  
                
                 print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter"))
                 
-                if NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter") != ""
+                if NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter") == "" ||  NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter") == nil
                 {
                     
-                    
+                  
+                    cell.countLabel.hidden = true;
+                }
+                
+                else
+                
+                {
                 cell.countLabel.hidden = false;
                     
                 cell.countLabel.layer.cornerRadius = cell.countLabel.frame.size.height/2;

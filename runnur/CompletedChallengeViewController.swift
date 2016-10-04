@@ -1601,6 +1601,9 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
         super.viewDidLoad()
         
         
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "FromCompletedScreen")
+        
+        
         completedTableView.separatorColor = UIColor.clearColor()
      
         

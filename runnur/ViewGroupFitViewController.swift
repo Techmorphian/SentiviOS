@@ -386,7 +386,20 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         
         if summaryView.userStatus == "2"
         {
+            
+            
+          //  if NSUserDefaults.standardUserDefaults().setBool(true, forKey: "FromCompletedScreen")
+            
+            if NSUserDefaults.standardUserDefaults().boolForKey("FromCompletedScreen") == true
+            {
+                overFlowButton.hidden = true;
+                
+            }
+            else
+            {
             overFlowButton.hidden = false;
+                
+            }
             
         }
         else
@@ -681,7 +694,18 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
             
             if self.summaryView.userStatus == "2"
             {
-                self.overFlowButton.hidden = false;
+                
+                if NSUserDefaults.standardUserDefaults().boolForKey("FromCompletedScreen") == true
+                {
+                    self.overFlowButton.hidden = true;
+                    
+                }
+                else
+                {
+                    self.overFlowButton.hidden = false;
+                    
+                }
+               
                 
             }
             else
@@ -722,8 +746,16 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
                 
                 if self.summaryView.userStatus == "2"
                 {
-                    self.overFlowButton.hidden = false;
-                    
+                    if NSUserDefaults.standardUserDefaults().boolForKey("FromCompletedScreen") == true
+                    {
+                        self.overFlowButton.hidden = true;
+                        
+                    }
+                    else
+                    {
+                        self.overFlowButton.hidden = false;
+                        
+                    }
                 }
                 else
                 {

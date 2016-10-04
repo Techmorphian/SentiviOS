@@ -251,12 +251,12 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
         super.viewDidLoad();
         
         //self.call();
-        
-        let button = UIButton(type: UIButtonType.RoundedRect)
-        button.frame = CGRectMake(20, 50, 100, 30)
-        button.setTitle("Crash", forState: UIControlState.Normal)
-        button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        view.addSubview(button)
+//        
+//        let button = UIButton(type: UIButtonType.RoundedRect)
+//        button.frame = CGRectMake(20, 50, 100, 30)
+//        button.setTitle("Crash", forState: UIControlState.Normal)
+//        button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+//        view.addSubview(button)
 
         
          print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter"))

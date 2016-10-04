@@ -1713,6 +1713,8 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     {
         super.viewDidLoad()
         
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "FromCompletedScreen")
+        
         activeTableView.separatorColor = UIColor.clearColor()
         
           NSUserDefaults.standardUserDefaults().setBool(false, forKey: "FromCreateCauseAndGroupFitScreen")

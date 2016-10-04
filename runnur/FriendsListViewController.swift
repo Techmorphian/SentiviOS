@@ -1363,10 +1363,10 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         
                     let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { void in
                     
-                        self.friendListArray.removeAll();
-                        
-                        
-                        self.friendList();
+//                        self.friendListArray.removeAll();
+//                        
+//                        
+//                        self.friendList();
 
                        // self.friendsTableView.reloadData();
                     
@@ -1393,9 +1393,9 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         
                     let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { void in
                    
-                        self.friendListArray.removeAll();
-
-                        self.friendList();
+//                        self.friendListArray.removeAll();
+//
+//                        self.friendList();
 
                             })
         

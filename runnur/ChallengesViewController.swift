@@ -122,7 +122,7 @@ class ChallengesViewController: UIViewController
     @IBAction func activeButtonAction(sender: AnyObject)
     {
         
-        
+       NSUserDefaults.standardUserDefaults().setBool(false, forKey: "FromCompletedScreen")
         
         activeButton.titleLabel?.textColor  = UIColor.whiteColor();
         
@@ -310,6 +310,13 @@ class ChallengesViewController: UIViewController
         super.viewDidLoad()
         
         
+        
+        
+        
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "CauseChallengeImageView")
+        
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "GroupChallengeImageView")
+       
         //// push notification
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChallengesViewController.methodOfReceivedNotification(_:)), name:"showAlert", object: nil)

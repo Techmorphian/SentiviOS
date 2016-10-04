@@ -161,11 +161,11 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         if activityChatArray[indexPath.row].isFromUserChat == true
         {
             
-            activityChatArray[indexPath.row].isFromChat = false
-            
-            activityChatArray[indexPath.row].isFromActivity = false
-            
-            activityChatArray[indexPath.row].isFromUserActivity = false
+//            activityChatArray[indexPath.row].isFromChat = false
+//            
+//            activityChatArray[indexPath.row].isFromActivity = false
+//            
+//            activityChatArray[indexPath.row].isFromUserActivity = false
             
             
             let cell:userChatTableViewCell = tableView.dequeueReusableCellWithIdentifier("userChatTableViewCell")as!
@@ -259,11 +259,11 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         if activityChatArray[indexPath.row].isFromChat == true
         {
            
-            activityChatArray[indexPath.row].isFromUserChat = false
-            
-            activityChatArray[indexPath.row].isFromActivity = false
-            
-            activityChatArray[indexPath.row].isFromUserActivity = false
+//            activityChatArray[indexPath.row].isFromUserChat = false
+//            
+//            activityChatArray[indexPath.row].isFromActivity = false
+//            
+//            activityChatArray[indexPath.row].isFromUserActivity = false
 
             
             
@@ -356,12 +356,12 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         {
             
             
-            
-            activityChatArray[indexPath.row].isFromChat = false
-
-            activityChatArray[indexPath.row].isFromUserChat = false
-            
-            activityChatArray[indexPath.row].isFromActivity = false
+//            
+//            activityChatArray[indexPath.row].isFromChat = false
+//
+//            activityChatArray[indexPath.row].isFromUserChat = false
+//            
+//            activityChatArray[indexPath.row].isFromActivity = false
             
             
                     let cell:userActivityTableViewCell = tableView.dequeueReusableCellWithIdentifier("userActivityTableViewCell")as!
@@ -493,12 +493,12 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
     {
                     
-                    activityChatArray[indexPath.row].isFromUserChat = false
-
-                    activityChatArray[indexPath.row].isFromChat = false
-                    
-                    activityChatArray[indexPath.row].isFromUserActivity = false
-        
+//                    activityChatArray[indexPath.row].isFromUserChat = false
+//
+//                    activityChatArray[indexPath.row].isFromChat = false
+//                    
+//                    activityChatArray[indexPath.row].isFromUserActivity = false
+//        
         
         
                         let cell:activityTableViewCell = tableView.dequeueReusableCellWithIdentifier("activityTableViewCell")as!
@@ -667,33 +667,27 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
 
 
     
-    //    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
-    //    {
-    //        return 130.0;//Choose your custom row height
-    //    }
-    //
-    
-    
-    //    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
-    //
-    //    {
-    //
-    //        if activityChatArray[indexPath.row].isFromUserChat == true ||  activityChatArray[indexPath.row].isFromChat
-    //        {
-    //
-    //            return 78.0;
-    //
-    //        }
-    //        else
-    //        {
-    //            return 176.0;
-    //
-    //        }
-    //
-    //        
-    //        
-    //    }
-    //    
+//    
+//        func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+//    
+//        {
+//    
+//        if activityChatArray[indexPath.row].isFromUserChat == true ||  activityChatArray[indexPath.row].isFromChat
+//            {
+//    
+//                return 75;
+//    
+//            }
+//            else
+//            {
+//                return 172;
+//    
+//            }
+//    
+//            
+//            
+//        }
+//        
     
     
     
@@ -704,6 +698,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     {
         
        let check = indexPath.row
+        
                 
         if (check <= 5 && shouldCallPagging)
         {
@@ -721,7 +716,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             lastDateSent = CurrentDateFunc.getSubtractedDate(lastDateSent)
             
-            // showActivityIndi()
+           
             
             SShowActivityIndicatory()
             self.activityInfo();
@@ -799,14 +794,13 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
 //    }
     
 
-
+   // MARK:- IS ROW VISIBLE
+    
     func isRowVisible(rowIndex:Int) -> Bool
         
     {
         
-        
         var returnData = true
-        
         
         let indexes = self.ActivityTableView.indexPathsForVisibleRows
         
@@ -819,11 +813,9 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             if index.row == rowIndex
                 
             {
-                
                 returnData = true
                 
                 break;
-                
                 
             }
                 
@@ -842,11 +834,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
 
-    
-    
-    
-    
-    
+        
     
     
     
@@ -1076,15 +1064,15 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         shouldCallPagging = true
                         
                         
-                        self.activityModel.isFromActivity = false
-                       
-                        self.activityModel.isFromUserActivity = false
-                        
-                        
-                        self.activityModel.isFromChat = false
-                        
-                        self.activityModel.isFromUserChat = false
-                        
+//                        self.activityModel.isFromActivity = false
+//                       
+//                        self.activityModel.isFromUserActivity = false
+//                        
+//                        
+//                        self.activityModel.isFromChat = false
+//                        
+//                        self.activityModel.isFromUserChat = false
+//                        
 
 
                         
@@ -1125,13 +1113,11 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             {
                               
                                 
+                                
                                 let lastRowIndex = self.activityChatArray.count
                                 
-                                
-                                
                                 //indexPath.append(NSIndexPath(forRow: lastRowIndex , inSection: 0))
-                                
-                                
+                                                               
                                indexPath.append(NSIndexPath(forRow: i , inSection: 0))
                                 
                                
@@ -1569,23 +1555,26 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 
                          } // for close
                             
-                            if  activityChatArray.count < 15
-                            {
-                                
-                                lastDateSent = CurrentDateFunc.getSubtractedDate(lastDateSent)
-                                activityInfo()
-                                return
-                                
-                            }
-//
+//                            if  activityChatArray.count < 15
+//                            {
+//                                
+//                                lastDateSent = CurrentDateFunc.getSubtractedDate(lastDateSent)
+//                                activityInfo()
+//                                return
+//                                
+//                            }
+
                             
                             NSOperationQueue.mainQueue().addOperationWithBlock
                                 {
                                     if NSUserDefaults.standardUserDefaults().boolForKey("isMyPaggingCalled") == true
                                         
                                     {
-                                         let indexes = self.ActivityTableView.indexPathsForVisibleRows
+                                        /// indexes for indexPathsForVisibleRows
+                                        let indexes = self.ActivityTableView.indexPathsForVisibleRows
+                                        
                                          self.beforeContentSize = self.ActivityTableView.contentSize;
+                                        
                                          self.ActivityTableView.beginUpdates()
                                         self.ActivityTableView.insertRowsAtIndexPaths(indexPath, withRowAnimation: UITableViewRowAnimation.None)
                                                                                 
@@ -1593,7 +1582,9 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                         
                                         self.afterContentSize = self.ActivityTableView.contentSize;
                                         self.afterContentOffset = self.ActivityTableView.contentOffset;
+                                        
                                         self.ActivityTableView.contentOffset = CGPoint(x: self.afterContentOffset.x, y: self.afterContentOffset.y + self.afterContentSize.height - self.beforeContentSize.height)
+                                        
                                         let index = indexes?.last?.row
                                         
                                         let ad = elements.count + index!;
@@ -1629,9 +1620,6 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                         
 //                                          self.ActivityTableView.scrollToRowAtIndexPath(NSIndexPath(startIndex,inSection: 0), atScrollPosition: .Top, animated: true)
                                         
-                                        
-                                        
-                                    
                                     
                                     }
                                
@@ -3440,6 +3428,8 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 
                 ActivityTableView.contentInset = contentInsets
                 ActivityTableView.scrollIndicatorInsets = ActivityTableView.contentInset
+                
+              //  bcz of ths line app crashes
                             
             ActivityTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.ActivityTableView.numberOfRowsInSection(0) - 1, inSection: 0), atScrollPosition: .Top, animated: false)
             
@@ -3694,8 +3684,8 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         
         
-        self.ActivityTableView.estimatedRowHeight = 80;
-        self.ActivityTableView.rowHeight = UITableViewAutomaticDimension;
+//        self.ActivityTableView.estimatedRowHeight = 80;
+//        self.ActivityTableView.rowHeight = UITableViewAutomaticDimension;
         
         
         ////////////////////////////////////////////// send button

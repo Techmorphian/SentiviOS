@@ -218,7 +218,7 @@ var  CgFloatReturn = CGFloat()
             if selectedRow == 0
             {
              
-                return (getLabelHeight(cell.questionLabel, text: GeneralQues[indexPath.row], fontSize: 15,Width: 62)+getLabelHeight(cell.answerLabel, text: GeneralAns[indexPath.row], fontSize: 13,Width: 72))+30;
+                return (getLabelHeight(cell.questionLabel, text: GeneralQues[indexPath.row], fontSize: 15,Width: 62)+getLabelHeight(cell.answerLabel, text: GeneralAns[indexPath.row], fontSize: 14,Width: 72))+38;
                 
                 
           
@@ -228,20 +228,20 @@ var  CgFloatReturn = CGFloat()
             if selectedRow == 1
             {
                 
-                  return (getLabelHeight(cell.questionLabel, text: MoneyQues[indexPath.row], fontSize: 15,Width: 62)+getLabelHeight(cell.answerLabel, text: MoneyAns[indexPath.row], fontSize: 13,Width: 72))+30;
+                  return (getLabelHeight(cell.questionLabel, text: MoneyQues[indexPath.row], fontSize: 15,Width: 62)+getLabelHeight(cell.answerLabel, text: MoneyAns[indexPath.row], fontSize: 14,Width: 72))+38;
                 
            
             }
             
             if selectedRow == 2
             {
-                return (getLabelHeight(cell.questionLabel, text: GPSTrackingQues[indexPath.row], fontSize: 15,Width: 62)+getLabelHeight(cell.answerLabel, text: GPSTrackingAns[indexPath.row], fontSize: 13,Width: 72))+30;
+                return (getLabelHeight(cell.questionLabel, text: GPSTrackingQues[indexPath.row], fontSize: 15,Width: 62)+getLabelHeight(cell.answerLabel, text: GPSTrackingAns[indexPath.row], fontSize: 14,Width: 72))+38;
                 
 
             }
             if selectedRow == 3
                 {
-                  return (getLabelHeight(cell.questionLabel, text: CauseFitQues[indexPath.row], fontSize: 15,Width: 62)+getLabelHeight(cell.answerLabel, text: CauseFitAns[indexPath.row], fontSize: 13,Width: 72))+30;
+                  return (getLabelHeight(cell.questionLabel, text: CauseFitQues[indexPath.row], fontSize: 15,Width: 62)+getLabelHeight(cell.answerLabel, text: CauseFitAns[indexPath.row], fontSize: 14,Width: 72))+38;
                     
                     
             }
@@ -249,7 +249,7 @@ var  CgFloatReturn = CGFloat()
             
             if selectedRow == 4
             {
-                return (getLabelHeight(cell.questionLabel, text: GroupFitQues[indexPath.row], fontSize: 15,Width: 62)+getLabelHeight(cell.answerLabel, text: GroupFitAns[indexPath.row], fontSize: 13,Width: 72))+30;
+                return (getLabelHeight(cell.questionLabel, text: GroupFitQues[indexPath.row], fontSize: 15,Width: 62)+getLabelHeight(cell.answerLabel, text: GroupFitAns[indexPath.row], fontSize: 14,Width: 72))+38;
                 
                 
             }
@@ -269,7 +269,7 @@ var  CgFloatReturn = CGFloat()
             case 0:
                 
                 
-                CgFloatReturn = (getLabelHeight(cell.questionLabel, text: GeneralQues[indexPath.row], fontSize: 15, Width: 62))+25;
+                CgFloatReturn = (getLabelHeight(cell.questionLabel, text: GeneralQues[indexPath.row], fontSize: 14, Width: 62))+25;
                 
            
             break;
@@ -279,7 +279,7 @@ var  CgFloatReturn = CGFloat()
             case 1:
                 
                 
-                CgFloatReturn = (getLabelHeight(cell.questionLabel, text: MoneyQues[indexPath.row], fontSize: 15, Width: 62))+25;
+                CgFloatReturn = (getLabelHeight(cell.questionLabel, text: MoneyQues[indexPath.row], fontSize: 14, Width: 62))+25;
 
                 
                 //return (getLabelHeight(cell.questionLabel, text: CauseFitQues[indexPath.row], fontSize: 15, Width: 60))+25;
@@ -287,19 +287,19 @@ var  CgFloatReturn = CGFloat()
             case 2:
                
                 
-                CgFloatReturn = (getLabelHeight(cell.questionLabel, text: GPSTrackingQues[indexPath.row], fontSize: 15, Width: 62))+25;
+                CgFloatReturn = (getLabelHeight(cell.questionLabel, text: GPSTrackingQues[indexPath.row], fontSize: 14, Width: 62))+25;
              //return (getLabelHeight(cell.questionLabel, text: GeneralQues[indexPath.row], fontSize: 15, Width: 60))+25;                break;
                 
             case 3:
                 
-                 CgFloatReturn = (getLabelHeight(cell.questionLabel, text: CauseFitQues[indexPath.row], fontSize: 15, Width: 62))+25;
+                 CgFloatReturn = (getLabelHeight(cell.questionLabel, text: CauseFitQues[indexPath.row], fontSize: 14, Width: 62))+25;
                 break;
                 
             case 4:
                 
                 
                 
-                  CgFloatReturn = (getLabelHeight(cell.questionLabel, text: GroupFitQues[indexPath.row], fontSize: 15, Width: 62))+25;
+                  CgFloatReturn = (getLabelHeight(cell.questionLabel, text: GroupFitQues[indexPath.row], fontSize: 14, Width: 62))+25;
                 break;
                 
                 

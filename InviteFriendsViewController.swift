@@ -404,7 +404,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             
             self.label.hidden = false;
             
-            self.label.frame = CGRectMake(0, self.view.frame.size.height/2, self.view.frame.width, 50)
+            self.label.frame = CGRectMake(20, self.view.frame.size.height/2, self.view.frame.width-20, 50)
             
             self.label.center = self.view.center
             
@@ -416,7 +416,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             
             self.label.lineBreakMode = NSLineBreakMode.ByWordWrapping
             
-            self.label.font = self.label.font.fontWithSize(13)
+            self.label.font = self.label.font.fontWithSize(15)
             
             self.label.textColor = colorCode.DarkGrayColor
             
@@ -426,31 +426,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             
             self.inviteButton.hidden = true
 
-            
-//            if self.view.subviews.contains(self.noFriendResult.view)
-//                
-//            {
-//                
-//                
-//            }
-//                
-//            else
-//                
-//            {
-//                
-//                self.noFriendResult = self.storyboard?.instantiateViewControllerWithIdentifier("NoFriendViewController") as! NoFriendViewController
-//                
-//                self.noFriendResult.view.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
-//                
-//                self.view.addSubview((self.noFriendResult.view)!);
-//                
-//                
-//                
-//                self.noFriendResult.didMoveToParentViewController(self)
-//                
-//            }
-            
-            
+                      
             
         }
         
@@ -1017,6 +993,16 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         
         if (searchButtonActive == true)
         {
+            
+            
+            
+            if searchInviteFrndsArray[indexPath.row].friendStatus == "1"
+            {
+                
+            }
+            
+            else
+            {
             cell.setSelected(true, animated: false);
             
             searchInviteFrndsArray[indexPath.row].isSelected=true;
@@ -1032,8 +1018,11 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             
             selectedFriendsPhotoUrl.append(searchInviteFrndsArray[indexPath.row].friendPhotoUrl)
             
+            selectedFriendsStatus.append(searchInviteFrndsArray[indexPath.row].friendStatus)
             
             selectedIndex.append(String(searchInviteFrndsArray[indexPath.row].indexPathRow))
+                
+            }
             
             
         }
@@ -1044,6 +1033,13 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             ///// append values
             
             
+            if inviteFrndsArray[indexPath.row].friendStatus == "1"
+            {
+                
+            }
+            
+            else
+            {
             
             selectedFriendsIds.append(inviteFrndsArray[indexPath.row].friendId)
             
@@ -1066,6 +1062,8 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             cell.selectedUnselectedImageView.image = UIImage(named: "ic_checked")
             
             print(selectedIndex)
+                
+            }
             
             
         }
@@ -1083,7 +1081,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
     {
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! InviteFriendsTableViewCell
         
-        cell.selectedUnselectedImageView.image = UIImage(named: "ic_uncheck")
+        //cell.selectedUnselectedImageView.image = UIImage(named: "ic_uncheck")
 
     
         
@@ -1108,6 +1106,14 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             
         {
             
+            if searchInviteFrndsArray[indexPath.row].friendStatus == "1"
+            {
+                
+            }
+           
+            else
+            
+            {
             searchInviteFrndsArray[indexPath.row].isSelected=false;
             
             cell.selectedUnselectedImageView.image = UIImage(named: "ic_uncheck")
@@ -1154,25 +1160,24 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                 
             }
             
-        }
+            }
+            
+            
+        }   // if close
         
         else
         {
             
-            inviteFrndsArray[indexPath.row].isSelected=false;
             
-//            if cell.selectedUnselectedImageView.image == UIImage(named: "im_status_invited")
-//            {
-//                cell.selectedUnselectedImageView.image = UIImage(named: "im_status_invited")
-//            }
-////            else
-////            {
-////                
-////                cell.selectedUnselectedImageView.image = UIImage(named: "ic_uncheck")
-////                
-////                
-////            }
-////
+            if inviteFrndsArray[indexPath.row].friendStatus == "1"
+            {
+                
+            }
+            
+            else
+            {
+            
+            inviteFrndsArray[indexPath.row].isSelected=false;
             
            cell.selectedUnselectedImageView.image = UIImage(named: "ic_uncheck")
             
@@ -1197,7 +1202,16 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                 }
                 
             }
-            
+            for i in selectedFriendsIds
+            {
+                if i == inviteFrndsArray[indexPath.row].friendId
+                {
+                    let index = selectedFriendsIds.indexOf(i)
+                        selectedFriendsIds.removeAtIndex(index!)
+                        
+                }
+                    
+            }
             
             for i in selectedIndex
             {
@@ -1213,6 +1227,10 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                 
             }
             
+           
+            
+            
+        }
             
             
         } /// //else close
@@ -1241,6 +1259,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         
         // LoaderFile.showLoader(self.view);
         
+        inviteFrndsArray.removeAll();
         
         CommonFunctions.showActivityIndicator(view)
         
@@ -2068,6 +2087,12 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         searchTextField.leftView = paddingView1
         searchTextField.leftViewMode = UITextFieldViewMode.Always
         
+        
+        let paddingView2 = UIView(frame: CGRectMake(self.searchTextField.frame.width-10, 0, 20, self.searchTextField.frame.height))
+        
+        searchTextField.rightView = paddingView2
+        searchTextField.rightViewMode = UITextFieldViewMode.Always
+
         
         //MARK:-  placeholder in text fileds
 

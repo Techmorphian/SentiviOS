@@ -2770,7 +2770,11 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     {
         super.viewDidLoad()
         
+       ///// clearing CauseChallengeImageView and  GroupChallengeImageView nsuser default image value
         
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "CauseChallengeImageView")
+        
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "GroupChallengeImageView")
         
         NSUserDefaults.standardUserDefaults().setBool(true, forKey: "FromCreateCauseAndGroupFitScreen")
         

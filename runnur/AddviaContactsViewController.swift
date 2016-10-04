@@ -524,7 +524,8 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                     
                     
                     self.noResult.didMoveToParentViewController(self)
-                                }
+                    
+                }
                 
                 self.ContactTableView.reloadData();
             }

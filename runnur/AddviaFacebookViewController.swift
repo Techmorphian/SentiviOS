@@ -523,6 +523,9 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
                 
                self.label.hidden = true
                 
+                self.doneButton.hidden = false
+
+                
                 if facebookArray.count == 0
                 {
                     
