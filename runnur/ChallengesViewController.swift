@@ -62,6 +62,23 @@ class ChallengesViewController: UIViewController
     {
         
      
+//        
+//        let alert = UIAlertView(title: "Custom AlertView", message: "Please enter your mobile number", delegate: self, cancelButtonTitle: "OK");
+//        
+//        //        var view = UIView()
+//        //        view.frame = CGRectMake(0, 0, 300, 40)
+//        
+//        let field = UITextField()
+//        
+//        field.frame = CGRectMake(0, 0, 300, 400)
+//        field.borderStyle = UITextBorderStyle.None
+//        field.keyboardType = UIKeyboardType.PhonePad
+//        //  field.keyboardAppearance = UIKeyboardAppearance.Dark
+//        field .becomeFirstResponder()
+//        //  view.addSubview(field)
+//        
+//        alert .setValue(field, forKey: "accessoryView")
+//        alert.show()
         
       
         
@@ -83,6 +100,9 @@ class ChallengesViewController: UIViewController
             
         let CauseFit = UIAlertAction(title: "CauseFit", style: UIAlertActionStyle.Default, handler: {action in
               NSUserDefaults.standardUserDefaults().setBool(true, forKey: "filterActive")
+            
+                //actionSheetController.add
+            
                  self.typeId = "2"
                 NSNotificationCenter.defaultCenter().postNotificationName("filterClicked", object: nil, userInfo: ["typeId":self.typeId])
             

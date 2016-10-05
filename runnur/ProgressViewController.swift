@@ -183,35 +183,69 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     
-    
-    
-    
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     let loadingView: UIView = UIView()
+    
+
+    
     func showActivityIndicatory()
     {
-        loadingView.frame = CGRectMake(0, 0, 60, 50)
-        loadingView.center = view.center
         
-        loadingView.backgroundColor = UIColor.grayColor()
-        loadingView.alpha = 0.6
-        loadingView.clipsToBounds = true
+        
+        loadingView.frame = CGRectMake(self.view.frame.width/2-30,self.view.frame.height/2 - 100,60,150)
+        
         loadingView.layer.cornerRadius = 10
-        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+        loadingView.alpha = 0.6
+        
+        
+        loadingView.clipsToBounds = true
+        
+        
+        // activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+        
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        
         activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
                                                loadingView.frame.size.height / 2);
+        
+        activityIndicator.color = UIColor.darkGrayColor()
+        
         loadingView.addSubview(activityIndicator)
+        
+        
         self.view.addSubview(loadingView)
         activityIndicator.startAnimating()
+        
+        
     }
     
+    
+    
+    func hideActivityIndicator()
+    {
+        
+        loadingView.removeFromSuperview();
+        
+        //        self.activityIndicator.stopAnimating();
+        //       
+        //        self.loadingView.removeFromSuperview();
+        
+        
+    }
+    
+    
+    
+
     
     func progress()
         
     {
         
-        showActivityIndicatory()
+       
+        //CommonFunctions.showActivityIndicator(view)
+        
+         self.showActivityIndicatory()
+        
         
         let myurl = NSURL(string: Url.progress)
         
@@ -233,7 +267,7 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         
         
-        print(postString)
+        //////print(postString)
         
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -282,7 +316,7 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         
         
-        print(dataString!)
+        //////print(dataString!)
         
         // MARK:-  IF DATA TASK =  VIEW REQUEST
         
@@ -318,9 +352,7 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         
                         self.RemoveNoResult();
                         
-                        self.activityIndicator.stopAnimating();
-                        
-                        self.loadingView.removeFromSuperview();
+                        hideActivityIndicator()
                         
                         self.frontView.hidden = true;
                         
@@ -411,9 +443,7 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             
                             NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
+                                self.hideActivityIndicator()
                                 
                                 
                                 
@@ -596,10 +626,8 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         
                         NSOperationQueue.mainQueue().addOperationWithBlock({
                             
-                            
-                            self.activityIndicator.stopAnimating();
-                            
-                            self.loadingView.removeFromSuperview();
+                            self.hideActivityIndicator()
+
                             
                             
                             self.RemoveNoInternet();
@@ -646,9 +674,8 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         
                         self.RemoveNoResult();
                         
-                        self.activityIndicator.stopAnimating();
-                        
-                        self.loadingView.removeFromSuperview();
+                        self.hideActivityIndicator()
+
                         
                         self.frontView.hidden = true;
                         
@@ -745,9 +772,8 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             
                             NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
+                                self.hideActivityIndicator()
+
                                 
                                 
                                 
@@ -830,7 +856,7 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     
                 }
                 
-                print(error)
+                //////////print(error)
                 
             }
             
@@ -863,11 +889,10 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
     {
         
         
-        print(error)
+        ////////print(error)
         
-        self.activityIndicator.stopAnimating();
-        
-        self.loadingView.removeFromSuperview();
+        self.hideActivityIndicator()
+
         
         self.RemoveNoResult();
         
@@ -1045,9 +1070,9 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         // Animate the drawing of the circle over the course of 1 second
         
-        print(GoalAmount);
+        ////////print(GoalAmount);
         
-        print(RaisedAmount);
+        ////////print(RaisedAmount);
         
         
         
@@ -1055,7 +1080,7 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         let formatedValue =  String(format: "%.2f",calValue)
         
-        print(formatedValue)
+        ////////print(formatedValue)
         
         var cgFloatValue = CGFloat()
         
@@ -1074,7 +1099,7 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
         }
         
-        print(cgFloatValue)
+        ////////print(cgFloatValue)
         
         
         circleView.animateCircle(5, progress:cgFloatValue)
@@ -1169,16 +1194,16 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         let aps = data.objectForKey("aps")
         
-        print(aps)
+        ////////print(aps)
         
         let NotificationMessage = aps!["alert"] as! String
         
-        print(NotificationMessage)
+        ////////print(NotificationMessage)
         
         
         let custom = data.objectForKey("custom")
         
-        print(custom)
+        //////print(custom)
         
         
         let alert = UIAlertController(title: "", message: NotificationMessage , preferredStyle: UIAlertControllerStyle.Alert)

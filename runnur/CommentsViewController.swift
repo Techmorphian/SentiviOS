@@ -175,7 +175,7 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 
                 let dateAsString1  =  activityChatArray[indexPath.row].createdAt
                 
-                //    //print(dateAsString1)
+                //    print(dateAsString1)
                 
                 let dateFormatter1 = NSDateFormatter()
                 
@@ -189,7 +189,7 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 
                 let date = dateFormatter1.dateFromString(dateAsString1)
                 
-                // //print(date)
+                // print(date)
                 
                 
                 if date != nil
@@ -260,7 +260,7 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 
                 let dateAsString1  =  activityChatArray[indexPath.row].createdAt
                 
-                //    //print(dateAsString1)
+                //    print(dateAsString1)
                 
                 let dateFormatter1 = NSDateFormatter()
                 
@@ -274,7 +274,7 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 
                 let date = dateFormatter1.dateFromString(dateAsString1)
                 
-                // //print(date)
+                // print(date)
                 
                 
                 if date != nil
@@ -326,48 +326,48 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     
     
-    var loadingLable = UILabel()
-    var loadingView = UIView()
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    // func showActivityIndicator(view:UIView,height:CGFloat=0)
-    func showActivityIndicator()
-        
-    {
-        
-        print(view.frame.height)
-        print(view.frame.width)
-        
-        
-        /// x-30 is a width of loadingView/2 mns 60/2
-        ////// y-100 mns height of parent view(upper view only)
-        
-        loadingView.frame = CGRectMake(self.view.frame.width/2-30,self.view.frame.height/2 - 100,60,150)
-        
-        loadingView.layer.cornerRadius = 10
-        loadingView.alpha = 0.6
-        
-        
-        loadingView.clipsToBounds = true
-        
-        
-        // activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
-        
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        
-        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
-                                               loadingView.frame.size.height / 2);
-        
-    
-        activityIndicator.color = UIColor.blueColor()
-        
-        loadingView.addSubview(activityIndicator)
-        
-        
-        self.view.addSubview(loadingView)
-        activityIndicator.startAnimating()
-        
-        
-    }
+//    var loadingLable = UILabel()
+//    var loadingView = UIView()
+//    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+//    // func showActivityIndicator(view:UIView,height:CGFloat=0)
+//    func showActivityIndicator()
+//        
+//    {
+//        
+//        print(view.frame.height)
+//        print(view.frame.width)
+//        
+//        
+//        /// x-30 is a width of loadingView/2 mns 60/2
+//        ////// y-100 mns height of parent view(upper view only)
+//        
+//        loadingView.frame = CGRectMake(self.view.frame.width/2-30,self.view.frame.height/2 - 100,60,150)
+//        
+//        loadingView.layer.cornerRadius = 10
+//        loadingView.alpha = 0.6
+//        
+//        
+//        loadingView.clipsToBounds = true
+//        
+//        
+//        // activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+//        
+//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+//        
+//        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
+//                                               loadingView.frame.size.height / 2);
+//        
+//    
+//        activityIndicator.color = UIColor.grayColor()
+//        
+//        loadingView.addSubview(activityIndicator)
+//        
+//        
+//        self.view.addSubview(loadingView)
+//        activityIndicator.startAnimating()
+//        
+//        
+//    }
     
 
     
@@ -381,8 +381,7 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
     {
         
-        showActivityIndicator();
-        
+        CommonFunctions.showActivityIndicator(view)
         
         let myurl = NSURL(string: Url.getRunObjectComments)
         
@@ -426,7 +425,7 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
     {
         
-        showActivityIndicator();
+       CommonFunctions.showActivityIndicator(view)
         
         
         let myurl = NSURL(string: Url.postComment)
@@ -529,10 +528,10 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     if(status=="Success")
                     {
                         
-                        self.activityIndicator.stopAnimating();
+                      
+                        CommonFunctions.hideActivityIndicator();
                         
-                        self.loadingView.removeFromSuperview();
-                        
+                    
                         
                         if  let elements: AnyObject = json!["response"]
                         {
@@ -632,7 +631,7 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             NSOperationQueue.mainQueue().addOperationWithBlock
                                 {
                                     
-                                  //  self.activityChatArray = self.activityChatArray.reverse();
+                                   self.activityChatArray = self.activityChatArray.reverse();
                                     
                                     self.commentsTableView.delegate = self;
                                     
@@ -642,6 +641,12 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                     
                                     self.RemoveNoResult();
                                     self.commentsTableView.reloadData();
+                                    
+                                
+                                    
+                                    self.commentsTableView.setContentOffset(CGPointMake(0, CGFloat.max), animated: false)
+                                    
+//                                      self.commentsTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.commentsTableView.numberOfRowsInSection(0) - 1, inSection: 0), atScrollPosition: .None, animated: false)
                                     
                             }
                             
@@ -663,10 +668,7 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
-                                
+                            
                                 
                                 self.RemoveNoInternet();
                                 
@@ -708,11 +710,8 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         
                         NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
-                                
-                                
+                            
+                            CommonFunctions.hideActivityIndicator()
                                 
                                 self.RemoveNoInternet();
                                 
@@ -803,6 +802,7 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
             {
                 
                 let json = try NSJSONSerialization.JSONObjectWithData(self.mutableData, options: .MutableContainers) as? NSDictionary
+                
                 
                 if  let parseJSON = json
                 {
@@ -899,9 +899,9 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         
                         
      
-                      activityChatArray.insert(activityModel, atIndex: activityChatArray.count)
+                    activityChatArray.insert(activityModel, atIndex: activityChatArray.count)
                         
-                   // activityChatArray.insert(activityModel, atIndex: 0)
+                  // activityChatArray.insert(activityModel, atIndex: 0)
                        
                         
                         NSOperationQueue.mainQueue().addOperationWithBlock
@@ -913,9 +913,7 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                  self.RemoveNoInternet();
                                 
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
+                                CommonFunctions.hideActivityIndicator();
                                 
                                 self.heightOfMSGbottomView.constant = 45
 
@@ -933,10 +931,10 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 self.messageTextView.resignFirstResponder();
                                 
                                 
-                                self.commentsTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.commentsTableView.numberOfRowsInSection(0), inSection: 0)], withRowAnimation: UITableViewRowAnimation.None)
+                              self.commentsTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.commentsTableView.numberOfRowsInSection(0), inSection: 0)], withRowAnimation: UITableViewRowAnimation.None)
                                 
                                 
-                                self.commentsTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.commentsTableView.numberOfRowsInSection(0)-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.None, animated: true);
+                                self.commentsTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.commentsTableView.numberOfRowsInSection(0)-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.None, animated: false);
                                 
                                 
                                 self.commentsTableView.delegate=self;
@@ -961,11 +959,8 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         NSOperationQueue.mainQueue().addOperationWithBlock({
                                 
                                 
-                                self.activityIndicator.stopAnimating();
-                                
-                                self.loadingView.removeFromSuperview();
-                                
-                                
+                            CommonFunctions.hideActivityIndicator();
+                            
                                 let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
                                 let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
                                 
@@ -987,9 +982,7 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
             {
                 
                 
-                self.activityIndicator.stopAnimating();
-                
-                self.loadingView.removeFromSuperview();
+                CommonFunctions.hideActivityIndicator();
                 
                                
                 let alert = UIAlertController(title: "", message:"something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
@@ -1037,11 +1030,7 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
     {
         
         
-        print(error)
-        
-        self.activityIndicator.stopAnimating();
-        
-        self.loadingView.removeFromSuperview();
+        CommonFunctions.hideActivityIndicator();
         
         self.RemoveNoResult();
         
@@ -1059,7 +1048,7 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
             
-            self.noInternet.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+            self.noInternet.view.frame = CGRectMake(0, 65, self.view.frame.size.width, self.view.frame.size.height-65);
             
             self.view.addSubview((self.noInternet.view)!);
             

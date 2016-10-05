@@ -612,7 +612,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
 //        for i in 0 ..< PBArray.count
 //        {
 //            
-//            //print(PBArray[i].Email)
+//            print(PBArray[i].Email)
 //           
 //            for j in PBArray[i].Email
 //            {
@@ -639,7 +639,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         for i in 0 ..< PBArray.count
         {
             
-            //print(PBArray[i].Email)
+            print(PBArray[i].Email)
             
             for j in PBArray[i].Email
             {
@@ -1250,7 +1250,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         }
         
         let  friendFbIds  = cliendIds.joinWithSeparator("&")
-        //print(friendFbIds);
+        print(friendFbIds);
         
         
         let postString = "userId=\(userId!)&\(friendFbIds)";
@@ -1312,7 +1312,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         
         
         
-        //print(dataString!)
+        print(dataString!)
         
         
         if dataTask.currentRequest?.URL! == NSURL(string: Url.addFriends)
@@ -1964,7 +1964,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                                                     var image: UIImage?
                                                     
                                                     
-                                                    //print(ABPersonHasImageData(record))
+                                                    print(ABPersonHasImageData(record))
                                                     if ABPersonHasImageData(record)
                                                     {
                                                         

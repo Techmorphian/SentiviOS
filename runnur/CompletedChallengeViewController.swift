@@ -336,7 +336,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                 for i in 0..<participatingArray.count
                 {
                     
-                    print(book)
+                    ////////////print(book)
                     
                  
                     
@@ -407,7 +407,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                 for i in 0..<contributingArray.count
                 {
                     
-                    print(book)
+                    //////////print(book)
                     
                     
                     if self.view.subviews.contains(self.noResult.view)
@@ -473,7 +473,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                 
                 
                 
-                print(participatingFilterArray.count)
+                //////////print(participatingFilterArray.count)
                 
                 
                 self.completedTableView.reloadData();
@@ -598,10 +598,10 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                         let StartDate = dateFunction.dateFormatFunc("MMM dd", formFormat: "yyyy/MM/dd", dateToConvert: participatingFilterArray[indexPath.row].startDate)
                         
                         
-                        print(StartDate)
+                        //////////print(StartDate)
                         
                         let EndDate = dateFunction.dateFormatFunc("MMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: participatingFilterArray[indexPath.row].endDate)
-                        print(EndDate)
+                        //////////print(EndDate)
                         
                         
                         let date = StartDate + " " + "to" + " " + EndDate
@@ -694,10 +694,10 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                 let StartDate = dateFunction.dateFormatFunc("MMM dd", formFormat: "yyyy/MM/dd", dateToConvert: participatingArray[indexPath.row].startDate)
                 
                 
-                print(StartDate)
+                //////////print(StartDate)
                 
                 let EndDate = dateFunction.dateFormatFunc("MMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: participatingArray[indexPath.row].endDate)
-                print(EndDate)
+                //////////print(EndDate)
                 
                 
                 let date = StartDate + " " + "to" + " " + EndDate
@@ -810,10 +810,10 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                     let StartDate = dateFunction.dateFormatFunc("MMM dd", formFormat: "yyyy/MM/dd", dateToConvert: contributingFilterArray[indexPath.row].startDate)
                     
                     
-                    print(StartDate)
+                    //////////print(StartDate)
                     
                     let EndDate = dateFunction.dateFormatFunc("MMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: contributingFilterArray[indexPath.row].endDate)
-                    print(EndDate)
+                    //////////print(EndDate)
                     
                     
                     let date = StartDate + " " + "to" + " " + EndDate
@@ -860,10 +860,10 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                 let StartDate = dateFunction.dateFormatFunc("MMM dd", formFormat: "yyyy/MM/dd", dateToConvert: contributingArray[indexPath.row].startDate)
                 
                 
-                print(StartDate)
+                ////////print(StartDate)
                 
                 let EndDate = dateFunction.dateFormatFunc("MMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: contributingArray[indexPath.row].endDate)
-                print(EndDate)
+                ////////print(EndDate)
                 
                 
                 let date = StartDate + " " + "to" + " " + EndDate
@@ -920,7 +920,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
         
         let postString = "userId=\(userId!)&filter=\(filter)&currentDate=\(CurrentDateFunc.currentDate())";
         
-        print(postString)
+        ////////print(postString)
         
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -1011,7 +1011,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
         
         
         
-        print(dataString!)
+        ////////print(dataString!)
         
         if dataTask.currentRequest?.URL! == NSURL(string: Url.viewCompletedChallenges)
             
@@ -1042,7 +1042,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                         if  let elements: AnyObject = json!["response"]
                         {
                             
-                            print(elements.count)
+                            ////////print(elements.count)
                             
                             
                                                        
@@ -1496,7 +1496,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
     {
         
         
-        print(error)
+        ////////print(error)
         
         self.hideActivityIndicator();
 

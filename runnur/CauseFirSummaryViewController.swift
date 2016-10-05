@@ -349,7 +349,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                 
         let nscurrentDate = NSDate()
         
-        print(nscurrentDate)
+        ////////print(nscurrentDate)
         
         let dateFormatter = NSDateFormatter()
         
@@ -357,7 +357,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         
         let currentDate = dateFormatter.stringFromDate(nscurrentDate)
         
-        print(currentDate)
+        ////print(currentDate)
         
         
         
@@ -371,23 +371,23 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         
         let nsStartDate = dateFormatter2.dateFromString(startDate)
         
-        print(nsStartDate)
+        ////print(nsStartDate)
         
         let nsEndDatee = dateFormatter2.dateFromString(endDate)
         
-        print(nsEndDatee)
+        ////print(nsEndDatee)
         
         
         let nsEndDate = nsEndDatee?.dateByAddingTimeInterval(86399)
         
-        print(nsEndDate)
+        ////print(nsEndDate)
         
         
         ///// nscurrent date is equal to end date challenge over
         if nscurrentDate.compare(nsEndDate!) == .OrderedDescending
         {
             
-            print("over")
+            ////print("over")
             
         }
         else
@@ -397,7 +397,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
             
             if nsStartDate?.compare(nscurrentDate) == .OrderedAscending && nsEndDate?.compare(nscurrentDate) == .OrderedDescending
             {
-                print("could be going")
+                ////print("could be going")
                 return challengeOnGoing
                 
             }
@@ -406,13 +406,13 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
             else if nsStartDate?.compare(nscurrentDate) == .OrderedSame || nsEndDate?.compare(nscurrentDate) == .OrderedSame
                 
             {
-                print("could be going")
+                ////print("could be going")
                 return challengeOnGoing
                 
             }
             else
             {
-                print("not started")
+                ////print("not started")
                 
                 return challengeNotStarted
                 
@@ -491,11 +491,11 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         
         let ChallengeId = NSUserDefaults.standardUserDefaults().stringForKey("challengeId")
         
-        print(ChallengeId)
+        ////print(ChallengeId)
         
         let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
         
-        print(postString)
+        ////print(postString)
         
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -551,7 +551,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         
         let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())&amount=\(amount)&anonymous=\(anonymous)";
         
-        print(postString)
+        ////print(postString)
         
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -613,7 +613,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         
         let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
         
-        print(postString)
+        ////print(postString)
         
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -719,7 +719,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         
         
         
-        print(dataString!)
+        ////print(dataString!)
         
         if dataTask.currentRequest?.URL! == NSURL(string: Url.viewCauseChallengeDetail)
             
@@ -737,7 +737,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                     let status = parseJSON["status"] as? String
                     let msg=parseJSON["message"] as? String
                     
-                    print(msg)
+                    ////print(msg)
                     
                     
                     if msg != ""
@@ -781,7 +781,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                         if  let elements: AnyObject = json!["response"]
                         {
                             
-                            print(elements.count)
+                            ////print(elements.count)
                             
                             
                             for i in 0 ..< elements.count
@@ -811,7 +811,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                 
                                 NSUserDefaults.standardUserDefaults().setObject("", forKey: "GroupChallengeImageView")
                                 
-                            print( NSUserDefaults.standardUserDefaults().stringForKey("CauseChallengeImageView"))
+                            ////print( NSUserDefaults.standardUserDefaults().stringForKey("CauseChallengeImageView"))
                                 
                                 if NSUserDefaults.standardUserDefaults().stringForKey("CauseChallengeImageView") == ""
                                 {
@@ -920,10 +920,10 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                 
                                 let StartDate = dateFunction.dateFormatFunc("MMM dd", formFormat: "yyyy/MM/dd", dateToConvert: startDate)
                                 
-                                print(StartDate)
+                                ////print(StartDate)
                                 
                                 let EndDate = dateFunction.dateFormatFunc("MMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: endDate)
-                                print(EndDate)
+                                ////print(EndDate)
                                 
                                 let date = StartDate + " " + "to" + " " + EndDate
                                 
@@ -1394,7 +1394,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                 
             {
                 
-                print(error)
+                ////print(error)
                 
                 
                 self.RemoveNoInternet();
@@ -1540,7 +1540,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                 
                 
                 
-                print(error)
+                ////print(error)
                 
             }
             
@@ -1643,7 +1643,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                 
                 
                 
-                print(error)
+                ////print(error)
                 
             }
             
@@ -1681,7 +1681,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
     {
         
         
-        print(error)
+        ////print(error)
         
         self.hideActivityIndicator()
         
@@ -1880,16 +1880,16 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         
         let aps = data.objectForKey("aps")
         
-        print(aps)
+        ////print(aps)
         
         let NotificationMessage = aps!["alert"] as! String
         
-        print(NotificationMessage)
+        ////print(NotificationMessage)
         
         
         let custom = data.objectForKey("custom")
         
-        print(custom)
+        ////print(custom)
         
         
         let alert = UIAlertController(title: "", message: NotificationMessage , preferredStyle: UIAlertControllerStyle.Alert)

@@ -241,17 +241,17 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     {
         
         
-        print(NSUserDefaults.standardUserDefaults().boolForKey("filterActive"))
+        //////////print(NSUserDefaults.standardUserDefaults().boolForKey("filterActive"))
         
-        print(NSUserDefaults.standardUserDefaults().stringForKey("filterActive"))
+        //////////print(NSUserDefaults.standardUserDefaults().stringForKey("filterActive"))
         
         
         
         NSUserDefaults.standardUserDefaults().setBool(true, forKey: "filterActive")
         
-        print(NSUserDefaults.standardUserDefaults().boolForKey("filterActive"))
+        //////////print(NSUserDefaults.standardUserDefaults().boolForKey("filterActive"))
         
-        print(NSUserDefaults.standardUserDefaults().stringForKey("filterActive"))
+        //////////print(NSUserDefaults.standardUserDefaults().stringForKey("filterActive"))
  
        
         
@@ -267,7 +267,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                 for i in 0..<participatingArray.count
                 {
                     
-                    print(book)
+                    ////////print(book)
                     
                     if book == participatingArray[i].typeId
                     {
@@ -338,7 +338,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                 for i in 0..<contributingArray.count
                 {
                     
-                    print(book)
+                    ////////print(book)
                     
                     if self.view.subviews.contains(self.noResult.view)
                         
@@ -523,10 +523,10 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                         let StartDate = dateFunction.dateFormatFunc("MMM dd", formFormat: "yyyy/MM/dd", dateToConvert: participatingFilterArray[indexPath.row].startDate)
                         
                         
-                        print(StartDate)
+                        ////////print(StartDate)
                         
                         let EndDate = dateFunction.dateFormatFunc("MMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: participatingFilterArray[indexPath.row].endDate)
-                        print(EndDate)
+                        ////////print(EndDate)
                         
                         
                         let date = StartDate + " " + "to" + " " + EndDate
@@ -622,10 +622,10 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                     let StartDate = dateFunction.dateFormatFunc("MMM dd", formFormat: "yyyy/MM/dd", dateToConvert: participatingArray[indexPath.row].startDate)
                     
                     
-                    print(StartDate)
+                    ////////print(StartDate)
                     
                     let EndDate = dateFunction.dateFormatFunc("MMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: participatingArray[indexPath.row].endDate)
-                    print(EndDate)
+                    ////////print(EndDate)
                     
                     
                     let date = StartDate + " " + "to" + " " + EndDate
@@ -744,10 +744,10 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                     let StartDate = dateFunction.dateFormatFunc("MMM dd", formFormat: "yyyy/MM/dd", dateToConvert: contributingFilterArray[indexPath.row].startDate)
                     
                     
-                    print(StartDate)
+                    ////////print(StartDate)
                     
                     let EndDate = dateFunction.dateFormatFunc("MMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: contributingFilterArray[indexPath.row].endDate)
-                    print(EndDate)
+                    ////////print(EndDate)
                     
                     
                     let date = StartDate + " " + "to" + " " + EndDate
@@ -794,12 +794,12 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                     let StartDate = dateFunction.dateFormatFunc("MMM dd", formFormat: "yyyy/MM/dd", dateToConvert: contributingArray[indexPath.row].startDate)
                     
                     
-                    print(StartDate)
+                    ////////print(StartDate)
                     
                   
                     
                     let EndDate = dateFunction.dateFormatFunc("MMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: contributingArray[indexPath.row].endDate)
-                    print(EndDate)
+                    //////print(EndDate)
                     
                     
                     let date = StartDate + " " + "to" + " " + EndDate
@@ -852,7 +852,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
             
               NSUserDefaults.standardUserDefaults().setObject(challengeId, forKey: "challengeId")
             
-             print(NSUserDefaults.standardUserDefaults().stringForKey("challengeId"))
+             ////////print(NSUserDefaults.standardUserDefaults().stringForKey("challengeId"))
             
             
              let challengeName = participatingArray[indexPath.row].challengeName
@@ -887,7 +887,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
             let challengeId =  contributingArray[indexPath.row].challengeId
             NSUserDefaults.standardUserDefaults().setObject(challengeId, forKey: "challengeId")
             
-            print(NSUserDefaults.standardUserDefaults().stringForKey("challengeId"))
+            ////////print(NSUserDefaults.standardUserDefaults().stringForKey("challengeId"))
 
             
             let challengeName = contributingArray[indexPath.row].challengeName
@@ -949,7 +949,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
         let postString = "userId=\(userId!)&filter=\(filter)&currentDate=\(CurrentDateFunc.currentDate())";
         
-        print(postString)
+        ////////print(postString)
         
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -1076,7 +1076,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
         
         
-        print(dataString!)
+        ////////print(dataString!)
         
         if dataTask.currentRequest?.URL! == NSURL(string: Url.viewActiveChallenges)
             
@@ -1110,7 +1110,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                         if  let elements: AnyObject = json!["response"]
                         {
                             
-                            print(elements.count)
+                            ////////print(elements.count)
                             
                             
                             for i in 0 ..< elements.count
@@ -1527,7 +1527,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                     
                 }
                 
-                print(error)
+                ////////print(error)
                 
             }
             
@@ -1584,7 +1584,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     {
         
         
-        print(error)
+        ////////print(error)
         
         self.activityIndicator.stopAnimating();
         
@@ -1729,7 +1729,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
         NSUserDefaults.standardUserDefaults().setObject("", forKey: "challengeName")
         
-        print(NSUserDefaults.standardUserDefaults().boolForKey("filterActive"))
+        ////////print(NSUserDefaults.standardUserDefaults().boolForKey("filterActive"))
         
         //// addObserver
         NSNotificationCenter.defaultCenter().addObserver(self,selector: #selector(ActiveChallengesViewController.FilterButtonActive(_:)),name: "filterClicked",object: nil)
@@ -1737,13 +1737,13 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
         activeTableView.tableFooterView = UIView()
         
-        print(participatingArray)
+        ////////print(participatingArray)
         
         
         for i in participatingArray
         {
             
-            print(i.challengeId)
+            ////////print(i.challengeId)
             
             
         }

@@ -73,7 +73,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         
-        print(WinnerAndUsersArray.count)
+        //////print(WinnerAndUsersArray.count)
         return WinnerAndUsersArray.count
         
     }
@@ -318,7 +318,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
             
             
             
-            print(WinnerAndUsersArray.count)
+            //////print(WinnerAndUsersArray.count)
             
             
             let cell:LeaderBoardUsersNotWinnersTableViewCell = tableView.dequeueReusableCellWithIdentifier("LeaderBoardUsersNotWinnersTableViewCell")as!
@@ -432,7 +432,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
         
         
         
-        print(postString)
+        //////print(postString)
         
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -478,7 +478,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
         
         
         
-        print(dataString!)
+        //////print(dataString!)
         
         // MARK:-  IF DATA TASK =  LEADERBOARD
         
@@ -499,7 +499,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                     let status = parseJSON["status"] as? String
                     let msg=parseJSON["message"] as? String
                     let userStatus=parseJSON["userStatus"] as? String
-                    print(userStatus)
+                    //////print(userStatus)
                     
                     //MARK: - STATUS = SUCCESS
                     
@@ -525,7 +525,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                             
                         {
                             
-                            print(elements.count)
+                            ////////print(elements.count)
                             for i in 0 ..< elements.count
                             {
                             
@@ -945,7 +945,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                                             rankLabel.text = "#" + " " + String(userRank)
                                             
                                             
-                                            print(userRank)
+                                            //////print(userRank)
                                             
                                             
                                             let FirstName = elements[i]["FirstName"] as! String
@@ -1268,7 +1268,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                     
                 }
                 
-                print(error)
+                //////print(error)
                 
             }
             
@@ -1438,16 +1438,16 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
         
         let aps = data.objectForKey("aps")
         
-        print(aps)
+        //////print(aps)
         
         let NotificationMessage = aps!["alert"] as! String
         
-        print(NotificationMessage)
+        //////print(NotificationMessage)
         
         
         let custom = data.objectForKey("custom")
         
-        print(custom)
+        //////print(custom)
         
         
         let alert = UIAlertController(title: "", message: NotificationMessage , preferredStyle: UIAlertControllerStyle.Alert)

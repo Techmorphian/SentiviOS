@@ -123,6 +123,8 @@
 		47CBF9231DA28DE70084EC04 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47CBF9211DA28DE70084EC04 /* Crashlytics.framework */; };
 		47CF1FC11D4CC5620083B1A7 /* challengeFilterXIB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CF1FC01D4CC5620083B1A7 /* challengeFilterXIB.swift */; };
 		47DA6B0D1D81509B005E8F5E /* LeaderBoardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DA6B0C1D81509B005E8F5E /* LeaderBoardModel.swift */; };
+		47DA9F5A1DA5105E005F16AF /* PaymentDoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DA9F591DA5105D005F16AF /* PaymentDoneViewController.swift */; };
+		47DA9F5C1DA51073005F16AF /* PaymentProcessingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DA9F5B1DA51073005F16AF /* PaymentProcessingViewController.swift */; };
 		47E7EE3E1D6C8C44008DD370 /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E7EE3D1D6C8C44008DD370 /* CommentsViewController.swift */; };
 		47EF173C1D41EE0C00468698 /* dateFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EF173B1D41EE0C00468698 /* dateFunction.swift */; };
 		47F40DFA1D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F40DF91D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift */; };
@@ -258,6 +260,8 @@
 		47CF1FBC1D4CC3130083B1A7 /* challengeFilterXIB.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = challengeFilterXIB.xib; sourceTree = "<group>"; };
 		47CF1FC01D4CC5620083B1A7 /* challengeFilterXIB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = challengeFilterXIB.swift; sourceTree = "<group>"; };
 		47DA6B0C1D81509B005E8F5E /* LeaderBoardModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderBoardModel.swift; sourceTree = "<group>"; };
+		47DA9F591DA5105D005F16AF /* PaymentDoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentDoneViewController.swift; sourceTree = "<group>"; };
+		47DA9F5B1DA51073005F16AF /* PaymentProcessingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentProcessingViewController.swift; sourceTree = "<group>"; };
 		47E7EE3D1D6C8C44008DD370 /* CommentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
 		47EF173B1D41EE0C00468698 /* dateFunction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dateFunction.swift; sourceTree = "<group>"; };
 		47EFFBA91D58689A00F2A2D7 /* CurrentDateFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentDateFunc.swift; sourceTree = "<group>"; };
@@ -517,6 +521,8 @@
 			children = (
 				470CF8941D24E8500001B3BC /* FriendsListCellTableViewCell.swift */,
 				470CF8921D24E8290001B3BC /* FriendsListViewController.swift */,
+				47DA9F591DA5105D005F16AF /* PaymentDoneViewController.swift */,
+				47DA9F5B1DA51073005F16AF /* PaymentProcessingViewController.swift */,
 			);
 			name = "Friend List";
 			sourceTree = "<group>";
@@ -929,6 +935,7 @@
 				470B1B641D27A61C00E3B5B0 /* NavigationViewController.swift in Sources */,
 				470B1B661D27A63A00E3B5B0 /* NavigationCellTableViewCell.swift in Sources */,
 				470CF89D1D2507770001B3BC /* AddviaFacebookViewController.swift in Sources */,
+				47DA9F5C1DA51073005F16AF /* PaymentProcessingViewController.swift in Sources */,
 				47BBED1F1D6AC9DA00EAEDE9 /* ViewActivityModel.swift in Sources */,
 				47CF1FC11D4CC5620083B1A7 /* challengeFilterXIB.swift in Sources */,
 				47FED2501D2E84D9006CAE8A /* ChallengesViewController.swift in Sources */,
@@ -950,6 +957,7 @@
 				470CF8A11D2507FD0001B3BC /* AddviaContactCellTableViewCell.swift in Sources */,
 				473D0D8E1D49E8FB004DDC07 /* completedChallengeTableViewCell.swift in Sources */,
 				47FED2561D2E8D14006CAE8A /* animation2.swift in Sources */,
+				47DA9F5A1DA5105E005F16AF /* PaymentDoneViewController.swift in Sources */,
 				47C78CF81D265520006DEACF /* colorCode.swift in Sources */,
 				471A686A1D30D4E200DD2138 /* NoInternetViewController.swift in Sources */,
 				4785E07A1D745A790003ABC0 /* RequestWithActionTableViewCell.swift in Sources */,

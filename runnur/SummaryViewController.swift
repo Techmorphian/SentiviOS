@@ -339,7 +339,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
        
       let nscurrentDate = NSDate()
         
-        print(nscurrentDate)
+        //print(nscurrentDate)
         
         let dateFormatter = NSDateFormatter()
         
@@ -347,7 +347,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
         let currentDate = dateFormatter.stringFromDate(nscurrentDate)
         
-        print(currentDate)
+        //print(currentDate)
         
       
         
@@ -361,23 +361,23 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
         let nsStartDate = dateFormatter2.dateFromString(startDate)
         
-        print(nsStartDate)
+        //print(nsStartDate)
         
        let nsEndDatee = dateFormatter2.dateFromString(endDate)
         
-        print(nsEndDatee)
+        //print(nsEndDatee)
         
         
         let nsEndDate = nsEndDatee?.dateByAddingTimeInterval(86399)
         
-        print(nsEndDate)
+        //print(nsEndDate)
 
         
         ///// nscurrent date is equal to end date challenge over
         if nscurrentDate.compare(nsEndDate!) == .OrderedDescending
         {
             
-            print("over")
+            //print("over")
             
         }
         else
@@ -387,7 +387,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
             
             if nsStartDate?.compare(nscurrentDate) == .OrderedAscending && nsEndDate?.compare(nscurrentDate) == .OrderedDescending
             {
-                print("could be going")
+                //print("could be going")
                 return challengeOnGoing
                 
             }
@@ -396,13 +396,13 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
             else if nsStartDate?.compare(nscurrentDate) == .OrderedSame || nsEndDate?.compare(nscurrentDate) == .OrderedSame
                 
             {
-                print("could be going")
+                //print("could be going")
                 return challengeOnGoing
                 
             }
             else
             {
-                print("not started")
+                //print("not started")
                 
                 return challengeNotStarted
                 
@@ -420,7 +420,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
 //        if nscurrentDate.compare(nsEndDate!) == .OrderedDescending
 //        {
 //            
-//             print("over")
+//             //print("over")
 //            
 //        }
 //        else
@@ -430,20 +430,20 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
 //            
 //            if nsStartDate?.compare(nscurrentDate) == .OrderedAscending && nsEndDate?.compare(nscurrentDate) == .OrderedDescending
 //            {
-//                 print("could be going")
+//                 //print("could be going")
 //                return challengeOnGoing
 //               
 //            }
 //            else if nsStartDate?.compare(nscurrentDate) == .OrderedSame || nsEndDate?.compare(nscurrentDate) == .OrderedSame
 //
 //            {
-//                 print("could be going")
+//                 //print("could be going")
 //                return challengeOnGoing
 //                
 //            }
 //            else
 //            {
-//                print("not started")
+//                //print("not started")
 //                
 //                return challengeNotStarted
 //               
@@ -524,7 +524,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
         let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
         
-        print(postString)
+        //print(postString)
         
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -575,7 +575,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
         let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
         
-        print(postString)
+        //print(postString)
         
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -623,6 +623,9 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
     {
         
+        
+        RemoveNoInternet();
+        RemoveNoResult();
              
        showActivityIndicatory()
         
@@ -647,7 +650,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
         let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
         
-        print(postString)
+        //print(postString)
         
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -789,7 +792,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
         
         
-        print(dataString!)
+        //print(dataString!)
         
         if dataTask.currentRequest?.URL! == NSURL(string: Url.viewGroupChallengeDetail)
             
@@ -810,7 +813,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                     let status = parseJSON["status"] as? String
                     let msg=parseJSON["message"] as? String
                     
-                    print(msg)
+                    //print(msg)
                     
                     
                     if msg != ""
@@ -863,7 +866,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                         if  let elements: AnyObject = json!["response"]
                         {
                             
-                            print(elements.count)
+                            //print(elements.count)
                             
                             
                             for i in 0 ..< elements.count
@@ -898,7 +901,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                 NSUserDefaults.standardUserDefaults().setObject("", forKey: "CauseChallengeImageView")
 
                                 
-                                print(NSUserDefaults.standardUserDefaults().stringForKey("GroupChallengeImageView"))
+                                //////print(NSUserDefaults.standardUserDefaults().stringForKey("GroupChallengeImageView"))
                                 
                                 if NSUserDefaults.standardUserDefaults().stringForKey("GroupChallengeImageView") == ""
                                 {
@@ -955,10 +958,10 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                
                                 let StartDate = dateFunction.dateFormatFunc("MMM dd", formFormat: "yyyy/MM/dd", dateToConvert: startDate)
                                 
-                                 print(StartDate)
+                                 ////print(StartDate)
                                 
                                 let EndDate = dateFunction.dateFormatFunc("MMM dd, yyyy", formFormat: "yyyy/MM/dd", dateToConvert: endDate)
-                                print(EndDate)
+                                ////print(EndDate)
                                 
                                 let date = StartDate + " " + "to" + " " + EndDate
                                 
@@ -1520,7 +1523,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                         
                                         thirdWinnerImageView.kf_setImageWithURL(NSURL(string: photoUrl!)!, placeholderImage: UIImage(named:"im_default_profile"))
                                         
-                                        print(thirdWinnerLabel.text)
+                                        ////print(thirdWinnerLabel.text)
                                         
                                         
                                         thirdWinnerImageView.layer.cornerRadius = thirdWinnerImageView.frame.size.width / 2;
@@ -1540,7 +1543,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
 //                                    if i.valueForKey("rank") as! String == "1"
 //                                    {
 //                                        
-//                                        print(i.valueForKey("winner"))
+//                                        ////print(i.valueForKey("winner"))
 //                                        
 //                                       if i.valueForKey("firstName") as? String == ""
 //                                       {
@@ -1739,7 +1742,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
 //                                        
 //                                        thirdWinnerImageView.kf_setImageWithURL(NSURL(string: photoUrl!)!, placeholderImage: UIImage(named:"im_default_profile"))
 //
-//                                        print(thirdWinnerLabel.text)
+//                                        ////print(thirdWinnerLabel.text)
 //                                        
 //                                        
 //                                        thirdWinnerImageView.layer.cornerRadius = thirdWinnerImageView.frame.size.width / 2;
@@ -1760,7 +1763,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                if WinnerArray.count == 0
                                {
                                 
-                                print(WinnerArray.count)
+                                ////print(WinnerArray.count)
                                 
                                 
                                 
@@ -1808,7 +1811,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                                 winnerDividerView2Height.constant = 150
                                 
 
-                                print(WinnerArray.count)
+                                ////print(WinnerArray.count)
  
                                 
                             }
@@ -2026,7 +2029,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
             {
                 
                 
-                 print(error)
+                 ////print(error)
                
                     self.hideActivityIndicator();
                 
@@ -2141,7 +2144,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
                 
                 
                 
-                print(error)
+                ////print(error)
                 
             }
             
@@ -2177,7 +2180,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
     {
         
         
-        print(error)
+        ////print(error)
         
           self.hideActivityIndicator();
         
@@ -2229,16 +2232,16 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
         let aps = data.objectForKey("aps")
         
-        print(aps)
+        //print(aps)
         
         let NotificationMessage = aps!["alert"] as! String
         
-        print(NotificationMessage)
+        //print(NotificationMessage)
         
         
         let custom = data.objectForKey("custom")
         
-        print(custom)
+        //print(custom)
         
         
         let alert = UIAlertController(title: "", message: NotificationMessage , preferredStyle: UIAlertControllerStyle.Alert)
