@@ -114,6 +114,39 @@ class ActivityDetailsViewController: UIViewController,TutorialPageViewController
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
         alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.Default, handler:{ (UIAlertAction)in
             self.location.text = self.textField.text;
+            
+            let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
+            let client = delegate!.client!;
+            
+            let user: MSUser = MSUser(userId: NSUserDefaults.standardUserDefaults().stringForKey("azureUserId"));
+            user.mobileServiceAuthenticationToken = NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken");
+            client.currentUser = user
+            
+            let table2 = client.tableWithName("RouteObject")
+            table2.readWithId("\(self.mapData.itemID)", completion: { (itemInfo, error) in
+                
+                if error == nil{
+                    print("\(self.mapData.itemID)");
+                    let oldItem = itemInfo as NSDictionary
+                    if let newItem = oldItem.mutableCopy() as? NSMutableDictionary {
+                        newItem["startLocationP"] = "\(self.textField.text!)"
+                        print(newItem);
+                        table2.update(newItem as [NSObject: AnyObject], completion: { (result, error) -> Void in
+                            if let err = error {
+                                print("ERROR ", err)
+                            } else if let item = result {
+                                print("Todo Item: ", item["startLocationP"])
+                            }
+                        })
+                    }
+                    print(itemInfo);
+                }else{
+                    
+                    print(error.localizedDescription)
+                }
+                
+            })
+            
             print(self.textField.text)
         }))
         self.presentViewController(alert, animated: true, completion: nil)
@@ -123,7 +156,7 @@ class ActivityDetailsViewController: UIViewController,TutorialPageViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         self.location.text = mapData.location;
-        self.dateAndType.text = mapData.date! + " - " + mapData.performedActivity!;
+        self.dateAndType.text = dateFunction.dateFormatFunc("MMM dd, yyyy hh:mm a", formFormat: "MM/dd/yyyy HH:mm:ss", dateToConvert: mapData.date!) + " - " + mapData.performedActivity!;
         
 //       let sumViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SummaryActivityViewController") as! SummaryActivityViewController;
 //        sumViewController.mapData = mapData;
@@ -192,6 +225,14 @@ class ActivityDetailsViewController: UIViewController,TutorialPageViewController
             childViewController.mapData = mapData;
             self.childView = childViewController;
             childViewController.ActivityDetailsDelegate = self;
+            // Now you have a pointer to the child view controller.
+            // You can save the reference to it, or pass data to it.
+        }
+        if (segue.identifier == "GraphsViewController") {
+            let childViewController = segue.destinationViewController as! GraphsViewController
+            childViewController.mapData = mapData;
+//            self.childView = childViewController;
+//            childViewController.ActivityDetailsDelegate = self;
             // Now you have a pointer to the child view controller.
             // You can save the reference to it, or pass data to it.
         }

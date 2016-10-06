@@ -1435,7 +1435,8 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             
             //avgpace = 1.00;
             endDate = NSDate();
-            caloriesburned = caloriesLookUp.Running(avgpace, weight: weight, elapsedTime: CLong(round(endDate.timeIntervalSinceDate(startDate))));
+      //      TODO :- commented calories burned for running
+          //  caloriesburned = caloriesLookUp.Running(avgpace, weight: weight, elapsedTime: CLong(round(endDate.timeIntervalSinceDate(startDate))));
         }
     }
     //--------------------------------------Calculate Elevation-----------------------------------------

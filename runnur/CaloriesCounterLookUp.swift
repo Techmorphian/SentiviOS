@@ -60,7 +60,7 @@ public class CaloriesCounterLookUp {
      * The above equation is used to calculate the correct value of MET at a particular pace.
      * Research paper "2011 Compendium of Physical Activities: A Second Update of Codes and MET Values," by BE Ainsworth, WL Haskell, SD Hermann, N Meckes, DR Basset, Jr., C. Tudor-Locke, JL Greer, J Vezina, MC Whitt-Glover, and AS Leon"
      */
-    func Running(avgpace:Double, weight:Double, elapsedTime:CLong) -> Double{
+    func Running(avgpace:Double, weight:Double, elapsedTime:Float) -> Double{
     //If avgpace is very slow then use a constant value otherwise the equation will break and give a negative value
     if(avgpace > 13.5){
     MET = 0.041;

@@ -180,18 +180,27 @@ class SummaryActivityViewController: UIViewController {
         if self.mapData.weatherData.temp != ""
         {
         self.thermeter.text=self.mapData.weatherData.temp+" F";
+        }else{
+            self.thermeter.text = "- F"
         }
         if self.mapData.weatherData.humidity != ""
         {
          self.dropValue.text = self.mapData.weatherData.humidity+"%";
         }
+        else{
+            self.dropValue.text = "- %"
+        }
         if self.mapData.weatherData.descriptin != ""
         {
         self.weatherValue.text = self.mapData.weatherData.descriptin;
+        }else{
+          self.weatherValue.text = "";
         }
-        if self.mapData.weatherData.deg != ""
+        if self.mapData.weatherData.deg != "-"
         {
         self.windValue.text = self.mapData.weatherData.deg;
+        }else{
+          self.windValue.text = "-"
         }
         
         

@@ -49,7 +49,7 @@ class SplitsViewController: UIViewController {
         splitChart.rightAxis.labelTextColor = UIColor.clearColor();
         splitChart.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
         }
-        splitChart.noDataText = "No Avg Speed Data Available";
+        splitChart.noDataText = "No Splits Data Available";
          }
     
     

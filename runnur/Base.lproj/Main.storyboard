@@ -2079,7 +2079,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QtC-sz-57V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1850" y="554"/>
+            <point key="canvasLocation" x="1859" y="564"/>
         </scene>
         <!--Summary Activity View Controller-->
         <scene sceneID="41w-rS-b6q">
@@ -2103,7 +2103,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xIF-L2-1ZH">
                                 <rect key="frame" x="0.0" y="220" width="600" height="33"/>
                                 <subviews>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="ic_thermometer" translatesAutoresizingMaskIntoConstraints="NO" id="3XK-5d-Alq">
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" horizontalCompressionResistancePriority="751" image="ic_thermometer" translatesAutoresizingMaskIntoConstraints="NO" id="3XK-5d-Alq">
                                         <rect key="frame" x="8" y="7" width="12" height="20"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" text="weather" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CYH-3j-LU7">
@@ -2122,7 +2122,7 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="ic_drop" translatesAutoresizingMaskIntoConstraints="NO" id="1Bg-rH-xaU">
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" horizontalCompressionResistancePriority="751" image="ic_drop" translatesAutoresizingMaskIntoConstraints="NO" id="1Bg-rH-xaU">
                                         <rect key="frame" x="94" y="6" width="13" height="20"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" text="weather" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gsW-oF-ib4">
@@ -2141,7 +2141,7 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="ic_wind" translatesAutoresizingMaskIntoConstraints="NO" id="ejb-DY-xI0">
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" horizontalCompressionResistancePriority="751" image="ic_wind" translatesAutoresizingMaskIntoConstraints="NO" id="ejb-DY-xI0">
                                         <rect key="frame" x="186" y="6" width="20" height="20"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" text="weather" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fjO-73-hKq">
@@ -2163,7 +2163,7 @@
                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="ic_right_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="50w-va-SCi">
                                         <rect key="frame" x="271" y="11" width="15" height="12"/>
                                     </imageView>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="ic_weather" translatesAutoresizingMaskIntoConstraints="NO" id="nlx-Vc-j8q">
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" horizontalCompressionResistancePriority="751" image="ic_weather" translatesAutoresizingMaskIntoConstraints="NO" id="nlx-Vc-j8q">
                                         <rect key="frame" x="303" y="7" width="25" height="20"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" text="weather" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xER-2G-BHM">

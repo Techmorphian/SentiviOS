@@ -129,30 +129,30 @@ class AddActivityViewController: UIViewController,UITextFieldDelegate {
     
     @IBAction func startTime(sender: UITextField) {
         
-                let datePickerView:UIDatePicker = UIDatePicker()
-                datePickerView.datePickerMode = UIDatePickerMode.DateAndTime
-                // datePickerView.minimumDate=NSDate();
+        let datePickerView:UIDatePicker = UIDatePicker()
+        datePickerView.datePickerMode = UIDatePickerMode.DateAndTime
+        // datePickerView.minimumDate=NSDate();
         
-                datePickerView.locale = NSLocale(localeIdentifier: "en_US");
-                sender.inputView = datePickerView;
-                datePickerView.alpha=0.7;
-                datePickerView.backgroundColor = UIColor.whiteColor();
-                let orgcColor = UIColor(red: 255/255, green: 102/255, blue: 102/255, alpha: 1)
-                datePickerView.setValue(orgcColor, forKey: "textColor");
+        datePickerView.locale = NSLocale(localeIdentifier: "en_US");
+        sender.inputView = datePickerView;
+        datePickerView.alpha=0.7;
+        datePickerView.backgroundColor = UIColor.whiteColor();
+        let orgcColor = UIColor(red: 255/255, green: 102/255, blue: 102/255, alpha: 1)
+        datePickerView.setValue(orgcColor, forKey: "textColor");
         
-                datePickerView.addTarget(self, action: #selector(AddActivityViewController.datePickerValueChanged2(_:)), forControlEvents: UIControlEvents.ValueChanged)
-                let toolBar = UIToolbar()
-                toolBar.barStyle = UIBarStyle.Default
-                toolBar.translucent = true
-                toolBar.tintColor = UIColor.blackColor()
-                toolBar.sizeToFit()
+        datePickerView.addTarget(self, action: #selector(AddActivityViewController.datePickerValueChanged2(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        let toolBar = UIToolbar()
+        toolBar.barStyle = UIBarStyle.Default
+        toolBar.translucent = true
+        toolBar.tintColor = UIColor.blackColor()
+        toolBar.sizeToFit()
         
-                let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(AddActivityViewController.donePicker))
-                let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-                toolBar.setItems([flexSpace, doneButton], animated: false)
-                toolBar.userInteractionEnabled = true
-                sender.inputAccessoryView = toolBar
-                datePickerView.setDate(selectedTime, animated: true)
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(AddActivityViewController.donePicker))
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        toolBar.setItems([flexSpace, doneButton], animated: false)
+        toolBar.userInteractionEnabled = true
+        sender.inputAccessoryView = toolBar
+        datePickerView.setDate(selectedTime, animated: true)
         
     }
     
@@ -160,7 +160,7 @@ class AddActivityViewController: UIViewController,UITextFieldDelegate {
     {
         self.view.endEditing(true);
     }
-     func datePickerValueChanged2(sender:UIDatePicker) {
+    func datePickerValueChanged2(sender:UIDatePicker) {
         
         let dateFormatter = NSDateFormatter()
         //  dateFormatter.locale = NSLocale(localeIdentifier: "en_US");
@@ -187,8 +187,8 @@ class AddActivityViewController: UIViewController,UITextFieldDelegate {
         }
         if textField == distance{
             animateViewMoving(true, moveValue: 80)
-
         }
+        
     }
     func textFieldDidEndEditing(textField: UITextField) {
         if textField == durationmm || textField == durationhr
@@ -196,17 +196,46 @@ class AddActivityViewController: UIViewController,UITextFieldDelegate {
             animateViewMoving(false, moveValue: 100)
         }
         if textField == caloriesBurned || textField == startTime{
-             animateViewMoving(false, moveValue: 130)
+            animateViewMoving(false, moveValue: 130)
         }
         if textField == distance{
             animateViewMoving(false, moveValue: 80)
-            
         }
+        
+        if textField == distance
+        {
+            if self.durationhr.text != "" && self.durationmm.text! != "" && self.activityType.text! != ""
+            {
+                
+                elapsedTimeInFloat = self.hhMili + self.mmMili;
+                calculateCaloriesBurned();
+            }
+        }
+        if textField == durationhr
+        {
+            self.hhMili = Float(self.durationhr.text!)! * 60 * 1000;
+            if self.distance.text != "" && self.durationmm.text! != "" && self.activityType.text! != ""
+            {
+                elapsedTimeInFloat = self.hhMili + self.mmMili;
+                calculateCaloriesBurned();
+            }
+        }
+        if textField == durationmm
+        {
+            self.mmMili = Float(self.durationmm.text!)! * 60 * 60 * 1000;
+            if self.distance.text != "" && self.durationhr.text! != "" && self.activityType.text! != ""
+            {
+                elapsedTimeInFloat = self.hhMili + self.mmMili;
+                calculateCaloriesBurned();
+            }
+        }
+        
+        
     }
     
     @IBAction func save(sender: AnyObject) {
         
-        // if Reachability.isConnectedToNetwork() == true{
+if Reachability.isConnectedToNetwork() == true{
         CommonFunctions.showActivityIndicator(self.view);
         //--------------------------------- Connecting to azure client ------------------------------------
         let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
@@ -220,16 +249,19 @@ class AddActivityViewController: UIViewController,UITextFieldDelegate {
         if client.currentUser != nil{
             print(client.currentUser.userId)
             let uuid = NSUUID().UUIDString;
+           // print(round(Double(self.caloriesBurned.text!)!))
             
             //--------------------------creating dictionary to send data to azure---------------------------
             
             let newItem : NSDictionary = ["id": uuid,
                                           "distance": Double(self.distance.text!)!,
                                           "startLocationS":self.activityTitle.text!,
-                                          "performedActivity": "Running",
+                                          "performedActivity": self.activityType.text!,
                                           "caloriesBurnedS": self.caloriesBurned.text!,
                                           "date": self.startTime.text!,
-                                          "elapsedTime": "11:00:00"
+                                          "averagePace":self.avgPace,
+                                          "averageSpeed":self.avgSpeed,
+                                          "elapsedTime": "\(self.durationhr.text!):\(self.durationmm.text!):00"
                 // "EmailS" : "gaurav@techmorphosis.com"
                 // "userId" : NSUserDefaults.standardUserDefaults().stringForKey("userId")!
                 
@@ -238,39 +270,61 @@ class AddActivityViewController: UIViewController,UITextFieldDelegate {
             table.insert(newItem as [NSObject : AnyObject], parameters: ["runnurId":NSUserDefaults.standardUserDefaults().stringForKey("userId")!], completion: { (result, error) in
                 if let err = error {
                     CommonFunctions.hideActivityIndicator();
+                    CommonFunctions.showPopup(self, msg: "Something Went Wrong.", getClick: {
+                       
+                    })
                     print("ERROR ", err)
                 } else if let item = result {
+                    print(result);
                     CommonFunctions.hideActivityIndicator();
-                    print("RunObject: ", item["startLocationS"])
-                    self.dismissViewControllerAnimated(false, completion: nil)
+                   // print("RunObject: ", item["startLocationS"])
+
+                    CommonFunctions.showPopup(self, msg: "Activity saved successfully.", getClick: {
+                        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "activityChanged");
+                         self.dismissViewControllerAnimated(false, completion: nil)
+                    })
+                    
                 }
                 
             })
             
         }
+}else{
+    CommonFunctions.showPopup(self, msg: "No Internet, Please try again later.", getClick: {
+        
+    })
+  }
+ }
+    //    MARK:- calculate calories
+    var mmMili = Float()
+    var hhMili = Float();
+    var elapsedTimeInFloat = Float();
+    var caloriesburned : Double = 0.0;
+    var avgPace = Double();
+    var avgSpeed = Double();
+    func calculateCaloriesBurned() {
+        let caloriesLookUp = CaloriesCounterLookUp()
+        let weight = NSUserDefaults.standardUserDefaults().doubleForKey("weight");
+        let dis = Double(self.distance.text!);
+        avgPace = round(((((Double(elapsedTimeInFloat) / 1000) / 60) / (dis!)) * 100.0)) / 100.0;
+        avgSpeed = round(((dis!) / (((Double(elapsedTimeInFloat) / 1000) / 60) / 60)) * 100.0) / 100.0;
+        
+        if (self.activityType.text! == ("Biking")) {  // calculate calories burned if biking
+          
+            
+            caloriesburned = caloriesLookUp.Biking(avgPace, weight: weight, elapsedTime: CLong(elapsedTimeInFloat), altGain: 0, distance: dis!);
+        } else if (self.activityType.text! == ("Walking")) {
+            //  avgpace = 1.00; CLong(round(endDate.timeIntervalSinceDate(startDate)))
+            caloriesburned = caloriesLookUp.Walking(avgPace, weight: weight, elapsedTime: CLong(elapsedTimeInFloat), altGain: 0, distance: Double(self.distance.text!)!);
+        } else if (self.activityType.text! == ("Running")) { //calculate calories burned for running
+         
+            caloriesburned = caloriesLookUp.Running(avgPace, weight: weight, elapsedTime: elapsedTimeInFloat);
+        }
+        let data = String(caloriesburned)
+        
+        self.caloriesBurned.text = data.componentsSeparatedByString(".")[0];
         
     }
-//    MARK:- calculate calories
-    var caloriesburned = String();
-//    func calculateCaloriesBurned() {
-//        let caloriesLookUp = CaloriesCounterLookUp()
-//        var weight = NSUserDefaults.standardUserDefaults().doubleForKey("weight");
-//        if (self.activityType.text! == ("Biking")) {  // calculate calories burned if biking
-//        
-//            caloriesburned = caloriesLookUp.Biking(0, weight: weight, elapsedTime: CLong(elapseTime)!, altGain: 0, distance: (Double(self.distance.text!)!));
-//            
-//        } else if (self.activityType.text! == ("Walking")) {
-//            //  avgpace = 1.00; CLong(round(endDate.timeIntervalSinceDate(startDate)))
-//            caloriesburned = caloriesLookUp.Walking(0, weight: weight, elapsedTime: CLong(elapseTime)!, altGain: 0, distance: Double(self.distance.text!)!);
-//            
-//            
-//        } else if (self.activityType.text! == ("Running")) { //calculate calories burned for running
-//            
-//            //avgpace = 1.00;
-//
-//            //caloriesburned = caloriesLookUp.Running(0, weight: weight, elapsedTime: CLong(round(endDate.timeIntervalSinceDate(startDate))));
-//        }
-//    }
     
     
     @IBAction func back(sender: AnyObject) {

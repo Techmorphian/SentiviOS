@@ -32,6 +32,7 @@ class GraphsViewController: UIViewController {
     var avgSpeedGraphValues : [Double] = [];
     var maxElevationGraphValues : [Double] = [];
     var heartRateGraphValues : [Double] = [];
+    var mapData = MapData();
     
     func setChart(valuesForSpeed: [Double],valuesForMaxElevation:[Double],valuesForHeartRate:[Double]) {
      //   barChartView.noDataText = "You need to provide data for the chart."
@@ -136,7 +137,16 @@ class GraphsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        avgSpeedGraphValues = [10.0,10.2,10,8,11.0,12.1,12.6,12.8,13.9,20.5,20.9,25,4,28,9,30.0,30.1,30.50,10.5,10.5,10.5,10.5,10.0];
+      //  avgSpeedGraphValues = [10.0,10.2,10,8,11.0,12.1,12.6,12.8,13.9,20.5,20.9,25,4,28,9,30.0,30.1,30.50,10.5,10.5,10.5,10.5,10.0];
+        
+        self.totalDistanceValue = self.mapData.distance!
+        self.avgSpeedValue = self.mapData.avgSpeed!;
+        self.maxElevationValue = self.mapData.maxElevation!;
+        
+        self.avgSpeedGraphValues = self.mapData.avgSpeedGraphValues;
+        self.maxElevationGraphValues = self.mapData.maxElevationGraphValues;
+        self.heartRateGraphValues = self.mapData.heartRateGraphValues;
+        
         
         totalDistance.text = totalDistanceValue.stringByReplacingOccurrencesOfString("mi", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil);
         avgSpeed.text = avgSpeedValue.stringByReplacingOccurrencesOfString(" mph", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil);

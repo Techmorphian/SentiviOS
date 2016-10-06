@@ -190,6 +190,8 @@ static func downloadFromBlob(containerName:String) -> Bool
               //  writeToFile(data, contName: containerNam)
                 if (results!.continuationToken != nil) {
                      self.listBlobsInContainerHelper(container, continuationToken: (results?.continuationToken)!, prefix: prefix, blobListingDetails: blobListingDetails, maxResults: maxResults, completionHandler: completionHandler)
+                }else{
+                    NSNotificationCenter.defaultCenter().postNotificationName("DownloadFromBlobNotification", object: nil);
                 }
             }
         })
