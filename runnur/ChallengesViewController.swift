@@ -58,11 +58,66 @@ class ChallengesViewController: UIViewController
     
     var typeId = String()
     
+    var FilterXIB = challengeFilterView()
+    
     @IBAction func filterButtonAction(sender: AnyObject)
     {
         
-     
-//        
+        
+        
+        FilterXIB = NSBundle.mainBundle().loadNibNamed("challengeFilterView", owner: view, options: nil).last as! challengeFilterView
+        
+        
+        FilterXIB.backgroundColor = UIColor(white: 0, alpha: 0.5)
+        
+        
+        
+        FilterXIB.GroupFitButton.addTarget(self, action: #selector(ChallengesViewController.GroupFitFilter), forControlEvents: UIControlEvents.TouchUpInside)
+        
+        FilterXIB.CauseFitButton.addTarget(self, action: #selector(ChallengesViewController.CauseFitFilter), forControlEvents: UIControlEvents.TouchUpInside)
+        
+
+        FilterXIB.ShowAllButton.addTarget(self, action: #selector(ChallengesViewController.ShowAllFilter), forControlEvents: UIControlEvents.TouchUpInside)
+
+        FilterXIB.CancelButton.addTarget(self, action: #selector(ChallengesViewController.CancelPopUp), forControlEvents: UIControlEvents.TouchUpInside)
+        
+        self.view.addSubview(FilterXIB)
+        FilterXIB.frame = self.view.bounds
+        
+        
+        if NSUserDefaults.standardUserDefaults().boolForKey("GropFitPressed") == true
+        {
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "ShowAllPressed")
+            
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "CauseFitPressed")
+            FilterXIB.GroupFitButton.setTitleColor(colorCode.RedColor, forState: UIControlState.Normal)
+            
+        }
+        if NSUserDefaults.standardUserDefaults().boolForKey("CauseFitPressed") == true
+        {
+           
+            
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "GropFitPressed")
+            
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "ShowAllPressed")
+
+           // FilterXIB.GroupFitButton.setTitleColor(colorCode.BlueColor, forState: UIControlState.Normal)
+
+            FilterXIB.CauseFitButton.setTitleColor(colorCode.RedColor, forState: UIControlState.Normal)
+            
+        }
+        
+        if NSUserDefaults.standardUserDefaults().boolForKey("ShowAllPressed") == true
+        {
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "GropFitPressed")
+            
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "CauseFitPressed")
+
+            
+            FilterXIB.ShowAllButton.setTitleColor(colorCode.RedColor, forState: UIControlState.Normal)
+            
+        }
+//
 //        let alert = UIAlertView(title: "Custom AlertView", message: "Please enter your mobile number", delegate: self, cancelButtonTitle: "OK");
 //        
 //        //        var view = UIView()
@@ -81,62 +136,135 @@ class ChallengesViewController: UIViewController
 //        alert.show()
         
       
-        
-        let actionSheetController = UIAlertController(title: "choose option", message: "",
-                                                      preferredStyle: UIAlertControllerStyle.ActionSheet);
-        
-        
-        let GroupFit = UIAlertAction(title: "GroupFit", style: UIAlertActionStyle.Default, handler: {actopn in
-             NSUserDefaults.standardUserDefaults().setBool(true, forKey: "filterActive")
-            self.typeId = "1"
-                NSNotificationCenter.defaultCenter().postNotificationName("filterClicked", object: nil, userInfo: ["typeId":self.typeId])
-          
-            
-            
-            
-            
-            })
-        
-            
-        let CauseFit = UIAlertAction(title: "CauseFit", style: UIAlertActionStyle.Default, handler: {action in
-              NSUserDefaults.standardUserDefaults().setBool(true, forKey: "filterActive")
-            
-                //actionSheetController.add
-            
-                 self.typeId = "2"
-                NSNotificationCenter.defaultCenter().postNotificationName("filterClicked", object: nil, userInfo: ["typeId":self.typeId])
-            
-          })
-        
-        
-        let ShowAll = UIAlertAction(title: "Show All", style: UIAlertActionStyle.Default, handler: {action in
-            
-            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "filterActive")
-            
-            print(NSUserDefaults.standardUserDefaults().boolForKey("filterActive"))
-           
-               NSNotificationCenter.defaultCenter().postNotificationName("filterClicked", object: nil)
-            })
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
-        
-        
-     
-
-        actionSheetController.addAction(GroupFit)
-        actionSheetController.addAction(CauseFit)
-        actionSheetController.addAction(ShowAll)
-        actionSheetController.addAction(cancelAction)
-        
-      
-        
-        self.presentViewController(actionSheetController, animated: true, completion:{})
+//        
+//        let actionSheetController = UIAlertController(title: "choose option", message: "",
+//                                                      preferredStyle: UIAlertControllerStyle.ActionSheet);
+//        
+//        
+//        let GroupFit = UIAlertAction(title: "GroupFit", style: UIAlertActionStyle.Default, handler: {actopn in
+//             NSUserDefaults.standardUserDefaults().setBool(true, forKey: "filterActive")
+//            self.typeId = "1"
+//                NSNotificationCenter.defaultCenter().postNotificationName("filterClicked", object: nil, userInfo: ["typeId":self.typeId])
+//          
+//           // actionSheetController.
+//            
+//            
+//            
+//            
+//            })
+//        
+//            
+//        let CauseFit = UIAlertAction(title: "CauseFit", style: UIAlertActionStyle.Default, handler: {action in
+//              NSUserDefaults.standardUserDefaults().setBool(true, forKey: "filterActive")
+//            
+//                //actionSheetController.add
+//            
+//                 self.typeId = "2"
+//                NSNotificationCenter.defaultCenter().postNotificationName("filterClicked", object: nil, userInfo: ["typeId":self.typeId])
+//            
+//          })
+//        
+//        
+//        let ShowAll = UIAlertAction(title: "Show All", style: UIAlertActionStyle.Default, handler: {action in
+//            
+//            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "filterActive")
+//            
+//            //////print(NSUserDefaults.standardUserDefaults().boolForKey("filterActive"))
+//           
+//               NSNotificationCenter.defaultCenter().postNotificationName("filterClicked", object: nil)
+//            })
+//        
+//        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
+//        
+//        
+//       
+//
+//        actionSheetController.addAction(GroupFit)
+//        actionSheetController.addAction(CauseFit)
+//        actionSheetController.addAction(ShowAll)
+//        actionSheetController.addAction(cancelAction)
+//        
+//        
+//        self.presentViewController(actionSheetController, animated: true, completion:{})
         
     }
     
     ///////////////////////////////////////////////////////////
     
+    func GroupFitFilter()
+    {
+        
+        
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "GropFitPressed")
+        
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "CauseFitPressed")
+        
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "ShowAllPressed")
+        
+        ////// filter code
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "filterActive")
+        
+        self.typeId = "1"
+        NSNotificationCenter.defaultCenter().postNotificationName("filterClicked", object: nil, userInfo: ["typeId":self.typeId])
+        
+        
+
+       FilterXIB.removeFromSuperview();
+
+    }
     
+    func CauseFitFilter()
+        
+    {
+        
+          NSUserDefaults.standardUserDefaults().setBool(true, forKey: "CauseFitPressed")
+        
+        
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "GropFitPressed")
+        
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "ShowAllPressed")
+        
+        
+        ///// filter code
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "filterActive")
+        
+        self.typeId = "2"
+        NSNotificationCenter.defaultCenter().postNotificationName("filterClicked", object: nil, userInfo: ["typeId":self.typeId])
+                    
+        FilterXIB.removeFromSuperview();
+
+        
+    }
+    
+    
+    func ShowAllFilter()
+    {
+        
+         NSUserDefaults.standardUserDefaults().setBool(true, forKey: "ShowAllPressed")
+        
+        
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "GropFitPressed")
+
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "CauseFitPressed")
+
+        
+        
+        /////////
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "filterActive")
+        
+        
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("filterClicked", object: nil)
+        
+        FilterXIB.removeFromSuperview();
+
+    }
+    
+    
+    func CancelPopUp()
+    {
+        FilterXIB.removeFromSuperview();
+    }
     
     
     @IBAction func activeButtonAction(sender: AnyObject)
@@ -283,16 +411,16 @@ class ChallengesViewController: UIViewController
         
         let aps = data.objectForKey("aps")
         
-        print(aps)
+        ////print(aps)
         
         let NotificationMessage = aps!["alert"] as! String
         
-        print(NotificationMessage)
+        ////print(NotificationMessage)
         
         
         let custom = data.objectForKey("custom")
         
-        print(custom)
+        ////print(custom)
         
         
         let alert = UIAlertController(title: "", message: NotificationMessage , preferredStyle: UIAlertControllerStyle.Alert)
@@ -330,7 +458,11 @@ class ChallengesViewController: UIViewController
         super.viewDidLoad()
         
         
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "GropFitPressed")
         
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "CauseFitPressed")
+        
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "ShowAllPressed")
         
         
         NSUserDefaults.standardUserDefaults().setObject("", forKey: "CauseChallengeImageView")

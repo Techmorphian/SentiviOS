@@ -125,6 +125,8 @@
 		47DA6B0D1D81509B005E8F5E /* LeaderBoardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DA6B0C1D81509B005E8F5E /* LeaderBoardModel.swift */; };
 		47DA9F5A1DA5105E005F16AF /* PaymentDoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DA9F591DA5105D005F16AF /* PaymentDoneViewController.swift */; };
 		47DA9F5C1DA51073005F16AF /* PaymentProcessingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DA9F5B1DA51073005F16AF /* PaymentProcessingViewController.swift */; };
+		47E6C7FA1DA66831002181AC /* challengeFilterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E6C7F91DA66831002181AC /* challengeFilterView.xib */; };
+		47E6C7FC1DA66BEA002181AC /* challengeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6C7FB1DA66BEA002181AC /* challengeFilterView.swift */; };
 		47E7EE3E1D6C8C44008DD370 /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E7EE3D1D6C8C44008DD370 /* CommentsViewController.swift */; };
 		47EF173C1D41EE0C00468698 /* dateFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EF173B1D41EE0C00468698 /* dateFunction.swift */; };
 		47F40DFA1D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F40DF91D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift */; };
@@ -262,6 +264,8 @@
 		47DA6B0C1D81509B005E8F5E /* LeaderBoardModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderBoardModel.swift; sourceTree = "<group>"; };
 		47DA9F591DA5105D005F16AF /* PaymentDoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentDoneViewController.swift; sourceTree = "<group>"; };
 		47DA9F5B1DA51073005F16AF /* PaymentProcessingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentProcessingViewController.swift; sourceTree = "<group>"; };
+		47E6C7F91DA66831002181AC /* challengeFilterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = challengeFilterView.xib; sourceTree = "<group>"; };
+		47E6C7FB1DA66BEA002181AC /* challengeFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = challengeFilterView.swift; sourceTree = "<group>"; };
 		47E7EE3D1D6C8C44008DD370 /* CommentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
 		47EF173B1D41EE0C00468698 /* dateFunction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dateFunction.swift; sourceTree = "<group>"; };
 		47EFFBA91D58689A00F2A2D7 /* CurrentDateFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentDateFunc.swift; sourceTree = "<group>"; };
@@ -447,6 +451,8 @@
 				473D0D8B1D49E8F1004DDC07 /* CompletedChallengeViewController.swift */,
 				473D0D8D1D49E8FB004DDC07 /* completedChallengeTableViewCell.swift */,
 				47474C151D3CBFB0008FE197 /* CreateGroupAndCauseFitViewController.swift */,
+				47E6C7F91DA66831002181AC /* challengeFilterView.xib */,
+				47E6C7FB1DA66BEA002181AC /* challengeFilterView.swift */,
 			);
 			name = challenge;
 			sourceTree = "<group>";
@@ -766,6 +772,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47E6C7FA1DA66831002181AC /* challengeFilterView.xib in Resources */,
 				47FFB77A1D686B92002880A3 /* SWRevealViewController.m in Resources */,
 				47FFB7791D686B8A002880A3 /* SWRevealViewController.h in Resources */,
 				470CF88B1D24DC370001B3BC /* LaunchScreen.storyboard in Resources */,
@@ -970,6 +977,7 @@
 				470CF8861D24DC370001B3BC /* runnur.xcdatamodeld in Sources */,
 				4731FC8C1D2A2E2A00E860B0 /* GroupCauseFitViewController.swift in Sources */,
 				4739D4481D3506F80087CDC1 /* NoFriendViewController.swift in Sources */,
+				47E6C7FC1DA66BEA002181AC /* challengeFilterView.swift in Sources */,
 				47FEAE0A1D2FD93800881EE8 /* Url.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

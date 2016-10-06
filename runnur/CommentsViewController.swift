@@ -644,9 +644,9 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                     
                                 
                                     
-                                    self.commentsTableView.setContentOffset(CGPointMake(0, CGFloat.max), animated: false)
+                                    //self.commentsTableView.setContentOffset(CGPointMake(0, CGFloat.max), animated: false)
                                     
-//                                      self.commentsTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.commentsTableView.numberOfRowsInSection(0) - 1, inSection: 0), atScrollPosition: .None, animated: false)
+                                    self.commentsTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.commentsTableView.numberOfRowsInSection(0) - 1, inSection: 0), atScrollPosition: .None, animated: false)
                                     
                             }
                             

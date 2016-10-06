@@ -694,8 +694,8 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
 //            
 //            
 //        }
-//        
-//    
+    
+//
     
     
 //    func tableView(tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat
@@ -713,7 +713,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
        let check = indexPath.row
         
                 
-        if (check <= 5 && shouldCallPagging && false)
+        if (check <= 5 && shouldCallPagging)
         {
             
             //// making it false so that it can call at ones 
@@ -1045,11 +1045,11 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 
               
                 
-                self.ActivityTableView.transform =  CGAffineTransformMakeScale(1,-1);
-                
-            
-                
-                self.ActivityTableView.transform = CGAffineTransformInvert(self.view.transform);
+//                self.ActivityTableView.transform =  CGAffineTransformMakeScale(1,-1);
+//                
+//            
+//                
+//                self.ActivityTableView.transform = CGAffineTransformInvert(self.view.transform);
                 
                 
                 
@@ -1142,13 +1142,13 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                               
                                 
                                 
-                                let lastRowIndex = self.activityChatArray.count
+                               let lastRowIndex = self.activityChatArray.count
                                 
-                                //indexPath.append(NSIndexPath(forRow: lastRowIndex , inSection: 0))
+                            indexPath.append(NSIndexPath(forRow: lastRowIndex , inSection: 0))
                                                                
                               // indexPath.append(NSIndexPath(forRow: i , inSection: 0))
                                 
-                                  indexPath.append(NSIndexPath(forRow: i , inSection: 0))
+                                 // indexPath.append(NSIndexPath(forRow: i , inSection: 0))
                                 
                                 self.activityModel=ViewActivityModel()
                                 
@@ -1617,7 +1617,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                         self.afterContentSize = self.ActivityTableView.contentSize;
                                         self.afterContentOffset = self.ActivityTableView.contentOffset;
                                         
-                                        self.ActivityTableView.contentOffset = CGPoint(x: self.afterContentOffset.x, y: self.afterContentOffset.y + self.afterContentSize.height - self.beforeContentSize.height)
+//                                        self.ActivityTableView.contentOffset = CGPoint(x: self.afterContentOffset.x, y: self.afterContentOffset.y + self.afterContentSize.height - self.beforeContentSize.height)
                                         
                                         let index = indexes?.last?.row
                                         
@@ -1638,13 +1638,26 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
 //                                            self.activityChatArray.append(self.activityChatArray[arrayIndex])
 //                                        }
 //                                        
-                                    
+                                        for i in self.activityChatArray
+                                        {
+                                            
+                                            print(i.message)
+                                            
+                                        }
                                         
                                         self.activityChatArray = self.activityChatArray.reverse();
                                         
                                         
-                                     
                                         
+                                        for i in self.activityChatArray
+                                        {
+                                            
+                                          print(i.message)
+                                            
+                                        }
+                                        
+                                        
+                                        print(self.activityChatArray.count)
                                         
                                         self.ActivityTableView.delegate = self;
                                         
@@ -1652,19 +1665,34 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                         
                                         self.ActivityTableView.reloadData();
                                         
+                                        
+                                        let lastSectionIndex = self.ActivityTableView!.numberOfSections - 1
+                                        
+                                        print(lastSectionIndex)
+                                        
+                                        // Then grab the number of rows in the last section
+                                        let lastRowIndex = self.ActivityTableView!.numberOfRowsInSection(lastSectionIndex) - 1
+                                        
+                                        print(lastRowIndex)
+                                        
+                                        // Now just construct the index path
+                                        let pathToLastRow = NSIndexPath(forRow: lastRowIndex, inSection: lastSectionIndex)
+                                        
+                                        print(pathToLastRow)
+                                        
+//                                        // Make the last row visible
+//                                        self.ActivityTableView?.scrollToRowAtIndexPath(pathToLastRow, atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
+                                        
+                                        
+                                        self.ActivityTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.ActivityTableView.numberOfRowsInSection(0) - 1, inSection: 0), atScrollPosition: .None, animated: false)
+                                        
+                                                
+                                        
+                                        
                                         /////// scroll to bottom
-                                      
+
                                         
-                                        
-                                        
-                                        self.ActivityTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.ActivityTableView.numberOfRowsInSection(0) - 1, inSection: 0), atScrollPosition: .Bottom, animated: false)
-                                                
-                                                
-                                        
-                                        
-                                        
-                                        
-//                                          self.ActivityTableView.scrollToRowAtIndexPath(NSIndexPath(startIndex,inSection: 0), atScrollPosition: .Top, animated: true)
+//                                          self.ActivityTableView.scrollToRowAtIndexPath(NSIndexPath(activityChatArray.count-1,inSection: 0), atScrollPosition: .Bottom, animated: true)
                                         
                                     
                                     }
@@ -2063,7 +2091,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                // self.ActivityTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.ActivityTableView.numberOfRowsInSection(0), inSection: 0)], withRowAnimation: UITableViewRowAnimation.None)
                                
                              
-                               self.ActivityTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.ActivityTableView.numberOfRowsInSection(0)-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.None, animated: true);
+                               self.ActivityTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.ActivityTableView.numberOfRowsInSection(0)-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.None, animated: false);
                                 
                                
 
@@ -2111,7 +2139,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 
                 self.loadingView.removeFromSuperview();
                 
-                ////print(error)
+                //////print(error)
                 
                 let alert = UIAlertController(title: "", message:"something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
                 
@@ -2167,7 +2195,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 
                 var likeCount  = self.activityChatArray[index].likes
                 
-              //  ////print(likeCount)
+              //  //////print(likeCount)
                 
                 self.count = Int(likeCount)!
                 
@@ -3700,11 +3728,16 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     override func viewDidAppear(animated: Bool)
     {
-        self.ActivityTableView.estimatedRowHeight = 72;
+        
+      self.ActivityTableView.estimatedRowHeight = 100;
         self.ActivityTableView.rowHeight = UITableViewAutomaticDimension;
+        
+        
         if Reachability.isConnectedToNetwork() == true
         {
             print("calling wb")
+            
+            self.activityChatArray.removeAll();
             self.activityInfo();
             
             
@@ -3758,7 +3791,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         super.viewDidLoad();
  
         
-        beforeContentSize = self.ActivityTableView.contentSize;
+       // beforeContentSize = self.ActivityTableView.contentSize;
         
         
         
