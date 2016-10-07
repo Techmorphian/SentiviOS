@@ -376,18 +376,18 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 }
                                 
                                 
-                                let amountPerMile = elementss[i]["amountPerMile"] as! String
+                                _ = elementss[i]["amountPerMile"] as! String
                                                                 
-                                let usereStatus = elementss[i]["usereStatus"] as! String
+                                _ = elementss[i]["usereStatus"] as! String
                                 
                                 let raisedAmount = elementss[i]["raisedAmount"] as! String
                                 
                                 RaisedAmount = raisedAmount
                                 
-                                let runCount = elementss[i]["runCount"] as! String
+                                _ = elementss[i]["runCount"] as! String
                                 
                                 
-                                let averageSpeed = elementss[i]["averageSpeed"] as! String
+                                _ = elementss[i]["averageSpeed"] as! String
                                 
                                 let distance = elementss[i]["distance"] as! String
                                 let unit = elementss[i]["unit"] as! String

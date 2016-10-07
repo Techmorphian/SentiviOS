@@ -143,7 +143,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     {
       
         
-        
+        print(activityChatArray.count)
         
         return activityChatArray.count
             
@@ -713,7 +713,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
        let check = indexPath.row
         
                 
-        if (check <= 5 && shouldCallPagging)
+        if (check <= 5 && shouldCallPagging && false)
         {
             
             //// making it false so that it can call at ones 
@@ -862,6 +862,9 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
     {
     
+        
+        
+      //  self.activityChatArray.removeAll();
         
         let myurl = NSURL(string: Url.activityInfo)
         

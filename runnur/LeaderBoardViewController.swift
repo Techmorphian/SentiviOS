@@ -87,7 +87,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
         
         var tableCell = UITableViewCell()
         
-        let data = WinnerAndUsersArray[indexPath.row]
+   
         
         
         if indexPath.row == 0
@@ -325,6 +325,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
             LeaderBoardUsersNotWinnersTableViewCell
             
             
+             cell.rank.text = "#" + " " + String(WinnerAndUsersArray[indexPath.row].Rank)
             
             cell.ProfileImageView.layer.cornerRadius = cell.ProfileImageView.frame.size.width / 2;
             cell.ProfileImageView.clipsToBounds = true;
@@ -360,9 +361,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
             
         }
         
-        
-        
-        
+         
         return tableCell
         
         

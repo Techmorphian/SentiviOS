@@ -73,6 +73,9 @@
 		470CF8A31D2508140001B3BC /* AddviaFacebookCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CF8A21D2508140001B3BC /* AddviaFacebookCellTableViewCell.swift */; };
 		470CF8A51D25082C0001B3BC /* AddviaGoogleCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CF8A41D25082C0001B3BC /* AddviaGoogleCellTableViewCell.swift */; };
 		470CF8A71D252F540001B3BC /* AddManuallyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CF8A61D252F540001B3BC /* AddManuallyViewController.swift */; };
+		4711C8BF1DA77A5A00E4ABC9 /* WinningsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4711C8BE1DA77A5A00E4ABC9 /* WinningsViewController.swift */; };
+		4711C8C21DA78C9600E4ABC9 /* TotalAmountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4711C8C11DA78C9600E4ABC9 /* TotalAmountTableViewCell.swift */; };
+		4711C8C41DA78CB500E4ABC9 /* TransctionsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4711C8C31DA78CB500E4ABC9 /* TransctionsListTableViewCell.swift */; };
 		471A686A1D30D4E200DD2138 /* NoInternetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471A68691D30D4E200DD2138 /* NoInternetViewController.swift */; };
 		472528321D82D9D7007A53C9 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472528311D82D9D7007A53C9 /* CircleView.swift */; };
 		4731FC8C1D2A2E2A00E860B0 /* GroupCauseFitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4731FC8B1D2A2E2A00E860B0 /* GroupCauseFitViewController.swift */; };
@@ -213,6 +216,9 @@
 		470CF8A21D2508140001B3BC /* AddviaFacebookCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddviaFacebookCellTableViewCell.swift; sourceTree = "<group>"; };
 		470CF8A41D25082C0001B3BC /* AddviaGoogleCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddviaGoogleCellTableViewCell.swift; sourceTree = "<group>"; };
 		470CF8A61D252F540001B3BC /* AddManuallyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddManuallyViewController.swift; sourceTree = "<group>"; };
+		4711C8BE1DA77A5A00E4ABC9 /* WinningsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WinningsViewController.swift; path = ../WinningsViewController.swift; sourceTree = "<group>"; };
+		4711C8C11DA78C9600E4ABC9 /* TotalAmountTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalAmountTableViewCell.swift; sourceTree = "<group>"; };
+		4711C8C31DA78CB500E4ABC9 /* TransctionsListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransctionsListTableViewCell.swift; sourceTree = "<group>"; };
 		471A68691D30D4E200DD2138 /* NoInternetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoInternetViewController.swift; sourceTree = "<group>"; };
 		472528311D82D9D7007A53C9 /* CircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		4731FC8B1D2A2E2A00E860B0 /* GroupCauseFitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupCauseFitViewController.swift; sourceTree = "<group>"; };
@@ -389,6 +395,7 @@
 		470CF87C1D24DC370001B3BC /*   */ = {
 			isa = PBXGroup;
 			children = (
+				4711C8C01DA77A7800E4ABC9 /* winnigs */,
 				472527FB1D828B1A007A53C9 /* Progress */,
 				470045E21D8040D50011805A /* LeaderBoard */,
 				4785E0701D744A890003ABC0 /* Requests */,
@@ -430,6 +437,16 @@
 			);
 			name = " ";
 			path = runnur;
+			sourceTree = "<group>";
+		};
+		4711C8C01DA77A7800E4ABC9 /* winnigs */ = {
+			isa = PBXGroup;
+			children = (
+				4711C8BE1DA77A5A00E4ABC9 /* WinningsViewController.swift */,
+				4711C8C11DA78C9600E4ABC9 /* TotalAmountTableViewCell.swift */,
+				4711C8C31DA78CB500E4ABC9 /* TransctionsListTableViewCell.swift */,
+			);
+			name = winnigs;
 			sourceTree = "<group>";
 		};
 		472527FB1D828B1A007A53C9 /* Progress */ = {
@@ -898,6 +915,7 @@
 				473D0D981D49E984004DDC07 /* HistoryViewController.swift in Sources */,
 				4457FFE41D59C2030097C598 /* SummaryActivityViewController.swift in Sources */,
 				47DA6B0D1D81509B005E8F5E /* LeaderBoardModel.swift in Sources */,
+				4711C8C41DA78CB500E4ABC9 /* TransctionsListTableViewCell.swift in Sources */,
 				44BBF3771D5D96E2006618EF /* NSObject+MTNativeFacebookLogin.m in Sources */,
 				473D0D821D49E86A004DDC07 /* CircleLabel.swift in Sources */,
 				448584211D4A3BE40027F141 /* TourContentViewController.swift in Sources */,
@@ -951,6 +969,7 @@
 				4731FC8E1D2A2E4300E860B0 /* GroupFitCellTableViewCell.swift in Sources */,
 				47C6AFFC1D5AF58800410DAE /* userActivityTableViewCell.swift in Sources */,
 				47B8A8FA1D45E31600BACB83 /* SummaryViewController.swift in Sources */,
+				4711C8BF1DA77A5A00E4ABC9 /* WinningsViewController.swift in Sources */,
 				473D0D7E1D49E820004DDC07 /* inviteFriendsModel.swift in Sources */,
 				470CF89B1D2505C60001B3BC /* AddviaContactsViewController.swift in Sources */,
 				47C6AFFE1D5AF59B00410DAE /* activityTableViewCell.swift in Sources */,
@@ -976,6 +995,7 @@
 				473D0D8A1D49E8D9004DDC07 /* activeChallengeTableViewCell.swift in Sources */,
 				470CF8861D24DC370001B3BC /* runnur.xcdatamodeld in Sources */,
 				4731FC8C1D2A2E2A00E860B0 /* GroupCauseFitViewController.swift in Sources */,
+				4711C8C21DA78C9600E4ABC9 /* TotalAmountTableViewCell.swift in Sources */,
 				4739D4481D3506F80087CDC1 /* NoFriendViewController.swift in Sources */,
 				47E6C7FC1DA66BEA002181AC /* challengeFilterView.swift in Sources */,
 				47FEAE0A1D2FD93800881EE8 /* Url.swift in Sources */,

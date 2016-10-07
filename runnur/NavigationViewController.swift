@@ -434,6 +434,8 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             case "Winnings":
             
                 
+                self.performSegueWithIdentifier("winnings", sender: nil)
+                
                 break;
                 
                 

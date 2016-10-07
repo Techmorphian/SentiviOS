@@ -96,5 +96,28 @@ class Url
       //////////// Progress
      static let progress = baseUrl + "progress.php"
     
+    
+    
+    
+    //// winnings
+    
+     static let winnings = baseUrl + "winnings.php"
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 }
