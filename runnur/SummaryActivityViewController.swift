@@ -139,6 +139,22 @@ class SummaryActivityViewController: UIViewController {
     @IBOutlet weak var weatherValue: UILabel!
     
     
+    
+    func getTime (stringFromDate:String) -> String
+    {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss";
+        var dateString = String();
+        var datE = NSDate();
+        if let parsedDateTimeString = dateFormatter.dateFromString(stringFromDate) {
+            dateFormatter.dateFormat = "hh:mm a";
+            dateString = dateFormatter.stringFromDate(parsedDateTimeString)
+            datE = dateFormatter.dateFromString(dateString)!
+        }
+        return dateString;
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -203,6 +219,10 @@ class SummaryActivityViewController: UIViewController {
           self.windValue.text = "-"
         }
         
+        if self.getTime(self.mapData.date!) != ""
+        {
+            self.startTime.text = self.getTime(self.mapData.date!)
+        }
         
         
         

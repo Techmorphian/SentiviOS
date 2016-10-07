@@ -15,6 +15,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
 //  Using 'historyCache' ----- keyword
 // also Using firstCache  ---
     
+    @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView: UITableView!
     @IBAction func menuButtonAction(sender: AnyObject)
@@ -68,6 +69,10 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     var containerName = String();
     
     var showAll = true;
+    
+    var filterDataArray = [MapData]();
+    var filterTemp2Array = [MapData]();
+
     //  ---------------------------------------- getDataFromHistory -------------------------------------
     
     @IBOutlet weak var tableTopHeader: UILabel!
@@ -97,72 +102,19 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         })
         
     }
-//    MARK:- streak calculation
-//    var moc: NSManagedObjectContext!
-//    func fetchLatestDates(moc: NSManagedObjectContext, lastDate: NSDate) -> [NSDate] {
-//        var dates = [NSDate]()
-//        
-//        let fetchRequest = NSFetchRequest(entityName: "YourEntity")
-//        let datePredicate = NSPredicate(format: "date < %@", lastDate)
-//        
-//        fetchRequest.predicate = datePredicate
-//        
-//        do {
-//            let result = try moc.executeFetchRequest(fetchRequest)
-//            let allDates = result as! [NSDate]
-//            if allDates.count > 0 {
-//                for date in allDates {
-//                    dates.append(date)
-//                }
-//            }
-//        } catch {
-//            fatalError()
-//        }
-//        return dates
-//    }
-//    func changeDateTime(userDate: NSDate) -> NSDate {
-//        let dateComponents = NSDateComponents()
-//        let currentCalendar = NSCalendar.currentCalendar()
-//        let year = Int(currentCalendar.component(NSCalendarUnit.Year, fromDate: userDate))
-//        let month = Int(currentCalendar.component(NSCalendarUnit.Month, fromDate: userDate))
-//        let day = Int(currentCalendar.component(NSCalendarUnit.Day, fromDate: userDate))
-//        
-//        dateComponents.year = year
-//        dateComponents.month = month
-//        dateComponents.day = day
-//        dateComponents.hour = 23
-//        dateComponents.minute = 59
-//        dateComponents.second = 59
-//        
-//        guard let returnDate = currentCalendar.dateFromComponents(dateComponents) else {
-//            return userDate
-//        }
-//        return returnDate
-//    }
-//    
-//    func addDay(today: NSDate) -> NSDate {
-//        let tomorrow = NSCalendar.currentCalendar().dateByAddingUnit(.Day, value: 1, toDate: today, options: NSCalendarOptions(rawValue: 0))
-//        
-//        return tomorrow!
-//    }
-//    func calculateStreak(date: NSDate) -> Int {
-//        let dateList =
-//        let compareDate = changeDateTime(lastDate)
-//        var streakDateList = [NSDate]()
-//        var tomorrow = addDay(compareDate)
-//        
-//       // for date in dateList {
-//            changeDateTime(date)
-//            if date == tomorrow {
-//                streakDateList.append(date)
-//            }
-//            tomorrow = addDay(tomorrow)
-//      //  }
-//        
-//        NSUserDefaults.standardUserDefaults().setObject(streakDateList.last, forKey: "lastStreakEndDate")
-//        return streakDateList.count
-//    }
-    var filterDataArray = [MapData]();
+    var time = Int()
+    func calculateDuration(dateString:String)
+    {
+        let date = CommonFunctions.getDate(dateString);
+        let hh = CommonFunctions.gethrs(date)
+        let mm = CommonFunctions.getMin(date)
+        let ss = CommonFunctions.getss(date)
+        let s1 = hh*3600
+        let s2 = (mm*60)
+        time = time + s1+s2+ss;
+    }
+    
+
     func getData()
     {
         
@@ -175,25 +127,15 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
             self.containerName = words![0]
         self.resetData();
         let file = "\(contName).txt" //this is the file. we will write to and read from it
-       // self.tableView.hidden=false;
-//        let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
-//        print(paths);
-//        
-//        let getFilePath = paths.URLByAppendingPathComponent(file)
-//        
-//        let checkValidation = NSFileManager.defaultManager();
-//        if (checkValidation.fileExistsAtPath(getFilePath.path!))
         
         let dat = CommonFunctions.checkIfDirectoryAvailable(contName)
         
         if dat.0
         {
  
-//        let fileManager:NSFileManager = NSFileManager.defaultManager()
         var fileList = CommonFunctions.listFilesFromDocumentsFolder(contName)
-            print(fileList);
+            
         let count = fileList.count
-//        var isDir:Bool = true;
         
         for i:Int in 0 ..< count
         {
@@ -211,23 +153,50 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 if data != nil || data?.length < 0
                 {
                 let jsonData = try! NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as! NSDictionary
-                    print(jsonData);
+                   // print(jsonData);
                     
                     self.totalNumberOfActivities = self.totalNumberOfActivities + 1;
                     
                     self.routeData = MapData();
-                    if let distance = jsonData.objectForKey("distance") as? Double{
-                        self.routeData.distance = String(distance);
+                    if let startLocation = jsonData.objectForKey("startLocationS") as? String{
+                        if "gaurang2" == startLocation
+                        {
+                            print("gaurang2");
+                        }
+                    }
+
+                    if let dis = jsonData.objectForKey("distance") {
+                        print("distance\(dis)");
+                        let disString = String(dis)
+                        let doubleDis = Double(disString);
+                        self.routeData.distance = disString;
+                       
                         if self.totalDis == "0.00"
                         {
                             self.totalDis = "0";
                         }
-                        if String(Int(distance)+Int(self.totalDis)!) != nil
+                        //let dis = (distance as! NSNumber).doubleValue;
+                        if String(doubleDis!+Double(self.totalDis)!) != nil
                         {
-                        self.totalDis = String(Int(distance)+Int(self.totalDis)!);
+                            self.totalDis = String(doubleDis!+Double(self.totalDis)!);
                         }
-                        
+
                     }
+                    
+//                    if let distance = jsonData.objectForKey("distance") as? Double {
+//                        self.routeData.distance = String(distance);
+//                        print(String(distance))
+//                        if self.totalDis == "0.00"
+//                        {
+//                            self.totalDis = "0";
+//                        }
+//                        //let dis = (distance as! NSNumber).doubleValue;
+//                        if String(Double(distance)+Double(self.totalDis)!) != nil
+//                        {
+//                        self.totalDis = String(Double(distance)+Double(self.totalDis)!);
+//                        }
+//                        
+//                    }
                     if let averagePace = jsonData.objectForKey("averagePace") as? Double{
                         self.routeData.avgPace = String(averagePace)
                     }
@@ -246,36 +215,29 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     }
                     if let elapsedTime = jsonData.objectForKey("elapsedTime") as? String{
                         self.routeData.duration = elapsedTime
-                        //self.totalDur = String(Int(elapsedTime)!+Int(self.totalDur)!);
+                        self.calculateDuration(elapsedTime);
                     }
                     if let date = jsonData.objectForKey("date") as? String{
                         self.routeData.date = date;
                         
                         let formatedDate = CommonFunctions.dateFromFixedFormatString(date);
-                        let currentDate = NSDate()
-                       let dateComparisionResult:NSComparisonResult = NSCalendar.currentCalendar().compareDate(formatedDate, toDate: NSDate(), toUnitGranularity: .Day)
-                      //  let dateComparisionResult:NSComparisonResult = currentDate.compare(formatedDate);
+                        let currentDate = NSDate();
+                        let dateComparisionResult:NSComparisonResult = NSCalendar.currentCalendar().compareDate(formatedDate, toDate: NSDate(), toUnitGranularity: .Day)
                         if dateComparisionResult == NSComparisonResult.OrderedSame
                         {
                             if !self.checkTodayActivity
                             {
                                 self.streakCount = self.streakCount + 1;
                                 self.checkTodayActivity = true;
-                                //previousDate = yesterDay(previousDate);
                             }
-                            // Current date and end date are same.
                         }
                         
                         
                         let dateComparisionResult2:NSComparisonResult = NSCalendar.currentCalendar().compareDate(formatedDate, toDate: previousDate, toUnitGranularity: .Day);
                         if dateComparisionResult2 == NSComparisonResult.OrderedSame
                         {
-//                            if !self.checkTodayActivity
-//                            {
-                                self.streakCount = self.streakCount + 1;
-                                previousDate = yesterDay(previousDate);
-//                            }
-                            // Current date and end date are same.
+                            self.streakCount = self.streakCount + 1;
+                            previousDate = yesterDay(previousDate);
                         }
                         
                         
@@ -315,7 +277,6 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         }
                     }
                     if let trackPolylines = jsonData.objectForKey("trackPolylinesS") as? String{
-                        // print(trackPolylines);
                         
                         let data: NSData = trackPolylines.dataUsingEncoding(NSUTF8StringEncoding)!
                         do
@@ -333,7 +294,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         
                     }
                     
-//                    Graph speed
+// Graph speed
                     
                     if let trackPolylines = jsonData.objectForKey("graphSpeedS") as? NSArray{
                         
@@ -353,7 +314,6 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     }
                     
                     if let trackPolylines = jsonData.objectForKey("graphAltitudeS") as? NSArray{
-                        // print(trackPolylines);
                         
                         for i in 0 ..< trackPolylines.count
                         {
@@ -371,9 +331,6 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         }
                     }
 
-                    
-                    //self.weatherData = WeatherData();
-                    
                     if let weatherData = jsonData.objectForKey("weatherData") as? String{
                         //print(weatherData);
                         let array = weatherData.componentsSeparatedByString(",");
@@ -397,43 +354,15 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         
                         self.routeData.weatherData.deg = array[8].componentsSeparatedByString("=")[1];
                         }
-//                        let data: NSData = weatherData.dataUsingEncoding(NSUTF8StringEncoding)!
-//                        do
-//                        {
-//                            let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSDictionary;
-//                            
-//                            self.routeData.weatherData.speed = ((json!.objectForKey("speed") as? String)!)
-//                            self.routeData.weatherData.cod = ((json!.objectForKey("cod") as? String)!)
-//                            self.routeData.weatherData.temp = ((json!.objectForKey("temp") as? String)!)
-//                            self.routeData.weatherData.descriptin = ((json!.objectForKey("description") as? String)!)
-//                            self.routeData.weatherData.pressure = ((json!.objectForKey("pressure") as? String)!)
-//                            self.routeData.weatherData.main = ((json!.objectForKey("main") as? String)!)
-//                            self.routeData.weatherData.humidity = ((json!.objectForKey("humidity") as? String)!)
-//                            self.routeData.weatherData.deg = ((json!.objectForKey("deg") as? String)!)
-//                            
-//                        }catch{
-//                            print("error");
-//                        }
                         
                     }
                     
                     // ------------------------ code to calculate week and add into perticular week ----------------------------
                     let weekCount = "Week " + CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!));
-                    //print(self.routeData.date!)
-                    if self.routeData.weatherData.speed != ""
-                    {
-                        print("this week has weather Data \(weekCount)\(self.routeDataArray.count)")
-                    }
-                    if self.routeData.avgSpeedGraphValues.count > 1
-                    {
-                        print("this week has avgspeed Data \(weekCount)\(self.routeDataArray.count)")
-                    }
                     self.routeData.weekNum = weekCount
                     self.routeData.weekIntNum = Int(CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!)))!
                     self.routeDataArray.append(self.routeData);
-                    //print("\(weekCount)+\(CommonFunctions.dateFromFixedFormatString(self.routeData.date!))");
-                    
-                    // print("Todo Item: ", item)
+
                 }
                 
 
@@ -447,14 +376,19 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
             var tempArray = [MapData]();
             filterDataArray = routeDataArray;
             filterTempArray = routeDataArray;
+            
+            self.routeDataArray.sortInPlace({ (m1, m2) -> Bool in
+                m1.date > m2.date
+            })
+
             self.routeDataArray.sortInPlace({ (m1, m2) -> Bool in
                 m1.weekIntNum > m2.weekIntNum
             })
             
             for (data,i) in routeDataArray.enumerate(){
-                print(i.weekIntNum);
+              //  print(i.weekIntNum);
                 let weekCount = i.weekNum
-                print(data);
+               // print(data);
              //   25164dee-723f-4961-83f1-b3b051d93807
                 
                 
@@ -467,55 +401,38 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         tempArray.removeAll();
                         break;
                     }
+                     if data+1 < self.routeDataArray.count-1{
                     if i.weekIntNum != self.routeDataArray[data+1].weekIntNum
                     {
                        self.sectionItem.append(tempArray);
                         tempArray.removeAll();
                     }
+                    }
                     
                 }else{
                     tempArray.append(i);
-                    if i.weekIntNum != self.routeDataArray[data+1].weekIntNum
-                    {
-                    self.sectionItem.append(tempArray);
-                         tempArray.removeAll();
+                    
+                    if data+1 <= self.routeDataArray.count-1{
+                        if i.weekIntNum != self.routeDataArray[data+1].weekIntNum
+                        {
+                            self.sectionItem.append(tempArray);
+                            tempArray.removeAll();
+                        }
+                    }else if data == self.routeDataArray.count-1{
+                         self.sectionItem.append(tempArray);
                     }
                     self.sectionHeader.append(weekCount);
                    self.previousWeeks.append(weekCount);
                 }
                 
-                
-//                if self.previousWeeks.contains(weekCount)
-//                {
-//                    tempArray.append(i);
-//                    
-//                }
-//                else{
-//                    // weekNumber.append(CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!)));
-//                    self.sectionHeader.append(weekCount);
-//                    if self.priviousWeekCount != ""
-//                    {
-//                        //print(self.routeDataArray.count)
-//                        self.sectionItem.append(tempArray);
-//                    }
-//                    if self.lastItem{
-//                        self.sectionItem.append(tempArray);
-//                    }
-//                    self.previousWeeks.append(weekCount);
-//                    tempArray.removeAll();
-//                    tempArray.append(i);
-//                    self.priviousWeekCount = weekCount;
-//                }
    
             }
-  
             
             
-//            print(self.sectionItem.count);
-//            print(self.sectionHeader.count);
-            
+            print(self.sectionHeader.count);
+            print(self.sectionItem.count);
             self.counter=String(self.totalNumberOfActivities);
-            
+           totalDur = CommonFunctions.secondsToHoursMinutesSeconds(time);
             
             streak = String(streakCount);
             values.append(streak);
@@ -538,7 +455,6 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 CommonFunctions.hideActivityIndicator();
 
             })
-
    
         }
         
@@ -554,260 +470,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
             
         }
 
-        
-   
-/*        if dat.0
-        {
-         
-            var text2 = NSString()
-            print("FILE AVAILABLE");
-         
-         for i:Int in 0 ..< count
-         {
-         if fileList[i] != ".DS_Store"{
-         var text2 = NSString()
-         do {
-         let path = dat.1.URLByAppendingPathComponent(fileList[i])
-         text2 = try NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding)
-         }catch{
-         print("error");
-         }
 
-            do{
-                let data = text2.dataUsingEncoding(NSUTF8StringEncoding)
-                let jsonData = try! NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as! NSArray
-                
-                let items = jsonData;
-                print(jsonData);
-                
-                if items.count == 0
-                {
-                    self.showNoRoutesView();
-                    return;
-                }
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.tableView.hidden=false;
-                })
-                
-                let itemss = items.sortedArrayUsingDescriptors([ NSSortDescriptor(key: "date", ascending: false)])
-                
-                
-                
-                for item in itemss {
-                    
-                    
-                    
-                    self.totalNumberOfActivities = self.totalNumberOfActivities + 1;
-                    if items.count == self.totalNumberOfActivities
-                    {
-                        self.lastItem = true;
-                    }
-                    
-                    self.routeData = MapData();
-                    if let distance = item["distance"] as? Double{
-                        self.routeData.distance = String(distance);
-                        self.totalDis = String(Int(distance)+Int(self.totalDis)!);
-                    }
-                    
-                    if let elevationLoss = item["altLossS"] as? String{
-                        self.routeData.elevationLoss = elevationLoss
-                    }
-                    if let elevationGain = item["altGainS"] as? String{
-                        self.routeData.elevationGain = elevationGain
-                    }
-                    if let startLocation = item["startLocationS"] as? String{
-                        self.routeData.location = startLocation
-                    }
-                    if let elapsedTime = item["elapsedTime"] as? String{
-                        self.routeData.duration = elapsedTime
-                        //self.totalDur = String(Int(elapsedTime)!+Int(self.totalDur)!);
-                    }
-                    if let date = item["date"] as? String{
-                        self.routeData.date = date;
-                        
-                        let formatedDate = CommonFunctions.dateFromFixedFormatString(self.routeData.date!);
-                        let currentDate = NSDate()
-                        let dateComparisionResult:NSComparisonResult = currentDate.compare(formatedDate);
-                        if dateComparisionResult == NSComparisonResult.OrderedSame
-                        {
-                            if !self.checkTodayActivity
-                            {
-                                self.streakCount = self.streakCount + 1;
-                                self.checkTodayActivity = true;
-                            }
-                            // Current date and end date are same.
-                        }
-                        
-                        
-                        let dateComparisionResult2:NSComparisonResult = previousDate.compare(formatedDate);
-                        if dateComparisionResult2 == NSComparisonResult.OrderedSame
-                        {
-                            if !self.checkTodayActivity
-                            {
-                                self.streakCount = self.streakCount + 1;
-                                previousDate = yesterDay(previousDate);
-                            }
-                            // Current date and end date are same.
-                        }
-                        
-                        
-                        
-                    }
-                    if let distanceAway = item["distanceAwayP"] as? String{
-                        self.routeData.distanceAway = distanceAway
-                    }
-                    if let caloriesBurned = item["caloriesBurnedS"] as? String{
-                        self.routeData.caloriesBurned = caloriesBurned
-                        if self.routeData.caloriesBurned != ""
-                        {
-                            self.totalCal = String(Int(caloriesBurned)!+Int(self.totalCal)!);
-                        }
-                    }
-                    if let performedActivity = item["performedActivity"] as? String{
-                        self.routeData.performedActivity = performedActivity
-                    }
-                    if let itemID = item["id"] as? String{
-                        self.routeData.itemID = itemID
-                    }
-                    
-                    if let elevationCoordinatesP = item["elevationCoordinatesP"] as? String{
-                        
-                        let data: NSData = elevationCoordinatesP.dataUsingEncoding(NSUTF8StringEncoding)!
-                        do
-                        {
-                            let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
-                            
-                            for i in 0 ..< json!.count
-                            {
-                                self.routeData.elevationLat.append((json![i].objectForKey("latitude") as? Double)!)
-                                self.routeData.elevationLong.append((json![i].objectForKey("longitude") as? Double)!)
-                            }
-                        }catch{
-                            
-                        }
-                    }
-                    if let trackPolylines = item["trackPolylinesS"] as? String{
-                        // print(trackPolylines);
-                        
-                        let data: NSData = trackPolylines.dataUsingEncoding(NSUTF8StringEncoding)!
-                        do
-                        {
-                            let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
-                            
-                            for i in 0 ..< json!.count
-                            {
-                                self.routeData.trackLat.append((json![i].objectForKey("latitude") as? Double)!)
-                                self.routeData.trackLong.append((json![i].objectForKey("longitude") as? Double)!)
-                            }
-                        }catch{
-                            
-                        }
-                        
-                    }
-                    
-                    self.weatherData = WeatherData();
-                    if let weatherData = item["weatherData"] as? String{
-                        print(weatherData);
-                        _ = weatherData.componentsSeparatedByString("=")
-                        let data: NSData = weatherData.dataUsingEncoding(NSUTF8StringEncoding)!
-                        do
-                        {
-                            let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSDictionary;
-                            
-                            self.routeData.weatherData.speed = ((json!.objectForKey("speed") as? String)!)
-                            self.routeData.weatherData.cod = ((json!.objectForKey("cod") as? String)!)
-                            self.routeData.weatherData.temp = ((json!.objectForKey("temp") as? String)!)
-                            self.routeData.weatherData.descriptin = ((json!.objectForKey("description") as? String)!)
-                            self.routeData.weatherData.pressure = ((json!.objectForKey("pressure") as? String)!)
-                            self.routeData.weatherData.main = ((json!.objectForKey("main") as? String)!)
-                            self.routeData.weatherData.humidity = ((json!.objectForKey("humidity") as? String)!)
-                            self.routeData.weatherData.deg = ((json!.objectForKey("deg") as? String)!)
-                            
-                        }catch{
-                            print("error");
-                        }
-                        
-                    }
-                    //                    self.routeDataArray.append(self.routeData);
-                    //                    self.counter=String(self.routeDataArray.count);
-                    
-                    
-                    // ------------------------ code to calculate week and add into perticular week ----------------------------
-                    let weekCount = "Week " + CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!));
-                    print(self.routeData.date!)
-                    print("\(weekCount)+\(CommonFunctions.dateFromFixedFormatString(self.routeData.date!))");
-                    // weekCount == self.priviousWeekCount
-                    if self.previousWeeks.contains(weekCount)
-                    {
-                        self.routeDataArray.append(self.routeData);
-                        if self.lastItem{
-                            self.sectionItem.append(self.routeDataArray);
-                        }
-                    }
-                    else{
-                        // weekNumber.append(CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!)));
-                        self.sectionHeader.append(weekCount);
-                        if self.priviousWeekCount != ""
-                        {
-                            print(self.routeDataArray.count)
-                            self.sectionItem.append(self.routeDataArray);
-                        }
-                        if self.lastItem{
-                            self.sectionItem.append(self.routeDataArray);
-                        }
-                        self.previousWeeks.append(weekCount);
-                        self.routeDataArray.removeAll();
-                        self.routeDataArray.append(self.routeData);
-                        self.priviousWeekCount = weekCount;
-                    }
-                    
-                    
-                    // print("Todo Item: ", item)
-                }
-                
-                
-                self.counter=String(self.totalNumberOfActivities);
-                
-                
-                streak = String(streakCount);
-                values.append(streak);
-                values.append(counter);
-                values.append(totalDis);
-                values.append(totalDur);
-                values.append(totalCal);
-                
-                
-                
-                self.tableView.hidden=false;
-                self.tableView.delegate=self;
-                self.tableView.dataSource=self;
-                self.tableView.reloadData();
-                self.collectionView.delegate=self;
-                self.collectionView.dataSource=self;
-                self.collectionView.reloadData();
-                
-                CommonFunctions.hideActivityIndicator();
-                
-                
-            }
-            catch {
-                /* error handling here */
-                print("error");
-            }
-            }
-        }
-        else
-        {
-            var email =  NSUserDefaults.standardUserDefaults().stringForKey("email");
-            email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
-            let words =  email?.componentsSeparatedByString("@");
-            let contName = words![0]
-            if  DownloadFromBlob.downloadFromBlob(contName) == true{
-                self.getData();
-            }
-            
-        }
-        */
         }else{
             NSUserDefaults.standardUserDefaults().setBool(true, forKey: "firstCacheHistory");
             var email =  NSUserDefaults.standardUserDefaults().stringForKey("email");
@@ -823,7 +486,8 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         }
     }
     func methodOfReceivedNotification(notification:NSNotification)  {
-        self.getData();
+        position = 0;
+        self.filterData();
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "selectedActivityNotification", object: nil)
     }
 
@@ -849,7 +513,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         
         return yesterDayDate
     }
-    
+//MARK:- Reset data
     func resetData()
     {
         self.streakCount = 0;
@@ -861,6 +525,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         self.sectionHeader.removeAll()
         self.previousWeeks.removeAll();
         self.totalCal = "0"
+        self.time = 0;
       //  self.activities.removeAll();
         self.values.removeAll();
         self.totalNumberOfActivities = 0;
@@ -874,463 +539,168 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     var filterTempArray = [MapData]();
     
-    func showFilterData()
-    {
-//        if position == 1{
-//            if selectedActivity == routeData.performedActivity{
-//                self.routeDataArray.append(self.routeData);
-//            }
-//        }else
-            if position == 2{
-            
-            if self.filterDate == 1{
-                let todaysWeek = CommonFunctions.getWeek(NSDate());
-                if todaysWeek == CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!))
-                {
-                    self.calculateStreak(self.routeData.date!);
-                    if selectedActivity == routeData.performedActivity{
-                        self.routeDataArray.append(self.routeData);
-                    }
-                    
-                   // --------------- calculate total Distance ---------------
-                }
-                
-                
-            }else if self.filterDate == 2
-            {
-                let todaysMonth = CommonFunctions.getMonth(NSDate());
-                if todaysMonth == CommonFunctions.getMonth(CommonFunctions.dateFromFixedFormatString(self.routeData.date!))
-                {
-                    self.calculateStreak(self.routeData.date!);
-                    if selectedActivity == routeData.performedActivity{
-                        self.routeDataArray.append(self.routeData);
-                    }
-                    
-                    // --------------- calculate total Distance ---------------
-                }
-                
-                
-            }else if self.filterDate == 3
-            {
-                let todaysYear = CommonFunctions.getMonth(NSDate());
-                if todaysYear == CommonFunctions.getMonth(CommonFunctions.dateFromFixedFormatString(self.routeData.date!))
-                {
-                    self.calculateStreak(self.routeData.date!);
-                    if selectedActivity == routeData.performedActivity{
-                        self.routeDataArray.append(self.routeData);
-                    }
-
-                    // --------------- calculate total Distance ---------------
-                }
-                
-            }else if self.filterDate == 4
-            {
-                
-                if  CommonFunctions.dateFromFixedFormatString(self.routeData.date!).isBetweeen(date: self.startDate, andDate: self.endDate)
-                {
-                    self.calculateStreak(self.routeData.date!);
-                      if selectedActivity == routeData.performedActivity{
-                        self.routeDataArray.append(self.routeData);
-                    }
-                    
-                    // --------------- calculate total Distance ---------------
-                }
-                
-            }else{
-                 if selectedActivity == routeData.performedActivity{
-                    self.routeDataArray.append(self.routeData);
-                }
-                
-            }
-            
-        }else{
-            self.routeDataArray.append(self.routeData);
-            
-        }
-    }
+// MARK:- filter
     
-    
-    
-    
+   /// filterTempArray this array is copy of main array
+    /// filterTemp2Array this array is copy of filter array
     
     func populateList()
     {
         if NSUserDefaults.standardUserDefaults().objectForKey("firstCacheHistory") != nil && NSUserDefaults.standardUserDefaults().boolForKey("firstCacheHistory") == true{
             CommonFunctions.showActivityIndicator(self.view);
-//            var email =  NSUserDefaults.standardUserDefaults().stringForKey("email");
-//            email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
-//            let words =  email?.componentsSeparatedByString("@");
-//            let contName = words![0]
-//            self.containerName = words![0]
-           self.resetData();
-//            let file = "\(contName).txt" //this is the file. we will write to and read from it
-//            
-//            let dat = CommonFunctions.checkIfDirectoryAvailable(contName)
-//            
-//            if dat.0
-//            {
-//                
-//                //        let fileManager:NSFileManager = NSFileManager.defaultManager()
-//                var fileList = CommonFunctions.listFilesFromDocumentsFolder(contName)
-//                print(fileList);
-//                let count = fileList.count
-                //        var isDir:Bool = true;
+            self.resetData();
             self.routeDataArray.removeAll();
-            if selectedActivity == "All"
-            {
-                filterDataArray = filterTempArray;
-                
-            }
-            print(filterDataArray.count);
-                for  i in filterDataArray
-                {
-//                    if fileList[i] != ".DS_Store"{
-//                        var text2 = NSString()
-//                        do {
-//                            let path = dat.1.URLByAppendingPathComponent(fileList[i])
-//                            text2 = try NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding)
-//                        }catch{
-//                            print("error");
-//                        }
-//                        do{
-//                            let data = text2.dataUsingEncoding(NSUTF8StringEncoding)
-//                            
-//                            if data != nil || data?.length < 0
-//                            {
-//                                let jsonData = try! NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as! NSDictionary
-//                                print(jsonData);
-//                                
-//                                
-//                                
-//                                self.routeData = MapData();
-//                                if let distance = jsonData.objectForKey("distance") as? Double{
-//                                    self.routeData.distance = String(distance);
-//                                    
-//                                }
-//                                if let averagePace = jsonData.objectForKey("averagePace") as? Double{
-//                                    self.routeData.avgPace = String(averagePace)
-//                                }
-//                                if let averageSpeed = jsonData.objectForKey("averageSpeed") as? Double{
-//                                    self.routeData.avgSpeed = String(averageSpeed)
-//                                }
-//                                
-//                                if let elevationLoss = jsonData.objectForKey("altLossS") as? String{
-//                                    self.routeData.elevationLoss = elevationLoss
-//                                }
-//                                if let elevationGain = jsonData.objectForKey("altGainS") as? String{
-//                                    self.routeData.elevationGain = elevationGain
-//                                }
-//                                if let startLocation = jsonData.objectForKey("startLocationS") as? String{
-//                                    self.routeData.location = startLocation
-//                                }
-//                                if let elapsedTime = jsonData.objectForKey("elapsedTime") as? String{
-//                                    self.routeData.duration = elapsedTime
-//                                    //self.totalDur = String(Int(elapsedTime)!+Int(self.totalDur)!);
-//                                }
-//                                if let date = jsonData.objectForKey("date") as? String{
-//                                    self.routeData.date = date;
-//                                    
-//                                    
-//                                    
-//                                }
-//                                if let distanceAway = jsonData.objectForKey("distanceAwayP") as? String{
-//                                    self.routeData.distanceAway = distanceAway
-//                                }
-//                                if let caloriesBurned = jsonData.objectForKey("caloriesBurnedS") as? String{
-//                                    self.routeData.caloriesBurned = caloriesBurned
-//                                }
-//                                if let performedActivity = jsonData.objectForKey("performedActivity") as? String{
-//                                    self.routeData.performedActivity = performedActivity
-//                                }
-//                                if let itemID = jsonData.objectForKey("id") as? String{
-//                                    self.routeData.itemID = itemID
-//                                }
-//                                
-//                                if let elevationCoordinatesP = jsonData.objectForKey("elevationCoordinatesP") as? String{
-//                                    
-//                                    let data: NSData = elevationCoordinatesP.dataUsingEncoding(NSUTF8StringEncoding)!
-//                                    do
-//                                    {
-//                                        let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
-//                                        
-//                                        for i in 0 ..< json!.count
-//                                        {
-//                                            self.routeData.elevationLat.append((json![i].objectForKey("latitude") as? Double)!)
-//                                            self.routeData.elevationLong.append((json![i].objectForKey("longitude") as? Double)!)
-//                                        }
-//                                    }catch{
-//                                        
-//                                    }
-//                                }
-//                                if let trackPolylines = jsonData.objectForKey("trackPolylinesS") as? String{
-//                                    // print(trackPolylines);
-//                                    
-//                                    let data: NSData = trackPolylines.dataUsingEncoding(NSUTF8StringEncoding)!
-//                                    do
-//                                    {
-//                                        let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
-//                                        
-//                                        for i in 0 ..< json!.count
-//                                        {
-//                                            self.routeData.trackLat.append((json![i].objectForKey("latitude") as? Double)!)
-//                                            self.routeData.trackLong.append((json![i].objectForKey("longitude") as? Double)!)
-//                                        }
-//                                    }catch{
-//                                        
-//                                    }
-//                                    
-//                                }
-//                                
-//                                //                    Graph speed
-//                                
-//                                if let trackPolylines = jsonData.objectForKey("graphSpeedS") as? NSArray{
-//                                    
-//                                    for i in 0 ..< trackPolylines.count
-//                                    {
-//                                        if trackPolylines.count == 1 && (trackPolylines[i].objectForKey("I") as? Double)! == 0
-//                                        {
-//                                            
-//                                        }else{
-//                                            
-//                                            self.routeData.avgSpeedGraphValues.append((trackPolylines[i].objectForKey("I") as? Double)!)
-//                                        }
-//                                        
-//                                    }
-//                                    
-//                                    
-//                                }
-//                                
-//                                if let trackPolylines = jsonData.objectForKey("graphAltitudeS") as? NSArray{
-//                                    // print(trackPolylines);
-//                                    
-//                                    for i in 0 ..< trackPolylines.count
-//                                    {
-//                                        if trackPolylines.count == 1 || (trackPolylines[i].objectForKey("A") as? Double)! == 0
-//                                        {
-//                                            self.routeData.maxElevation = String((trackPolylines[i].objectForKey("A") as? Double)!)
-//                                        }else{
-//                                            self.routeData.maxElevationGraphValues.append((trackPolylines[i].objectForKey("A") as? Double)!)
-//                                            if i == 0
-//                                            {
-//                                                self.routeData.maxElevation = String((trackPolylines[i].objectForKey("A") as? Double)!)
-//                                            }
-//                                        }
-//                                        
-//                                    }
-//                                }
-//                                
-//                                
-//                                //self.weatherData = WeatherData();
-//                                
-//                                if let weatherData = jsonData.objectForKey("weatherData") as? String{
-//                                    //print(weatherData);
-//                                    let array = weatherData.componentsSeparatedByString(",");
-//                                    if array.count == 9{
-//                                        
-//                                        self.routeData.weatherData.speed = array[0].componentsSeparatedByString("=")[1]
-//                                        
-//                                        // let icon = array[1].componentsSeparatedByString("=")[1];
-//                                        
-//                                        self.routeData.weatherData.cod = array[2].componentsSeparatedByString("=")[1]
-//                                        
-//                                        self.routeData.weatherData.temp = array[3].componentsSeparatedByString("=")[1];
-//                                        
-//                                        self.routeData.weatherData.descriptin = array[4].componentsSeparatedByString("=")[1]
-//                                        
-//                                        self.routeData.weatherData.pressure = array[5].componentsSeparatedByString("=")[1];
-//                                        
-//                                        self.routeData.weatherData.main = array[6].componentsSeparatedByString("=")[1];
-//                                        
-//                                        self.routeData.weatherData.humidity = array[7].componentsSeparatedByString("=")[1]
-//                                        
-//                                        self.routeData.weatherData.deg = array[8].componentsSeparatedByString("=")[1];
-//                                    }
-//                                    
-//                                }
-//                                
-//                                // ------------------------ code to calculate week and add into perticular week ----------------------------
-//                                let weekCount = "Week " + CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!));
-//                                //print(self.routeData.date!)
-//                                if self.routeData.weatherData.speed != ""
-//                                {
-//                                    print("this week has weather Data \(weekCount)\(self.routeDataArray.count)")
-//                                }
-//                                if self.routeData.avgSpeedGraphValues.count > 1
-//                                {
-//                                    print("this week has avgspeed Data \(weekCount)\(self.routeDataArray.count)")
-//                                }
-//                                self.routeData.weekNum = weekCount
-//                                self.routeData.weekIntNum = Int(CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!)))!
-                    
-                                if position == 1{
-                                    if selectedActivity == "All"
-                                    {
-                                        self.routeDataArray.append(i);
-                                        
-                                    }
-                                    else if selectedActivity == i.performedActivity{
-                                        self.routeDataArray.append(i);
-                                    }
-                                }else if position == 2{
-                                    
-                                    if self.filterDate == 1{
-                                        let todaysWeek = CommonFunctions.getWeek(NSDate());
-                                        if todaysWeek == CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(i.date!))
-                                        {
-                                            self.calculateStreak(i.date!);
-                                            if selectedActivity == "All"
-                                            {
-                                                self.routeDataArray.append(i);
-                                              
-                                            }
-                                           else if selectedActivity == i.performedActivity{
-                                                self.routeDataArray.append(i);
-                                            }
-                                            // --------------- calculate total Distance ---------------
-                                        }
-                                        
-                                        
-                                    }else if self.filterDate == 2
-                                    {
-                                        let todaysMonth = CommonFunctions.getMonth(NSDate());
-                                        if todaysMonth == CommonFunctions.getMonth(CommonFunctions.dateFromFixedFormatString(i.date!))
-                                        {
-                                            self.calculateStreak(i.date!);
-                                            
-                                                if selectedActivity == "All"
-                                                {
-                                                    self.routeDataArray.append(i);
-                                                   
-                                                }
-                                                else if selectedActivity == i.performedActivity{
-                                                    self.routeDataArray.append(i);
-                                                }
-                                            
-
-                                            // --------------- calculate total Distance ---------------
-                                        }
-                                        
-                                        
-                                    }else if self.filterDate == 3
-                                    {
-                                        let todaysYear = CommonFunctions.getMonth(NSDate());
-                                        if todaysYear == CommonFunctions.getMonth(CommonFunctions.dateFromFixedFormatString(i.date!))
-                                        {
-                                            self.calculateStreak(i.date!);
-                                            if selectedActivity == "All"
-                                            {
-                                                self.routeDataArray.append(i);
-                                                
-                                            }
-                                            else if selectedActivity == i.performedActivity{
-                                                self.routeDataArray.append(i);
-                                            }
-
-                                            // --------------- calculate total Distance ---------------
-                                        }
-                                        
-                                    }else if self.filterDate == 4
-                                    {
-                                        
-                                        if  CommonFunctions.dateFromFixedFormatString(i.date!).isBetweeen(date: self.startDate, andDate: self.endDate)
-                                        {
-                                            self.calculateStreak(i.date!);
-                                            if selectedActivity == "All"
-                                            {
-                                                self.routeDataArray.append(i);
-                                                
-                                            }
-                                            else if selectedActivity == routeData.performedActivity{
-                                                self.routeDataArray.append(i);
-                                            }
-
-                                            // --------------- calculate total Distance ---------------
-                                        }
-                                        
-                                    }else{
-                                        if selectedActivity == "All"
-                                        {
-                                            self.routeDataArray.append(i);
-                                            
-                                        }
-                                        else if selectedActivity == i.performedActivity{
-                                            self.routeDataArray.append(i);
-                                        }
-
-                                    }
-                                    
-                                }else{
-                                    self.routeDataArray.append(i);
-
-                                }
-//                            }
-                    
-//                            
-//                        }
-//                        catch{
-//                        }
+            filterDataArray = filterTempArray;
             
-//                    }
+            print(filterDataArray.count);
+            for  i in filterDataArray
+            {
+                if self.filterDate == 1{
+                    let todaysWeek = CommonFunctions.getWeek(NSDate());
+                    if todaysWeek == CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(i.date!))
+                    {
+                        
+                        if selectedActivity == "All"
+                        {
+                            self.calculateStreak(i.date!);
+                            self.routeDataArray.append(i);
+                            
+                        }
+                        else if selectedActivity == i.performedActivity{
+                            self.calculateStreak(i.date!);
+                            self.routeDataArray.append(i);
+                        }
+                        // --------------- calculate total Distance ---------------
+                    }
                     
-                }// blob list
-//            if selectedActivity != "All"
-//            {
-              self.filterDataArray=self.routeDataArray;
-                
-//            }
-           
-                self.routeDataArray.sortInPlace({ (m1, m2) -> Bool in
-                    m1.date > m2.date
-                })
-
-                
-               
-                
-                self.routeDataArray.sortInPlace({ (m1, m2) -> Bool in
-                    m1.weekIntNum > m2.weekIntNum
-                })
-                self.totalNumberOfActivities = self.routeDataArray.count;
-                for (data,i) in routeDataArray.enumerate(){
-                    print(i.weekIntNum);
                     
-                    let weekCount = i.weekNum
-                    print(data);
-                  self.addToList(data,i: i);
-                    //   25164dee-723f-4961-83f1-b3b051d93807
-
+                }else if self.filterDate == 2
+                {
+                    let todaysMonth = CommonFunctions.getMonth(NSDate());
+                    if todaysMonth == CommonFunctions.getMonth(CommonFunctions.dateFromFixedFormatString(i.date!))
+                    {
+                        
+                        
+                        if selectedActivity == "All"
+                        {
+                            self.calculateStreak(i.date!);
+                            self.routeDataArray.append(i);
+                            
+                        }
+                        else if selectedActivity == i.performedActivity{
+                            self.calculateStreak(i.date!);
+                            self.routeDataArray.append(i);
+                        }
+                        
+                        
+                        // --------------- calculate total Distance ---------------
+                    }
+                    
+                    
+                }else if self.filterDate == 3
+                {
+                    let todaysYear = CommonFunctions.getYear(NSDate());
+                    if todaysYear == CommonFunctions.getYear(CommonFunctions.dateFromFixedFormatString(i.date!))
+                    {
+                        
+                        if selectedActivity == "All"
+                        {
+                            self.calculateStreak(i.date!);
+                            self.routeDataArray.append(i);
+                            
+                        }
+                        else if selectedActivity == i.performedActivity{
+                            self.calculateStreak(i.date!);
+                            self.routeDataArray.append(i);
+                        }
+                        
+                        // --------------- calculate total Distance ---------------
+                    }
+                    
+                }else if self.filterDate == 4
+                {
+                    
+                    if  CommonFunctions.dateFromFixedFormatString(i.date!).isBetweeen(date: self.startDate, andDate: self.endDate)
+                    {
+                        
+                        if selectedActivity == "All"
+                        {
+                            self.calculateStreak(i.date!);
+                            self.routeDataArray.append(i);
+                            
+                        }
+                        else if selectedActivity == i.performedActivity{
+                            self.calculateStreak(i.date!);
+                            self.routeDataArray.append(i);
+                        }
+                        
+                        // --------------- calculate total Distance ---------------
+                    }
+                    
+                }else{
+                    if selectedActivity == "All"
+                    {
+                        self.calculateStreak(i.date!);
+                        self.routeDataArray.append(i);
+                        
+                    }
+                    else if selectedActivity == i.performedActivity{
+                        self.calculateStreak(i.date!);
+                        self.routeDataArray.append(i);
+                    }
                     
                 }
                 
+            }// blob list
+            self.filterDataArray=self.routeDataArray;
+            
+            self.routeDataArray.sortInPlace({ (m1, m2) -> Bool in
+                m1.date > m2.date
+            })
+            
+            self.routeDataArray.sortInPlace({ (m1, m2) -> Bool in
+                m1.weekIntNum > m2.weekIntNum
+            })
+            self.totalNumberOfActivities = self.routeDataArray.count;
+            for (data,i) in routeDataArray.enumerate(){
+                print(i.weekIntNum);
+                self.calculateDuration(i.duration!);
+
+                let weekCount = i.weekNum
+                print(data);
+                self.addToList(data,i: i);
+                //   25164dee-723f-4961-83f1-b3b051d93807
                 
                 
-                self.counter=String(self.totalNumberOfActivities);
+            }
+            
+            
+            
+            self.counter=String(self.totalNumberOfActivities);
+            
+            totalDur = CommonFunctions.secondsToHoursMinutesSeconds(time);
+            streak = String(streakCount);
+            values.append(streak);
+            values.append(counter);
+            values.append(totalDis);
+            values.append(totalDur);
+            values.append(totalCal);
+            
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                // self.tableTopHeader.text = "All Activities - Till Date";
+                self.tableView.hidden=false;
+                self.tableView.delegate=self;
+                self.tableView.dataSource=self;
+                self.tableView.reloadData();
+                self.collectionView.delegate=self;
+                self.collectionView.dataSource=self;
+                self.collectionView.reloadData();
                 
+                CommonFunctions.hideActivityIndicator();
                 
-                streak = String(streakCount);
-                values.append(streak);
-                values.append(counter);
-                values.append(totalDis);
-                values.append(totalDur);
-                values.append(totalCal);
-                
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                   // self.tableTopHeader.text = "All Activities - Till Date";
-                    self.tableView.hidden=false;
-                    self.tableView.delegate=self;
-                    self.tableView.dataSource=self;
-                    self.tableView.reloadData();
-                    self.collectionView.delegate=self;
-                    self.collectionView.dataSource=self;
-                    self.collectionView.reloadData();
-                    
-                    CommonFunctions.hideActivityIndicator();
-                    
-                })
-                
-                
-//            }
-    }
+            })
+        }
     }
     
     func addToList(data:Int,i:MapData)
@@ -1492,39 +862,6 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                             self.tableView.hidden=false;
                             self.collectionView.hidden=false;
                             
-                            
-                            
-                            
-                            
-                         /*   var text = "";
-                            if NSJSONSerialization.isValidJSONObject(items){
-                                let jsonData = try! NSJSONSerialization.dataWithJSONObject(items, options: NSJSONWritingOptions())
-                                let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
-                                text = jsonString;
-                            } //just a text
-                            
-                            let path = paths.URLByAppendingPathComponent(file)
-                            
-                            //writing
-                            do {
-                                
-                                try text.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
-                            }
-                            catch {/* error handling here */
-                                print(error);
-                                print("error while write");
-                            }
-                            
-                            //reading
-                            do {
-                                let text2 = try NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding)
-                                print(text2);
-                            }
-                            catch {/* error handling here */}
-                            
-                            
-                            */
-                            //  }
                         }
                         
                         for item in items {
@@ -1565,503 +902,6 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         }
 
                           self.getData();
-                         /*
-                            self.totalNumberOfActivities = self.totalNumberOfActivities + 1;
-                            if items.count == self.totalNumberOfActivities
-                            {
-                                self.lastItem = true;
-                            }
-
-                            self.routeData = MapData();
-                            if let distance = item["distance"] as? Double{
-                                self.routeData.distance = String(distance);
-                                self.totalDis = String(Int(distance)+Int(self.totalDis)!);
-                            }
-                            
-                            if let elevationLoss = item["altLossS"] as? String{
-                                self.routeData.elevationLoss = elevationLoss
-                            }
-                            if let elevationGain = item["altGainS"] as? String{
-                                self.routeData.elevationGain = elevationGain
-                            }
-                            if let startLocation = item["startLocationS"] as? String{
-                                if startLocation == ""
-                                {
-                                  self.routeData.location = "UNKNOWN"
-                                }else{
-                                  self.routeData.location = startLocation
-                                }
-                                
-                            }
-                            if let elapsedTime = item["elapsedTime"] as? String{
-                                self.routeData.duration = elapsedTime
-                                
-                                
-//   TODO:- Add duration
-                       
-                                if elapsedTime != ""{
-                                let val  =  elapsedTime.componentsSeparatedByString(":");
-//                                if val.count > 2
-//                                {
-//                                    self.hrs  = self.hrs + Int(val[0])!
-//                                    self.mm  = self.mm + Int(val[1])!
-//                                    self.sec  = self.sec + Int(val[2])!
-//                                    
-//                                }
-                                }
-                                
-//                                let calendar = NSCalendar.currentCalendar()
-//                                let newDate = calendar.dateByAddingUnit(
-//                                    .CalendarUnitHour, // adding hours
-//                                    value: 2, // adding two hours
-//                                    toDate: oldDate,
-//                                    options: .allZeros
-//                                )
-//                                
-                                
-                                
-                                //  self.totalDur = String(Int(elapsedTime)!+Int(self.totalDur)!);
-                            }
-                            if let date = item["date"] as? String{
-                                self.routeData.date = date;
-                                
-                                let formatedDate = CommonFunctions.dateFromFixedFormatString(self.routeData.date!);
-                                let currentDate = NSDate()
-                                let dateComparisionResult:NSComparisonResult = currentDate.compare(formatedDate);
-                                if dateComparisionResult == NSComparisonResult.OrderedSame
-                                {
-                                    if !self.checkTodayActivity
-                                    {
-                                        self.streakCount = self.streakCount + 1;
-                                        self.checkTodayActivity = true;
-                                    }
-                                    // Current date and end date are same.
-                                }
-                                
-                                
-                                let dateComparisionResult2:NSComparisonResult = self.previousDate.compare(formatedDate);
-                                if dateComparisionResult2 == NSComparisonResult.OrderedSame
-                                {
-                                    if !self.checkTodayActivity
-                                    {
-                                        self.streakCount = self.streakCount + 1;
-                                        self.previousDate = self.yesterDay(self.previousDate);
-                                    }
-                                    // Current date and end date are same.
-                                }
-                                
-                                
-                                
-                            }
-                            if let distanceAway = item["distanceAwayP"] as? String{
-                                self.routeData.distanceAway = distanceAway
-                            }
-                            if let caloriesBurned = item["caloriesBurnedS"] as? String{
-                                self.routeData.caloriesBurned = caloriesBurned
-                                //  self.totalCal = String(Int(caloriesBurned)!+Int(self.totalCal)!);
-                            }
-                            if let performedActivity = item["performedActivity"] as? String{
-                                self.routeData.performedActivity = performedActivity
-                            }
-                            if let itemID = item["id"] as? String{
-                                self.routeData.itemID = itemID
-                            }
-                            
-                            if let elevationCoordinatesP = item["elevationCoordinatesP"] as? String{
-                                // self.routeData.distanceAway = distanceAway
-                                // print(elevationCoordinatesP);
-                                
-                                let data: NSData = elevationCoordinatesP.dataUsingEncoding(NSUTF8StringEncoding)!
-                                do
-                                {
-                                    let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
-                                    
-                                    for i in 0 ..< json!.count
-                                    {
-                                        self.routeData.elevationLat.append((json![i].objectForKey("latitude") as? Double)!)
-                                        self.routeData.elevationLong.append((json![i].objectForKey("longitude") as? Double)!)
-                                    }
-                                }catch{
-                                    
-                                }
-                            }
-                            if let trackPolylines = item["trackPolylinesS"] as? String{
-                                // print(trackPolylines);
-                                
-                                let data: NSData = trackPolylines.dataUsingEncoding(NSUTF8StringEncoding)!
-                                do
-                                {
-                                    let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
-                                    
-                                    for i in 0 ..< json!.count
-                                    {
-                                        self.routeData.trackLat.append((json![i].objectForKey("latitude") as? Double)!)
-                                        self.routeData.trackLong.append((json![i].objectForKey("longitude") as? Double)!)
-                                    }
-                                }catch{
-                                    
-                                }
-                                
-                            }
-                            
-                            self.weatherData = WeatherData();
-                            if let weatherData = item["weatherData"] as? String{
-                                print(weatherData);
-                                let array = weatherData.componentsSeparatedByString(",");
-                                if array.count == 8{
-                                    
-                                    self.routeData.weatherData.speed = array[0].componentsSeparatedByString("=")[1]
-                                    
-                                    // let icon = array[1].componentsSeparatedByString("=")[1];
-                                    
-                                    self.routeData.weatherData.cod = array[2].componentsSeparatedByString("=")[1]
-                                    
-                                    self.routeData.weatherData.temp = array[3].componentsSeparatedByString("=")[1];
-                                    
-                                    self.routeData.weatherData.descriptin = array[4].componentsSeparatedByString("=")[1]
-                                    
-                                    self.routeData.weatherData.pressure = array[5].componentsSeparatedByString("=")[1];
-                                    
-                                    self.routeData.weatherData.main = array[6].componentsSeparatedByString("=")[1];
-                                    
-                                    self.routeData.weatherData.humidity = array[7].componentsSeparatedByString("=")[1]
-                                    
-                                    self.routeData.weatherData.deg = array[8].componentsSeparatedByString("=")[1];
-                                }
-                            }
-                            //                    self.routeDataArray.append(self.routeData);
-                            //                    self.counter=String(self.routeDataArray.count);
-                            if self.filterDate == 4{
-                            if  CommonFunctions.dateFromFixedFormatString(self.routeData.date!).isBetweeen(date: self.startDate, andDate: self.endDate)
-                            {
-                            self.counter = String(1+Int(self.counter)!)
-                            // ------------------------ code to calculate week and add into perticular week ----------------------------
-                            let weekCount = "Week " + CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!));
-                           // weekCount == self.priviousWeekCount
-                                
-                                if self.routeData.weatherData.speed != ""
-                                {
-                                    print("this week has weather Data \(weekCount)\(self.routeDataArray.count)")
-                                }
-                            if self.previousWeeks.contains(weekCount)
-                            {
-                                self.routeDataArray.append(self.routeData);
-                                if self.lastItem{
-                                    self.sectionItem.append(self.routeDataArray);
-                                }
-                            }
-                            else{
-                                self.previousWeeks.append(weekCount);
-                                self.sectionHeader.append(weekCount);
-                                if self.priviousWeekCount != ""
-                                {
-                                    print(self.routeDataArray.count)
-                                    self.sectionItem.append(self.routeDataArray);
-                                }
-                                
-                                self.routeDataArray.removeAll();
-                                self.routeDataArray.append(self.routeData);
-                                if self.lastItem{
-                                    self.sectionItem.append(self.routeDataArray);
-                                }
-                                
-                                print(weekCount);
-                                print(self.sectionHeader.count);
-                                print(self.sectionItem.count)
-
-                            }
-                            self.priviousWeekCount = weekCount;
-                            }else{
-                                
-                                if self.routeDataArray.count != 0 && self.lastItem
-                                {
-                                  self.sectionItem.append(self.routeDataArray);
-                                }
-                                }
-                            }else{
-//                                self.totalNumberOfActivities = self.totalNumberOfActivities + 1;
-//                                if items.count == self.totalNumberOfActivities
-//                                {
-//                                    self.lastItem = true;
-//                                }
-                                // ------------------------ code to calculate week and add into perticular week ----------------------------
-                                let weekCount = "Week " + CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!));
-                                // weekCount == self.priviousWeekCount
-                                if self.previousWeeks.contains(weekCount)
-                                {
-                                    self.routeDataArray.append(self.routeData);
-                                    if self.lastItem{
-                                        self.sectionItem.append(self.routeDataArray);
-                                    }
-                                }
-                                else{
-                                    self.previousWeeks.append(weekCount);
-                                    self.sectionHeader.append(weekCount);
-                                    if self.priviousWeekCount != ""
-                                    {
-                                        print(self.routeDataArray.count)
-                                        self.sectionItem.append(self.routeDataArray);
-                                    }
-                                    
-                                    self.routeDataArray.removeAll();
-                                    self.routeDataArray.append(self.routeData);
-                                    if self.lastItem{
-                                        self.sectionItem.append(self.routeDataArray);
-                                    }
-                                    
-                                    print(weekCount);
-                                    print(self.sectionHeader.count);
-                                    print(self.sectionItem.count)
-                                    
-                                }
-                                self.priviousWeekCount = weekCount;
-  
-                            } */
-                            // print("Todo Item: ", item)
-//                        }
-                        
-                        
-                      
-                        
-                        
-                  /*      for item in items {
-                            self.totalNumberOfActivities = self.totalNumberOfActivities + 1;
-                            if items.count == self.totalNumberOfActivities
-                            {
-                                self.lastItem = true;
-                            }
-                            self.routeData = MapData();
-                            if let distance = item["distance"] as? Double{
-                                self.routeData.distance = String(distance);
-                                
-                            }else{
-                                self.routeData.distance = "0";
-                            }
-                            
-                            if let elevationLoss = item["altLossS"] as? String{
-                                self.routeData.elevationLoss = elevationLoss
-                            }
-                            if let elevationGain = item["altGainS"] as? String{
-                                self.routeData.elevationGain = elevationGain
-                            }
-                            if let startLocation = item["startLocationS"] as? String{
-                                self.routeData.location = startLocation
-                            }
-                            if let elapsedTime = item["elapsedTime"] as? String{
-                                self.routeData.duration = elapsedTime
-                                
-                            }
-                            if let distanceAway = item["distanceAwayP"] as? String{
-                                self.routeData.distanceAway = distanceAway
-                            }
-                            if let caloriesBurned = item["caloriesBurnedS"] as? String{
-                                self.routeData.caloriesBurned = caloriesBurned
-                                
-                            }
-                            if let performedActivity = item["performedActivity"] as? String{
-                                self.routeData.performedActivity = performedActivity
-                            }
-                            if let itemID = item["id"] as? String{
-                                self.routeData.itemID = itemID
-                            }
-                            
-                            if let elevationCoordinatesP = item["elevationCoordinatesP"] as? String{
-                                // self.routeData.distanceAway = distanceAway
-                                // print(elevationCoordinatesP);
-                                
-                                let data: NSData = elevationCoordinatesP.dataUsingEncoding(NSUTF8StringEncoding)!
-                                do
-                                {
-                                    let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
-                                    
-                                    for i in 0 ..< json!.count
-                                    {
-                                        self.routeData.elevationLat.append((json![i].objectForKey("latitude") as? Double)!)
-                                        self.routeData.elevationLong.append((json![i].objectForKey("longitude") as? Double)!)
-                                    }
-                                }catch{
-                                    
-                                }
-                            }
-                            if let trackPolylines = item["trackPolylinesS"] as? String{
-                                // print(trackPolylines);
-                                
-                                let data: NSData = trackPolylines.dataUsingEncoding(NSUTF8StringEncoding)!
-                                do
-                                {
-                                    let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
-                                    
-                                    for i in 0 ..< json!.count
-                                    {
-                                        self.routeData.trackLat.append((json![i].objectForKey("latitude") as? Double)!)
-                                        self.routeData.trackLong.append((json![i].objectForKey("longitude") as? Double)!)
-                                    }
-                                }catch{
-                                    
-                                }
-                                
-                            }
-                            
-                            self.weatherData = WeatherData();
-                            if let weatherData = item["weatherData"] as? String{
-                                // print(weatherData);
-                                
-                                let data: NSData = weatherData.dataUsingEncoding(NSUTF8StringEncoding)!
-                                do
-                                {
-                                    let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSDictionary;
-                                    
-                                    self.routeData.weatherData.speed = ((json!.objectForKey("speed") as? String)!)
-                                    self.routeData.weatherData.cod = ((json!.objectForKey("cod") as? String)!)
-                                    self.routeData.weatherData.temp = ((json!.objectForKey("temp") as? String)!)
-                                    self.routeData.weatherData.descriptin = ((json!.objectForKey("description") as? String)!)
-                                    self.routeData.weatherData.pressure = ((json!.objectForKey("pressure") as? String)!)
-                                    self.routeData.weatherData.main = ((json!.objectForKey("main") as? String)!)
-                                    self.routeData.weatherData.humidity = ((json!.objectForKey("humidity") as? String)!)
-                                    self.routeData.weatherData.deg = ((json!.objectForKey("deg") as? String)!)
-                                    
-                                }catch{
-                                    
-                                }
-                                
-                            }
-                            if let date = item["date"] as? String{
-                                self.routeData.date = date
-                                
-                            }
-                            if self.filterDate == 1{
-                                let todaysWeek = CommonFunctions.getWeek(NSDate());
-                                if todaysWeek == CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!))
-                                {
-                                    self.calculateStreak();
-                                    self.addToTableList();
-                                    // --------------- calculate total Distance ---------------
-                                    self.totalDis = String(Int(self.routeData.distance!)!+Int(self.totalDis)!);
-                                    //  self.totalDur = String(Int(elapsedTime)!+Int(self.totalDur)!);
-                                    //  self.totalCal = String(Int(caloriesBurned)!+Int(self.totalCal)!);
-                                }
-                                
-                                
-                            }else if self.filterDate == 2
-                            {
-                                let todaysMonth = CommonFunctions.getMonth(NSDate());
-                                if todaysMonth == CommonFunctions.getMonth(CommonFunctions.dateFromFixedFormatString(self.routeData.date!))
-                                {
-                                    self.calculateStreak();
-                                    self.addToTableList();
-                                    // --------------- calculate total Distance ---------------
-                                    self.totalDis = String(Int(self.routeData.distance!)!+Int(self.totalDis)!);
-                                    //  self.totalDur = String(Int(elapsedTime)!+Int(self.totalDur)!);
-                                    //  self.totalCal = String(Int(caloriesBurned)!+Int(self.totalCal)!);
-                                }
-                                
-                                
-                            }else if self.filterDate == 3
-                            {
-                                let todaysYear = CommonFunctions.getMonth(NSDate());
-                                if todaysYear == CommonFunctions.getMonth(CommonFunctions.dateFromFixedFormatString(self.routeData.date!))
-                                {
-                                    self.calculateStreak();
-                                    self.addToTableList();
-                                    // --------------- calculate total Distance ---------------
-                                    self.totalDis = String(Int(self.routeData.distance!)!+Int(self.totalDis)!);
-                                    //  self.totalDur = String(Int(elapsedTime)!+Int(self.totalDur)!);
-                                    //  self.totalCal = String(Int(caloriesBurned)!+Int(self.totalCal)!);
-                                }
-                                
-                            }else if self.filterDate == 4
-                            {
-                                
-                                if  CommonFunctions.dateFromFixedFormatString(self.routeData.date!).isBetweeen(date: self.startDate, andDate: self.endDate)
-                                {
-                                    self.calculateStreak();
-                                    self.addToTableList();
-                                    // --------------- calculate total Distance ---------------
-                                    self.totalDis = String(Int(self.routeData.distance!)!+Int(self.totalDis)!);
-                                    //  self.totalDur = String(Int(elapsedTime)!+Int(self.totalDur)!);
-                                    //  self.totalCal = String(Int(caloriesBurned)!+Int(self.totalCal)!);
-                                }
-                                
-                            }
-                            else{
-//                            // ------------------------ code to calculate week and add into perticular week ----------------------------
-                            print("currentWeek \(CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!)))")
-                            print("previousWeek \(self.priviousWeekCount)")
-                            let weekCount = "Week " + CommonFunctions.getWeek(CommonFunctions.dateFromFixedFormatString(self.routeData.date!));
-                            
-                                if self.priviousWeekCount == ""
-                                {
-                                  self.priviousWeekCount = weekCount;
-                                }
-                                
-                            if weekCount == self.priviousWeekCount
-                            {
-                                self.routeDataArray.append(self.routeData);
-                                if self.lastItem{
-                                    self.sectionItem.append(self.routeDataArray);
-                                }
-                            }
-                            else{
-                                
-                                self.sectionHeader.append(weekCount);
-                                if self.priviousWeekCount != ""
-                                {
-                                    print(self.routeDataArray.count)
-                                    self.sectionItem.append(self.routeDataArray);
-                                }
-                                self.routeDataArray.removeAll();
-                                self.routeDataArray.append(self.routeData);
-                                self.priviousWeekCount = weekCount;
-                            }
-                              
-                          }
-                            
-                        } */
-                        
-                   /*     if self.sectionItem.count == 0
-                        {
-                            self.resetData();
-                            self.tableView.hidden = true;
-                            self.collectionView.hidden=true;
-                            self.showNoRoutesView();
-                             CommonFunctions.hideActivityIndicator();
-                        }else{
-                        
-                        self.totalDur = String(self.hrs) + ":" + String(self.mm) + ":" + String(self.sec);
-                        if self.totalDur == "" || self.totalDur == "0"{
-                            self.totalDur = "00:00:00"
-                        }else{
-                            
-                            
-                            self.totalDur = String(self.hrs) + ":" + String(self.mm) + ":" + String(self.sec);
-                        }
-                        if self.totalDis == "" || self.totalDis == "0"{
-                            self.totalDis = "0.0"
-                        }
-                        if self.filterDate != 4
-                        {
-                        self.counter=String(self.totalNumberOfActivities);
-                        }else{
-                            
-                        }
-                        self.streak=String(self.streakCount);
-                        self.values.append(self.streak);
-                        self.values.append(self.counter);
-                        self.values.append(self.totalDis);
-                        self.values.append(self.totalDur);
-                        self.values.append(self.totalCal);
-                        print(self.sectionItem.count);
-                        dispatch_async(dispatch_get_main_queue(), {
-                            self.tableView.delegate=self;
-                            self.tableView.dataSource=self;
-                            self.tableView.reloadData();
-                            self.collectionView.delegate=self;
-                            self.collectionView.dataSource=self;
-                            self.collectionView.reloadData();
-                            CommonFunctions.hideActivityIndicator();
-                        })
-                        }
-                        */
                     }
                     
                 })
@@ -2147,18 +987,8 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     //----------------------------------- refresh button action -----------------------------
     @IBAction func refresh(sender: UIButton) {
-//        position=0;
-//        self.filterData();
-//        self.tableView.beginUpdates();
-//        self.previousWeeks.removeAll();
-//        self.sectionItem.removeAll();
-//        self.routeDataArray.removeAll();
-//        self.tableView.endUpdates();
-//        self.tableView.reloadData();
-//        self.collectionView.reloadData();
         self.getData();
-        // self.tableView.reloadData();
-    }
+     }
     //----------------------------------- sort button action --------------------------------
     @IBAction func sort(sender: UIButton) {
         let optionMenu = UIAlertController(title: nil, message: "Choose an Option", preferredStyle: .ActionSheet)
@@ -2192,7 +1022,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 (alert: UIAlertAction!) -> Void in
                 self.selectedActivity = "All";
                 self.tableTopHeader.text = "\(self.selectedActivity) Activities - \(self.selectedDateFormate)";
-                
+                self.position = 1;
                 self.populateList();
 
         })
@@ -2251,13 +1081,14 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let dateAction = UIAlertAction(title: "Till Date", style: .Default, handler:
             {
                 (alert: UIAlertAction!) -> Void in
-                //self.filterDate = 4;
-//                self.filterDate = 0;
-//                self.filterData()
+ 
                 self.selectedDateFormate = "Till Date";
                 self.tableTopHeader.text = "\(self.selectedActivity) Activities - \(self.selectedDateFormate)";
+                self.filterDate = 0;
+                self.position = 2;
+                self.populateList();
 
-                self.getData();
+              //  self.getData();
         })
         let customeRangeAction = UIAlertAction(title: "Custom Date Range", style: .Default, handler:
             {
@@ -2374,7 +1205,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         return activities.count
     }
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: self.view.frame.width/2, height: 123);
+        return CGSize(width: self.view.frame.width/2, height: collectionView.frame.height);
     }
     //--------tableView delegate Methods ------- list ----------
     var index = 0;
@@ -2382,7 +1213,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let cell = self.tableView.dequeueReusableCellWithIdentifier("HistoryTableViewCell", forIndexPath: indexPath) as! HistoryTableViewCell;
         let data = self.sectionItem[indexPath.section][indexPath.row]
         // MM/dd/yyyy HH:mm:ss ---- blob date formatter
-        cell.dateAndTime.text =  dateFunction.dateFormatFunc("MMM dd, yyyy hh:mm a", formFormat: "MM/dd/yyyy HH:mm:ss", dateToConvert: data.date!);
+        cell.dateAndTime.text =  dateFunction.dateFormatFunc("MMM dd, yyyy hh:mm a", formFormat: "MM/dd/yyyy   HH:mm:ss", dateToConvert: data.date!);
         cell.location.text = data.location;
         cell.duration.text = data.duration;//String(format: "%0.02f", data.duration!)
         cell.distance.text = data.distance;
@@ -2392,6 +1223,11 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
             cell.img.image = UIImage(named: "ic_runing_history.png");
         }else if data.performedActivity == "Biking"{
             cell.img.image = UIImage(named: "ic_biking_history.png");
+        }else if data.performedActivity == "Walking"{
+            cell.img.image = UIImage(named: "ic_runing_history.png");
+  
+        }else{
+            cell.img.image = nil;
         }
         return cell;
     }
@@ -2521,6 +1357,9 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     //self.routeDataArray.removeAtIndex(indexPath.row);
                     self.sectionItem[indexPath.section].removeAtIndex(indexPath.row);
                     self.tableView.endUpdates();
+                    
+                    self.totalNumberOfActivities -= 1
+                    self.collectionView.reloadData();
                     let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
                     let client = delegate!.client!;
                     
@@ -2559,9 +1398,10 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
 
     
     override func viewDidAppear(animated: Bool) {
+        self.collectionViewHeight.constant = (self.view.frame.height/3)-40
         if  NSUserDefaults.standardUserDefaults().boolForKey("activityChanged") == true{
               NSUserDefaults.standardUserDefaults().setBool(false, forKey: "activityChanged");
-            self.position = 1;
+            self.position = 0;
             filterData();
         }
     }

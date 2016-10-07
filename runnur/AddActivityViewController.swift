@@ -164,7 +164,7 @@ class AddActivityViewController: UIViewController,UITextFieldDelegate {
         
         let dateFormatter = NSDateFormatter()
         //  dateFormatter.locale = NSLocale(localeIdentifier: "en_US");
-        dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss";
+        dateFormatter.dateFormat = "MM/dd/yyyy   HH:mm:ss";   // MM/dd/yyyy   HH:mm:ss
         startTime.text = dateFormatter.stringFromDate(sender.date)
         selectedTime=sender.date
     }
@@ -254,7 +254,7 @@ if Reachability.isConnectedToNetwork() == true{
             //--------------------------creating dictionary to send data to azure---------------------------
             
             let newItem : NSDictionary = ["id": uuid,
-                                          "distance": Double(self.distance.text!)!,
+                                          "distance": self.distance.text!,
                                           "startLocationS":self.activityTitle.text!,
                                           "performedActivity": self.activityType.text!,
                                           "caloriesBurnedS": self.caloriesBurned.text!,

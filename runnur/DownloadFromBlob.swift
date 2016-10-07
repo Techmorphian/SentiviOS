@@ -139,9 +139,14 @@ static func downloadFromBlob(containerName:String) -> Bool
         //let token = NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken");
         
         self.listBlobsInContainerHelper(container, continuationToken: nil, prefix: nil, blobListingDetails: AZSBlobListingDetails.All, maxResults: -1, completionHandler: {
-            
+//            dispatch_sync(dispatch_get_main_queue(), {
+//                print("all Data")
+//                NSNotificationCenter.defaultCenter().postNotificationName("DownloadFromBlobNotification", object: nil);
+//            })
+           
+
         })
-        
+     
     }
     return downloaded;
    }
@@ -149,9 +154,7 @@ static func downloadFromBlob(containerName:String) -> Bool
     static var data = String();
     
   static  func listBlobsInContainerHelper(container: AZSCloudBlobContainer, continuationToken: AZSContinuationToken?, prefix: String?, blobListingDetails: AZSBlobListingDetails, maxResults: Int, completionHandler: () -> Void) {
-        
-        
-        
+    
         container.listBlobsSegmentedWithContinuationToken(continuationToken, prefix: prefix, useFlatBlobListing: true, blobListingDetails: blobListingDetails, maxResults: maxResults, completionHandler: {(error, results) -> Void in
             if error != nil {
                 print(error);
@@ -180,21 +183,33 @@ static func downloadFromBlob(containerName:String) -> Bool
                             print("what getting \(string)");
                                 writeToFile(string!, contName: containerNam,fileName: (results!.blobs![i] as! AZSCloudBlockBlob).blobName )
                         }
+                        if i == results!.blobs!.count - 1{
+                            NSNotificationCenter.defaultCenter().postNotificationName("DownloadFromBlobNotification", object: nil);
+                            print("all data gggtt downloaded ");
+                        }
                       })
                     }
                    
-                    
+                    if i == results!.blobs!.count - 1{
+                      print("all data downloaded ");
+                    }
                 }
                 downloaded = true
-                print("all data downloaded ");
+                
               //  writeToFile(data, contName: containerNam)
                 if (results!.continuationToken != nil) {
                      self.listBlobsInContainerHelper(container, continuationToken: (results?.continuationToken)!, prefix: prefix, blobListingDetails: blobListingDetails, maxResults: maxResults, completionHandler: completionHandler)
                 }else{
-                    NSNotificationCenter.defaultCenter().postNotificationName("DownloadFromBlobNotification", object: nil);
+                   // NSNotificationCenter.defaultCenter().postNotificationName("DownloadFromBlobNotification", object: nil);
                 }
             }
+            
+            
+            
         })
+    
+    print("printinggggg")
+    
     }
     
     static var firstCache : String? = nil;

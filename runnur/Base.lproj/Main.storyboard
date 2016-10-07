@@ -4688,7 +4688,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="102" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NQ5-M4-sum">
-                                                    <rect key="frame" x="75" y="69" width="63" height="48"/>
+                                                    <rect key="frame" x="75" y="77" width="63" height="48"/>
                                                     <fontDescription key="fontDescription" type="system" weight="thin" pointSize="40"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -4701,7 +4701,7 @@
                                             <constraint firstItem="NQ5-M4-sum" firstAttribute="centerX" secondItem="uud-dZ-Au3" secondAttribute="centerX" id="1H9-yp-UzI"/>
                                             <constraint firstItem="Jf6-EQ-ILE" firstAttribute="centerX" secondItem="uud-dZ-Au3" secondAttribute="centerX" id="L1h-om-LTk"/>
                                             <constraint firstItem="Jf6-EQ-ILE" firstAttribute="top" secondItem="uud-dZ-Au3" secondAttribute="top" constant="20" id="O1z-nN-wao"/>
-                                            <constraint firstItem="NQ5-M4-sum" firstAttribute="centerY" secondItem="uud-dZ-Au3" secondAttribute="centerY" constant="20" id="OKf-Ja-kva"/>
+                                            <constraint firstItem="NQ5-M4-sum" firstAttribute="centerY" secondItem="uud-dZ-Au3" secondAttribute="centerY" constant="28" id="OKf-Ja-kva"/>
                                         </constraints>
                                         <size key="customSize" width="213" height="146"/>
                                         <connections>
@@ -4734,7 +4734,7 @@
                                     </constraints>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="HistoryTableViewCell" rowHeight="138" id="KQN-e2-b3d" customClass="HistoryTableViewCell" customModule="Sentiv" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="HistoryTableViewCell" rowHeight="138" id="KQN-e2-b3d" customClass="HistoryTableViewCell" customModule="Sentiv" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="72" width="560" height="138"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KQN-e2-b3d" id="F7f-f7-AiD">
@@ -4959,13 +4959,14 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="CCl-Hb-auQ" id="ADL-49-5tn"/>
+                        <outlet property="collectionViewHeight" destination="vIz-Bn-CSN" id="jbb-di-FbI"/>
                         <outlet property="tableTopHeader" destination="4yV-8l-WTF" id="0aG-ed-SoV"/>
                         <outlet property="tableView" destination="RyP-cR-26e" id="mg1-TP-mIN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VnH-tb-fBH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3441" y="1501"/>
+            <point key="canvasLocation" x="-3522" y="1443"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="KKq-qF-AJh">

@@ -497,16 +497,58 @@ class CommonFunctions : NSObject
     }
     static func getYear(today:NSDate) -> String {
         let myCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierISO8601)!;
-        let myComponents = myCalendar.components(.WeekOfYear, fromDate: today);
+        let myComponents = myCalendar.components(.Year, fromDate: today);
         let weekNumber = myComponents.year;
         return String(weekNumber);
     }
     static func getMonth(today:NSDate) -> String {
         let myCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierISO8601)!;
-        let myComponents = myCalendar.components(.WeekOfYear, fromDate: today);
+        let myComponents = myCalendar.components(.Month, fromDate: today);
         let weekNumber = myComponents.month;
         return String(weekNumber);
     }
+    
+    
+    
+   static func getDate(stringDate:String) -> NSDate
+    {
+        let df = NSDateFormatter();
+        df.locale = NSLocale(localeIdentifier: "en_US_POSIX");
+        df.dateFormat = "HH:mm:ss";
+        if let date = df.dateFromString(stringDate){
+            return date;
+        }else{
+           return df.dateFromString("00:00:00")!
+        }
+       
+    }
+    
+   static func getMin(today:NSDate) -> Int {
+        let myCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierISO8601)!;
+        let myComponents = myCalendar.components(.Minute, fromDate: today);
+        let weekNumber = myComponents.minute;
+        return (weekNumber);
+    }
+   static func gethrs(today:NSDate) -> Int {
+        let myCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierISO8601)!;
+        let myComponents = myCalendar.components(.Hour, fromDate: today);
+        let weekNumber = myComponents.hour;
+        return (weekNumber);
+    }
+   static func getss(today:NSDate) -> Int {
+        let myCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierISO8601)!;
+        let myComponents = myCalendar.components(.Second, fromDate: today);
+        let weekNumber = myComponents.second;
+        return (weekNumber);
+    }
+   static func secondsToHoursMinutesSeconds (seconds : Int) -> String {
+        
+        let strng = String(format: "%02d", seconds / 3600) + ":" + String(format: "%02d", (seconds % 3600) / 60) + ":" + String(format: "%02d", seconds % 60)
+        return strng;
+    }
+    
+    
+    
     
     static func removeAlert(){
         alertView.removeFromSuperview()
