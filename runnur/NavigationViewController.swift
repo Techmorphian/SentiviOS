@@ -218,12 +218,20 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 cell.naviImageViews.image = UIImage(named: sectionTwoImages[indexPath.row])
 
                
-                cell.countLabel.hidden = false;
               
-//                if NSUserDefaults.standardUserDefaults().objectForKey("winningCount") != nil
-//                {
-//                cell.countLabel.text = "$" + " " + NSUserDefaults.standardUserDefaults().stringForKey("winningCount")!
-//                }
+              
+                if NSUserDefaults.standardUserDefaults().stringForKey("winningCount") == "0"
+                {
+                    cell.countLabel.hidden = true;
+                }
+                
+                else
+                {
+                    
+                      cell.countLabel.hidden = false;
+                    cell.countLabel.text = "$" + " " + NSUserDefaults.standardUserDefaults().stringForKey("winningCount")!
+                    
+                }
                 
               
                cell.countLabel.layer.cornerRadius = cell.countLabel.frame.size.height/2;

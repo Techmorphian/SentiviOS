@@ -573,6 +573,8 @@ class AddFriendsViewController: UIViewController,UITableViewDataSource,UITableVi
             
         case "Add Manually":
             
+            
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "PressedRedeemButton")
           self.performSegueWithIdentifier("AddManually", sender: nil)
           
           break;

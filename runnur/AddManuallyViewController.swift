@@ -28,6 +28,13 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
     @IBOutlet var addButton: UIButton!
 
     
+    @IBOutlet var screenNameLabel: UILabel!
+    
+    
+    
+    @IBOutlet var enterYourFrndEmailIdLabel: UILabel!
+    
+    
     
     @IBAction func cancelButtonAction(sender: AnyObject)
     {
@@ -62,8 +69,10 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
     //MARK:-propertyDetailNetwork
     func doneButtonNetwork()
     {
+         view.endEditing(true);
         
-        view.endEditing(true);
+       if addButton.currentTitle == "ADD"
+       {
         
         if(Reachability.isConnectedToNetwork()==true )
         {
@@ -84,7 +93,7 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
                 return
             }
             
-          if ( emailIDTextField.text != "" )
+            if ( emailIDTextField.text != "" )
             {
                 if(!isValidEmail(emailIDTextField.text!) )
                 {
@@ -92,32 +101,29 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                     
                     self.presentViewController(alert, animated: true, completion: nil)
-                   
-                     return
+                    
+                    return
                 }
                 
-               
+                
             }
-           
             
             
-                EmailIds.append(emailIDTextField.text!)
+            
+            EmailIds.append(emailIDTextField.text!)
             
             
-               //self.emailIDTextField.text = ""
+            //self.emailIDTextField.text = ""
             
-               emailIDTextField.resignFirstResponder();
-                addFriends();
+            emailIDTextField.resignFirstResponder();
+            addFriends();
             
-            
-        
-          
-
             
         }
         else
         {
-          
+            
+            
             let alert = UIAlertController(title: "", message: alertMsg.noInternetMsg, preferredStyle: UIAlertControllerStyle.Alert)
             let okAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil)
             let tryAgainAction = UIAlertAction(title: "Try again", style: UIAlertActionStyle.Default, handler: {action  in  self.doneButtonNetwork() })
@@ -125,10 +131,79 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
             alert.addAction(tryAgainAction)
             self.presentViewController(alert, animated: true, completion: nil)
             return
-  
-         
+            
+            
             
         }
+
+     
+        
+       }
+    else
+        
+    {
+       
+        
+//        Are you sure you want to transfer your winnings to (email id) paypal account?
+        
+        if(emailIDTextField.text == "")
+        {
+            
+            
+            
+            let alert = UIAlertController(title: "", message: "Please enter your paypal email id", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+            
+            return
+        }
+        if ( emailIDTextField.text != "" )
+        {
+            if(!isValidEmail(emailIDTextField.text!) )
+            {
+                let alert = UIAlertController(title: "", message: alertMsg.addManuallyValidField, preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+                
+                return
+            }
+            else
+            {
+                
+                let alert = UIAlertController(title: "", message: "Are you sure you want to transfer your winnings to" + " " + emailIDTextField.text! + " " + "paypal account?", preferredStyle: UIAlertControllerStyle.Alert)
+                
+                let NoAction = UIAlertAction(title: "NO", style: UIAlertActionStyle.Default, handler: nil)
+                
+                let  YesAction = UIAlertAction(title: "YES", style: UIAlertActionStyle.Default, handler: {action  in
+                    
+                    // print("")
+                    
+                    
+                })
+                
+                alert.addAction(NoAction)
+                
+                alert.addAction(YesAction)
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+                return
+                
+            }
+            
+
+            
+            
+        }
+        
+        
+    }
+        
+        
+        
+       
         
     }
     
@@ -475,6 +550,14 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
     }
     
 
+    
+    override func viewDidAppear(animated: Bool)
+    {
+          // NSUserDefaults.standardUserDefaults().setBool(true, forKey: "PressedRedeemButton")
+        
+        
+        
+    }
   
     
     override func viewDidLoad()
@@ -482,7 +565,33 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
         super.viewDidLoad()
         
         self.emailIDTextField.delegate = self;
-           emailIDTextField.autocorrectionType = .No
+        emailIDTextField.autocorrectionType = .No
+        
+        
+        if NSUserDefaults.standardUserDefaults().boolForKey("PressedRedeemButton") == true
+        {
+            
+            screenNameLabel.text =  "PayPal Email"
+            
+            enterYourFrndEmailIdLabel.text = "Please enter your paypal email id to which your winnings will be transferred."
+            
+            addButton.setTitle("CONFIRM", forState: UIControlState.Normal)
+            
+        }
+        else
+        {
+            
+            screenNameLabel.text =  "Add Manually"
+            
+            enterYourFrndEmailIdLabel.text = "Enter your friends email ID"
+            
+            addButton.setTitle("ADD", forState: UIControlState.Normal)
+            
+            
+            
+        }
+
+       
 
         // Do any additional setup after loading the view.
     }

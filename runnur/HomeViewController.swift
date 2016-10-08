@@ -78,6 +78,8 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
                             {
                                 let winningCount = elements[i]["winning"] as! String
                                 self.winning.append(winningCount)
+                                
+                                print(winningCount)
                                 NSUserDefaults.standardUserDefaults().setObject(winningCount, forKey: "winningCount")
                             }//
                         }
@@ -250,7 +252,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     {
         super.viewDidLoad();
         
-        //self.call();
+        self.call();
 //        
 //        let button = UIButton(type: UIButtonType.RoundedRect)
 //        button.frame = CGRectMake(20, 50, 100, 30)
