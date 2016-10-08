@@ -3418,7 +3418,7 @@
                                     <constraint firstAttribute="height" constant="40" id="hzn-be-fVP"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lPx-LC-mfc">
                                 <rect key="frame" x="20" y="120" width="560" height="1"/>
@@ -3454,7 +3454,7 @@
                                     <constraint firstAttribute="height" constant="40" id="KTv-pq-1Zn"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5oi-8S-SOU">
                                 <rect key="frame" x="20" y="232" width="560" height="1"/>
@@ -3469,7 +3469,7 @@
                                     <constraint firstAttribute="height" constant="40" id="Cyc-Wi-vwV"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 <connections>
                                     <action selector="distanceHh:" destination="wXP-0S-Dw4" eventType="editingDidBegin" id="opx-fj-Ku7"/>
                                 </connections>
@@ -3487,7 +3487,7 @@
                                     <constraint firstAttribute="height" constant="40" id="a5g-fG-89L"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 <connections>
                                     <action selector="distanceMm:" destination="wXP-0S-Dw4" eventType="editingDidBegin" id="C0Y-w6-1me"/>
                                 </connections>
@@ -3505,7 +3505,7 @@
                                     <constraint firstAttribute="height" constant="40" id="byk-be-iim"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 <connections>
                                     <action selector="caloriesBurned:" destination="wXP-0S-Dw4" eventType="editingDidBegin" id="THN-5z-ugc"/>
                                 </connections>
@@ -4966,7 +4966,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VnH-tb-fBH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3522" y="1443"/>
+            <point key="canvasLocation" x="-3600" y="1241"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="KKq-qF-AJh">

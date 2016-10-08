@@ -136,7 +136,9 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         var fileList = CommonFunctions.listFilesFromDocumentsFolder(contName)
             
         let count = fileList.count
-        
+            if count == 0{
+                self.showNoRoutesView();
+            }
         for i:Int in 0 ..< count
         {
             if fileList[i] != ".DS_Store"{
@@ -183,20 +185,6 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
 
                     }
                     
-//                    if let distance = jsonData.objectForKey("distance") as? Double {
-//                        self.routeData.distance = String(distance);
-//                        print(String(distance))
-//                        if self.totalDis == "0.00"
-//                        {
-//                            self.totalDis = "0";
-//                        }
-//                        //let dis = (distance as! NSNumber).doubleValue;
-//                        if String(Double(distance)+Double(self.totalDis)!) != nil
-//                        {
-//                        self.totalDis = String(Double(distance)+Double(self.totalDis)!);
-//                        }
-//                        
-//                    }
                     if let averagePace = jsonData.objectForKey("averagePace") as? Double{
                         self.routeData.avgPace = String(averagePace)
                     }
@@ -521,17 +509,17 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         self.counter = "0";
         self.sectionItem.removeAll();
         self.routeDataArray.removeAll();
-        self.priviousWeekCount = ""
-        self.sectionHeader.removeAll()
+        self.priviousWeekCount = "";
+        self.sectionHeader.removeAll();
         self.previousWeeks.removeAll();
-        self.totalCal = "0"
+        self.totalCal = "0";
         self.time = 0;
-      //  self.activities.removeAll();
+        self.totalDis = "0";
+        self.totalDur = "0";
         self.values.removeAll();
         self.totalNumberOfActivities = 0;
         self.lastItem=false;
         mainView.removeFromSuperview();
-        
         previousDate = yesterDay(NSDate());
     }
     
@@ -637,6 +625,29 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         // --------------- calculate total Distance ---------------
                     }
                     
+                }else if self.filterDate == 5
+                {
+                    print(CommonFunctions.dateFromFixedFormatString(i.date!))
+                    print(startDate);
+                    let dateComparisionResult:NSComparisonResult = NSCalendar.currentCalendar().compareDate(CommonFunctions.dateFromFixedFormatString(i.date!), toDate: startDate, toUnitGranularity: .Day)
+                    //  let dateComparisionResult:NSComparisonResult = currentDate.compare(formatedDate);
+                    if dateComparisionResult == NSComparisonResult.OrderedSame
+                    {
+                        
+                        if selectedActivity == "All"
+                        {
+                            self.calculateStreak(i.date!);
+                            self.routeDataArray.append(i);
+                            
+                        }
+                        else if selectedActivity == i.performedActivity{
+                            self.calculateStreak(i.date!);
+                            self.routeDataArray.append(i);
+                        }
+                        
+                        // --------------- calculate total Distance ---------------
+                    }
+                    
                 }else{
                     if selectedActivity == "All"
                     {
@@ -674,7 +685,8 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 
             }
             
-            
+            print(self.sectionHeader.count)
+            print(self.sectionItem.count)
             
             self.counter=String(self.totalNumberOfActivities);
             
@@ -744,6 +756,9 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 self.sectionItem.append(tempArray);
                 tempArray.removeAll();
                 }}
+            else if self.routeDataArray.count-1 == data{
+                self.sectionItem.append(tempArray);
+            }
             self.sectionHeader.append(i.weekNum);
             self.previousWeeks.append(i.weekNum);
         }
@@ -925,7 +940,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         
         
         let formatedDate = CommonFunctions.dateFromFixedFormatString(date);
-        let currentDate = NSDate()
+        let currentDate = NSDate();
         let dateComparisionResult:NSComparisonResult = NSCalendar.currentCalendar().compareDate(formatedDate, toDate: NSDate(), toUnitGranularity: .Day)
         //  let dateComparisionResult:NSComparisonResult = currentDate.compare(formatedDate);
         if dateComparisionResult == NSComparisonResult.OrderedSame
@@ -1097,6 +1112,9 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 self.tableTopHeader.text = "\(self.selectedActivity) Activities - \(self.selectedDateFormate)";
 
                 self.datePickerView = UIDatePicker()
+                self.datePickerView.locale = NSLocale(localeIdentifier: "en_US");
+                self.datePickerView.timeZone = NSTimeZone()
+
                 self.datePickerView.frame = CGRectMake(0, (self.view.frame.maxY-200), self.view.bounds.width, 200);
                 self.datePickerView.backgroundColor = UIColor.whiteColor();
                 self.datePickerView.datePickerMode = UIDatePickerMode.Date
@@ -1131,12 +1149,15 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         toolBar.translucent = true
         toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
         toolBar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "Start", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(HistoryViewController.donePicker))
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(HistoryViewController.closePicker))
         doneButton.tintColor = UIColor.blackColor();
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(HistoryViewController.donePicker))
+        let label = UIBarButtonItem(title: "Start", style: UIBarButtonItemStyle.Plain, target: self, action: nil)
+        let space2Button = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        doneButton.tintColor = UIColor.blackColor();
+        let cancelButton = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(HistoryViewController.donePicker))
         
-        toolBar.setItems([doneButton,spaceButton,cancelButton], animated: false)
+        toolBar.setItems([doneButton,spaceButton,label,space2Button,cancelButton], animated: false)
         toolBar.userInteractionEnabled = true
         
         self.view.addSubview(toolBar);
@@ -1144,6 +1165,18 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     //--Done action of tool bar
     var firstDone = false;
+    
+    
+    func closePicker()
+    {
+        self.toolBar.removeFromSuperview();
+        self.datePickerView.removeFromSuperview();
+        filterDate = 5;
+        self.position = 2;
+        self.populateList();
+
+    }
+    
     func donePicker()
     {
        self.toolBar.removeFromSuperview();
@@ -1152,18 +1185,30 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         if !firstDone
         {
             firstDone = true;
-            let doneButton = UIBarButtonItem(title: "End", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(HistoryViewController.donePicker))
-            doneButton.tintColor = UIColor.blackColor();
-            let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-            let cancelButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(HistoryViewController.donePicker))
             
-            toolBar.setItems([doneButton,spaceButton,cancelButton], animated: false)
+            self.view.addSubview(toolBar);
             self.datePickerView = UIDatePicker()
             self.datePickerView.frame = CGRectMake(0, (self.view.frame.maxY-200), self.view.bounds.width, 200);
             self.datePickerView.backgroundColor = UIColor.whiteColor();
+            self.datePickerView.locale = NSLocale(localeIdentifier: "en_US");
+            self.datePickerView.timeZone = NSTimeZone()
             self.datePickerView.datePickerMode = UIDatePickerMode.Date
             self.view.addSubview(self.datePickerView)
-            self.addToolBar()
+            
+            
+            let doneButton = UIBarButtonItem(title: "End", style: UIBarButtonItemStyle.Plain, target: self, action:nil)
+            doneButton.tintColor = UIColor.blackColor();
+            let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+            let cancelButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(HistoryViewController.donePicker))
+            toolBar.frame = CGRectMake(self.datePickerView.frame.origin.x, self.datePickerView.frame.origin.y-40, self.datePickerView.frame.width, 40)
+            toolBar.barStyle = UIBarStyle.Default
+            toolBar.translucent = true
+            toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
+            toolBar.sizeToFit()
+            toolBar.setItems([doneButton,spaceButton,cancelButton], animated: false)
+            toolBar.userInteractionEnabled = true
+
+//            self.addToolBar()
             self.datePickerView.addTarget(self, action: #selector(HistoryViewController.datePickerValueChanged), forControlEvents: UIControlEvents.ValueChanged)
             
         }else{
@@ -1178,17 +1223,26 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     //----picker to chnaged value
     func datePickerValueChanged(sender:UIDatePicker) {
         
-        let dateFormatter = NSDateFormatter()
-        
-        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
-        
-        dateFormatter.timeStyle = NSDateFormatterStyle.NoStyle
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd";
+//        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
+//        
+//        dateFormatter.timeStyle = NSDateFormatterStyle.NoStyle
+        //dateFormatter.locale = NSLocale(localeIdentifier: "en_US");
         
         print(dateFormatter.stringFromDate(sender.date));
+        let str = dateFormatter.stringFromDate(sender.date)
+        dateFormatter=NSDateFormatter()
+         dateFormatter.dateFormat = "yyyy-MM-dd";
+        dateFormatter.timeZone = NSTimeZone()
+        let data = dateFormatter.dateFromString(str)
+        print(data)
+        
+        
         if firstDone{
-            self.startDate = sender.date;
+            self.startDate = data!
         }else{
-            self.endDate = sender.date;
+            self.endDate = data!
         }
         
     }
@@ -1216,7 +1270,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         cell.dateAndTime.text =  dateFunction.dateFormatFunc("MMM dd, yyyy hh:mm a", formFormat: "MM/dd/yyyy   HH:mm:ss", dateToConvert: data.date!);
         cell.location.text = data.location;
         cell.duration.text = data.duration;//String(format: "%0.02f", data.duration!)
-        cell.distance.text = data.distance;
+        cell.distance.text = data.distance!;//String(format: "%0.02f", data.distance!);
         cell.avgPace.text = data.avgPace;
         if data.performedActivity == "Running"
         {
@@ -1224,8 +1278,15 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         }else if data.performedActivity == "Biking"{
             cell.img.image = UIImage(named: "ic_biking_history.png");
         }else if data.performedActivity == "Walking"{
-            cell.img.image = UIImage(named: "ic_runing_history.png");
-  
+            cell.img.image = UIImage(named: "ic_walk_history");
+        }else if data.performedActivity == "Kayaking"{
+            cell.img.image = UIImage(named: "ic_kayaking_history");
+        }else if data.performedActivity == "Mountain Biking"{
+            cell.img.image = UIImage(named: "ic_mountain_biking_history");
+        }else if data.performedActivity == "Hiking"{
+            cell.img.image = UIImage(named: "ic_hiking_history");
+        }else if data.performedActivity == "Golfing"{
+            cell.img.image = UIImage(named: "ic_golfing_add_activity_selected");
         }else{
             cell.img.image = nil;
         }
@@ -1268,6 +1329,14 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     func scrollViewDidScroll(scrollView: UIScrollView) {
         self.collectionView.maskView?.frame = self.collectionView.bounds
+     }
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        //if (0 > scrollView.contentOffset.x){
+//        UIView.animateWithDuration(0.5, delay: 0, options: .CurveEaseInOut, animations: {
+//             self.collectionView.transform = CGAffineTransformMakeScale(0.5,0.5);
+//            }, completion: nil)
+        
+       // }
     }
     
     
@@ -1279,9 +1348,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         super.viewDidLoad()
         self.position = 0;
         self.selectedActivity = "All";
-    self.getData();
-//        position = 1
-//        self.filterData();
+        self.getData();
         
         self.tableView.hidden=true;
         tableView.estimatedRowHeight = 138;

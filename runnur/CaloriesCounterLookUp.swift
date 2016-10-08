@@ -67,9 +67,12 @@ public class CaloriesCounterLookUp {
     } else {
     MET = (-0.000758151 * pow(avgpace, 3)) + (0.021515187 * pow(avgpace, 2)) - (0.206666437 * avgpace) + 0.775159681;
     }
-    let timeInSecs = (elapsedTime / 1000);
+
+   let timeInSecs = (elapsedTime / 1000);
     let timeInMin = timeInSecs/60;
     let timeInHours = timeInMin/60;
+        
+        
 //    let ti = NSInteger(elapsedTime)
 //    let timeInHours = Double(ti%3600);
     caloriesburned = (MET * 100) * (weight / 2.2) * Double(timeInHours);

@@ -49,81 +49,18 @@ class AddActivityViewController: UIViewController,UITextFieldDelegate {
     var selectedDate = NSDate();
     var selectedTime = NSDate();
     var elapseTime = String();
-//    var textField = UITextField();
-//    func configurationTextField(textField: UITextField!)
-//    {
-//        
-//        if textField != nil {
-//            
-//            self.textField = textField!        //Save reference to the UITextField
-//            self.textField.text = durationhr.text!
-//        }
-//    }
-//    func configurationTextField2(textField: UITextField!)
-//    {
-//        
-//        if textField != nil {
-//            
-//            self.textField = textField!        //Save reference to the UITextField
-//            self.textField.text = durationmm.text!
-//        }
-//    }
-//    func configurationTextField3(textField: UITextField!)
-//    {
-//        
-//        if textField != nil {
-//            
-//            self.textField = textField!        //Save reference to the UITextField
-//            self.textField.text = caloriesBurned.text!
-//        }
-//    }
+
 
     @IBAction func distanceHh(sender: UITextField) {
         
-        
-//        let alert = UIAlertController(title: "", message: "ENTER HOURS", preferredStyle: UIAlertControllerStyle.Alert)
-//        
-//        alert.addTextFieldWithConfigurationHandler(configurationTextField)
-//        
-//        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
-//        alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.Default, handler:{ (UIAlertAction)in
-//            self.durationhr.text = self.textField.text;
-//            print(self.textField.text)
-//        }))
-//        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     @IBAction func distanceMm(sender: UITextField) {
-        
-//        let alert = UIAlertController(title: "", message: "ENTER MINUTES", preferredStyle: UIAlertControllerStyle.Alert)
-//        
-//        alert.addTextFieldWithConfigurationHandler(configurationTextField2)
-//        
-//        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
-//        alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.Default, handler:{ (UIAlertAction)in
-//            self.durationmm.text = self.textField.text;
-//            print(self.textField.text)
-//        }))
-//        self.presentViewController(alert, animated: true, completion: nil)
-
-        
-        
-        
         
     }
     
     
     @IBAction func caloriesBurned(sender: UITextField) {
-//        let alert = UIAlertController(title: "", message: "ENTER CALORIES", preferredStyle: UIAlertControllerStyle.Alert)
-//        
-//        alert.addTextFieldWithConfigurationHandler(configurationTextField2)
-//        
-//        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
-//        alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.Default, handler:{ (UIAlertAction)in
-//            self.caloriesBurned.text = self.textField.text;
-//            print(self.textField.text)
-//        }))
-//        self.presentViewController(alert, animated: true, completion: nil)
 
     }
     
@@ -204,7 +141,15 @@ class AddActivityViewController: UIViewController,UITextFieldDelegate {
         
         if textField == distance
         {
-            if self.durationhr.text != "" && self.durationmm.text! != "" && self.activityType.text! != ""
+            if self.distance.text! == ""
+            {
+                self.distance.text = "0.00"
+            }
+            if self.distance.text != ""{
+                self.distance.text = String(format: "%.2f",Float(self.distance.text!)!)
+                
+            }
+            if  self.distance.text != "" && self.durationmm.text! != "" && self.activityType.text! != "" &&  self.durationhr.text! != ""
             {
                 
                 elapsedTimeInFloat = self.hhMili + self.mmMili;
@@ -213,18 +158,29 @@ class AddActivityViewController: UIViewController,UITextFieldDelegate {
         }
         if textField == durationhr
         {
-            self.hhMili = Float(self.durationhr.text!)! * 60 * 1000;
-            if self.distance.text != "" && self.durationmm.text! != "" && self.activityType.text! != ""
+            if self.durationhr.text! == ""
             {
+                self.durationhr.text = "00"
+            }
+            
+            if self.distance.text != "" && self.durationmm.text! != "" && self.activityType.text! != "" &&  self.durationhr.text! != ""
+            {
+                
+                self.hhMili = Float(self.durationhr.text!)! * 60 * 60 * 1000;
                 elapsedTimeInFloat = self.hhMili + self.mmMili;
                 calculateCaloriesBurned();
             }
         }
         if textField == durationmm
         {
-            self.mmMili = Float(self.durationmm.text!)! * 60 * 60 * 1000;
-            if self.distance.text != "" && self.durationhr.text! != "" && self.activityType.text! != ""
+            if self.durationmm.text! == ""
             {
+                self.durationmm.text = "00"
+            }
+
+            if self.distance.text != "" && self.durationhr.text! != "" && self.activityType.text! != "" && self.durationmm.text! != ""
+            {
+                self.mmMili = Float(self.durationmm.text!)! * 60 * 1000;
                 elapsedTimeInFloat = self.hhMili + self.mmMili;
                 calculateCaloriesBurned();
             }
@@ -234,66 +190,71 @@ class AddActivityViewController: UIViewController,UITextFieldDelegate {
     }
     
     @IBAction func save(sender: AnyObject) {
-        
-if Reachability.isConnectedToNetwork() == true{
-        CommonFunctions.showActivityIndicator(self.view);
-        //--------------------------------- Connecting to azure client ------------------------------------
-        let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
-        let client = delegate!.client!;
-        
-        let user: MSUser = MSUser(userId: NSUserDefaults.standardUserDefaults().stringForKey("azureUserId")!);
-        user.mobileServiceAuthenticationToken = NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken");
-        client.currentUser = user;
-        
-        let table = client.tableWithName("RunObject");
-        if client.currentUser != nil{
-            print(client.currentUser.userId)
-            let uuid = NSUUID().UUIDString;
-           // print(round(Double(self.caloriesBurned.text!)!))
+         if self.distance.text != "" && self.durationhr.text! != "" && self.activityType.text! != "" && self.durationmm.text! != ""{
+        if Reachability.isConnectedToNetwork() == true{
+            CommonFunctions.showActivityIndicator(self.view);
+            //--------------------------------- Connecting to azure client ------------------------------------
+            let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
+            let client = delegate!.client!;
             
-            //--------------------------creating dictionary to send data to azure---------------------------
+            let user: MSUser = MSUser(userId: NSUserDefaults.standardUserDefaults().stringForKey("azureUserId")!);
+            user.mobileServiceAuthenticationToken = NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken");
+            client.currentUser = user;
             
-            let newItem : NSDictionary = ["id": uuid,
-                                          "distance": self.distance.text!,
-                                          "startLocationS":self.activityTitle.text!,
-                                          "performedActivity": self.activityType.text!,
-                                          "caloriesBurnedS": self.caloriesBurned.text!,
-                                          "date": self.startTime.text!,
-                                          "averagePace":self.avgPace,
-                                          "averageSpeed":self.avgSpeed,
-                                          "elapsedTime": "\(self.durationhr.text!):\(self.durationmm.text!):00"
-                // "EmailS" : "gaurav@techmorphosis.com"
-                // "userId" : NSUserDefaults.standardUserDefaults().stringForKey("userId")!
+            let table = client.tableWithName("RunObject");
+            if client.currentUser != nil{
+                print(client.currentUser.userId)
+                let uuid = NSUUID().UUIDString;
+                // print(round(Double(self.caloriesBurned.text!)!))
                 
-            ] ;
-            
-            table.insert(newItem as [NSObject : AnyObject], parameters: ["runnurId":NSUserDefaults.standardUserDefaults().stringForKey("userId")!], completion: { (result, error) in
-                if let err = error {
-                    CommonFunctions.hideActivityIndicator();
-                    CommonFunctions.showPopup(self, msg: "Something Went Wrong.", getClick: {
-                       
-                    })
-                    print("ERROR ", err)
-                } else if let item = result {
-                    print(result);
-                    CommonFunctions.hideActivityIndicator();
-                   // print("RunObject: ", item["startLocationS"])
-
-                    CommonFunctions.showPopup(self, msg: "Activity saved successfully.", getClick: {
-                        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "activityChanged");
-                         self.dismissViewControllerAnimated(false, completion: nil)
-                    })
+                //--------------------------creating dictionary to send data to azure---------------------------
+                
+                let newItem : NSDictionary = ["id": uuid,
+                                              "distance": self.distance.text!,
+                                              "startLocationS":self.activityTitle.text!,
+                                              "performedActivity": self.activityType.text!,
+                                              "caloriesBurnedS": self.caloriesBurned.text!,
+                                              "date": self.startTime.text!,
+                                              "averagePace":self.avgPace,
+                                              "averageSpeed":self.avgSpeed,
+                                              "elapsedTime": "\(self.durationhr.text!):\(self.durationmm.text!):00"
+                    // "EmailS" : "gaurav@techmorphosis.com"
+                    // "userId" : NSUserDefaults.standardUserDefaults().stringForKey("userId")!
                     
-                }
+                ] ;
+                
+                table.insert(newItem as [NSObject : AnyObject], parameters: ["runnurId":NSUserDefaults.standardUserDefaults().stringForKey("userId")!], completion: { (result, error) in
+                    if let err = error {
+                        CommonFunctions.hideActivityIndicator();
+                        CommonFunctions.showPopup(self, msg: "Something Went Wrong.", getClick: {
+                            
+                        })
+                        print("ERROR ", err)
+                    } else if let item = result {
+                        print(result);
+                        CommonFunctions.hideActivityIndicator();
+                        // print("RunObject: ", item["startLocationS"])
+                        
+                        CommonFunctions.showPopup(self, msg: "Activity saved successfully.", getClick: {
+                            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "activityChanged");
+                            self.dismissViewControllerAnimated(false, completion: nil)
+                        })
+                        
+                    }
+                    
+                })
+                
+            }
+        }else{
+            CommonFunctions.showPopup(self, msg: "No Internet, Please try again later.", getClick: {
                 
             })
-            
         }
-}else{
-    CommonFunctions.showPopup(self, msg: "No Internet, Please try again later.", getClick: {
-        
-    })
-  }
+         }else{
+            CommonFunctions.showPopup(self, msg: "Please enter all requested Information.", getClick: {
+                
+            })
+        }
  }
     //    MARK:- calculate calories
     var mmMili = Float()
@@ -308,17 +269,12 @@ if Reachability.isConnectedToNetwork() == true{
         let dis = Double(self.distance.text!);
         avgPace = round(((((Double(elapsedTimeInFloat) / 1000) / 60) / (dis!)) * 100.0)) / 100.0;
         avgSpeed = round(((dis!) / (((Double(elapsedTimeInFloat) / 1000) / 60) / 60)) * 100.0) / 100.0;
-        
         if (self.activityType.text! == ("Biking")) {  // calculate calories burned if biking
-          
-            
             caloriesburned = caloriesLookUp.Biking(avgPace, weight: weight, elapsedTime: CLong(elapsedTimeInFloat), altGain: 0, distance: dis!);
         } else if (self.activityType.text! == ("Walking")) {
-            //  avgpace = 1.00; CLong(round(endDate.timeIntervalSinceDate(startDate)))
             caloriesburned = caloriesLookUp.Walking(avgPace, weight: weight, elapsedTime: CLong(elapsedTimeInFloat), altGain: 0, distance: Double(self.distance.text!)!);
         } else if (self.activityType.text! == ("Running")) { //calculate calories burned for running
-         
-            caloriesburned = caloriesLookUp.Running(avgPace, weight: weight, elapsedTime: elapsedTimeInFloat);
+            caloriesburned = caloriesLookUp.Running(avgPace, weight: (weight), elapsedTime: elapsedTimeInFloat);
         }
         let data = String(caloriesburned)
         
@@ -333,6 +289,8 @@ if Reachability.isConnectedToNetwork() == true{
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         activityTitle.delegate=self;
         activityType.delegate=self;
         distance.delegate=self;
@@ -341,7 +299,7 @@ if Reachability.isConnectedToNetwork() == true{
         caloriesBurned.delegate=self;
         startTime.delegate=self;
         
-        CommonFunctions.addInputAccessoryForTextFields([activityTitle,activityType,distance,durationhr,durationmm,caloriesBurned,startTime], dismissable: true, previousNextable: true, showDone: false)
+        CommonFunctions.addInputAccessoryForTextFields([activityTitle,activityType,distance,durationhr,durationmm,caloriesBurned,startTime], dismissable: true, previousNextable: true, showDone: true)
         // Do any additional setup after loading the view.
     }
 

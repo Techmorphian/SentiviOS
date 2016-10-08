@@ -190,7 +190,6 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
                 //            barChartView.rightAxis.addLimitLine(ll)
             }
             barChartView.noDataText = "No Chart Data Available"
-            
         }
     }
     
