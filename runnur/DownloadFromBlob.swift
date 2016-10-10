@@ -157,6 +157,12 @@ static func downloadFromBlob(containerName:String) -> Bool
     
         container.listBlobsSegmentedWithContinuationToken(continuationToken, prefix: prefix, useFlatBlobListing: true, blobListingDetails: blobListingDetails, maxResults: maxResults, completionHandler: {(error, results) -> Void in
             if error != nil {
+               if ((error?.description.containsString("404")) == true)
+                {
+                    NSNotificationCenter.defaultCenter().postNotificationName("DownloadFromBlobNotification", object: nil);
+
+                }
+                else{
                 print(error);
                 var topController = UIApplication.sharedApplication().keyWindow!.rootViewController
                 while (topController!.presentedViewController != nil) {
@@ -168,7 +174,7 @@ static func downloadFromBlob(containerName:String) -> Bool
                     
                 })
 
-             })
+             })}
                 
             }
             else {

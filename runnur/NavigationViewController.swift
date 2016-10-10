@@ -223,7 +223,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             {
             case "History":
                 
-                
+             // NSUserDefaults.standardUserDefaults().setBool(false, forKey: "firstCacheHistory");
             self.performSegueWithIdentifier("History", sender: nil)
                 break;
                 

@@ -628,8 +628,8 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 }else if self.filterDate == 5
                 {
                     print(CommonFunctions.dateFromFixedFormatString(i.date!))
-                    print(startDate);
-                    let dateComparisionResult:NSComparisonResult = NSCalendar.currentCalendar().compareDate(CommonFunctions.dateFromFixedFormatString(i.date!), toDate: startDate, toUnitGranularity: .Day)
+                    print(endDate);
+                    let dateComparisionResult:NSComparisonResult = NSCalendar.currentCalendar().compareDate(CommonFunctions.dateFromFixedFormatString(i.date!), toDate: endDate, toUnitGranularity: .Day)
                     //  let dateComparisionResult:NSComparisonResult = currentDate.compare(formatedDate);
                     if dateComparisionResult == NSComparisonResult.OrderedSame
                     {
@@ -742,11 +742,14 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 tempArray.removeAll();
                 return;
             }
+              if data+1 < self.routeDataArray.count-1{
             if i.weekIntNum != self.routeDataArray[data+1].weekIntNum
             {
                 self.sectionItem.append(tempArray);
                 tempArray.removeAll();
             }
+              }
+           
             
         }else{
             tempArray.append(i);
@@ -860,7 +863,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         self.showNoRoutesView();
                         print("ERROR ", err)
                     } else if let items = result?.items {
-        
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "firstCacheHistory");
                         print(result.accessibilityPath);
                         
                         
@@ -897,7 +900,17 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                                         {
                                             
                                         }else{
-                                            //  self.downloadOneBlob(UUIDBlob, ContainerName: contName, uriBlob: "http://runobjectblob.blob.core.windows.net:80/development/");
+                                            if let id = item["id"] as? String{
+                                                var text = "";
+                                                if NSJSONSerialization.isValidJSONObject(item){
+                                                    let jsonData = try! NSJSONSerialization.dataWithJSONObject(item, options: NSJSONWritingOptions())
+                                                    let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
+                                                    text = jsonString;
+                                                }
+                                                DownloadFromBlob.writeToFile(text, contName: contName, fileName: id);
+                                            }
+
+
                                         }
                                         
                                     }
@@ -915,8 +928,23 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                                
                             }
                         }
+                        if NSUserDefaults.standardUserDefaults().objectForKey("firstCacheHistory") != nil && NSUserDefaults.standardUserDefaults().boolForKey("firstCacheHistory") == true
+                        {
+                             self.getData();
+                        }else{
+                            
+                            var email =  NSUserDefaults.standardUserDefaults().stringForKey("email");
+                            email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
+                            let words =  email?.componentsSeparatedByString("@");
+                            let contName = words![0]
+                            CommonFunctions.showActivityIndicator(self.view);
+                            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HistoryViewController.methodOfReceivedNotification(_:)), name:"DownloadFromBlobNotification", object: nil)
+                            if  DownloadFromBlob.downloadFromBlob(contName) == true{
+                                // self.getData();
+                            }
 
-                          self.getData();
+                          
+                        }
                     }
                     
                 })
@@ -1002,7 +1030,8 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     //----------------------------------- refresh button action -----------------------------
     @IBAction func refresh(sender: UIButton) {
-        self.getData();
+        position=0;
+        self.filterData();
      }
     //----------------------------------- sort button action --------------------------------
     @IBAction func sort(sender: UIButton) {
@@ -1152,7 +1181,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(HistoryViewController.closePicker))
         doneButton.tintColor = UIColor.blackColor();
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        let label = UIBarButtonItem(title: "Start", style: UIBarButtonItemStyle.Plain, target: self, action: nil)
+        let label = UIBarButtonItem(title: "Start Date", style: UIBarButtonItemStyle.Plain, target: self, action: nil)
         let space2Button = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         doneButton.tintColor = UIColor.blackColor();
         let cancelButton = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(HistoryViewController.donePicker))
@@ -1196,7 +1225,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
             self.view.addSubview(self.datePickerView)
             
             
-            let doneButton = UIBarButtonItem(title: "End", style: UIBarButtonItemStyle.Plain, target: self, action:nil)
+            let doneButton = UIBarButtonItem(title: "End Date", style: UIBarButtonItemStyle.Plain, target: self, action:nil)
             doneButton.tintColor = UIColor.blackColor();
             let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
             let cancelButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(HistoryViewController.donePicker))
@@ -1348,11 +1377,17 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         super.viewDidLoad()
         self.position = 0;
         self.selectedActivity = "All";
+//        if NSUserDefaults.standardUserDefaults().objectForKey("firstCacheHistory") != nil && NSUserDefaults.standardUserDefaults().boolForKey("firstCacheHistory") == true{
+//            self.filterData();
+//        }else{
         self.getData();
+//        }
         
         self.tableView.hidden=true;
         tableView.estimatedRowHeight = 138;
-        tableView.tableFooterView = UIView();
+        let views = UIView()
+        views.backgroundColor=UIColor.clearColor();
+        tableView.tableFooterView = views;
         tableView.rowHeight = UITableViewAutomaticDimension;
         
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(RouteViewController.longPress(_:)))

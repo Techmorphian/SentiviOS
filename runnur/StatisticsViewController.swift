@@ -14,26 +14,15 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
     
     var routeData = MapData();
     var routeDataArray = [MapData]();
-    var sectionItem = [[MapData]]();
-    
-    var weatherData = WeatherData();
-    var priviousWeekCount = String();
-    var sectionHeader = [String]();
-    var totalNumberOfActivities = Int();
-    var lastItem = Bool();
-    var weekCount = [Double]();
-    var calories = [Double]()
-    
-    var distance = [Double]()
-    
-    var countt = Double();
-    var previousWeeks = [String]();
+
     
     var refreshControl: UIRefreshControl!
     
+    @IBOutlet var slider: UISlider!
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet var filter: UIButton!
     
     @IBAction func menuButtonAction(sender: AnyObject)
     {
@@ -43,26 +32,12 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
         }
         
     }
-    // Pa
+   
+//    @IBAction func slider(sender: UISlider) {
+//        
+//        
+//    }
     
-    struct weekNameAndCount {
-        var weekName : String!
-        var weekCount :String!
-    }
-    
-    var caculateWeek = [weekNameAndCount]()
-    var dataPoints = [Double]()
-    var dataPoints1 = [String]()
-    var dataPoints2 = [String]()
-    
-    var totalDistanceValue : String = "---";
-    var avgSpeedValue : String = "---";
-    var maxElevationValue : String = "---";
-    var heartRateValue : String = "---";
-    
-    var avgSpeedGraphValues : [Double] = [];
-    var maxElevationGraphValues : [Double] = [];
-    var heartRateGraphValues : [Double] = [];
     
     var ce = Double()
     var isSet = false;
@@ -92,8 +67,8 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
                 
                 barChartView.data = lineChartData
                 barChartView.drawValueAboveBarEnabled=true;
-                barChartView.leftAxis.labelTextColor = colorCode.BlueColor;
-                barChartView.xAxis.labelTextColor = colorCode.BlueColor;
+//                barChartView.leftAxis.labelTextColor = colorCode.BlueColor;
+//                barChartView.xAxis.labelTextColor = colorCode.BlueColor;
                 barChartView.rightAxis.labelTextColor = UIColor.clearColor();
                 barChartView.xAxis.labelPosition = .Bottom
                 
@@ -103,8 +78,6 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
                 barChartView.legend.xEntrySpace = 4.0;
                 barChartView.animate(yAxisDuration: 1.0)
                 
-                //            let ll = ChartLimitLine(limit: 10.5, label: "Avg Speed")
-                //            barChartView.rightAxis.addLimitLine(ll)
             }
             barChartView.noDataText = "No Chart Data Available"
             
@@ -138,8 +111,8 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
                 barChartView.xAxis.spaceBetweenLabels = 4;
                 barChartView.drawValueAboveBarEnabled=true;
                 
-                barChartView.leftAxis.labelTextColor = colorCode.RedColor;
-                barChartView.xAxis.labelTextColor = colorCode.RedColor;
+//                barChartView.leftAxis.labelTextColor = colorCode.RedColor;
+//                barChartView.xAxis.labelTextColor = colorCode.RedColor;
                 barChartView.rightAxis.labelTextColor = UIColor.clearColor();
                 
                 barChartView.xAxis.labelPosition = .Bottom
@@ -169,21 +142,21 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
                 var dataEntries: [BarChartDataEntry] = []
                 var c = Double()
                 for i in 0..<valuesForSpeed.count {
-                    let dataEntry = BarChartDataEntry(value:valuesForSpeed[i], xIndex: i)
+                    let dataEntry = BarChartDataEntry(value:valuesForCal[i], xIndex: i)
                     dataEntries.append(dataEntry);
                     // dataPoints.append(cy);
                     cy = cy+1;
                 }
                 let lineChartDataSet = BarChartDataSet(yVals: dataEntries, label: "Total Calories")
-                let lineChartData = BarChartData(xVals: valuesForCal, dataSet: lineChartDataSet)
+                let lineChartData = BarChartData(xVals: valuesForSpeed, dataSet: lineChartDataSet)
                 lineChartDataSet.colors = [UIColor.yellowColor()]
                 barChartView.drawValueAboveBarEnabled=true;
                 
                 barChartView.data = lineChartData
                 barChartView.xAxis.spaceBetweenLabels = 15;
                 barChartView.xAxis.getLongestLabel()
-                barChartView.leftAxis.labelTextColor = UIColor.yellowColor();
-                barChartView.xAxis.labelTextColor = UIColor.yellowColor();
+//                barChartView.leftAxis.labelTextColor = UIColor.yellowColor();
+//                barChartView.xAxis.labelTextColor = UIColor.yellowColor();
                 barChartView.rightAxis.labelTextColor = UIColor.clearColor();
                 barChartView.animate(yAxisDuration: 1.0)
                 //            let ll = ChartLimitLine(limit: 10.5, label: "Avg Speed")
@@ -192,117 +165,130 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
             barChartView.noDataText = "No Chart Data Available"
         }
     }
-    
-    
-    
-    func setDistanceSpeedChart(valuesForSpeed: [Double],valuesForDistance:[Double],barChartView:BarChartView) {
-        //   barChartView.noDataText = "You need to provide data for the chart."
-        if !isCalSet {
-            isCalSet = true;
-            if valuesForSpeed.count != 0
-            {
-                var dataEntries: [BarChartDataEntry] = []
-                var c = Double()
-                for i in 0..<valuesForSpeed.count {
-                    let dataEntry = BarChartDataEntry(value:valuesForSpeed[i], xIndex: i)
-                    dataEntries.append(dataEntry);
-                    dataPoints.append(cy);
-                    cy = cy+1;
-                }
-                let lineChartDataSet = BarChartDataSet(yVals: dataEntries, label: "Total Distance (mi)")
-                let lineChartData = BarChartData(xVals: dataPoints, dataSet: lineChartDataSet)
-                lineChartDataSet.colors = [UIColor.yellowColor()]
+     var isDisSpeedSet = false;
+    func setDistanceSpeedChart2(xValues: [Double], valuesBarChart: [Double], valuesLineChart: [Double],barChartView:CombinedChartView) {
+        if !isDisSpeedSet {
+            isDisSpeedSet = true;
+            barChartView.descriptionText = ""
+            barChartView.noDataText = "No Chart Data Available."
+            
+            var yValsBarChart: [BarChartDataEntry] = []
+            var yValsLineChart : [ChartDataEntry] = [ChartDataEntry]()
+            
+            for i in 0..<xValues.count {
                 
-                
-                barChartView.data = lineChartData
-                
-                barChartView.leftAxis.labelTextColor = UIColor.yellowColor();
-                barChartView.xAxis.labelTextColor = UIColor.yellowColor();
-                barChartView.rightAxis.labelTextColor = UIColor.clearColor();
-                
-                //            let ll = ChartLimitLine(limit: 10.5, label: "Avg Speed")
-                //            barChartView.rightAxis.addLimitLine(ll)
+                yValsBarChart.append(BarChartDataEntry(value: valuesBarChart[i], xIndex: i))
+                yValsLineChart.append(ChartDataEntry(value: valuesLineChart[i], xIndex: i))
             }
-            barChartView.noDataText = "No Chart Data Available"
+            
+            let lineChartDataSet = LineChartDataSet(yVals: yValsLineChart, label: "Speed (mph)")
+            let barChartDataSet = BarChartDataSet(yVals: yValsBarChart, label: "Distance (mi)")
+            
+            lineChartDataSet.colors = [colorCode.BlueColor];
+            lineChartDataSet.circleColors = [colorCode.BlueColor];
+            barChartDataSet.colors = [UIColor.greenColor()];
+            lineChartDataSet.drawCircleHoleEnabled=false;
+            lineChartDataSet.circleRadius = 4.0;
+            
+            let data: CombinedChartData = CombinedChartData(xVals: xValues)
+            data.barData = BarChartData(xVals: xValues, dataSets: [barChartDataSet])
+            data.lineData = LineChartData(xVals: xValues, dataSets: [lineChartDataSet])
+            barChartView.data = data
+            barChartView.animate(yAxisDuration: 1.0)
+            
+            
+            let ll = ChartLimitLine(limit: 0.6, label: "Avg Speed")
+            ll.lineDashLengths = [5.0,1.5];
+            
+            barChartView.rightAxis.addLimitLine(ll)
             
         }
+        
     }
-    
-    
-    
-    
-    
     
     
     
     //MARK:- tableViewDelegate
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3;
+        return 4;
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("StatisticsTableViewCell", forIndexPath: indexPath) as! StatisticsTableViewCell;
+       
         
         if indexPath.row == 0
         {
+            let cell = self.tableView.dequeueReusableCellWithIdentifier("StatisticsTableViewCell", forIndexPath: indexPath) as! StatisticsTableViewCell;
             cell.name.text = "Weekly Activities";
-            
-            var weeks = [Double]();
-            var act = [Double]();
-            for i in datas{
-                weeks.append(Double(i.weekNo)!);
-            }
-            for i in datas{
-                act.append(Double(i.numOfActivities)!);
-            }
             self.setChart(weeks, activities: act, barChartView: cell.barChartView)
+            return cell;
             
         }else if indexPath.row == 1{
+            let cell = self.tableView.dequeueReusableCellWithIdentifier("StatisticsTableViewCell", forIndexPath: indexPath) as! StatisticsTableViewCell;
             cell.name.text = "Weekly Distance Traveled"
-            var weeks = [Double]();
-            var dis = [Double]();
-            for i in datas{
-                weeks.append(Double(i.weekNo)!);
-            }
-            for i in datas{
-                dis.append(Double(i.totalDistance)!);
-            }
-            print(dis);
-            print(weeks);
             self.setDistanceChart(dis, valuesForWeek: weeks, barChartView: cell.barChartView);
+            return cell;
             //  self.setDistanceChart(distance, barChartView: cell.barChartView);
         }else if indexPath.row == 2{
+            let cell = self.tableView.dequeueReusableCellWithIdentifier("StatisticsTableViewCell", forIndexPath: indexPath) as! StatisticsTableViewCell;
             cell.name.text = "Weekly Calories Burned"
-            
-            var weeks = [Double]();
-            var cal = [Double]();
-            for i in datas{
-                weeks.append(Double(i.weekNo)!);
-            }
-            for i in datas{
-                cal.append(Double(i.totalCalories)!);
-            }
-            
-            
             self.setCalChart(weeks, valuesForCal: cal, barChartView: cell.barChartView)
-            
-        }else if indexPath.row == 3{
+            return cell;
+        }else {
+            let cell = self.tableView.dequeueReusableCellWithIdentifier("StatsTableViewCell", forIndexPath: indexPath) as! StatsTableViewCell;
             cell.name.text = "Distance and Speed Performance"
-            
+            cell.slider.tag = indexPath.row
+            cell.slider.addTarget(self, action: #selector(StatisticsViewController.sliderValueChanged(_:)), forControlEvents: .ValueChanged);
+            self.setDistanceSpeedChart2(weeks, valuesBarChart: dis, valuesLineChart: speed, barChartView: cell.combinedChartview)
+            return cell;
         }
+       
+    }
+    
+    func sliderValueChanged(sender:AnyObject)
+    {
+     let indexPath = NSIndexPath(forRow: sender.tag, inSection: 0)
+        let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! StatsTableViewCell;
+        isDisSpeedSet = false;
+         self.setDistanceSpeedChart2(weeks, valuesBarChart: dis, valuesLineChart: speed, barChartView: cell.combinedChartview)
         
-        return cell;
     }
     
     var tempArray = [MapData]();
     
-    struct stats {
-        var totalDistance = String();
-        var totalCalories = String();
-        var weekNo = String();
-        var numOfActivities = String();
-    }
-    var datas = [stats]();
+    var activities1 : Double = 0;
+    var activities2 : Double = 0;
+    var activities3 : Double = 0;
+    var activities4 : Double = 0;
+    
+    var caloriesBurned1 : Double = 0;
+    var caloriesBurned2 : Double = 0;
+    var caloriesBurned3 : Double = 0;
+    var caloriesBurned4 : Double = 0;
+    
+    var totalDistance1 : Double = 0;
+    var totalDistance2 : Double = 0;
+    var totalDistance3 : Double = 0;
+    var totalDistance4 : Double = 0;
+    
+    var speed1 : Double = 0;
+    var speed2 : Double = 0;
+    var speed3 : Double = 0;
+    var speed4 : Double = 0;
+    
+    var week1 = Double();
+    var week2 = Double();
+    var week3 = Double();
+    var week4 = Double();
+    
+    var dis = [Double]();
+    var act = [Double]();
+    var cal = [Double]();
+    var speed = [Double]();
+    var weeks = [Double]();
+  
+   
+    
     
     func callDatas()
     {
@@ -321,6 +307,11 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
                 var fileList = CommonFunctions.listFilesFromDocumentsFolder(contName)
                 
                 let count = fileList.count
+                week1 = Double(CommonFunctions.getWeek(NSDate()))!;
+                self.week2 = (Double(week1)+1)
+                self.week3 = (Double(week2)+1)
+                self.week4 = (Double(week3)+1)
+                weeks = [week1,week2,week3,week4];
                 
                 for i:Int in 0 ..< count
                 {
@@ -339,13 +330,9 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
                             {
                                 let item = try! NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as! NSDictionary
                                 // print(jsonData);
-                                
-                                self.totalNumberOfActivities = self.totalNumberOfActivities + 1;
-                                
                                 self.routeData = MapData();
                                 if let distance = item["distance"] {
                                     let dd = String(distance)
-                                    self.distance.append(Double(dd)!)
                                     if String(distance) != ""{
                                         self.routeData.distance = String(distance);
                                     }else{
@@ -354,6 +341,10 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
                                     
                                     // self.totalDis = String(Int(distance)+Int(self.totalDis)!);
                                 }
+                                if let averageSpeed = item["averageSpeed"] as? Double{
+                                    self.routeData.avgSpeed = String(averageSpeed)
+                                }
+
                                 if let startLocation = item["startLocationS"] as? String{
                                     self.routeData.location = startLocation
                                 }
@@ -376,9 +367,6 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
                                         self.routeData.caloriesBurned = "0"
                                     }
                                     
-                                    
-                                    // calories.append(Double(caloriesBurned)!);
-                                    //  self.totalCal = String(Int(caloriesBurned)!+Int(self.totalCal)!);
                                 }
                                 if let performedActivity = item["performedActivity"] as? String{
                                     self.routeData.performedActivity = performedActivity
@@ -394,7 +382,6 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
                                 self.routeDataArray.append(self.routeData);
                                 
                             }
-                            
                             
                         }
                         catch{
@@ -413,64 +400,50 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
                 })
                 
                 tempArray = self.routeDataArray;
-                var dis : String = "0";
-                var cal : String = "0";
-                var week = String();
-                var activityCount : String = "0";
-                for (data,i) in routeDataArray.enumerate(){
-                    //  print(i.weekIntNum);
-                    let weekCount = i.weekNum
-                    // print(data);
-                    //   25164dee-723f-4961-83f1-b3b051d93807
+                
+                for i in routeDataArray{
                     
-                    
-                    if self.previousWeeks.count <= 4{
-                        if self.previousWeeks.contains(weekCount)
-                        {
-                            let dd = i.distance?.stringByReplacingOccurrencesOfString("mi", withString: "");
-                            dis = String(Double(dd!)! + Double(dis)!)
-                            cal = String(Double(i.caloriesBurned!)! + Double(cal)!)
-                            week = String(i.weekIntNum);
-                            activityCount = String(Int(activityCount)!+1)
-                        }else{
-                            if self.previousWeeks.count != 5{
-                                if previousWeeks.count == 0{
-                                    
-                                }else{
-                                    var stat = stats()
-                                    stat.totalCalories = cal;
-                                    stat.totalDistance = dis;
-                                    stat.weekNo = week;
-                                    stat.numOfActivities = activityCount;
-                                    datas.append(stat);
-                                    dis="0";
-                                    cal="0";
-                                    week="0";
-                                    activityCount = "0"
-                                }
-                                
-                                
-                                activityCount = String(Int(activityCount)!+1)
-                                if previousWeeks.count > 4{
-                                    var stat = stats()
-                                    stat.totalCalories = cal;
-                                    stat.totalDistance = dis;
-                                    stat.weekNo = week;
-                                    stat.numOfActivities = activityCount;
-                                    datas.append(stat);
-                                }else{
-                                    self.previousWeeks.append(weekCount)
-                                }
-                            }
-                            else if self.previousWeeks.count == 4{
-                                
-                            }
-                        }
+                    if Double(i.weekIntNum) == week1{
+                        self.activities1 += 1;
+                        self.totalDistance1 = Double(i.distance!)! + self.totalDistance1;
+                        self.caloriesBurned1 = Double(i.caloriesBurned!)! + self.caloriesBurned1;
+                        self.speed1 = Double(i.avgSpeed!)! + self.speed1;
+                        
+                        
+                    }else if Double(i.weekIntNum) == week2{
+                        self.activities2 += 1;
+                        self.totalDistance1 = Double(i.distance!)! + self.totalDistance1;
+                        self.caloriesBurned1 = Double(i.caloriesBurned!)! + self.caloriesBurned1;
+                        self.speed1 = Double(i.avgSpeed!)! + self.speed1;
+
+                        
+                    }else if Double(i.weekIntNum) == week3{
+                        self.activities3 += 1;
+                        self.totalDistance1 = Double(i.distance!)! + self.totalDistance1;
+                        self.caloriesBurned1 = Double(i.caloriesBurned!)! + self.caloriesBurned1;
+                        self.speed1 = Double(i.avgSpeed!)! + self.speed1;
+
+                        
+                    }else if Double(i.weekIntNum) == week4{
+                        self.activities4 += 1;
+                        self.totalDistance1 = Double(i.distance!)! + self.totalDistance1;
+                        self.caloriesBurned1 = Double(i.caloriesBurned!)! + self.caloriesBurned1;
+                        self.speed1 = Double(i.avgSpeed!)! + self.speed1;
+
                     }
                     
                 }
                 
-                print(self.previousWeeks)
+                
+                self.speed = [speed1,speed2,speed3,speed4];
+                self.dis=[totalDistance1,totalDistance2,totalDistance3,totalDistance4];
+                self.cal=[caloriesBurned1,caloriesBurned2,caloriesBurned3,caloriesBurned4];
+                self.act=[activities1,activities2,activities3,activities4];
+                
+                
+                
+                
+                
                 dispatch_async(dispatch_get_main_queue(), {
                     self.tableView.hidden=false;
                     self.tableView.delegate=self;
@@ -489,9 +462,12 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
                 email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
                 let words =  email?.componentsSeparatedByString("@");
                 let contName = words![0]
-                //                if  DownloadFromBlob.downloadFromBlob(contName) == true{
-                //                    self.getData();
-                //                }
+                CommonFunctions.showActivityIndicator(self.view);
+                NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HistoryViewController.methodOfReceivedNotification(_:)), name:"DownloadFromBlobNotification", object: nil)
+                if  DownloadFromBlob.downloadFromBlob(contName) == true{
+                    // self.getData();
+                }
+
                 
             }
             
@@ -510,71 +486,285 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
             
         }
     }
-    
+    var position = Int();
+    func methodOfReceivedNotification(notification:NSNotification)  {
+        position = 0;
+        self.filterData();
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "selectedActivityNotification", object: nil)
+    }
+    func filterData()
+    {
+        CommonFunctions.showActivityIndicator(self.view);
+        // requesting route data from route table
+        var email =  NSUserDefaults.standardUserDefaults().stringForKey("email");
+        email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
+        let words =  email?.componentsSeparatedByString("@");
+        let contName = words![0]
+        let file = "\(contName).txt"; //this is the file. we will write to and read from it
+       
+        let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
+        print(paths);
+        
+        _ = paths.URLByAppendingPathComponent(file);
+        
+        if Reachability.isConnectedToNetwork() == true{
+            
+            self.tableView.reloadData();
+            
+            let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
+            let client = delegate!.client!;
+            
+            let user: MSUser = MSUser(userId: NSUserDefaults.standardUserDefaults().stringForKey("azureUserId"));
+            user.mobileServiceAuthenticationToken = NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken");
+            client.currentUser = user
+            
+            let table = client.tableWithName("RunObject");
+            
+            if client.currentUser != nil{
+                
+                let query = table.query();
+                switch position {
+                case 0:
+                    print(NSUserDefaults.standardUserDefaults().stringForKey("userId")!);
+                    //gaurav's userID ==== Facebook:241099289625278
+                    query.parameters = ["runnurId":NSUserDefaults.standardUserDefaults().stringForKey("userId")!]
+                    //query.predicate = NSPredicate(format: "runnerId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!);
+                    query.fetchLimit=100;
+                    query.orderByDescending("__createdAt");
+                    //query.selectFields = ["id"]
+                    
+                    break;
+                case 1:
+                    
+                    
+                    query.parameters = ["runnurId":NSUserDefaults.standardUserDefaults().stringForKey("userId")!]
+                    query.predicate = NSPredicate(format: "performedActivity == [c] %@", "Running");
+                    //query.predicate = NSPredicate(format: "userId == [c] %@ AND performedActivity == [c] %@", argumentArray: [NSUserDefaults.standardUserDefaults().stringForKey("userId")!,"Running"]);
+                    //query.predicate = NSPredicate(format: "performedActivity == [c] %@", "Running")
+                    query.fetchLimit=100;
+                    query.orderByDescending("__createdAt");
+                    
+                    break;
+                    
+                case 2:
+                    
+                    //  query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
+                    query.predicate = NSPredicate(format: "performedActivity == [c] %@", "Biking")
+                    query.parameters = ["runnurId":NSUserDefaults.standardUserDefaults().stringForKey("userId")!]
+                    //query.predicate = NSPredicate(format: "userId == [c] %@ AND performedActivity == [c] %@", argumentArray: [NSUserDefaults.standardUserDefaults().stringForKey("userId")!,"Biking"]);
+                    
+                    query.fetchLimit=100;
+                    query.orderByDescending("__createdAt");
+                    
+                    break;
+                    
+                case 3:
+                    // query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
+                    query.predicate = NSPredicate(format: "performedActivity == [c] %@", "Driving")
+                    query.parameters = ["runnurId":NSUserDefaults.standardUserDefaults().stringForKey("userId")!]
+                    // query.predicate = NSPredicate(format: "userId == [c] %@ AND performedActivity == [c] %@", argumentArray: [NSUserDefaults.standardUserDefaults().stringForKey("userId")!,"Driving"]);
+                    
+                    query.fetchLimit=100;
+                    query.orderByDescending("__createdAt");
+                    
+                    break;
+                    
+                case 4:
+                    //query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
+                    query.parameters = ["runnurId":NSUserDefaults.standardUserDefaults().stringForKey("userId")!]
+                    query.fetchLimit=100;
+                    query.orderByDescending("__createdAt");
+                    
+                    break;
+                default:
+                    break;
+                }
+                
+                
+                query.readWithCompletion({ (result, error) in
+                    if let err = error {
+                        CommonFunctions.hideActivityIndicator();
+                        
+                        self.showNoRoutesView();
+                        print("ERROR ", err)
+                    } else if let items = result?.items {
+                        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "firstCacheHistory");
+                        print(result.accessibilityPath);
+                        
+                        
+                        
+                        
+                        print(result?.items)
+                        if items.count == 0
+                        {
+                              self.tableView.hidden=true;
+                            self.showNoRoutesView();
+                        }else{
+                            // self.resetData();
+                            self.tableView.hidden=false;
+                           
+                            
+                        }
+                        
+                        for item in items {
+                            
+                            
+                            if let UUIDBlob = item["UUIDBlob"] as? String{
+                                let dat = CommonFunctions.checkIfDirectoryAvailable(contName)
+                                
+                                if dat.0
+                                {
+                                    
+                                    let fileList = CommonFunctions.listFilesFromDocumentsFolder(contName)
+                                    //print(fileList);
+                                    
+                                    //let count = fileList.count
+                                    
+                                    if fileList.contains("\(UUIDBlob).txt")
+                                    {
+                                        
+                                    }else{
+                                        if let id = item["id"] as? String{
+                                            var text = "";
+                                            if NSJSONSerialization.isValidJSONObject(item){
+                                                let jsonData = try! NSJSONSerialization.dataWithJSONObject(item, options: NSJSONWritingOptions())
+                                                let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
+                                                text = jsonString;
+                                            }
+                                            DownloadFromBlob.writeToFile(text, contName: contName, fileName: id);
+                                        }
+                                        
+                                        
+                                    }
+                                    
+                                }
+                                
+                            }else{
+                                if let id = item["id"] as? String{
+                                    var text = "";
+                                    if NSJSONSerialization.isValidJSONObject(item){
+                                        let jsonData = try! NSJSONSerialization.dataWithJSONObject(item, options: NSJSONWritingOptions())
+                                        let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
+                                        text = jsonString;
+                                    }
+                                    DownloadFromBlob.writeToFile(text, contName: contName, fileName: id);
+                                }
+                                
+                            }
+                        }
+                        if NSUserDefaults.standardUserDefaults().objectForKey("firstCacheHistory") != nil && NSUserDefaults.standardUserDefaults().boolForKey("firstCacheHistory") == true
+                        {
+                            self.callDatas();
+                        }else{
+                            
+                            var email =  NSUserDefaults.standardUserDefaults().stringForKey("email");
+                            email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
+                            let words =  email?.componentsSeparatedByString("@");
+                            let contName = words![0]
+                            CommonFunctions.showActivityIndicator(self.view);
+                            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HistoryViewController.methodOfReceivedNotification(_:)), name:"DownloadFromBlobNotification", object: nil)
+                            if  DownloadFromBlob.downloadFromBlob(contName) == true{
+                                // self.getData();
+                            }
+                            
+                            
+                        }
+                    }
+                    
+                })
+            }
+        }else{
+            
+            // NO Internet
+          
+        }
+    }
     
     var selectedActivity = String();
     
     
+    
+    
     func applyFilter()
     {
+        CommonFunctions.showActivityIndicator(self.view);
+        isSet=false;
+        isDistanceSet=false;
+        isCalSet=false;
+        isDisSpeedSet=false;
+        activities1=0;
+        activities2=0;
+        activities3=0;
+        activities4=0;
+        caloriesBurned1=0;
+        caloriesBurned2=0;
+        caloriesBurned3=0;
+        caloriesBurned4=0;
+        totalDistance1=0;
+        totalDistance2=0;
+        totalDistance3=0;
+        totalDistance4=0;
+        speed1=0;
+        speed2=0;
+        speed3=0;
+        speed4=0;
+
         routeDataArray = tempArray
-        var dis : String = "0";
-        var cal : String = "0";
-        var week = String();
-        var activityCount : String = "0";
-        for (data,i) in routeDataArray.enumerate(){
-            //  print(i.weekIntNum);
-            let weekCount = i.weekNum
-            // print(data);
-            //   25164dee-723f-4961-83f1-b3b051d93807
-            
-            
-            if self.previousWeeks.count <= 4{
-                if self.previousWeeks.contains(weekCount)
-                {
-                    let dd = i.distance?.stringByReplacingOccurrencesOfString("mi", withString: "");
-                    dis = String(Double(dd!)! + Double(dis)!)
-                    cal = String(Double(i.caloriesBurned!)! + Double(cal)!)
-                    week = String(i.weekIntNum);
-                    activityCount = String(Int(activityCount)!+1)
-                }else{
-                    if self.previousWeeks.count != 5{
-                        if previousWeeks.count == 0{
-                            
-                        }else{
-                            var stat = stats()
-                            stat.totalCalories = cal;
-                            stat.totalDistance = dis;
-                            stat.weekNo = week;
-                            stat.numOfActivities = activityCount;
-                            datas.append(stat);
-                            dis="0";
-                            cal="0";
-                            week="0";
-                            activityCount = "0"
-                        }
-                        
-                        
-                        activityCount = String(Int(activityCount)!+1)
-                        if previousWeeks.count > 4{
-                            var stat = stats()
-                            stat.totalCalories = cal;
-                            stat.totalDistance = dis;
-                            stat.weekNo = week;
-                            stat.numOfActivities = activityCount;
-                            datas.append(stat);
-                        }else{
-                            self.previousWeeks.append(weekCount)
-                        }
-                    }
-                    else if self.previousWeeks.count == 4{
-                        
-                    }
-                }
+
+        
+        for i in routeDataArray{
+            if selectedActivity == "All" || i.performedActivity == selectedActivity
+            {
+            if Double(i.weekIntNum) == week1{
+                self.activities1 += 1;
+                self.totalDistance1 = Double(i.distance!)! + self.totalDistance1;
+                self.caloriesBurned1 = Double(i.caloriesBurned!)! + self.caloriesBurned1;
+                self.speed1 = Double(i.avgSpeed!)! + self.speed1;
+                
+                
+            }else if Double(i.weekIntNum) == week2{
+                self.activities2 += 1;
+                self.totalDistance1 = Double(i.distance!)! + self.totalDistance1;
+                self.caloriesBurned1 = Double(i.caloriesBurned!)! + self.caloriesBurned1;
+                self.speed1 = Double(i.avgSpeed!)! + self.speed1;
+                
+                
+            }else if Double(i.weekIntNum) == week3{
+                self.activities3 += 1;
+                self.totalDistance1 = Double(i.distance!)! + self.totalDistance1;
+                self.caloriesBurned1 = Double(i.caloriesBurned!)! + self.caloriesBurned1;
+                self.speed1 = Double(i.avgSpeed!)! + self.speed1;
+                
+                
+            }else if Double(i.weekIntNum) == week4{
+                self.activities4 += 1;
+                self.totalDistance1 = Double(i.distance!)! + self.totalDistance1;
+                self.caloriesBurned1 = Double(i.caloriesBurned!)! + self.caloriesBurned1;
+                self.speed1 = Double(i.avgSpeed!)! + self.speed1;
+                
+            }
             }
             
         }
-        showDefaultGraphs();
+        
+        
+        self.speed = [speed1,speed2,speed3,speed4];
+        self.dis=[totalDistance1,totalDistance2,totalDistance3,totalDistance4];
+        self.cal=[caloriesBurned1,caloriesBurned2,caloriesBurned3,caloriesBurned4];
+        self.act=[activities1,activities2,activities3,activities4];
+
+ 
+
+        dispatch_async(dispatch_get_main_queue(), {
+            self.tableView.hidden=false;
+            self.tableView.delegate=self;
+            self.tableView.dataSource=self;
+            self.tableView.reloadData();
+            
+            CommonFunctions.hideActivityIndicator();
+        })
+        
+        //showDefaultGraphs();
     }
     
     
@@ -613,20 +803,71 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
         self.view.addSubview(mainView);
         refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl.addTarget(self, action: #selector(StatisticsViewController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
         tableView.addSubview(refreshControl)
     }
     
     func refresh(sender:AnyObject) {
-        isSet = false;
-        isDistanceSet = false;
-        isCalSet = false;
+        isSet=false;
+        isDistanceSet=false;
+        isCalSet=false;
+        isDisSpeedSet=false;
         self.tableView.reloadData();
+        refreshControl.endRefreshing()
     }
+    
+//   Filter
+    
+    
+    @IBAction func filter(sender: UIButton) {
+        
+        let optionMenu = UIAlertController(title: nil, message: "Choose an Option", preferredStyle: .ActionSheet)
+        optionMenu.view.tintColor = colorCode.BlueColor;
+        let weekAction = UIAlertAction(title: "Running", style: .Default, handler:
+            {
+                (alert: UIAlertAction!) -> Void in
+                self.selectedActivity = "Running";
+                self.applyFilter();
+        })
+        
+        let monthAction = UIAlertAction(title: "Biking", style: .Default, handler:
+            {
+                (alert: UIAlertAction!) -> Void in
+                self.selectedActivity = "Biking";
+                self.applyFilter();
+        })
+        
+        let yearAction = UIAlertAction(title: "Show All", style: .Default, handler:
+            {
+                (alert: UIAlertAction!) -> Void in
+                self.selectedActivity = "All";
+                self.applyFilter();
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler:
+            {
+                (alert: UIAlertAction!) -> Void in
+        })
+        
+        optionMenu.addAction(weekAction);
+        optionMenu.addAction(monthAction);
+        optionMenu.addAction(yearAction);
+        optionMenu.addAction(cancelAction);
+        self.presentViewController(optionMenu, animated: true, completion: nil)
+    }
+    
+    
+    
     override func viewDidLoad()
     {
         super.viewDidLoad();
+
         self.callDatas();
+        refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(StatisticsViewController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        tableView.addSubview(refreshControl)
+
         
     }
     

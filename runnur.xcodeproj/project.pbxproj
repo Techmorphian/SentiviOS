@@ -75,6 +75,7 @@
 		44C7967E1D5EF70D000118C5 /* SWRevealViewController.m in Resources */ = {isa = PBXBuildFile; fileRef = 470B1B611D27A5A100E3B5B0 /* SWRevealViewController.m */; };
 		44D6FFD41D67151200B3F9D8 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 44D6FFD31D67151200B3F9D8 /* .gitignore */; };
 		44D6FFD71D67233E00B3F9D8 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D6FFD61D67233E00B3F9D8 /* HelpViewController.swift */; };
+		44DC44971DAB81930017D626 /* StatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DC44961DAB81930017D626 /* StatsTableViewCell.swift */; };
 		44E103351D9BA151003308CF /* SearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E103341D9BA151003308CF /* SearchResultsController.swift */; };
 		44E7EABD1D93F9D1009DE983 /* StatisticsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E7EABC1D93F9D1009DE983 /* StatisticsTableViewCell.swift */; };
 		44E7EABF1D940285009DE983 /* ActivityType.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44E7EABE1D940285009DE983 /* ActivityType.xib */; };
@@ -219,6 +220,7 @@
 		44C7967C1D5EF65D000118C5 /* Project-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Project-Prefix.pch"; sourceTree = "<group>"; };
 		44D6FFD31D67151200B3F9D8 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		44D6FFD61D67233E00B3F9D8 /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
+		44DC44961DAB81930017D626 /* StatsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsTableViewCell.swift; sourceTree = "<group>"; };
 		44E103341D9BA151003308CF /* SearchResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsController.swift; sourceTree = "<group>"; };
 		44E7EABC1D93F9D1009DE983 /* StatisticsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsTableViewCell.swift; sourceTree = "<group>"; };
 		44E7EABE1D940285009DE983 /* ActivityType.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityType.xib; sourceTree = "<group>"; };
@@ -623,6 +625,7 @@
 		477811651D4879A8003B01A4 /* History */ = {
 			isa = PBXGroup;
 			children = (
+				44DC44961DAB81930017D626 /* StatsTableViewCell.swift */,
 				444CE0F61D6C5A3F0044FBD9 /* HistoryTableViewCell.swift */,
 				444CE0F71D6C5A3F0044FBD9 /* SlideHistoryCollectionViewCell.swift */,
 				444CE0F81D6C5A3F0044FBD9 /* CenterCellCollectionViewFlowLayout.swift */,
@@ -972,6 +975,7 @@
 				44524A1D1D54B8C800CC21C8 /* StartActivityViewController.swift in Sources */,
 				446103DE1D77FB4B0084E20A /* DownloadFromBlob.swift in Sources */,
 				4457FFE21D59C19A0097C598 /* ActivityDetailsViewController.swift in Sources */,
+				44DC44971DAB81930017D626 /* StatsTableViewCell.swift in Sources */,
 				470CF8971D24FB010001B3BC /* AddFriendsViewController.swift in Sources */,
 				446624101D6B3B8900B65BAA /* AlertView.swift in Sources */,
 				470B1B621D27A5A100E3B5B0 /* SWRevealViewController.m in Sources */,
