@@ -1057,10 +1057,11 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         
         
+//        // Create a new CircleView
+//        let circleView = CircleView(frame: CGRectMake((UIScreen.mainScreen().bounds.width/2)/2-70, 30, circleWidth, circleHeight))
+        
         // Create a new CircleView
-        let circleView = CircleView(frame: CGRectMake((UIScreen.mainScreen().bounds.width/2)/2-55, 20, circleWidth, circleHeight))
-        
-        
+        let circleView = CircleView(frame: CGRectMake(self.cView.frame.width/2-50, 30, circleWidth, circleHeight))
         
         cView.addSubview(circleView)
         
@@ -1107,7 +1108,106 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
     }
     
-    
+//    
+//    // MARK:- FUNC ADD CIRCLE VIEW
+//    func addCircleView()
+//        
+//    {
+//        
+//        let circleWidth = CGFloat(100)
+//        let circleHeight = circleWidth
+//        
+//        
+//        //////////////////////////////////
+//        
+//        let labelY = cView.frame.height/2 - 10
+//        
+//        let label = UILabel(frame: CGRectMake(0,labelY, self.cView.frame.width, 15))
+//        
+//        label.textAlignment = NSTextAlignment.Center
+//        label.text = "$" + " " + RaisedAmount
+//        
+//        label.font = label.font.fontWithSize(14)
+//        
+//        
+//        self.cView.addSubview(label)
+//        
+//        
+//        
+//        
+//        //////////////////////////////////
+//        
+//        let RaisedLabelY = label.frame.origin.y + 10
+//        
+//        let RaisedLabel = UILabel(frame: CGRectMake(0, RaisedLabelY+5, self.cView.frame.width, 15))
+//        
+//        
+//        RaisedLabel.textAlignment = NSTextAlignment.Center
+//        RaisedLabel.text = "Raised"
+//        RaisedLabel.font = RaisedLabel.font.fontWithSize(12)
+//        
+//        RaisedLabel.textColor = colorCode.DarkGrayColor
+//        
+//        self.cView.addSubview(RaisedLabel)
+//        
+//        cView.addSubview(label)
+//        cView.addSubview(RaisedLabel)
+//        
+//        
+//        
+//        
+//        // Create a new CircleView
+//        let circleView = CircleView(frame: CGRectMake((UIScreen.mainScreen().bounds.width/2)/2-55, 20, circleWidth, circleHeight))
+//        
+//        
+//        
+//        cView.addSubview(circleView)
+//        
+//        cView.addSubview(label)
+//        cView.addSubview(RaisedLabel)
+//        
+//        
+//        // Animate the drawing of the circle over the course of 1 second
+//        
+//        ////////print(GoalAmount);
+//        
+//        ////////print(RaisedAmount);
+//        
+//        
+//        
+//        let calValue = Float(RaisedAmount)! / Float(GoalAmount)!
+//        
+//        let formatedValue =  String(format: "%.2f",calValue)
+//        
+//        ////////print(formatedValue)
+//        
+//        var cgFloatValue = CGFloat()
+//        
+//        if Float(formatedValue) > 1
+//        {
+//            
+//            cgFloatValue = 1.00
+//            
+//            
+//        }
+//            
+//        else
+//        {
+//            
+//            cgFloatValue = CGFloat(Float(formatedValue)!)
+//            
+//        }
+//        
+//        ////////print(cgFloatValue)
+//        
+//        
+//        circleView.animateCircle(5, progress:cgFloatValue)
+//        
+//        
+//    }
+//    
+//
+//    
     
     override func viewDidAppear(animated: Bool)
     {

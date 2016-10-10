@@ -1603,6 +1603,11 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
     {
         
         
+        
+        RemoveNoInternet();
+        RemoveNoResult();
+
+        
         CommonFunctions.showActivityIndicator(view)
         
         self.requestId.removeAll()

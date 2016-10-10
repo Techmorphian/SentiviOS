@@ -1547,7 +1547,8 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                         NSOperationQueue.mainQueue().addOperationWithBlock
                             {
                                 
-                                
+                                self.inviteButton.hidden = false
+
                                 self.searchTextField.hidden = false
                                 
                                 self.searchCancelButton.hidden = false
@@ -1556,6 +1557,8 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                                 self.searchIcon.hidden = false
                                 
                                 self.upperViewHeightConstraint.constant = 100
+                                
+                                
                                 
 
                                 
@@ -2057,17 +2060,24 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         
         super.viewDidLoad()
         
+        /// while data loads hiding  inviteButton showing on only sucess
+        self.inviteButton.hidden = true
         
-    
+        
+        self.searchTextField.hidden = true
+        
+        self.searchCancelButton.hidden = true
+        
+        
+        self.searchIcon.hidden = true
+        
+        self.upperViewHeightConstraint.constant = 65
+
+      
         
         EmailContacts = [];
         
         
-        
-
-        
-        
-     
         self.searchTextField.delegate = self;
         self.searchTextField.autocorrectionType = .No
        

@@ -89,7 +89,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
     @IBOutlet var frontView: UIView!
     
     
-    @IBOutlet var bottomFrontView: UIView!
+   
     
     
     @IBOutlet var ChallengeImageView: UIImageView!
@@ -875,7 +875,8 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                     
                                 }
                                 
-                              else
+                                if amountPerMile != "1.0" &&  amountPerMile !=  "1.5" && amountPerMile !=  "2.0"
+                                
                                 {
                                     
                                     let string = amountPerMile
@@ -993,7 +994,7 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
                                 }
                                 else
                                 {
-                                    maxAmountContributionTxtField.text =  "0"
+                                   // maxAmountContributionTxtField.text =  "0"
                                     
                                 }
                                 
@@ -1918,6 +1919,17 @@ class CauseFirSummaryViewController: UIViewController,NSURLSessionDelegate,NSURL
         
     }
 
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        registerForKeyboardNotifications();
+    }
+    
+    
+    override func viewDidDisappear(animated: Bool)
+    {
+        deregisterFromKeyboardNotifications();
+    }
 
     
     override func viewDidLoad()

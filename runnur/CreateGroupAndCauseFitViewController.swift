@@ -2987,13 +2987,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         
         //MARK:-  padding views
         
-        ///////// padding views in text fileds
-        
-        let paddingView2 = UIView(frame: CGRectMake(0, 0, 20, self.maxAmountContributionTxtField.frame.height))
-        maxAmountContributionTxtField.leftView = paddingView2
-        maxAmountContributionTxtField.leftViewMode = UITextFieldViewMode.Always
-
-        
+             
         ///////// padding views in text fileds
         
         let paddingView1 = UIView(frame: CGRectMake(0, 0, 10, self.nameOfChallenge.frame.height))
@@ -3034,6 +3028,9 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
 
         let placeholder7 = NSAttributedString(string: "0", attributes: [NSForegroundColorAttributeName:UIColor(red: 139/255, green: 139/255, blue: 139/255, alpha: 1)])
         setBetAmountperMileTxtFld.attributedPlaceholder = placeholder7
+        
+        let placeholder8 = NSAttributedString(string: "0", attributes: [NSForegroundColorAttributeName:UIColor(red: 139/255, green: 139/255, blue: 139/255, alpha: 1)])
+        maxAmountContributionTxtField.attributedPlaceholder = placeholder8
 
         
     }

@@ -1472,6 +1472,19 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         super.viewDidLoad()
         
         
+        
+        self.searchTextField.hidden = true
+        
+        self.searchCancelButton.hidden = true
+        
+        
+        self.searchIcon.hidden = true
+        
+        self.upperViewHeightConstraint.constant = 65
+
+        
+        
+        
                 
         //// push notification
         

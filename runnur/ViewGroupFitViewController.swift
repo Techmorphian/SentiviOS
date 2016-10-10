@@ -62,6 +62,8 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         {
            
             self.presentingViewController.self!.presentingViewController!.dismissViewControllerAnimated(true, completion: nil);
+            
+             // self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil);
 
             
         }

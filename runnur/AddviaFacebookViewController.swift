@@ -652,6 +652,15 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
             
             
              self.doneButton.hidden = false
+                      
+            self.searchTextField.hidden = false
+            self.searchIcon.hidden = false
+            
+            self.icCancelImageView.hidden = false
+            
+            self.upperViewHeightConstraint.constant = 100
+            
+
 
             self.label.hidden = true;
             
@@ -1569,6 +1578,19 @@ class AddviaFacebookViewController: UIViewController,UITableViewDataSource,UITab
     {
         super.viewDidLoad()
               
+        
+        /// while data loads hiding  addButton  and  searchTextField showing on only sucess
+        
+        self.doneButton.hidden = true
+        self.searchTextField.hidden = true
+        
+                      
+        self.searchIcon.hidden = true
+        
+        self.upperViewHeightConstraint.constant = 65
+
+        
+        
         
         
         ////// push notification

@@ -603,22 +603,29 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     
     var noOfRowsCount = 0
     
+    
+//    if PBFriendsFilterArray[indexPath.row].Email.count > 1
+//    {
+//    
+//    for entry in PBFriendsFilterArray[indexPath.row].Email
+//    {
+
     func filterValues()
     
     {
        
         print(PBArray.count)
-//        
+        
 //        for i in 0 ..< PBArray.count
 //        {
 //            
-//            print(PBArray[i].Email)
-//           
+//            //print(PBArray[i].Email)
+//            
 //            for j in PBArray[i].Email
 //            {
 //                for k in friendListArray
 //                {
-//                   
+//                    
 //                    
 //                    if k.Email[0] == j
 //                        
@@ -626,8 +633,28 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
 //                        print(PBArray[i].Email)
 //                        
 //                        PBArray[i].toShow = false
-//                        return;
+//                        break;
 //                    }
+////
+////                    for t in  k.Email[0]
+////                    {
+////                        
+////                        print(k.Email)
+////                        
+////                        if t == j
+////                        {
+////                            PBArray[i].toShow = false
+////                            break;
+////
+////                        }
+////                        
+////                        
+////                    }
+//                    
+//                   
+//                  //  for
+//
+//                    
 //                    
 //                }
 //                
@@ -635,64 +662,96 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
 //            
 //        }
         
-        
         for i in 0 ..< PBArray.count
         {
             
-            print(PBArray[i].Email)
+            //print(PBArray[i].Email)
             
-            for j in PBArray[i].Email
+            for j in friendListArray
             {
-                for k in friendListArray
+                for k in 0 ..< PBArray[i].Email.count
+
                 {
                     
-                    
-                    if k.Email[0] == j
+                   // let pb = k.inde
+                
+                    if j.Email[0] == PBArray[i].Email[k]
                         
                     {
-                        print(PBArray[i].Email)
+                       
                         
-                        PBArray[i].toShow = false
+                       
+                       PBArray[i].Email.removeAtIndex(k)
+                        
+                         print(PBArray[i].Email)
+                        
+                        
+                        //PBArray[i].toShow = false
                         break;
                     }
+//                    if PBArray[i].Email.count == 0
+//                    {
+//                       PBArray[i].toShow = false
+//                    }
+                    
+                    //
+                    //                    for t in  k.Email[0]
+                    //                    {
+                    //
+                    //                        print(k.Email)
+                    //
+                    //                        if t == j
+                    //                        {
+                    //                            PBArray[i].toShow = false
+                    //                            break;
+                    //
+                    //                        }
+                    //
+                    //                        
+                    //                    }
+                    
+                    
+                    //  for
+                    
                     
                 }
                 
             }
             
         }
+
         
         print(PBArray.count)
         
         
-        for h in 0 ..< PBArray.count
-        {
-            
-            
-            if   PBArray[h].toShow == true
-            {
-                
-                PBFriendsFilterModel = phoneBookModel()
-                
-                PBFriendsFilterModel.firstName = PBArray[h].firstName
-                PBFriendsFilterModel.lastName = PBArray[h].lastName
-                
-                PBFriendsFilterModel.Email = PBArray[h].Email
-                
-                PBFriendsFilterModel.contImages = PBArray[h].contImages
-                
-                PBFriendsFilterModel.isSelected = PBArray[h].isSelected
-                
-                self.label.hidden = true;
-                
-                PBFriendsFilterArray.append(PBFriendsFilterModel)
-                
-                print(PBFriendsFilterArray.count)
-                
-                
-            }
-            
-        }
+//        for h in 0 ..< PBArray.count
+//        {
+//            
+//            
+//            if   PBArray[h].toShow == true
+//            {
+//                
+//                PBFriendsFilterModel = phoneBookModel()
+//                
+//                PBFriendsFilterModel.firstName = PBArray[h].firstName
+//                PBFriendsFilterModel.lastName = PBArray[h].lastName
+//                
+//                PBFriendsFilterModel.Email = PBArray[h].Email
+//                
+//                PBFriendsFilterModel.contImages = PBArray[h].contImages
+//                
+//                PBFriendsFilterModel.isSelected = PBArray[h].isSelected
+//                
+//                self.label.hidden = true;
+//                
+//                PBFriendsFilterArray.append(PBFriendsFilterModel)
+//                
+//                print(PBFriendsFilterArray.count)
+//                
+//                
+//            }
+//            
+//        }
 
         
         
@@ -811,28 +870,28 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
 //            
 //            {
             
-            if PBFriendsFilterArray[indexPath.row].firstName + PBFriendsFilterArray[indexPath.row].lastName != ""
+            if PBArray[indexPath.row].firstName + PBArray[indexPath.row].lastName != ""
             {
             
 
-            cell.friendsNameLabel.text = PBFriendsFilterArray[indexPath.row].firstName + " " + PBFriendsFilterArray[indexPath.row].lastName
+            cell.friendsNameLabel.text = PBArray[indexPath.row].firstName + " " + PBFriendsFilterArray[indexPath.row].lastName
             
             }
             else
             {
                 
-                cell.friendsNameLabel.text  = PBFriendsFilterArray[indexPath.row].Email[0]
+                cell.friendsNameLabel.text  = PBArray[indexPath.row].Email[0]
                 
             }
                 
             
-            if PBFriendsFilterArray[indexPath.row].contImages != nil
+            if PBArray[indexPath.row].contImages != nil
             {
                 
              
                 
                 
-                cell.contactImage.image = UIImage(data: PBFriendsFilterArray[indexPath.row].contImages!)
+                cell.contactImage.image = UIImage(data: PBArray[indexPath.row].contImages!)
 
                 
 
@@ -845,7 +904,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             }
 
 
-            if PBFriendsFilterArray[indexPath.row].isSelected == true
+            if PBArray[indexPath.row].isSelected == true
             {
                 cell.setSelected(true, animated: false);
                  cell.selectedUnselectedImageView.image = UIImage(named: "ic_checked")
@@ -984,8 +1043,8 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             
             
             ///// append values
-            selectedFristName.append(PBFriendsFilterArray[indexPath.row].firstName)
-            selectedLastName.append(PBFriendsFilterArray[indexPath.row].lastName)
+            selectedFristName.append(PBArray[indexPath.row].firstName)
+            selectedLastName.append(PBArray[indexPath.row].lastName)
             
             
             
@@ -998,13 +1057,13 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             print(selectedIndex)
 
             cell.setSelected(true, animated: false);
-            PBFriendsFilterArray[indexPath.row].isSelected=true;
+            PBArray[indexPath.row].isSelected=true;
             
             
             
            /// mark:- action sheet
             
-            if PBFriendsFilterArray[indexPath.row].Email.count > 1
+            if PBArray[indexPath.row].Email.count > 1
             {
             
             
@@ -1012,7 +1071,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                                                              preferredStyle: UIAlertControllerStyle.ActionSheet);
                 
                 
-                    for entry in PBFriendsFilterArray[indexPath.row].Email
+                    for entry in PBArray[indexPath.row].Email
                     {
                         
                         
@@ -1031,7 +1090,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                                 
                                // self.selectedEmail.removeAll();
                                 
-                             
+                                 /// selected email(title) id append in selectedEmail
                                 
                                self.selectedEmail.append(title)
                                 
@@ -1060,7 +1119,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             
             {
                 
-                  selectedEmail.append(PBFriendsFilterArray[indexPath.row].Email[0])
+                  selectedEmail.append(PBArray[indexPath.row].Email[0])
                  cell.selectedUnselectedImageView.image = UIImage(named: "ic_checked")
                 
             }
@@ -1860,7 +1919,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                                                      self.PBModel.Email.append(email as! String);
                     
                                                         
-                                                       // print(self.PBModel.Email)
+                                                    print(self.PBModel.Email)
                     
                                                     }
                     
@@ -2016,11 +2075,11 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
                                     {
                                     
                                         
-                                        self.numberOfRows = true
+                                      self.numberOfRows = true
                                         
                                       self.PBArray.append(self.PBModel);
                                        
-                                        print(self.PBArray.count)
+                                     print(self.PBArray.count)
 
                                      self.PBArray  = self.PBArray.reduce([]) { $0.contains($1) ? $0 : $0 + [$1] }
                                         
