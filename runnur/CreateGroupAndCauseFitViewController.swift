@@ -284,6 +284,14 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
              
     }
     
+   var betAmount = Int()
+    
+    var challengeName = String()
+    
+    
+    var startDate  = String()
+    var endDate  = String()
+
     
   //  MARK:- CREATE BUTTON ACTION
     
@@ -446,7 +454,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                 self.createCauseFit()
                 
             }
-                
+             ////////// group fit
             else
             {
                 
@@ -506,8 +514,69 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                     return
                 }
               
+                betAmount = Int(setBetAmountTextField.text!)!
+                challengeName = nameOfChallenge.text!
                 
-                createGroupFit();
+                let Description = challengeDescription.text!
+                
+                if Description ==  "Challenge description"
+                {
+                    descriptionText = ""
+                }
+                else
+                {
+                    descriptionText = challengeDescription.text!
+                    
+                }
+
+                let StartDate = NSUserDefaults.standardUserDefaults().stringForKey("startDate")
+                
+                startDate = StartDate!
+                
+                let EndDate = NSUserDefaults.standardUserDefaults().stringForKey("endDate")
+
+                endDate = EndDate!
+                
+                let GP  = self.storyboard?.instantiateViewControllerWithIdentifier("CreateGroupFitWebViewViewController") as! CreateGroupFitWebViewViewController;
+                
+                
+                  GP.betAmount = betAmount
+                  GP.challengeName = challengeName
+                
+                GP.descriptionText = descriptionText
+                
+                GP.ParameterTypeId = ParameterTypeId
+                
+                GP.activityTypeId = activityTypeId
+                
+                GP.FirstWinner = FirstWinner
+                
+                  GP.secondWinner = secondWinner
+                
+                  GP.thirdWinner = thirdWinner
+                
+                GP.startDate = startDate
+                
+                GP.endDate = endDate
+                
+                self.presentViewController(GP,animated :false , completion:nil);
+                
+                
+                
+               
+                
+                
+          
+                
+             
+                
+               // ParameterType = ParameterTypeId
+
+                //createGroupFit();
+                
+                
+                
+                
                 
             }/// else close
             

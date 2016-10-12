@@ -163,15 +163,17 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
        //tableViewCell.transform = CGAffineTransformInvert(tableViewCell.transform)
     
+        print("cell for row index :\(indexPath.row)")
+      
         
         if activityChatArray[indexPath.row].isFromUserChat == true
         {
-//            
-//            activityChatArray[indexPath.row].isFromChat = false
-//            
-//            activityChatArray[indexPath.row].isFromActivity = false
-//            
-//            activityChatArray[indexPath.row].isFromUserActivity = false
+           
+            activityChatArray[indexPath.row].isFromChat = false
+            
+            activityChatArray[indexPath.row].isFromActivity = false
+            
+            activityChatArray[indexPath.row].isFromUserActivity = false
             
             
             let cell:userChatTableViewCell = tableView.dequeueReusableCellWithIdentifier("userChatTableViewCell")as!
@@ -255,22 +257,22 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             
                         } /// if close
                         
-                        tableViewCell = cell
+                    tableViewCell = cell
             
-            
+            //return nil
             
             
         }
         
         
-        if activityChatArray[indexPath.row].isFromChat == true
+       else  if activityChatArray[indexPath.row].isFromChat == true
         {
            
-//            activityChatArray[indexPath.row].isFromUserChat = false
-//            
-//            activityChatArray[indexPath.row].isFromActivity = false
-//            
-//            activityChatArray[indexPath.row].isFromUserActivity = false
+            activityChatArray[indexPath.row].isFromUserChat = false
+            
+            activityChatArray[indexPath.row].isFromActivity = false
+            
+            activityChatArray[indexPath.row].isFromUserActivity = false
 
             
             
@@ -356,20 +358,21 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             tableViewCell = cell
             
+           // return cell
             
         }
 
-     if activityChatArray[indexPath.row].isFromUserActivity == true
+    else if activityChatArray[indexPath.row].isFromUserActivity == true
         
         {
             
             
-//            
-//            activityChatArray[indexPath.row].isFromChat = false
-//
-//            activityChatArray[indexPath.row].isFromUserChat = false
-//            
-//            activityChatArray[indexPath.row].isFromActivity = false
+            
+            activityChatArray[indexPath.row].isFromChat = false
+
+            activityChatArray[indexPath.row].isFromUserChat = false
+            
+            activityChatArray[indexPath.row].isFromActivity = false
             
             
                     let cell:userActivityTableViewCell = tableView.dequeueReusableCellWithIdentifier("userActivityTableViewCell")as!
@@ -492,21 +495,22 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 
             } /// if close
             
-        tableViewCell =  cell
+       tableViewCell =  cell
         
+     
         
         }
         
-   if activityChatArray[indexPath.row].isFromActivity == true
+   else if activityChatArray[indexPath.row].isFromActivity == true
         
     {
                     
-//                    activityChatArray[indexPath.row].isFromUserChat = false
-//
-//                    activityChatArray[indexPath.row].isFromChat = false
-//                    
-//                    activityChatArray[indexPath.row].isFromUserActivity = false
-//        
+                    activityChatArray[indexPath.row].isFromUserChat = false
+
+                    activityChatArray[indexPath.row].isFromChat = false
+                    
+                    activityChatArray[indexPath.row].isFromUserActivity = false
+        
         
         
                         let cell:activityTableViewCell = tableView.dequeueReusableCellWithIdentifier("activityTableViewCell")as!
@@ -645,16 +649,23 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     } /// if close
                     
                     
-          tableViewCell.setNeedsUpdateConstraints()
-          tableViewCell.updateConstraintsIfNeeded()
+//          tableViewCell.setNeedsUpdateConstraints()
+//          tableViewCell.updateConstraintsIfNeeded()
         
        
         
-            tableViewCell =  cell
-                    
+         tableViewCell =  cell
+        
+        
+       
                     
         }
-                
+//        else
+//        {
+//           print("blanck cell")
+//        
+//        }
+        
         
         return tableViewCell
         
@@ -670,6 +681,34 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     {
         selectedRunID = indexPath.row
+        print(selectedRunID)
+        
+          print("on click index path row:\(indexPath.row)")
+        
+        if activityChatArray[indexPath.row].isFromUserChat == true
+        {
+            
+             print("on click index path row:\(indexPath.row)")
+        }
+        if activityChatArray[indexPath.row].isFromChat == true
+        {
+            
+              print("on click index path row:\(indexPath.row)")
+        }
+        
+        if activityChatArray[indexPath.row].isFromUserActivity == true
+                    
+        {
+               print("on click index path row:\(indexPath.row)")
+                    
+        }
+        
+        if activityChatArray[indexPath.row].isFromActivity == true
+                        
+        {
+               print("on click index path row:\(indexPath.row)")
+        }
+        
     }
 
 
@@ -713,7 +752,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
        let check = indexPath.row
         
                 
-        if (check <= 5 && shouldCallPagging && false)
+        if (check <= 2 && shouldCallPagging)
         {
             
             //// making it false so that it can call at ones 
@@ -727,9 +766,8 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             self.loadingView.removeFromSuperview();
             
+            //to call webservice again with currentDate- 6 days as currentDate so that it returns the next 5 days data
             lastDateSent = CurrentDateFunc.getSubtractedDate(lastDateSent)
-            
-           
             
             SShowActivityIndicatory()
             self.activityInfo();
@@ -886,7 +924,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
        
     
         
-        print(postString)
+        print(" URL STRING IS \(postString)")
         
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -1046,8 +1084,6 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 
                  print("i have got response")
                 
-              
-                
 //                self.ActivityTableView.transform =  CGAffineTransformMakeScale(1,-1);
 //                
 //            
@@ -1071,14 +1107,14 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                    NSUserDefaults.standardUserDefaults().setObject(morePagging, forKey: "userStatus");
                   
                     
-                    
-                    self.activityModel.isFromActivity = false
-                    
-                    self.activityModel.isFromUserActivity = false
-                    
-                    self.activityModel.isFromChat = false
-                    
-                    self.activityModel.isFromUserChat = false
+//                    
+//                    self.activityModel.isFromActivity = false
+//                    
+//                    self.activityModel.isFromUserActivity = false
+//                    
+//                    self.activityModel.isFromChat = false
+//                    
+//                    self.activityModel.isFromUserChat = false
 
 
                     
@@ -1090,18 +1126,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         
                         shouldCallPagging = true
                         
-                        
-//                        self.activityModel.isFromActivity = false
-//                       
-//                        self.activityModel.isFromUserActivity = false
-//                        
-//                        
-//                        self.activityModel.isFromChat = false
-//                        
-//                        self.activityModel.isFromUserChat = false
-//                        
-
-
+                   
                         
                     }
                     else
@@ -1167,19 +1192,6 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                         if let activityData = elements[i]["data"]
                                         {
                                             
-                                           
-                                            
-//                                            self.activityModel.isFromChat = false
-//                                            
-//                                            self.activityModel.isFromUserChat = false
-//                                            
-//                                            //////////////////////////////////////////////
-//                                            
-//                                            self.activityModel.isFromActivity = true
-//                                            
-//                                            self.activityModel.isFromUserActivity = true
-                                            
-                                            
                                             
                                             /////////////////////
                                             
@@ -1201,10 +1213,10 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                                 
                                                 self.activityModel.isFromActivity = false
                                                 
-                                                
-                                                self.activityModel.isFromUserChat = false
-                                                
-                                                self.activityModel.isFromChat = false
+//                                                
+//                                                self.activityModel.isFromUserChat = false
+//                                                
+//                                                self.activityModel.isFromChat = false
 
 
                                                 
@@ -1217,9 +1229,9 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                                 
                                                 self.activityModel.isFromUserActivity = false
                                                 
-                                                self.activityModel.isFromUserChat = false
-                                                
-                                                self.activityModel.isFromChat = false
+//                                                self.activityModel.isFromUserChat = false
+//                                                
+//                                                self.activityModel.isFromChat = false
 
 
                                                 
@@ -1412,9 +1424,9 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                                 self.activityModel.isFromChat = false
                                                 
                                                 
-                                                self.activityModel.isFromUserActivity = false
-                                                
-                                                self.activityModel.isFromActivity = false
+//                                                self.activityModel.isFromUserActivity = false
+//                                                
+//                                                self.activityModel.isFromActivity = false
 
                                                 
                                             }
@@ -1426,9 +1438,9 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                                 
                                                 self.activityModel.isFromUserChat = false
                                                 
-                                                self.activityModel.isFromUserActivity = false
-                                                
-                                                self.activityModel.isFromActivity = false
+//                                                self.activityModel.isFromUserActivity = false
+//                                                
+//                                                self.activityModel.isFromActivity = false
                                                 
                                             }
                                             
@@ -1607,7 +1619,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                         let indexes = self.ActivityTableView.indexPathsForVisibleRows
                                         
                                         ///after apending data scrolling should not happend automatically
-                                        self.beforeContentSize = self.ActivityTableView.contentSize;
+                                    //    self.beforeContentSize = self.ActivityTableView.contentSize;
                                         
                                          self.ActivityTableView.beginUpdates()
                                         
@@ -1617,8 +1629,8 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                         
                                         ///after apending data scrolling should not happend automatically
                                         
-                                        self.afterContentSize = self.ActivityTableView.contentSize;
-                                        self.afterContentOffset = self.ActivityTableView.contentOffset;
+                                    //    self.afterContentSize = self.ActivityTableView.contentSize;
+                                    //    self.afterContentOffset = self.ActivityTableView.contentOffset;
                                         
 //                                        self.ActivityTableView.contentOffset = CGPoint(x: self.afterContentOffset.x, y: self.afterContentOffset.y + self.afterContentSize.height - self.beforeContentSize.height)
                                         
@@ -1641,23 +1653,23 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
 //                                            self.activityChatArray.append(self.activityChatArray[arrayIndex])
 //                                        }
 //                                        
-                                        for i in self.activityChatArray
-                                        {
-                                            
-                                            print(i.message)
-                                            
-                                        }
+//                                        for i in self.activityChatArray
+//                                        {
+//                                            
+//                                            print(i.message)
+//                                            
+//                                        }
                                         
                                         self.activityChatArray = self.activityChatArray.reverse();
                                         
                                         
-                                        
-                                        for i in self.activityChatArray
-                                        {
-                                            
-                                          print(i.message)
-                                            
-                                        }
+//                                        
+//                                        for i in self.activityChatArray
+//                                        {
+//                                            
+//                                          print(i.message)
+//                                            
+//                                        }
                                         
                                         
                                         print(self.activityChatArray.count)
@@ -1946,37 +1958,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         self.activityModel=ViewActivityModel()
                         
                         
-                                let message = messageTextView.text
-                             
-                                if message != ""
-                                {
-                                    self.activityModel.message = message!
-                                }
-
-                                
-                                let currentdate = NSDate()
-                        
-                             //   ////print(currentdate)
-                        
-                              let dateFormatter1 = NSDateFormatter()
-                        
-                              dateFormatter1.timeZone = NSTimeZone(name: "UTC")
-                        
-                              dateFormatter1.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                        
-                              let date = dateFormatter1.stringFromDate(currentdate)
-                        
-                        //    ////print(date)
-
-                                
-                                if date != ""
-                                {
-                                    self.activityModel.createdAt = date
-
-                                    
-                                }
-                                
-                                let userId = NSUserDefaults.standardUserDefaults().stringForKey("userId")
+                        let userId = NSUserDefaults.standardUserDefaults().stringForKey("userId")
                                 
                                 if userId != ""
                                 {
@@ -2001,6 +1983,39 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
 
                                     
                                 }
+                        
+                        
+                        
+                        let message = messageTextView.text
+                        
+                        if message != ""
+                        {
+                            self.activityModel.message = message!
+                        }
+                        
+                        
+                        let currentdate = NSDate()
+                        
+                        //   ////print(currentdate)
+                        
+                        let dateFormatter1 = NSDateFormatter()
+                        
+                        dateFormatter1.timeZone = NSTimeZone(name: "UTC")
+                        
+                        dateFormatter1.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                        
+                        let date = dateFormatter1.stringFromDate(currentdate)
+                        
+                        //    ////print(date)
+                        
+                        
+                        if date != ""
+                        {
+                            self.activityModel.createdAt = date
+                            
+                            
+                        }
+
                         
                             let firstName = NSUserDefaults.standardUserDefaults().stringForKey("firstName")
                         
@@ -3735,7 +3750,16 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
       self.ActivityTableView.estimatedRowHeight = 100;
         self.ActivityTableView.rowHeight = UITableViewAutomaticDimension;
         
+        ActivityTableView.tableFooterView = UIView(frame: CGRect.zero)
         
+        
+        
+         ActivityTableView.tableFooterView = nil
+        
+        self.ActivityTableView.separatorColor = UIColor.clearColor()
+        
+        
+
         if Reachability.isConnectedToNetwork() == true
         {
             print("calling wb")
@@ -3827,7 +3851,9 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
       
          //////////////////////////////////////////////
-        ActivityTableView.tableFooterView = UIView()
+      //  ActivityTableView.tableFooterView = UIView()
+        
+        ActivityTableView.tableFooterView = UIView(frame: CGRect.zero)
         
         self.ActivityTableView.separatorColor = UIColor.clearColor()
         

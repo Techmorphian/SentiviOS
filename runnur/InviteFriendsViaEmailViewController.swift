@@ -20,7 +20,7 @@ class InviteFriendsViaEmailViewController: UIViewController,UITextFieldDelegate,
     {
         
         
-        delegate.EmailIds = EmailIds
+       // delegate.EmailIds = EmailIds
         self.dismissViewControllerAnimated(false, completion: nil);
         
         
@@ -369,7 +369,7 @@ class InviteFriendsViaEmailViewController: UIViewController,UITextFieldDelegate,
                                 
                                 self.emailIdTextField.resignFirstResponder();
                                 
-                                 self.delegate.EmailIds = self.EmailIds
+                                // self.delegate.EmailIds = self.EmailIds
                                 
 
                                 

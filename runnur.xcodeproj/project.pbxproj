@@ -73,6 +73,7 @@
 		470CF8A31D2508140001B3BC /* AddviaFacebookCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CF8A21D2508140001B3BC /* AddviaFacebookCellTableViewCell.swift */; };
 		470CF8A51D25082C0001B3BC /* AddviaGoogleCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CF8A41D25082C0001B3BC /* AddviaGoogleCellTableViewCell.swift */; };
 		470CF8A71D252F540001B3BC /* AddManuallyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CF8A61D252F540001B3BC /* AddManuallyViewController.swift */; };
+		4710900D1DAE6FF50000C248 /* CreateGroupFitWebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4710900C1DAE6FF50000C248 /* CreateGroupFitWebViewViewController.swift */; };
 		4711C8BF1DA77A5A00E4ABC9 /* WinningsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4711C8BE1DA77A5A00E4ABC9 /* WinningsViewController.swift */; };
 		4711C8C21DA78C9600E4ABC9 /* TotalAmountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4711C8C11DA78C9600E4ABC9 /* TotalAmountTableViewCell.swift */; };
 		4711C8C41DA78CB500E4ABC9 /* TransctionsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4711C8C31DA78CB500E4ABC9 /* TransctionsListTableViewCell.swift */; };
@@ -216,6 +217,7 @@
 		470CF8A21D2508140001B3BC /* AddviaFacebookCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddviaFacebookCellTableViewCell.swift; sourceTree = "<group>"; };
 		470CF8A41D25082C0001B3BC /* AddviaGoogleCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddviaGoogleCellTableViewCell.swift; sourceTree = "<group>"; };
 		470CF8A61D252F540001B3BC /* AddManuallyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddManuallyViewController.swift; sourceTree = "<group>"; };
+		4710900C1DAE6FF50000C248 /* CreateGroupFitWebViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGroupFitWebViewViewController.swift; sourceTree = "<group>"; };
 		4711C8BE1DA77A5A00E4ABC9 /* WinningsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WinningsViewController.swift; path = ../WinningsViewController.swift; sourceTree = "<group>"; };
 		4711C8C11DA78C9600E4ABC9 /* TotalAmountTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalAmountTableViewCell.swift; sourceTree = "<group>"; };
 		4711C8C31DA78CB500E4ABC9 /* TransctionsListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransctionsListTableViewCell.swift; sourceTree = "<group>"; };
@@ -395,6 +397,7 @@
 		470CF87C1D24DC370001B3BC /*   */ = {
 			isa = PBXGroup;
 			children = (
+				4710900E1DAE700E0000C248 /* Group FIt Web View */,
 				4711C8C01DA77A7800E4ABC9 /* winnigs */,
 				472527FB1D828B1A007A53C9 /* Progress */,
 				470045E21D8040D50011805A /* LeaderBoard */,
@@ -437,6 +440,14 @@
 			);
 			name = " ";
 			path = runnur;
+			sourceTree = "<group>";
+		};
+		4710900E1DAE700E0000C248 /* Group FIt Web View */ = {
+			isa = PBXGroup;
+			children = (
+				4710900C1DAE6FF50000C248 /* CreateGroupFitWebViewViewController.swift */,
+			);
+			name = "Group FIt Web View";
 			sourceTree = "<group>";
 		};
 		4711C8C01DA77A7800E4ABC9 /* winnigs */ = {
@@ -926,6 +937,7 @@
 				473D0D841D49E87E004DDC07 /* animation1.swift in Sources */,
 				4785E06F1D744A7E0003ABC0 /* RequestsViewController.swift in Sources */,
 				47B8A8F81D45E2E100BACB83 /* ViewGroupFitViewController.swift in Sources */,
+				4710900D1DAE6FF50000C248 /* CreateGroupFitWebViewViewController.swift in Sources */,
 				445449261D534EC200995B45 /* ProfileViewController.swift in Sources */,
 				44524A1D1D54B8C800CC21C8 /* StartActivityViewController.swift in Sources */,
 				4457FFE21D59C19A0097C598 /* ActivityDetailsViewController.swift in Sources */,

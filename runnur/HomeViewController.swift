@@ -252,7 +252,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     {
         super.viewDidLoad();
         
-        self.call();
+        //self.call();
 //        
 //        let button = UIButton(type: UIButtonType.RoundedRect)
 //        button.frame = CGRectMake(20, 50, 100, 30)

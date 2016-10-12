@@ -591,7 +591,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         else
         {
             
-            return PBFriendsFilterArray.count
+            return PBArray.count
             
         }
         
@@ -601,159 +601,55 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
     
     ////// filrer values friend list and phonebook
     
-    var noOfRowsCount = 0
     
-    
-//    if PBFriendsFilterArray[indexPath.row].Email.count > 1
-//    {
-//    
-//    for entry in PBFriendsFilterArray[indexPath.row].Email
-//    {
-
     func filterValues()
     
     {
        
-        print(PBArray.count)
+       ///////////  existingFriendsIndex  is index of friendListArray
         
-//        for i in 0 ..< PBArray.count
-//        {
-//            
-//            //print(PBArray[i].Email)
-//            
-//            for j in PBArray[i].Email
-//            {
-//                for k in friendListArray
-//                {
-//                    
-//                    
-//                    if k.Email[0] == j
-//                        
-//                    {
-//                        print(PBArray[i].Email)
-//                        
-//                        PBArray[i].toShow = false
-//                        break;
-//                    }
-////
-////                    for t in  k.Email[0]
-////                    {
-////                        
-////                        print(k.Email)
-////                        
-////                        if t == j
-////                        {
-////                            PBArray[i].toShow = false
-////                            break;
-////
-////                        }
-////                        
-////                        
-////                    }
-//                    
-//                   
-//                  //  for
-//
-//                    
-//                    
-//                }
-//                
-//            }
-//            
-//        }
-        
-        for i in 0 ..< PBArray.count
+        for existingFriendsIndex in 0 ..< friendListArray.count
         {
             
-            //print(PBArray[i].Email)
+            //// phindex is index and contact is data on that index
             
-            for j in friendListArray
+            for (phindex,contact) in PBArray.enumerate()
             {
-                for k in 0 ..< PBArray[i].Email.count
-
+                
+                
+                for phEmailIndex in 0 ..< contact.Email.count
+                    
                 {
                     
-                   // let pb = k.inde
-                
-                    if j.Email[0] == PBArray[i].Email[k]
+                    ///// comparing friendList email with phone book email if match then removed
+                    if friendListArray[existingFriendsIndex].Email[0] == contact.Email[phEmailIndex]
                         
                     {
-                       
                         
-                       
-                       PBArray[i].Email.removeAtIndex(k)
+                        PBArray[phindex].Email.removeAtIndex(phEmailIndex)
                         
-                         print(PBArray[i].Email)
+                        if PBArray[phindex].Email.count == 0
+                            
+                        {
+                            
+                            /// removing from PBArray
+                            PBArray.removeAtIndex(phindex)
+                         
+                            
+                        }
                         
-                        
-                        //PBArray[i].toShow = false
                         break;
                     }
-//                    if PBArray[i].Email.count == 0
-//                    {
-//                       PBArray[i].toShow = false
-//                    }
-                    
-                    //
-                    //                    for t in  k.Email[0]
-                    //                    {
-                    //
-                    //                        print(k.Email)
-                    //
-                    //                        if t == j
-                    //                        {
-                    //                            PBArray[i].toShow = false
-                    //                            break;
-                    //
-                    //                        }
-                    //
-                    //                        
-                    //                    }
-                    
-                    
-                    //  for
-                    
                     
                 }
-                
-            }
+
+            }  /// for close
             
-        }
-
+        }/// for close
+      
         
-        print(PBArray.count)
-        
-        
-//        for h in 0 ..< PBArray.count
-//        {
-//            
-//            
-//            if   PBArray[h].toShow == true
-//            {
-//                
-//                PBFriendsFilterModel = phoneBookModel()
-//                
-//                PBFriendsFilterModel.firstName = PBArray[h].firstName
-//                PBFriendsFilterModel.lastName = PBArray[h].lastName
-//                
-//                PBFriendsFilterModel.Email = PBArray[h].Email
-//                
-//                PBFriendsFilterModel.contImages = PBArray[h].contImages
-//                
-//                PBFriendsFilterModel.isSelected = PBArray[h].isSelected
-//                
-//                self.label.hidden = true;
-//                
-//                PBFriendsFilterArray.append(PBFriendsFilterModel)
-//                
-//                print(PBFriendsFilterArray.count)
-//                
-//                
-//            }
-//            
-//        }
-
-        
+      
+        //// if contactList.count == 0 && PBArray.count == 0 means all emails from phone book are added now their is no data that y we are showing msg ("Hurray!! You are already friends with all your Phonebook friends who have joined Sentiv")
         
         if  contactList.count == 0 && PBArray.count == 0
         {
@@ -874,7 +770,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             {
             
 
-            cell.friendsNameLabel.text = PBArray[indexPath.row].firstName + " " + PBFriendsFilterArray[indexPath.row].lastName
+            cell.friendsNameLabel.text = PBArray[indexPath.row].firstName + " " + PBArray[indexPath.row].lastName
             
             }
             else
@@ -887,13 +783,8 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             
             if PBArray[indexPath.row].contImages != nil
             {
-                
-             
-                
-                
+                             
                 cell.contactImage.image = UIImage(data: PBArray[indexPath.row].contImages!)
-
-                
 
             }
             else
@@ -918,7 +809,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
 
             }
                 
-       // }// to show close
+      //  }// to show close
         
 
         }
@@ -1193,14 +1084,14 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
         else
         {
             
-              PBFriendsFilterArray[indexPath.row].isSelected=false;
+              PBArray[indexPath.row].isSelected=false;
             
             cell.selectedUnselectedImageView.image = UIImage(named: "ic_uncheck")
             
             
             for i in selectedFristName
             {
-                if i == PBFriendsFilterArray[indexPath.row].firstName
+                if i == PBArray[indexPath.row].firstName
                 {
                     let index = selectedFristName.indexOf(i)
                     selectedFristName.removeAtIndex(index!)
@@ -1210,7 +1101,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             }
             for i in selectedLastName
             {
-                if i == PBFriendsFilterArray[indexPath.row].lastName
+                if i == PBArray[indexPath.row].lastName
                 {
                     let index = selectedLastName.indexOf(i)
                     selectedLastName.removeAtIndex(index!)
@@ -1222,7 +1113,7 @@ class AddviaContactsViewController: UIViewController,UITableViewDataSource,UITab
             for i in selectedEmail
             {
                 
-                for j in PBFriendsFilterArray[indexPath.row].Email
+                for j in PBArray[indexPath.row].Email
                 {
                     if j == i
                     {

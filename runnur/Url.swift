@@ -105,9 +105,12 @@ class Url
     
     
     
+    ///////////// Web view GP
     
     
     
+    static let groupFitCreator = baseUrl + "groupFitCreator.php"
+
     
     
     

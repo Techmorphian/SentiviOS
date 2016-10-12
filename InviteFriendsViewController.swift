@@ -13,10 +13,17 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
 
     
 /////////////////////////////////////////////////////////////////////
+  
+    //// this var for invite frnd section
     var inviteFrndsModel = inviteFriendsModel()
     
     var inviteFrndsArray = [inviteFriendsModel]()
     
+  ///////////////////////////////////////////////
+    
+    
+    //// this var for search invite frnd section
+
     var searchInviteFrndsModel = inviteFriendsModel()
     
     var searchInviteFrndsArray = [inviteFriendsModel]()
@@ -26,16 +33,21 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
     
     @IBOutlet var inviteButtonBottomViewHeightConst: NSLayoutConstraint!
     
+   //// this var for invite through Email  section
     var inviteEmailModel = inviteFriendsModel()
     
     var inviteEmailArray = [inviteFriendsModel]()
+    
+    
+    //////////////////////////////
+    //// this var for invite through Search Email  section
     
     var searchEmailModel = inviteFriendsModel()
     
     var searchEmailArray = [inviteFriendsModel]()
     
-    
-    var tempEmailStroed = [String]()
+    //////////////////////////////
+   
     
     var noInternet = NoInternetViewController()
     
@@ -59,9 +71,9 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
     
     
     
-    var EmailIds = [String]()
+   
     
-    /////// func no internet
+    /////// func no internet (removing no internet view)
     func RemoveNoInternet()
     {
         
@@ -84,12 +96,12 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                 
             }
             
-            
-            
         }
         
     }
     
+    /////// func RemoveNoFrinedResult (removing no friends result view)
+
     func RemoveNoFrinedResult()
     {
         
@@ -120,6 +132,8 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
     }
     
     
+ ///   RemoveNoResult func  (removing no result view)
+
     func RemoveNoResult()
     {
         if self.view.subviews.contains(self.noResult.view)
@@ -151,13 +165,14 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
     
     
 
+    // BACK BUTTON ACTION
     
     @IBAction func backButtonAction(sender: AnyObject)
     {
         
         self.dismissViewControllerAnimated(false, completion: nil)
       
-        print("Archana")
+     
         
         
     }
@@ -176,6 +191,8 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
     
    //MARK:- SEARCH CANCEL BUTTON ACTION
     
+    //// search text field cancel button on click cancel button  reloading data , show invited button, clearing search text, hiding label
+    
     @IBAction func searchCancelButtonAction(sender: AnyObject)
         {
             
@@ -185,18 +202,25 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             self.searchTextField.text = ""
             self.searchTextField.resignFirstResponder();
             
+            
+             self.searchButtonActive = false;
+             self.searchButtonActive2 = false;
             self.label.hidden = true;
             
              self.inviteButton.hidden = false
             
             self.InviteFriendsTableView.reloadData()
+            
+           
+          
      
             
     }
     @IBOutlet var addButton: UIButton!
     
     
-    
+   //MARK:- ADD BUTTON ACTION
+  //  on click add button perform segue ... which takes to the user invite Friends via Eamil screen
     @IBAction func addButtonAction(sender: AnyObject)
     {
         
@@ -212,13 +236,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         if segue.identifier == "inviteFriendsEamil"
         {
             
-            
-            
             let toViewController = segue.destinationViewController as! InviteFriendsViaEmailViewController
-            
-             toViewController.delegate = self
-            toViewController.EmailIds = EmailIds
-            
             
             
         }
@@ -232,8 +250,6 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
    //MARK:- INVITE FRNDS
     @IBAction func inviteButtonAction(sender: AnyObject)
     {
-        
-     
         inviteFriendsNetwork();
     }
     
@@ -247,6 +263,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         if(Reachability.isConnectedToNetwork()==true )
         {
             
+            //// if selectedFriends count == 0 means if any friend is not selected and click on invite button then show alert msg
             
             if selectedFriendsFristName.count == 0
             {
@@ -283,14 +300,9 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             alert.addAction(tryAgainAction)
             self.presentViewController(alert, animated: true, completion: nil)
             return
-
-            
             
             
         }
-        
-        
-        
         
         
     }
@@ -330,7 +342,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                 
                 self.searchInviteFrndsModel = inviteFriendsModel();
                 
-                   self.searchInviteFrndsModel.friendId = inviteFrndsArray[i].friendId;
+                self.searchInviteFrndsModel.friendId = inviteFrndsArray[i].friendId;
                 self.searchInviteFrndsModel.friendFirstName = inviteFrndsArray[i].friendFirstName;
                 self.searchInviteFrndsModel.friendLastName = inviteFrndsArray[i].friendLastName;
                 
@@ -359,30 +371,19 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         {
 
             
-            if let _ =  inviteEmailArray[i].InviteEmails.lowercaseString.rangeOfString(searchController.lowercaseString, options: .RegularExpressionSearch)
+            if let _ =  inviteEmailArray[i].friendEmailId.lowercaseString.rangeOfString(searchController.lowercaseString, options: .RegularExpressionSearch)
                 
             {
                 
                 self.searchEmailModel = inviteFriendsModel();
                 
-                self.searchEmailModel.InviteEmails = inviteEmailArray[i].InviteEmails
+               // self.searchEmailModel.InviteEmails = inviteEmailArray[i].InviteEmails
+               
                 
-                
-//                self.searchInviteFrndsModel.friendId = inviteFrndsArray[i].friendId;
-//                self.searchInviteFrndsModel.friendFirstName = inviteFrndsArray[i].friendFirstName;
-//                self.searchInviteFrndsModel.friendLastName = inviteFrndsArray[i].friendLastName;
-//                
-//                self.searchInviteFrndsModel.friendEmailId = inviteFrndsArray[i].friendEmailId;
-//                self.searchInviteFrndsModel.friendPhotoUrl = inviteFrndsArray[i].friendPhotoUrl;
-//                
-//                self.searchInviteFrndsModel.friendStatus = inviteFrndsArray[i].friendStatus;
-//                
-//                self.searchInviteFrndsModel.isSelected = inviteFrndsArray[i].isSelected;
-//                
-//                self.searchInviteFrndsModel.isInvited = inviteFrndsArray[i].isInvited;
-//                
-//                self.searchInviteFrndsModel.isInvited = inviteFrndsArray[i].isInvited;
-//                
+                self.searchEmailModel.friendId = inviteEmailArray[i].friendId;
+                self.searchEmailModel.friendEmailId = inviteEmailArray[i].friendEmailId;
+                self.searchEmailModel.friendStatus = inviteEmailArray[i].friendStatus;
+
                 
                 
              searchEmailModel.indexPathRow = i;
@@ -461,7 +462,8 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                  searchButtonActive2 = false;
                 
                 self.label.hidden = true;
-               
+                self.inviteButton.hidden = false
+
                 
                 self.InviteFriendsTableView.reloadData();
             }
@@ -666,7 +668,8 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
        ////////////////////////////
         
         
-         //   In section 0 Email contacts
+         // In section 0 Email contacts
+        
         if indexPath.section == 0
         {
           //  if serach button active 2
@@ -676,7 +679,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             {
                  /// i have used here searchEmailArray
 
-                cell.friendsNameLabel.text = searchEmailArray[indexPath.row].InviteEmails
+                cell.friendsNameLabel.text = searchEmailArray[indexPath.row].friendEmailId
                 cell.contactImage.image = UIImage(named:"im_default_profile")
                 cell.selectedUnselectedImageView.image = UIImage(named: "im_status_invited")
 
@@ -685,7 +688,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
             {
                 /// i have used here inviteEmailArray
                 
-             cell.friendsNameLabel.text = inviteEmailArray[indexPath.row].InviteEmails
+             cell.friendsNameLabel.text = inviteEmailArray[indexPath.row].friendEmailId
            
            cell.contactImage.image = UIImage(named:"im_default_profile")
                 
@@ -1544,9 +1547,9 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                         CommonFunctions.hideActivityIndicator();
                         
 
-                        NSOperationQueue.mainQueue().addOperationWithBlock
-                            {
-                                
+//                        NSOperationQueue.mainQueue().addOperationWithBlock
+//                            {
+                        
                                 self.inviteButton.hidden = false
 
                                 self.searchTextField.hidden = false
@@ -1557,10 +1560,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                                 self.searchIcon.hidden = false
                                 
                                 self.upperViewHeightConstraint.constant = 100
-                                
-                                
-                                
-
+                        
                                 
                                 if  let elements: AnyObject = json!["response"]
 
@@ -1572,13 +1572,20 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                                     
                                     self.inviteButtonView.hidden = false;
 
+                                    for i in 0 ..< elements.count
+                                    {
+
                                     
-                                    
-                                        if let friendList  = elements[0]["friendList"]
+                                        if let friendList  = elements[i]["friendList"]
                                         {
                                             
                                             
-                                            if !(friendList is NSNull )
+                                            if friendList == nil
+                                            {
+                                                print("0")
+                                            }
+                                                
+                                           else
                                             {
                                                 //self.amenitiesName.removeAll();
                                                 
@@ -1670,45 +1677,98 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                                                     self.inviteButtonView.hidden = true
                                                     
                                                 }
-
-                                                
-                                                NSOperationQueue.mainQueue().addOperationWithBlock
-                                                    {
-                                                        
-                                                       CommonFunctions.hideActivityIndicator();
-                                                        
-                                                        self.RemoveNoInternet();
-                                                        
-                                                        self.RemoveNoFrinedResult();
-                                                        
-                                                        self.RemoveNoResult();
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        self.InviteFriendsTableView.delegate = self;
-                                                        
-                                                        self.InviteFriendsTableView.dataSource = self;
-                                                        self.InviteFriendsTableView.reloadData();
-                                                        
-                                                        
-                                                        
-                                                }
-
                                                 
                                             }
                                             
                                         } // friendList close
+                                        
+                                        if let emailList  = elements[i]["emailList"]
+                                        {
+                                            
+                                            
+                                            if emailList == nil
+                                             
+                                            {
+                                                
+                                                
+                                                print("0")
+                                            }
+                                            else
+                                                
+                                            {
+                                                //self.amenitiesName.removeAll();
+                                                
+                                                for var i = 0; i<emailList!.count; i += 1
+                                                {
+                                                    
+                                                    
+                                                    self.inviteEmailModel = inviteFriendsModel()
+                                                    
+                                                    
+                                                    
+                                                    let friendId = emailList![i]["friendId"] as! String
+                                                    
+                                                    if friendId != ""
+                                                    {
+                                                        self.inviteEmailModel.friendId = friendId
+                                                    }
+                                                    
+                                                    let friendEmailId = emailList![i]["friendEmailId"] as! String
+                                                    if friendEmailId != ""
+                                                    {
+                                                        self.inviteEmailModel.friendEmailId = friendEmailId
+                                                    }
+                                                    
+                                                    let friendStatus = emailList![i]["friendStatus"] as! String
+                                                    
+                                                    if friendStatus != ""
+                                                    {
+                                                        self.inviteEmailModel.friendStatus = friendStatus
+                                                        
+                                                        
+                                                        self.inviteEmailModel.isInvited = Int(friendStatus)!
+                                                        
+                                                    }
 
+                                                    
+                                                    self.inviteEmailArray.append(self.inviteEmailModel)
+  
+                                                }
+                                                
+                                            }
+                                            
+                                        }
+
+
+                                    }
                                     
                                     
+                                    NSOperationQueue.mainQueue().addOperationWithBlock
+                                        {
+                                            
+                                            CommonFunctions.hideActivityIndicator();
+                                            
+                                            self.RemoveNoInternet();
+                                            
+                                            self.RemoveNoFrinedResult();
+                                            
+                                            self.RemoveNoResult();
+                                                                                      
+                                            
+                                            self.InviteFriendsTableView.delegate = self;
+                                            
+                                            self.InviteFriendsTableView.dataSource = self;
+                                            self.InviteFriendsTableView.reloadData();
+                                            
+                                            
+                                            
+                                    }
+
                                     
                             }
                                 
                                 
-                        } // ns close
+                       // } // ns close
                         
                         
                         
@@ -1892,6 +1952,8 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
     
     //MARK:- NO INTERNET TAP GESTURE
     
+    //// tap to retry func on tap calling WB
+    
     func handleTap(sender: UITapGestureRecognizer)
     {
         
@@ -1985,11 +2047,18 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
     
     override func viewDidAppear(animated: Bool)
     {
+       
         
+        //// callling 1 st time wb if Reachability is true else showing no network image
         if(Reachability.isConnectedToNetwork()==true )
         {
+           
+            self.inviteEmailArray.removeAll();
+            self.inviteFrndsArray.removeAll();
+            
             self.InviteFriendsTableView.reloadData()
             
+            /// wb func
             self.getChallengeFriendlist();
             
             
@@ -2018,6 +2087,7 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
                 
                 
                 let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(InviteFriendsViewController.handleTap(_:)))
+                
                 self.noInternet.noInternetLabel.userInteractionEnabled = true
                 
                 
@@ -2030,27 +2100,6 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         }
 
         
-        for i in 0 ..< EmailIds.count
-         {
-            
-            inviteEmailModel = inviteFriendsModel()
-            
-            inviteEmailModel.InviteEmails = EmailIds[i]
-            
-            self.inviteEmailArray.append(self.inviteEmailModel);
-            
-            self.RemoveNoFrinedResult();
-         }
-        
-        
-        print(inviteEmailArray.count)
-        
-        print(inviteEmailModel.InviteEmails)
-        
-        EmailIds.removeAll();
-        self.InviteFriendsTableView.delegate = self;
-        self.InviteFriendsTableView.dataSource = self;
-        self.InviteFriendsTableView.reloadData();
     }
 
     
@@ -2074,8 +2123,6 @@ class InviteFriendsViewController: UIViewController,NSURLSessionDelegate,NSURLSe
         self.upperViewHeightConstraint.constant = 65
 
       
-        
-        EmailContacts = [];
         
         
         self.searchTextField.delegate = self;
