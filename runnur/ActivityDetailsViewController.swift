@@ -156,7 +156,7 @@ class ActivityDetailsViewController: UIViewController,TutorialPageViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         self.location.text = mapData.location;
-        self.dateAndType.text = dateFunction.dateFormatFunc("MMM dd, yyyy hh:mm a", formFormat: "MM/dd/yyyy HH:mm:ss", dateToConvert: mapData.date!) + " - " + mapData.performedActivity!;
+        self.dateAndType.text = dateFunction.dateFormatFunc("MMM dd, yyyy", formFormat: "MM/dd/yyyy HH:mm:ss", dateToConvert: mapData.date!) + " - " + mapData.performedActivity!;
         
 //       let sumViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SummaryActivityViewController") as! SummaryActivityViewController;
 //        sumViewController.mapData = mapData;

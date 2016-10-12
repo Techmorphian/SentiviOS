@@ -3144,7 +3144,7 @@
                                     <action selector="menuButtonAction:" destination="Far-NA-Pss" eventType="touchUpInside" id="Kp2-zk-Klc"/>
                                 </connections>
                             </button>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="btn_filter" translatesAutoresizingMaskIntoConstraints="NO" id="DzY-cj-gVN">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" image="ic_sort" translatesAutoresizingMaskIntoConstraints="NO" id="DzY-cj-gVN">
                                 <rect key="frame" x="560" y="27" width="18" height="19"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dt8-Va-MCH">

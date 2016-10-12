@@ -127,17 +127,15 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
             self.containerName = words![0]
         self.resetData();
         let file = "\(contName).txt" //this is the file. we will write to and read from it
-        
         let dat = CommonFunctions.checkIfDirectoryAvailable(contName)
-        
         if dat.0
         {
- 
         var fileList = CommonFunctions.listFilesFromDocumentsFolder(contName)
-            
         let count = fileList.count
             if count == 0{
+                CommonFunctions.hideActivityIndicator();
                 self.showNoRoutesView();
+                return;
             }
         for i:Int in 0 ..< count
         {
@@ -452,8 +450,10 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
             email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
             let words =  email?.componentsSeparatedByString("@");
             let contName = words![0]
+            CommonFunctions.showActivityIndicator(self.view);
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HistoryViewController.methodOfReceivedNotification(_:)), name:"DownloadFromBlobNotification", object: nil)
             if  DownloadFromBlob.downloadFromBlob(contName) == true{
-                self.getData();
+                //self.getData();
             }
             
         }
@@ -476,7 +476,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     func methodOfReceivedNotification(notification:NSNotification)  {
         position = 0;
         self.filterData();
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "selectedActivityNotification", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "DownloadFromBlobNotification", object: nil)
     }
 
     var position = Int();
@@ -859,7 +859,8 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 query.readWithCompletion({ (result, error) in
                     if let err = error {
                         CommonFunctions.hideActivityIndicator();
-                        
+                        self.collectionView.hidden=true;
+                        self.tableView.hidden=true;
                         self.showNoRoutesView();
                         print("ERROR ", err)
                     } else if let items = result?.items {
@@ -1001,20 +1002,25 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
     let mainView = UIView();
     func showNoRoutesView()
     {
-        mainView.frame = CGRectMake(20, 110, self.view.frame.width-40, 220)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.tableView.hidden=true;
+            self.collectionView.hidden=true;
+        }
+
+        mainView.frame = CGRectMake(20, 110, self.view.frame.width-40, 260)
         mainView.backgroundColor=UIColor.whiteColor();
         let label = UILabel(frame: CGRect(x:20, y: 20, width: mainView.frame.width-40, height: 17));
         label.font = UIFont.systemFontOfSize(15)
-        label.text = "No Saved Routes";
+        label.text = "No Tracked Activity Yet";
         //label.textColor=UIColor.whiteColor();
         label.textAlignment = .Center;
         
-        let imageView = UIImageView(frame: CGRectMake(0, 55, mainView.frame.width, 210-80));
+        let imageView = UIImageView(frame: CGRectMake(0, 55, mainView.frame.width, 240-80));
         imageView.image = UIImage(named: "im_no_routes");
-        routeViewButton.frame = CGRectMake(0, imageView.frame.origin.y+imageView.frame.height+4, mainView.frame.width, 30);
-        routeViewButton.setTitleColor(UIColor.blueColor(), forState: .Normal)
-        routeViewButton.setTitle("CREATE NEW ROUTE", forState: .Normal);
-        routeViewButton.addTarget(self, action: #selector(HistoryViewController.createRouteClicked), forControlEvents: UIControlEvents.TouchUpInside);
+        routeViewButton.frame = CGRectMake(0, imageView.frame.origin.y+imageView.frame.height+4, mainView.frame.width, 40);
+        routeViewButton.setTitleColor(colorCode.BlueColor, forState: .Normal)
+        routeViewButton.setTitle("START NEW ACTIVITY", forState: .Normal);
+        routeViewButton.addTarget(self, action: #selector(HistoryViewController.startActivityClicked), forControlEvents: UIControlEvents.TouchUpInside);
         routeViewButton.titleLabel?.font = UIFont.systemFontOfSize(14)
         mainView.addSubview(label);
         mainView.addSubview(imageView);
@@ -1023,8 +1029,8 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
         self.view.addSubview(mainView);
       
     }
-    func createRouteClicked(){
-        let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("CreateRouteViewController") as! CreateRouteViewController
+    func startActivityClicked(){
+        let nextViewController = self.storyboard?.instantiateViewControllerWithIdentifier("StartActivityViewController") as! StartActivityViewController
         self.presentViewController(nextViewController, animated: false, completion: nil)
     }
     
@@ -1469,7 +1475,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     user.mobileServiceAuthenticationToken = NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken");
                     client.currentUser = user
                     
-                    let table = client.tableWithName("RouteObject");
+                    let table = client.tableWithName("RunObject");
                     
                     table.deleteWithId(self.routeDataArray[indexPath.row].itemID) { (itemId, error) in
                         if let err = error {
@@ -1477,6 +1483,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
 
                         } else {
                             // Code to delete file
+                            
                             do {
                                 let file = "\(self.containerName)/\(self.routeDataArray[indexPath.row].itemID).txt"
                                 let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
@@ -1484,6 +1491,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                                 
                                 let getImagePath = paths.URLByAppendingPathComponent(file)
                                 try NSFileManager.defaultManager().removeItemAtPath(getImagePath.path!)
+                                self.routeDataArray.removeAtIndex(indexPath.row);
                             }
                             catch let error as NSError {
                                 print("Ooops! Something went wrong: \(error)")

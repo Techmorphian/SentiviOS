@@ -145,6 +145,10 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
     var lastMarker = [GMSMarker]();
     var polyline = GMSPolyline();
     
+    var arrayOfPolyline = [[GMSPolyline]]();
+    var singlePolyline = [GMSPolyline]();
+    
+    
     var autoRouteDistance = Double();
     var autoRouteLat = CLLocationDegrees();
     var autoRouteLang = CLLocationDegrees();
@@ -279,7 +283,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             }
         }
     }
-    
+   var polyLinePath = [[GMSPath]]()
     func passToGetDirections() {
         // Check if number of markers is greater than 2
         if (lastMarker.count >= 2) {
@@ -311,6 +315,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                             for i in 0 ..< elements.count
                             {
                                 let legs: AnyObject = elements[i].objectForKey("legs")!;
+                                 var pl = [GMSPath]()
                                 for i in 0 ..< legs.count
                                 {
                                     let distance = legs[i]["distance"] as! NSDictionary
@@ -318,26 +323,24 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                                     mapData.distance = distance.objectForKey("text") as? String;
                                     
                                     let steps = legs[i]["steps"] as! NSArray
-                                    
+                                   
                                     for i in 0 ..< steps.count
                                     {
                                         let polyLinePoints = (steps[i].objectForKey("polyline") as! NSDictionary).objectForKey("points") as! String
-                                        print(polyLinePoints);
-                                        print("polyline Point");
-                                       // print(decodePolyline(polyLinePoints))
-                                        let polyLinePath =  GMSPath(fromEncodedPath: polyLinePoints);
-                                        print(polyLinePath);
-                                        
-                                        // polyLineWithEncodedString(polyLinePoints);
-                                        
-                                        polyline = GMSPolyline(path: polyLinePath)
-                                        polyline.strokeColor = UIColor.redColor();
-                                        polyline.strokeWidth = 1
-                                        polyline.geodesic = true
-                                        polyline.map = mapView
+                                        pl.append(GMSPath(fromEncodedPath: polyLinePoints)!)
+                                       
+                                        let path = GMSPath(fromEncodedPath: polyLinePoints)!
+                                      
+                                            polyline = GMSPolyline(path: path)
+                                            polyline.strokeColor = UIColor.redColor();
+                                            polyline.strokeWidth = 1
+                                            polyline.geodesic = true
+                                            polyline.map = mapView
                                     }
-                                    print();
+                                    
                                 }
+                                
+                                  polyLinePath.append(pl);
                             }
                             
                             self.updateLabels();
@@ -487,31 +490,50 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
     @IBAction func clear(sender: UIButton) {
         CommonFunctions.showPopup(self, msg: "Are you sure you want to clear the mapped route?", positiveMsg: "Yes", negMsg: "No", show2Buttons: true, showReverseLayout: false) {
             self.mapView.clear();
+            self.lastMarker.removeAll();
+            self.polyLinePath.removeAll();
             self.path.removeAllCoordinates();
             self.tapCounter = 0;
         }
     }
     
     @IBAction func undo(sender: UIButton) {
-        if tapCounter != 0
+        if tapCounter != 0 && lastMarker.count != 0
         {
             tapCounter -= 1;
+            
+            if lastMarker.count == 2
+            {
+                mapView.clear();
+                polyline.map = nil;
+                polyLinePath.removeAll();
+                lastMarker.removeAll();
+                tapCounter = 0;
+                return;
+             }
+            
+            
             lastMarker[lastMarker.count-1].map=nil;
             lastMarker.removeLast();
-            polyline.map = nil
+            polyline.map = nil;
             
-            path.removeLastCoordinate()
-            
+            path.removeLastCoordinate();
             mapView.clear();
-            polyline.path = path;
-            // self.polyline = GMSPolyline(path:path)
+            polyLinePath.removeLast();
             for i in lastMarker{
                 i.map = self.mapView;
             }
-            polyline.strokeColor = UIColor.redColor();
-            polyline.strokeWidth = 1
-            polyline.geodesic = true
-            polyline.map = mapView;
+            
+            for i in polyLinePath
+            {
+                for j in i{
+                    polyline = GMSPolyline(path: j);
+                    polyline.strokeColor = UIColor.redColor();
+                    polyline.strokeWidth = 1
+                    polyline.geodesic = true
+                    polyline.map = mapView;
+                }
+            }
             
         }
         

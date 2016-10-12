@@ -32,8 +32,9 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         {
             self.revealViewController().revealToggle(self);
         }
-        
     }
+    
+    
     @IBOutlet weak var tableView: UITableView!
     // get route data from file or else dowmnload from routeObject table
     func getData()
@@ -355,18 +356,16 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     func showNoRoutesView()
     {
         let mainView = UIView();
-        mainView.frame = CGRectMake(20, 110, self.view.frame.width-40, 220)
+        mainView.frame = CGRectMake(20, 100, self.view.frame.width-40, self.view.frame.height/2.5)
         mainView.backgroundColor=UIColor.whiteColor();
         let label = UILabel(frame: CGRect(x:20, y: 20, width: mainView.frame.width-40, height: 17));
         label.font = UIFont.systemFontOfSize(15)
         label.text = "No Saved Routes";
-        //label.textColor=UIColor.whiteColor();
         label.textAlignment = .Center;
-        
-        let imageView = UIImageView(frame: CGRectMake(0, 55, mainView.frame.width, 210-80));
+        let imageView = UIImageView(frame: CGRectMake(0, 55, mainView.frame.width, self.view.frame.height/2.5-95));
         imageView.image = UIImage(named: "im_no_routes");
-        routeViewButton.frame = CGRectMake(0, imageView.frame.origin.y+imageView.frame.height+4, mainView.frame.width, 30);
-        routeViewButton.setTitleColor(UIColor.blueColor(), forState: .Normal)
+        routeViewButton.frame = CGRectMake(0, imageView.frame.origin.y+imageView.frame.height+4, mainView.frame.width, 40);
+        routeViewButton.setTitleColor(colorCode.BlueColor, forState: .Normal)
         routeViewButton.setTitle("CREATE NEW ROUTE", forState: .Normal);
         routeViewButton.addTarget(self, action: #selector(RouteViewController.createRouteClicked), forControlEvents: UIControlEvents.TouchUpInside);
         routeViewButton.titleLabel?.font = UIFont.systemFontOfSize(14)
