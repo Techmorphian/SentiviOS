@@ -135,6 +135,7 @@
 		47EF173C1D41EE0C00468698 /* dateFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EF173B1D41EE0C00468698 /* dateFunction.swift */; };
 		47F40DFA1D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F40DF91D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift */; };
 		47F97BE31D33CF5C0034B767 /* errorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F97BE21D33CF5C0034B767 /* errorViewController.swift */; };
+		47F98C531DAFA27600320D62 /* PaymentOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F98C521DAFA27600320D62 /* PaymentOptionsViewController.swift */; };
 		47FEAE0A1D2FD93800881EE8 /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FEAE091D2FD93800881EE8 /* Url.swift */; };
 		47FED24C1D2E6FE5006CAE8A /*  Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FED24B1D2E6FE5006CAE8A /*  Reachability.swift */; };
 		47FED2501D2E84D9006CAE8A /* ChallengesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FED24F1D2E84D9006CAE8A /* ChallengesViewController.swift */; };
@@ -280,6 +281,7 @@
 		47EFFBAB1D58822A00F2A2D7 /* CauseFirSummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CauseFirSummaryViewController.swift; sourceTree = "<group>"; };
 		47F40DF91D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsViaEmailViewController.swift; sourceTree = "<group>"; };
 		47F97BE21D33CF5C0034B767 /* errorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = errorViewController.swift; sourceTree = "<group>"; };
+		47F98C521DAFA27600320D62 /* PaymentOptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentOptionsViewController.swift; sourceTree = "<group>"; };
 		47FEAE091D2FD93800881EE8 /* Url.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
 		47FED24B1D2E6FE5006CAE8A /*  Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = " Reachability.swift"; sourceTree = "<group>"; };
 		47FED24F1D2E84D9006CAE8A /* ChallengesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengesViewController.swift; sourceTree = "<group>"; };
@@ -445,6 +447,8 @@
 		4710900E1DAE700E0000C248 /* Group FIt Web View */ = {
 			isa = PBXGroup;
 			children = (
+				47DA9F591DA5105D005F16AF /* PaymentDoneViewController.swift */,
+				47F98C521DAFA27600320D62 /* PaymentOptionsViewController.swift */,
 				4710900C1DAE6FF50000C248 /* CreateGroupFitWebViewViewController.swift */,
 			);
 			name = "Group FIt Web View";
@@ -555,7 +559,6 @@
 			children = (
 				470CF8941D24E8500001B3BC /* FriendsListCellTableViewCell.swift */,
 				470CF8921D24E8290001B3BC /* FriendsListViewController.swift */,
-				47DA9F591DA5105D005F16AF /* PaymentDoneViewController.swift */,
 				47DA9F5B1DA51073005F16AF /* PaymentProcessingViewController.swift */,
 			);
 			name = "Friend List";
@@ -978,6 +981,7 @@
 				47FED2501D2E84D9006CAE8A /* ChallengesViewController.swift in Sources */,
 				470CF89F1D25079C0001B3BC /* AddViaGoogleViewController.swift in Sources */,
 				470045E41D8049FB0011805A /* LeaderBoardWinnerTableViewCell.swift in Sources */,
+				47F98C531DAFA27600320D62 /* PaymentOptionsViewController.swift in Sources */,
 				4731FC8E1D2A2E4300E860B0 /* GroupFitCellTableViewCell.swift in Sources */,
 				47C6AFFC1D5AF58800410DAE /* userActivityTableViewCell.swift in Sources */,
 				47B8A8FA1D45E31600BACB83 /* SummaryViewController.swift in Sources */,

@@ -1140,15 +1140,15 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                                                 self.ChModel.causes = causes
                                             }
                                             
-                                            
-                                            
-                                            let betAmount = participating![i]["betAmount"] as! String
-                                            
-                                            if betAmount != ""
-                                            {
-                                                self.ChModel.betAmount = betAmount
-                                            }
-                                            
+//                                            
+//                                            
+//                                            let betAmount = participating![i]["betAmount"] as! String
+//                                            
+//                                            if betAmount != ""
+//                                            {
+//                                                self.ChModel.betAmount = betAmount
+//                                            }
+//                                            
                                             
                                             
                                             let usersCount = participating![i]["usersCount"] as! String
@@ -1264,13 +1264,13 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                                             
                                             
                                             
-                                            let betAmount = contributing![i]["betAmount"] as! String
-                                            
-                                            if betAmount != ""
-                                            {
-                                                self.ChModel.betAmount = betAmount
-                                            }
-                                            
+//                                            let betAmount = contributing![i]["betAmount"] as! String
+//                                            
+//                                            if betAmount != ""
+//                                            {
+//                                                self.ChModel.betAmount = betAmount
+//                                            }
+//                                            
                                             
                                             
                                             let usersCount = contributing![i]["usersCount"] as! String

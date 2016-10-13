@@ -291,6 +291,8 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     
     var startDate  = String()
     var endDate  = String()
+    
+     var challenegeImage = UIImage()
 
     
   //  MARK:- CREATE BUTTON ACTION
@@ -532,16 +534,24 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                 let StartDate = NSUserDefaults.standardUserDefaults().stringForKey("startDate")
                 
                 startDate = StartDate!
-                
+          
                 let EndDate = NSUserDefaults.standardUserDefaults().stringForKey("endDate")
 
                 endDate = EndDate!
                 
-                let GP  = self.storyboard?.instantiateViewControllerWithIdentifier("CreateGroupFitWebViewViewController") as! CreateGroupFitWebViewViewController;
+                challenegeImage = addImage.image!
                 
+                let GP  = self.storyboard?.instantiateViewControllerWithIdentifier("PaymentOptionsViewController") as! PaymentOptionsViewController;
                 
-                  GP.betAmount = betAmount
-                  GP.challengeName = challengeName
+             //   NSUserDefaults.standardUserDefaults().setObject("", forKey: "challengeName")
+
+                
+                GP.betAmount = betAmount
+                
+                //GP.challengeName = challengeName
+                
+                NSUserDefaults.standardUserDefaults().setObject(challengeName, forKey: "challengeName")
+                
                 
                 GP.descriptionText = descriptionText
                 
@@ -551,26 +561,19 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                 
                 GP.FirstWinner = FirstWinner
                 
-                  GP.secondWinner = secondWinner
+                GP.secondWinner = secondWinner
                 
-                  GP.thirdWinner = thirdWinner
+                GP.thirdWinner = thirdWinner
                 
                 GP.startDate = startDate
                 
                 GP.endDate = endDate
                 
+                GP.challenegeImage = self.challenegeImage
+                
                 self.presentViewController(GP,animated :false , completion:nil);
                 
-                
-                
-               
-                
-                
-          
-                
-             
-                
-               // ParameterType = ParameterTypeId
+              
 
                 //createGroupFit();
                 
@@ -2202,14 +2205,10 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         
         request.timeoutInterval = 20.0;
         
-     
-        
         let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
-        
-        
+    
         let betAmount = Int(setBetAmountTextField.text!)
         
-
         let startDate = NSUserDefaults.standardUserDefaults().stringForKey("startDate")
         
         let endDate = NSUserDefaults.standardUserDefaults().stringForKey("endDate")

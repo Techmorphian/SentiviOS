@@ -458,6 +458,7 @@ class ChallengesViewController: UIViewController
         super.viewDidLoad()
         
         
+              
         NSUserDefaults.standardUserDefaults().setBool(false, forKey: "GropFitPressed")
         
         NSUserDefaults.standardUserDefaults().setBool(false, forKey: "CauseFitPressed")

@@ -842,6 +842,10 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
+        
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "backFromPayment")
+
+        
         if indexPath.section == 0
         {
             
@@ -1210,14 +1214,14 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                                             }
                                             
                                             
-                                            
-                                            let betAmount = participating![i]["betAmount"] as! String
-                                            
-                                            if betAmount != ""
-                                            {
-                                               // betAmount.append(betAmount);
-                                                self.ChModel.betAmount = betAmount
-                                            }
+//                                            
+//                                            let betAmount = participating![i]["betAmount"] as! String
+//                                            
+//                                            if betAmount != ""
+//                                            {
+//                                               // betAmount.append(betAmount);
+//                                                self.ChModel.betAmount = betAmount
+//                                            }
                                             
                                             
                                             
@@ -1334,13 +1338,13 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                                             
                                             
                                             
-                                            let betAmount = contributing![i]["betAmount"] as! String
-                                            
-                                            if betAmount != ""
-                                            {
-                                                self.ChModel.betAmount = betAmount
-                                            }
-                                            
+//                                            let betAmount = contributing![i]["betAmount"] as! String
+//                                            
+//                                            if betAmount != ""
+//                                            {
+//                                                self.ChModel.betAmount = betAmount
+//                                            }
+//                                            
                                             
                                             
                                             let usersCount = contributing![i]["usersCount"] as! String
@@ -1712,6 +1716,8 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+     
         
         NSUserDefaults.standardUserDefaults().setBool(false, forKey: "FromCompletedScreen")
         

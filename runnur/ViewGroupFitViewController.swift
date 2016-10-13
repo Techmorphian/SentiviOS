@@ -58,6 +58,20 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         
      //   NSUserDefaults.standardUserDefaults().setBool(true, forKey: "FromCreateCauseAndGroupFitScreen")
         
+      //  NSUserDefaults.standardUserDefaults().setBool(true, forKey: "backFromPayment")
+        
+        if  NSUserDefaults.standardUserDefaults().boolForKey("backFromPayment") == true
+        {
+            
+                    self.presentingViewController.self!.presentingViewController.self!.presentingViewController.self!.presentingViewController.self!.presentingViewController!.dismissViewControllerAnimated(true, completion: nil);
+            
+            
+        }
+        
+        else
+        {
+
+            
         if NSUserDefaults.standardUserDefaults().boolForKey("FromCreateCauseAndGroupFitScreen") == true
         {
            
@@ -77,7 +91,7 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         }
 
         
-        
+        }
         
         
     }
@@ -1071,6 +1085,7 @@ class ViewGroupFitViewController: UIViewController,NSURLSessionDelegate,NSURLSes
    /////////////////////////////////////////////////////
         
         
+           print(NSUserDefaults.standardUserDefaults().stringForKey("challengeName"))
         
             challengeNameLabel.text = NSUserDefaults.standardUserDefaults().stringForKey("challengeName")
         
