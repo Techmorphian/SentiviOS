@@ -20,7 +20,9 @@ class ChallengeModel
     internal var activityType = String()
     internal var parameters = String()
     internal var causes = String()
+    
     internal var betAmount = String()
+    
     internal var usersCount = String()
     internal var potAmount = String()
     

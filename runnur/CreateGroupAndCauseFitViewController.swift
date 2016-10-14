@@ -552,6 +552,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                 
                 NSUserDefaults.standardUserDefaults().setObject(challengeName, forKey: "challengeName")
                 
+                NSUserDefaults.standardUserDefaults().setObject(1, forKey: "TypeIdParticipating")
                 
                 GP.descriptionText = descriptionText
                 
@@ -3034,7 +3035,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         
         activityTypeId = "1"
         
-        ParameterTypeId = "2"
+        ParameterTypeId = "1"
         
         myContributionsId = "1"
         

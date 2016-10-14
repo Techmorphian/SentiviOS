@@ -75,8 +75,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
                 
                 self.window?.makeKeyAndVisible()
                 
-                
                 self.window?.rootViewController?.presentViewController(initialViewController, animated: true, completion: nil)
+                
                 self.window?.rootViewController = initialViewController
                 
             }

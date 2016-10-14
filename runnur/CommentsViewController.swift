@@ -56,7 +56,7 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
      NSNotificationCenter.defaultCenter().postNotificationName("commentsCount", object: nil, userInfo: ["rowCount":activityChatArray.count,"indexOfRow":indexForAddCommentsCount])
       
-        
+   // NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isMyPaggingCalled")
     
     self.dismissViewControllerAnimated(true, completion: nil)
         
@@ -642,11 +642,18 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                     self.RemoveNoResult();
                                     self.commentsTableView.reloadData();
                                     
-                                
+                                                                      
+                                   
+                                    let lastSectionIndex = self.commentsTableView!.numberOfSections - 1
                                     
-                                    //self.commentsTableView.setContentOffset(CGPointMake(0, CGFloat.max), animated: false)
+                                    print(lastSectionIndex)
+                                  
+                                    let lastRowIndex = self.commentsTableView!.numberOfRowsInSection(lastSectionIndex) - 1
                                     
-                                    self.commentsTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.commentsTableView.numberOfRowsInSection(0) - 1, inSection: 0), atScrollPosition: .None, animated: false)
+                                    let pathToLastRow = NSIndexPath(forRow: lastRowIndex, inSection: lastSectionIndex)
+                                    
+                                self.commentsTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.commentsTableView.numberOfRowsInSection(0) - 1, inSection: 0), atScrollPosition: .None, animated: false)
+                                    
                                     
                             }
                             
@@ -901,8 +908,6 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
      
                     activityChatArray.insert(activityModel, atIndex: activityChatArray.count)
                         
-                  // activityChatArray.insert(activityModel, atIndex: 0)
-                       
                         
                         NSOperationQueue.mainQueue().addOperationWithBlock
                             {
@@ -930,15 +935,12 @@ class CommentsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 
                                 self.messageTextView.resignFirstResponder();
                                 
-                                
-                              self.commentsTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.commentsTableView.numberOfRowsInSection(0), inSection: 0)], withRowAnimation: UITableViewRowAnimation.None)
-                                
-                                
-                                self.commentsTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.commentsTableView.numberOfRowsInSection(0)-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.None, animated: false);
-                                
-                                
+                              
                                 self.commentsTableView.delegate=self;
                                 self.commentsTableView.dataSource=self;
+                                self.commentsTableView.reloadData();
+                                    
+                                
                                 
                                 
                                 

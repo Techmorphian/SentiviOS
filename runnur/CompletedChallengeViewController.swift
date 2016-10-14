@@ -588,7 +588,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                         
                     }
                     
-                    cell.BetAmount.text = participatingFilterArray[indexPath.row].betAmount
+                    cell.BetAmount.text = String(participatingFilterArray[indexPath.row].betAmount)
                     
                     cell.potAmount.text = participatingFilterArray[indexPath.row].potAmount
                     
@@ -680,11 +680,11 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                 
             }
             
-            cell.BetAmount.text = participatingArray[indexPath.row].betAmount
+            cell.BetAmount.text = String(participatingArray[indexPath.row].betAmount)
          
             
             
-            cell.potAmount.text = participatingArray[indexPath.row].potAmount
+            cell.potAmount.text = String(participatingArray[indexPath.row].potAmount)
                 
                         
             
@@ -795,12 +795,12 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                     
                 }
                 
-                cell.BetAmount.text = contributingFilterArray[indexPath.row].betAmount
+                cell.BetAmount.text = String(contributingFilterArray[indexPath.row].betAmount)
                 
                 
                 
                 
-                cell.potAmount.text = contributingFilterArray[indexPath.row].betAmount
+                cell.potAmount.text = String(contributingFilterArray[indexPath.row].betAmount)
                 
                 
                 
@@ -845,12 +845,12 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                 
             }
             
-            cell.BetAmount.text = contributingArray[indexPath.row].betAmount
+            cell.BetAmount.text = String(contributingArray[indexPath.row].betAmount)
             
     
             
             
-            cell.potAmount.text = contributingArray[indexPath.row].betAmount
+            cell.potAmount.text = String(contributingArray[indexPath.row].betAmount)
             
             
             
@@ -1140,15 +1140,15 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                                                 self.ChModel.causes = causes
                                             }
                                             
-//                                            
-//                                            
-//                                            let betAmount = participating![i]["betAmount"] as! String
-//                                            
-//                                            if betAmount != ""
-//                                            {
-//                                                self.ChModel.betAmount = betAmount
-//                                            }
-//                                            
+                                          
+                                            
+                                            let betAmount = participating![i]["betAmount"] as! String
+                                            
+                                            if betAmount != ""
+                                            {
+                                                self.ChModel.betAmount = betAmount
+                                            }
+                                            
                                             
                                             
                                             let usersCount = participating![i]["usersCount"] as! String
@@ -1264,13 +1264,13 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                                             
                                             
                                             
-//                                            let betAmount = contributing![i]["betAmount"] as! String
-//                                            
-//                                            if betAmount != ""
-//                                            {
-//                                                self.ChModel.betAmount = betAmount
-//                                            }
-//                                            
+                                            let betAmount = contributing![i]["betAmount"] as! String
+                                            
+                                            if betAmount != ""
+                                            {
+                                                self.ChModel.betAmount = betAmount
+                                            }
+                                            
                                             
                                             
                                             let usersCount = contributing![i]["usersCount"] as! String

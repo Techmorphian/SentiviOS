@@ -253,11 +253,24 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wu8-ny-gNv" customClass="CircleLabel" customModule="Sentiv" customModuleProvider="target">
-                                                    <rect key="frame" x="162" y="12" width="21" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ 8888.8" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wu8-ny-gNv" customClass="CircleLabel" customModule="Sentiv" customModuleProvider="target">
+                                                    <rect key="frame" x="132" y="14" width="60" height="17"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="90" id="4Lr-uo-KfO"/>
+                                                        <constraint firstAttribute="width" constant="18" id="Te6-Qd-M6J"/>
+                                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="60" id="V6s-5d-2Jj"/>
+                                                        <constraint firstAttribute="width" constant="36" id="Zmv-ri-7YS"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="Te6-Qd-M6J"/>
+                                                            <exclude reference="V6s-5d-2Jj"/>
+                                                            <exclude reference="Zmv-ri-7YS"/>
+                                                        </mask>
+                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -265,7 +278,7 @@
                                                 <constraint firstItem="rMb-Oz-T6m" firstAttribute="centerY" secondItem="0lf-7U-afN" secondAttribute="centerY" id="3fN-dp-Y6L"/>
                                                 <constraint firstItem="Mc9-QF-yzS" firstAttribute="leading" secondItem="0lf-7U-afN" secondAttribute="leadingMargin" constant="56" id="3vk-qW-gZ9"/>
                                                 <constraint firstItem="Wu8-ny-gNv" firstAttribute="centerY" secondItem="0lf-7U-afN" secondAttribute="centerY" id="695-AX-cUJ"/>
-                                                <constraint firstItem="Wu8-ny-gNv" firstAttribute="leading" secondItem="Mc9-QF-yzS" secondAttribute="trailing" constant="60" id="Ik2-bY-739"/>
+                                                <constraint firstItem="Wu8-ny-gNv" firstAttribute="leading" secondItem="Mc9-QF-yzS" secondAttribute="trailing" constant="30" id="Ik2-bY-739"/>
                                                 <constraint firstItem="rMb-Oz-T6m" firstAttribute="leading" secondItem="0lf-7U-afN" secondAttribute="leading" constant="20" symbolic="YES" id="Vy5-xH-h4F"/>
                                                 <constraint firstItem="Mc9-QF-yzS" firstAttribute="centerY" secondItem="0lf-7U-afN" secondAttribute="centerY" id="uzx-ZM-8go"/>
                                             </constraints>
@@ -5306,7 +5319,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tOX-fv-rng" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4116" y="3891"/>
+            <point key="canvasLocation" x="-4448" y="3821"/>
         </scene>
         <!--Create Group And Cause Fit View Controller-->
         <scene sceneID="uLx-ed-4NF">
@@ -10427,13 +10440,13 @@
                                     <mask key="constraints">
                                         <exclude reference="lhh-nX-dw6"/>
                                         <exclude reference="nR7-hx-aSF"/>
-                                        <exclude reference="AbM-Er-WKR"/>
-                                        <exclude reference="jdc-G7-gKp"/>
-                                        <exclude reference="hv4-zA-qW4"/>
-                                        <exclude reference="U4p-lQ-NmR"/>
-                                        <exclude reference="ikE-ls-m05"/>
-                                        <exclude reference="MlC-im-fde"/>
                                         <exclude reference="5OQ-zJ-xmI"/>
+                                        <exclude reference="AbM-Er-WKR"/>
+                                        <exclude reference="MlC-im-fde"/>
+                                        <exclude reference="U4p-lQ-NmR"/>
+                                        <exclude reference="hv4-zA-qW4"/>
+                                        <exclude reference="ikE-ls-m05"/>
+                                        <exclude reference="jdc-G7-gKp"/>
                                         <exclude reference="wju-hY-D2X"/>
                                     </mask>
                                 </variation>

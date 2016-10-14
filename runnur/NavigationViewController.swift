@@ -227,9 +227,11 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 
                 else
                 {
+                    cell.countLabel.hidden = false;
                     
-                      cell.countLabel.hidden = false;
-                    cell.countLabel.text = "$" + " " + NSUserDefaults.standardUserDefaults().stringForKey("winningCount")!
+                    let string = Double(NSUserDefaults.standardUserDefaults().stringForKey("winningCount")!)
+                    let winningCount = String(format: "%.1f", string!)
+                    cell.countLabel.text = "$" + " " + winningCount
                     
                 }
                 

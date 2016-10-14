@@ -54,7 +54,8 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
  
         
     }
-    func call(){
+    func call()
+    {
         print("os=\(UIDevice.currentDevice().systemVersion)&make=iphone&model=\(UIDevice.currentDevice().modelName)&userId=\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)")
         NetworkRequest.sharedInstance.connectToServer(self.view, urlString: Url.navigationDrawer, postData: "os=\(UIDevice.currentDevice().systemVersion)&make=iphone&model=\(UIDevice.currentDevice().modelName)&userId=\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)", responseData: {(success,error) in
             do
@@ -65,7 +66,8 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
                 if  let parseJSON = json{
                     let status = parseJSON["status"] as? String
                     let msg=parseJSON["message"] as? String
-                    dispatch_async(dispatch_get_main_queue(), {
+                    dispatch_async(dispatch_get_main_queue(),
+                        {
                         CommonFunctions.hideActivityIndicator()
                     })
                     
@@ -77,6 +79,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
                             for i in 0 ..< elements.count
                             {
                                 let winningCount = elements[i]["winning"] as! String
+                               
                                 self.winning.append(winningCount)
                                 
                                 print(winningCount)
@@ -252,7 +255,7 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     {
         super.viewDidLoad();
         
-        //self.call();
+        self.call();
 //        
 //        let button = UIButton(type: UIButtonType.RoundedRect)
 //        button.frame = CGRectMake(20, 50, 100, 30)

@@ -1745,10 +1745,7 @@ class RequestsViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                     self.requestId.append("")
                                     
                                 }
-                                
-
-                                
- 
+                              
                                 let requestType = elements[i]["requestType"] as! String
                                 
                                  if requestType != ""

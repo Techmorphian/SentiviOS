@@ -511,7 +511,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                         
                     }
                     
-                    cell.BetAmount.text = participatingFilterArray[indexPath.row].betAmount
+                    cell.BetAmount.text = String(participatingFilterArray[indexPath.row].betAmount)
                     
                                      
                     
@@ -607,7 +607,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                     
                 }
                 
-                cell.BetAmount.text = participatingArray[indexPath.row].betAmount
+                cell.BetAmount.text = String(participatingArray[indexPath.row].betAmount)
                 
               
                 
@@ -729,12 +729,12 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                     
                 }
                 
-                cell.BetAmount.text = contributingFilterArray[indexPath.row].betAmount
+                cell.BetAmount.text = String(contributingFilterArray[indexPath.row].betAmount)
                 
                 
                 
                 
-                cell.potAmount.text = contributingFilterArray[indexPath.row].betAmount
+                cell.potAmount.text = String(contributingFilterArray[indexPath.row].betAmount)
                 
                 
                 
@@ -779,12 +779,12 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                     
                 }
                 
-                cell.BetAmount.text = contributingArray[indexPath.row].betAmount
+                cell.BetAmount.text = String(contributingArray[indexPath.row].betAmount)
                 
                 
                 
                 
-                cell.potAmount.text = contributingArray[indexPath.row].betAmount
+                cell.potAmount.text = String(contributingArray[indexPath.row].betAmount)
                 
                 
                 
@@ -953,7 +953,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
         let postString = "userId=\(userId!)&filter=\(filter)&currentDate=\(CurrentDateFunc.currentDate())";
         
-        ////////print(postString)
+        print(postString)
         
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -1080,7 +1080,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
         
         
-        ////////print(dataString!)
+        print(dataString!)
         
         if dataTask.currentRequest?.URL! == NSURL(string: Url.viewActiveChallenges)
             
@@ -1103,13 +1103,8 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                     let msg=parseJSON["message"] as? String
                     if(status=="Success")
                     {
-                        
-                        
+                                             
                      hideActivityIndicator();
-                        
-                        
-                     
-                        
                         
                         if  let elements: AnyObject = json!["response"]
                         {
@@ -1213,16 +1208,16 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                                                 self.ChModel.causes = causes
                                             }
                                             
+                                     
+                                          
+                                            let betAmount = participating![i]["betAmount"] as! String
                                             
-//                                            
-//                                            let betAmount = participating![i]["betAmount"] as! String
-//                                            
-//                                            if betAmount != ""
-//                                            {
-//                                               // betAmount.append(betAmount);
-//                                                self.ChModel.betAmount = betAmount
-//                                            }
-                                            
+                                            if betAmount != ""
+                                            {
+                                               
+                                                self.ChModel.betAmount = betAmount
+                                            }
+
                                             
                                             
                                             let usersCount = participating![i]["usersCount"] as! String
@@ -1338,13 +1333,13 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                                             
                                             
                                             
-//                                            let betAmount = contributing![i]["betAmount"] as! String
-//                                            
-//                                            if betAmount != ""
-//                                            {
-//                                                self.ChModel.betAmount = betAmount
-//                                            }
-//                                            
+                                            let betAmount = contributing![i]["betAmount"] as! String
+                                            
+                                            if betAmount != ""
+                                            {
+                                                
+                                                self.ChModel.betAmount = betAmount
+                                            }
                                             
                                             
                                             let usersCount = contributing![i]["usersCount"] as! String
@@ -1636,6 +1631,16 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     {
         
         
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "TypeIdParticipating")
+        
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "TypeIdContributing")
+        
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "challengeImageView")
+        
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "successMsgOfDecline")
+        
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "challengeName")
+        
         if(Reachability.isConnectedToNetwork()==true )
         {
         
@@ -1712,6 +1717,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     
     
     
+
     
     override func viewDidLoad()
     {

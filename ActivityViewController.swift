@@ -572,8 +572,11 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         
                         cell.distance.text = activityChatArray[indexPath.row].distance
+        
                         cell.duration.text = activityChatArray[indexPath.row].elapsedTime
+        
                         cell.calories.text = activityChatArray[indexPath.row].caloriesBurnedS
+        
                         cell.like.text = activityChatArray[indexPath.row].likes + " " + "Likes"
         
         
@@ -752,7 +755,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
        let check = indexPath.row
         
                 
-        if (check <= 2 && shouldCallPagging)
+        if (check <= 5 && shouldCallPagging)
         {
             
             //// making it false so that it can call at ones 
@@ -1288,15 +1291,15 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                             
                                             /////////////////////
                                             
-                                            //let distance = activityData!["distance"] as! String
+                                            let distance = activityData!["distance"] as! String
                                             
                                             
-//                                            if distance != ""
-//                                            {
-//                                                self.activityModel.distance = distance
-//                                            }
+                                            if distance != ""
+                                            {
+                                                self.activityModel.distance = distance
+                                            }
                                             
-                                            self.activityModel.distance = "7.7"
+                                          //  self.activityModel.distance = "7.7"
 
                                             
                                             /////////////////////
@@ -1611,6 +1614,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             
                             NSOperationQueue.mainQueue().addOperationWithBlock
                                 {
+                                    
                                     if NSUserDefaults.standardUserDefaults().boolForKey("isMyPaggingCalled") == true
                                         
                                     {
@@ -3764,7 +3768,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         {
             print("calling wb")
             
-            self.activityChatArray.removeAll();
+           // self.activityChatArray.removeAll();
             self.activityInfo();
             
             

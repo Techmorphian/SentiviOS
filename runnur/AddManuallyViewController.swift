@@ -179,7 +179,11 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
                 
                 let  YesAction = UIAlertAction(title: "YES", style: UIAlertActionStyle.Default, handler: {action  in
                     
-                    // print("")
+                   
+                    
+                    self.emailIDTextField.resignFirstResponder();
+                    
+                    self.redeemPayments();
                     
                     
                 })
@@ -272,8 +276,63 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
     }
     
     
-
     
+    
+    // MARK:- ADD FRIENDS
+    
+    func redeemPayments()
+        
+    {
+        
+        // LoaderFile.showLoader(self.view);
+        
+        let myurl = NSURL(string:"http://sentivphp.azurewebsites.net/sentiv/redeemPayments.php")
+        
+        //let myurl = NSURL(string: Url.addFriends)
+        
+        let request = NSMutableURLRequest(URL: myurl!)
+        
+        request.HTTPMethod = "POST"
+        
+        request.timeoutInterval = 20.0;
+        
+        
+        let userId  =  NSUserDefaults.standardUserDefaults().stringForKey("userId");
+        
+        
+        
+//        var cliendIds = [String]()
+//        var count = 0;
+//        for i in EmailIds
+//        {
+//            
+//            cliendIds.append("emailId[\(count)]=\(i)");
+//            count += 1;
+//        }
+        
+        let  emailId  = emailIDTextField.text
+       
+        print(emailId);
+        
+        
+        let postString = "userId=\(userId!)&emailId=\(emailId!)";
+        
+        print(postString)
+        
+        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+        
+        let session = NSURLSession(configuration: config, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
+        
+        let downloadTask = session.dataTaskWithRequest(request);
+        
+        downloadTask.resume()
+        
+        
+        
+    }
+
     
     
     //MARK:- NSURLSession delegate methods
@@ -294,8 +353,8 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
         
         print(dataString!)
         
-        
-        if dataTask.currentRequest?.URL! == NSURL(string:"http://sentivphp.azurewebsites.net/addFriends.php")
+        // MARK :- DATA TASK =  ADD FRIENDS
+        if dataTask.currentRequest?.URL! == NSURL(string:Url.addFriends)
             
         {
             
@@ -401,7 +460,99 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
             
         } // if dataTask close
         
+         // MARK :- DATA TASK =  REDEEM PAYMENT
         
+        if dataTask.currentRequest?.URL! == NSURL(string:"http://sentivphp.azurewebsites.net/sentiv/redeemPayments.php")
+            
+        {
+            do
+                
+            {
+                
+                let json = try NSJSONSerialization.JSONObjectWithData(self.mutableData, options: .MutableContainers) as? NSDictionary
+                
+                if  let parseJSON = json
+                {
+                    
+                    let status = parseJSON["status"] as? String
+                    let msg=parseJSON["message"] as? String
+                    if(status=="Success")
+                    {
+                        
+                        
+                        NSOperationQueue.mainQueue().addOperationWithBlock
+                            {
+                                
+                               
+                                
+                                self.emailIDTextField.resignFirstResponder();
+                                
+                                NSUserDefaults.standardUserDefaults().setObject(msg, forKey: "successMsgOfRedeemPayment")
+                                
+                                 self.presentingViewController!.dismissViewControllerAnimated(false, completion: nil);
+                                
+                                
+                                
+                                
+                        } // ns close
+                        
+                        
+                        
+                        
+                    }
+                        
+                    else if status == "Error"
+                        
+                    {
+                        
+                        NSOperationQueue.mainQueue().addOperationWithBlock(
+                            {
+                            
+                            //  LoaderFile.hideLoader(self.view)
+                              
+                                                               
+                            let alert = UIAlertController(title: "", message: msg , preferredStyle: UIAlertControllerStyle.Alert)
+                            let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+                            
+                            alert.addAction(okAction)
+                            
+                            self.presentViewController(alert, animated: true, completion: nil)
+                            return
+                            
+                        })
+                        
+                    }
+                    
+                    
+                    
+                }
+                
+            }
+                
+            catch
+                
+            {
+                
+                
+                print(error)
+                
+                let alert = UIAlertController(title: "", message:"something went wrong." , preferredStyle: UIAlertControllerStyle.Alert)
+                
+                let alertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
+                
+                alert.addAction(alertAction)
+                
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+                
+                
+                
+                
+                
+                
+            }
+            
+        } // if dataTask close
         
         
     } //// main func
