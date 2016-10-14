@@ -24,7 +24,7 @@ class ViewRouteController: UIViewController {
     var customViewHeight2: NSLayoutConstraint!
     var pV = RouteViewController();
 
-    var dataPoints = [String]()
+
    
     @IBOutlet weak var lineChart: LineChartView!
     
@@ -107,44 +107,58 @@ class ViewRouteController: UIViewController {
     
     //    MARK:- Graph Elevation
     func setChart(valuesForElevation: [Double]) {
-        //   barChartView.noDataText = "You need to provide data for the chart."
-        
+        //s var valuesforElevations = [Double]()
+        var dataPoints = [Double]()
+        dataPoints = [51,103,155,206,258];
         if valuesForElevation.count != 0
         {
             var dataEntries: [ChartDataEntry] = []
-            
+            var c = Double()
             for i in 0..<valuesForElevation.count {
-                let dataEntry = ChartDataEntry(value: valuesForElevation[i], xIndex: i)
-                dataEntries.append(dataEntry)
-                dataPoints.append("");
+                let dataEntry = ChartDataEntry(value:valuesForElevation[i], xIndex: i)
+                dataEntries.append(dataEntry);
+                c = c+1;
             }
             
-            let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "Elevation")
-            let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet)
-            lineChartDataSet.circleColors = [colorCode.BlueColor];
-            lineChartDataSet.circleRadius = 0.0;
-            lineChartDataSet.lineWidth = 2;
-            lineChartDataSet.drawCubicEnabled = true;
-            //lineChartDataSet.drawFilledEnabled = true;
-            lineChartDataSet.colors = [colorCode.BlueColor]
+            let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "Elevation");
+            let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet);
+            lineChartDataSet.colors = [UIColor.greenColor()];
+            lineChartDataSet.cubicIntensity = 0.2;
+            lineChartDataSet.drawCirclesEnabled = false;
+            lineChartDataSet.drawCubicEnabled = true
+            lineChartDataSet.fillColor = UIColor.greenColor();
             
-            lineChartDataSet.drawCirclesEnabled = false
-            //remove xAxis line
-            lineChart.xAxis.drawGridLinesEnabled = false
-            lineChart.xAxis.drawAxisLineEnabled = false
-            
+            let gradientColors = [UIColor.greenColor().CGColor, UIColor.clearColor().CGColor] // Colors of the gradient
+            let colorLocations:[CGFloat] = [1.0, 0.0] // Positioning of the gradient
+            let gradient = CGGradientCreateWithColors(CGColorSpaceCreateDeviceRGB(), gradientColors, colorLocations) // Gradient Object
+            lineChartDataSet.fill = ChartFill.fillWithLinearGradient(gradient!, angle: 90.0) // Set the Gradient
+            lineChartDataSet.drawFilledEnabled = true // Draw the Gradient
             
             lineChart.data = lineChartData
-            lineChart.leftAxis.labelTextColor = colorCode.BlueColor;
-            lineChart.xAxis.labelTextColor = colorCode.BlueColor;
+            
+            lineChart.xAxis.spaceBetweenLabels = 4;
+            
             lineChart.rightAxis.labelTextColor = UIColor.clearColor();
             
-//            let ll = ChartLimitLine(limit: 10.5, label: "Avg Speed")
-//            lineChart.rightAxis.addLimitLine(ll)
+            lineChart.xAxis.labelPosition = .Bottom;
+            
+            
+            lineChart.leftAxis.axisMaxValue = 258;
+            lineChart.leftAxis.axisMinValue = 51;
+            
+            lineChart.leftAxis.xOffset = 6.0;
+            lineChart.leftAxis.yOffset = 2.0;
+            
+            lineChart.leftAxis.labelCount = 5;
+            
+            lineChart.legend.position = .BelowChartLeft;
+            lineChart.legend.form = .Square;
+            lineChart.legend.formSize = 9.0;
+            lineChart.legend.xEntrySpace = 4.0;
+            lineChart.animate(yAxisDuration: 1.0)
+            
         }
-       // lineChart.noDataText = "No  Data Available"
-        
-        
+        lineChart.noDataText = "No Chart Data Available";
     }
     
     // MARK:- Move Top View
@@ -159,7 +173,7 @@ class ViewRouteController: UIViewController {
         let touch = touches.first;
         let endPosition = touch?.locationInView(self.view);
         let difference = endPosition!.y - startPosition!.y;
-        if originalHeight + difference <= 75
+        if originalHeight + difference <= 100
         {
             
             customViewHeight2.constant = originalHeight + difference;
@@ -168,10 +182,6 @@ class ViewRouteController: UIViewController {
         
         if originalHeight + difference < 0
         {
-            //            UIView.animateWithDuration(2.0, animations: {
-            //                self.arrow.transform = CGAffineTransformMakeRotation((180.0 * CGFloat(M_PI)) / 180.0)
-            //            })
-            //   arrow.image = UIImage(named: "ic_up_down");
             UIView.animateWithDuration(2.0, animations: {
                 self.arrow.transform = CGAffineTransformMakeRotation((180.0 * CGFloat(M_PI)) / 180.0)
             })
@@ -206,17 +216,16 @@ class ViewRouteController: UIViewController {
             let camera = GMSCameraPosition.cameraWithLatitude(mapData.trackLat[0], longitude: mapData.trackLong[0], zoom: 16.0)
             self.mapView.camera = camera
             let london = GMSMarker(position: CLLocationCoordinate2D(latitude:mapData.trackLat[0], longitude: mapData.trackLong[0]))
-            london.icon = UIImage(named: "im_start_marker")
+            london.icon = UIImage(named: "ic_map_marker_green")
             london.map = mapView
             
             let london2 = GMSMarker(position: CLLocationCoordinate2D(latitude:mapData.trackLat[mapData.trackLat.count-1], longitude: mapData.trackLong[mapData.trackLong.count-1]))
-            london2.icon = UIImage(named: "im_stop_marker")
+            london2.icon = UIImage(named: "ic_map_marker_red")
             london2.map = mapView
         }
-        if mapData.trackLat.count > 0
+        if mapData.elevationValues.count > 0
         {
-           // ,dataPoints:[-122.03312,-122.0324,-122.03218,-122.03152999999999,-122.03152999999999,-122.03140999999999,-122.03053999999999]
-            setChart([37.33023,37.33023,37.33023,37.330250000000007,37.33026000000001,37.330280000000009,37.330520000000007]);
+            setChart(mapData.elevationValues);
         }
         
     }
@@ -262,9 +271,9 @@ class ViewRouteController: UIViewController {
         // Do any additional setup after loading the view.
         
         self.location.text = mapData.location;
-        self.routeDistance.text = mapData.distance;
-        self.elevationGain.text = mapData.elevationGain;
-        self.elevationLoss.text = mapData.elevationLoss;
+        self.routeDistance.text = mapData.distance! + " mi";
+        self.elevationGain.text = String(Int(round(Double(mapData.elevationGain!)!)))+" ft";
+        self.elevationLoss.text = String(Int(round(Double(mapData.elevationLoss!)!)))+" ft";
         
         
     }

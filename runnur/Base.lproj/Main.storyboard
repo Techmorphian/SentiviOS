@@ -1514,7 +1514,7 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0KU-9v-hP9">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0KU-9v-hP9">
                                                 <rect key="frame" x="81" y="28" width="33" height="27"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1560,7 +1560,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tsm-6R-HSO" customClass="BarChartView" customModule="Charts">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tsm-6R-HSO" customClass="LineChartView" customModule="Charts">
                                 <rect key="frame" x="0.0" y="140" width="600" height="0.0"/>
                                 <color key="backgroundColor" red="0.19215686269999999" green="0.54901960780000003" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -1854,6 +1854,7 @@
                         <outlet property="elevationGain" destination="Ua8-CM-zeP" id="oyG-bX-DTi"/>
                         <outlet property="elevationLoss" destination="0KU-9v-hP9" id="zxe-PD-slu"/>
                         <outlet property="getMyLocation" destination="GWl-O8-Qrk" id="wrQ-5n-cTX"/>
+                        <outlet property="lineChartView" destination="tsm-6R-HSO" id="Efv-mc-sts"/>
                         <outlet property="mapView" destination="M1h-SZ-bFq" id="Xje-pc-0Vw"/>
                         <outlet property="routeDistance" destination="VPi-cD-bgs" id="Afk-Gn-ndd"/>
                         <outlet property="searchButton" destination="R8K-MK-qhf" id="bxH-Z4-Bch"/>

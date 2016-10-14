@@ -67,11 +67,11 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                     if let distance = item["distanceP"] as? Double{
                         self.routeData.distance = String(distance);
                     }
-                    if let elevationLoss = item["elevationLossP"] as? String{
-                        self.routeData.elevationLoss = elevationLoss
+                    if let elevationLoss = item["elevationLossP"] as? Double{
+                        self.routeData.elevationLoss = String(elevationLoss)
                     }
-                    if let elevationGain = item["elevationGainP"] as? String{
-                        self.routeData.elevationGain = elevationGain
+                    if let elevationGain = item["elevationGainP"] as? Double{
+                        self.routeData.elevationGain = String(elevationGain)
                     }
                     if let startLocation = item["startLocationP"] as? String{
                         if  startLocation == ""
@@ -127,6 +127,24 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                         }
                         
                     }
+                    if let elevationValuesP = item["elevationValuesP"] as? String{
+                        print(elevationValuesP);
+                        
+                        let data: NSData = elevationValuesP.dataUsingEncoding(NSUTF8StringEncoding)!
+                        do
+                        {
+                            let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
+                            
+                            for i in 0 ..< json!.count
+                            {
+                                self.routeData.elevationValues.append((json![i].objectForKey("I") as? Double)!)
+                                
+                            }
+                        }catch{
+                            //                                19.2171975,72.8241082
+                        }
+                    }
+
                     
                     self.routeDataArray.append(self.routeData);
                     // print("Todo Item: ", item)
@@ -168,7 +186,7 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                     //query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
                     query.orderByDescending("__createdAt");
                     
-                    
+                
                     query.readWithCompletion({ (result, error) in
                         if let err = error {
                             CommonFunctions.hideActivityIndicator()
@@ -212,14 +230,14 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                             for item in items {
                                 
                                 self.routeData = MapData();
-                                if let distance = item["distanceP"] as? String{
-                                    self.routeData.distance = distance
+                                if let distance = item["distanceP"] as? Double{
+                                    self.routeData.distance = String(distance);
                                 }
-                                if let elevationLoss = item["elevationLossP"] as? String{
-                                    self.routeData.elevationLoss = elevationLoss
+                                if let elevationLoss = item["elevationLossP"] as? Double{
+                                    self.routeData.elevationLoss = String(elevationLoss)
                                 }
-                                if let elevationGain = item["elevationGainP"] as? String{
-                                    self.routeData.elevationGain = elevationGain
+                                if let elevationGain = item["elevationGainP"] as? Double{
+                                    self.routeData.elevationGain = String(elevationGain)
                                 }
                                 if let startLocation = item["startLocationP"] as? String{
                                     if  startLocation == ""
@@ -233,14 +251,13 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                                 if let date = item["dateP"] as? String{
                                     self.routeData.date = date
                                 }
-                                if let distanceAway = item["distanceAwayP"] as? String{
-                                    self.routeData.distanceAway = distanceAway
+                                if let distanceAway = item["distanceAwayP"] as? Double{
+                                    self.routeData.distanceAway = String(distanceAway)
                                 }
                                 if let itemID = item["id"] as? String{
                                     self.routeData.itemID = itemID
                                 }
                                 if let elevationCoordinatesP = item["elevationCoordinatesP"] as? String{
-                                    // self.routeData.distanceAway = distanceAway
                                     print(elevationCoordinatesP);
                                     
                                     let data: NSData = elevationCoordinatesP.dataUsingEncoding(NSUTF8StringEncoding)!
@@ -277,6 +294,24 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                                     }
                                     
                                 }
+                                if let elevationValuesP = item["elevationValuesP"] as? String{
+                                    print(elevationValuesP);
+                                    
+                                    let data: NSData = elevationValuesP.dataUsingEncoding(NSUTF8StringEncoding)!
+                                    do
+                                    {
+                                        let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
+                                        
+                                        for i in 0 ..< json!.count
+                                        {
+                                            self.routeData.elevationValues.append((json![i].objectForKey("I") as? Double)!)
+                                            
+                                        }
+                                    }catch{
+                                        //                                19.2171975,72.8241082
+                                    }
+                                }
+
                                 
                                 self.routeDataArray.append(self.routeData);
                                 // print("Todo Item: ", item)
@@ -322,10 +357,7 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             if let indexPath = tableView.indexPathForRowAtPoint(touchPoint) {
                 
                 CommonFunctions.showPopup(self, title: "", msg: "Are you sure you want to delete?", positiveMsg: "Yes", negMsg: "No", show2Buttons: true, showReverseLayout: false, getClick: {
-                    self.tableView.beginUpdates();
-                    self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Top)
-                    self.routeDataArray.removeAtIndex(indexPath.row);
-                    self.tableView.endUpdates();
+                    
                     let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
                     let client = delegate!.client!;
                     
@@ -335,6 +367,9 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                     
                     let table = client.tableWithName("RouteObject");
                     
+                    
+                    
+                    
                     table.deleteWithId(self.routeDataArray[indexPath.row].itemID) { (itemId, error) in
                         if let err = error {
                             print("ERROR ", err)
@@ -342,6 +377,10 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                             print("successfully delete")
                         }
                     }
+                    self.tableView.beginUpdates();
+                    self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Top)
+                    self.routeDataArray.removeAtIndex(indexPath.row);
+                    self.tableView.endUpdates();
                 })
                 
             }
@@ -385,7 +424,8 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         let data = routeDataArray[indexPath.row];
         let cell = self.tableView.dequeueReusableCellWithIdentifier("RouteTableViewCell", forIndexPath: indexPath) as! RouteTableViewCell
         cell.address.text = data.location;
-        cell.dateAndTime.text = data.date;
+//        10/14/2016   07:08 AM
+        cell.dateAndTime.text = dateFunction.dateFormatFunc("MMM dd, yyyy hh:mm a", formFormat: "MM/dd/yyyy   hh:mm a", dateToConvert: data.date!);
         if data.distanceAway == ""
         {
             cell.distance.text = "-- mi away";
@@ -393,8 +433,9 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             cell.distance.text = data.distanceAway + " mi away";
         }
         cell.distanceLabel.text = data.distance!;
-        cell.elevationGain.text = data.elevationGain;
-        cell.elevationLoss.text = data.elevationLoss;
+        
+        cell.elevationGain.text =  String(Int(round(Double(data.elevationGain!)!)))    //String(format: "%.2f", Double(data.elevationGain!)!);
+        cell.elevationLoss.text =  String(Int(round(Double(data.elevationLoss!)!)))          //String(format: "%.2f", Double(data.elevationLoss!)!);
         
         // cell.mapView.clear();
         
@@ -417,7 +458,6 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         path.removeAllCoordinates()
         for i in 0 ..< self.routeDataArray[indexPath.row].trackLat.count
         {
-            
             path.addLatitude(routeDataArray[indexPath.row].trackLat[i], longitude: routeDataArray[indexPath.row].trackLong[i])
         }
         

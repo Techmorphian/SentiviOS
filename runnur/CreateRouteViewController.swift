@@ -9,6 +9,7 @@
 import UIKit
 import GoogleMaps
 import GooglePlaces
+import Charts
 
 
 class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocationManagerDelegate, UISearchDisplayDelegate,UISearchBarDelegate,LocateOnTheMap {
@@ -29,6 +30,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
     @IBOutlet weak var elevationGain: UILabel!
     @IBOutlet weak var elevationLoss: UILabel!
     
+    @IBOutlet var lineChartView: LineChartView!
     
     @IBOutlet weak var customViewHeight: NSLayoutConstraint!
     
@@ -76,36 +78,9 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             }
             self.passToGetDirections()
 
-//            let camera = GMSCameraPosition.cameraWithLatitude(lat, longitude: lon, zoom: 16.0)
-//            self.mapView.camera = camera
-//            let london = GMSMarker(position: CLLocationCoordinate2D(latitude:lat, longitude: lon))
-//            london.icon = UIImage(named: "ic_map_marker_green")
-//            london.map = self.mapView
-//            self.tapCounter += 1;
-//            self.lastMarker.append(london);
         }
         
     }
-    var elevationValues = [Double]();
-    func calculateElevation(oldLocation:CLLocation,newLocation:CLLocation)
-    {
-        let elevationChange: Double = oldLocation.altitude - newLocation.altitude;
-        var netElevationLoss = Double();
-        var netElevationGain = Double();
-        if elevationChange < 0 {
-            netElevationLoss += fabs(elevationChange);
-            mapData.elevationLoss = String(netElevationLoss);
-        }
-        else {
-            netElevationGain += elevationChange
-            mapData.elevationGain = String(netElevationGain);
-        }
-        elevationValues.append(netElevationGain - netElevationLoss);
-        updateLabels();
- 
-    }
-    
-    
     
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
@@ -139,7 +114,29 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         searchResultController.delegate = self
     }
 
+    var elevationValues = [Double]();
     
+    //    TODO:- not using
+    func calculateElevation(oldLocation:CLLocation,newLocation:CLLocation)
+    {
+        let elevationChange: Double = oldLocation.altitude - newLocation.altitude;
+        var netElevationLoss = Double();
+        var netElevationGain = Double();
+        if elevationChange < 0 {
+            netElevationLoss += fabs(elevationChange);
+            mapData.elevationLoss = String(netElevationLoss);
+        }
+        else {
+            netElevationGain += elevationChange
+            mapData.elevationGain = String(netElevationGain);
+        }
+        elevationValues.append(netElevationGain - netElevationLoss);
+        updateLabels();
+        
+    }
+    
+    
+  
     
 // MARK:- My Location
     @IBAction func getMyLocation(sender: AnyObject) {
@@ -183,8 +180,8 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
     func updateLabels()
     {
         self.routeDistance.text = mapData.distance!;
-        self.elevationGain.text = String(format: "%.2f", mapData.elevationGain!);
-        self.elevationLoss.text = String(format: "%.2f", mapData.elevationLoss!);
+        self.elevationGain.text = mapData.elevationGain;
+        self.elevationLoss.text = mapData.elevationLoss;
         
         
       //  mapData.distance = String(mapData.distance?.componentsSeparatedByCharactersInSet(NSCharacterSet.decimalDigitCharacterSet().invertedSet));
@@ -194,7 +191,23 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
 //        self.elevationGain.text = String(format: "%.2f", mapData.elevationGain!);
 //        self.elevationLoss.text = String(format: "%.2f", mapData.elevationLoss!);
     }
-
+    
+    func calculateDistance( fromLong:Double, fromLat:Double,
+                            toLong:Double, toLat:Double) -> Double
+    {
+//        let d2r = M_PI / 180;
+//        let dLong = (toLong - fromLong) * d2r;
+//        let dLat = (toLat - fromLat) * d2r;
+//        let a = pow(sin(dLat / 2.0), 2) + cos(fromLat * d2r)
+//            * cos(toLat * d2r) * pow(sin(dLong / 2.0), 2);
+//        let c = 2 * atan2(sqrt(a), sqrt(1 - a));
+//       var dis = 6367000 * c;
+//        dis = dis * 0.000621371;
+        
+       var dis = CLLocation(latitude: fromLong, longitude: fromLat).distanceFromLocation(CLLocation(latitude: toLat, longitude: toLong));
+        return dis;
+    }
+    
     
     
 //  MARK:- All Button Actions AutoRoute
@@ -417,7 +430,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         }
     }
     
-    
+//MARK:- Elevation calculation
     /*
      This method is for elevation api calculation
      */
@@ -434,8 +447,6 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                 + url + "&key=AIzaSyAlNHDmYN0jVM3T6rgvlik0UNEY9ocCmMI";
         }
         else{
-        
-        
          elevationUrl = "https://maps.googleapis.com/maps/api/elevation/json?locations="
             + url + "&key=AIzaSyAlNHDmYN0jVM3T6rgvlik0UNEY9ocCmMI";
         }
@@ -450,29 +461,33 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         {
             let json = try NSJSONSerialization.JSONObjectWithData(dta, options: .MutableContainers) as? NSDictionary
             if  let parseJSON = json{
+                var lat = [Double]();
+                var long = [Double]();
+                var fromLat = Double();
+                var fromLong = Double();
                 
-             
                 if  let elements = parseJSON["results"] as? NSArray
                 {
                     for i in 0 ..< elements.count
                     {
                         let location = elements[i].objectForKey("location") as! NSDictionary;
-                        location.objectForKey("lat") as! Double
-                        location.objectForKey("lng") as! Double
+                        lat.append(location.objectForKey("lat") as! Double)
+                        long.append(location.objectForKey("lng") as! Double)
                         
                         let elevation = elements[i].objectForKey("elevation") as! Double;
                         elevations.append(elevation);
                         print(elevation);
-                        
                     }
                     
-                    
-                   
                 }
+                var distance = Double();
                 var prevValue = elevations[0];
-                for i in elevations
+                fromLat=lat[0];
+                fromLong=long[0];
+                for (index,i) in elevations.enumerate()
                 {
-                    var elevationNewValue = i;
+                    self.elevations.append(i*3.28084)
+                    let elevationNewValue = i;
                     
                     if ((elevationNewValue - prevValue) > 0) {
                         elevationGainValue += (elevationNewValue - prevValue);
@@ -481,13 +496,16 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                     }
                     prevValue = elevationNewValue;
                     
+                    distance = distance + calculateDistance(fromLong, fromLat: fromLat, toLong: lat[index], toLat: long[index])
+                    fromLong=long[index];
+                    fromLat=lat[index];
                 }
-                
+                mapData.distance = String(String(format: "%.2f", distance));
                 elevationValues.append(elevationGainValue);
                 elevationValues.append(elevationLossValue);
-                mapData.elevationGain = String(elevationGainValue);
-                mapData.elevationLoss = String(elevationLossValue);
-                
+                mapData.elevationGain = String(Int(round(elevationGainValue*3.28084)))+" ft"//String(format: "%.2f", elevationGainValue*3.28084);
+                mapData.elevationLoss = String(Int(round(elevationLossValue*3.28084)))+" ft"//String(format: "%.2f", elevationLossValue*3.28084);
+                plotDataOnChart(elevations)
                 updateLabels();
                 
             }
@@ -496,12 +514,56 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         }
     }
     
-    
-    
-    
-    
-    
-    
+//MARK:- Chart
+    func plotDataOnChart(valuesforElevations:[Double])
+    {
+       //s var valuesforElevations = [Double]()
+        var dataPoints = [Double]()
+       // dataPoints = [51,103,155,206,258];
+        if valuesforElevations.count != 0
+        {
+            var dataEntries: [ChartDataEntry] = []
+            var c = Double()
+            for i in 0..<valuesforElevations.count {
+                let dataEntry = ChartDataEntry(value:valuesforElevations[i], xIndex: i)
+                dataEntries.append(dataEntry);
+               dataPoints.append(c);
+                c = c+1;
+            }
+            
+            let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "Elevation");
+            let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet);
+            lineChartDataSet.colors = [UIColor.greenColor()];
+            lineChartDataSet.cubicIntensity = 0.2;
+            lineChartDataSet.drawCirclesEnabled = false;
+            lineChartDataSet.drawCubicEnabled = true
+            lineChartDataSet.fillColor = UIColor.greenColor();
+            
+            let gradientColors = [UIColor.greenColor().CGColor, UIColor.clearColor().CGColor] // Colors of the gradient
+            let colorLocations:[CGFloat] = [1.0, 0.0] // Positioning of the gradient
+            let gradient = CGGradientCreateWithColors(CGColorSpaceCreateDeviceRGB(), gradientColors, colorLocations) // Gradient Object
+            lineChartDataSet.fill = ChartFill.fillWithLinearGradient(gradient!, angle: 90.0) // Set the Gradient
+            lineChartDataSet.drawFilledEnabled = true // Draw the Gradient
+            
+            lineChartView.data = lineChartData
+            
+            lineChartView.xAxis.spaceBetweenLabels = 4;
+            
+            lineChartView.rightAxis.labelTextColor = UIColor.clearColor();
+            
+            lineChartView.xAxis.labelPosition = .Bottom
+            
+            
+            
+            lineChartView.legend.position = .BelowChartLeft;
+            lineChartView.legend.form = .Square;
+            lineChartView.legend.formSize = 9.0;
+            lineChartView.legend.xEntrySpace = 4.0;
+            lineChartView.animate(yAxisDuration: 1.0)
+            
+        }
+        lineChartView.noDataText = "No Chart Data Available"
+    }
     
     /*
      func polyLineWithEncodedString(encodedString: String) {
@@ -617,6 +679,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         
         return url;
     }
+//    MARK:- ButtonActions  Start clear undo save
     @IBAction func start(sender: UIButton) {
         if lastMarker.count == 0
         {
@@ -687,9 +750,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
     @IBAction func save(sender: UIButton) {
         var msg = String();
         if lastMarker.count < 0 {
-            
             CommonFunctions.showPopup(self, msg: "No Route Found", getClick: {
-                
             })
             
             
@@ -699,21 +760,6 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             }else{
                 msg = "Are you sure you want to save the activity?";
             }
-            
-            
-            //        let data = self.polyline.path?.encodedPath().dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
-            //
-            ////var properString = data!.stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-            // print(data)
-            //         let jsonString = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
-            //        print(jsonString)
-            //
-            //        if NSJSONSerialization.isValidJSONObject(data!){
-            //            let jsonData = try! NSJSONSerialization.dataWithJSONObject(data!, options: NSJSONWritingOptions())
-            //            let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
-            //            print(jsonString);
-            //        }
-            
             
             CommonFunctions.showPopup(self, title: "ALREADY FINISHED?", msg:msg , positiveMsg: "Yes, Save", negMsg: "No, Discard", show2Buttons: true, showReverseLayout: false,getClick: {
                 // if Reachability.isConnectedToNetwork() == true{
@@ -743,6 +789,28 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                     saveTrackPolyline = jsonString;
                 }
                 
+                var elevationValuesP = String();
+                if NSJSONSerialization.isValidJSONObject(self.elevations){
+                    let jsonData = try! NSJSONSerialization.dataWithJSONObject(self.elevations, options: NSJSONWritingOptions())
+                    let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
+                    elevationValuesP = jsonString;
+                }
+                
+                var mileMarkers = [NSDictionary]();
+                for i in self.lastMarker{
+                    mileMarkers.append(["latitude":Double(i.position.latitude),"longitude":Double(i.position.longitude)])
+                }
+                
+                var mileMarkersP = String();
+                if NSJSONSerialization.isValidJSONObject(mileMarkers){
+                    let jsonData = try! NSJSONSerialization.dataWithJSONObject(mileMarkers, options: NSJSONWritingOptions())
+                    let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
+                    mileMarkersP = jsonString;
+                }
+                
+                let dis = self.mapData.distance?.stringByReplacingOccurrencesOfString("mi", withString: "");
+                let elevationGain = self.mapData.elevationGain?.stringByReplacingOccurrencesOfString(" ft", withString: "");
+                let elevationLoss = self.mapData.elevationLoss?.stringByReplacingOccurrencesOfString(" ft", withString: "");
                 
                 let table = client.tableWithName("RouteObject")
                 if client.currentUser != nil{
@@ -752,20 +820,20 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                     let dateString = dateFormatter.stringFromDate(date)
                     
                     let newItem : NSDictionary =
-
                         [  "dateP": dateString,
-                            "distanceP": Double(self.autoRouteDistance),
-                            "elevationGainP": Double(self.mapData.elevationGain!)!,
-                            "elevationLossP": Double(self.mapData.elevationLoss!)!,
+                            "distanceP": Double(dis!)!,
+                            "elevationGainP": Double(elevationGain!)!,
+                            "elevationLossP": Double(elevationLoss!)!,
                             "userId": "\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)",
                             "trackPolylinesP": saveTrackPolyline,
-                            "mileMarkersP":saveTrackPolyline,
-                            "elevationValuesP":saveTrackPolyline,
-                            "elevationCoordinatesP": "",
+                            "mileMarkersP":mileMarkersP,
+                            "elevationValuesP":elevationValuesP,
+                            "elevationCoordinatesP": saveTrackPolyline,
                             "startLocationP": self.locationName];
                     
                     if Reachability.isConnectedToNetwork() == true{
-                        table.insert(newItem as [NSObject : AnyObject]) { (result, error) in
+                        
+                        table.insert(newItem as [NSObject : AnyObject], parameters: ["runnurId": "\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)"], completion: { (result, error) in
                             if let err = error {
                                 CommonFunctions.hideActivityIndicator();
                                 print("ERROR ", err)
@@ -777,7 +845,21 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                                 activityDetailsViewController.mapData=self.mapData;
                                 self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
                             }
-                        }
+
+                        })
+//                        table.insert(newItem as [NSObject : AnyObject]) { (result, error) in
+//                            if let err = error {
+//                                CommonFunctions.hideActivityIndicator();
+//                                print("ERROR ", err)
+//                            } else if let item = result {
+//                                CommonFunctions.hideActivityIndicator();
+//                                print("RunObject: ", item["trackPolylinesP"])
+//                                let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
+//                                ActivityDetailsViewController;
+//                                activityDetailsViewController.mapData=self.mapData;
+//                                self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
+//                            }
+//                        }
                     }else{
                         let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
                         ActivityDetailsViewController;
@@ -794,6 +876,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         }
         
     }
+//    MARK:- getAddress
     var locationName = String();
     func getAddressFromLatLong(latitude:Double,longitude:Double)
     {
@@ -922,7 +1005,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         let touch = touches.first;
         let endPosition = touch?.locationInView(self.view);
         let difference = endPosition!.y - startPosition!.y;
-        if originalHeight + difference <= 75
+        if originalHeight + difference <= 100
         {
             
             customViewHeight2.constant = originalHeight + difference;
@@ -1060,6 +1143,20 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         return UIStatusBarStyle.LightContent;
     }
     
+}
+extension CAGradientLayer
+{
+    func turquoiseColor() -> CAGradientLayer
+    {
+        let bottomColor = UIColor(red: 236/255, green: 65/255, blue: 78/255, alpha: 1);
+        let topColor = UIColor(red: 240.0/255.0, green: 93.0/255.0, blue: 74.0/255.0, alpha: 1)
+        let gradientColors: [CGColor] = [topColor.CGColor, bottomColor.CGColor]
+        let gradientLocations: [Float] = [0.0, 1.0]
+        let gradientLayer: CAGradientLayer = CAGradientLayer()
+        gradientLayer.colors = gradientColors
+        gradientLayer.locations = gradientLocations
+        return gradientLayer
+    }
 }
 /*
 extension Int {

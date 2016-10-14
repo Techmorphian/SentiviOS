@@ -39,6 +39,9 @@ class MapData
     
     var elevationLat = [Double]();
      var elevationLong = [Double]();
+    
+    var elevationValues = [Double]();
+    
     var itemID = String();
     
     var gpsAcc = Int();
