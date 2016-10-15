@@ -541,6 +541,9 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                 
                 challenegeImage = addImage.image!
                 
+                NSUserDefaults.standardUserDefaults().setBool(false, forKey: "PressedGroupFitAcceptButton")
+
+                
                 let GP  = self.storyboard?.instantiateViewControllerWithIdentifier("PaymentOptionsViewController") as! PaymentOptionsViewController;
                 
              //   NSUserDefaults.standardUserDefaults().setObject("", forKey: "challengeName")

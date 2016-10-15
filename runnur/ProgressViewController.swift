@@ -188,30 +188,31 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
 
     
-    func showActivityIndicatory()
+    
+    func showActivityIndicator()
     {
         
         
-        loadingView.frame = CGRectMake(self.view.frame.width/2-30,self.view.frame.height/2 - 100,60,150)
+        loadingView.frame = CGRectMake(self.view.frame.width/2-30,self.view.frame.height/2 - 100,60,60)
+        
+        loadingView.backgroundColor = colorCode.GrayColor
         
         loadingView.layer.cornerRadius = 10
-        loadingView.alpha = 0.6
+        loadingView.alpha = 0.7
         
         
         loadingView.clipsToBounds = true
+        activityIndicator.hidesWhenStopped=true
         
         
         // activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
         
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
         
         activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
                                                loadingView.frame.size.height / 2);
         
-        activityIndicator.color = UIColor.darkGrayColor()
-        
         loadingView.addSubview(activityIndicator)
-        
         
         self.view.addSubview(loadingView)
         activityIndicator.startAnimating()
@@ -226,13 +227,8 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         loadingView.removeFromSuperview();
         
-        //        self.activityIndicator.stopAnimating();
-        //       
-        //        self.loadingView.removeFromSuperview();
-        
         
     }
-    
     
     
 
@@ -241,10 +237,8 @@ class ProgressViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
     {
         
-       
-        //CommonFunctions.showActivityIndicator(view)
         
-         self.showActivityIndicatory()
+        self.showActivityIndicator()
         
         
         let myurl = NSURL(string: Url.progress)

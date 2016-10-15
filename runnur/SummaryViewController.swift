@@ -282,7 +282,9 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
     }
     
-    
+    var userId = String()
+   var ChallengeId = String()
+    var challengeName = String()
     
     @IBAction func buttonTwoAction(sender: UIButton)
     {
@@ -298,7 +300,27 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         if sender.titleLabel?.text == "Accept"
         {
             
-            self.AcceptGroupChallenge();
+           // self.AcceptGroupChallenge();
+            
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "PressedGroupFitAcceptButton")
+            
+            let GP  = self.storyboard?.instantiateViewControllerWithIdentifier("PaymentOptionsViewController") as! PaymentOptionsViewController;
+            
+            
+            userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId")!;
+            
+            GP.userId = userId
+            
+            ChallengeId = NSUserDefaults.standardUserDefaults().stringForKey("challengeId")!
+
+            GP.ChallengeId = ChallengeId
+            
+            challengeName = NSUserDefaults.standardUserDefaults().stringForKey("challengeName")!
+            
+            GP.challengeName = challengeName
+            
+            self.presentViewController(GP,animated :false , completion:nil);
+            
           
             
         }
@@ -493,6 +515,52 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
 
     ///////////////////////////////////////////////////// web service part
     
+    
+    
+    
+    
+    
+    
+    func AcceptGroupChallengeWithPayment()
+        
+    {
+        
+        self.showActivityIndicator()
+        
+        
+        let myurl = NSURL(string:"http://sentivphp.azurewebsites.net/sentiv/acceptSentiveGroupFit.php")
+        
+        let request = NSMutableURLRequest(URL: myurl!)
+        
+        request.HTTPMethod = "POST"
+        
+        request.timeoutInterval = 20.0;
+        
+        
+        
+        let userId  = NSUserDefaults.standardUserDefaults().stringForKey("userId");
+        
+        let ChallengeId = NSUserDefaults.standardUserDefaults().stringForKey("challengeId")
+        
+        let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(CurrentDateFunc.currentDate())";
+        
+       // print(postString)
+        
+        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+        
+        let session = NSURLSession(configuration: config, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
+        
+        let downloadTask = session.dataTaskWithRequest(request);
+        
+        downloadTask.resume()
+        
+        
+        
+    }
+
+    
     // MARK:- DECLINE WEB SERVICE
     
    
@@ -500,7 +568,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
     {
         
-        self.showActivityIndicatory()
+        self.showActivityIndicator()
        
         
         let myurl = NSURL(string: Url.acceptChallenge)
@@ -551,7 +619,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
     {
         
-        self.showActivityIndicatory()
+        self.showActivityIndicator()
         // LoaderFile.showLoader(self.view);
         
         let myurl = NSURL(string: Url.declineChallenge)
@@ -627,7 +695,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         RemoveNoInternet();
         RemoveNoResult();
              
-       showActivityIndicatory()
+       showActivityIndicator()
         
         
         // LoaderFile.showLoader(self.view);
@@ -670,74 +738,31 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
     let loadingView: UIView = UIView()
     
     
-//    func showActivityIndicatory()
-//    {
-//        loadingView.frame = CGRectMake(0, 0, 60, 50)
-//        loadingView.center = view.center
-//        
-//        loadingView.backgroundColor = UIColor.grayColor()
-//        loadingView.alpha = 0.6
-//        loadingView.clipsToBounds = true
-//        loadingView.layer.cornerRadius = 10
-//        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
-//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
-//        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
-//                                               loadingView.frame.size.height / 2);
-//        loadingView.addSubview(activityIndicator)
-//        self.view.addSubview(loadingView)
-//        activityIndicator.startAnimating()
-//    }
-//   
     
-    
-    
-    func showActivityIndicatory()
+    func showActivityIndicator()
     {
-      ////  old
         
         
-//        loadingView.frame = CGRectMake(0, 0, 60, 50)
-//        loadingView.center = view.center
-//        
-//        loadingView.backgroundColor = UIColor.grayColor()
-//        loadingView.alpha = 0.6
-//        loadingView.clipsToBounds = true
-//        loadingView.layer.cornerRadius = 10
-//        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
-//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
-//        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
-//                                               loadingView.frame.size.height / 2);
-//        
-//        
-//        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-//        
-//        loadingView.addSubview(activityIndicator)
-//        self.view.addSubview(loadingView)
-//        activityIndicator.startAnimating()
+        loadingView.frame = CGRectMake(self.view.frame.width/2-30,self.view.frame.height/2 - 100,60,60)
         
-        
-        
-        
-        loadingView.frame = CGRectMake(self.view.frame.width/2-30,self.view.frame.height/2 - 100,60,150)
-        
+        loadingView.backgroundColor = colorCode.GrayColor
+
         loadingView.layer.cornerRadius = 10
-        loadingView.alpha = 0.6
+        loadingView.alpha = 0.7
         
         
         loadingView.clipsToBounds = true
-        
+        activityIndicator.hidesWhenStopped=true
+
         
         // activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
         
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
         
         activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
                                                loadingView.frame.size.height / 2);
         
-        activityIndicator.color = UIColor.darkGrayColor()
-        
         loadingView.addSubview(activityIndicator)
-        
         
         self.view.addSubview(loadingView)
         activityIndicator.startAnimating()
@@ -751,11 +776,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
     {
         
         loadingView.removeFromSuperview();
-        
-//        self.activityIndicator.stopAnimating();
-//       
-//        self.loadingView.removeFromSuperview();
-
+    
         
     }
     
@@ -1940,7 +1961,7 @@ class SummaryViewController: UIViewController,NSURLSessionDelegate,NSURLSessionD
         
         // MARK:- IF DATA TASK ACCPET GROUP CHALLENGE(acceptChallenge)
         
-        if dataTask.currentRequest?.URL! == NSURL(string: Url.acceptChallenge)
+        if dataTask.currentRequest?.URL! == NSURL(string: "http://sentivphp.azurewebsites.net/sentiv/acceptSentiveGroupFit.php")
             
         {
             

@@ -1289,12 +1289,6 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         return true;
     }
 
-    
-    
-    
-    
-    
-    
         
     
     

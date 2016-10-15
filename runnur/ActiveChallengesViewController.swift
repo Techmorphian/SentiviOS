@@ -923,15 +923,10 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         
     {
         
-       // showActivityIndicatory()
-        
-        //showActivityIndicatory();
-        
-       // CommonFunctions.showActivityIndicator(view);
-        
         
         RemoveNoInternet();
         RemoveNoResult();
+        
         showActivityIndicator();
         
         let myurl = NSURL(string: Url.viewActiveChallenges)
@@ -996,16 +991,58 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     
     
     
-    func hideActivityIndicator()
-    {
-        
-        loadingView.removeFromSuperview();
-        
-    }
-    
-    
     
   var loadingLable = UILabel()
+//    
+//    loadingView.frame = CGRectMake(0, 0, 60, 60)
+//    
+//    loadingView.backgroundColor = colorCode.GrayColor
+//    
+//    loadingView.center=view.center
+//    
+//    //loadingView.backgroundColor = colorCode.themeTintColor()
+//    
+//    loadingView.layer.cornerRadius = 10
+//    
+//    loadingView.alpha = 0.7
+//    
+//    loadingView.hidden=false
+//    
+//    loadingView.clipsToBounds=true
+//    
+//    activityIndicator.color = UIColor.whiteColor()
+//    
+//    
+//    
+//    activityIndicator.activityIndicatorViewStyle = .WhiteLarge
+//    
+//    activityIndicator.center=CGPointMake(loadingView.frame.width/2, loadingView.frame.height/2)
+//    
+//    activityIndicator.hidesWhenStopped=true
+//    
+//    //loadingLable=UILabel(frame: CGRectMake(0, 47, loadingView.bounds.width, 20))
+//    
+//    // loadingLable.text="Please wait..."
+//    
+//    // loadingLable.textColor=UIColor.whiteColor()
+//    //
+//    //        loadingLable.font = loadingLable.font.fontWithSize(10)
+//    //
+//    //        loadingLable.lineBreakMode =  .ByWordWrapping
+//    //
+//    //        loadingLable.numberOfLines=0
+//    //
+//    //        loadingLable.textAlignment = .Center
+//    
+//    activityIndicator.startAnimating()
+//    
+//    loadingView.addSubview(activityIndicator)
+//    
+//    //  loadingView.addSubview(loadingLable)
+//    
+//    view.addSubview(loadingView)
+    
+
     
     func showActivityIndicator()
     
@@ -1015,24 +1052,39 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
          /// x-30 is a width of loadingView/2 mns 60/2
         ////// y-100 mns height of parent view(upper view only)
         
-        loadingView.frame = CGRectMake(self.view.frame.width/2-30,self.view.frame.height/2 - 100,60,150)
+        
+       
+        
+        
+        //loadingView.center=view.center
+
+        
+       // loadingView.frame = CGRectMake(self.view.frame.width/2-30,self.view.frame.height/2 - 100,60,150)
+        
+        loadingView.frame = CGRectMake(self.view.frame.width/2-30,self.view.frame.height/2 - 100,60,60)
+       
+      //   loadingView.frame = CGRectMake(0, 0, 60, 60)
+        
+        loadingView.backgroundColor = colorCode.GrayColor
+      
         
         loadingView.layer.cornerRadius = 10
-        loadingView.alpha = 0.6
+        loadingView.alpha = 0.7
         
-        
+        loadingView.hidden=false
+
         loadingView.clipsToBounds = true
-        
+         activityIndicator.hidesWhenStopped=true
         
        // activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
         
-      activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+      activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
         
        activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
                           loadingView.frame.size.height / 2);
      
         
-        activityIndicator.color = UIColor.darkGrayColor()
+       // activityIndicator.color = UIColor.darkGrayColor()
         
         
       //  loadingLable=UILabel(frame: CGRectMake(self.loadingView.frame.width/2-50,self.loadingView.frame.height/2+20, 100,50))
@@ -1061,8 +1113,14 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     }
 
     
+    func hideActivityIndicator()
+    {
+        
+        loadingView.removeFromSuperview();
+        
+    }
     
-    
+
     
     //MARK:- NSURLSession delegate methods
     

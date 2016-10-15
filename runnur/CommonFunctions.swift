@@ -237,28 +237,76 @@ class CommonFunctions : NSObject
         }
     }
     
+  //// old activity indictor simple loader only
+    
+//    static func showActivityIndicator(view:UIView)
+//    {
+//        
+//        loadingView.frame = CGRectMake(0, 0, view.frame.width/2, view.frame.height/2)
+//        
+//        loadingView.center=view.center
+//        //loadingView.backgroundColor = colorCode.themeTintColor()
+//        loadingView.layer.cornerRadius = 10
+//        loadingView.alpha = 0.7
+//        loadingView.hidden=false
+//        loadingView.clipsToBounds=true
+//        activityIndicator.color = UIColor.darkGrayColor()
+//        
+//        
+//        activityIndicator.center=CGPointMake(loadingView.frame.width/2, loadingView.frame.height/2)
+//        activityIndicator.hidesWhenStopped=true
+//        
+//        
+//        activityIndicator.startAnimating()
+//        loadingView.addSubview(activityIndicator)
+//        loadingView.addSubview(loadingLable)
+//        view.addSubview(loadingView)
+//        
+//        //Please wait a moment. This may take a while
+//        
+//    }
+    
+    
+    
+    //// new activity indictor loader with gray background
+
+    
     static func showActivityIndicator(view:UIView)
     {
         
-        loadingView.frame = CGRectMake(0, 0, view.frame.width/2, view.frame.height/2)
+        
+        loadingView.frame = CGRectMake(0, 0, 60, 60)
+        
+        loadingView.backgroundColor = colorCode.GrayColor
         
         loadingView.center=view.center
-        //loadingView.backgroundColor = colorCode.themeTintColor()
-        loadingView.layer.cornerRadius = 10
-        loadingView.alpha = 0.7
-        loadingView.hidden=false
-        loadingView.clipsToBounds=true
-        activityIndicator.color = UIColor.darkGrayColor()
         
+        //loadingView.backgroundColor = colorCode.themeTintColor()
+        
+        loadingView.layer.cornerRadius = 10
+        
+        loadingView.alpha = 0.7
+        
+        loadingView.hidden=false
+        
+        loadingView.clipsToBounds=true
+        
+        activityIndicator.color = UIColor.whiteColor()
+        
+        
+        
+        activityIndicator.activityIndicatorViewStyle = .WhiteLarge
         
         activityIndicator.center=CGPointMake(loadingView.frame.width/2, loadingView.frame.height/2)
+        
         activityIndicator.hidesWhenStopped=true
         
-//        loadingLable=UILabel(frame: CGRectMake(0, 60, loadingView.bounds.width, loadingView.bounds.height))
-//        loadingLable.text="Please wait..."
-//        
-//        loadingLable.textColor=UIColor.grayColor()
-//        
+        //loadingLable=UILabel(frame: CGRectMake(0, 47, loadingView.bounds.width, 20))
+        
+       // loadingLable.text="Please wait..."
+        
+       // loadingLable.textColor=UIColor.whiteColor()
+      //
 //        loadingLable.font = loadingLable.font.fontWithSize(10)
 //        
 //        loadingLable.lineBreakMode =  .ByWordWrapping
@@ -268,11 +316,18 @@ class CommonFunctions : NSObject
 //        loadingLable.textAlignment = .Center
         
         activityIndicator.startAnimating()
+        
         loadingView.addSubview(activityIndicator)
-        loadingView.addSubview(loadingLable)
+        
+      //  loadingView.addSubview(loadingLable)
+        
         view.addSubview(loadingView)
         
+        
+        
         //Please wait a moment. This may take a while
+        
+        
         
     }
     

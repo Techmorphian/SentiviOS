@@ -123,8 +123,6 @@
 		47C6B00A1D5B2ABA00410DAE /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C6B0091D5B2ABA00410DAE /* ProgressViewController.swift */; };
 		47C78CF81D265520006DEACF /* colorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C78CF71D265520006DEACF /* colorCode.swift */; };
 		47C78CFC1D26A480006DEACF /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C78CFB1D26A480006DEACF /* SplashScreenViewController.swift */; };
-		47CBF9221DA28DE70084EC04 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47CBF9201DA28DE70084EC04 /* Fabric.framework */; };
-		47CBF9231DA28DE70084EC04 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47CBF9211DA28DE70084EC04 /* Crashlytics.framework */; };
 		47CF1FC11D4CC5620083B1A7 /* challengeFilterXIB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CF1FC01D4CC5620083B1A7 /* challengeFilterXIB.swift */; };
 		47DA6B0D1D81509B005E8F5E /* LeaderBoardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DA6B0C1D81509B005E8F5E /* LeaderBoardModel.swift */; };
 		47DA9F5A1DA5105E005F16AF /* PaymentDoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DA9F591DA5105D005F16AF /* PaymentDoneViewController.swift */; };
@@ -266,8 +264,6 @@
 		47C6B0091D5B2ABA00410DAE /* ProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
 		47C78CF71D265520006DEACF /* colorCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = colorCode.swift; sourceTree = "<group>"; };
 		47C78CFB1D26A480006DEACF /* SplashScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
-		47CBF9201DA28DE70084EC04 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
-		47CBF9211DA28DE70084EC04 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		47CF1FBC1D4CC3130083B1A7 /* challengeFilterXIB.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = challengeFilterXIB.xib; sourceTree = "<group>"; };
 		47CF1FC01D4CC5620083B1A7 /* challengeFilterXIB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = challengeFilterXIB.swift; sourceTree = "<group>"; };
 		47DA6B0C1D81509B005E8F5E /* LeaderBoardModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderBoardModel.swift; sourceTree = "<group>"; };
@@ -297,7 +293,6 @@
 			files = (
 				447473C51D51F8CB0021C561 /* MapKit.framework in Frameworks */,
 				444C5E391D50B50F00A4DB3D /* UIKit.framework in Frameworks */,
-				47CBF9231DA28DE70084EC04 /* Crashlytics.framework in Frameworks */,
 				444C5E371D50B50600A4DB3D /* SystemConfiguration.framework in Frameworks */,
 				444C5E351D50B4FB00A4DB3D /* QuartzCore.framework in Frameworks */,
 				444C5E331D50B4F100A4DB3D /* OpenGLES.framework in Frameworks */,
@@ -317,7 +312,6 @@
 				47C634851D361D4B005EB1E3 /* FBSDKCoreKit.framework in Frameworks */,
 				444C5E1F1D50B39900A4DB3D /* GoogleMapsBase.framework in Frameworks */,
 				47C634871D361D5E005EB1E3 /* FBSDKLoginKit.framework in Frameworks */,
-				47CBF9221DA28DE70084EC04 /* Fabric.framework in Frameworks */,
 				444C5E1B1D50B36300A4DB3D /* GoogleMaps.framework in Frameworks */,
 				444C5E1D1D50B38E00A4DB3D /* GoogleMapsCore.framework in Frameworks */,
 				20813234FDE7A7F5889F9825 /* Pods_runnur.framework in Frameworks */,
@@ -353,8 +347,6 @@
 		448584151D4A0A980027F141 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				47CBF9201DA28DE70084EC04 /* Fabric.framework */,
-				47CBF9211DA28DE70084EC04 /* Crashlytics.framework */,
 				444C5E3A1D50C76A00A4DB3D /* GoogleMaps.bundle */,
 				444C5E1E1D50B39900A4DB3D /* GoogleMapsBase.framework */,
 				444C5E1C1D50B38E00A4DB3D /* GoogleMapsCore.framework */,
@@ -406,7 +398,6 @@
 				4785E0701D744A890003ABC0 /* Requests */,
 				47C6B0041D5AF5E300410DAE /* ViewActivity */,
 				47EFFBA81D5849D000F2A2D7 /* ViewCauseFitChallenge */,
-				47FD4EC31D48E3EC0059DB55 /* HeartHistory */,
 				47FD4EC21D48E3780059DB55 /* InviteFriends */,
 				477811691D487A4F003B01A4 /* AppDelegate */,
 				4778115B1D487706003B01A4 /* models */,
@@ -679,6 +670,7 @@
 			isa = PBXGroup;
 			children = (
 				47EFFBAB1D58822A00F2A2D7 /* CauseFirSummaryViewController.swift */,
+				47FD4EC31D48E3EC0059DB55 /* HeartHistory */,
 			);
 			name = ViewCauseFitChallenge;
 			sourceTree = "<group>";
@@ -875,7 +867,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run e268adbaa315a0907d077df3c98e73d8c21666f4 53dc4b3a57eadc6f0a9a207816f1bd18b4beb7209a761b7ed5ba909157b6d193";
+			shellScript = "";
 			showEnvVarsInLog = 0;
 		};
 		795E453EDB159647E78F3403 /* [CP] Check Pods Manifest.lock */ = {

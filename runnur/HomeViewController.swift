@@ -10,7 +10,7 @@ import UIKit
 import GoogleMaps
 import MapKit
 import CoreBluetooth
-import Crashlytics
+
 
 
 class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentralManagerDelegate*/
@@ -243,10 +243,10 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     
     
     
-    @IBAction func crashButtonTapped(sender: AnyObject) {
-        Crashlytics.sharedInstance().crash()
-    }
-
+//    @IBAction func crashButtonTapped(sender: AnyObject) {
+//        Crashlytics.sharedInstance().crash()
+//    }
+//
     
     var lat = String();
     var long = String();

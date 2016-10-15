@@ -921,7 +921,9 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         let ChallengeId = NSUserDefaults.standardUserDefaults().stringForKey("challengeId")
       
+        print(ChallengeId)
         
+        print(NSUserDefaults.standardUserDefaults().stringForKey("challengeId"))
         
         let postString = "userId=\(userId!)&challengeId=\(ChallengeId!)&currentDate=\(lastDateSent)";
        

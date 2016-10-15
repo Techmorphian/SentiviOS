@@ -10,9 +10,6 @@ import UIKit
 import CoreData
 import FBSDKCoreKit
 import GoogleMaps
-import Fabric
-import Crashlytics
-
 
 
 @UIApplicationMain
@@ -28,7 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         
         
         
-        Fabric.with([Crashlytics.self])
         
         //Add this line. Replace '5eb5a37e-b458-11e3-ac11-000c2940e62c' with your OneSignal App ID.
         OneSignal(launchOptions: launchOptions, appId: "a62ddded-7c71-4583-9fd4-b9a39101ff8d")

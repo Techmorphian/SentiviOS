@@ -73,8 +73,11 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         
-        //////print(WinnerAndUsersArray.count)
+        print(WinnerAndUsersArray.count)
+        
         return WinnerAndUsersArray.count
+        
+    
         
     }
     
@@ -102,6 +105,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
             case 1:
                 
                 
+                cell.FirstWinnerView.hidden = false
                 cell.SecWinnerView.hidden = true
                 cell.ThirdWinnerView.hidden = true
                 
@@ -142,6 +146,10 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                 
                 
                 cell.ThirdWinnerView.hidden = true
+                
+                cell.FirstWinnerView.hidden = false
+                
+                cell.SecWinnerView.hidden = false
                 
                 cell.FisrtWinnerImageView.layer.cornerRadius = cell.FisrtWinnerImageView.frame.size.width / 2;
                 cell.FisrtWinnerImageView.clipsToBounds = true;
@@ -367,49 +375,77 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
         
     }
     
-    //    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
-    //
-    //    {
-    //        <#code#>
-    //    }
-    //
-    //    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
-    //
-    //    {
-    //        <#code#>
-    //    }
-    //
-    
-    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    {
+        
+        
+        
+        if indexPath.row == 0
+        {
+            
+            return 220
+            
+        }
+        
+        else
+        {
+            return 75
+        }
+        
+        
+    }
     
     
     
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     let loadingView: UIView = UIView()
-    func showActivityIndicatory()
+    
+    func showActivityIndicator()
     {
-        loadingView.frame = CGRectMake(0, 0, 60, 50)
-        loadingView.center = view.center
         
-        loadingView.backgroundColor = UIColor.grayColor()
-        loadingView.alpha = 0.6
-        loadingView.clipsToBounds = true
+        
+        loadingView.frame = CGRectMake(self.view.frame.width/2-30,self.view.frame.height/2 - 100,60,60)
+        
+        loadingView.backgroundColor = colorCode.GrayColor
+        
         loadingView.layer.cornerRadius = 10
-        activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+        loadingView.alpha = 0.7
+        
+        
+        loadingView.clipsToBounds = true
+        activityIndicator.hidesWhenStopped=true
+        
+        
+        // activityIndicator.frame = CGRectMake(0.0, self.view.frame.height/2, 150.0, 150.0);
+        
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge
+        
         activityIndicator.center = CGPointMake(loadingView.frame.size.width / 2,
                                                loadingView.frame.size.height / 2);
+        
         loadingView.addSubview(activityIndicator)
+        
         self.view.addSubview(loadingView)
         activityIndicator.startAnimating()
+        
+        
     }
     
+    
+    
+    func hideActivityIndicator()
+    {
+        
+        loadingView.removeFromSuperview();
+        
+        
+    }
     
     func leaderboard()
         
     {
         
-        showActivityIndicatory()
+        showActivityIndicator()
         
         let myurl = NSURL(string: Url.leaderboard)
         
@@ -431,7 +467,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
         
         
         
-        //////print(postString)
+        print(postString)
         
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -477,7 +513,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
         
         
         
-        //////print(dataString!)
+        print(dataString!)
         
         // MARK:-  IF DATA TASK =  LEADERBOARD
         
@@ -514,9 +550,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                         self.RemoveNoResult();
                         
-                        self.activityIndicator.stopAnimating();
-                        
-                        self.loadingView.removeFromSuperview();
+                        hideActivityIndicator();
                         
                         defaultModel=LeaderBoardModel()
                         
@@ -1147,11 +1181,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                         NSOperationQueue.mainQueue().addOperationWithBlock({
                             
-                            
-                            self.activityIndicator.stopAnimating();
-                            
-                            self.loadingView.removeFromSuperview();
-                            
+                              self.hideActivityIndicator();
                             
                             self.RemoveNoInternet();
                             
@@ -1193,10 +1223,7 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                         NSOperationQueue.mainQueue().addOperationWithBlock({
                             
-                            self.activityIndicator.stopAnimating();
-                            
-                            self.loadingView.removeFromSuperview();
-                            
+                               self.hideActivityIndicator();
                             
                             
                             self.RemoveNoInternet();
@@ -1240,6 +1267,8 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
             {
                 
                 self.RemoveNoInternet();
+                
+                hideActivityIndicator();
                 
                 
                 if self.view.subviews.contains(self.noResult.view)
@@ -1299,10 +1328,9 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
     func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?)
     {
         
-        CommonFunctions.hideActivityIndicator();
         
+        hideActivityIndicator();
         
-        //self.RemoveNoInternet();
         self.RemoveNoResult();
         
         if self.view.subviews.contains(self.noInternet.view)
@@ -1475,30 +1503,13 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
         
     }
     
-    
-    
-    override func viewDidLoad()
+    override func viewDidAppear(animated: Bool)
     {
-        super.viewDidLoad()
-        
-        
-        
-       // ViewGroupFitViewController.instance?.overFlowButton.hidden=true;
-
-        
-        leaderBoardTableView.tableFooterView = UIView()
-        
-        leaderBoardTableView.separatorColor = UIColor.clearColor();
-        
-        
-        //// push notification
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LeaderBoardViewController.methodOfReceivedNotification(_:)), name:"showAlert", object: nil)
-        
+      
         
         if Reachability.isConnectedToNetwork() == true
         {
-            
+            self.WinnerAndUsersArray.removeAll();
             self.leaderboard();
         }
             
@@ -1538,9 +1549,34 @@ class LeaderBoardViewController: UIViewController,UITableViewDelegate,UITableVie
             
         }
         
+
+    }
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
         
-        self.leaderBoardTableView.estimatedRowHeight = 80;
-        self.leaderBoardTableView.rowHeight = UITableViewAutomaticDimension;
+        
+        
+       // ViewGroupFitViewController.instance?.overFlowButton.hidden=true;
+
+        
+        leaderBoardTableView.tableFooterView = UIView()
+        
+        leaderBoardTableView.separatorColor = UIColor.clearColor();
+        
+//        self.leaderBoardTableView.estimatedRowHeight = 100;
+//        self.leaderBoardTableView.rowHeight = UITableViewAutomaticDimension;
+        
+        
+        //// push notification
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LeaderBoardViewController.methodOfReceivedNotification(_:)), name:"showAlert", object: nil)
+        
+        
+        
+      
+      //  self.leaderBoardTableView.rowHeight = UITableViewAutomaticDimension;
         
         
         
