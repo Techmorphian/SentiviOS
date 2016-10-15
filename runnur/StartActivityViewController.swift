@@ -142,7 +142,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             user.mobileServiceAuthenticationToken = NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken");
             client.currentUser = user
             
-            let table = client.tableWithName("RunObject");
+            _ = client.tableWithName("RunObject");
             if client.currentUser != nil{
                 let date = self.lastLocation.timestamp
                 let dateFormatter = NSDateFormatter()
@@ -296,7 +296,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                         "RunDetailResource":"\(uuid)",
                         "complete":false
                     ];
-                    var runObjectDetailJson = String();
+                    _ = String();
                     let table2 = client.tableWithName("RunObjectBlob")  //Createing table
                     if client.currentUser != nil{
                         
@@ -619,7 +619,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         let d2r = M_PI / 180;
         let dLong = (toLong - fromLong) * d2r;
         let dLat = (toLat - fromLat) * d2r;
-        var a = pow(sin(dLat / 2.0), 2) + cos(fromLat * d2r)
+        let a = pow(sin(dLat / 2.0), 2) + cos(fromLat * d2r)
             * cos(toLat * d2r) * pow(sin(dLong / 2.0), 2);
         let c = 2 * atan2(sqrt(a), sqrt(1 - a));
         var dis = 6367000 * c;
@@ -756,7 +756,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             
             let kilometers: CLLocationDistance = firstLocation.distanceFromLocation(myManager.location!) / 1000.0
             distanceInMi =  kilometers * 0.62137;
-            var travelledDistance = pauseFeedback[0];
+            let travelledDistance = pauseFeedback[0];
             if (travelledDistance > 400 && pausedCount == 0) {
                 audioType(5);
                 pausedCount+1;
@@ -861,7 +861,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                         }
                         
                         let loc_distance = (self.calculateDistance(fromLong, fromLat: fromLat, toLong: toLong, toLat: toLat) * 1609.34);
-                        var time = self.cur_time - self.prev_time;
+                        let time = self.cur_time - self.prev_time;
                         
                         self.calSpeed = (loc_distance / (time));
                         
@@ -932,7 +932,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                             polyline.geodesic = true
                             polyline.map = self.mapView
                             
-                            var zoom1 = self.mapView.camera.zoom;
+                            let zoom1 = self.mapView.camera.zoom;
                             let camera = GMSCameraPosition.cameraWithLatitude(locValue.latitude, longitude: locValue.longitude, zoom: zoom1)
                             self.mapView.camera = camera
                             
@@ -1421,22 +1421,29 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     
     func calculateCaloriesBurned() {
         let caloriesLookUp = CaloriesCounterLookUp()
-        
+        let time = self.duration.text?.componentsSeparatedByString(":");
+        let hrs = Double(time![0])!*3600000;
+        let mm = Double(time![1])!*60000;
+        let ss = Double(time![2])!*1000;
+        let elapTime = hrs + mm + ss
+
         if (performedActivity == ("Biking")) {  // calculate calories burned if biking
-            caloriesburned = caloriesLookUp.Biking(avgpace, weight: weight, elapsedTime: CLong(round(endDate.timeIntervalSinceDate(startDate))), altGain: altGain, distance: Double(distanceInMi));
+            
+            
+            caloriesburned = caloriesLookUp.Biking(avgpace, weight: weight, elapsedTime: CLong(elapTime), altGain: altGain, distance: Double(distanceInMi));
             
         } else if (performedActivity == ("Walking")) {
             //  avgpace = 1.00; CLong(round(endDate.timeIntervalSinceDate(startDate)))
             endDate = NSDate();
-            caloriesburned = caloriesLookUp.Walking(avgpace, weight: weight, elapsedTime: CLong(round(endDate.timeIntervalSinceDate(startDate))), altGain: altGain, distance: Double(distanceInMi));
+            caloriesburned = caloriesLookUp.Walking(avgpace, weight: weight, elapsedTime: CLong(elapTime), altGain: altGain, distance: Double(distanceInMi));
             
             
         } else if (performedActivity == ("Running")) { //calculate calories burned for running
             
             //avgpace = 1.00;
-            endDate = NSDate();
+          //  endDate = NSDate();
       //      TODO :- commented calories burned for running
-          //  caloriesburned = caloriesLookUp.Running(avgpace, weight: weight, elapsedTime: CLong(round(endDate.timeIntervalSinceDate(startDate))));
+           caloriesburned = caloriesLookUp.Running(avgpace, weight: weight, elapsedTime: Float(elapTime));
         }
     }
     //--------------------------------------Calculate Elevation-----------------------------------------
@@ -1490,10 +1497,10 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         } else {
             temp = distanceInMi * 1.60934;
         }
-        var roundDis = Int(temp + 0.2);
+        let roundDis = Int(temp + 0.2);
         var absolute = (abs((round(temp * 10.0) / 10.0) - Double(roundDis))) * 100;
         absolute = round(absolute);
-        var isDivisibleby50 = absolute % 50 == 0;
+        let isDivisibleby50 = absolute % 50 == 0;
         if (isDivisibleby50 && temp > 0.2 && distanceIntervalCounter != absolute) {
             switch (intervalTypeDis) {
             case 1:
@@ -1506,7 +1513,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                 distanceIntervalCounter = absolute;
                 break;
             case 2:
-                distanceIntervalTimer++;
+                distanceIntervalTimer += 1;
                 if (distanceIntervalTimer == 2) {
                     if (temp < 1.1) {
                         firstSplitValue();
@@ -1519,7 +1526,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                 distanceIntervalCounter = absolute;
                 break;
             case 3:
-                distanceIntervalTimer++;
+                distanceIntervalTimer += 1;
                 if (distanceIntervalTimer == 4) {
                     if (temp < 2.1) {
                         firstSplitValue();
@@ -1532,7 +1539,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                 distanceIntervalCounter = absolute;
                 break;
             case 4:
-                distanceIntervalTimer++;
+                distanceIntervalTimer += 1;
                 if (distanceIntervalTimer == 6) {
                     if (temp < 3.1) {
                         firstSplitValue();
@@ -1545,7 +1552,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                 distanceIntervalCounter = absolute;
                 break;
             case 5:
-                distanceIntervalTimer++;
+                distanceIntervalTimer += 1;
                 if (distanceIntervalTimer == 8) {
                     if (temp < 4.1) {
                         firstSplitValue();
@@ -1558,7 +1565,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                 distanceIntervalCounter = absolute;
                 break;
             case 6:
-                distanceIntervalTimer++;
+                distanceIntervalTimer += 1;
                 if (distanceIntervalTimer == 10) {
                     if (temp < 5.1) {
                         firstSplitValue();
@@ -1571,7 +1578,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                 distanceIntervalCounter = absolute;
                 break;
             case 7:
-                distanceIntervalTimer++;
+                distanceIntervalTimer += 1;
                 if (distanceIntervalTimer == 16) {
                     if (temp < 8.1) {
                         firstSplitValue();
@@ -1584,7 +1591,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                 distanceIntervalCounter = absolute;
                 break;
             case 8:
-                distanceIntervalTimer++;
+                distanceIntervalTimer += 1;
                 if (distanceIntervalTimer == 20) {
                     if (temp < 10.1) {
                         firstSplitValue();
@@ -1613,7 +1620,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
      */
     func calculateIntervalPaceAndSpeed(scaling:Double) {
     intervalCurTime = CFAbsoluteTimeGetCurrent() / 1.00E9;
-    var diffTime = intervalCurTime - intervalPrevTime - splitIntervalPausedTime;
+    let diffTime = intervalCurTime - intervalPrevTime - splitIntervalPausedTime;
     if (measuringUnits == 1) {
     intervalSpeed = (2.23694) * ((scaling * 1609.34) / (diffTime));
     } else {
@@ -1669,7 +1676,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             }
             if NSUserDefaults.standardUserDefaults().boolForKey("sayDuration") == true{
                 let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
-                let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Distance\(duration)");
+                let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Duration \(self.duration.text)");
                 mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
                 mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
                 

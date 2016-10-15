@@ -56,7 +56,6 @@
 		446AE6E31D8C0CE800E2B6B5 /* SelectActivityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 446AE6E21D8C0CE800E2B6B5 /* SelectActivityView.xib */; };
 		446AE6E51D8C345800E2B6B5 /* AddActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446AE6E41D8C345800E2B6B5 /* AddActivityViewController.swift */; };
 		447473C51D51F8CB0021C561 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447473C41D51F8CB0021C561 /* MapKit.framework */; };
-		447A9EEF1D9A818B008B0BC9 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 470CF88C1D24DC370001B3BC /* Info.plist */; };
 		447A9EF01D9A83F4008B0BC9 /* challengeFilterXIB.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47CF1FBC1D4CC3130083B1A7 /* challengeFilterXIB.xib */; };
 		447A9EF21D9A848C008B0BC9 /* MeasuringUnits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447A9EF11D9A848C008B0BC9 /* MeasuringUnits.swift */; };
 		447A9EF41D9A84BE008B0BC9 /* MeasuringUnits.xib in Resources */ = {isa = PBXBuildFile; fileRef = 447A9EF31D9A84BE008B0BC9 /* MeasuringUnits.xib */; };
@@ -818,7 +817,6 @@
 				470CF88B1D24DC370001B3BC /* LaunchScreen.storyboard in Resources */,
 				447A9EF01D9A83F4008B0BC9 /* challengeFilterXIB.xib in Resources */,
 				470CF8881D24DC370001B3BC /* Assets.xcassets in Resources */,
-				447A9EEF1D9A818B008B0BC9 /* Info.plist in Resources */,
 				470CF8831D24DC370001B3BC /* Main.storyboard in Resources */,
 				440D64E41D522580004AE539 /* CustomPopUp.xib in Resources */,
 				445A036F1D994E270015B3EE /* DistanceFeedbackInterval.xib in Resources */,

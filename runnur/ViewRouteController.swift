@@ -129,7 +129,7 @@ class ViewRouteController: UIViewController {
             lineChartDataSet.fillColor = UIColor.greenColor();
             
             let gradientColors = [UIColor.greenColor().CGColor, UIColor.clearColor().CGColor] // Colors of the gradient
-            let colorLocations:[CGFloat] = [1.0, 0.0] // Positioning of the gradient
+            let colorLocations:[CGFloat] = [1.0, 1.0] // Positioning of the gradient
             let gradient = CGGradientCreateWithColors(CGColorSpaceCreateDeviceRGB(), gradientColors, colorLocations) // Gradient Object
             lineChartDataSet.fill = ChartFill.fillWithLinearGradient(gradient!, angle: 90.0) // Set the Gradient
             lineChartDataSet.drawFilledEnabled = true // Draw the Gradient
@@ -146,10 +146,7 @@ class ViewRouteController: UIViewController {
             lineChart.leftAxis.axisMaxValue = 258;
             lineChart.leftAxis.axisMinValue = 51;
             
-            lineChart.leftAxis.xOffset = 6.0;
-            lineChart.leftAxis.yOffset = 2.0;
-            
-            lineChart.leftAxis.labelCount = 5;
+            lineChart.leftAxis.labelCount = 4;
             
             lineChart.legend.position = .BelowChartLeft;
             lineChart.legend.form = .Square;

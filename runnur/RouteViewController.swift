@@ -10,7 +10,7 @@ import UIKit
 import GoogleMaps
 
 
-class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,CLLocationManagerDelegate {
     
     
     @IBOutlet weak var createRoute: UIButton!
@@ -49,6 +49,11 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         let getFilePath = paths.URLByAppendingPathComponent(file)
         
         let checkValidation = NSFileManager.defaultManager();
+    
+        if NSUserDefaults.standardUserDefaults().boolForKey("isRouteChahe") == true
+        {
+            
+        
         if (checkValidation.fileExistsAtPath(getFilePath.path!))
         {
             print("FILE AVAILABLE");
@@ -347,6 +352,192 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 
             }
         }
+        }else{
+            print("FILE NOT AVAILABLE");
+            // requesting route data from route table
+            if Reachability.isConnectedToNetwork() == true{
+                let delegate = UIApplication.sharedApplication().delegate as? AppDelegate
+                let client = delegate!.client!;
+                
+                let user: MSUser = MSUser(userId: NSUserDefaults.standardUserDefaults().stringForKey("azureUserId"));
+                user.mobileServiceAuthenticationToken = NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken");
+                client.currentUser = user
+                
+                let table = client.tableWithName("RouteObject");
+                
+                if client.currentUser != nil{
+                    
+                    let query = table.query();
+                    
+                    print("runnurId \(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)")
+                    query.parameters = ["runnurId": "\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)"];
+                    query.fetchLimit=100;
+                    
+                    //query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
+                    query.orderByDescending("__createdAt");
+                    
+                    
+                    query.readWithCompletion({ (result, error) in
+                        if let err = error {
+                            CommonFunctions.hideActivityIndicator()
+                            self.showNoRoutesView();
+                            print("ERROR ", err)
+                        } else if let items = result?.items {
+                            print(result);
+                            print(result?.items)
+                            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isRouteChahe")
+                            if items.count == 0
+                            {
+                                self.showNoRoutesView();
+                            }else{
+                                
+                                var text = "";
+                                if NSJSONSerialization.isValidJSONObject(items){
+                                    let jsonData = try! NSJSONSerialization.dataWithJSONObject(items, options: NSJSONWritingOptions())
+                                    let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
+                                    text = jsonString;
+                                } //just a text
+                                
+                                let path = paths.URLByAppendingPathComponent(file)
+                                
+                                //writing
+                                do {
+                                    
+                                    try text.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
+                                }
+                                catch {/* error handling here */
+                                    print(error);
+                                    print("error while write");
+                                }
+                                
+                                //reading
+                                do {
+                                    let text2 = try NSString(contentsOfURL: path, encoding: NSUTF8StringEncoding)
+                                    print(text2);
+                                }
+                                catch {/* error handling here */}
+                                //  }
+                            }
+                            for item in items {
+                                
+                                self.routeData = MapData();
+                                if let distance = item["distanceP"] as? Double{
+                                    self.routeData.distance = String(distance);
+                                }
+                                if let elevationLoss = item["elevationLossP"] as? Double{
+                                    self.routeData.elevationLoss = String(elevationLoss)
+                                }
+                                if let elevationGain = item["elevationGainP"] as? Double{
+                                    self.routeData.elevationGain = String(elevationGain)
+                                }
+                                if let startLocation = item["startLocationP"] as? String{
+                                    if  startLocation == ""
+                                    {
+                                        self.routeData.location = "UNKNOWN";
+                                    }else{
+                                        self.routeData.location = startLocation
+                                    }
+                                    
+                                }
+                                if let date = item["dateP"] as? String{
+                                    self.routeData.date = date
+                                }
+                                if let distanceAway = item["distanceAwayP"] as? Double{
+                                    self.routeData.distanceAway = String(distanceAway)
+                                }
+                                if let itemID = item["id"] as? String{
+                                    self.routeData.itemID = itemID
+                                }
+                                if let elevationCoordinatesP = item["elevationCoordinatesP"] as? String{
+                                    print(elevationCoordinatesP);
+                                    
+                                    let data: NSData = elevationCoordinatesP.dataUsingEncoding(NSUTF8StringEncoding)!
+                                    do
+                                    {
+                                        let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
+                                        
+                                        for i in 0 ..< json!.count
+                                        {
+                                            self.routeData.elevationLat.append((json![i].objectForKey("latitude") as? Double)!)
+                                            self.routeData.elevationLong.append((json![i].objectForKey("longitude") as? Double)!)
+                                        }
+                                    }catch{
+                                        //                                19.2171975,72.8241082
+                                    }
+                                }
+                                if let trackPolylines = item["trackPolylinesP"] as? String{
+                                    print(trackPolylines);
+                                    
+                                    let data: NSData = trackPolylines.dataUsingEncoding(NSUTF8StringEncoding)!
+                                    do
+                                    {
+                                        let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
+                                        
+                                        //                            trackPolylines.stringByReplacingOccurrencesOfString("[{}", withString: "")
+                                        //                         trackPolylines.componentsSeparatedByString(",")
+                                        for i in 0 ..< json!.count
+                                        {
+                                            self.routeData.trackLat.append((json![i].objectForKey("latitude") as? Double)!)
+                                            self.routeData.trackLong.append((json![i].objectForKey("longitude") as? Double)!)
+                                        }
+                                    }catch{
+                                        
+                                    }
+                                    
+                                }
+                                if let elevationValuesP = item["elevationValuesP"] as? String{
+                                    print(elevationValuesP);
+                                    
+                                    let data: NSData = elevationValuesP.dataUsingEncoding(NSUTF8StringEncoding)!
+                                    do
+                                    {
+                                        let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSArray;
+                                        
+                                        for i in 0 ..< json!.count
+                                        {
+                                            self.routeData.elevationValues.append((json![i].objectForKey("I") as? Double)!)
+                                            
+                                        }
+                                    }catch{
+                                        //                                19.2171975,72.8241082
+                                    }
+                                }
+                                
+                                
+                                self.routeDataArray.append(self.routeData);
+                                // print("Todo Item: ", item)
+                            }
+                            
+                            self.tableView.delegate=self;
+                            self.tableView.dataSource=self;
+                            self.tableView.reloadData();
+                            CommonFunctions.hideActivityIndicator();
+                        }
+                    })
+                }
+            }else{
+                
+                // NO Internet
+                self.noInternet = self.storyboard?.instantiateViewControllerWithIdentifier("NoInternetViewController") as! NoInternetViewController
+                
+                self.noInternet.view.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
+                self.noInternet.view.backgroundColor=UIColor.clearColor()
+                self.view.addSubview((self.noInternet.view)!);
+                
+                
+                let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(SummaryViewController.handleTap(_:)))
+                self.noInternet.noInternetLabel.userInteractionEnabled = true
+                
+                
+                self.noInternet.view.addGestureRecognizer(tapRecognizer)
+                
+                self.noInternet.didMoveToParentViewController(self)
+                
+                
+                
+                
+            }
+        }
     }
     //  longpress function to delete row
     func longPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
@@ -381,6 +572,30 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                     self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Top)
                     self.routeDataArray.removeAtIndex(indexPath.row);
                     self.tableView.endUpdates();
+                    
+                    var text = "";
+                    if NSJSONSerialization.isValidJSONObject(self.routeDataArray){
+                        let jsonData = try! NSJSONSerialization.dataWithJSONObject(self.routeDataArray, options: NSJSONWritingOptions())
+                        let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
+                        text = jsonString;
+                    } //just a text
+                    
+                    let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
+                    print(paths);
+
+                    let file = "routeData.txt"
+                    let path = paths.URLByAppendingPathComponent(file)
+                    
+                    //writing
+                    do {
+                        
+                        try text.writeToURL(path, atomically: false, encoding: NSUTF8StringEncoding)
+                    }
+                    catch {/* error handling here */
+                        print(error);
+                        print("error while write");
+                    }
+
                 })
                 
             }
@@ -426,11 +641,24 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         cell.address.text = data.location;
 //        10/14/2016   07:08 AM
         cell.dateAndTime.text = dateFunction.dateFormatFunc("MMM dd, yyyy hh:mm a", formFormat: "MM/dd/yyyy   hh:mm a", dateToConvert: data.date!);
+        
+        let distanceInMeters = CLLocation(latitude: data.trackLat[0], longitude: data.trackLong[0]).distanceFromLocation(userCurrentLocation)
+        data.distanceAway = String(round(distanceInMeters*0.00062137))
+        if NSUserDefaults.standardUserDefaults().integerForKey("MeasuringUnits") == 2{
+            if data.distanceAway == ""
+            {
+                cell.distance.text = "-- km away";
+            }else{
+                cell.distance.text = data.distanceAway + " km away";
+            }
+
+        }else{
         if data.distanceAway == ""
         {
             cell.distance.text = "-- mi away";
         }else{
             cell.distance.text = data.distanceAway + " mi away";
+        }
         }
         cell.distanceLabel.text = data.distance!;
         
@@ -530,9 +758,29 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         //            print("Ooops! Something went wrong: \(error)")
         //        }
     }
+    var myManager:CLLocationManager!
+    var userCurrentLocation = CLLocation();
+    var refreshControl: UIRefreshControl!
+   func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    print("locations = \(locations)")
+    userCurrentLocation = locations[0];
+    myManager.stopUpdatingLocation()
+    myManager = nil;
+    
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // self.showNoRoutesView();
+        self.myManager = CLLocationManager();
+        
+        self.myManager.desiredAccuracy = kCLLocationAccuracyBest;
+        
+        self.myManager.requestWhenInUseAuthorization()
+        self.myManager.startUpdatingLocation()
+        myManager.startMonitoringSignificantLocationChanges()
+        
+        self.myManager.delegate = self;
+        
         
         self.tableView.estimatedRowHeight=106;
         self.tableView.rowHeight=UITableViewAutomaticDimension;
@@ -547,7 +795,19 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         createRoute.layer.shadowOpacity = 0.3;
         
         // Do any additional setup after loading the view.
+        
+        refreshControl = UIRefreshControl()
+        refreshControl.tintColor = UIColor.whiteColor();
+        //refreshControl.attributedTitle = NSAttributedString(string: "")
+        refreshControl.addTarget(self, action: #selector(RouteViewController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        tableView.addSubview(refreshControl)
     }
+    
+    func refresh(sender:AnyObject) {
+        self.tableView.reloadData();
+        refreshControl.endRefreshing()
+    }
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

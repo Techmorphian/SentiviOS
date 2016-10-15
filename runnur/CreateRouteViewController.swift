@@ -116,7 +116,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
 
     var elevationValues = [Double]();
     
-    //    TODO:- not using
+// TODO:- not using
     func calculateElevation(oldLocation:CLLocation,newLocation:CLLocation)
     {
         let elevationChange: Double = oldLocation.altitude - newLocation.altitude;
@@ -201,11 +201,12 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
 //        let a = pow(sin(dLat / 2.0), 2) + cos(fromLat * d2r)
 //            * cos(toLat * d2r) * pow(sin(dLong / 2.0), 2);
 //        let c = 2 * atan2(sqrt(a), sqrt(1 - a));
-//       var dis = 6367000 * c;
+//        var dis = 6367000 * c;
 //        dis = dis * 0.000621371;
         
-       var dis = CLLocation(latitude: fromLong, longitude: fromLat).distanceFromLocation(CLLocation(latitude: toLat, longitude: toLong));
-        return dis;
+        let distanceInMeters = CLLocation(latitude: fromLong, longitude: fromLat).distanceFromLocation(CLLocation(latitude: toLat, longitude: toLong));
+        let  distanceInMiles = distanceInMeters*0.00062137      ///1609.344
+        return distanceInMiles;
     }
     
     
@@ -322,8 +323,8 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         }
     }
 //    MARK:- Get direction and draw polyline
-   var polyLinePath = [[GMSPath]]()
-  
+    var polyLinePath = [[GMSPath]]()
+    var paths = [GMSPath]();
     func passToGetDirections() {
         // Check if number of markers is greater than 2
         if (lastMarker.count >= 2) {
@@ -352,7 +353,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                     if  let parseJSON = json{
                         if  let elements = parseJSON["routes"] as? NSArray
                         {
-                              var paths = [GMSPath]();
+                            //paths.removeAll();
                             for i in 0 ..< elements.count
                             {
                                 let legs: AnyObject = elements[i].objectForKey("legs")!;
@@ -437,6 +438,10 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
     var elevationGainValue = Double();
     var elevationLossValue = Double();
     var elevations = [Double]();
+    var elevtion = [Double]();
+    var elevationData = [NSDictionary]();  /// to save data in table -> azure
+    var elevationCordinates = [NSDictionary]()
+    
     
     func passToGetElevation(url:String,isSingle:Bool){
         
@@ -465,6 +470,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                 var long = [Double]();
                 var fromLat = Double();
                 var fromLong = Double();
+                elevtion.removeAll();
                 
                 if  let elements = parseJSON["results"] as? NSArray
                 {
@@ -473,20 +479,21 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                         let location = elements[i].objectForKey("location") as! NSDictionary;
                         lat.append(location.objectForKey("lat") as! Double)
                         long.append(location.objectForKey("lng") as! Double)
-                        
+                        elevationCordinates.append(["latitude":location.objectForKey("lat") as! Double,"longitude":location.objectForKey("lng") as! Double])
                         let elevation = elements[i].objectForKey("elevation") as! Double;
-                        elevations.append(elevation);
+                        elevtion.append(elevation);
                         print(elevation);
                     }
                     
                 }
                 var distance = Double();
-                var prevValue = elevations[0];
+                var prevValue = elevtion[0];
                 fromLat=lat[0];
                 fromLong=long[0];
-                for (index,i) in elevations.enumerate()
+                for (index,i) in elevtion.enumerate()
                 {
                     self.elevations.append(i*3.28084)
+                    self.elevationData.append(["I":i*3.28084]);
                     let elevationNewValue = i;
                     
                     if ((elevationNewValue - prevValue) > 0) {
@@ -500,6 +507,9 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                     fromLong=long[index];
                     fromLat=lat[index];
                 }
+                
+                self.distance = distance;
+                
                 mapData.distance = String(String(format: "%.2f", distance));
                 elevationValues.append(elevationGainValue);
                 elevationValues.append(elevationLossValue);
@@ -507,7 +517,6 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                 mapData.elevationLoss = String(Int(round(elevationLossValue*3.28084)))+" ft"//String(format: "%.2f", elevationLossValue*3.28084);
                 plotDataOnChart(elevations)
                 updateLabels();
-                
             }
         }catch{
             
@@ -525,22 +534,25 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             var dataEntries: [ChartDataEntry] = []
             var c = Double()
             for i in 0..<valuesforElevations.count {
+                
+               // if valuesforElevations[i] > 50{
                 let dataEntry = ChartDataEntry(value:valuesforElevations[i], xIndex: i)
                 dataEntries.append(dataEntry);
                dataPoints.append(c);
                 c = c+1;
-            }
+                }
+          //  }
             
             let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "Elevation");
             let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet);
             lineChartDataSet.colors = [UIColor.greenColor()];
             lineChartDataSet.cubicIntensity = 0.2;
             lineChartDataSet.drawCirclesEnabled = false;
-            lineChartDataSet.drawCubicEnabled = true
+            lineChartDataSet.drawCubicEnabled = true;
             lineChartDataSet.fillColor = UIColor.greenColor();
             
             let gradientColors = [UIColor.greenColor().CGColor, UIColor.clearColor().CGColor] // Colors of the gradient
-            let colorLocations:[CGFloat] = [1.0, 0.0] // Positioning of the gradient
+            let colorLocations:[CGFloat] = [1.0, 1.0] // Positioning of the gradient
             let gradient = CGGradientCreateWithColors(CGColorSpaceCreateDeviceRGB(), gradientColors, colorLocations) // Gradient Object
             lineChartDataSet.fill = ChartFill.fillWithLinearGradient(gradient!, angle: 90.0) // Set the Gradient
             lineChartDataSet.drawFilledEnabled = true // Draw the Gradient
@@ -552,8 +564,10 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             lineChartView.rightAxis.labelTextColor = UIColor.clearColor();
             
             lineChartView.xAxis.labelPosition = .Bottom
-            
-            
+            lineChartView.leftAxis.axisMaxValue = 258;
+            lineChartView.leftAxis.axisMinValue = 51;
+
+            lineChartView.leftAxis.labelCount = 4;
             
             lineChartView.legend.position = .BelowChartLeft;
             lineChartView.legend.form = .Square;
@@ -772,26 +786,72 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                 user.mobileServiceAuthenticationToken = NSUserDefaults.standardUserDefaults().stringForKey("azureAuthenticationToken");
                 client.currentUser = user
                 
+//                var cor = [CLLocationCoordinate2D]();
+//                let c = Int((self.polyline.path?.count())!)
+//                for i in 0 ..< c
+//                {
+//                    cor.append((self.polyline.path?.coordinateAtIndex(UInt(i)))!);
+//                }
+//                var trackPolyline = NSDictionary();
+//                for i in cor{
+//                    trackPolyline.append(["latitude":Double(i.latitude),"longitude":Double(i.longitude)])
+//                }
+//                var saveTrackPolyline = String();
+//                if NSJSONSerialization.isValidJSONObject(trackPolyline){
+//                    let jsonData = try! NSJSONSerialization.dataWithJSONObject(trackPolyline, options: NSJSONWritingOptions())
+//                    let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
+//                    saveTrackPolyline = jsonString;
+//                }
+                
+                
                 var cor = [CLLocationCoordinate2D]();
-                let c = Int((self.polyline.path?.count())!)
+                let c = Int((self.paths.count))//Int((polyline.path?.count())!)
+                
+                
                 for i in 0 ..< c
                 {
-                    cor.append((self.polyline.path?.coordinateAtIndex(UInt(i)))!);
+                    for j in 0 ..< self.paths[i].count()
+                    {
+                        cor.append(self.paths[i].coordinateAtIndex(UInt(j)));
+                    }
                 }
                 var trackPolyline = [NSDictionary]();
                 for i in cor{
-                    trackPolyline.append(["latitude":Double(i.latitude),"longitude":Double(i.longitude)])
+                    
+                    if i.latitude != -180.0
+                    {
+                         trackPolyline.append(["latitude":Double(i.latitude),"longitude":Double(i.longitude)])
+                    }
+                    
                 }
+                
                 var saveTrackPolyline = String();
                 if NSJSONSerialization.isValidJSONObject(trackPolyline){
                     let jsonData = try! NSJSONSerialization.dataWithJSONObject(trackPolyline, options: NSJSONWritingOptions())
                     let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
                     saveTrackPolyline = jsonString;
                 }
+
+                
+                
+                
+                
+                
+                
+                
+                
+                var elevationCoordinatesP = String();
+                if NSJSONSerialization.isValidJSONObject(self.elevationCordinates){
+                    let jsonData = try! NSJSONSerialization.dataWithJSONObject(self.elevationCordinates, options: NSJSONWritingOptions())
+                    let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
+                    elevationCoordinatesP = jsonString;
+                }
+
+                
                 
                 var elevationValuesP = String();
-                if NSJSONSerialization.isValidJSONObject(self.elevations){
-                    let jsonData = try! NSJSONSerialization.dataWithJSONObject(self.elevations, options: NSJSONWritingOptions())
+                if NSJSONSerialization.isValidJSONObject(self.elevationData){
+                    let jsonData = try! NSJSONSerialization.dataWithJSONObject(self.elevationData, options: NSJSONWritingOptions())
                     let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
                     elevationValuesP = jsonString;
                 }
@@ -816,7 +876,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                 if client.currentUser != nil{
                     let date = NSDate()
                     let dateFormatter = NSDateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd";
+                    dateFormatter.dateFormat = "MM/dd/yyyy   hh:mm a";
                     let dateString = dateFormatter.stringFromDate(date)
                     
                     let newItem : NSDictionary =
@@ -828,10 +888,13 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                             "trackPolylinesP": saveTrackPolyline,
                             "mileMarkersP":mileMarkersP,
                             "elevationValuesP":elevationValuesP,
-                            "elevationCoordinatesP": saveTrackPolyline,
+                            "elevationCoordinatesP": elevationCoordinatesP,
                             "startLocationP": self.locationName];
                     
                     if Reachability.isConnectedToNetwork() == true{
+                        
+                        
+                        print(newItem as [NSObject : AnyObject]);
                         
                         table.insert(newItem as [NSObject : AnyObject], parameters: ["runnurId": "\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)"], completion: { (result, error) in
                             if let err = error {
@@ -839,27 +902,33 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                                 print("ERROR ", err)
                             } else if let item = result {
                                 CommonFunctions.hideActivityIndicator();
+                                
+                                let popup = UIAlertController(title: "ROUTE SAVED", message: "Your route has been saved would you like to use it for your activity?", preferredStyle: .Alert)
+                                
+                                        popup.addAction(UIAlertAction(title: "START ACTIVITY", style: .Default, handler: {
+                                            finised in
+                                            let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
+                                            ActivityDetailsViewController;
+                                            activityDetailsViewController.mapData=self.mapData;
+                                            self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
+                                        }))
+                                
+                                    popup.addAction(UIAlertAction(title: "VIEW SAVED ROUTE", style: .Default, handler: {
+                                        finished in
+                                        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isRouteChahe")
+                                        self.dismissViewControllerAnimated(false, completion: nil)
+                                    }))
+                                self.presentViewController(popup, animated: true, completion: nil)
+
+                                
+//                                  CommonFunctions.showPopup(self, title: "ROUTE SAVED", msg:"Your route has been saved would you like to use it for your activity?" , positiveMsg: "Yes, Save", negMsg: "No, Discard", show2Buttons: true, showReverseLayout: false,getClick: {
+//                                     })
                                 print("RunObject: ", item["trackPolylinesP"])
-                                let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
-                                ActivityDetailsViewController;
-                                activityDetailsViewController.mapData=self.mapData;
-                                self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
+
                             }
 
                         })
-//                        table.insert(newItem as [NSObject : AnyObject]) { (result, error) in
-//                            if let err = error {
-//                                CommonFunctions.hideActivityIndicator();
-//                                print("ERROR ", err)
-//                            } else if let item = result {
-//                                CommonFunctions.hideActivityIndicator();
-//                                print("RunObject: ", item["trackPolylinesP"])
-//                                let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
-//                                ActivityDetailsViewController;
-//                                activityDetailsViewController.mapData=self.mapData;
-//                                self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
-//                            }
-//                        }
+                        
                     }else{
                         let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
                         ActivityDetailsViewController;
@@ -891,9 +960,14 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                 placeMark = placemarks?[0]
                 
                 // Address dictionary
-                //                print(placeMark.addressDictionary)
+                 print(placeMark.addressDictionary)
                 
                 // Location name
+                if let FormattedAddressLines = placeMark.addressDictionary?["FormattedAddressLines"] as? NSArray {
+                    print(FormattedAddressLines);
+                }
+                
+                
                 if let locationName = placeMark.addressDictionary?["Name"] as? NSString {
                     self.locationName = locationName as String;
                 }
