@@ -32,32 +32,11 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cell:userActivityTableViewCell = tableView.dequeueReusableCellWithIdentifier("userActivityTableViewCell")as!
-        
+            
         userActivityTableViewCell
         
-        
-       // let cell:userChatTableViewCell = tableView.dequeueReusableCellWithIdentifier("userChatTableViewCell")as!
-            
-        //userChatTableViewCell
-        
-        
         return cell
-        
-       
-        
-        
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     override func viewDidLoad()
     {

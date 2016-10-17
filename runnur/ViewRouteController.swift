@@ -9,7 +9,7 @@
 import UIKit
 import GoogleMaps
 import Charts
-class ViewRouteController: UIViewController {
+class ViewRouteController: UIViewController,ChartViewDelegate {
     
     @IBAction func back(sender: AnyObject) {
         self.dismissViewControllerAnimated(false, completion: nil);
@@ -71,7 +71,8 @@ class ViewRouteController: UIViewController {
             
             
             let table2 = client.tableWithName("RouteObject")
-            table2.readWithId("\(self.mapData.itemID)", completion: { (itemInfo, error) in
+            
+            table2.readWithId(self.mapData.itemID, parameters: ["runnurId": "\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)"], completion:  { (itemInfo, error) in
                 
                 if error == nil{
                     print("\(self.mapData.itemID)");
@@ -83,6 +84,7 @@ class ViewRouteController: UIViewController {
                             if let err = error {
                                 print("ERROR ", err)
                             } else if let item = result {
+                                NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isRouteChahe")
                                 print("Todo Item: ", item["startLocationP"])
                             }
                         })
@@ -156,6 +158,7 @@ class ViewRouteController: UIViewController {
             
         }
         lineChart.noDataText = "No Chart Data Available";
+        lineChart.delegate = self;
     }
     
     // MARK:- Move Top View
@@ -229,6 +232,7 @@ class ViewRouteController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         customViewHeight2 = customViewHeight;
         let mapImage = UIImage(named: "ic_fab_map")!
         let satelliteImage = UIImage(named: "ic_fab_sattelite")!
@@ -278,6 +282,18 @@ class ViewRouteController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    var markers = GMSMarker()
+    
+    func chartValueSelected(chartView: ChartViewBase, entry: ChartDataEntry, dataSetIndex: Int, highlight: ChartHighlight) {
+        print("valueSelected\(dataSetIndex)");
+        print(entry.xIndex);
+
+        //markers = nil;
+        markers = GMSMarker(position: CLLocationCoordinate2D(latitude:mapData.trackLat[entry.xIndex], longitude: mapData.trackLong[entry.xIndex]))
+        markers.icon = UIImage(named: "ic_auto_route");
+        markers.map = mapView;
     }
     
     

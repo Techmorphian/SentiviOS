@@ -300,7 +300,8 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                     let table2 = client.tableWithName("RunObjectBlob")  //Createing table
                     if client.currentUser != nil{
                         
-                        table2.insert(newItem2 as [NSObject : AnyObject]) { (result, error) in
+            
+                        table2.insert(newItem2 as [NSObject : AnyObject], parameters: ["runnurId": "\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)"]) { (result, error) in
                             if let err = error {
                                 CommonFunctions.hideActivityIndicator();
                                 print("ERROR ", err)
@@ -993,7 +994,6 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         //  updatedLocation(manager);
-        
         
         let locValue:CLLocationCoordinate2D = myManager.location!.coordinate
         

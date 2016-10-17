@@ -185,7 +185,7 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                     let query = table.query();
                     
                     print("runnurId \(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)")
-                     query.parameters = ["runnurId": "\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)"];
+                     query.parameters = ["runnurId":"\(NSUserDefaults.standardUserDefaults().stringForKey("userId")!)"];
                     query.fetchLimit=100;
                     
                     //query.predicate = NSPredicate(format: "runnurId == [c] %@", NSUserDefaults.standardUserDefaults().stringForKey("userId")!)
@@ -641,9 +641,10 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         cell.address.text = data.location;
 //        10/14/2016   07:08 AM
         cell.dateAndTime.text = dateFunction.dateFormatFunc("MMM dd, yyyy hh:mm a", formFormat: "MM/dd/yyyy   hh:mm a", dateToConvert: data.date!);
-        
+        if data.trackLat.count > 0{
         let distanceInMeters = CLLocation(latitude: data.trackLat[0], longitude: data.trackLong[0]).distanceFromLocation(userCurrentLocation)
         data.distanceAway = String(round(distanceInMeters*0.00062137))
+        }
         if NSUserDefaults.standardUserDefaults().integerForKey("MeasuringUnits") == 2{
             if data.distanceAway == ""
             {

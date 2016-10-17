@@ -175,6 +175,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
     var thirdAngle = 90;
     var backgroudRunning = Bool()
     var distance = Double();
+    var calcDistance = Double();
     
 //    MARK:- update Distance,elevationLoss,elevationGain
     func updateLabels()
@@ -195,18 +196,18 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
     func calculateDistance( fromLong:Double, fromLat:Double,
                             toLong:Double, toLat:Double) -> Double
     {
-//        let d2r = M_PI / 180;
-//        let dLong = (toLong - fromLong) * d2r;
-//        let dLat = (toLat - fromLat) * d2r;
-//        let a = pow(sin(dLat / 2.0), 2) + cos(fromLat * d2r)
-//            * cos(toLat * d2r) * pow(sin(dLong / 2.0), 2);
-//        let c = 2 * atan2(sqrt(a), sqrt(1 - a));
-//        var dis = 6367000 * c;
-//        dis = dis * 0.000621371;
+        let d2r = M_PI / 180;
+        let dLong = (toLong - fromLong) * d2r;
+        let dLat = (toLat - fromLat) * d2r;
+        let a = pow(sin(dLat / 2.0), 2) + cos(fromLat * d2r)
+            * cos(toLat * d2r) * pow(sin(dLong / 2.0), 2);
+        let c = 2 * atan2(sqrt(a), sqrt(1 - a));
+        var dis = 6367000 * c;
+        dis = dis * 0.000621371;
         
-        let distanceInMeters = CLLocation(latitude: fromLong, longitude: fromLat).distanceFromLocation(CLLocation(latitude: toLat, longitude: toLong));
-        let  distanceInMiles = distanceInMeters*0.00062137      ///1609.344
-        return distanceInMiles;
+//        let distanceInMeters = CLLocation(latitude: fromLong, longitude: fromLat).distanceFromLocation(CLLocation(latitude: toLat, longitude: toLong));
+//        let  distanceInMiles = distanceInMeters*0.00062137      ///1609.344
+        return dis;
     }
     
     
@@ -246,7 +247,6 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         autoRouteLat = (myManager.location?.coordinate.latitude)!;
         autoRouteLang = (myManager.location?.coordinate.longitude)!
         firstAngle = Int(arc4random_uniform(360-0)+0);
-        
         getSecondLocationPoint(autoRouteLat, Long: autoRouteLang, Distance: autoRouteDistance, firstAngle: firstAngle, thirdAngle: thirdAngle);
         
     }
@@ -329,7 +329,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         // Check if number of markers is greater than 2
         if (lastMarker.count >= 2) {
             
-            let origin = lastMarker[lastMarker.count-2];
+            let origin = lastMarker[0]; //lastMarker.count-2
             let dest = lastMarker[lastMarker.count-1];
             print("origin= \(origin)");
             print("dest= \(dest)")
@@ -339,9 +339,9 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
             }else{
                 backgroudRunning = true;
                 
-                let directionsURL = getDirectionsUrl(origin, dest: dest);
+                var directionsURL = getDirectionsUrl(origin, dest: dest);
                 print(directionsURL);
-                
+               directionsURL = directionsURL.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!;
                 let urls = NSURL(string: directionsURL)!
                 let dta = NSData(contentsOfURL: urls)!
                 NSString(data: dta, encoding: NSUTF8StringEncoding)!
@@ -353,7 +353,9 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                     if  let parseJSON = json{
                         if  let elements = parseJSON["routes"] as? NSArray
                         {
-                            //paths.removeAll();
+                            self.calcDistance = 0;
+                            paths.removeAll();
+                            polyLinePath.removeAll();
                             for i in 0 ..< elements.count
                             {
                                 let legs: AnyObject = elements[i].objectForKey("legs")!;
@@ -362,8 +364,11 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                                 {
                                     let distance = legs[i]["distance"] as! NSDictionary
                                     
-                                    mapData.distance = distance.objectForKey("text") as? String;
+                                   let txt = distance.objectForKey("text") as? String
+                                   let result = txt!.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "0123456789.").invertedSet)
                                     
+                                    mapData.distance = String(format: "%.2f", (Double(result)!+self.calcDistance));
+                                    self.calcDistance = (Double(result)!+calcDistance);
                                     let steps = legs[i]["steps"] as! NSArray
                                    
                                     for i in 0 ..< steps.count
@@ -458,8 +463,8 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         
         elevationUrl = elevationUrl.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!;
         let urls = NSURL(string: elevationUrl)!
-        let dta = NSData(contentsOfURL: urls)!
-    
+        if let dta = NSData(contentsOfURL: urls)
+        {
         print(NSString(data: dta, encoding: NSUTF8StringEncoding)!, terminator: "\n\n")
         
         do
@@ -471,6 +476,11 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                 var fromLat = Double();
                 var fromLong = Double();
                 elevtion.removeAll();
+                elevationGainValue = 0;
+                elevationLossValue = 0;
+                elevationCordinates.removeAll();
+                elevations.removeAll();
+                elevationData.removeAll();
                 
                 if  let elements = parseJSON["results"] as? NSArray
                 {
@@ -482,19 +492,21 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                         elevationCordinates.append(["latitude":location.objectForKey("lat") as! Double,"longitude":location.objectForKey("lng") as! Double])
                         let elevation = elements[i].objectForKey("elevation") as! Double;
                         elevtion.append(elevation);
-                        print(elevation);
+                        //print(elevation);
                     }
                     
                 }
                 var distance = Double();
-                var prevValue = elevtion[0];
-                fromLat=lat[0];
-                fromLong=long[0];
-                for (index,i) in elevtion.enumerate()
+                var prevValue = elevtion[0]*3.28084;
+                fromLat=0;
+                fromLong=0;
+                
+                
+                for var i = 1; i < elevtion.count; i += 5
                 {
-                    self.elevations.append(i*3.28084)
-                    self.elevationData.append(["I":i*3.28084]);
-                    let elevationNewValue = i;
+                    self.elevations.append(self.elevtion[i]*3.28084)
+                    self.elevationData.append(["I":self.elevtion[i]*3.28084]);
+                    let elevationNewValue = self.elevtion[i]*3.28084;
                     
                     if ((elevationNewValue - prevValue) > 0) {
                         elevationGainValue += (elevationNewValue - prevValue);
@@ -503,24 +515,30 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                     }
                     prevValue = elevationNewValue;
                     
-                    distance = distance + calculateDistance(fromLong, fromLat: fromLat, toLong: lat[index], toLat: long[index])
-                    fromLong=long[index];
-                    fromLat=lat[index];
+                    if i > 0{
+                        distance = distance + calculateDistance(fromLong, fromLat: fromLat, toLong: long[i], toLat: lat[i]);
+                    }
+                    fromLong=long[i];
+                    fromLat=lat[i];
+  
                 }
+                
+                
                 
                 self.distance = distance;
                 
-                mapData.distance = String(String(format: "%.2f", distance));
+                //mapData.distance = String(String(format: "%.2f", distance));
                 elevationValues.append(elevationGainValue);
                 elevationValues.append(elevationLossValue);
-                mapData.elevationGain = String(Int(round(elevationGainValue*3.28084)))+" ft"//String(format: "%.2f", elevationGainValue*3.28084);
-                mapData.elevationLoss = String(Int(round(elevationLossValue*3.28084)))+" ft"//String(format: "%.2f", elevationLossValue*3.28084);
+                mapData.elevationGain = String(Int(round(elevationGainValue)))+" ft"//String(format: "%.2f", elevationGainValue*3.28084);
+                mapData.elevationLoss = String(Int(round(elevationLossValue)))+" ft"//String(format: "%.2f", elevationLossValue*3.28084);
                 plotDataOnChart(elevations)
                 updateLabels();
             }
         }catch{
             
         }
+    }
     }
     
 //MARK:- Chart
@@ -649,11 +667,10 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         
         // Origin of route
         
-        let str_origin = "origin=" + String(origin.position.latitude) + ","
-            + String(origin.position.longitude);
+        let str_origin = "origin=" + String(format: "%.15f", origin.position.latitude) + "," + String(format: "%.15f", origin.position.longitude);
         
         // Destination of route
-        let str_dest = "destination=" + String(dest.position.latitude) + "," + String(dest.position.longitude);
+        let str_dest = "destination=" + String(format: "%.15f", dest.position.latitude) + "," + String(format: "%.15f", dest.position.longitude);
         
         // Sensor enabled
         let sensor = "sensor=false";
@@ -661,21 +678,25 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         
         // add Waypoints
         var waypoints = "waypoints=";
-        let point = lastMarker[lastMarker.count - 1];
-        waypoints += String(point.position.latitude) + "," + String(point.position.longitude);
+       // let point = lastMarker[lastMarker.count - 1];
+// TODO:- uncomment Waypoints
+//        for i in 1 ..< lastMarker.count - 1
+//        {
+//        waypoints += String(point.position.latitude) + "," + String(point.position.longitude);
+//        }
         //        let point2 = lastMarker[lastMarker.count - 1];
         //        waypoints += "," + String(point2.position.latitude) + "," + String(point2.position.longitude);
         //
         
         
-        //    for (var i = 0; i < lastMarker.count - 1; i++) {
-        //        let point = lastMarker[i];
-        ////    if (i == 0) {
-        ////    waypoints += String(point.position.latitude) + "," + String(point.position.longitude);
-        ////    } else {
-        ////    waypoints += "," + String(point.position.latitude) + "," + String(point.position.longitude);
-        ////    }
-        ////    }
+            for i in 1 ..< lastMarker.count - 1 {
+                let point = lastMarker[i];
+            if (i == 1) {
+            waypoints += String(point.position.latitude) + "," + String(point.position.longitude);
+            } else {
+            waypoints += "|" + String(point.position.latitude) + "," + String(point.position.longitude);
+            }
+            }
         //        print()
         
         // Building the parameters to the web service
@@ -964,7 +985,7 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
                 
                 // Location name
                 if let FormattedAddressLines = placeMark.addressDictionary?["FormattedAddressLines"] as? NSArray {
-                    print(FormattedAddressLines);
+                   // print(FormattedAddressLines);
                 }
                 
                 
@@ -1121,22 +1142,47 @@ class CreateRouteViewController: UIViewController, GMSMapViewDelegate,CLLocation
         }
         
     }
+    
+    
     func mapView(mapView: GMSMapView, didTapAtCoordinate coordinate: CLLocationCoordinate2D) {
         print("You tapped at \(coordinate.latitude), \(coordinate.longitude)");
+        
         if tapCounter == 0
         {
-            let london = GMSMarker(position: CLLocationCoordinate2D(latitude:19.0681818, longitude: 72.827179))
+            let london = GMSMarker(position: CLLocationCoordinate2D(latitude:19.0681925780198, longitude: 72.8271869570017))
             london.icon = UIImage(named: "ic_map_marker_green")
             london.map = mapView
             tapCounter += 1;
             lastMarker.append(london);
+
+            
             self.getAddressFromLatLong(coordinate.latitude, longitude: coordinate.longitude)
         }else{
-            let london = GMSMarker(position: CLLocationCoordinate2D(latitude:19.0693753, longitude: 72.8273129))
-            london.icon = UIImage(named: "ic_map_marker_red")
-            london.map = mapView
-            tapCounter += 1;
-            lastMarker.append(london);
+            
+            if tapCounter == 1
+            {
+                let london = GMSMarker(position: CLLocationCoordinate2D(latitude:19.0693789712453, longitude: 72.8273103386164))
+                london.icon = UIImage(named: "ic_map_marker_red")
+                london.map = mapView
+                tapCounter += 1;
+                lastMarker.append(london);
+            }
+           else if tapCounter == 2{
+                let london = GMSMarker(position: CLLocationCoordinate2D(latitude:19.0685728331834, longitude: 72.828329578042))
+                london.icon = UIImage(named: "ic_map_marker_red")
+                london.map = mapView
+                tapCounter += 1;
+                lastMarker.append(london);
+            }else{
+                let london = GMSMarker(position: CLLocationCoordinate2D(latitude:19.0677666912009, longitude: 72.8284744173288))
+                london.icon = UIImage(named: "ic_map_marker_red")
+                london.map = mapView
+                tapCounter += 1;
+                lastMarker.append(london);
+            }
+            
+           
+          
         }
         passToGetDirections()
         //        arrayOfCLLocationCoordinate2D.append(coordinate);

@@ -303,6 +303,8 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
                                 NSUserDefaults.standardUserDefaults().setObject("5", forKey: "heightFt")
                                 NSUserDefaults.standardUserDefaults().setObject("10", forKey: "heightIn")
                                 NSUserDefaults.standardUserDefaults().setBool(true, forKey: "voiceFeedback")
+                                NSUserDefaults.standardUserDefaults().setObject("1", forKey: "MeasuringUnits")
+                                NSUserDefaults.standardUserDefaults().setObject("1", forKey: "intervalTypeDis")
 
                             }//
                         }
