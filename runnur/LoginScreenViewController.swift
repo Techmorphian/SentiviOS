@@ -104,20 +104,20 @@ class LoginScreenViewController: UIViewController, GIDSignInUIDelegate, GIDSignI
                 NSUserDefaults.standardUserDefaults().setObject( "Google:\(googleId)", forKey: "azureUserId")
                 NSUserDefaults.standardUserDefaults().setObject( idToken, forKey: "azureAuthenticationToken")
                 
-//                client.loginWithProvider("google", token: payload, completion: { (user, error) in
-//                    
-//                    if error != nil{
-//                        print(error)
-//                    }
-//                    if user != nil{
-//                        print(user)
-//                        
-//                        print("Google Login Sucess")
-//                        self.call(false, email: email, firstName: firstName, lastName: lastName, id: googleId, token: idToken,imageUrl: imageUrl.absoluteString)
-//                    }
-//                })
+                client.loginWithProvider("google", token: payload, completion: { (user, error) in
+                    
+                    if error != nil{
+                        print(error)
+                    }
+                    if user != nil{
+                        print(user)
+                        
+                        print("Google Login Sucess")
+                        self.call(false, email: email, firstName: firstName, lastName: lastName, id: googleId, token: idToken,imageUrl: imageUrl.absoluteString)
+                    }
+                })
                 
-                self.call(false, email: email, firstName: firstName, lastName: lastName, id: googleId, token: idToken,imageUrl: imageUrl.absoluteString)
+               // self.call(false, email: email, firstName: firstName, lastName: lastName, id: googleId, token: idToken,imageUrl: imageUrl.absoluteString)
                 
             }
             

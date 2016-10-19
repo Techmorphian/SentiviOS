@@ -385,12 +385,12 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                         } else if let items = result?.items {
                             print(result);
                             print(result?.items)
-                            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isRouteChahe")
+                            
                             if items.count == 0
                             {
                                 self.showNoRoutesView();
                             }else{
-                                
+                                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isRouteChahe")
                                 var text = "";
                                 if NSJSONSerialization.isValidJSONObject(items){
                                     let jsonData = try! NSJSONSerialization.dataWithJSONObject(items, options: NSJSONWritingOptions())
@@ -610,13 +610,14 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     func showNoRoutesView()
     {
         let mainView = UIView();
-        mainView.frame = CGRectMake(20, 100, self.view.frame.width-40, self.view.frame.height/2.5)
+        
+        mainView.frame = CGRectMake(20, 110, self.view.frame.width-40, 260)
         mainView.backgroundColor=UIColor.whiteColor();
         let label = UILabel(frame: CGRect(x:20, y: 20, width: mainView.frame.width-40, height: 17));
         label.font = UIFont.systemFontOfSize(15)
         label.text = "No Saved Routes";
         label.textAlignment = .Center;
-        let imageView = UIImageView(frame: CGRectMake(0, 55, mainView.frame.width, self.view.frame.height/2.5-95));
+        let imageView = UIImageView(frame: CGRectMake(0, 55, mainView.frame.width, 240-80));
         imageView.image = UIImage(named: "im_no_routes");
         routeViewButton.frame = CGRectMake(0, imageView.frame.origin.y+imageView.frame.height+4, mainView.frame.width, 40);
         routeViewButton.setTitleColor(colorCode.BlueColor, forState: .Normal)
@@ -628,6 +629,7 @@ class RouteViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         mainView.addSubview(routeViewButton);
         self.view.addSubview(mainView);
     }
+    
     func createRouteClicked()   {
         createRoute.sendActionsForControlEvents(UIControlEvents.TouchUpInside);
     }

@@ -154,7 +154,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 if data != nil || data?.length < 0
                 {
                 let jsonData = try! NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as! NSDictionary
-                   // print(jsonData);
+                    print(jsonData);
                     
                     self.totalNumberOfActivities = self.totalNumberOfActivities + 1;
                     
@@ -165,10 +165,16 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                             print("gaurang2");
                         }
                     }
+                    if let itemID = jsonData.objectForKey("id") as? String{
+                        self.routeData.itemID = itemID
+                    }
 
                     if let dis = jsonData.objectForKey("distance") {
                         print("distance\(dis)");
-                        let disString = String(dis)
+                        
+                
+                         let disString = String(dis)
+                        if let d = dis as? String{
                         let doubleDis = Double(disString);
                         self.routeData.distance = disString;
                        
@@ -180,6 +186,8 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         if String(doubleDis!+Double(self.totalDis)!) != nil
                         {
                             self.totalDis = String(doubleDis!+Double(self.totalDis)!);
+                        
+                        }
                         }
 
                     }

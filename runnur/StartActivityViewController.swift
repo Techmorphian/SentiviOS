@@ -45,7 +45,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     var customPopUp = CustomPopUp();
     
     var firstLocation = CLLocation();
-    var lastLocation = CLLocation();
+    var lastLocation : CLLocation! = nil;
     var distanceInMi = CLLocationDistance();
     var speeds = CFloat();
     var time = CFloat();
@@ -67,6 +67,11 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     var planSecoundPoint = CLLocationCoordinate2D();
     
     var firstCache : String? = nil;
+    
+    var afterTime = Double();
+    var beforeTime = Double();
+    
+
     
     //------------------------------------------Outlets--------------------------------------------
     
@@ -480,7 +485,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             }
             //startTime = currentTime;
             timer.invalidate()
-            
+            q = 0;
             self.pause.setTitle("RESUME", forState: .Normal);
         }else if self.pause.titleLabel?.text == "DISCARD RUN"{
             
@@ -494,7 +499,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             if NSUserDefaults.standardUserDefaults().boolForKey("voiceFeedback") == true{
                 self.audioType(5);
             }
-            
+            q = 1;
             self.stop.setTitle("STOP", forState: .Normal);
             self.pause.setTitle("PAUSE", forState: .Normal);
             timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: #selector(StartActivityViewController.updateTime), userInfo: nil, repeats: true)
@@ -510,6 +515,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     //-------------------------------change time-----------------------------------
     var minutes = UInt8();
     var seconds = UInt8();
+    var elapsedTimeInMiliSecds = Double();
     func updateTime() {
         endTime = NSDate();
         currentTime = NSDate.timeIntervalSinceReferenceDate()
@@ -629,11 +635,11 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     }
     //-----------------------------update text of all labels---------------------------------- not being used
     func currentstatus(){
-        if (elapsedTime <= 0) {
+        if (elapsedTimeInMiliSecds <= 0) {
             return;
         } else {
-            avgspeed = (dis / (((elapsedTime / 1000) / 60) / 60));
-            avgpace = (((elapsedTime / 1000) / 60) / dis);
+            avgspeed = (dis / (((elapsedTimeInMiliSecds / 1000) / 60) / 60));
+            avgpace = (((elapsedTimeInMiliSecds / 1000) / 60) / dis);
         }
         if (measuringUnits == 1) {
             
@@ -697,9 +703,19 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         
     }
     //TODO:- Not Being Used
+    var repeatDistance = Double();
+    var mileMarkerCount = Int();
+    var splitSpeed = Double();
+    var splitPace = Double();
+    var mileMarker = [CLLocation]()
+    var splitTime = [Double]()
+    
     func updatedLocation(myManager:CLLocationManager)
     {
         self.myManager=myManager
+        
+        
+        
         let locValue:CLLocationCoordinate2D = myManager.location!.coordinate
         
         accuracy = myManager.location!.horizontalAccuracy;
@@ -713,19 +729,28 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         if first == false
             //        if (r < 1 && mapView != nil)
         {
-            let camera = GMSCameraPosition.cameraWithLatitude(locValue.latitude, longitude: locValue.longitude, zoom: 16.0)
-            self.mapView.camera = camera
-            firstLocation = myManager.location!;
-            first = true;
-            mapView.myLocationEnabled = true
-            let london = GMSMarker(position: CLLocationCoordinate2D(latitude:locValue.latitude, longitude: locValue.longitude))
-            london.icon = UIImage(named: "im_start_marker")
-            london.map = mapView
-            getWeatherData("http://api.openweathermap.org/data/2.5/weather?lat=\(myManager.location!.coordinate.latitude)&lon=\(myManager.location!.coordinate.longitude)")
+            dispatch_async(dispatch_get_main_queue(), {
+                let camera = GMSCameraPosition.cameraWithLatitude(locValue.latitude, longitude: locValue.longitude, zoom: 16.0)
+                self.mapView.camera = camera
+                self.firstLocation = myManager.location!;
+                self.first = true;
+                self.mapView.myLocationEnabled = true
+                let london = GMSMarker(position: CLLocationCoordinate2D(latitude:locValue.latitude, longitude: locValue.longitude))
+                london.icon = UIImage(named: "im_start_marker")
+                london.map = self.mapView
+            })
+            if Reachability.isConnectedToNetwork() == true
+            {
+             getWeatherData("http://api.openweathermap.org/data/2.5/weather?lat=\(myManager.location!.coordinate.latitude)&lon=\(myManager.location!.coordinate.longitude)")
             
             self.getAddressFromLatLong(locValue.latitude, longitude: locValue.longitude);
-            r+1;
+            }
+            //r+1;
         }
+        
+        
+//        do not zoom unless user zoom in
+  // this method is for auto pause to start again activity track
         
         if (b == 1) {
             if ((myManager.location!.speed * 2.23694) > 1.00){
@@ -737,7 +762,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                 audioType(3);
                 b = 0;
                 count = 0;
-                //                TODO:- related to pause -- total pause time
+//                TODO:- related to pause -- total pause time
                 //                pause_end = (double) System.nanoTime() / 1.00E9;
                 //
                 //                //Calculate the total paused tme
@@ -778,25 +803,29 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
          * tracking when start, pause or stop are pressed.
          */
         
-        
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), {
+       
+       // dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), {
             if (self.q == 1) {
+                
+
                 if (self.turnOnActivity) {
+// ------------------- TODO:- Check where this variable used and implement that -----------------------------
+                    callMotionActivity();
                     self.turnOnActivity = false;
                 }
+//  TODO:- In backround needs to update activity Data
                 if (self.accuracy < 40) {
                     var toLong = Double();
                     var toLat=Double();
                     //Get latitude and longitude for previous location
                     var fromLong = Double();
                     var fromLat = Double();
-                    self.lastLocation = self.myManager.location!;
+                   // self.lastLocation = self.myManager.location!;
                     
                     if self.lastLocation == ""{
                         self.lastLocation = self.myManager.location!;
                     }
                     if (self.maCount <= 3) {
-                        
                         
                         self.avglastLat.append(self.lastLocation.coordinate.latitude);
                         self.addElevation.append(self.altitude);
@@ -805,16 +834,17 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                         self.avglastLong.append(self.lastLocation.coordinate.longitude);
                         
                         
-                        //                    avglastLong[maCount] = lastLocation.coordinate.longitude;
-                        //                    avglastLat[maCount] = lastLocation.coordinate.latitude;
-                        //                    addElevation[maCount] = altitude;
-                        //                    avgthisLong[maCount] = long;
-                        //                    avgthisLat[maCount] = lat;
+//                        self.avglastLong[self.maCount] = self.lastLocation.coordinate.longitude;
+//                        self.avglastLat[self.maCount] = self.lastLocation.coordinate.latitude;
+//                        self.addElevation[self.maCount] = self.altitude;
+//                        self.avgthisLong[self.maCount] = self.long;
+//                        self.avgthisLat[self.maCount] = self.lat;
                         
                         self.maCount = self.maCount+1;
                     } else {
                         
-                        //                    double cur_time = (double) System.nanoTime() / (1.00E9);
+//   TODO:-                 double cur_time = (double) System.nanoTime() / (1.00E9);
+                        self.cur_time = self.currentTime;
                         
                         var lastlat:Double = 0;
                         var lastlon:Double = 0;
@@ -822,9 +852,9 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                         var thislon:Double = 0;
                         var alt:Double = 0;
                         print(self.maCount);
-                        for (var i = 0; i < self.maCount; i++) {
-                            print(i)
-                            print(self.avglastLong.count);
+                    
+                        for i in 0 ..< self.maCount
+                        {
                             lastlat = lastlat + self.avglastLat[i];
                             lastlon = lastlon + self.avglastLong[i];
                             thislat = thislat + self.avgthisLat[i];
@@ -835,14 +865,18 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                         toLong = thislon / Double(self.maCount);
                         toLat = thislat / Double(self.maCount);
                         fromLong = lastlon / Double(self.maCount);
-                        fromLat = lastlat / Double(self.maCount);
+                        fromLat = lastlon / Double(self.maCount);
+                        
+                        print("\(toLong)\(toLat)\(fromLong)\(fromLat)");
+                        print("\(thislon)\(thislat)\(lastlon)\(lastlon)")
+                        print(self.maCount)
                         
                         //Calculate distance
                         self.dis = self.dis + self.calculateDistance(fromLong, fromLat: fromLat, toLong: toLong, toLat: toLat);
                         //                  TODO:- graphDistance
-                        //                    if (graphDistance.size() < 1 && dis > 0.4) {
-                        //                        dis = 0.0;
-                        //                    }
+                        if (self.graphDistance.count < 1 && self.dis > 0.4) {
+                            self.dis = 0.0;
+                        }
                         
                         self.lastLocationloc = self.lastLocation;
                         
@@ -861,13 +895,49 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                             absolute = abs(kmDis - markerDistance);
                         }
                         
+                        
+                        if ((absolute >= 0.95 || absolute <= 0.05) && (temp > 0.5) && (self.mileMarkerCount == 0) && (markerDistance != self.repeatDistance))
+                        {
+                            self.cur_time = self.currentTime;
+                            var diffTime = self.cur_time - self.prev_time - self.splitIntervalPausedTime;
+                            
+                            if NSUserDefaults.standardUserDefaults().integerForKey("measuringUnits") == 1
+                            {
+                                self.splitSpeed = (2.23694) * (1609.34 / (diffTime));
+                                self.splitPace = (60.0 / self.splitSpeed);
+                                
+                            }else{
+                                
+                                self.splitSpeed = (3.6) * (1000 / (diffTime));
+                                self.splitPace = (60.0 / self.splitSpeed);
+                                var kmDis = self.dis * 1.60934;
+                            }
+                            
+                        
+                            self.mileMarker.append(self.myManager.location!);
+                            self.splitTime.append(self.splitSpeed)
+                            
+                            self.prev_time = self.cur_time;
+                            self.mileMarkerCount+=1;
+                            self.repeatDistance = markerDistance;
+                            //reset pause start and end times
+//                            self.pause_end = 0;
+//                            self.pause_start = 0;
+//                            self.splitPausedTime = 0;
+                        }else if (self.mileMarkerCount >= 1 && self.mileMarkerCount <= 7) {
+                           self.mileMarkerCount = self.mileMarkerCount + 1;
+                        } else {
+                            self.mileMarkerCount = 0;
+                        }
+                        
+                        
                         let loc_distance = (self.calculateDistance(fromLong, fromLat: fromLat, toLong: toLong, toLat: toLat) * 1609.34);
                         let time = self.cur_time - self.prev_time;
                         
                         self.calSpeed = (loc_distance / (time));
                         
                         //Get pace and altitude
-                        self.calSpeed = (self.calSpeed * 2.23694);                       // speed in mph
+                        self.calSpeed = (self.calSpeed * 2.23694); // speed in mph
                         
                         //If speed below this value then record it as 0
                         //Avoid adding miscalculated speed for a location error during start of the activity
@@ -887,11 +957,11 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                         
                         //Add points for generating graphs
                         if (self.repeatDistance1 < 1) {
-                            // trackpolyline.add(thisLatLng);          //Add latlng information to store the info in server
+                           // trackpolyline.add(thisLatLng);          //Add latlng information to store the info in server
                             self.graphPace.append(self.pace);
                             self.graphSpeed.append(round(self.calSpeed * 100.0) / 100.0);
                             self.graphDistance.append(self.dis);
-                            self.timeLog.append(self.elapsedTime);
+                            self.timeLog.append(self.elapsedTimeInMiliSecds);
                             
                             //                        if (BLEConnect & mConnected)
                             //                        graphHR.add(Integer.parseInt(HR));
@@ -905,6 +975,21 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                                 self.calculateElevation(Int(self.altitude));
                             }
                         }
+                        
+                        
+                        
+                        self.avglastLat.removeAll();
+                        self.addElevation.removeAll();
+                        self.avgthisLong.removeAll();
+                        self.avgthisLat.removeAll();
+                        self.avglastLong.removeAll();
+                        
+                        
+                        self.maCount = 0;
+                        self.prev_time = self.cur_time;
+                        
+                        
+                        self.calculateCaloriesBurned();
                         if (self.autoPause) {
                             
                             if (self.calSpeed < 0.8) {
@@ -917,11 +1002,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                                 //  forcePause();
                             }
                         }
-                        self.maCount = 0;
-                        self.prev_time = self.cur_time;
-                        
-                        
-                        self.calculateCaloriesBurned();
+
                         dispatch_async(dispatch_get_main_queue(),{
                             //Update UI
                             self.thisLatLng = CLLocationCoordinate2D(latitude: toLat, longitude: toLong);
@@ -938,14 +1019,14 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                             self.mapView.camera = camera
                             
                             self.currentstatus();
-                        });
+                        })
                     }
                     
                 }
                 
                 
             }
-        })
+      //  })
         
     }
     
@@ -972,8 +1053,8 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     var calSpeed = Double();
     var pace = Double();
     var repeatDistance1 = Int();
-    var cur_time = NSTimeInterval();
-    var prev_time = NSTimeInterval();
+    var cur_time = Double();
+    var prev_time = Double();
     
     //    var graphSpeed=[Double]();
     //    var graphPace = [Double]();
@@ -991,41 +1072,94 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         return (((minutes*60) + seconds) / distance) / 60;
     }
     
+// MARK:- Location Manager location update
+//   ################################### using this vars for avg forst threee lat long ####################################
+    var latsForAvg = [Double]();
+    var laongsForAvg = [Double]();;
+    
+    
+    
+    
+    
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        //  updatedLocation(manager);
         
+        
+        self.measuringUnits = NSUserDefaults.standardUserDefaults().integerForKey("measuringUnits")
+        
+        loc = locations;
+        accuracy = myManager.location!.horizontalAccuracy;
+        lat = (myManager.location?.coordinate.latitude)!;
+        long = (myManager.location?.coordinate.longitude)!;
+        altitude = myManager.location!.altitude;
+
+        
+// ------------------ On Location update Calculating Elapsed Time ---------------------------
         let locValue:CLLocationCoordinate2D = myManager.location!.coordinate
+        let time = self.duration.text?.componentsSeparatedByString(":");
+        let hrs = Double(time![0])!*3600000;
+        let mm = Double(time![1])!*60000;
+        let ss = Double(time![2])!*1000;
+        elapsedTimeInMiliSecds = hrs + mm + ss
+        //  updatedLocation(manager);
+    
         
+//------------------- If Location update for the very first time then get the address and put start location marker -----------------
         if fromPlanRoute == false{
             if first == false{
-                let camera = GMSCameraPosition.cameraWithLatitude(locValue.latitude, longitude: locValue.longitude, zoom: 16.0)
-                self.mapView.camera = camera
-                firstLocation = manager.location!;
-                first = true;
-                mapView.myLocationEnabled = true
-                let london = GMSMarker(position: CLLocationCoordinate2D(latitude:locValue.latitude, longitude: locValue.longitude))
-                london.icon = UIImage(named: "im_start_marker")
-                london.map = mapView
-                getWeatherData("http://api.openweathermap.org/data/2.5/weather?lat=\(manager.location!.coordinate.latitude)&lon=\(manager.location!.coordinate.longitude)")
-                
-                self.getAddressFromLatLong(locValue.latitude, longitude: locValue.longitude);
+                self.lastLocation = CLLocation(latitude: loc[0].coordinate.latitude, longitude: loc[0].coordinate.longitude)
+                dispatch_async(dispatch_get_main_queue(), {
+                    let camera = GMSCameraPosition.cameraWithLatitude(locValue.latitude, longitude: locValue.longitude, zoom: 16.0);
+                    self.mapView.camera = camera
+                    self.firstLocation = self.myManager.location!;
+                    self.first = true;
+                    self.mapView.myLocationEnabled = true
+                    let london = GMSMarker(position: CLLocationCoordinate2D(latitude:locValue.latitude, longitude: locValue.longitude));
+                    london.icon = UIImage(named: "im_start_marker")
+                    london.map = self.mapView
+                })
+                if Reachability.isConnectedToNetwork() == true
+                {
+                    getWeatherData("http://api.openweathermap.org/data/2.5/weather?lat=\(myManager.location!.coordinate.latitude)&lon=\(myManager.location!.coordinate.longitude)")
+                    self.getAddressFromLatLong(locValue.latitude, longitude: locValue.longitude);
+                }
+                self.turnOnActivity = true;
+                return
                 //  19.069761, 72.829857
             }
         }
-        
+//---------------------- Take map to updated Location --------------------------
         self.mapView.animateToLocation(CLLocationCoordinate2D(latitude:locValue.latitude, longitude: locValue.longitude))
-        accuracy = locations[0].horizontalAccuracy
-        altitude = (locations[0].altitude);
-        if (altitude < (-25)) {
-            Altitudes.append(Int((-25 - Double(-EGM96_US)) * 3.28084));
-            calculateElevation(-25);
-        } else {
-            Altitudes.append(Int((altitude - Double(-EGM96_US)) * 3.28084));
-            calculateElevation(Int(altitude));
-        }
         
         
+        
+//---------------------- calculating Accuracy -----------------------------------
+        
+        
+  //  print("horizontalAccuracy\(locations[0].horizontalAccuracy)  verticalAccuracy\(locations[0].verticalAccuracy)")
+        
+//************************************  work on this
+//        accuracy = locations[0].horizontalAccuracy //+ locations[0].verticalAccuracy
+//        distanceInMi = locations[0].distanceFromLocation(lastLocation)
+//        
+//        self.dis = distanceInMi * 1609.34;
+//        let times = currentTime - prev_time;
+//        
+//        self.calSpeed = self.dis/times;
+        
+        
+        
+//---------------------- Calculate Altitude and Elevation  -------------------------------------  *************** do later
+//        altitude = (locations[0].altitude);
+//        if (altitude < (-25)) {
+//            Altitudes.append(Int((-25 - Double(-EGM96_US)) * 3.28084));
+//            calculateElevation(-25);
+//        } else {
+//            Altitudes.append(Int((altitude - Double(-EGM96_US)) * 3.28084));
+//            calculateElevation(Int(altitude));
+//        }
+        
+// ---------------------- On Every Location update check gps accuracy and change th gps icon --------------------
         loc = locations;
         // calculateDistanceSpeed(locations[0]);
         if !CLLocationManager.locationServicesEnabled()
@@ -1054,34 +1188,215 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                 // Full Signal
             }
         }
+      //  self.dis = locations[0].distanceFromLocation(self.lastLocation);
+       // self.currentstatus();
+
         
-        //        for i in locations
-        //        {
+        if (self.turnOnActivity) {
+            // ------------------- TODO:- Check where this variable used and implement that -----------------------------
+            callMotionActivity();
+            self.turnOnActivity = false;
+        }
+
+        
+       if (self.accuracy < 40) {
+
+        
+        //  Avg of lat long
+        
+        var toLong = Double();
+        var toLat=Double();
+        //  Get latitude and longitude for previous location
+        var fromLong = Double();
+        var fromLat = Double();
+        
+        if self.lastLocation == nil
+        {
+            self.lastLocation = CLLocation(latitude: loc[0].coordinate.latitude, longitude: loc[0].coordinate.longitude)
+        }
+
         
         
-        if (self.accuracy < 40) {
-            //            var toLong = Double();
-            //            var toLat=Double();
-            //Get latitude and longitude for previous location
-            //            var fromLong = Double();
-            //            var fromLat = Double();
+        if (self.maCount <= 3) {
             
-            self.lastLocation = self.myManager.location!;
-            self.trackPolyline.append(["latitude":29.69288,"longitude":95.50932])
+            self.avglastLat.append(self.lastLocation.coordinate.latitude);
+            self.addElevation.append(self.altitude);
+            self.avgthisLong.append(long);
+            self.avgthisLat.append(lat);
+            self.avglastLong.append(self.lastLocation.coordinate.longitude);
+            self.maCount = self.maCount+1;
+        } else {
+            self.endDate = NSDate();
+            let interval = endDate.timeIntervalSinceDate(startDate);
+            let ti = round(interval)
+            self.cur_time = Double(ti % 60);
+           // afterTime = CFAbsoluteTimeGetCurrent();
+            
+            self.cur_time = afterTime - beforeTime;
+            
+            var lastlat:Double = 0;
+            var lastlon:Double = 0;
+            var thislat:Double = 0;
+            var thislon:Double = 0;
+            var alt:Double = 0;
+//            print(self.maCount);
+            
+            for i in 0 ..< self.maCount
+            {
+                lastlat = lastlat + self.avglastLat[i];
+                lastlon = lastlon + self.avglastLong[i];
+                thislat = thislat + self.avgthisLat[i];
+                thislon = thislon + self.avgthisLong[i];
+                alt = alt + self.addElevation[i];
+            }
+            
+            toLong = thislon / Double(self.maCount);
+            toLat = thislat / Double(self.maCount);
+            fromLong = lastlon / Double(self.maCount);
+            fromLat = lastlat / Double(self.maCount);
+            
+//            print("\(toLong)  \(toLat)   \(fromLong)   \(fromLat)");
+//            print("\(thislon)   \(thislat)   \(lastlon)   \(lastlon)");
+//            print(self.maCount);
+            
+            
+            self.dis = self.dis + self.calculateDistance(fromLong, fromLat: fromLat, toLong: toLong, toLat: toLat);
+            
+            if (graphDistance.count < 1 && dis > 0.4) {
+                dis = 0.0;
+            }
+            
+//            thisLatLong is changed to the "loc"
+            
+            self.lastLocation = CLLocation(latitude: toLat, longitude: toLong)
+            
+            //Add marker at every one mile or km marker
+            var markerDistance = Double();
+            var absolute:Double = 0;
+            var temp=Double();
+            if (NSUserDefaults.standardUserDefaults().integerForKey("measuringUnits") == 1) {
+                temp = self.dis;
+                markerDistance = (self.dis + 0.5);                //Round to nearest integer
+                absolute = abs(self.dis - markerDistance);     //Subtract actual distance from nearest integer to get value between 0.00 to 0.99
+            } else {
+                let kmDis:Double = self.dis * 1.60934;
+                markerDistance = kmDis + 0.5;                //Round to nearest integer
+                absolute = abs(kmDis - markerDistance);
+            }
+
+            
+            if ((absolute >= 0.95 || absolute <= 0.05) && (temp > 0.5) && (self.mileMarkerCount == 0) && (markerDistance != self.repeatDistance))
+            {
+                self.endDate = NSDate();
+                
+//    get time
+                
+                let interval = endDate.timeIntervalSinceDate(startDate);
+                let ti = NSInteger(interval)
+                self.cur_time = Double(ti % 60);
+        
+                
+              //  self.cur_time = self.currentTime;
+                let diffTime = self.cur_time - self.prev_time - self.splitIntervalPausedTime;
+                
+                if NSUserDefaults.standardUserDefaults().integerForKey("measuringUnits") == 1
+                {
+                    self.splitSpeed = (2.23694) * (1609.34 / (diffTime));
+                    self.splitPace = (60.0 / self.splitSpeed);
+                    
+                }else{
+                    
+                    self.splitSpeed = (3.6) * (1000 / (diffTime));
+                    self.splitPace = (60.0 / self.splitSpeed);
+                  ///  var kmDis = self.dis * 1.60934;  ------------------>>> In andrid they are using this update the marker icon size and polyline
+                }
+                
+                
+                self.mileMarker.append(self.myManager.location!);
+                self.splitTime.append(self.splitSpeed)
+                
+                self.prev_time = self.cur_time;
+                self.mileMarkerCount+=1;
+                self.repeatDistance = markerDistance;
+                //reset pause start and end times
+                
+//                self.pause_end = 0;
+//                self.pause_start = 0;
+//                self.splitPausedTime = 0;
+                
+                
+            }else if (self.mileMarkerCount >= 1 && self.mileMarkerCount <= 7) {
+                self.mileMarkerCount = self.mileMarkerCount + 1;
+            } else {
+                self.mileMarkerCount = 0;
+            }
+
+         
+            let loc_distance = (self.calculateDistance(fromLong, fromLat: fromLat, toLong: toLong, toLat: toLat) * 1609.34);
+            
+            let time = self.cur_time - self.prev_time;
+            
+            self.calSpeed = (loc_distance / (time));
+            
+            //Get pace and altitude
+            self.calSpeed = (self.calSpeed * 2.23694); // speed in mph
+ 
+            
+            
+            
+            
+            
+            
+            let intervals = endDate.timeIntervalSinceDate(startDate);
+            let tis = NSInteger(intervals)
+            startDate = NSDate();
+            self.prev_time = Double(tis % 60);
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+           // self.lastLocation = self.myManager.location!;
+        
+        
+/*            self.trackPolyline.append(["latitude":29.69288,"longitude":95.50932])
             
             if NSJSONSerialization.isValidJSONObject(trackPolyline){
                 let jsonData = try! NSJSONSerialization.dataWithJSONObject(trackPolyline, options: NSJSONWritingOptions())
                 let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
                 saveTrackPolyline = jsonString
-            }
-            
-            self.graphPace.append(self.pace);
-            self.graphSpeed.append(round(self.calSpeed * 100.0) / 100.0);
-            self.graphDistance.append(self.dis);
-            self.timeLog.append(self.elapsedTime);
-            
-            calculateCaloriesBurned();
-            calculateDistanceSpeed(lastLocation);
+            }*/
+ 
+//---------------------------------- On Location update put all calculated data in graph values to save in database ----------------------------
+        
+        
+//        self.graphPace.append(self.pace);
+//        self.graphSpeed.append(round(self.calSpeed * 100.0) / 100.0);
+//        self.graphDistance.append(self.dis);
+//        self.timeLog.append(self.elapsedTimeInMiliSecds);
+        
+        
+      //  calculateCaloriesBurned();
+        
+        
+        
+        
+        
+        
+        
+
+        
+       // self.dis = self.dis + self.calculateDistance(fromLong, fromLat: fromLat, toLong: toLong, toLat: toLat);
+        //self.currentstatus();
+           // calculateDistanceSpeed(lastLocation);
+        
+        
+//----------------------------------------------- draw polyline ---------------------------------------------------
             path.addCoordinate(locations[0].coordinate);
             mapView.clear();
             let polyline = GMSPolyline(path: path)
@@ -1089,7 +1404,21 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             polyline.strokeWidth = 1
             polyline.geodesic = true
             polyline.map = mapView
-            //-------------------------------------------Enroid way of location update------------------------------------
+        
+ 
+  
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            //-------------------------------------------enroid way of location update------------------------------------
             /*  if (self.maCount <= 3) {
              
              
@@ -1175,7 +1504,9 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         //        polyline.strokeWidth = 1
         //        polyline.geodesic = true
         //        polyline.map = mapView
-        
+//------------------------------------------ speak msg -----------------------------------------------
+    
+    
         self.voiceCoachPerDistanceInterval();
         
     }
@@ -1280,12 +1611,11 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         }
         task.resume()
     }
-    //    --------------------------------------------- parse weather Data --------------------------------
+//    --------------------------------------------- parse weather Data --------------------------------
     func setLabels(weatherData: NSData) {
         
         do
         {
-            
             let json = try NSJSONSerialization.JSONObjectWithData(weatherData, options: .MutableContainers) as? NSDictionary
             if  let parseJSON = json{
                 print(parseJSON)
@@ -1339,7 +1669,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         }
         
     }
-    //    -----------------------------------------Get start location of user -------------------------------
+ //    -----------------------------------------Get start location of user -------------------------------
     func getAddressFromLatLong(latitude:Double,longitude:Double)
     {
         if Reachability.isConnectedToNetwork() == true{
@@ -1369,7 +1699,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             })
         }
     }
-    //----------------------------------gesture functions for top view animation------------------------------------------
+//----------------------------------gesture functions for top view animation------------------------------------------
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let touch = touches.first;
         startPosition = touch?.locationInView(self.view);
@@ -1404,7 +1734,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         self.view.layoutIfNeeded()
         
     }
-    //    MARK:- Calculate Calories
+//    MARK:- Calculate Calories
     var avgpace = Double();
     var weight = Double();
     //var elapsedTime = CLong();
@@ -1446,7 +1776,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
            caloriesburned = caloriesLookUp.Running(avgpace, weight: weight, elapsedTime: Float(elapTime));
         }
     }
-    //--------------------------------------Calculate Elevation-----------------------------------------
+//--------------------------------------Calculate Elevation-----------------------------------------
     //This method calculates max elevation gain and max elevation loss
     func calculateElevation(Elevation:Int) {
         let roundDis = Int(dis + 0.5);
@@ -1614,7 +1944,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     intervalSpeed = 60.0 / intervalPace;
     intervalPrevTime = CFAbsoluteTimeGetCurrent() / 1.00E9;
     }
-    
+// --------------------------------------- copy pasted code from android ------------------------------ -----------
     /*
      This method is to calculate interval pace and speed
      */
@@ -1632,7 +1962,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     }
     
     
-    
+// --------------------------------------- this function is use for speek about user activity as user selects the types from settings  ----------------------------
     
     
     func speakText(type:Int)
@@ -1763,7 +2093,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         
     }
     
-    
+//----------------------------- This function is used for the sppek text which are constant for all ----------------------------
     
     func audioType(type:Int){
         switch type {
@@ -1820,6 +2150,8 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     }
     
     
+    
+//    MARK:-  Calculate Activity Performed
     var activityType = String();
     var running = Int();
     var walking = Int();
@@ -1827,8 +2159,8 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     var vehicle = Int();
     var still = Int();
     var bike = Int();
+
     
-    //    MARK:-  Calculate Activity Performed
     let activityManager = CMMotionActivityManager()
     
     func callMotionActivity()
@@ -1891,32 +2223,30 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         }
         
     }
-    // MARK:- Life cycle
+// MARK:- Life cycle Methods
     override func viewDidAppear(animated: Bool) {
-        
+// -------------------------- send notification for workout progress -----------------------
         UIApplication.sharedApplication().cancelAllLocalNotifications()
-        
         notification.alertBody = "Your workout is in progress"
         
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        
+//  --------------- location manager to start updating location of user ------------------------------------------
         self.myManager = CLLocationManager();
         self.myManager.delegate = self;
+        self.myManager.distanceFilter = 10;
         self.myManager.desiredAccuracy = kCLLocationAccuracyBest;
-        
+        beforeTime = CFAbsoluteTimeGetCurrent();
         self.myManager.requestWhenInUseAuthorization()
         self.myManager.startUpdatingLocation()
         myManager.startMonitoringSignificantLocationChanges()
+//        -------------------------- If location service is not enabled then change image of gps On start of activity -----------------------------
         if CLLocationManager.locationServicesEnabled()
         {
             
         }else{
             gpsImg.image = UIImage(named: "ic_gps_none");
         }
-        
-    }
-    override func viewDidDisappear(animated: Bool) {
-        myManager.stopUpdatingLocation();
-        myManager.stopMonitoringSignificantLocationChanges()
         
     }
     
@@ -1927,9 +2257,6 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         if NSUserDefaults.standardUserDefaults().boolForKey("voiceFeedback") == true{
             self.audioType(1);
         }
-        //          self.myManager = CLLocationManager();
-        //         self.myManager.desiredAccuracy = kCLLocationAccuracyBest;
-        //         self.myManager.startUpdatingLocation()
         q = 1;
         if fromPlanRoute{
             let london = GMSMarker(position: CLLocationCoordinate2D(latitude:planFirstPoint.latitude, longitude: planFirstPoint.longitude))
@@ -2017,9 +2344,11 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+//    MARK:- deint location manager to stop updating location
     deinit{
         myManager.stopUpdatingLocation();
         myManager.stopUpdatingLocation();
+        myManager = nil;
         myManager.stopMonitoringSignificantLocationChanges()
     }
     

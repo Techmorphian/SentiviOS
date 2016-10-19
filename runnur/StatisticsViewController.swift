@@ -372,33 +372,35 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
                             if data != nil || data?.length < 0
                             {
                                 let item = try! NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as! NSDictionary
-                                // print(jsonData);
+                                 //print(item);
                                 self.routeData = MapData();
                                 if let distance = item["distance"] {
                                     let dd = String(distance)
+                                    if let d = distance as? String{
+
                                     if String(distance) != ""{
                                         
-//                                        if NSUserDefaults.standardUserDefaults().integerForKey("measuringUnits") == 2
-//                                        {
-//                                            self.routeData.distance = String((distance as! Double)*1.60934);
-//                                        }else{
+                                        if NSUserDefaults.standardUserDefaults().integerForKey("measuringUnits") == 2
+                                        {
+                                            self.routeData.distance = String((distance as! Double)*1.60934);
+                                        }else{
                                         
                                         self.routeData.distance = String(distance);
-//                                        }
+                                        }
                                     }else{
                                         self.routeData.distance = "0";
                                         
                                     }
-                                    
+                                    }
                                 }
                                 if let averageSpeed = item["averageSpeed"] as? Double{
-//                                    if NSUserDefaults.standardUserDefaults().integerForKey("measuringUnits") == 2
-//                                    {
-//                                        self.routeData.avgSpeed = String((averageSpeed)*1.60934);
-//                                    }else{
+                                    if NSUserDefaults.standardUserDefaults().integerForKey("measuringUnits") == 2
+                                    {
+                                        self.routeData.avgSpeed = String((averageSpeed)*1.60934);
+                                    }else{
                                     
                                     self.routeData.avgSpeed = String(averageSpeed)
-//                                    }
+                                    }
                                 }
                                 
                                 if let startLocation = item["startLocationS"] as? String{
@@ -468,6 +470,7 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
                     
                     if Double(i.weekIntNum) == week1{
                         self.activities1 += 1;
+                        i.distance = i.distance?.stringByReplacingOccurrencesOfString("mi", withString: "");
                         self.totalDistance1 = Double(i.distance!)! + self.totalDistance1;
                         self.caloriesBurned1 = Double(i.caloriesBurned!)! + self.caloriesBurned1;
                         self.speed1 = Double(i.avgSpeed!)! + self.speed1;
@@ -475,6 +478,7 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
                         
                     }else if Double(i.weekIntNum) == week2{
                         self.activities2 += 1;
+                        i.distance = i.distance?.stringByReplacingOccurrencesOfString("mi", withString: "");
                         self.totalDistance1 = Double(i.distance!)! + self.totalDistance1;
                         self.caloriesBurned1 = Double(i.caloriesBurned!)! + self.caloriesBurned1;
                         self.speed1 = Double(i.avgSpeed!)! + self.speed1;
@@ -482,6 +486,7 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
                         
                     }else if Double(i.weekIntNum) == week3{
                         self.activities3 += 1;
+                        i.distance = i.distance?.stringByReplacingOccurrencesOfString("mi", withString: "");
                         self.totalDistance1 = Double(i.distance!)! + self.totalDistance1;
                         self.caloriesBurned1 = Double(i.caloriesBurned!)! + self.caloriesBurned1;
                         self.speed1 = Double(i.avgSpeed!)! + self.speed1;
@@ -489,6 +494,7 @@ class StatisticsViewController: UIViewController,UITableViewDelegate,UITableView
                         
                     }else if Double(i.weekIntNum) == week4{
                         self.activities4 += 1;
+                        i.distance = i.distance?.stringByReplacingOccurrencesOfString("mi", withString: "");
                         self.totalDistance1 = Double(i.distance!)! + self.totalDistance1;
                         self.caloriesBurned1 = Double(i.caloriesBurned!)! + self.caloriesBurned1;
                         self.speed1 = Double(i.avgSpeed!)! + self.speed1;

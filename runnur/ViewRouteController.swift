@@ -161,6 +161,18 @@ class ViewRouteController: UIViewController,ChartViewDelegate {
         lineChart.delegate = self;
     }
     
+    var markers = GMSMarker()
+    
+    func chartValueSelected(chartView: ChartViewBase, entry: ChartDataEntry, dataSetIndex: Int, highlight: ChartHighlight) {
+        print("valueSelected\(dataSetIndex)");
+        print(entry.xIndex);
+        markers.map = nil;
+        markers = GMSMarker(position: CLLocationCoordinate2D(latitude:mapData.trackLat[entry.xIndex], longitude: mapData.trackLong[entry.xIndex]))
+        markers.icon = UIImage(named: "ic_auto_route");
+        markers.map = mapView;
+    }
+
+    
     // MARK:- Move Top View
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let touch = touches.first;
@@ -284,17 +296,6 @@ class ViewRouteController: UIViewController,ChartViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    var markers = GMSMarker()
-    
-    func chartValueSelected(chartView: ChartViewBase, entry: ChartDataEntry, dataSetIndex: Int, highlight: ChartHighlight) {
-        print("valueSelected\(dataSetIndex)");
-        print(entry.xIndex);
-
-        //markers = nil;
-        markers = GMSMarker(position: CLLocationCoordinate2D(latitude:mapData.trackLat[entry.xIndex], longitude: mapData.trackLong[entry.xIndex]))
-        markers.icon = UIImage(named: "ic_auto_route");
-        markers.map = mapView;
-    }
     
     
     /*
