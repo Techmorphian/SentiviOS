@@ -2,6 +2,9 @@ PODS:
   - Charts (2.2.4):
     - Charts/Core (= 2.2.4)
   - Charts/Core (2.2.4)
+  - Crashlytics (3.7.0):
+    - Fabric (~> 1.6.3)
+  - Fabric (1.6.7)
   - FirebaseAnalytics (3.2.0):
     - FirebaseInstanceID (~> 1.0)
     - GoogleInterchangeUtilities (~> 1.2)
@@ -35,12 +38,16 @@ PODS:
 
 DEPENDENCIES:
   - Charts
+  - Crashlytics
+  - Fabric
   - Google/SignIn
   - Kingfisher (~> 2.4)
   - OneSignal
 
 SPEC CHECKSUMS:
   Charts: a9e735c83c6d376ade20f6612dcf0ba217394a49
+  Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
+  Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   FirebaseAnalytics: 6f75b04e6bfb8e0b6e9ef298e04c24eea3b13863
   FirebaseInstanceID: d014d574053a2fe84478f12f7bae96979e7051bb
   Google: 813c467362eabc11385f5a5cc9ad0cb651a58f4e
@@ -54,6 +61,6 @@ SPEC CHECKSUMS:
   Kingfisher: 41aed5b6c1ed8fa98cf6d75283ce89cf7890f517
   OneSignal: 15b94fa760a6754908f11ef92da6ec945923fa2c
 
-PODFILE CHECKSUM: e2d62884952c672099a906c1fbb8106b018c902c
+PODFILE CHECKSUM: 58d0441479218f508854002df414eebe71c385aa
 
 COCOAPODS: 1.0.1

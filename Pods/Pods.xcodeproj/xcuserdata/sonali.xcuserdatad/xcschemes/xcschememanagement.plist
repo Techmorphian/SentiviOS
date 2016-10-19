@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Charts.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Kingfisher.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -17,11 +22,6 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1CA4D3792E7B8CF2B4522522B0ADD60B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>404EC25055A4E1EC6355E2E68C1E5439</key>
 		<dict>
 			<key>primary</key>

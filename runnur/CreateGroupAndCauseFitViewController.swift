@@ -179,7 +179,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     {
         
         
-        
+       
         
         if NSUserDefaults.standardUserDefaults().boolForKey("GroupFitScreen") == true
             
@@ -201,8 +201,22 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
 
             alert.addAction(No)
             
-            
-            self.presentViewController(alert, animated: true, completion: nil)
+            if   NSUserDefaults.standardUserDefaults().boolForKey("backFromPaymentFailed") == true
+            {
+                
+                
+                 self.presentingViewController.self!.presentingViewController.self!.presentingViewController.self!.presentingViewController.self!.presentingViewController!.dismissViewControllerAnimated(true, completion: nil);
+                
+            }
+                
+            else
+                
+            {
+                 self.presentViewController(alert, animated: true, completion: nil)
+                
+                
+            }
+          
 
           
             
@@ -258,16 +272,12 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
             anonymous = "1"
             
         }
-            
         else
         {
             anonymousCheckUncheckButton.setImage(UIImage(named: "ic_uncheck"), forState: UIControlState
                 .Normal)
-            
             anonymous = "0"
         }
-
-        
         
     }
     
@@ -770,7 +780,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     
    var  CauseTypeId = String()
 
-    
+     // MARK: - PERSONAL CAUSE  BUTTON ACTION
     @IBOutlet var personalCauseLabel: UILabel!
     @IBOutlet var charityLabel: UILabel!
     @IBOutlet var personalCauseButton: UIButton!
@@ -791,6 +801,13 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     
     @IBOutlet var charityButton: UIButton!
     
+    var selectedCharity = String()
+     var selectedRow = Int()
+    
+    var selectedEIN = String()
+
+    // MARK: - CHARITY BUTTON ACTION
+    
     @IBAction func charityButtonAction(sender: AnyObject)
     {
         
@@ -801,6 +818,24 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         personalCauseLabel.textColor = UIColor.blackColor()
 
        CauseTypeId = "5"
+        
+        
+        let charity = self.storyboard?.instantiateViewControllerWithIdentifier("CharityViewController") as! CharityViewController
+        
+        charity.Delegate = self;
+        
+        
+        
+        charity.selectedCharity = selectedCharity
+        
+        charity.selectedRow = selectedRow
+        
+        charity.selectedEIN = selectedEIN
+        
+        
+        self.presentViewController(charity, animated: false, completion: nil)
+        
+        
         
     }
     
@@ -2357,6 +2392,8 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
                 "myContributions"  : myContributionsId,
                 "activityType"  : activityTypeId,
                 "causes"  : CauseTypeId,
+                 "charityName"  : selectedCharity,
+                  "ein"  : selectedEIN,
                 "startDate" : startDate!,
                 "endDate" : endDate!,
                 "maxAmount" : maxAmountContributionTxtField.text!,
@@ -2382,7 +2419,7 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
         else
         {
         
-        let postString = "userId=\(userId!)&challengeName=\(nameOfChallenge.text!)&description=\(descriptionText)&amountPerMile=\(amountPerMile)&betAmount=\(betAmount!)&activityType=\(activityTypeId)&causes=\(CauseTypeId)&startDate=\(startDate!)&endDate=\(endDate!)&myContributions=\(myContributionsId)&maxAmount=\(maxAmountContributionTxtField.text!)&anonymous=\(anonymous)";
+        let postString = "userId=\(userId!)&challengeName=\(nameOfChallenge.text!)&description=\(descriptionText)&amountPerMile=\(amountPerMile)&betAmount=\(betAmount!)&activityType=\(activityTypeId)&causes=\(CauseTypeId)&startDate=\(startDate!)&endDate=\(endDate!)&myContributions=\(myContributionsId)&maxAmount=\(maxAmountContributionTxtField.text!)&anonymous=\(anonymous)&charityName=\(selectedCharity)&ein=\(selectedEIN)";
         
         print(postString)
         
@@ -2828,6 +2865,21 @@ class CreateGroupAndCauseFitViewController: UIViewController,UIPickerViewDataSou
     
     override func viewDidAppear(animated: Bool)
     {
+        
+        print(selectedEIN)
+        
+        print(selectedCharity)
+        
+        if selectedCharity != ""
+        {
+        charityLabel.text = selectedCharity
+        }
+        else
+        {
+        charityLabel.text = "Charity"
+            
+        }
+        
          registerForKeyboardNotifications();
     }
     

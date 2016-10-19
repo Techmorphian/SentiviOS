@@ -10,6 +10,8 @@ import UIKit
 import CoreData
 import FBSDKCoreKit
 import GoogleMaps
+import Fabric
+import Crashlytics
 
 
 @UIApplicationMain
@@ -22,6 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     {
         // Override point for customization after application launch.
+        
+        
+           Fabric.with([Crashlytics.self])
         
         
         
@@ -377,8 +382,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter"))
 
         
-    NSNotificationCenter.defaultCenter().postNotificationName("UIApplicationDidBecomeActiveNotification", object: nil)
-
+//    NSNotificationCenter.defaultCenter().postNotificationName("UIApplicationDidBecomeActiveNotification", object: nil)
+//
         
         
         

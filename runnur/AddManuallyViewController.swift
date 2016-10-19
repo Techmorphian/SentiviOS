@@ -74,6 +74,8 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
        if addButton.currentTitle == "ADD"
        {
         
+       
+        
         if(Reachability.isConnectedToNetwork()==true )
         {
             
@@ -109,15 +111,16 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
             }
             
             
-            
+            EmailIds.removeAll();
             EmailIds.append(emailIDTextField.text!)
             
             
             //self.emailIDTextField.text = ""
             
             emailIDTextField.resignFirstResponder();
+            addButton.enabled = false
             addFriends();
-            
+           
             
         }
         else
@@ -252,14 +255,11 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
         }
         
         let  friendEmailIds  = cliendIds.joinWithSeparator("&")
-        print(friendEmailIds);
-        
-
         
         
         let postString = "userId=\(userId!)&\(friendEmailIds)";
         
-        print(postString)
+        print("AddManually: \(postString)")
         
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -395,7 +395,7 @@ class AddManuallyViewController: UIViewController,UITextFieldDelegate,NSURLSessi
                            // }
     
                                 
-                                
+                              self.addButton.enabled = true
                          self.presentingViewController.self!.presentingViewController!.dismissViewControllerAnimated(true, completion: nil);
 
                                 

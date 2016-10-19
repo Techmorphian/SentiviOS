@@ -522,7 +522,7 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
                 
                 let postString = "os=\(systemVersion)&make=\(make)&model=\(modelName)&userId=\(userId!)&friendUserId=\(self.friendListArray[index].friendId)";
                 
-                print(postString)
+                print("postString")
                 
                 
                 
@@ -832,8 +832,8 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         
         let postString = "userId=\(userId!)";
         
-        print(postString)
-        
+       
+        print("FriendLis:\(postString)")
         
         
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
@@ -1507,6 +1507,11 @@ class FriendsListViewController: UIViewController,UITableViewDataSource,UITableV
         searchTextField.leftView = paddingView1
         searchTextField.leftViewMode = UITextFieldViewMode.Always
         
+        let paddingView2 = UIView(frame: CGRectMake(self.searchTextField.frame.width-10, 0, 20, self.searchTextField.frame.height))
+        
+        searchTextField.rightView = paddingView2
+        searchTextField.rightViewMode = UITextFieldViewMode.Always
+
         
         //MARK:-  placeholder in text fileds
         

@@ -697,9 +697,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
             
             cell.noOfPlayers.hidden = true;
             
-          //  cell.ic_memCenterXConstraint.constant = 0
-            
-           // cell.playerLabelCenterXConstraint.constant = 0
+        
             
             cell.ic_memberImageView.image = UIImage(named: "ic_charity_gray")
             
@@ -843,7 +841,10 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "backFromPaymentFailed")
+        
         NSUserDefaults.standardUserDefaults().setBool(false, forKey: "backFromPayment")
+
 
         
         if indexPath.section == 0

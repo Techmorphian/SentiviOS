@@ -13,6 +13,9 @@ import CoreBluetooth
 
 
 
+
+
+
 class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentralManagerDelegate*/
 {
     var myManager:CLLocationManager!
@@ -233,49 +236,42 @@ class HomeViewController: UIViewController,CLLocationManagerDelegate/*,CBCentral
     
     
     
-    func applicationDidBecomeActive(notification: NSNotification)
-    {
-        
-          print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter"))       
-        
-    }
-
-    
-    
-    
+//    
 //    @IBAction func crashButtonTapped(sender: AnyObject) {
 //        Crashlytics.sharedInstance().crash()
 //    }
 //
+//    
     
+
     var lat = String();
     var long = String();
     var btManager = CBCentralManager()
+    
     override func viewDidLoad()
     {
         super.viewDidLoad();
         
-        self.call();
-//        
+       // self.call();
+        
 //        let button = UIButton(type: UIButtonType.RoundedRect)
 //        button.frame = CGRectMake(20, 50, 100, 30)
 //        button.setTitle("Crash", forState: UIControlState.Normal)
 //        button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 //        view.addSubview(button)
-
-        
-         print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter"))
+//        
+//         print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter"))
         
         ////// push notification
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HomeViewController.methodOfReceivedNotification(_:)), name:"showAlert", object: nil)
         
         
-        //// addObserver for applicationDidBecomeActive (every time refresh)
-        NSNotificationCenter.defaultCenter().addObserver(self,selector: #selector(UIApplicationDelegate.applicationDidBecomeActive(_:)),
-                                                         name: "UIApplicationDidBecomeActiveNotification",
-                                                         object: nil)
-
+//        //// addObserver for applicationDidBecomeActive (every time refresh)
+//        NSNotificationCenter.defaultCenter().addObserver(self,selector: #selector(UIApplicationDelegate.applicationDidBecomeActive(_:)),
+//                                                         name: "UIApplicationDidBecomeActiveNotification",
+//                                                         object: nil)
+//
         
         
         gps.layer.shadowOpacity=0.4;

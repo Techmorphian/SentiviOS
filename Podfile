@@ -9,6 +9,10 @@ pod 'Charts'
 pod 'Kingfisher', '~> 2.4'
 pod 'Google/SignIn'
 pod 'OneSignal'
+
+pod 'Fabric'
+pod 'Crashlytics'
+
   # Pods for runnur
 
 end
