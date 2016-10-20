@@ -108,15 +108,16 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     }
     //----------------------------------stop activity and timer--------------------------------------
     @IBAction func stop(sender: AnyObject) {
+        print("Last Loctaion \(loc[0].coordinate.latitude) \(loc[0].coordinate.longitude)");
         if self.stop.titleLabel?.text == "STOP"{
             if NSUserDefaults.standardUserDefaults().boolForKey("voiceFeedback") == true{
-                self.audioType(2);
+                self.speakText(2);
             }
             
             timer.invalidate()
             // lastLocation =
             self.myManager.stopUpdatingLocation();
-            let london = GMSMarker(position: (loc.last?.coordinate)!)
+            let london = GMSMarker(position: (loc[0].coordinate))
             london.icon = UIImage(named: "im_stop_marker")
             london.map = mapView
             
@@ -316,9 +317,29 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                                 print("RunObject: ", item["userId"])//-------------getting userId
                                 var error:NSError?
                                 let sasQueryString = item["sasQueryString"]!  //-----------------getting sasString------------------
-                                let cred = AZSStorageCredentials(SASToken: sasQueryString as! String); //------StorageCredential get using saa
+                                
+                                
+                                
+                               let connn = item["rundetailcontainerblob"]! as! String
                                 let blogName = item["RunDetailResource"]! as! String//-------blogName
                                 let UriBlob = item["Uri"]!;//----------uri
+                                
+                         
+                                if NSJSONSerialization.isValidJSONObject(newItem){
+                                    let jsonData = try! NSJSONSerialization.dataWithJSONObject([newItem], options: NSJSONWritingOptions());
+                                    let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
+                                     DownloadFromBlob.uploadBlobToContainer(connn, blobName: blogName, textToUpload: jsonString);
+                                }
+                                
+                               
+                                
+                                
+                                
+                                
+  /*
+                                
+                                let cred = AZSStorageCredentials(SASToken: sasQueryString as! String); //------StorageCredential get using saa
+                                
                                 //let uri = UriBlob.stringByReplacingOccurrencesOfString("http", withString: "https")
                                 let UriForBlob:NSURL = NSURL(string: UriBlob as! String)!
                                 print(UriForBlob)
@@ -368,6 +389,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                                         print("success")
                                     }
                                 });
+                                */
                                 
 //                                blobFromSASCredential.uploadFromText("{lat:251652,long:2323424}", completionHandler: { (error) in
 //                                    if error != nil{
@@ -481,7 +503,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     @IBAction func pause(sender: AnyObject) {
         if self.pause.titleLabel?.text == "PAUSE"{
             if NSUserDefaults.standardUserDefaults().boolForKey("voiceFeedback") == true{
-                self.audioType(4);
+                self.speakText(4);
             }
             //startTime = currentTime;
             timer.invalidate()
@@ -497,7 +519,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             
         }else{
             if NSUserDefaults.standardUserDefaults().boolForKey("voiceFeedback") == true{
-                self.audioType(5);
+                self.speakText(5);
             }
             q = 1;
             self.stop.setTitle("STOP", forState: .Normal);
@@ -516,6 +538,10 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     var minutes = UInt8();
     var seconds = UInt8();
     var elapsedTimeInMiliSecds = Double();
+    var strMinutes = String();
+    var strSeconds = String();
+    var strHours = String();
+    
     func updateTime() {
         endTime = NSDate();
         currentTime = NSDate.timeIntervalSinceReferenceDate()
@@ -532,10 +558,10 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         elapsedTime -= (NSTimeInterval(hours)*3600)
         //  let fraction = UInt8(elapsedTime * 100)
         //add the leading zero for minutes, seconds and millseconds and store them as string constants
-        let strMinutes = String(format: "%02d", minutes)
-        let strSeconds = String(format: "%02d", seconds)
+         strMinutes = String(format: "%02d", minutes)
+         strSeconds = String(format: "%02d", seconds)
         // let strFraction = String(format: "%02d", fraction)
-        let strHours = String(format: "%02d", hours)
+         strHours = String(format: "%02d", hours)
         //concatenate minuets, seconds and milliseconds as assign it to the UILabel
         duration.text = "\(strHours):\(strMinutes):\(strSeconds)"
         
@@ -559,63 +585,6 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     
     //   MARK:- Map
     
-    // --------------------------- calculate spped,pace --------------------------------
-    func calculateDistanceSpeed(lastLocation:CLLocation)  {
-        let kilometers: CLLocationDistance = firstLocation.distanceFromLocation(lastLocation) / 1000.0
-        distanceInMi =  kilometers * 0.62137;
-        distance.text = String(format: "%.2f", distanceInMi);
-        if (lastLocation.speed / 0.44704) < 0
-        {
-            speed.text = "0.0"
-            self.avgspeed = 0.0;
-        }else{
-            //  1609.344
-            speed.text = String(format: "%.2f", lastLocation.speed / 0.44704);
-            if distanceInMi/elapsedTime < 0
-            {
-                self.avgspeed = 0.00;
-            }else{
-                //        Double(speed.text!)!/
-                self.avgspeed = (distanceInMi)/(elapsedTime);
-            }
-        }
-        endDate = NSDate();
-        // (Double(round(endDate.timeIntervalSinceDate(startDate))) / 1000) / 60) Double(String(format: "%.2f", distanceInMi))!
-        self.avgpace = (((round(endDate.timeIntervalSinceDate(startDate))) / 1000) / 60)/(distanceInMi);
-        self.avgpace = paceInMinutes(Double(minutes), seconds:Double(seconds), distance: distanceInMi);
-        calculateCaloriesBurned()
-        
-        
-        if String(format:"%.1f", caloriesburned) == "nan"
-        {
-            caloriesburned = 0.0;
-        }
-        //   String(format:"%.2f", round(avgspeed * 1.60934 * 100.0) / 100.0);
-        //        distanceInMi / round(endDate.timeIntervalSinceDate(startDate))
-        avgSpeed.text = String(format:"%.2f", self.avgspeed);
-        calories.text = String(format:"%d", Int(caloriesburned));
-        
-        if (avgpace < 100) {
-            if avgpace.isInfinite{
-                avgPace.text = "" //currentstatus
-            }else{
-                avgPace.text = String(format: "%.2f", round(avgpace * 0.621371 * 100.0 / 100.0)) //currentstatus
-            }
-            
-            
-        } else {
-            avgPace.text = "0.00"
-        }
-        
-        //        if (avgpace < 100) {
-        //            avgPace.text = String(format: "%.2f", round(avgpace * 100.0 / 100.0))
-        //
-        //        } else {
-        //            avgPace.text = String(format: "%s", "0.00")
-        //        }
-        
-        
-    }
     
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
@@ -710,325 +679,6 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     var mileMarker = [CLLocation]()
     var splitTime = [Double]()
     
-    func updatedLocation(myManager:CLLocationManager)
-    {
-        self.myManager=myManager
-        
-        
-        
-        let locValue:CLLocationCoordinate2D = myManager.location!.coordinate
-        
-        accuracy = myManager.location!.horizontalAccuracy;
-        lat = (myManager.location?.coordinate.latitude)!;
-        long = (myManager.location?.coordinate.longitude)!;
-        altitude = myManager.location!.altitude;
-        
-        //update GPS Icon
-        gpsIcon();
-        
-        if first == false
-            //        if (r < 1 && mapView != nil)
-        {
-            dispatch_async(dispatch_get_main_queue(), {
-                let camera = GMSCameraPosition.cameraWithLatitude(locValue.latitude, longitude: locValue.longitude, zoom: 16.0)
-                self.mapView.camera = camera
-                self.firstLocation = myManager.location!;
-                self.first = true;
-                self.mapView.myLocationEnabled = true
-                let london = GMSMarker(position: CLLocationCoordinate2D(latitude:locValue.latitude, longitude: locValue.longitude))
-                london.icon = UIImage(named: "im_start_marker")
-                london.map = self.mapView
-            })
-            if Reachability.isConnectedToNetwork() == true
-            {
-             getWeatherData("http://api.openweathermap.org/data/2.5/weather?lat=\(myManager.location!.coordinate.latitude)&lon=\(myManager.location!.coordinate.longitude)")
-            
-            self.getAddressFromLatLong(locValue.latitude, longitude: locValue.longitude);
-            }
-            //r+1;
-        }
-        
-        
-//        do not zoom unless user zoom in
-  // this method is for auto pause to start again activity track
-        
-        if (b == 1) {
-            if ((myManager.location!.speed * 2.23694) > 1.00){
-                count+1;
-            }else {
-                count = 0;
-            }
-            if (count > 6) {
-                audioType(3);
-                b = 0;
-                count = 0;
-//                TODO:- related to pause -- total pause time
-                //                pause_end = (double) System.nanoTime() / 1.00E9;
-                //
-                //                //Calculate the total paused tme
-                //                double pauseDiffTime = pause_end - pause_start;
-                //
-                //                splitPausedTime = splitPausedTime + pauseDiffTime;   //Calculate total pause time within each mile marker spacing
-                //                totalPausedTime = totalPausedTime + pauseDiffTime;   //Calculate the total pause time during the entire activity
-                //                splitIntervalPausedTime = splitIntervalPausedTime + pauseDiffTime;   //Calculate total pause time within each interval voicecoach spacing
-                //                showStopButton();
-            }
-        }
-        // This section is to provide auto feedback to the user to inform to restart the activity if forgotten after manual pause
-        if (q == 0 && c == 1) {
-            
-            var pauseFeedback = [Double]();
-            
-            
-            let kilometers: CLLocationDistance = firstLocation.distanceFromLocation(myManager.location!) / 1000.0
-            distanceInMi =  kilometers * 0.62137;
-            let travelledDistance = pauseFeedback[0];
-            if (travelledDistance > 400 && pausedCount == 0) {
-                audioType(5);
-                pausedCount+1;
-            }
-            if (travelledDistance > 600 && pausedCount == 1) {
-                audioType(5);
-                pausedCount+1;
-            }
-        }
-        
-        /*
-         * This if statement starts the workout tracking only after user presses
-         * the start button and wants to continue with the workout. If accuracy
-         * of your current location is greater than 12 meters then tracking does
-         * not record distance since accuracy is low. q variable is used to
-         * disable and enable tracking on map. If workout has started q is set
-         * to 1 thus enabling to map route. q variable is used to start and stop
-         * tracking when start, pause or stop are pressed.
-         */
-        
-       
-       // dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), {
-            if (self.q == 1) {
-                
-
-                if (self.turnOnActivity) {
-// ------------------- TODO:- Check where this variable used and implement that -----------------------------
-                    callMotionActivity();
-                    self.turnOnActivity = false;
-                }
-//  TODO:- In backround needs to update activity Data
-                if (self.accuracy < 40) {
-                    var toLong = Double();
-                    var toLat=Double();
-                    //Get latitude and longitude for previous location
-                    var fromLong = Double();
-                    var fromLat = Double();
-                   // self.lastLocation = self.myManager.location!;
-                    
-                    if self.lastLocation == ""{
-                        self.lastLocation = self.myManager.location!;
-                    }
-                    if (self.maCount <= 3) {
-                        
-                        self.avglastLat.append(self.lastLocation.coordinate.latitude);
-                        self.addElevation.append(self.altitude);
-                        self.avgthisLong.append(self.long);
-                        self.avgthisLat.append(self.lat);
-                        self.avglastLong.append(self.lastLocation.coordinate.longitude);
-                        
-                        
-//                        self.avglastLong[self.maCount] = self.lastLocation.coordinate.longitude;
-//                        self.avglastLat[self.maCount] = self.lastLocation.coordinate.latitude;
-//                        self.addElevation[self.maCount] = self.altitude;
-//                        self.avgthisLong[self.maCount] = self.long;
-//                        self.avgthisLat[self.maCount] = self.lat;
-                        
-                        self.maCount = self.maCount+1;
-                    } else {
-                        
-//   TODO:-                 double cur_time = (double) System.nanoTime() / (1.00E9);
-                        self.cur_time = self.currentTime;
-                        
-                        var lastlat:Double = 0;
-                        var lastlon:Double = 0;
-                        var thislat:Double = 0;
-                        var thislon:Double = 0;
-                        var alt:Double = 0;
-                        print(self.maCount);
-                    
-                        for i in 0 ..< self.maCount
-                        {
-                            lastlat = lastlat + self.avglastLat[i];
-                            lastlon = lastlon + self.avglastLong[i];
-                            thislat = thislat + self.avgthisLat[i];
-                            thislon = thislon + self.avgthisLong[i];
-                            alt = alt + self.addElevation[i];
-                        }
-                        
-                        toLong = thislon / Double(self.maCount);
-                        toLat = thislat / Double(self.maCount);
-                        fromLong = lastlon / Double(self.maCount);
-                        fromLat = lastlon / Double(self.maCount);
-                        
-                        print("\(toLong)\(toLat)\(fromLong)\(fromLat)");
-                        print("\(thislon)\(thislat)\(lastlon)\(lastlon)")
-                        print(self.maCount)
-                        
-                        //Calculate distance
-                        self.dis = self.dis + self.calculateDistance(fromLong, fromLat: fromLat, toLong: toLong, toLat: toLat);
-                        //                  TODO:- graphDistance
-                        if (self.graphDistance.count < 1 && self.dis > 0.4) {
-                            self.dis = 0.0;
-                        }
-                        
-                        self.lastLocationloc = self.lastLocation;
-                        
-                        
-                        //Add marker at every one mile or km marker
-                        var markerDistance = Double();
-                        var absolute:Double = 0;
-                        var temp=Double();
-                        if (self.measuringUnits == 1) {
-                            temp = self.dis;
-                            markerDistance = (self.dis + 0.5);                //Round to nearest integer
-                            absolute = abs(self.dis - markerDistance);     //Subtract actual distance from nearest integer to get value between 0.00 to 0.99
-                        } else {
-                            let kmDis:Double = self.dis * 1.60934;
-                            markerDistance = kmDis + 0.5;                //Round to nearest integer
-                            absolute = abs(kmDis - markerDistance);
-                        }
-                        
-                        
-                        if ((absolute >= 0.95 || absolute <= 0.05) && (temp > 0.5) && (self.mileMarkerCount == 0) && (markerDistance != self.repeatDistance))
-                        {
-                            self.cur_time = self.currentTime;
-                            var diffTime = self.cur_time - self.prev_time - self.splitIntervalPausedTime;
-                            
-                            if NSUserDefaults.standardUserDefaults().integerForKey("measuringUnits") == 1
-                            {
-                                self.splitSpeed = (2.23694) * (1609.34 / (diffTime));
-                                self.splitPace = (60.0 / self.splitSpeed);
-                                
-                            }else{
-                                
-                                self.splitSpeed = (3.6) * (1000 / (diffTime));
-                                self.splitPace = (60.0 / self.splitSpeed);
-                                var kmDis = self.dis * 1.60934;
-                            }
-                            
-                        
-                            self.mileMarker.append(self.myManager.location!);
-                            self.splitTime.append(self.splitSpeed)
-                            
-                            self.prev_time = self.cur_time;
-                            self.mileMarkerCount+=1;
-                            self.repeatDistance = markerDistance;
-                            //reset pause start and end times
-//                            self.pause_end = 0;
-//                            self.pause_start = 0;
-//                            self.splitPausedTime = 0;
-                        }else if (self.mileMarkerCount >= 1 && self.mileMarkerCount <= 7) {
-                           self.mileMarkerCount = self.mileMarkerCount + 1;
-                        } else {
-                            self.mileMarkerCount = 0;
-                        }
-                        
-                        
-                        let loc_distance = (self.calculateDistance(fromLong, fromLat: fromLat, toLong: toLong, toLat: toLat) * 1609.34);
-                        let time = self.cur_time - self.prev_time;
-                        
-                        self.calSpeed = (loc_distance / (time));
-                        
-                        //Get pace and altitude
-                        self.calSpeed = (self.calSpeed * 2.23694); // speed in mph
-                        
-                        //If speed below this value then record it as 0
-                        //Avoid adding miscalculated speed for a location error during start of the activity
-                        if (self.calSpeed < 0.5 || (self.graphSpeed.count < 1 && self.calSpeed > 50)) {
-                            self.pace = 120.0;
-                            self.calSpeed = 0;
-                        } else {
-                            self.pace = (60.0 / self.calSpeed);
-                        }
-                        
-                        // THis if statement is to stop adding data to graph charts in an event person is stopped at one location for a longer period
-                        if (self.calSpeed < 0.6) {
-                            self.repeatDistance1+1;
-                        } else {
-                            self.repeatDistance1 = 0;
-                        }
-                        
-                        //Add points for generating graphs
-                        if (self.repeatDistance1 < 1) {
-                           // trackpolyline.add(thisLatLng);          //Add latlng information to store the info in server
-                            self.graphPace.append(self.pace);
-                            self.graphSpeed.append(round(self.calSpeed * 100.0) / 100.0);
-                            self.graphDistance.append(self.dis);
-                            self.timeLog.append(self.elapsedTimeInMiliSecds);
-                            
-                            //                        if (BLEConnect & mConnected)
-                            //                        graphHR.add(Integer.parseInt(HR));
-                            //                        altitude = alt / maCount;
-                            if (self.altitude < (-25)) {
-                                self.Altitudes.append(Int((-25 - Double(-self.EGM96_US)) * 3.28084));
-                                self.calculateElevation(-25);
-                            } else {
-                                self.Altitudes.append(Int((self.altitude - Double(-self.EGM96_US)) * 3.28084));
-                                
-                                self.calculateElevation(Int(self.altitude));
-                            }
-                        }
-                        
-                        
-                        
-                        self.avglastLat.removeAll();
-                        self.addElevation.removeAll();
-                        self.avgthisLong.removeAll();
-                        self.avgthisLat.removeAll();
-                        self.avglastLong.removeAll();
-                        
-                        
-                        self.maCount = 0;
-                        self.prev_time = self.cur_time;
-                        
-                        
-                        self.calculateCaloriesBurned();
-                        if (self.autoPause) {
-                            
-                            if (self.calSpeed < 0.8) {
-                                self.count+1;
-                            } else {
-                                self.count = 0;
-                            }
-                            
-                            if (self.count >= 2) {
-                                //  forcePause();
-                            }
-                        }
-
-                        dispatch_async(dispatch_get_main_queue(),{
-                            //Update UI
-                            self.thisLatLng = CLLocationCoordinate2D(latitude: toLat, longitude: toLong);
-                            self.path.addCoordinate(self.thisLatLng);
-                            
-                            let polyline = GMSPolyline(path: self.path)
-                            polyline.strokeColor = UIColor.redColor();
-                            polyline.strokeWidth = 1
-                            polyline.geodesic = true
-                            polyline.map = self.mapView
-                            
-                            let zoom1 = self.mapView.camera.zoom;
-                            let camera = GMSCameraPosition.cameraWithLatitude(locValue.latitude, longitude: locValue.longitude, zoom: zoom1)
-                            self.mapView.camera = camera
-                            
-                            self.currentstatus();
-                        })
-                    }
-                    
-                }
-                
-                
-            }
-      //  })
-        
-    }
     
     //  MARK:- location Variables
     
@@ -1073,10 +723,10 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     }
     
 // MARK:- Location Manager location update
-//   ################################### using this vars for avg forst threee lat long ####################################
+//   ################################### using this vars for avg forst three lat long ####################################
     var latsForAvg = [Double]();
     var laongsForAvg = [Double]();;
-    
+    var polyline = GMSPolyline();
     
     
     
@@ -1085,28 +735,27 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         
-        self.measuringUnits = NSUserDefaults.standardUserDefaults().integerForKey("measuringUnits")
+        self.measuringUnits = NSUserDefaults.standardUserDefaults().integerForKey("MeasuringUnits")
         
         loc = locations;
         accuracy = myManager.location!.horizontalAccuracy;
         lat = (myManager.location?.coordinate.latitude)!;
         long = (myManager.location?.coordinate.longitude)!;
         altitude = myManager.location!.altitude;
-
+        gpsIcon();
         
-// ------------------ On Location update Calculating Elapsed Time ---------------------------
+        // ------------------ On Location update Calculating Elapsed Time ---------------------------
         let locValue:CLLocationCoordinate2D = myManager.location!.coordinate
         let time = self.duration.text?.componentsSeparatedByString(":");
         let hrs = Double(time![0])!*3600000;
         let mm = Double(time![1])!*60000;
         let ss = Double(time![2])!*1000;
         elapsedTimeInMiliSecds = hrs + mm + ss
-        //  updatedLocation(manager);
-    
         
-//------------------- If Location update for the very first time then get the address and put start location marker -----------------
+        //------------------- If Location update for the very first time then get the address and put start location marker -----------------
         if fromPlanRoute == false{
             if first == false{
+                print("start Loctaion \(loc[0].coordinate.latitude) \(loc[0].coordinate.longitude)");
                 self.lastLocation = CLLocation(latitude: loc[0].coordinate.latitude, longitude: loc[0].coordinate.longitude)
                 dispatch_async(dispatch_get_main_queue(), {
                     let camera = GMSCameraPosition.cameraWithLatitude(locValue.latitude, longitude: locValue.longitude, zoom: 16.0);
@@ -1128,474 +777,258 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                 //  19.069761, 72.829857
             }
         }
-//---------------------- Take map to updated Location --------------------------
+        //---------------------- Take map to updated Location --------------------------
         self.mapView.animateToLocation(CLLocationCoordinate2D(latitude:locValue.latitude, longitude: locValue.longitude))
         
-        
-        
-//---------------------- calculating Accuracy -----------------------------------
-        
-        
-  //  print("horizontalAccuracy\(locations[0].horizontalAccuracy)  verticalAccuracy\(locations[0].verticalAccuracy)")
-        
-//************************************  work on this
-//        accuracy = locations[0].horizontalAccuracy //+ locations[0].verticalAccuracy
-//        distanceInMi = locations[0].distanceFromLocation(lastLocation)
-//        
-//        self.dis = distanceInMi * 1609.34;
-//        let times = currentTime - prev_time;
-//        
-//        self.calSpeed = self.dis/times;
-        
-        
-        
-//---------------------- Calculate Altitude and Elevation  -------------------------------------  *************** do later
-//        altitude = (locations[0].altitude);
-//        if (altitude < (-25)) {
-//            Altitudes.append(Int((-25 - Double(-EGM96_US)) * 3.28084));
-//            calculateElevation(-25);
-//        } else {
-//            Altitudes.append(Int((altitude - Double(-EGM96_US)) * 3.28084));
-//            calculateElevation(Int(altitude));
-//        }
-        
-// ---------------------- On Every Location update check gps accuracy and change th gps icon --------------------
+        // ---------------------- On Every Location update check gps accuracy and change th gps icon --------------------
         loc = locations;
-        // calculateDistanceSpeed(locations[0]);
-        if !CLLocationManager.locationServicesEnabled()
-        {
-            gpsImg.image = UIImage(named: "ic_gps_none");
-        }else{
-            if (locations[0].horizontalAccuracy < 0)
-            {
-                gpsImg.image = UIImage(named: "ic_gps_none");
-                // No Signal
-            }
-            else if (locations[0].horizontalAccuracy > 163)
-            {
-                gpsImg.image = UIImage(named: "ic_gps_low_range");
-                // Poor Signal
-            }
-            else if (locations[0].horizontalAccuracy > 48)
-            {
-                
-                gpsImg.image = UIImage(named: "ic_gps_med_range");
-                // Average Signal
-            }
-            else
-            {
-                gpsImg.image = UIImage(named: "ic_gps_full_range");
-                // Full Signal
-            }
-        }
-      //  self.dis = locations[0].distanceFromLocation(self.lastLocation);
-       // self.currentstatus();
-
         
         if (self.turnOnActivity) {
             // ------------------- TODO:- Check where this variable used and implement that -----------------------------
             callMotionActivity();
             self.turnOnActivity = false;
         }
-
-        
-       if (self.accuracy < 40) {
-
-        
-        //  Avg of lat long
-        
-        var toLong = Double();
-        var toLat=Double();
-        //  Get latitude and longitude for previous location
-        var fromLong = Double();
-        var fromLat = Double();
-        
-        if self.lastLocation == nil
-        {
-            self.lastLocation = CLLocation(latitude: loc[0].coordinate.latitude, longitude: loc[0].coordinate.longitude)
-        }
-
         
         
-        if (self.maCount <= 3) {
+        if (self.accuracy < 40) {
             
-            self.avglastLat.append(self.lastLocation.coordinate.latitude);
-            self.addElevation.append(self.altitude);
-            self.avgthisLong.append(long);
-            self.avgthisLat.append(lat);
-            self.avglastLong.append(self.lastLocation.coordinate.longitude);
-            self.maCount = self.maCount+1;
-        } else {
-            self.endDate = NSDate();
-            let interval = endDate.timeIntervalSinceDate(startDate);
-            let ti = round(interval)
-            self.cur_time = Double(ti % 60);
-           // afterTime = CFAbsoluteTimeGetCurrent();
             
-            self.cur_time = afterTime - beforeTime;
+            //  Avg of lat long
             
-            var lastlat:Double = 0;
-            var lastlon:Double = 0;
-            var thislat:Double = 0;
-            var thislon:Double = 0;
-            var alt:Double = 0;
-//            print(self.maCount);
+            var toLong = Double();
+            var toLat=Double();
+            //  Get latitude and longitude for previous location
+            var fromLong = Double();
+            var fromLat = Double();
             
-            for i in 0 ..< self.maCount
+            if self.lastLocation == nil
             {
-                lastlat = lastlat + self.avglastLat[i];
-                lastlon = lastlon + self.avglastLong[i];
-                thislat = thislat + self.avgthisLat[i];
-                thislon = thislon + self.avgthisLong[i];
-                alt = alt + self.addElevation[i];
+                self.lastLocation = CLLocation(latitude: loc[0].coordinate.latitude, longitude: loc[0].coordinate.longitude)
             }
             
-            toLong = thislon / Double(self.maCount);
-            toLat = thislat / Double(self.maCount);
-            fromLong = lastlon / Double(self.maCount);
-            fromLat = lastlat / Double(self.maCount);
-            
-//            print("\(toLong)  \(toLat)   \(fromLong)   \(fromLat)");
-//            print("\(thislon)   \(thislat)   \(lastlon)   \(lastlon)");
-//            print(self.maCount);
             
             
-            self.dis = self.dis + self.calculateDistance(fromLong, fromLat: fromLat, toLong: toLong, toLat: toLat);
-            
-            if (graphDistance.count < 1 && dis > 0.4) {
-                dis = 0.0;
-            }
-            
-//            thisLatLong is changed to the "loc"
-            
-            self.lastLocation = CLLocation(latitude: toLat, longitude: toLong)
-            
-            //Add marker at every one mile or km marker
-            var markerDistance = Double();
-            var absolute:Double = 0;
-            var temp=Double();
-            if (NSUserDefaults.standardUserDefaults().integerForKey("measuringUnits") == 1) {
-                temp = self.dis;
-                markerDistance = (self.dis + 0.5);                //Round to nearest integer
-                absolute = abs(self.dis - markerDistance);     //Subtract actual distance from nearest integer to get value between 0.00 to 0.99
+            if (self.maCount <= 3) {
+                
+                self.avglastLat.append(self.lastLocation.coordinate.latitude);
+                self.addElevation.append(self.altitude);
+                self.avgthisLong.append(long);
+                self.avgthisLat.append(lat);
+                self.avglastLong.append(self.lastLocation.coordinate.longitude);
+                self.maCount = self.maCount+1;
             } else {
-                let kmDis:Double = self.dis * 1.60934;
-                markerDistance = kmDis + 0.5;                //Round to nearest integer
-                absolute = abs(kmDis - markerDistance);
-            }
-
-            
-            if ((absolute >= 0.95 || absolute <= 0.05) && (temp > 0.5) && (self.mileMarkerCount == 0) && (markerDistance != self.repeatDistance))
-            {
                 self.endDate = NSDate();
-                
-//    get time
-                
-                let interval = endDate.timeIntervalSinceDate(startDate);
-                let ti = NSInteger(interval)
+                let interval = endDate.timeIntervalSince1970
+                // let interval = endDate.timeIntervalSinceDate(startDate);
+                let ti = round(interval)
                 self.cur_time = Double(ti % 60);
-        
+                // afterTime = CFAbsoluteTimeGetCurrent();
                 
-              //  self.cur_time = self.currentTime;
-                let diffTime = self.cur_time - self.prev_time - self.splitIntervalPausedTime;
+                // self.cur_time = afterTime - beforeTime;
                 
-                if NSUserDefaults.standardUserDefaults().integerForKey("measuringUnits") == 1
+                var lastlat:Double = 0;
+                var lastlon:Double = 0;
+                var thislat:Double = 0;
+                var thislon:Double = 0;
+                var alt:Double = 0;
+                //            print(self.maCount);
+                
+                for i in 0 ..< self.maCount
                 {
-                    self.splitSpeed = (2.23694) * (1609.34 / (diffTime));
-                    self.splitPace = (60.0 / self.splitSpeed);
-                    
-                }else{
-                    
-                    self.splitSpeed = (3.6) * (1000 / (diffTime));
-                    self.splitPace = (60.0 / self.splitSpeed);
-                  ///  var kmDis = self.dis * 1.60934;  ------------------>>> In andrid they are using this update the marker icon size and polyline
+                    lastlat = lastlat + self.avglastLat[i];
+                    lastlon = lastlon + self.avglastLong[i];
+                    thislat = thislat + self.avgthisLat[i];
+                    thislon = thislon + self.avgthisLong[i];
+                    alt = alt + self.addElevation[i];
+                }
+                
+                toLong = thislon / Double(self.maCount);
+                toLat = thislat / Double(self.maCount);
+                fromLong = lastlon / Double(self.maCount);
+                fromLat = lastlat / Double(self.maCount);
+                
+                //            print("\(toLong)  \(toLat)   \(fromLong)   \(fromLat)");
+                //            print("\(thislon)   \(thislat)   \(lastlon)   \(lastlon)");
+                //            print(self.maCount);
+                
+                
+                self.dis = self.dis + self.calculateDistance(fromLong, fromLat: fromLat, toLong: toLong, toLat: toLat);
+                
+                if (graphDistance.count < 1 && dis > 0.4) {
+                    dis = 0.0;
+                }
+                
+                //            thisLatLong is changed to the "loc"
+                self.thisLatLng = CLLocationCoordinate2D(latitude: toLat, longitude: toLong)
+                
+                self.lastLocation = CLLocation(latitude: toLat, longitude: toLong)
+                
+                //Add marker at every one mile or km marker
+                var markerDistance = Double();
+                var absolute:Double = 0;
+                var temp=Double();
+                if (NSUserDefaults.standardUserDefaults().integerForKey("MeasuringUnits") == 1) {
+                    temp = self.dis;
+                    markerDistance = (self.dis + 0.5);                //Round to nearest integer
+                    absolute = abs(self.dis - markerDistance);     //Subtract actual distance from nearest integer to get value between 0.00 to 0.99
+                } else {
+                    let kmDis:Double = self.dis * 1.60934;
+                    markerDistance = kmDis + 0.5;                //Round to nearest integer
+                    absolute = abs(kmDis - markerDistance);
                 }
                 
                 
-                self.mileMarker.append(self.myManager.location!);
-                self.splitTime.append(self.splitSpeed)
+                if ((absolute >= 0.95 || absolute <= 0.05) && (temp > 0.5) && (self.mileMarkerCount == 0) && (markerDistance != self.repeatDistance))
+                {
+                    
+                    
+                    //    get time
+                    
+                    self.endDate = NSDate();
+                    let interval = endDate.timeIntervalSince1970
+                    // let interval = endDate.timeIntervalSinceDate(startDate);
+                    let ti = round(interval)
+                    self.cur_time = Double(ti % 60);
+                    
+                    
+                    //  self.cur_time = self.currentTime;
+                    let diffTime = self.cur_time - self.prev_time - self.splitIntervalPausedTime;
+                    
+                    if NSUserDefaults.standardUserDefaults().integerForKey("MeasuringUnits") == 1
+                    {
+                        self.splitSpeed = (2.23694) * (1609.34 / (diffTime));
+                        self.splitPace = (60.0 / self.splitSpeed);
+                        
+                    }else{
+                        
+                        self.splitSpeed = (3.6) * (1000 / (diffTime));
+                        self.splitPace = (60.0 / self.splitSpeed);
+                        ///  var kmDis = self.dis * 1.60934;  ------------------>>> In andrid they are using this update the marker icon size and polyline
+                    }
+                    
+                    
+                    self.mileMarker.append(self.myManager.location!);
+                    self.splitTime.append(self.splitSpeed)
+                    
+                    self.prev_time = self.cur_time;
+                    self.mileMarkerCount+=1;
+                    self.repeatDistance = markerDistance;
+                    //reset pause start and end times
+                    
+                    //                self.pause_end = 0;
+                    //                self.pause_start = 0;
+                    //                self.splitPausedTime = 0;
+                    
+                    
+                }else if (self.mileMarkerCount >= 1 && self.mileMarkerCount <= 7) {
+                    self.mileMarkerCount = self.mileMarkerCount + 1;
+                } else {
+                    self.mileMarkerCount = 0;
+                }
                 
-                self.prev_time = self.cur_time;
-                self.mileMarkerCount+=1;
-                self.repeatDistance = markerDistance;
-                //reset pause start and end times
                 
-//                self.pause_end = 0;
-//                self.pause_start = 0;
-//                self.splitPausedTime = 0;
+                let loc_distance = (self.calculateDistance(fromLong, fromLat: fromLat, toLong: toLong, toLat: toLat) * 1609.34);
+                
+                let time = self.cur_time - self.prev_time;
+                
+                self.calSpeed = (loc_distance / (time));
+                
+                //Get pace and altitude
+                self.calSpeed = (self.calSpeed * 2.23694); // speed in mph
                 
                 
-            }else if (self.mileMarkerCount >= 1 && self.mileMarkerCount <= 7) {
-                self.mileMarkerCount = self.mileMarkerCount + 1;
-            } else {
-                self.mileMarkerCount = 0;
+                
+                //If speed below this value then record it as 0
+                //Avoid adding miscalculated speed for a location error during start of the activity
+                if (self.calSpeed < 0.5 || (self.graphSpeed.count < 1 && self.calSpeed > 50)) {
+                    self.pace = 120.0;
+                    self.calSpeed = 0;
+                } else {
+                    self.pace = (60.0 / self.calSpeed);
+                }
+                
+                // THis if statement is to stop adding data to graph charts in an event person is stopped at one location for a longer period
+                if (self.calSpeed < 0.6) {
+                    self.repeatDistance1+1;
+                } else {
+                    self.repeatDistance1 = 0;
+                }
+                
+                //Add points for generating graphs
+                if (self.repeatDistance1 < 1) {
+                    self.trackPolyline.append(["latitude":self.thisLatLng.latitude,"longitude":self.thisLatLng.longitude]);  //Add latlng information to store the info in server
+                    
+                    self.graphPace.append(self.pace);
+                    self.graphSpeed.append(round(self.calSpeed * 100.0) / 100.0);
+                    self.graphDistance.append(self.dis);
+                    self.timeLog.append(self.elapsedTimeInMiliSecds);
+                    
+                    //                        if (BLEConnect & mConnected)
+                    //                        graphHR.add(Integer.parseInt(HR));
+                    //                        altitude = alt / maCount;
+                    if (self.altitude < (-25)) {
+                        self.Altitudes.append(Int((-25 - Double(-self.EGM96_US)) * 3.28084));
+                        self.calculateElevation(-25);
+                    } else {
+                        self.Altitudes.append(Int((self.altitude - Double(-self.EGM96_US)) * 3.28084));
+                        
+                        self.calculateElevation(Int(self.altitude));
+                    }
+                }
+                
+                self.path.addCoordinate(CLLocationCoordinate2D(latitude: toLat, longitude: toLong));
+                
+                // self.polyline.map = nil;
+                
+                
+                self.polyline = GMSPolyline(path:  self.path);
+                polyline.strokeColor = UIColor.redColor();
+                polyline.strokeWidth = 3;
+                polyline.geodesic = true;
+                polyline.map = mapView;
+                let zoom1 = self.mapView.camera.zoom;
+                let camera = GMSCameraPosition.cameraWithLatitude(locValue.latitude, longitude: locValue.longitude, zoom: zoom1)
+                self.mapView.camera = camera
+
+                
+                self.calculateCaloriesBurned();
+                currentstatus();
+                self.voiceCoachPerDistanceInterval();
+                
+                if (self.autoPause) {
+                    
+                    if (self.calSpeed < 0.8) {
+                        self.count+1;
+                    } else {
+                        self.count = 0;
+                    }
+                    
+                    if (self.count >= 2) {
+                        forcePause();
+                    }
+                }
+                
+                self.avglastLat.removeAll();
+                self.addElevation.removeAll();
+                self.avgthisLong.removeAll();
+                self.avgthisLat.removeAll();
+                self.avglastLong.removeAll();
+                
+                self.maCount = 0;
+                
+                self.endDate = NSDate();
+                let intervals = endDate.timeIntervalSince1970;
+                let tis = NSInteger(intervals)
+                startDate = NSDate();
+                self.prev_time = Double(tis % 60);
+                
             }
-
-         
-            let loc_distance = (self.calculateDistance(fromLong, fromLat: fromLat, toLong: toLong, toLat: toLat) * 1609.34);
-            
-            let time = self.cur_time - self.prev_time;
-            
-            self.calSpeed = (loc_distance / (time));
-            
-            //Get pace and altitude
-            self.calSpeed = (self.calSpeed * 2.23694); // speed in mph
- 
-            
-            
-            
-            
-            
-            
-            let intervals = endDate.timeIntervalSinceDate(startDate);
-            let tis = NSInteger(intervals)
-            startDate = NSDate();
-            self.prev_time = Double(tis % 60);
             
         }
-        
-        
-        
-        
-        
-        
-        
-        
-           // self.lastLocation = self.myManager.location!;
-        
-        
-/*            self.trackPolyline.append(["latitude":29.69288,"longitude":95.50932])
-            
-            if NSJSONSerialization.isValidJSONObject(trackPolyline){
-                let jsonData = try! NSJSONSerialization.dataWithJSONObject(trackPolyline, options: NSJSONWritingOptions())
-                let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
-                saveTrackPolyline = jsonString
-            }*/
- 
-//---------------------------------- On Location update put all calculated data in graph values to save in database ----------------------------
-        
-        
-//        self.graphPace.append(self.pace);
-//        self.graphSpeed.append(round(self.calSpeed * 100.0) / 100.0);
-//        self.graphDistance.append(self.dis);
-//        self.timeLog.append(self.elapsedTimeInMiliSecds);
-        
-        
-      //  calculateCaloriesBurned();
-        
-        
-        
-        
-        
-        
-        
-
-        
-       // self.dis = self.dis + self.calculateDistance(fromLong, fromLat: fromLat, toLong: toLong, toLat: toLat);
-        //self.currentstatus();
-           // calculateDistanceSpeed(lastLocation);
-        
-        
-//----------------------------------------------- draw polyline ---------------------------------------------------
-            path.addCoordinate(locations[0].coordinate);
-            mapView.clear();
-            let polyline = GMSPolyline(path: path)
-            polyline.strokeColor = UIColor.redColor();
-            polyline.strokeWidth = 1
-            polyline.geodesic = true
-            polyline.map = mapView
-        
- 
-  
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-            //-------------------------------------------enroid way of location update------------------------------------
-            /*  if (self.maCount <= 3) {
-             
-             
-             //   self.avglastLat.append(self.firstLocation.coordinate.latitude);
-             self.addElevation.append(self.altitude);
-             self.avgthisLong.append(myManager.location!.coordinate.longitude);
-             self.avgthisLat.append(myManager.location!.coordinate.latitude);
-             // self.avglastLong.append(self.firstLocation.coordinate.longitude);
-             
-             
-             //                    avglastLong[maCount] = lastLocation.coordinate.longitude;
-             //                    avglastLat[maCount] = lastLocation.coordinate.latitude;
-             //                    addElevation[maCount] = altitude;
-             //                    avgthisLong[maCount] = long;
-             //                    avgthisLat[maCount] = lat;
-             
-             self.maCount = self.maCount+1;
-             } else {
-             
-             //                    double cur_time = (double) System.nanoTime() / (1.00E9);
-             
-             //            var lastlat:Double = 0;
-             //            var lastlon:Double = 0;
-             var thislat:Double = 0;
-             var thislon:Double = 0;
-             var alt:Double = 0;
-             print(self.maCount);
-             for (var i = 0; i < self.maCount; i += 1) {
-             print(i)
-             print(self.avglastLong.count);
-             // lastlat = lastlat + self.avglastLat[i];
-             // lastlon = lastlon + self.avglastLong[i];
-             thislat = thislat + self.avgthisLat[i];
-             thislon = thislon + self.avgthisLong[i];
-             alt = alt + self.addElevation[i];
-             }
-             
-             toLong = thislon / Double(self.maCount);
-             toLat = thislat / Double(self.maCount);
-             //            fromLong = lastlon / Double(self.maCount);
-             //            fromLat = lastlat / Double(self.maCount);
-             // let fromLoc = CLLocation(latitude: fromLat, longitude: fromLong);
-             let toLoc = CLLocation(latitude: toLat, longitude: toLong);
-             calSpeed =  locations[0].speed/0.44704;
-             
-             //                if (self.calSpeed < 0.5 || (self.graphSpeed.count < 1 && self.calSpeed > 50)) {
-             //                    self.pace = 120.0;
-             //                    self.calSpeed = 0;
-             //                } else {
-             //                    self.pace = (60.0 / self.calSpeed);
-             //                }
-             
-             
-             //Calculate distance
-             // self.dis = self.dis + self.calculateDistance(fromLong, fromLat: fromLat, toLong: toLong, toLat: toLat);
-             let kilometers: CLLocationDistance = firstLocation.distanceFromLocation(myManager.location!) / 1000.0
-             distanceInMi +=  kilometers * 0.62137;
-             //            print(firstLocation.coordinate.latitude);
-             //            print(firstLocation.coordinate.longitude);
-             //            print(myManager.location!.coordinate.latitude);
-             //            print(myManager.location!.coordinate.longitude);
-             //
-             //            print(kilometers)
-             self.dis = (firstLocation.distanceFromLocation(toLoc) / 1000.0)*0.62137;
-             print((firstLocation.distanceFromLocation(toLoc) / 1000.0)*0.62137)
-             print("printing calculated Distance\(self.dis)");
-             print("printing generated Distance\(distanceInMi)")
-             self.maCount = 0;
-             path.addCoordinate(toLoc.coordinate);
-             self.avgthisLong.removeAll();
-             self.avgthisLat.removeAll();
-             // currentstatus();
-             calculateDistanceSpeed(lastLocation);
-             }  */
-        }
-        
-        
-        
-        //        }
-        // path.addCoordinate(locations[0].coordinate);
-        //        let polyline = GMSPolyline(path: path)
-        //        polyline.strokeColor = UIColor.redColor();
-        //        polyline.strokeWidth = 1
-        //        polyline.geodesic = true
-        //        polyline.map = mapView
-//------------------------------------------ speak msg -----------------------------------------------
-    
-    
-        self.voiceCoachPerDistanceInterval();
-        
     }
     
     
-    
-    // TODO:- Not Being Used
-    
-    //    func locationManager(manager: CLLocationManager,   locations: [CLLocation]) {
-    //
-    //
-    //
-    //        _ = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: #selector(StartActivityViewController.updatedLocation), userInfo: nil, repeats: false)
-    
-    /*
-     let locValue:CLLocationCoordinate2D = myManager.location!.coordinate
-     
-     if fromPlanRoute == false{
-     if first == false{
-     let camera = GMSCameraPosition.cameraWithLatitude(locValue.latitude, longitude: locValue.longitude, zoom: 16.0)
-     self.mapView.camera = camera
-     firstLocation = manager.location!;
-     first = true;
-     mapView.myLocationEnabled = true
-     let london = GMSMarker(position: CLLocationCoordinate2D(latitude:locValue.latitude, longitude: locValue.longitude))
-     london.icon = UIImage(named: "im_start_marker")
-     london.map = mapView
-     getWeatherData("http://api.openweathermap.org/data/2.5/weather?lat=\(manager.location!.coordinate.latitude)&lon=\(manager.location!.coordinate.longitude)")
-     
-     self.getAddressFromLatLong(locValue.latitude, longitude: locValue.longitude);
-     //  19.069761, 72.829857
-     }
-     }
-     
-     
-     self.mapView.animateToLocation(CLLocationCoordinate2D(latitude:locValue.latitude, longitude: locValue.longitude))
-     accuracy = locations[0].horizontalAccuracy
-     altitude = (locations[0].altitude);
-     if (altitude < (-25)) {
-     Altitudes.append(Int((-25 - Double(-EGM96_US)) * 3.28084));
-     calculateElevation(-25);
-     } else {
-     Altitudes.append(Int((altitude - Double(-EGM96_US)) * 3.28084));
-     calculateElevation(Int(altitude));
-     }
-     
-     
-     loc = locations;
-     // calculateDistanceSpeed(locations[0]);
-     if !CLLocationManager.locationServicesEnabled()
-     {
-     gpsImg.image = UIImage(named: "ic_gps_none");
-     }else{
-     if (locations[0].horizontalAccuracy < 0)
-     {
-     gpsImg.image = UIImage(named: "ic_gps_none");
-     // No Signal
-     }
-     else if (locations[0].horizontalAccuracy > 163)
-     {
-     gpsImg.image = UIImage(named: "ic_gps_low_range");
-     // Poor Signal
-     }
-     else if (locations[0].horizontalAccuracy > 48)
-     {
-     
-     gpsImg.image = UIImage(named: "ic_gps_med_range");
-     // Average Signal
-     }
-     else
-     {
-     gpsImg.image = UIImage(named: "ic_gps_full_range");
-     // Full Signal
-     }
-     }
-     
-     //        for i in locations
-     //        {
-     path.addCoordinate(locations[0].coordinate);
-     //        }
-     // path.addCoordinate(locations[0].coordinate);
-     let polyline = GMSPolyline(path: path)
-     polyline.strokeColor = UIColor.redColor();
-     polyline.strokeWidth = 1
-     polyline.geodesic = true
-     polyline.map = mapView
-     */
-    
-    //    }
+
     //----------------------------------- get Weather Data --------------------------------
     func getWeatherData(urlString: String) {
         
@@ -1720,9 +1153,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         
         if originalHeight + difference <= 0
         {
-            //            UIView.animateWithDuration(2.0, animations: {
-            //                self.arrowImg.transform = CGAffineTransformMakeRotation((180.0 * CGFloat(M_PI)) / 180.0)
-            //            })
+
             arrowImg.image = UIImage(named: "ic_up_down");
             
         }else{
@@ -1750,32 +1181,33 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     var endDate = NSDate();
     
     func calculateCaloriesBurned() {
+        
         let caloriesLookUp = CaloriesCounterLookUp()
+        
         let time = self.duration.text?.componentsSeparatedByString(":");
+        var elapTime = Double();
+        if time?.count == 3{
         let hrs = Double(time![0])!*3600000;
         let mm = Double(time![1])!*60000;
         let ss = Double(time![2])!*1000;
-        let elapTime = hrs + mm + ss
+        elapTime = hrs + mm + ss
+        }
 
         if (performedActivity == ("Biking")) {  // calculate calories burned if biking
             
+            caloriesburned = caloriesLookUp.Biking(avgpace, weight: weight, elapsedTime: CLong(elapTime), altGain: altGain, distance: self.dis);
             
-            caloriesburned = caloriesLookUp.Biking(avgpace, weight: weight, elapsedTime: CLong(elapTime), altGain: altGain, distance: Double(distanceInMi));
+        } else if (performedActivity == ("Walking")) { // calculate calories burned if walking
             
-        } else if (performedActivity == ("Walking")) {
-            //  avgpace = 1.00; CLong(round(endDate.timeIntervalSinceDate(startDate)))
-            endDate = NSDate();
-            caloriesburned = caloriesLookUp.Walking(avgpace, weight: weight, elapsedTime: CLong(elapTime), altGain: altGain, distance: Double(distanceInMi));
-            
+            caloriesburned = caloriesLookUp.Walking(avgpace, weight: weight, elapsedTime: CLong(elapTime), altGain: altGain, distance: self.dis);
             
         } else if (performedActivity == ("Running")) { //calculate calories burned for running
             
-            //avgpace = 1.00;
-          //  endDate = NSDate();
-      //      TODO :- commented calories burned for running
            caloriesburned = caloriesLookUp.Running(avgpace, weight: weight, elapsedTime: Float(elapTime));
         }
     }
+    
+    
 //--------------------------------------Calculate Elevation-----------------------------------------
     //This method calculates max elevation gain and max elevation loss
     func calculateElevation(Elevation:Int) {
@@ -1823,9 +1255,9 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         intervalTypeDis = 1
         var temp = Double();
         if (measuringUnits == 1) {
-            temp = distanceInMi;
+            temp = self.dis;
         } else {
-            temp = distanceInMi * 1.60934;
+            temp = self.dis * 1.60934;
         }
         let roundDis = Int(temp + 0.2);
         var absolute = (abs((round(temp * 10.0) / 10.0) - Double(roundDis))) * 100;
@@ -1839,7 +1271,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                 } else {
                     calculateIntervalPaceAndSpeed(0.5);
                 }
-                speakText(4);
+                speakText(5);
                 distanceIntervalCounter = absolute;
                 break;
             case 2:
@@ -1850,7 +1282,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                     } else {
                         calculateIntervalPaceAndSpeed(1.0);
                     }
-                    speakText(4);
+                    speakText(5);
                     distanceIntervalTimer = 0;
                 }
                 distanceIntervalCounter = absolute;
@@ -1863,7 +1295,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                     } else {
                         calculateIntervalPaceAndSpeed(2.0);
                     }
-                    speakText(4);
+                    speakText(5);
                     distanceIntervalTimer = 0;
                 }
                 distanceIntervalCounter = absolute;
@@ -1876,7 +1308,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                     } else {
                         calculateIntervalPaceAndSpeed(3.0);
                     }
-                    speakText(4);
+                    speakText(5);
                     distanceIntervalTimer = 0;
                 }
                 distanceIntervalCounter = absolute;
@@ -1889,7 +1321,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                     } else {
                         calculateIntervalPaceAndSpeed(4.0);
                     }
-                    speakText(4);
+                    speakText(5);
                     distanceIntervalTimer = 0;
                 }
                 distanceIntervalCounter = absolute;
@@ -1902,7 +1334,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                     } else {
                         calculateIntervalPaceAndSpeed(5.0);
                     }
-                    speakText(4);
+                    speakText(5);
                     distanceIntervalTimer = 0;
                 }
                 distanceIntervalCounter = absolute;
@@ -1915,7 +1347,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                     } else {
                         calculateIntervalPaceAndSpeed(8.0);
                     }
-                    speakText(4);
+                    speakText(5);
                     distanceIntervalTimer = 0;
                 }
                 distanceIntervalCounter = absolute;
@@ -1928,7 +1360,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                     } else {
                         calculateIntervalPaceAndSpeed(10.0);
                     }
-                    speakText(4);
+                    speakText(5);
                     distanceIntervalTimer = 0;
                 }
                 distanceIntervalCounter = absolute;
@@ -1965,128 +1397,292 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
 // --------------------------------------- this function is use for speek about user activity as user selects the types from settings  ----------------------------
     
     
+    //     intervalDuration ------> sayDuration
+    //    intervalDistance -------> sayDistance
+    //    intervalAvgpace ---------> sayAveragePace
+    //    intervalAvgspeed -------> sayAverageSpeed
+    //   intervalSplitPace -------> saySplitPace
+    //    intervalSplitSpeed --------> saySplitSpeed
+    //    intervalCalories  -------->  sayCalories
+    var speak = String();
+    
     func speakText(type:Int)
     {
+        
         if NSUserDefaults.standardUserDefaults().boolForKey("voiceFeedback") == true{
             
-            if NSUserDefaults.standardUserDefaults().boolForKey("sayDistance") == true{
-                
-                if NSUserDefaults.standardUserDefaults().stringForKey("intervalTypeDis") == "0.5"
-                {
-                    if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "1"
-                    {
-                        let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
-                        let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Distance.\(distanceInMi), miles");
-                        mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-                        mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
-  
-                    }else if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "2"
-                    {
-                        let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
-                        let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Distance.\(distanceInMi), kilometers");
-                        mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-                        mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+            var summary = [String]()
+            self.measuringUnits = NSUserDefaults.standardUserDefaults().integerForKey("MeasuringUnits");
+            self.intervalTypeDis = NSUserDefaults.standardUserDefaults().integerForKey("intervalTypeDis")
+            let intervalDuration = NSUserDefaults.standardUserDefaults().boolForKey("sayDuration")
+            let intervalDistance = NSUserDefaults.standardUserDefaults().boolForKey("sayDistance")
+            let intervalAvgpace = NSUserDefaults.standardUserDefaults().boolForKey("sayAveragePace")
+            let intervalAvgspeed = NSUserDefaults.standardUserDefaults().boolForKey("sayAverageSpeed")
+            let intervalSplitPace = NSUserDefaults.standardUserDefaults().boolForKey("saySplitPace")
+            let intervalSplitSpeed = NSUserDefaults.standardUserDefaults().boolForKey("saySplitSpeed")
+            let intervalCalories = NSUserDefaults.standardUserDefaults().boolForKey("sayCalories")
+            
+            
+            if (dis > 0) {
+                if (intervalDuration) {
+                    if (strHours == "00" && strMinutes == "00") {
+                        summary.append("time. \(strSeconds) seconds.");
+                    } else if (strHours == "00") {
+                        summary.append("time. \(strMinutes), minutes and.\(strSeconds), seconds.");
+                    } else {
+                        summary.append("time. \(strHours), hours. \(strMinutes), minutes and. \(strSeconds), seconds.");
                     }
+                }
+                if (intervalDistance) {
+                    if (intervalTypeDis == 1) {       //This if statement is to check if the distance interval is selected as 0.5 then speak every 0.5miles or kms
+                        var temp = Double();
+                        if (measuringUnits == 1) {
+                            temp = dis;
+                        } else {
+                            temp = dis * 1.60934;
+                        }
+                        let halfDistance = round(temp * 10.0) / 10.0;
+                        let isDivisibleby10 = (halfDistance * 10.0) % 10 == 0;
+                        if (isDivisibleby10) {
+                            if (measuringUnits == 1) {
+                                summary.append("distance. \(round(dis)), miles,")
+                            } else {
+                                summary.append("distance. \(round(dis * 1.60934) ), kilometers,");
+                            }
+                        } else {
+                            if (measuringUnits == 1) {
+                                summary.append("distance. \(round(dis) ), miles,");
+                            } else {
+                                summary.append("distance. \( round(dis * 1.60934) ), kilometers,");
+                            }
+                        }
+                    } else { // If distance interval is greater than 0.5 miles or kms
+                        if (measuringUnits == 1) {
+                            summary.append("distance. \( round(dis) ), miles,");
+                        } else {
+                            summary.append("distance. \(round(dis * 1.60934)), kilometers,");
+                        }
+                    }
+                }
+                if (intervalAvgpace) {
+                    if (measuringUnits == 1) {
+                        summary.append("Average pace. \(round(avgpace * 10.0) / 10.0 ), minute, per, mile,");
+                    } else {
+                        summary.append("Average pace. \(round(avgpace * 0.621371 * 10.0) / 10.0 ), minute, per, kilometer,");
+                    }
+                }
+                if (intervalAvgspeed) {
+                    if (measuringUnits == 1) {
+                        summary.append("Average speed.\(round(avgspeed * 10.0) / 10.0 ), miles, per, hour,");
+                    } else {
+                        summary.append("Average speed. \(round(avgspeed * 1.60934 * 10.0) / 10.0 ), kilometers, per, hour,");
+                    }
+                }
+                if (intervalSplitPace) {
+                    if (measuringUnits == 1) {
+                        summary.append("Split, Pace. \(round(intervalPace * 10.0) / 10.0 ), minute, per, mile,");
+                    } else {
+                        summary.append("Split, Pace. \(round(intervalPace * 10.0) / 10.0 ), minute, per, kilometer,");
+                    }
+                }
+                if (intervalSplitSpeed) {
+                    if (measuringUnits == 1) {
+                        summary.append("Split, Speed. \(round(intervalSpeed * 10.0) / 10.0 ), miles, per, hour,");
+                    } else {
+                        summary.append("Split, Speed. \(round(intervalSpeed * 10.0) / 10.0 ), kilometers, per, hour,");
+                    }
+                }
+                if (intervalCalories) {
+                    summary.append("Calouries, burned. \(caloriesburned)");
+                }
+            }
+            
+            
+            switch type {
+            case 1:
+                let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+                let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Activity Started");
+                mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+                mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+                break;
+            case 2:
+                let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+                let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Activity Stopped");
+                mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+                mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+                break;
+                
+            case 3:
+                let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+                var pause = String();
+                if b == 1
+                {
+                  pause = "Activity Automatically Paused"
                 }else{
-                    if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "1"
-                    {
-                        let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
-                        let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Distance.\(distanceInMi), miles");
-                        mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-                        mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
-                    }else if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "2"
-                    {
-                        let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
-                        let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Distance.\(distanceInMi), kilometers");
-                        mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-                        mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
-                    }
+                  pause = "Activity Manually Paused"
                 }
-                
-            }
-            if NSUserDefaults.standardUserDefaults().boolForKey("sayDuration") == true{
-                let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
-                let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Duration \(self.duration.text)");
+                let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:pause);
                 mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
                 mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+                break;
                 
-            }
-            
-            if NSUserDefaults.standardUserDefaults().boolForKey("sayAveragePace") == true{
-               
-                
-                if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "1"
-                {
-                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
-                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Average pace. .\(avgPace.text!), minute, per, mile,");
-                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
-                }else if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "2"
-                {
-                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
-                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Average pace.\(avgPace.text!), , minute, per, kilometer,");
-                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
-                }
-                
-            }
-            
-            if NSUserDefaults.standardUserDefaults().boolForKey("sayAverageSpeed") == true{
-                if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "1"
-                {
-                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
-                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Average speed.  .\(avgSpeed.text!), minute, per, mile,");
-                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
-                }else if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "2"
-                {
-                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
-                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Average speed. \(avgSpeed.text!), , minute, per, kilometer,");
-                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
-                }
-            }
-            
-            if NSUserDefaults.standardUserDefaults().boolForKey("saySplitPace") == true{
-                if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "1"
-                {
-                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
-                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Split, Pace.   .\(avgSpeed.text!), minute, per, mile,");
-                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
-                }else if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "2"
-                {
-                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
-                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Split, Pace.  \(avgSpeed.text!), , minute, per, kilometer,");
-                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
-                }
-
-            }
-            
-            if NSUserDefaults.standardUserDefaults().boolForKey("saySplitSpeed") == true{
-                if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "1"
-                {
-                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
-                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Split, Speed.  .\(avgSpeed.text!), miles, per, hour,");
-                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
-                }else if NSUserDefaults.standardUserDefaults().stringForKey("measuringUnits") == "2"
-                {
-                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
-                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Split, Speed.  \(avgSpeed.text!), , kilometers, per, hour,");
-                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
-                }
-
-            }
-            
-            if NSUserDefaults.standardUserDefaults().boolForKey("sayCalories") == true{
+            case 4:
                 let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
-                let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Calouries, burned. \(caloriesburned)");
+                let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Activity Resumed");
                 mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
                 mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+                break;
+                
+            case 5:
+               //  i in 0.. <summary.count
+                for i in 0 ..< summary.count
+                {
+                    speak = speak + summary[i];
+                }
+                
+                let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+                let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:speak);
+                
+                mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+                mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+                speak = ""
+                break;
+            case 6:
+                let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+                let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Activity is paused, would you like to resume or stop it?");
+                mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+                mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+                break;
+                
+            default:
+                break;
             }
+
+            
+            
+            
+            
+            
+            
+            
+//            if NSUserDefaults.standardUserDefaults().boolForKey("sayDistance") == true{
+//                
+//                if NSUserDefaults.standardUserDefaults().stringForKey("intervalTypeDis") == "0.5"
+//                {
+//                    if NSUserDefaults.standardUserDefaults().stringForKey("MeasuringUnits") == "1"
+//                    {
+//                        let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+//                        let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Distance.\(round(self.dis)), miles");
+//                        mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+//                        mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+//  
+//                    }else if NSUserDefaults.standardUserDefaults().stringForKey("MeasuringUnits") == "2"
+//                    {
+//                        let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+//                        let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Distance.\(distanceInMi), kilometers");
+//                        mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+//                        mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+//                    }
+//                }else{
+//                    if NSUserDefaults.standardUserDefaults().stringForKey("MeasuringUnits") == "1"
+//                    {
+//                        let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+//                        let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Distance.\(distanceInMi), miles");
+//                        mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+//                        mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+//                    }else if NSUserDefaults.standardUserDefaults().stringForKey("MeasuringUnits") == "2"
+//                    {
+//                        let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+//                        let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Distance.\(distanceInMi), kilometers");
+//                        mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+//                        mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+//                    }
+//                }
+//                
+//            }
+//            if NSUserDefaults.standardUserDefaults().boolForKey("sayDuration") == true{
+//                let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+//                let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Duration \(self.duration.text)");
+//                mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+//                mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+//                
+//            }
+//            
+//            if NSUserDefaults.standardUserDefaults().boolForKey("sayAveragePace") == true{
+//               
+//                
+//                if NSUserDefaults.standardUserDefaults().stringForKey("MeasuringUnits") == "1"
+//                {
+//                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+//                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Average pace. .\(avgPace.text!), minute, per, mile,");
+//                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+//                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+//                }else if NSUserDefaults.standardUserDefaults().stringForKey("MeasuringUnits") == "2"
+//                {
+//                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+//                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Average pace.\(avgPace.text!), , minute, per, kilometer,");
+//                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+//                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+//                }
+//                
+//            }
+//            
+//            if NSUserDefaults.standardUserDefaults().boolForKey("sayAverageSpeed") == true{
+//                if NSUserDefaults.standardUserDefaults().stringForKey("MeasuringUnits") == "1"
+//                {
+//                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+//                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Average speed.  .\(avgSpeed.text!), minute, per, mile,");
+//                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+//                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+//                }else if NSUserDefaults.standardUserDefaults().stringForKey("MeasuringUnits") == "2"
+//                {
+//                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+//                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Average speed. \(avgSpeed.text!), , minute, per, kilometer,");
+//                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+//                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+//                }
+//            }
+//            
+//            if NSUserDefaults.standardUserDefaults().boolForKey("saySplitPace") == true{
+//                if NSUserDefaults.standardUserDefaults().stringForKey("MeasuringUnits") == "1"
+//                {
+//                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+//                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Split, Pace.   .\(avgSpeed.text!), minute, per, mile,");
+//                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+//                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+//                }else if NSUserDefaults.standardUserDefaults().stringForKey("MeasuringUnits") == "2"
+//                {
+//                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+//                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Split, Pace.  \(avgSpeed.text!), , minute, per, kilometer,");
+//                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+//                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+//                }
+//
+//            }
+//            
+//            if NSUserDefaults.standardUserDefaults().boolForKey("saySplitSpeed") == true{
+//                if NSUserDefaults.standardUserDefaults().stringForKey("MeasuringUnits") == "1"
+//                {
+//                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+//                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Split, Speed.  .\(avgSpeed.text!), miles, per, hour,");
+//                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+//                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+//                }else if NSUserDefaults.standardUserDefaults().stringForKey("MeasuringUnits") == "2"
+//                {
+//                    let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+//                    let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Split, Speed.  \(avgSpeed.text!), , kilometers, per, hour,");
+//                    mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+//                    mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+//                }
+//
+//            }
+//            
+//            if NSUserDefaults.standardUserDefaults().boolForKey("sayCalories") == true{
+//                let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+//                let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Calouries, burned. \(caloriesburned)");
+//                mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+//                mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+//            }
            
             
         }
@@ -2095,61 +1691,65 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     
 //----------------------------- This function is used for the sppek text which are constant for all ----------------------------
     
-    func audioType(type:Int){
-        switch type {
-        case 1:
-            let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
-            let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Activity Started");
-            mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-            mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
-            break;
-        case 2:
-            let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
-            let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Activity Stopped");
-            mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-            mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
-            break;
-            
-        case 3:
-            let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
-            let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Activity Automatically Paused");
-            mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-            mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
-            break;
-            
-        case 4:
-            let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
-            let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Activity Manually Paused");
-            mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-            mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
-            break;
-            
-        case 5:
-            let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
-            let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Activity Resumed");
-            mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-            mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
-            break;
-        case 6:
-            let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
-            let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Distance");
-            mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-            mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
-            break;
-        case 57:
-            let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
-            let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Activity is paused, would you like to resume or stop it?");
-            mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-            mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
-            break;
-            
-        default:
-            break;
-        }
-        
+//    func audioType(type:Int){
+//        switch type {
+//        case 1:
+//            let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+//            let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Activity Started");
+//            mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+//            mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+//            break;
+//        case 2:
+//            let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+//            let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Activity Stopped");
+//            mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+//            mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+//            break;
+//            
+//        case 3:
+//            let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+//            let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Activity Automatically Paused");
+//            mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+//            mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+//            break;
+//            
+//        case 4:
+//            let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+//            let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Activity Manually Paused");
+//            mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+//            mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+//            break;
+//            
+//        case 5:
+//            let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+//            let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Activity Resumed");
+//            mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+//            mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+//            break;
+//        case 6:
+//            let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+//            let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Distance");
+//            mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+//            mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+//            break;
+//        case 57:
+//            let mySpeechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
+//            let mySpeechUtterance:AVSpeechUtterance = AVSpeechUtterance(string:"Activity is paused, would you like to resume or stop it?");
+//            mySpeechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+//            mySpeechSynthesizer .speakUtterance(mySpeechUtterance)
+//            break;
+//            
+//        default:
+//            break;
+//        }
+//        
+//    }
+    
+    func forcePause()
+    {
+        speakText(2);
+        q=0;
     }
-    
-    
     
 //    MARK:-  Calculate Activity Performed
     var activityType = String();
@@ -2165,7 +1765,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
     
     func callMotionActivity()
     {
-        if CMMotionActivityManager.isActivityAvailable()
+       if CMMotionActivityManager.isActivityAvailable()
         {
             self.activityManager.startActivityUpdatesToQueue(NSOperationQueue.mainQueue(), withHandler:{  activity in
                 
@@ -2183,6 +1783,8 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                     } else if (activity!.automotive == true){
                         self.activityType = "Automotive"
                     }
+                    CommonFunctions.showPopup(self, msg: "\(self.activityType)", getClick: {})
+
                     
                 }
                 self.mostProbableActivity();
@@ -2221,6 +1823,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         } else {
             performedActivity = "Walking";
         }
+        CommonFunctions.showPopup(self, msg: "\(self.performedActivity)", getClick: {})
         
     }
 // MARK:- Life cycle Methods
@@ -2234,13 +1837,15 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
 //  --------------- location manager to start updating location of user ------------------------------------------
         self.myManager = CLLocationManager();
         self.myManager.delegate = self;
-        self.myManager.distanceFilter = 10;
+        //self.myManager.distanceFilter = 10;
         self.myManager.desiredAccuracy = kCLLocationAccuracyBest;
         beforeTime = CFAbsoluteTimeGetCurrent();
         self.myManager.requestWhenInUseAuthorization()
         self.myManager.startUpdatingLocation()
         myManager.startMonitoringSignificantLocationChanges()
 //        -------------------------- If location service is not enabled then change image of gps On start of activity -----------------------------
+        
+        
         if CLLocationManager.locationServicesEnabled()
         {
             
@@ -2255,7 +1860,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         super.viewDidLoad()
         NSTimer.scheduledTimerWithTimeInterval(0.8, target: self, selector: #selector(StartActivityViewController.callMotionActivity), userInfo: nil, repeats: true);
         if NSUserDefaults.standardUserDefaults().boolForKey("voiceFeedback") == true{
-            self.audioType(1);
+            self.speakText(1);
         }
         q = 1;
         if fromPlanRoute{

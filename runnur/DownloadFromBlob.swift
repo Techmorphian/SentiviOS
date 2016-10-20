@@ -61,7 +61,7 @@ class DownloadFromBlob{
             }
         })
     }
-    func uploadBlobToContainer() {
+   static func uploadBlobToContainer(containerName:String,blobName:String,textToUpload:String) {
         var accountCreationError: NSError?
         // Create a storage account object from a connection string.
         let account = try! AZSCloudStorageAccount(fromConnectionString:"DefaultEndpointsProtocol=https;AccountName=8jportalvhdshbrn9fzjhph5;AccountKey=442soY57EtVhXSnFRHsJSK3JD+9COPIUt7qDpKA8+uzi/EgsD4Ox64fMcPL4cpiFWrbQcQR+2XVb7GbfNRt1Tg==")
@@ -71,7 +71,7 @@ class DownloadFromBlob{
         // Create a blob service client object.
         let blobClient = account.getBlobClient()
         // Create a local container object.
-        let blobContainer = blobClient.containerReferenceFromName("newcontainer")
+        let blobContainer = blobClient.containerReferenceFromName(containerName)
         blobContainer.createContainerIfNotExistsWithAccessType(AZSContainerPublicAccessType.Container, requestOptions: nil, operationContext: nil, completionHandler: {(error, exists) -> Void in
             if error != nil {
                 print("Error in creating container.")
@@ -79,12 +79,15 @@ class DownloadFromBlob{
             else {
                 do {
                     // Create a local blob object
-                    let blockBlob = blobContainer.blockBlobReferenceFromName("sampleblob")
+                   let blockBlob = blobContainer.blockBlobReferenceFromName(blobName)
+                   // let blockBlob =
                     // Upload blob to Storage
                 
-                    blockBlob.uploadFromText("This text will be uploaded to Blob Storage.", completionHandler: {(error) -> Void in
+                    blockBlob.uploadFromText(textToUpload, completionHandler: {(error) -> Void in
                         if error != nil {
                             print("Error in creating blob.");
+                        }else{
+                            print("Success in upload blob");
                         }
                     })
                 }
