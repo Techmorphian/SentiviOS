@@ -800,7 +800,7 @@ class CompletedChallengeViewController: UIViewController,UITableViewDelegate,UIT
                 
                 
                 
-                cell.potAmount.text = String(contributingFilterArray[indexPath.row].betAmount)
+                cell.potAmount.text = String(contributingFilterArray[indexPath.row].potAmount)
                 
                 
                 

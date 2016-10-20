@@ -462,10 +462,10 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
+        
+        
         let cell:activeChallengeTableViewCell = tableView.dequeueReusableCellWithIdentifier("activeChallengeTableViewCell")as!
         activeChallengeTableViewCell
-        
-        
         
         
         
@@ -608,9 +608,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                 }
                 
                 cell.BetAmount.text = String(participatingArray[indexPath.row].betAmount)
-                
-              
-                
+                                
                 
                 cell.potAmount.text = participatingArray[indexPath.row].potAmount
                 
@@ -685,24 +683,21 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
         {
             
             
-             cell.noOfPlayers.hidden = true;
+            cell.noOfPlayers.hidden = true;
             
             cell.betAmountLabel.text = "PER MILE"
+            
             cell.potAmountLabel.text = "TOTAL AMOUNT"
             
-             cell.playersLabel.text = "ORGHUNTER"
+            cell.playersLabel.text = "ORGHUNTER"
             
             
             cell.grpCauseFitIcon.image = UIImage(named:"ic_cause_fit")
             
             cell.noOfPlayers.hidden = true;
             
-        
-            
             cell.ic_memberImageView.image = UIImage(named: "ic_charity_gray")
             
-            
-        
             
             
             if NSUserDefaults.standardUserDefaults().boolForKey("filterActive") == true
@@ -732,7 +727,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                 
                 
                 
-                cell.potAmount.text = String(contributingFilterArray[indexPath.row].betAmount)
+                cell.potAmount.text = String(contributingFilterArray[indexPath.row].potAmount)
                 
                 
                 
@@ -782,7 +777,7 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                 
                 
                 
-                cell.potAmount.text = String(contributingArray[indexPath.row].betAmount)
+                cell.potAmount.text = String(contributingArray[indexPath.row].potAmount)
                 
                 
                 
@@ -1415,6 +1410,9 @@ class ActiveChallengesViewController: UIViewController,UITableViewDelegate,UITab
                                             {
                                                 self.ChModel.potAmount = potAmount
                                             }
+                                            
+                                            
+                                            print("contributing:\(potAmount)")
                                             
                                             contributingArray.append(ChModel)
                                             

@@ -753,8 +753,8 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
     {
         
        let check = indexPath.row
+              
         
-                
         if (check <= 5 && shouldCallPagging)
         {
             
@@ -1109,19 +1109,6 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     
                     let morePagging=parseJSON["morePagging"] as? String
                     
-                   NSUserDefaults.standardUserDefaults().setObject(morePagging, forKey: "userStatus");
-                  
-                    
-//                    
-//                    self.activityModel.isFromActivity = false
-//                    
-//                    self.activityModel.isFromUserActivity = false
-//                    
-//                    self.activityModel.isFromChat = false
-//                    
-//                    self.activityModel.isFromUserChat = false
-
-
                     
                     
                     if morePagging == "1"
@@ -1179,9 +1166,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 
                             indexPath.append(NSIndexPath(forRow: lastRowIndex , inSection: 0))
                                                                
-                              // indexPath.append(NSIndexPath(forRow: i , inSection: 0))
-                                
-                                 // indexPath.append(NSIndexPath(forRow: i , inSection: 0))
+                           
                                 
                                 self.activityModel=ViewActivityModel()
                                 
@@ -1215,15 +1200,8 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                                 
                                                 self.activityModel.isFromUserActivity = true
                                                 
-                                                
                                                 self.activityModel.isFromActivity = false
-                                                
-//                                                
-//                                                self.activityModel.isFromUserChat = false
-//                                                
-//                                                self.activityModel.isFromChat = false
-
-
+                                          
                                                 
                                             }
                                                 
@@ -1234,10 +1212,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                                 
                                                 self.activityModel.isFromUserActivity = false
                                                 
-//                                                self.activityModel.isFromUserChat = false
-//                                                
-//                                                self.activityModel.isFromChat = false
-
+                                             
 
                                                 
                                             }
@@ -1527,7 +1502,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                                 
                                         activityChatArray.insert(activityModel, atIndex: 0)
                                                 
-                                                // activityChatArray.append(activityModel)
+                                                
                                             }
                                             else
                                             {
@@ -1654,11 +1629,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                         
                                         self.RemoveNoInternet();
                                         self.RemoveNoResult();
-//                                        
-//                                        for arrayIndex in (self.activityChatArray.count - 1).stride(through: 0, by: -1) {
-//                                            self.activityChatArray.append(self.activityChatArray[arrayIndex])
-//                                        }
-//                                        
+///
 //                                        for i in self.activityChatArray
 //                                        {
 //                                            
@@ -1667,18 +1638,6 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
 //                                        }
                                         
                                         self.activityChatArray = self.activityChatArray.reverse();
-                                        
-                                        
-//                                        
-//                                        for i in self.activityChatArray
-//                                        {
-//                                            
-//                                          print(i.message)
-//                                            
-//                                        }
-                                        
-                                        
-                                        print(self.activityChatArray.count)
                                         
                                         self.ActivityTableView.delegate = self;
                                         
@@ -1711,8 +1670,6 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                         
                                         
                                         /////// scroll to bottom
-
-                                        
 //                                          self.ActivityTableView.scrollToRowAtIndexPath(NSIndexPath(activityChatArray.count-1,inSection: 0), atScrollPosition: .Bottom, animated: true)
                                         
                                     

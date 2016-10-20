@@ -337,8 +337,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             case "Challenges":
                 
                 
-                print(indexPath.row)
-               
+                
                 if indexPath.row == 1
                 {
                   //cell.backgroundColor = colorCode.MediumDarkBlueColor
@@ -365,7 +364,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             case "Friends":
                 
                 
-                print(indexPath.row)
+            
                 
                 if indexPath.row == 3
                 {
@@ -467,7 +466,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             case "Settings":
                 
                 
-                //                self.performSegueWithIdentifier("home", sender: nil)
+                self.performSegueWithIdentifier("settings", sender: nil)
                 break;
                 
             case "Logout":

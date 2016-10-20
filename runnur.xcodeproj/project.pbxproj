@@ -136,6 +136,7 @@
 		47E7EE3E1D6C8C44008DD370 /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E7EE3D1D6C8C44008DD370 /* CommentsViewController.swift */; };
 		47EF173C1D41EE0C00468698 /* dateFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EF173B1D41EE0C00468698 /* dateFunction.swift */; };
 		47F40DFA1D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F40DF91D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift */; };
+		47F4C9A21DB89A7900A65F76 /* TestingActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F4C9A11DB89A7900A65F76 /* TestingActivityViewController.swift */; };
 		47F97BE31D33CF5C0034B767 /* errorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F97BE21D33CF5C0034B767 /* errorViewController.swift */; };
 		47F98C531DAFA27600320D62 /* PaymentOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F98C521DAFA27600320D62 /* PaymentOptionsViewController.swift */; };
 		47FEAE0A1D2FD93800881EE8 /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FEAE091D2FD93800881EE8 /* Url.swift */; };
@@ -284,6 +285,7 @@
 		47EFFBA91D58689A00F2A2D7 /* CurrentDateFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentDateFunc.swift; sourceTree = "<group>"; };
 		47EFFBAB1D58822A00F2A2D7 /* CauseFirSummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CauseFirSummaryViewController.swift; sourceTree = "<group>"; };
 		47F40DF91D4B3C3B0087E658 /* InviteFriendsViaEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsViaEmailViewController.swift; sourceTree = "<group>"; };
+		47F4C9A11DB89A7900A65F76 /* TestingActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingActivityViewController.swift; sourceTree = "<group>"; };
 		47F97BE21D33CF5C0034B767 /* errorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = errorViewController.swift; sourceTree = "<group>"; };
 		47F98C521DAFA27600320D62 /* PaymentOptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentOptionsViewController.swift; sourceTree = "<group>"; };
 		47FEAE091D2FD93800881EE8 /* Url.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
@@ -414,6 +416,7 @@
 				4778115B1D487706003B01A4 /* models */,
 				4778115C1D487723003B01A4 /* swift Files */,
 				470CF8811D24DC370001B3BC /* Main.storyboard */,
+				47F4C9A11DB89A7900A65F76 /* TestingActivityViewController.swift */,
 				477811681D4879EE003B01A4 /* noInternet/error */,
 				47323D091D479D6D002B27CF /* challenge */,
 				4778115A1D4876AF003B01A4 /* ViewGroupFitChalleneg */,
@@ -1006,6 +1009,7 @@
 				470CF89D1D2507770001B3BC /* AddviaFacebookViewController.swift in Sources */,
 				47DA9F5C1DA51073005F16AF /* PaymentProcessingViewController.swift in Sources */,
 				47BBED1F1D6AC9DA00EAEDE9 /* ViewActivityModel.swift in Sources */,
+				47F4C9A21DB89A7900A65F76 /* TestingActivityViewController.swift in Sources */,
 				47CF1FC11D4CC5620083B1A7 /* challengeFilterXIB.swift in Sources */,
 				47FED2501D2E84D9006CAE8A /* ChallengesViewController.swift in Sources */,
 				470CF89F1D25079C0001B3BC /* AddViaGoogleViewController.swift in Sources */,
