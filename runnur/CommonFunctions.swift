@@ -295,6 +295,8 @@ class CommonFunctions : NSObject
     
     
     
+    
+    
     //    static func showPopup(view : UIViewController,title:String = "", msg:String,positiveMsg : String = "OK",negMsg : String = "Cancel",show2Buttons : Bool = false,getClick : GetClick){
     //
     //        let popup = UIAlertController(title: title, message: msg, preferredStyle: .Alert)
@@ -554,7 +556,7 @@ class CommonFunctions : NSObject
         alertView.removeFromSuperview()
     }
     
-    static func convertStringToJson(stringToConvert:String) -> String
+    static func convertStringToJson(stringToConvert:AnyObject) -> String
     {
         if NSJSONSerialization.isValidJSONObject(stringToConvert){
             let jsonData = try! NSJSONSerialization.dataWithJSONObject(stringToConvert, options: NSJSONWritingOptions())

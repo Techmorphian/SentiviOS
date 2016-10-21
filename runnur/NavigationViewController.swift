@@ -236,7 +236,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 
                 
             case "Heart Rate":
-                   self.performSegueWithIdentifier("HeartRate", sender: nil)
+                 //  self.performSegueWithIdentifier("HeartHistroryViewController", sender: nil)
                 
                 break;
                 

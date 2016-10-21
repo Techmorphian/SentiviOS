@@ -396,7 +396,7 @@ class HistoryViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         tempArray.removeAll();
                         break;
                     }
-                     if data+1 < self.routeDataArray.count-1{
+                     if data+1 < self.routeDataArray.count{
                     if i.weekIntNum != self.routeDataArray[data+1].weekIntNum
                     {
                        self.sectionItem.append(tempArray);

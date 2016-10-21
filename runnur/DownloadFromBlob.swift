@@ -64,7 +64,7 @@ class DownloadFromBlob{
    static func uploadBlobToContainer(containerName:String,blobName:String,textToUpload:String) {
         var accountCreationError: NSError?
         // Create a storage account object from a connection string.
-        let account = try! AZSCloudStorageAccount(fromConnectionString:"DefaultEndpointsProtocol=https;AccountName=8jportalvhdshbrn9fzjhph5;AccountKey=442soY57EtVhXSnFRHsJSK3JD+9COPIUt7qDpKA8+uzi/EgsD4Ox64fMcPL4cpiFWrbQcQR+2XVb7GbfNRt1Tg==")
+        let account = try! AZSCloudStorageAccount(fromConnectionString:"DefaultEndpointsProtocol=https;AccountName=runobjectblob;AccountKey=nFW1hnciBKCZ9QRO2MDgQKs3Ocge4kEUkISWeIx8WNETJPwhNOfnDTwWK5cWKoUSdyhM3v8n8Lp+9y/sR5PdtQ==")
         if accountCreationError != nil {
             print("Error in creating account.")
         }
@@ -181,8 +181,12 @@ static func downloadFromBlob(containerName:String) -> Bool
                 
             }
             else {
+                if results!.blobs!.count == 0
+                {
+                    print("NoData");
+                }
                 for i in 0..<results!.blobs!.count {
-                   // print("\(results!.blobs![i] as! AZSCloudBlockBlob).blobName()")
+                   print("\(results!.blobs![i] as! AZSCloudBlockBlob).blobName())")
                     if let blockBlog = results!.blobs![i] as? AZSCloudBlockBlob
                     {
                       blockBlog.downloadToTextWithCompletionHandler({ (error, string) in

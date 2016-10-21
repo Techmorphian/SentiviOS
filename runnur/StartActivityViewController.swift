@@ -133,6 +133,58 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
         }
         // self.duration.text = "00:00:00"
     }
+    
+    
+    
+    
+    func uploadBlobToContainer(containerName:String,blobName:String,textToUpload:String) {
+        var accountCreationError: NSError?
+        // Create a storage account object from a connection string.
+        let account = try! AZSCloudStorageAccount(fromConnectionString:"DefaultEndpointsProtocol=https;AccountName=runobjectblob;AccountKey=nFW1hnciBKCZ9QRO2MDgQKs3Ocge4kEUkISWeIx8WNETJPwhNOfnDTwWK5cWKoUSdyhM3v8n8Lp+9y/sR5PdtQ==")
+        if accountCreationError != nil {
+            print("Error in creating account.")
+        }
+        // Create a blob service client object.
+        let blobClient = account.getBlobClient()
+        // Create a local container object.
+        let blobContainer = blobClient.containerReferenceFromName(containerName)
+        blobContainer.createContainerIfNotExistsWithAccessType(AZSContainerPublicAccessType.Container, requestOptions: nil, operationContext: nil, completionHandler: {(error, exists) -> Void in
+            if error != nil {
+                CommonFunctions.hideActivityIndicator();
+                print("Error in creating container.")
+            }
+            else {
+                do {
+                    // Create a local blob object
+                    let blockBlob = blobContainer.blockBlobReferenceFromName(blobName)
+                    // Upload blob to Storage
+                    
+                    blockBlob.uploadFromText(textToUpload, completionHandler: {(error) -> Void in
+                        if error != nil {
+                            CommonFunctions.hideActivityIndicator();
+                            print("Error in creating blob.");
+                        }else{
+                            print("Success in upload blob");
+
+                            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "firstCacheHistory");
+                            dispatch_async(dispatch_get_main_queue(), {
+                                CommonFunctions.hideActivityIndicator();
+                                let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
+                                ActivityDetailsViewController;
+                                activityDetailsViewController.mapData=self.mapData;
+                                self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
+
+                            })
+                             }
+                    })
+                }
+            }
+            }
+        )
+    }
+
+    
+    
     private func saveData()
     {
         
@@ -152,30 +204,73 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
             if client.currentUser != nil{
                 let date = self.lastLocation.timestamp
                 let dateFormatter = NSDateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd";
+                dateFormatter.dateFormat = "MM/dd/yyyy   HH:mm:ss";
                 let dateString = dateFormatter.stringFromDate(date)
                 let uuid = NSUUID().UUIDString;
+                
+                
+                
+                
+                var GraphAltitude = [NSDictionary]();
+                for i in self.Altitudes{
+                    GraphAltitude.append(["A": i]);
+                }
+                var GraphDistance = [NSDictionary]();
+                for i in self.graphDistance{
+                    GraphDistance.append(["I": i]);
+                }
+                var GraphPace = [NSDictionary]();
+                for i in self.graphPace{
+                    GraphPace.append(["I": i]);
+                }
+                var GraphSpeed = [NSDictionary]();
+                for i in self.graphSpeed{
+                    GraphSpeed.append(["I": i]);
+                }
+                
+                var SplitTime = [NSDictionary]();
+                for i in self.timeLog
+                {
+                    SplitTime.append(["timeLog":i]);
+                }
+                
+                
+//                let saveGraphDistance = CommonFunctions.convertStringToJson(GraphDistance);
+//                let saveGraphPace = CommonFunctions.convertStringToJson(GraphPace);
+//                let saveGraphSpeed = CommonFunctions.convertStringToJson(GraphSpeed);
+//                let saveGraphAltitudes = CommonFunctions.convertStringToJson(GraphAltitude);
+                
                 
                 //--------------------------creating dictionary to send data to azure---------------------------
                 
                 let newItem : NSDictionary = ["id": uuid,
                     "date": dateString,
-                    "distance": Double(self.distance.text!)!,
-                    "elapsedTime": Double(self.elapsedTime),
+                    "GPSAcc":self.accuracy,
+                    "activityLog": self.activityLog,
+                    "distance": self.dis,
+                    "elapsedTime": self.duration.text!,
                     "averageSpeed": Double(self.avgSpeed.text!)!,
                     "averagePace": Double(self.avgPace.text!)!,
-                    // "time": "nil",
-                    "performedActivity": String(UTF8String: self.performedActivity)!,
+                    "performedActivity": self.performedActivity,
                     "caloriesBurnedS": self.caloriesburned,
-                    "startLocationS": String(self.firstLocation),
+                    "startLocationS": self.locationName,
                     "altGainS": String(self.altGain),
                     "altLossS": String(self.altLoss),
-                    "weatherData": "weatherData",
-                    "trackPolylinesP":self.saveTrackPolyline
-                    // "graphDistanceS" : self.graphDistance
-                    // "graphPaceS" : graphPace
-                    // "graphSpeedS" : graphSpeed
+                    "weatherData": "",
+                    "time":self.elapsedTimeInMiliSecds,
+                    "trackPolylinesP":self.trackPolyline,
+                     "graphDistanceS" : GraphDistance,  //saveGraphDistance,
+                     "graphPaceS" : GraphPace,  //saveGraphPace,
+                    "graphSpeedS" : GraphSpeed, //saveGraphSpeed,
+                    "graphAltitudeS" : GraphAltitude,    //saveGraphAltitudes
+                    "splitTimeLog": SplitTime
                 ] ;
+                
+                
+                print(CommonFunctions.convertStringToJson(newItem));
+                
+                
+                
                 //------------------------Saving whole route data----------------------------------------------
                 self.mapData = MapData();
                 self.mapData.distance = self.distance.text!;
@@ -187,6 +282,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                 self.mapData.duration = self.duration.text!;
                 self.mapData.weatherData = self.weatherData;
                 self.mapData.activityType = "Run";
+                self.mapData.performedActivity = self.performedActivity;
                 self.mapData.maxElevation = "";
                 self.mapData.maxSpeed = "";
                 self.mapData.startTime = self.stringStartTime;
@@ -197,27 +293,17 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                 self.mapData.startLong = self.firstLocation.coordinate.longitude;
                 self.mapData.endLat = self.lastLocation.coordinate.latitude;
                 self.mapData.endLong = self.lastLocation.coordinate.longitude;
-                self.mapData.trackPlyline = self.saveTrackPolyline;
+                self.mapData.trackPlyline = CommonFunctions.convertStringToJson(self.trackPolyline);
+                self.mapData.splitGraphValues = self.timeLog;
+                self.mapData.avgSpeedGraphValues = self.graphSpeed;
+               // self.mapData.elevationValues = self.Altitudes;
+                
                 
                 //     TODO:- add more data
                 
                 //, "GPSAcc": Double(accuracy), "EmailS": [""],"graphDistanceS": [Double("1.4")],"graphPaceS": [Double("1.4")],"graphSpeedS": [Double("1.4")],"graphAltitudeS": ["\(altitude)"], "mileMarkerS": [""],"splitSpeedS": ["0"], "splitDistanceS": ["0"], "graphHRS": [""],"splitTimeLog": ["custom-id"], "UriBlob": "my new item", "UUIDBlob": "ui", "activityLog": "my new item"
                 // is no internet pass data to azure else save offline
                 if Reachability.isConnectedToNetwork() == true{
-                    //
-                    //                    table.insert(newItem as [NSObject : AnyObject]) { (result, error) in
-                    //                        if let err = error {
-                    //                            CommonFunctions.hideActivityIndicator();
-                    //                            print("ERROR ", err)
-                    //                        } else if let item = result {
-                    //                            CommonFunctions.hideActivityIndicator();
-                    //                            print("RunObject: ", item["altGainS"])
-                    ////                            let activityDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ActivityDetailsViewController") as!
-                    ////                            ActivityDetailsViewController;
-                    ////                            activityDetailsViewController.mapData=self.mapData;
-                    ////                            self.presentViewController(activityDetailsViewController, animated: false, completion: nil)
-                    //                        }
-                    //                    }
                     
                     
                     /***
@@ -229,6 +315,10 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                     email = email?.stringByReplacingOccurrencesOfString(".", withString: "-");
                     let words =  email?.componentsSeparatedByString("@");
                     let contName = words![0]
+                    
+                    
+    /*
+                    
                     let file = "\(contName).txt" //this is the file. we will write to and read from it
                     let paths = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!)
                     print(paths);
@@ -272,7 +362,7 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                         }
                         
                         
-                    }
+                    }  */
                     
                     
                     
@@ -313,22 +403,22 @@ class StartActivityViewController: UIViewController,CLLocationManagerDelegate {
                                 print("ERROR ", err)
                             } else if let item = result {
                                 print(result);
-                                CommonFunctions.hideActivityIndicator();
+                                
                                 print("RunObject: ", item["userId"])//-------------getting userId
-                                var error:NSError?
-                                let sasQueryString = item["sasQueryString"]!  //-----------------getting sasString------------------
-                                
-                                
+//                                var error:NSError?
+//                                let sasQueryString = item["sasQueryString"]!  //-----------------getting sasString------------------
+//                                
+//                                let UriBlob = item["Uri"]!;//----------uri
+
                                 
                                let connn = item["rundetailcontainerblob"]! as! String
                                 let blogName = item["RunDetailResource"]! as! String//-------blogName
-                                let UriBlob = item["Uri"]!;//----------uri
                                 
                          
                                 if NSJSONSerialization.isValidJSONObject(newItem){
-                                    let jsonData = try! NSJSONSerialization.dataWithJSONObject([newItem], options: NSJSONWritingOptions());
+                                    let jsonData = try! NSJSONSerialization.dataWithJSONObject(newItem, options: NSJSONWritingOptions());
                                     let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
-                                     DownloadFromBlob.uploadBlobToContainer(connn, blobName: blogName, textToUpload: jsonString);
+                                     self.uploadBlobToContainer(connn, blobName: blogName, textToUpload: jsonString);
                                 }
                                 
                                
