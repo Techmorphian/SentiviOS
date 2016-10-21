@@ -179,10 +179,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             let cell:userChatTableViewCell = tableView.dequeueReusableCellWithIdentifier("userChatTableViewCell")as!
                       userChatTableViewCell
             
-          //  cell.transform = CGAffineTransformInvert(tableViewCell.transform)
-
-            
-
+         
             
             cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.size.width / 2;
             cell.profileImageView.clipsToBounds = true;
@@ -278,6 +275,9 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             let cell:chatTableViewCell = tableView.dequeueReusableCellWithIdentifier("chatTableViewCell")as!
             chatTableViewCell
+            
+            
+          
             
              // cell.transform = CGAffineTransformInvert(tableViewCell.transform)
             
@@ -754,7 +754,11 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
        let check = indexPath.row
               
+//        let rowIndex =  activityChatArray.count - 1
+//        
+////        if (check <= 5 && shouldCallPagging)
         
+            
         if (check <= 5 && shouldCallPagging)
         {
             
@@ -770,9 +774,10 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
             self.loadingView.removeFromSuperview();
             
             //to call webservice again with currentDate- 6 days as currentDate so that it returns the next 5 days data
-            lastDateSent = CurrentDateFunc.getSubtractedDate(lastDateSent)
             
             SShowActivityIndicatory()
+            
+            lastDateSent = CurrentDateFunc.getSubtractedDate(lastDateSent)
             self.activityInfo();
             
         }
@@ -1162,7 +1167,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                               
                                 
                                 
-                               let lastRowIndex = self.activityChatArray.count
+                            let lastRowIndex = self.activityChatArray.count
                                 
                             indexPath.append(NSIndexPath(forRow: lastRowIndex , inSection: 0))
                                                                
@@ -1360,7 +1365,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                                 
                                             {
                                                ////// when paggging is true add data at bottom
-                                             activityChatArray.insert(activityModel, atIndex: 0)
+                                             activityChatArray.insert(activityModel, atIndex:0)
                                                 
                                               // activityChatArray.append(activityModel)
                                             
@@ -1595,6 +1600,8 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                     if NSUserDefaults.standardUserDefaults().boolForKey("isMyPaggingCalled") == true
                                         
                                     {
+                                        
+                                      
                                        
                                         /// indexes for indexPathsForVisibleRows
                                         let indexes = self.ActivityTableView.indexPathsForVisibleRows
@@ -1626,16 +1633,8 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                     
                                     {
                                         
-                                        
                                         self.RemoveNoInternet();
                                         self.RemoveNoResult();
-///
-//                                        for i in self.activityChatArray
-//                                        {
-//                                            
-//                                            print(i.message)
-//                                            
-//                                        }
                                         
                                         self.activityChatArray = self.activityChatArray.reverse();
                                         
@@ -1668,11 +1667,6 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                         
                                                 
                                         
-                                        
-                                        /////// scroll to bottom
-//                                          self.ActivityTableView.scrollToRowAtIndexPath(NSIndexPath(activityChatArray.count-1,inSection: 0), atScrollPosition: .Bottom, animated: true)
-                                        
-                                    
                                     }
                                 }
 
@@ -2361,9 +2355,6 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             
                             self.presentViewController(alert, animated: true, completion: nil)
                             return
-                            
-                            
-                            
                             
                             
                         }
@@ -3716,6 +3707,8 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         ActivityTableView.tableFooterView = UIView(frame: CGRect.zero)
         
         
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isMyPaggingCalled")
+        
         
          ActivityTableView.tableFooterView = nil
         
@@ -3784,7 +3777,10 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
        // beforeContentSize = self.ActivityTableView.contentSize;
         
         
-        
+//        var CgFolat  = CGFloat(M_PI)
+//        
+//        ActivityTableView.transform=CGAffineTransformMakeRotation(CgFolat);
+
         
        // ViewGroupFitViewController.instance?.overFlowButton.hidden=true;
 
@@ -3795,7 +3791,7 @@ class ActivityViewController: UIViewController,UITableViewDelegate,UITableViewDa
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ActivityViewController.methodOfReceivedNotification(_:)), name:"showAlert", object: nil)
 
         
-        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isMyPaggingCalled")
+     
         
         //print(activityChatArray.count)
         

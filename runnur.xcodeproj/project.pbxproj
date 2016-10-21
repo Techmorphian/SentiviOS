@@ -765,7 +765,7 @@
 				8E86C39686B5F3740BD2DCDB /* [CP] Copy Pods Resources */,
 				29EF030A9B1AF4D6B6DA7B10 /* 📦 Embed Pods Frameworks */,
 				70A999E5C5FBB006EB4853D0 /* 📦 Copy Pods Resources */,
-				4723820D1DB4F552003B1D75 /* ShellScript */,
+				47B27FF41DB9FC5D000FD60F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -880,7 +880,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-runnur/Pods-runnur-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		4723820D1DB4F552003B1D75 /* ShellScript */ = {
+		47B27FF41DB9FC5D000FD60F /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+//import Crashlytics
+//import Fabric
 
 class NavigationViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
 {
@@ -125,11 +127,6 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 
                 cell.namesLabel.text = sectionOne[indexPath.row]
                 cell.naviImageViews.image = UIImage(named: sectionOneImages[indexPath.row])
-
-               
-                  
-               
-                print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter"))
                 
                 if NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter") == "" ||  NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter") == nil
                 {
@@ -151,7 +148,6 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
 
                 cell.countLabel.text = NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter")
                     
-                print(NSUserDefaults.standardUserDefaults().stringForKey("badgeCounter"))
                     
                 
                 }
@@ -238,7 +234,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
               
                cell.countLabel.layer.cornerRadius = cell.countLabel.frame.size.height/2;
                cell.countLabel.backgroundColor = colorCode.RedColor
-            // cell.countLabel.layer.masksToBounds = true
+            
               cell.countLabel.clipsToBounds = true
                 
                 
@@ -289,9 +285,11 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             }
             
         }
-        if cell.selected == true{
+        if cell.selected == true
+        {
             cell.contentView.backgroundColor = colorCode.MediumDarkBlueColor
-        }else{
+        }else
+        {
             cell.contentView.backgroundColor = UIColor.clearColor();
         }
         
@@ -326,7 +324,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
 
                 if indexPath.row == 0
                 {
-                    //cell.backgroundColor = colorCode.MediumDarkBlueColor
+                  
                     
                 }
                 
@@ -340,7 +338,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 
                 if indexPath.row == 1
                 {
-                  //cell.backgroundColor = colorCode.MediumDarkBlueColor
+                 
                     
                 }
                 self.performSegueWithIdentifier("Challenges", sender: nil)
@@ -352,7 +350,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 
                 if indexPath.row == 2
                 {
-                  //  cell.backgroundColor = colorCode.MediumDarkBlueColor
+                 
                     
                 }
               
@@ -368,7 +366,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 
                 if indexPath.row == 3
                 {
-                    //cell.backgroundColor = colorCode.MediumDarkBlueColor
+                    
                     
                 }
 
@@ -384,7 +382,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 
                 if indexPath.row == 4
                 {
-                    //cell.backgroundColor = colorCode.MediumDarkBlueColor
+                    
                     
                 }
                 
@@ -408,7 +406,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 
                 if indexPath.row == 0
                 {
-                    //cell.backgroundColor = colorCode.MediumDarkBlueColor
+                    
                     
                 }
                 
@@ -420,7 +418,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 
                 if indexPath.row == 1
                 {
-                    //cell.backgroundColor = colorCode.MediumDarkBlueColor
+                   
                     
                 }
                 self.performSegueWithIdentifier("Statistics", sender: nil)
@@ -432,11 +430,11 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
                 
                 if indexPath.row == 2
                 {
-                   // cell.backgroundColor = colorCode.MediumDarkBlueColor
+                   
                     
                 }
                 
-                   self.performSegueWithIdentifier("HeartRate ", sender: nil)
+                //   self.performSegueWithIdentifier("HeartRate ", sender: nil)
                 
                 break;
                 
@@ -466,7 +464,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             case "Settings":
                 
                 
-                self.performSegueWithIdentifier("settings", sender: nil)
+              //  self.performSegueWithIdentifier("settings", sender: nil)
                 break;
                 
             case "Logout":
@@ -555,123 +553,6 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
         
     }
 
-    
-//    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath)
-//    {
-//        
-//        
-//        let cell = tableView.cellForRowAtIndexPath(indexPath) as!  NavigationCellTableViewCell
-//        
-//        
-//        if indexPath.section == 0
-//        {
-//           
-//            if indexPath.row == 0   /// activity
-//            {
-//               cell.backgroundColor = UIColor.clearColor();
-//            
-//            }
-//            if indexPath.row == 1 /// challenge
-//            {
-//                
-//              cell.backgroundColor = UIColor.clearColor();
-//            }
-//            
-//            
-//            if indexPath.row == 2 /// requests
-//            {
-//                
-//                
-//                cell.backgroundColor = UIColor.clearColor();
-//                
-//            }
-//            
-//            
-//            if indexPath.row == 3 // friends
-//            {
-//               cell.backgroundColor = UIColor.clearColor();
-//            }
-//            
-//            
-//            if indexPath.row == 4 // routes
-//            {
-//                
-//              cell.backgroundColor = UIColor.clearColor();
-//            }
-//            
-//            
-//            
-//        }
-//        if indexPath.section == 1
-//        {
-//            
-//            if indexPath.row == 0 /// history
-//            {
-//               cell.backgroundColor = UIColor.clearColor();
-//            
-//            }
-//            
-//            if indexPath.row == 1  // statistics
-//            {
-//                
-//            cell.backgroundColor = UIColor.clearColor();
-//            
-//            }
-//            if indexPath.row == 2 // heart rate
-//            {
-//                
-//               cell.backgroundColor = UIColor.clearColor();
-//            }
-//            
-//            if indexPath.row == 3 /// winnings
-//            {
-//            
-//                cell.backgroundColor = UIColor.clearColor();
-//                
-//            }
-//            
-//            
-//            
-//        }
-//        if indexPath.section == 2
-//        {
-//            
-//            
-//            if indexPath.row == 0 // setting
-//            {
-//                cell.backgroundColor = UIColor.clearColor();
-//                
-//                
-//            }
-//            
-//            
-//            if indexPath.row == 1 //log out
-//            {
-//             
-//                cell.backgroundColor = UIColor.clearColor();
-//                
-//                
-//            }
-//            
-//            if indexPath.row == 2 // feedback
-//            {
-//              
-//                cell.backgroundColor = UIColor.clearColor();
-//                
-//            }
-//            
-//            if indexPath.row == 3 // faq
-//            {
-//                cell.backgroundColor = UIColor.clearColor();
-//                
-//            }
-//                    
-//        }
-//        
-//    }
-    
- 
-    
     
     var sectionOne = ["Activity","Challenges","Requests","Friends","Routes"]
     var sectionOneImages = ["ic_activity_nav","ic_challenges_nav","ic_requests_nav","ic_friends_nav","ic_routes_nav"]

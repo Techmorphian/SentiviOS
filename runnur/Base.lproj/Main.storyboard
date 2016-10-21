@@ -351,15 +351,15 @@
                         <outlet property="navigationProfilePic" destination="8yk-Q3-UeN" id="3vV-2f-vtF"/>
                         <segue destination="PhC-vx-jp7" kind="custom" identifier="Friends" customClass="SWRevealViewControllerSeguePushController" animates="NO" id="QjY-qQ-zKU"/>
                         <segue destination="xHV-rC-gQp" kind="custom" identifier="FAQ" customClass="SWRevealViewControllerSeguePushController" animates="NO" id="qq7-7M-v0T"/>
-                        <segue destination="Hri-67-CaN" kind="custom" identifier="History" customClass="SWRevealViewControllerSeguePushController" id="nDU-fS-ISR"/>
-                        <segue destination="Far-NA-Pss" kind="custom" identifier="Statistics" customClass="SWRevealViewControllerSeguePushController" id="bzS-z8-EH4"/>
-                        <segue destination="cPN-qj-xCc" kind="custom" identifier="Heart Rate History" customClass="SWRevealViewControllerSeguePushController" id="yed-Qd-ZXk"/>
-                        <segue destination="clZ-ab-6nm" kind="custom" identifier="Challenges" customClass="SWRevealViewControllerSeguePushController" id="NXp-A6-o7Z"/>
-                        <segue destination="MSq-bx-dYD" kind="custom" identifier="homeView" customClass="SWRevealViewControllerSeguePushController" id="SX8-Tp-5vo"/>
-                        <segue destination="OOa-kl-kkf" kind="custom" identifier="ProfileScreen" customClass="SWRevealViewControllerSeguePushController" id="Oio-sy-4Hi"/>
-                        <segue destination="ggX-er-kS2" kind="custom" identifier="Requests" customClass="SWRevealViewControllerSeguePushController" id="Rhm-7d-vE0"/>
-                        <segue destination="fr9-EL-4aS" kind="show" identifier="winnings" customClass="SWRevealViewControllerSeguePushController" id="vtJ-w3-ZIM"/>
-                        <segue destination="lth-BA-pbd" kind="show" identifier="settings" customClass="SWRevealViewControllerSeguePushController" id="SiS-5w-WLY"/>
+                        <segue destination="Hri-67-CaN" kind="custom" identifier="History" customClass="SWRevealViewControllerSeguePushController" animates="NO" id="nDU-fS-ISR"/>
+                        <segue destination="Far-NA-Pss" kind="custom" identifier="Statistics" customClass="SWRevealViewControllerSeguePushController" animates="NO" id="bzS-z8-EH4"/>
+                        <segue destination="cPN-qj-xCc" kind="custom" identifier="Heart Rate History" customClass="SWRevealViewControllerSeguePushController" animates="NO" id="yed-Qd-ZXk"/>
+                        <segue destination="clZ-ab-6nm" kind="custom" identifier="Challenges" customClass="SWRevealViewControllerSeguePushController" animates="NO" id="NXp-A6-o7Z"/>
+                        <segue destination="MSq-bx-dYD" kind="custom" identifier="homeView" customClass="SWRevealViewControllerSeguePushController" animates="NO" id="SX8-Tp-5vo"/>
+                        <segue destination="OOa-kl-kkf" kind="custom" identifier="ProfileScreen" customClass="SWRevealViewControllerSeguePushController" animates="NO" id="Oio-sy-4Hi"/>
+                        <segue destination="ggX-er-kS2" kind="custom" identifier="Requests" customClass="SWRevealViewControllerSeguePushController" animates="NO" id="Rhm-7d-vE0"/>
+                        <segue destination="fr9-EL-4aS" kind="custom" identifier="winnings" customClass="SWRevealViewControllerSeguePushController" animates="NO" id="vtJ-w3-ZIM"/>
+                        <segue destination="lth-BA-pbd" kind="custom" identifier="settings" customClass="SWRevealViewControllerSeguePushController" animates="NO" id="SiS-5w-WLY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZjP-dy-Cag" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -13885,7 +13885,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="TRi-45-ITm"/>
         <segue reference="9RJ-dN-WK8"/>
-        <segue reference="SX8-Tp-5vo"/>
+        <segue reference="HPL-Kq-q44"/>
         <segue reference="a1h-2Q-vNT"/>
     </inferredMetricsTieBreakers>
 </document>
