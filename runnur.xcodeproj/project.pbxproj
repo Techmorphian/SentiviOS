@@ -210,7 +210,7 @@
 		470CF8851D24DC370001B3BC /* runnur.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = runnur.xcdatamodel; sourceTree = "<group>"; };
 		470CF8871D24DC370001B3BC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		470CF88A1D24DC370001B3BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		470CF88C1D24DC370001B3BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		470CF88C1D24DC370001B3BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = runnur/Info.plist; sourceTree = "<group>"; };
 		470CF8921D24E8290001B3BC /* FriendsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsListViewController.swift; sourceTree = "<group>"; };
 		470CF8941D24E8500001B3BC /* FriendsListCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsListCellTableViewCell.swift; sourceTree = "<group>"; };
 		470CF8961D24FB010001B3BC /* AddFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendsViewController.swift; sourceTree = "<group>"; };
@@ -391,6 +391,7 @@
 				470CF87C1D24DC370001B3BC /*   */,
 				470CF87B1D24DC370001B3BC /* Products */,
 				563C1A8EACAD8D49F842549C /* Pods */,
+				470CF88C1D24DC370001B3BC /* Info.plist */,
 				E81A32A4CAE00AD216210983 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -444,7 +445,6 @@
 				470CF8871D24DC370001B3BC /* Assets.xcassets */,
 				4485841E1D4A14A20027F141 /* GoogleService-Info.plist */,
 				470CF8891D24DC370001B3BC /* LaunchScreen.storyboard */,
-				470CF88C1D24DC370001B3BC /* Info.plist */,
 				470CF8841D24DC370001B3BC /* runnur.xcdatamodeld */,
 				470B1B601D27A5A100E3B5B0 /* runnur-Bridging-Header.h */,
 			);
