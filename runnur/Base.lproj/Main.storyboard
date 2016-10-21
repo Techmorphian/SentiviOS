@@ -353,7 +353,7 @@
                         <segue destination="xHV-rC-gQp" kind="custom" identifier="FAQ" customClass="SWRevealViewControllerSeguePushController" animates="NO" id="qq7-7M-v0T"/>
                         <segue destination="Hri-67-CaN" kind="custom" identifier="History" customClass="SWRevealViewControllerSeguePushController" animates="NO" id="nDU-fS-ISR"/>
                         <segue destination="Far-NA-Pss" kind="custom" identifier="Statistics" customClass="SWRevealViewControllerSeguePushController" animates="NO" id="bzS-z8-EH4"/>
-                        <segue destination="cPN-qj-xCc" kind="custom" identifier="Heart Rate History" customClass="SWRevealViewControllerSeguePushController" animates="NO" id="yed-Qd-ZXk"/>
+                        <segue destination="cPN-qj-xCc" kind="custom" identifier="HeartRateHistory" customClass="SWRevealViewControllerSeguePushController" animates="NO" id="yed-Qd-ZXk"/>
                         <segue destination="clZ-ab-6nm" kind="custom" identifier="Challenges" customClass="SWRevealViewControllerSeguePushController" animates="NO" id="NXp-A6-o7Z"/>
                         <segue destination="MSq-bx-dYD" kind="custom" identifier="homeView" customClass="SWRevealViewControllerSeguePushController" animates="NO" id="SX8-Tp-5vo"/>
                         <segue destination="OOa-kl-kkf" kind="custom" identifier="ProfileScreen" customClass="SWRevealViewControllerSeguePushController" animates="NO" id="Oio-sy-4Hi"/>
