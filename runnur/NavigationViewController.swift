@@ -454,8 +454,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             
             
         } // section one close
-        
-        
+             
         if indexPath.section == 2
         {
             
