@@ -359,7 +359,6 @@
                         <segue destination="OOa-kl-kkf" kind="custom" identifier="ProfileScreen" customClass="SWRevealViewControllerSeguePushController" animates="NO" id="Oio-sy-4Hi"/>
                         <segue destination="ggX-er-kS2" kind="custom" identifier="Requests" customClass="SWRevealViewControllerSeguePushController" animates="NO" id="Rhm-7d-vE0"/>
                         <segue destination="fr9-EL-4aS" kind="custom" identifier="winnings" customClass="SWRevealViewControllerSeguePushController" animates="NO" id="vtJ-w3-ZIM"/>
-                        <segue destination="lth-BA-pbd" kind="custom" identifier="settings" customClass="SWRevealViewControllerSeguePushController" animates="NO" id="SiS-5w-WLY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZjP-dy-Cag" userLabel="First Responder" sceneMemberID="firstResponder"/>

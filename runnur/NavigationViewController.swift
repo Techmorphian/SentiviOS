@@ -464,7 +464,7 @@ class NavigationViewController: UIViewController,UITableViewDelegate,UITableView
             case "Settings":
                 
                 
-              //  self.performSegueWithIdentifier("settings", sender: nil)
+            
                 break;
                 
             case "Logout":
